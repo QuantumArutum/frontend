@@ -10,7 +10,8 @@ import ParticlesBackground from '@/app/components/ParticlesBackground';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
 
-const getPartnerTypes = (t: (key: string, options?: object) => string | string[]) => [
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const getPartnerTypes = (t: any) => [
   {
     icon: FaBuilding,
     title: t('enterprise.partners.types.technology.title'),
@@ -34,7 +35,7 @@ const getPartnerTypes = (t: (key: string, options?: object) => string | string[]
   }
 ];
 
-const getFeaturedPartners = (t: (key: string) => string) => [
+const getFeaturedPartners = (t: any) => [
   { name: 'AWS', category: t('enterprise.partners.categories.cloud'), logo: '☁️' },
   { name: 'Microsoft Azure', category: t('enterprise.partners.categories.cloud'), logo: '🔷' },
   { name: 'Google Cloud', category: t('enterprise.partners.categories.cloud'), logo: '🌐' },
@@ -45,7 +46,7 @@ const getFeaturedPartners = (t: (key: string) => string) => [
   { name: 'KPMG', category: t('enterprise.partners.categories.audit'), logo: '📋' }
 ];
 
-const getPartnerBenefits = (t: (key: string) => string) => [
+const getPartnerBenefits = (t: any) => [
   {
     icon: FaRocket,
     title: t('enterprise.partners.benefits_list.growth.title'),
@@ -68,7 +69,7 @@ const getPartnerBenefits = (t: (key: string) => string) => [
   }
 ];
 
-const getPartnerLevels = (t: (key: string, options?: object) => string | string[]) => [
+const getPartnerLevels = (t: any) => [
   {
     level: t('enterprise.partners.levels.registered.name'),
     color: 'from-gray-500 to-gray-600',
