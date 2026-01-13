@@ -8,63 +8,94 @@ const QuantumWalletPage = () => {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [balance, setBalance] = useState<string>('0');
   const [isLoading, setIsLoading] = useState(true);
+  const [isConnecting, setIsConnecting] = useState(false);
   const [copied, setCopied] = useState(false);
   const [chainId, setChainId] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+
+  const loadWalletData = async (address: string) => {
+    const ethereum = (window as any).ethereum;
+    
+    // Get chain ID
+    const chainIdHex = await ethereum.request({ method: 'eth_chainId' });
+    setChainId(parseInt(chainIdHex, 16).toString());
+
+    // Get balance
+    const balanceHex = await ethereum.request({
+      method: 'eth_getBalance',
+      params: [address, 'latest']
+    });
+    const balanceWei = parseInt(balanceHex, 16);
+    setBalance((balanceWei / 1e18).toFixed(4));
+  };
+
+  const connectWallet = async () => {
+    if (typeof window === 'undefined' || !(window as any).ethereum) {
+      window.open('https://metamask.io/download/', '_blank');
+      return;
+    }
+
+    setIsConnecting(true);
+    setError(null);
+    
+    try {
+      const ethereum = (window as any).ethereum;
+      // Request connection - this will prompt MetaMask
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      
+      if (accounts && accounts.length > 0) {
+        const address = accounts[0];
+        setWalletAddress(address);
+        await loadWalletData(address);
+      }
+    } catch (err: any) {
+      console.error('Connection error:', err);
+      if (err.code === 4001) {
+        setError('Connection rejected by user');
+      } else {
+        setError('Failed to connect wallet');
+      }
+    } finally {
+      setIsConnecting(false);
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
     
     const init = async () => {
-      try {
-        // Check if MetaMask is installed
-        if (typeof window === 'undefined' || !(window as any).ethereum) {
-          if (isMounted) {
-            setError('MetaMask not installed');
-            setIsLoading(false);
-          }
-          return;
+      // Check if MetaMask is installed
+      if (typeof window === 'undefined' || !(window as any).ethereum) {
+        if (isMounted) {
+          setError('MetaMask not installed');
+          setIsLoading(false);
         }
+        return;
+      }
 
+      try {
         const ethereum = (window as any).ethereum;
         
-        // Get already connected accounts (don't request new connection)
+        // First check if already connected
         const accounts = await ethereum.request({ method: 'eth_accounts' });
         
         if (!isMounted) return;
         
-        if (!accounts || accounts.length === 0) {
-          setError('No wallet connected');
+        if (accounts && accounts.length > 0) {
+          // Already connected, load data
+          const address = accounts[0];
+          setWalletAddress(address);
+          await loadWalletData(address);
           setIsLoading(false);
-          return;
+        } else {
+          // Not connected, auto-request connection
+          await connectWallet();
         }
-
-        const address = accounts[0];
-        setWalletAddress(address);
-
-        // Get chain ID
-        const chainIdHex = await ethereum.request({ method: 'eth_chainId' });
-        if (isMounted) {
-          setChainId(parseInt(chainIdHex, 16).toString());
-        }
-
-        // Get balance
-        const balanceHex = await ethereum.request({
-          method: 'eth_getBalance',
-          params: [address, 'latest']
-        });
-        if (isMounted) {
-          const balanceWei = parseInt(balanceHex, 16);
-          setBalance((balanceWei / 1e18).toFixed(4));
-        }
-
       } catch (err) {
         console.error('Error:', err);
         if (isMounted) {
           setError('Failed to load wallet data');
-        }
-      } finally {
-        if (isMounted) {
           setIsLoading(false);
         }
       }
@@ -73,18 +104,9 @@ const QuantumWalletPage = () => {
     // Small delay to ensure page is ready
     const timer = setTimeout(init, 300);
     
-    // Fallback timeout - if still loading after 5 seconds, stop loading
-    const fallbackTimer = setTimeout(() => {
-      if (isMounted) {
-        setError('Connection timeout');
-        setIsLoading(false);
-      }
-    }, 5000);
-    
     return () => {
       isMounted = false;
       clearTimeout(timer);
-      clearTimeout(fallbackTimer);
     };
   }, []);
 
@@ -131,20 +153,33 @@ const QuantumWalletPage = () => {
         <div className="relative z-10 text-center p-8 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 max-w-md">
           <Wallet className="w-16 h-16 text-purple-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-white mb-4">
-            {error === 'MetaMask not installed' ? 'MetaMask Required' : 'Wallet Not Connected'}
+            {error === 'MetaMask not installed' ? 'MetaMask Required' : 
+             error === 'Connection rejected by user' ? 'Connection Rejected' : 'Connect Your Wallet'}
           </h2>
           <p className="text-gray-300 mb-6">
             {error === 'MetaMask not installed' 
               ? 'Please install MetaMask to use this feature.'
-              : 'Please connect your wallet first.'}
+              : error === 'Connection rejected by user'
+              ? 'You rejected the connection request. Click below to try again.'
+              : 'Connect your MetaMask wallet to view your balance and transactions.'}
           </p>
-          <a
-            href="/wallet"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-xl transition-colors"
+          <button
+            onClick={connectWallet}
+            disabled={isConnecting}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-purple-500 hover:bg-purple-600 disabled:bg-purple-500/50 text-white rounded-xl transition-colors"
           >
-            <ArrowLeft className="w-5 h-5" />
-            Go to Connect Wallet
-          </a>
+            {isConnecting ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Connecting...
+              </>
+            ) : (
+              <>
+                <Wallet className="w-5 h-5" />
+                {error === 'MetaMask not installed' ? 'Install MetaMask' : 'Connect Wallet'}
+              </>
+            )}
+          </button>
         </div>
       </div>
     );
