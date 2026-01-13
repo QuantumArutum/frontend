@@ -12,7 +12,8 @@ import { Tabs } from '@/components/ui/Tabs';
 import { Badge } from '@/components/ui/Badge';
 import { useTranslation } from 'react-i18next';
 
-const getCategoryName = (t: (key: string) => string, id: string): string => {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const getCategoryName = (t: any, id: string): string => {
   const categoryMap: Record<string, string> = {
     '': t('crowdfunding_page.categories.all'),
     'technology': t('crowdfunding_page.categories.technology'),

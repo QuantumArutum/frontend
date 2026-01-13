@@ -2349,7 +2349,7 @@ export const ar = {
         california: 'كاليفورنيا',
         kanto: 'منطقة كانتو'
       },
-      processing: {
+      processing_time: {
         instant: 'فوري',
         one_to_two: '1-2 دقيقة',
         one_to_three: '1-3 دقائق'

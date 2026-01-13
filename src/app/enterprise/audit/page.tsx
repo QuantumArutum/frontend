@@ -10,7 +10,8 @@ import ParticlesBackground from '@/app/components/ParticlesBackground';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
 
-const getAuditReports = (t: (key: string) => string) => [
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const getAuditReports = (t: any) => [
   {
     title: t('enterprise.audit.reports_list.smart_contract.title'),
     auditor: 'CertiK',
@@ -53,7 +54,7 @@ const getAuditReports = (t: (key: string) => string) => [
   }
 ];
 
-const getCertifications = (t: (key: string) => string) => [
+const getCertifications = (t: any) => [
   {
     name: 'SOC 2 Type II',
     issuer: 'AICPA',
@@ -80,7 +81,7 @@ const getCertifications = (t: (key: string) => string) => [
   }
 ];
 
-const getSecurityFeatures = (t: (key: string) => string) => [
+const getSecurityFeatures = (t: any) => [
   {
     icon: FaLock,
     title: t('enterprise.audit.features.quantum.title'),
@@ -103,7 +104,7 @@ const getSecurityFeatures = (t: (key: string) => string) => [
   }
 ];
 
-const getBugBountyTiers = (t: (key: string) => string) => [
+const getBugBountyTiers = (t: any) => [
   { severity: t('enterprise.audit.findings.critical'), reward: '$50,000 - $100,000', color: 'text-red-400', bgColor: 'bg-red-500/20' },
   { severity: t('enterprise.audit.findings.high'), reward: '$10,000 - $50,000', color: 'text-orange-400', bgColor: 'bg-orange-500/20' },
   { severity: t('enterprise.audit.findings.medium'), reward: '$2,000 - $10,000', color: 'text-yellow-400', bgColor: 'bg-yellow-500/20' },
