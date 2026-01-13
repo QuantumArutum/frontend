@@ -12,6 +12,7 @@ import { ar } from './locales/ar';
 import { pt } from './locales/pt';
 import { it } from './locales/it';
 import { nl } from './locales/nl';
+import { vi } from './locales/vi';
 
 // 语言资源
 const resources = {
@@ -26,7 +27,8 @@ const resources = {
   ar,
   pt,
   it,
-  nl
+  nl,
+  vi
 };
 
 // RTL languages list
