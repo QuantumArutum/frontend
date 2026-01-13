@@ -111,7 +111,7 @@ export default function CommunityNavbar() {
   };
 
   return (
-    <div className="sticky top-0 z-50 w-full">
+    <div className="sticky top-0 z-[200] w-full">
       {/* 分类导航 - 放在最上面 */}
       <nav
         className="relative border-b border-white/10 w-full"
