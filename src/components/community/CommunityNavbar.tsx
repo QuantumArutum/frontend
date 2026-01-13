@@ -152,7 +152,7 @@ export default function CommunityNavbar() {
               </button>
 
               {isLangMenuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 bg-[#0F172A]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-200">
+                <div className="absolute right-0 top-full mt-2 w-48 bg-[#0F172A]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl py-2 z-[100] animate-in fade-in zoom-in-95 duration-200">
                   <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                     {languages.map((lang) => (
                       <button
