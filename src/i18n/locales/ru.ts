@@ -2841,45 +2841,6 @@ export const ru = {
         author: 'Автор'
       }
     },
-    // Страницы аутентификации
-    auth: {
-      login: {
-        title: 'С возвращением',
-        subtitle: 'Войдите в свой аккаунт Quantaureum',
-        email: 'Email адрес',
-        password: 'Пароль',
-        remember: 'Запомнить меня',
-        forgot: 'Забыли пароль?',
-        submit: 'Войти',
-        no_account: 'Нет аккаунта?',
-        register: 'Зарегистрироваться',
-        or: 'Или продолжить с',
-        google: 'Продолжить с Google',
-        github: 'Продолжить с GitHub',
-        errors: { invalid: 'Неверный email или пароль', required: 'Это поле обязательно' }
-      },
-      register: {
-        title: 'Создать аккаунт',
-        subtitle: 'Присоединяйтесь к квантово-безопасной блокчейн-революции',
-        username: 'Имя пользователя',
-        email: 'Email адрес',
-        password: 'Пароль',
-        confirm_password: 'Подтвердите пароль',
-        terms: 'Я согласен с Условиями использования и Политикой конфиденциальности',
-        submit: 'Создать аккаунт',
-        have_account: 'Уже есть аккаунт?',
-        login: 'Войти',
-        password_requirements: { title: 'Пароль должен содержать:', length: 'Минимум 8 символов', uppercase: 'Одну заглавную букву', lowercase: 'Одну строчную букву', number: 'Одну цифру', special: 'Один специальный символ' }
-      },
-      forgot_password: {
-        title: 'Сброс пароля',
-        subtitle: 'Введите email для получения инструкций по сбросу',
-        email: 'Email адрес',
-        submit: 'Отправить ссылку для сброса',
-        back: 'Вернуться к входу',
-        success: 'Ссылка для сброса отправлена! Проверьте email.'
-      }
-    },
     // Подстраницы сообщества
     community_sub: {
       bug_bounty: {

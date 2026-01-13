@@ -2883,45 +2883,6 @@ export const ko = {
         author: '저자'
       }
     },
-    // 인증 페이지
-    auth: {
-      login: {
-        title: '다시 오신 것을 환영합니다',
-        subtitle: 'Quantaureum 계정에 로그인',
-        email: '이메일 주소',
-        password: '비밀번호',
-        remember: '로그인 상태 유지',
-        forgot: '비밀번호를 잊으셨나요?',
-        submit: '로그인',
-        no_account: '계정이 없으신가요?',
-        register: '회원가입',
-        or: '또는',
-        google: 'Google로 로그인',
-        github: 'GitHub로 로그인',
-        errors: { invalid: '이메일 또는 비밀번호가 잘못되었습니다', required: '이 필드는 필수입니다' }
-      },
-      register: {
-        title: '계정 만들기',
-        subtitle: '양자 안전 블록체인 혁명에 참여하세요',
-        username: '사용자 이름',
-        email: '이메일 주소',
-        password: '비밀번호',
-        confirm_password: '비밀번호 확인',
-        terms: '서비스 약관 및 개인정보 보호정책에 동의합니다',
-        submit: '계정 만들기',
-        have_account: '이미 계정이 있으신가요?',
-        login: '로그인',
-        password_requirements: { title: '비밀번호 요구사항:', length: '최소 8자', uppercase: '대문자 1개', lowercase: '소문자 1개', number: '숫자 1개', special: '특수문자 1개' }
-      },
-      forgot_password: {
-        title: '비밀번호 재설정',
-        subtitle: '재설정 안내를 받을 이메일을 입력하세요',
-        email: '이메일 주소',
-        submit: '재설정 링크 보내기',
-        back: '로그인으로 돌아가기',
-        success: '재설정 링크를 보냈습니다! 이메일을 확인하세요.'
-      }
-    },
     // 커뮤니티 서브페이지
     community_sub: {
       bug_bounty: {

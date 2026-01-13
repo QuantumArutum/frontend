@@ -2826,45 +2826,6 @@ export const fr = {
         author: 'Auteur'
       }
     },
-    // Pages d'Authentification
-    auth: {
-      login: {
-        title: 'Bon Retour',
-        subtitle: 'Connectez-vous à votre compte Quantaureum',
-        email: 'Adresse Email',
-        password: 'Mot de Passe',
-        remember: 'Se souvenir de moi',
-        forgot: 'Mot de passe oublié?',
-        submit: 'Se Connecter',
-        no_account: 'Pas de compte?',
-        register: 'S\'inscrire',
-        or: 'Ou continuer avec',
-        google: 'Continuer avec Google',
-        github: 'Continuer avec GitHub',
-        errors: { invalid: 'Email ou mot de passe invalide', required: 'Ce champ est requis' }
-      },
-      register: {
-        title: 'Créer un Compte',
-        subtitle: 'Rejoignez la révolution blockchain quantique-sécurisée',
-        username: 'Nom d\'utilisateur',
-        email: 'Adresse Email',
-        password: 'Mot de Passe',
-        confirm_password: 'Confirmer le Mot de Passe',
-        terms: 'J\'accepte les Conditions d\'Utilisation et la Politique de Confidentialité',
-        submit: 'Créer un Compte',
-        have_account: 'Déjà un compte?',
-        login: 'Se Connecter',
-        password_requirements: { title: 'Le mot de passe doit contenir:', length: 'Au moins 8 caractères', uppercase: 'Une lettre majuscule', lowercase: 'Une lettre minuscule', number: 'Un chiffre', special: 'Un caractère spécial' }
-      },
-      forgot_password: {
-        title: 'Réinitialiser le Mot de Passe',
-        subtitle: 'Entrez votre email pour recevoir les instructions de réinitialisation',
-        email: 'Adresse Email',
-        submit: 'Envoyer le Lien de Réinitialisation',
-        back: 'Retour à la Connexion',
-        success: 'Lien de réinitialisation envoyé! Vérifiez votre email.'
-      }
-    },
     // Sous-pages Communauté
     community_sub: {
       bug_bounty: {

@@ -3950,45 +3950,6 @@ export const zh = {
         }
       }
     },
-    // 认证页面
-    auth: {
-      login: {
-        title: '欢迎回来',
-        subtitle: '登录您的Quantaureum账户',
-        email: '邮箱地址',
-        password: '密码',
-        remember: '记住我',
-        forgot: '忘记密码？',
-        submit: '登录',
-        no_account: '还没有账户？',
-        register: '注册',
-        or: '或者使用',
-        google: '使用Google登录',
-        github: '使用GitHub登录',
-        errors: { invalid: '邮箱或密码错误', required: '此字段为必填项' }
-      },
-      register: {
-        title: '创建账户',
-        subtitle: '加入量子安全区块链革命',
-        username: '用户名',
-        email: '邮箱地址',
-        password: '密码',
-        confirm_password: '确认密码',
-        terms: '我同意服务条款和隐私政策',
-        submit: '创建账户',
-        have_account: '已有账户？',
-        login: '登录',
-        password_requirements: { title: '密码必须包含：', length: '至少8个字符', uppercase: '一个大写字母', lowercase: '一个小写字母', number: '一个数字', special: '一个特殊字符' }
-      },
-      forgot_password: {
-        title: '重置密码',
-        subtitle: '输入您的邮箱以接收重置说明',
-        email: '邮箱地址',
-        submit: '发送重置链接',
-        back: '返回登录',
-        success: '重置链接已发送！请检查您的邮箱。'
-      }
-    },
     // 社区子页面
     community_sub: {
       bug_bounty: {

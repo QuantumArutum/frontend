@@ -2841,45 +2841,6 @@ export const it = {
         author: 'Autore'
       }
     },
-    // Pagine Autenticazione
-    auth: {
-      login: {
-        title: 'Bentornato',
-        subtitle: 'Accedi al tuo account Quantaureum',
-        email: 'Indirizzo Email',
-        password: 'Password',
-        remember: 'Ricordami',
-        forgot: 'Password dimenticata?',
-        submit: 'Accedi',
-        no_account: 'Non hai un account?',
-        register: 'Registrati',
-        or: 'Oppure continua con',
-        google: 'Continua con Google',
-        github: 'Continua con GitHub',
-        errors: { invalid: 'Email o password non validi', required: 'Questo campo è obbligatorio' }
-      },
-      register: {
-        title: 'Crea Account',
-        subtitle: 'Unisciti alla rivoluzione blockchain quantum-sicura',
-        username: 'Nome Utente',
-        email: 'Indirizzo Email',
-        password: 'Password',
-        confirm_password: 'Conferma Password',
-        terms: 'Accetto i Termini di Servizio e l\'Informativa sulla Privacy',
-        submit: 'Crea Account',
-        have_account: 'Hai già un account?',
-        login: 'Accedi',
-        password_requirements: { title: 'La password deve contenere:', length: 'Almeno 8 caratteri', uppercase: 'Una lettera maiuscola', lowercase: 'Una lettera minuscola', number: 'Un numero', special: 'Un carattere speciale' }
-      },
-      forgot_password: {
-        title: 'Reimposta Password',
-        subtitle: 'Inserisci la tua email per ricevere le istruzioni di reimpostazione',
-        email: 'Indirizzo Email',
-        submit: 'Invia Link di Reimpostazione',
-        back: 'Torna al Login',
-        success: 'Link di reimpostazione inviato! Controlla la tua email.'
-      }
-    },
     // Sottopagine Community
     community_sub: {
       bug_bounty: {

@@ -2887,45 +2887,6 @@ export const ja = {
         author: '著者'
       }
     },
-    // 認証ページ
-    auth: {
-      login: {
-        title: 'おかえりなさい',
-        subtitle: 'Quantauneumアカウントにサインイン',
-        email: 'メールアドレス',
-        password: 'パスワード',
-        remember: 'ログイン状態を保持',
-        forgot: 'パスワードをお忘れですか？',
-        submit: 'サインイン',
-        no_account: 'アカウントをお持ちでないですか？',
-        register: '新規登録',
-        or: 'または',
-        google: 'Googleでログイン',
-        github: 'GitHubでログイン',
-        errors: { invalid: 'メールまたはパスワードが無効です', required: 'この項目は必須です' }
-      },
-      register: {
-        title: 'アカウント作成',
-        subtitle: '量子安全ブロックチェーン革命に参加',
-        username: 'ユーザー名',
-        email: 'メールアドレス',
-        password: 'パスワード',
-        confirm_password: 'パスワード確認',
-        terms: '利用規約とプライバシーポリシーに同意します',
-        submit: 'アカウント作成',
-        have_account: 'すでにアカウントをお持ちですか？',
-        login: 'サインイン',
-        password_requirements: { title: 'パスワードの要件：', length: '8文字以上', uppercase: '大文字1つ', lowercase: '小文字1つ', number: '数字1つ', special: '特殊文字1つ' }
-      },
-      forgot_password: {
-        title: 'パスワードリセット',
-        subtitle: 'リセット手順を受け取るメールアドレスを入力',
-        email: 'メールアドレス',
-        submit: 'リセットリンクを送信',
-        back: 'ログインに戻る',
-        success: 'リセットリンクを送信しました！メールをご確認ください。'
-      }
-    },
     // コミュニティサブページ
     community_sub: {
       bug_bounty: {

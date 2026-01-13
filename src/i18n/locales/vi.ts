@@ -2853,45 +2853,6 @@ export const vi = {
         author: 'Tác giả'
       }
     },
-    // Trang Xác thực
-    auth: {
-      login: {
-        title: 'Chào mừng Trở lại',
-        subtitle: 'Đăng nhập vào tài khoản Quantaureum của bạn',
-        email: 'Địa chỉ Email',
-        password: 'Mật khẩu',
-        remember: 'Ghi nhớ tôi',
-        forgot: 'Quên mật khẩu?',
-        submit: 'Đăng nhập',
-        no_account: 'Chưa có tài khoản?',
-        register: 'Đăng ký',
-        or: 'Hoặc tiếp tục với',
-        google: 'Tiếp tục với Google',
-        github: 'Tiếp tục với GitHub',
-        errors: { invalid: 'Email hoặc mật khẩu không hợp lệ', required: 'Trường này là bắt buộc' }
-      },
-      register: {
-        title: 'Tạo Tài khoản',
-        subtitle: 'Tham gia cuộc cách mạng blockchain an toàn lượng tử',
-        username: 'Tên người dùng',
-        email: 'Địa chỉ Email',
-        password: 'Mật khẩu',
-        confirm_password: 'Xác nhận Mật khẩu',
-        terms: 'Tôi đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật',
-        submit: 'Tạo Tài khoản',
-        have_account: 'Đã có tài khoản?',
-        login: 'Đăng nhập',
-        password_requirements: { title: 'Mật khẩu phải chứa:', length: 'Ít nhất 8 ký tự', uppercase: 'Một chữ hoa', lowercase: 'Một chữ thường', number: 'Một số', special: 'Một ký tự đặc biệt' }
-      },
-      forgot_password: {
-        title: 'Đặt lại Mật khẩu',
-        subtitle: 'Nhập email để nhận hướng dẫn đặt lại',
-        email: 'Địa chỉ Email',
-        submit: 'Gửi Liên kết Đặt lại',
-        back: 'Quay lại Đăng nhập',
-        success: 'Đã gửi liên kết đặt lại! Kiểm tra email của bạn.'
-      }
-    },
     // Trang con Cộng đồng
     community_sub: {
       bug_bounty: {

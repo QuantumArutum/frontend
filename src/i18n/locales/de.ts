@@ -2826,45 +2826,6 @@ export const de = {
         author: 'Autor'
       }
     },
-    // Authentifizierungsseiten
-    auth: {
-      login: {
-        title: 'Willkommen zurück',
-        subtitle: 'Melden Sie sich bei Ihrem Quantaureum-Konto an',
-        email: 'E-Mail-Adresse',
-        password: 'Passwort',
-        remember: 'Angemeldet bleiben',
-        forgot: 'Passwort vergessen?',
-        submit: 'Anmelden',
-        no_account: 'Noch kein Konto?',
-        register: 'Registrieren',
-        or: 'Oder fortfahren mit',
-        google: 'Mit Google fortfahren',
-        github: 'Mit GitHub fortfahren',
-        errors: { invalid: 'Ungültige E-Mail oder Passwort', required: 'Dieses Feld ist erforderlich' }
-      },
-      register: {
-        title: 'Konto erstellen',
-        subtitle: 'Treten Sie der quantensicheren Blockchain-Revolution bei',
-        username: 'Benutzername',
-        email: 'E-Mail-Adresse',
-        password: 'Passwort',
-        confirm_password: 'Passwort bestätigen',
-        terms: 'Ich stimme den Nutzungsbedingungen und der Datenschutzrichtlinie zu',
-        submit: 'Konto erstellen',
-        have_account: 'Bereits ein Konto?',
-        login: 'Anmelden',
-        password_requirements: { title: 'Passwort muss enthalten:', length: 'Mindestens 8 Zeichen', uppercase: 'Einen Großbuchstaben', lowercase: 'Einen Kleinbuchstaben', number: 'Eine Zahl', special: 'Ein Sonderzeichen' }
-      },
-      forgot_password: {
-        title: 'Passwort zurücksetzen',
-        subtitle: 'Geben Sie Ihre E-Mail ein, um Anweisungen zum Zurücksetzen zu erhalten',
-        email: 'E-Mail-Adresse',
-        submit: 'Reset-Link senden',
-        back: 'Zurück zur Anmeldung',
-        success: 'Reset-Link gesendet! Überprüfen Sie Ihre E-Mail.'
-      }
-    },
     // Community-Unterseiten
     community_sub: {
       bug_bounty: {

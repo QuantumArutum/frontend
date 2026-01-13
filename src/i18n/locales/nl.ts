@@ -2826,45 +2826,6 @@ export const nl = {
         author: 'Auteur'
       }
     },
-    // Authenticatiepagina's
-    auth: {
-      login: {
-        title: 'Welkom terug',
-        subtitle: 'Log in op uw Quantaureum account',
-        email: 'E-mailadres',
-        password: 'Wachtwoord',
-        remember: 'Onthoud mij',
-        forgot: 'Wachtwoord vergeten?',
-        submit: 'Inloggen',
-        no_account: 'Nog geen account?',
-        register: 'Registreren',
-        or: 'Of doorgaan met',
-        google: 'Doorgaan met Google',
-        github: 'Doorgaan met GitHub',
-        errors: { invalid: 'Ongeldige e-mail of wachtwoord', required: 'Dit veld is verplicht' }
-      },
-      register: {
-        title: 'Account aanmaken',
-        subtitle: 'Word lid van de kwantumveilige blockchain revolutie',
-        username: 'Gebruikersnaam',
-        email: 'E-mailadres',
-        password: 'Wachtwoord',
-        confirm_password: 'Wachtwoord bevestigen',
-        terms: 'Ik ga akkoord met de Servicevoorwaarden en Privacybeleid',
-        submit: 'Account aanmaken',
-        have_account: 'Al een account?',
-        login: 'Inloggen',
-        password_requirements: { title: 'Wachtwoord moet bevatten:', length: 'Minimaal 8 tekens', uppercase: 'Eén hoofdletter', lowercase: 'Eén kleine letter', number: 'Eén cijfer', special: 'Eén speciaal teken' }
-      },
-      forgot_password: {
-        title: 'Wachtwoord resetten',
-        subtitle: 'Voer uw e-mail in om reset instructies te ontvangen',
-        email: 'E-mailadres',
-        submit: 'Reset link versturen',
-        back: 'Terug naar inloggen',
-        success: 'Reset link verzonden! Controleer uw e-mail.'
-      }
-    },
     // Community subpagina's
     community_sub: {
       bug_bounty: {
