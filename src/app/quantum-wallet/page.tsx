@@ -40,7 +40,6 @@ const QuantumWalletPage = () => {
     
     try {
       const ethereum = (window as any).ethereum;
-      // Request connection - this will prompt MetaMask
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       
       if (accounts && accounts.length > 0) {
@@ -62,15 +61,11 @@ const QuantumWalletPage = () => {
   };
 
   useEffect(() => {
-    let isMounted = true;
-    
     const init = async () => {
       // Check if MetaMask is installed
       if (typeof window === 'undefined' || !(window as any).ethereum) {
-        if (isMounted) {
-          setError('MetaMask not installed');
-          setIsLoading(false);
-        }
+        setError('MetaMask not installed');
+        setIsLoading(false);
         return;
       }
 
@@ -80,8 +75,6 @@ const QuantumWalletPage = () => {
         // First check if already connected
         const accounts = await ethereum.request({ method: 'eth_accounts' });
         
-        if (!isMounted) return;
-        
         if (accounts && accounts.length > 0) {
           // Already connected, load data
           const address = accounts[0];
@@ -89,25 +82,37 @@ const QuantumWalletPage = () => {
           await loadWalletData(address);
           setIsLoading(false);
         } else {
-          // Not connected, auto-request connection
-          await connectWallet();
+          // Not connected - request connection directly here
+          setIsConnecting(true);
+          try {
+            const newAccounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            if (newAccounts && newAccounts.length > 0) {
+              const address = newAccounts[0];
+              setWalletAddress(address);
+              await loadWalletData(address);
+            }
+          } catch (err: any) {
+            if (err.code === 4001) {
+              setError('Connection rejected by user');
+            } else {
+              setError('Failed to connect wallet');
+            }
+          } finally {
+            setIsConnecting(false);
+            setIsLoading(false);
+          }
         }
       } catch (err) {
         console.error('Error:', err);
-        if (isMounted) {
-          setError('Failed to load wallet data');
-          setIsLoading(false);
-        }
+        setError('Failed to load wallet data');
+        setIsLoading(false);
       }
     };
 
     // Small delay to ensure page is ready
-    const timer = setTimeout(init, 300);
+    const timer = setTimeout(init, 500);
     
-    return () => {
-      isMounted = false;
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   const copyAddress = () => {
