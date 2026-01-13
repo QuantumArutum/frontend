@@ -1,0 +1,170 @@
+{
+  "users": [
+    {
+      "id": "07ad0434c2b5d1609a65f4efa45d5946",
+      "email": "test20251229205555@example.com",
+      "passwordHash": "edc526d8fe87d6fe82f9132f0cbc2f4b:1bd88e775ca96d0e3393afd8e5336f3cbd3afed20a38a9f40b2cb46db36652aac92621032c29101cfed6b64ef1153a975b096b568bf06a5293e3f709880465d0",
+      "createdAt": "2025-12-29T12:55:55.923Z",
+      "updatedAt": "2025-12-29T12:55:55.923Z",
+      "isVerified": false,
+      "isActive": true,
+      "role": "user",
+      "kycStatus": "none",
+      "totpEnabled": false
+    },
+    {
+      "id": "578c4d1a40ae2f51db34fc3fd616a4a7",
+      "email": "test20251229205607@example.com",
+      "passwordHash": "63163efd85cd2becaf082e3a32054e27:daa93732a22ab49c090cfa4642d11b50bf335970714ef83765836934d6b42fb0c6f3bbc8acca384686d2b14816781173c9d87642ae4f9659cef8ec7403aab54e",
+      "createdAt": "2025-12-29T12:56:08.024Z",
+      "updatedAt": "2025-12-29T12:56:08.024Z",
+      "isVerified": false,
+      "isActive": true,
+      "role": "user",
+      "kycStatus": "none",
+      "totpEnabled": false
+    },
+    {
+      "id": "6b2c9b33f1f1aa270b96d3add87a68af",
+      "email": "test20251229205618@example.com",
+      "passwordHash": "967cad59b2eb17c67d75e9d282f3fde8:0f312708406e53ad3aac78010bbeda82d3da4e57433ae02f6a4ee01226b6c61e60a0dbb5963e4bb1a768ce8af7cccf4ef1d259489dd4617c50d08b85df97b2bd",
+      "createdAt": "2025-12-29T12:56:18.803Z",
+      "updatedAt": "2025-12-29T12:56:18.803Z",
+      "isVerified": false,
+      "isActive": true,
+      "role": "user",
+      "kycStatus": "none",
+      "totpEnabled": false
+    },
+    {
+      "id": "29936b8cbd35422d0f2dca8dee54c23d",
+      "email": "test20251229205649@example.com",
+      "passwordHash": "4fc60a7b76e21438d13f877e41babb25:2bfda2071efd3acba53bfb152cac098a8cafc24f4151c9bada81c6261eb8157abfecb853c785727fc07f4e6cd081702c51b88c2df3ef8ef9b18a2c6694e9231f",
+      "createdAt": "2025-12-29T12:56:50.067Z",
+      "updatedAt": "2025-12-29T12:56:50.488Z",
+      "isVerified": false,
+      "isActive": true,
+      "role": "user",
+      "kycStatus": "none",
+      "totpEnabled": false,
+      "totpSecret": "OHIXK475VWWBB7BYTCNYLLEIXTHAJTBE"
+    },
+    {
+      "id": "215761bfff8b78a2abb42faa36746e67",
+      "email": "test20251229205756@example.com",
+      "passwordHash": "988cc3766163a133267e879a2ec9c18c:35e7540f0dd51d0839774235ef10cf7de317ef127e018d4028d61e9d69764ee638f94ff9fea91a800995bd395a3bd046b7b5c93321a8346e296492a44ad2ee96",
+      "createdAt": "2025-12-29T12:57:56.710Z",
+      "updatedAt": "2025-12-29T12:57:57.066Z",
+      "isVerified": false,
+      "isActive": true,
+      "role": "user",
+      "kycStatus": "none",
+      "totpEnabled": false,
+      "totpSecret": "COIIQH2X5ZUXGTUEP3KK567AJLWYNNPO"
+    }
+  ],
+  "purchases": [
+    {
+      "buyerAddress": "0x742d35Cc6634C0532925a3b844Bc9e7595f5bE21",
+      "amountUSD": 500,
+      "tokensBase": 16666.666666666668,
+      "tokensBonus": 2500,
+      "tokensTotal": 19166.666666666668,
+      "txHash": "",
+      "paymentMethod": "ETH",
+      "paymentStatus": "pending",
+      "id": "70556454886454840cd0bed2d3d7eb03",
+      "status": "pending",
+      "createdAt": "2025-12-29T12:53:05.710Z"
+    },
+    {
+      "buyerAddress": "0x742d35Cc6634C0532925a3b844Bc9e7595f5bE21",
+      "amountUSD": 100,
+      "tokensBase": 3333.3333333333335,
+      "tokensBonus": 500,
+      "tokensTotal": 3833.3333333333335,
+      "txHash": "",
+      "paymentMethod": "ETH",
+      "paymentStatus": "pending",
+      "id": "5226f8b95556f92be4c8f82e91418c80",
+      "status": "pending",
+      "createdAt": "2025-12-29T12:56:57.954Z"
+    }
+  ],
+  "kycDocuments": [],
+  "paymentVerifications": [
+    {
+      "purchaseId": "70556454886454840cd0bed2d3d7eb03",
+      "paymentMethod": "ETH",
+      "paymentAddress": "0x742d35Cc6634C0532925a3b844Bc9e7595f5bE21",
+      "expectedAmount": 0.25,
+      "expiresAt": "2025-12-29T13:23:16.460Z",
+      "id": "9b4a3f135252a6ffc1b90491f0acc4e9",
+      "status": "pending",
+      "createdAt": "2025-12-29T12:53:16.460Z"
+    },
+    {
+      "purchaseId": "5226f8b95556f92be4c8f82e91418c80",
+      "paymentMethod": "ETH",
+      "paymentAddress": "0x742d35Cc6634C0532925a3b844Bc9e7595f5bE21",
+      "expectedAmount": 0.05,
+      "expiresAt": "2025-12-29T13:27:08.627Z",
+      "id": "cf6093081a01b631ba4f58cb28a8d732",
+      "status": "pending",
+      "createdAt": "2025-12-29T12:57:08.628Z"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "181a825c42d484415f68e2ea24cddac9",
+      "userId": "07ad0434c2b5d1609a65f4efa45d5946",
+      "token": "46a3f9e792345329d3f712bfcc7b0b28dc79e7455d1b8a6da9fed0a1da6c90af",
+      "ip": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; zh-CN) WindowsPowerShell/5.1.26100.7462",
+      "createdAt": "2025-12-29T12:55:55.925Z",
+      "expiresAt": "2025-12-30T12:55:55.925Z",
+      "isValid": true
+    },
+    {
+      "id": "9945305767d9fe234775d95a63cfb297",
+      "userId": "578c4d1a40ae2f51db34fc3fd616a4a7",
+      "token": "5f6b589830d93313401e40493f61da930dbe2b7bf17e4f9cd018a8941811a076",
+      "ip": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; zh-CN) WindowsPowerShell/5.1.26100.7462",
+      "createdAt": "2025-12-29T12:56:08.027Z",
+      "expiresAt": "2025-12-30T12:56:08.027Z",
+      "isValid": true
+    },
+    {
+      "id": "3ce105ae7bd7309892b1fc1cbd9c1554",
+      "userId": "6b2c9b33f1f1aa270b96d3add87a68af",
+      "token": "4ec1b89a9689beb969ff657264f89cbd6f4dfbc4229861b6d7dcc4b4ff3b7dcd",
+      "ip": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; zh-CN) WindowsPowerShell/5.1.26100.7462",
+      "createdAt": "2025-12-29T12:56:18.805Z",
+      "expiresAt": "2025-12-30T12:56:18.805Z",
+      "isValid": true
+    },
+    {
+      "id": "39398c5d33d512695b7f716ecb2bd543",
+      "userId": "29936b8cbd35422d0f2dca8dee54c23d",
+      "token": "56cc5bc4817b875759e1ac3706b7dbd41e96097cd98be682349a32055a955f9b",
+      "ip": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; zh-CN) WindowsPowerShell/5.1.26100.7462",
+      "createdAt": "2025-12-29T12:56:50.069Z",
+      "expiresAt": "2025-12-30T12:56:50.069Z",
+      "isValid": true
+    },
+    {
+      "id": "ff4efa03467dd06b1be11c5c1d200840",
+      "userId": "215761bfff8b78a2abb42faa36746e67",
+      "token": "8ecddd52addf3c89fc0df808a3bb19231c2ace8a7a624d23ad0f2ee6387d23a9",
+      "ip": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; zh-CN) WindowsPowerShell/5.1.26100.7462",
+      "createdAt": "2025-12-29T12:57:56.712Z",
+      "expiresAt": "2025-12-30T12:57:56.712Z",
+      "isValid": true
+    }
+  ],
+  "backupCodes": []
+}

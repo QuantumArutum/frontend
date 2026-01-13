@@ -63,27 +63,27 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // 过滤状态
     let filteredOrders = orders;
     if (status) {
-      filteredOrders = orders.filter(o => o.status === status);
+      filteredOrders = orders.filter((o: any) => o.status === status);
     }
 
     // 分页
     const total = filteredOrders.length;
     const startIndex = (page - 1) * limit;
     const paginatedOrders = filteredOrders
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       .slice(startIndex, startIndex + limit);
 
     // 计算统计
     const stats = {
       totalOrders: orders.length,
-      completedOrders: orders.filter(o => o.status === 'completed').length,
-      pendingOrders: orders.filter(o => o.status === 'pending').length,
-      totalSpent: orders.filter(o => o.status === 'completed').reduce((sum, o) => sum + o.amountUSD, 0),
-      totalTokens: orders.filter(o => o.status === 'completed').reduce((sum, o) => sum + o.tokensTotal, 0),
+      completedOrders: orders.filter((o: any) => o.status === 'completed').length,
+      pendingOrders: orders.filter((o: any) => o.status === 'pending').length,
+      totalSpent: orders.filter((o: any) => o.status === 'completed').reduce((sum: number, o: any) => sum + o.amountUSD, 0),
+      totalTokens: orders.filter((o: any) => o.status === 'completed').reduce((sum: number, o: any) => sum + o.tokensTotal, 0),
     };
 
     return successResponse({
-      orders: paginatedOrders.map(o => ({
+      orders: paginatedOrders.map((o: any) => ({
         id: o.id,
         amountUSD: o.amountUSD,
         tokensTotal: o.tokensTotal,

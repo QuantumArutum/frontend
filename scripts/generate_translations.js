@@ -1,0 +1,973 @@
+const fs = require('fs');
+const path = require('path');
+
+const en = {
+  translation: {
+    nav: {
+      home: 'Home',
+      features: 'Features',
+      specs: 'Specifications',
+      demo: 'Demo',
+      ecosystem: 'Ecosystem',
+      team: 'Team',
+      explorer: 'Explorer',
+      community: 'Community',
+      tokenSale: 'Buy QAU',
+      exchange: 'Exchange',
+      docs: 'Documentation',
+      experience: 'Get Started'
+    },
+    hero: {
+      badge: '🚀 Next-Gen Quantum-Safe Blockchain',
+      title: 'Quantaureum',
+      subtitle: 'Quantum-Safe Blockchain Platform',
+      description: 'Next-generation blockchain infrastructure based on post-quantum cryptography, providing ',
+      highlight: 'enterprise-grade security and performance',
+      scroll_down: 'Scroll Down',
+      stats: {
+        realtime: 'Real-time Performance',
+        tps: { value: '100,000+', label: 'Transactions Per Second', unit: ' TPS' },
+        score: { value: '99.9', label: 'Security Score', unit: '%' },
+        coverage: { value: '100', label: 'Quantum-Safe Coverage', unit: '%' },
+        languages: { value: '10+', label: 'Supported Languages', unit: '' },
+        vulnerabilities: { value: '0', label: 'Known Vulnerabilities', unit: '' },
+        availability: { value: '99.99', label: 'System Availability', unit: '%' }
+      },
+      cta: {
+        experience: 'Get Started',
+        docs: 'View Docs'
+      },
+      trust: {
+        nist: 'NIST Post-Quantum Standard',
+        audit: 'Third-Party Security Audit',
+        enterprise: 'Enterprise Deployment'
+      },
+      modal: {
+        title: 'Connect Quantaureum Network',
+        description: 'Add Quantaureum Network to your MetaMask Wallet',
+        network: 'Network',
+        chainId: 'Chain ID',
+        symbol: 'Symbol',
+        rpc: 'RPC',
+        connected: 'Connected',
+        connect_failed: 'Connection failed, please try again',
+        connecting: 'Connecting...',
+        added: 'Network Added',
+        add_to_metamask: 'Add to MetaMask',
+        install_metamask: 'Install MetaMask',
+        enter_wallet: 'Enter Quantum Wallet',
+        download_metamask: 'No MetaMask? Click here to download →'
+      }
+    },
+    concept: {
+      title: 'What is Quantum Blockchain?',
+      description: 'Combining quantum computing and blockchain technology to build future-proof secure infrastructure',
+      items: {
+        crypto: 'Post-Quantum Crypto',
+        hardware: 'Hardware Wallet',
+        mobile: 'Mobile App',
+        crosschain: 'Cross-Chain Bridge',
+        performance: 'High Performance',
+        contracts: 'Smart Contracts'
+      }
+    },
+    benefits: {
+      title: 'Core Advantages',
+      description: 'Why choose Quantaureum?',
+      items: {
+        security: { title: 'Quantum Security', desc: 'NIST-standard post-quantum cryptographic algorithms to resist quantum attacks' },
+        performance: { title: 'Ultimate Performance', desc: '100,000+ TPS, sub-second confirmation, meeting enterprise needs' },
+        evolution: { title: 'AI Evolution', desc: 'Built-in AI engine continuously optimizing network performance and security' },
+        global: { title: 'Global Coverage', desc: 'Distributed node network, 10+ languages, serving global users' },
+        economic: { title: 'Economic Model', desc: 'Innovative token economics incentivizing ecosystem participants' },
+        developer: { title: 'Developer Friendly', desc: 'Complete SDK and API for rapid dApp development' }
+      }
+    },
+    roadmap: {
+      title: 'Development Roadmap',
+      description: 'Our development plan and milestones',
+      milestones: {
+        q4_2023: { title: 'Infrastructure', desc: 'Core protocol development, testnet launch' },
+        q2_2024: { title: 'Ecosystem Building', desc: 'Mainnet launch, wallet and explorer release' },
+        q4_2024: { title: 'Application Expansion', desc: 'DeFi ecosystem, cross-chain bridge' },
+        q2_2025: { title: 'Global Expansion', desc: 'Enterprise partnerships, global node deployment' }
+      }
+    },
+    team: {
+      title: 'Core Team',
+      description: 'Composed of top cryptographers and blockchain experts',
+      members: {
+        ceo: { name: 'Zhang Ming', role: 'CEO & Founder' },
+        cto: { name: 'Li Hua', role: 'CTO & Chief Architect' },
+        scientist: { name: 'Dr. Wang', role: 'Chief Cryptographer' }
+      }
+    },
+    features: {
+      title: 'Product Features',
+      description: 'Comprehensive blockchain solutions',
+      badges: {
+        tests: '✓ All Tests Passed',
+        vulnerabilities: '✓ 0 Known Vulnerabilities',
+        enterprise: '✓ Enterprise Deployment'
+      },
+      items: {
+        wallet: { 
+          title: 'Quantum Wallet', 
+          desc: 'Secure and convenient digital asset management',
+          stats: { hardware: 'Hardware Support', biometric: 'Biometric Auth', mobile: 'Mobile App' },
+          values: { hardware: 'Full Support', biometric: 'Face/Fingerprint', mobile: 'iOS/Android' }
+        },
+        explorer: { title: 'Block Explorer', desc: 'Real-time on-chain data viewing' },
+        defi: { title: 'DeFi Platform', desc: 'Decentralized financial services' },
+        bridge: { title: 'Cross-Chain Bridge', desc: 'Multi-chain asset interoperability' },
+        blockchain: {
+          title: 'Quantum Blockchain Core',
+          desc: 'High-performance blockchain core based on post-quantum cryptography with enterprise-grade security',
+          stats: { speed: 'Processing Speed', security: 'Security Level', coverage: 'Quantum Coverage' },
+          values: { speed: '100,000 TPS', security: 'NIST L3', coverage: '100%' }
+        },
+        contracts: {
+          title: 'Smart Contract System',
+          desc: 'EVM-compatible smart contract platform supporting Solidity and proprietary QSL language',
+          stats: { vm: 'Virtual Machine', compiler: 'Compiler', speed: 'Execution Speed' },
+          values: { vm: 'QVM 2.0', compiler: 'Multi-lang', speed: '3x Faster' }
+        },
+        crosschain: {
+          title: 'Cross-Chain Interoperability',
+          desc: 'Secure cross-chain bridging protocol supporting major public chain asset interoperability',
+          stats: { chains: 'Supported Chains', bridge: 'Bridge Protocol', verification: 'Verification' },
+          values: { chains: '10+', bridge: 'Quantum-Safe', verification: 'Multi-Sig' }
+        },
+        i18n: {
+          title: 'Multi-Language Support',
+          desc: 'Complete internationalization support covering major global languages and regions',
+          stats: { languages: 'Languages', coverage: 'Translation Coverage', rtl: 'RTL Support' },
+          values: { languages: '10+', coverage: '100%', rtl: 'Full Support' }
+        },
+        enterprise: {
+          title: 'Enterprise Deployment',
+          desc: 'High-availability architecture design supporting private deployment and hybrid cloud solutions',
+          stats: { availability: 'Availability', balancer: 'Load Balancing', deployment: 'Deployment' },
+          values: { availability: '99.99%', balancer: 'Smart Allocation', deployment: 'Multi-Cloud' }
+        }
+      }
+    },
+    wallet: {
+      title: 'Quantum Wallet',
+      description: 'Secure digital wallet based on quantum encryption technology',
+      current_network: 'Current Network',
+      networks: {
+        quantum_mainnet: 'Quantum Mainnet',
+        quantum_testnet: 'Quantum Testnet',
+        ethereum_mainnet: 'Ethereum Mainnet',
+        polygon_mainnet: 'Polygon Mainnet'
+      },
+      total_balance: 'Total Balance',
+      hide_balance: 'Hide Balance',
+      show_balance: 'Show Balance',
+      send: 'Send',
+      receive: 'Receive',
+      swap: 'Swap',
+      assets: 'Assets',
+      nfts: 'NFT Collection',
+      history: 'Transaction History',
+      settings: 'Settings'
+    },
+    trading: {
+      title: 'Quantum Trading',
+      coming_soon: 'Trading application is under development...'
+    },
+    defi: {
+      swap: {
+        enter_amount: 'Enter swap amount',
+        success: 'Successfully swapped {{fromAmount}} {{fromToken}} for {{toAmount}} {{toToken}}',
+        failed: 'Swap failed, please try again'
+      }
+    },
+    specs: {
+      title: 'Technical Specifications',
+      description: 'Deep dive into Quantaureum technical architecture and performance metrics',
+      tabs: {
+        'quantum-crypto': { title: 'Quantum Crypto', icon: '🔐' },
+        'performance': { title: 'Performance', icon: '⚡' },
+        'security': { title: 'Security Audit', icon: '🛡️' },
+        'compatibility': { title: 'Compatibility', icon: '🔗' }
+      },
+      data: {
+        crypto: {
+          dilithium: 'NIST standard digital signature algorithm',
+          kyber: 'NIST standard key encapsulation mechanism',
+          sphincs: 'NIST standard hash-based signature',
+          sphincs_value: 'Stateless',
+          prng_label: 'Random Generation',
+          prng_value: 'QRNG',
+          prng: 'Quantum random number generator',
+          key_length_label: 'Key Length',
+          key_length_value: '2592 bytes',
+          key_length: 'Dilithium public key length',
+          signature_length_label: 'Signature Length',
+          signature_length_value: '2420 bytes',
+          signature_length: 'Dilithium signature length'
+        },
+        performance: {
+          tps_label: 'Transaction Throughput',
+          tps: 'Transactions per second',
+          block_time_label: 'Block Time',
+          block_time_value: '3 seconds',
+          block_time: 'Average block interval',
+          key_gen_label: 'Key Generation',
+          key_gen_value: '0.5ms',
+          key_gen: 'Key pair generation time',
+          verify_label: 'Signature Verification',
+          verify_value: '0.3ms',
+          verify: 'Single signature verification time',
+          latency_label: 'Network Latency',
+          latency: 'Average network latency',
+          memory_label: 'Memory Usage',
+          memory: 'Node memory usage'
+        },
+        security: {
+          vulnerabilities_label: 'Known Vulnerabilities',
+          vulnerabilities_value: '0',
+          vulnerabilities: 'Comprehensive security audit',
+          coverage_label: 'Code Coverage',
+          coverage_value: '95%',
+          coverage: 'Test code coverage',
+          penetration_label: 'Penetration Test',
+          penetration_value: 'Passed',
+          penetration: 'Third-party penetration test',
+          quantum_resistance_label: 'Quantum Resistance',
+          quantum_resistance_value: 'NIST Level 3',
+          quantum_resistance: 'Post-quantum security level',
+          side_channel_label: 'Side Channel Protection',
+          side_channel_value: 'Complete',
+          side_channel: 'Timing attack protection',
+          formal_verification_label: 'Formal Verification',
+          formal_verification_value: 'Completed',
+          formal_verification: 'Core algorithm formal verification'
+        },
+        compatibility: {
+          evm_label: 'EVM Compatible',
+          evm_value: 'Fully Compatible',
+          evm: 'Ethereum Virtual Machine compatible',
+          protocols_label: 'Protocol Support',
+          protocols_value: 'JSON-RPC',
+          protocols: 'Standard RPC protocol',
+          hardware_label: 'Hardware Wallet',
+          hardware_value: 'Ledger/Trezor',
+          hardware: 'Major hardware wallet support',
+          api_label: 'API Version',
+          api_value: 'v2.0',
+          api: 'REST and WebSocket API',
+          languages_label: 'Dev Languages',
+          languages_value: '10+',
+          languages: 'SDK supported languages',
+          os_label: 'Operating System',
+          os_value: 'All Platforms',
+          os: 'Windows/Linux/macOS'
+        }
+      },
+      status: {
+        network_label: 'Network Status',
+        network_value: 'Operational',
+        network_desc: 'All nodes online',
+        nodes_label: 'Active Nodes',
+        nodes_value: '156',
+        nodes_desc: 'Globally distributed',
+        tps_label: 'Current TPS',
+        tps_value: '1,250',
+        tps_desc: 'Real-time processing',
+        quantum_label: 'Quantum Safe',
+        quantum_value: '100%',
+        quantum_desc: 'Full coverage'
+      }
+    },
+    demo: {
+      title: 'Interactive Demo',
+      description: 'Experience Quantaureum core features and technical capabilities',
+      demos: {
+        'smart-contract': { title: 'Smart Contract', icon: '📜', description: 'Deploy and execute quantum-safe smart contracts' },
+        'hardware-wallet': { title: 'Hardware Wallet', icon: '💳', description: 'Connect hardware wallet for secure signing' },
+        'cross-chain': { title: 'Cross-Chain', icon: '🌐', description: 'Cross-chain asset transfer demo' },
+        'mobile-app': { title: 'Mobile App', icon: '📱', description: 'Mobile wallet functionality demo' }
+      },
+      steps: {
+        write_contract: 'Write Contract',
+        quantum_compile: 'Quantum Compile',
+        deploy_chain: 'Deploy to Chain',
+        execute_call: 'Execute Call',
+        device_detect: 'Device Detection',
+        key_generation: 'Key Generation',
+        biometric_auth: 'Biometric Auth',
+        quantum_sign: 'Quantum Sign',
+        select_source: 'Select Source Chain',
+        create_proof: 'Create Proof',
+        lock_assets: 'Lock Assets',
+        release_target: 'Release on Target',
+        app_launch: 'Launch App',
+        biometric_login: 'Biometric Login',
+        view_assets: 'View Assets',
+        send_transaction: 'Send Transaction'
+      },
+      code: {
+        compiling: '// Compiling contract...\n// Applying quantum-safe optimizations...\n✓ Compilation successful',
+        deploying: '// Deploying to quantum chain...\n// Waiting for confirmation...\n✓ Deployment successful\nContract: 0x1234...5678',
+        executing: '// Executing contract call...\n// Verifying quantum signature...\n✓ Transaction successful',
+        scanning: '// Scanning hardware devices...\n✓ Detected Ledger Nano X',
+        generating: '// Generating quantum-safe key pair...\n// Using CRYSTALS-Dilithium...\n✓ Key generation complete',
+        authenticating: '// Please verify fingerprint on device...\n✓ Authentication successful',
+        signing: '// Using quantum signature algorithm...\n✓ Signing complete',
+        selecting: '// Source chain: Ethereum\n// Target chain: Quantaureum',
+        proving: '// Generating cross-chain proof...\n// Verifying state root...\n✓ Proof generation complete',
+        locking: '// Locking source chain assets...\n// Waiting for confirmation...\n✓ Assets locked',
+        releasing: '// Releasing assets on target chain...\n✓ Cross-chain transfer complete',
+        launching: '// Launching quantum wallet...\n✓ App launched',
+        biometric: '// Please verify Face ID/fingerprint...\n✓ Login successful',
+        loading: '// Loading asset list...\n✓ Assets loaded',
+        sending: '// Sending transaction...\n// Quantum signature verification...\n✓ Transaction sent'
+      },
+      buttons: {
+        run: 'Run Demo',
+        running: 'Running...',
+        reset: 'Reset'
+      },
+      execution_steps: 'Execution Steps',
+      output_title: 'Output/Code',
+      performance: {
+        title: 'Performance Metrics',
+        execution_speed: 'Execution Speed',
+        execution_speed_value: '< 100ms',
+        memory_usage: 'Memory Usage',
+        memory_usage_value: '< 50MB',
+        success_rate: 'Success Rate',
+        success_rate_value: '99.9%'
+      },
+      security: {
+        title: 'Security Metrics',
+        quantum_level: 'Quantum Level',
+        quantum_level_value: 'NIST Level 3',
+        encryption_strength: 'Encryption Strength',
+        encryption_strength_value: '256-bit',
+        verification_status: 'Verification Status',
+        verification_status_value: 'Verified'
+      },
+      compatibility: {
+        title: 'Compatibility',
+        supported_devices: 'Supported Devices',
+        supported_devices_value: 'All Platforms',
+        platform_support: 'Platform Support',
+        platform_support_value: 'Web/iOS/Android',
+        api_version: 'API Version',
+        api_version_value: 'v2.0'
+      }
+    },
+    ecosystem: {
+      title: 'Application Ecosystem',
+      description: 'Explore the rich decentralized application ecosystem of Quantaureum',
+      status: {
+        online: 'Online',
+        offline: 'Offline',
+        coming_soon: 'Coming Soon'
+      },
+      apps: {
+        wallet: { title: 'Quantum Wallet', description: 'Secure digital asset management' },
+        exchange: { title: 'Quantum Exchange', description: 'Decentralized trading platform' },
+        defi: { title: 'DeFi Platform', description: 'Decentralized financial services' },
+        sto: { title: 'STO Platform', description: 'Security token offering' },
+        crowdfunding: { title: 'Crowdfunding', description: 'Decentralized crowdfunding' },
+        lottery: { title: 'Quantum Lottery', description: 'Fair and transparent lottery' },
+        movies: { title: 'Movie Tickets', description: 'Blockchain movie ticketing' },
+        concerts: { title: 'Concert Tickets', description: 'Concert ticket sales' },
+        flights: { title: 'Flight Booking', description: 'Blockchain flight service' },
+        hotels: { title: 'Hotel Booking', description: 'Decentralized hotel booking' },
+        utilities: { title: 'Utilities', description: 'Utility bill payments' },
+        forum: { title: 'Community Forum', description: 'Decentralized community' }
+      },
+      ui: {
+        active_users: 'Active Users',
+        core_features: 'Core Features',
+        view_details: 'View Details',
+        use_now: 'Use Now'
+      },
+      modal: {
+        introduction: 'Introduction',
+        core_features: 'Core Features',
+        tech_specs: 'Technical Specs',
+        usage_stats: 'Usage Statistics',
+        close: 'Close',
+        use_now: 'Use Now'
+      },
+      details: {
+        wallet: {
+          introduction: 'Quantum Wallet is a secure digital asset management tool based on post-quantum cryptography.',
+          features: {
+            key_management: 'Quantum-safe key management',
+            multi_currency: 'Multi-currency support',
+            hardware_integration: 'Hardware wallet integration',
+            biometric_auth: 'Biometric authentication'
+          },
+          techSpecs: {
+            dilithium: 'CRYSTALS-Dilithium signatures',
+            nist_level: 'NIST Level 3 security',
+            hardware_support: 'Ledger/Trezor support',
+            platforms: 'iOS/Android/Web'
+          }
+        },
+        exchange: {
+          introduction: 'Quantum Exchange is a decentralized digital asset trading platform with high performance.',
+          features: {
+            quantum_trading: 'Quantum-safe trading',
+            liquidity_mining: 'Liquidity mining',
+            cross_chain: 'Cross-chain trading',
+            smart_routing: 'Smart routing'
+          },
+          techSpecs: {
+            tps: '1000+ TPS',
+            order_matching: '< 10ms matching',
+            trading_pairs: '20+ trading pairs',
+            fees: '0.1% fees'
+          }
+        },
+        defi: {
+          introduction: 'DeFi platform provides decentralized lending, liquidity mining and other financial services.',
+          features: {
+            lending: 'Decentralized lending',
+            liquidity_mining: 'Liquidity mining',
+            yield_farming: 'Yield farming',
+            insurance: 'DeFi insurance'
+          },
+          techSpecs: {
+            automation: 'Smart contract automation',
+            oracle: 'Decentralized oracle',
+            cross_chain: 'Cross-chain asset support',
+            rate_model: 'Dynamic rate model'
+          }
+        },
+        default: {
+          introduction: 'This application is under development, stay tuned.',
+          features: 'More features coming soon',
+          techSpecs: 'Technical specs TBD',
+          status: 'In Development'
+        }
+      }
+    },
+    footer: {
+      sections: {
+        product: {
+          title: 'Product',
+          links: {
+            core: 'Blockchain Core',
+            wallet: 'Quantum Wallet',
+            contracts: 'Smart Contracts',
+            crosschain: 'Cross-Chain Bridge',
+            docs: 'API Documentation'
+          }
+        },
+        developer: {
+          title: 'Developers',
+          links: {
+            docs: 'Documentation',
+            sdk: 'SDK',
+            examples: 'Code Examples',
+            community: 'Developer Community',
+            github: 'GitHub'
+          }
+        },
+        enterprise: {
+          title: 'Enterprise',
+          links: {
+            solutions: 'Solutions',
+            support: 'Technical Support',
+            partners: 'Partners',
+            audit: 'Security Audit',
+            contact: 'Contact Us'
+          }
+        },
+        community: {
+          title: 'Community',
+          links: {
+            discord: 'Discord',
+            telegram: 'Telegram',
+            twitter: 'Twitter',
+            medium: 'Medium',
+            reddit: 'Reddit'
+          }
+        }
+      },
+      stats: {
+        title: 'Join the Global Quantum Blockchain Network',
+        description: 'Build a quantum-safe future with developers and enterprises worldwide',
+        nodes: 'Global Nodes',
+        transactions: 'Total Transactions',
+        developers: 'Developers',
+        enterprises: 'Enterprise Users'
+      },
+      brand: {
+        description: 'Quantaureum is a next-generation quantum-safe blockchain platform using post-quantum cryptography to provide secure and efficient blockchain infrastructure for enterprises and developers.'
+      },
+      newsletter: {
+        title: 'Subscribe to Our Newsletter',
+        description: 'Get the latest product updates, technical articles, and industry news',
+        placeholder: 'Enter your email',
+        subscribe: 'Subscribe'
+      },
+      legal: {
+        copyright: '© 2024 Quantaureum. All rights reserved.',
+        privacy: 'Privacy Policy',
+        terms: 'Terms of Service',
+        cookies: 'Cookie Policy',
+        security: 'Security Statement'
+      }
+    },
+    dashboard: {
+      title: 'User Dashboard',
+      working_on_it: 'User Dashboard is under development...',
+      login_success: 'Login Successful! Welcome back',
+      login_failed: 'Login Failed, please try again',
+      wallet_balance: 'Wallet Balance',
+      recent_transactions: 'Recent Transactions',
+      send_qau: 'Send QAU',
+      receive_qau: 'Receive QAU',
+      app_usage: 'App Usage',
+      market: 'Marketplace',
+      defi: 'DeFi Protocol',
+      active: 'Active',
+      staking: 'Staking'
+    },
+    common: {
+      loading: 'Loading...'
+    },
+    developers: {
+      title: 'Developer Resources',
+      subtitle: 'Build next-generation applications with Quantaureum quantum-safe blockchain technology. Get complete development tools, documentation and support.',
+      resources: {
+        docs: {
+          title: 'Technical Documentation',
+          description: 'Complete API documentation, SDK guides and tutorials'
+        },
+        api: {
+          title: 'API Reference',
+          description: 'RESTful API documentation and code examples'
+        },
+        sdk: {
+          title: 'SDK Download',
+          description: 'Multi-language SDK packages and dev tools'
+        },
+        explore: 'Explore'
+      },
+      quickStart: {
+        title: 'Quick Start',
+        step1: {
+          title: 'Get API Key',
+          description: 'Register a developer account and get your API access key'
+        },
+        step2: {
+          title: 'Install SDK',
+          description: 'Choose your preferred programming language and install the SDK'
+        },
+        step3: {
+          title: 'Start Developing',
+          description: 'View code examples and start building your quantum-safe app'
+        }
+      },
+      codeExample: {
+        title: 'Code Example',
+        comment: 'Create quantum-safe wallet'
+      },
+      community: {
+        title: 'Developer Community',
+        description: 'Join our developer community to exchange experiences and get technical support.',
+        forum: 'Developer Forum',
+        github: 'GitHub Repository',
+        discord: 'Discord Channel'
+      },
+      support: {
+        title: 'Technical Support',
+        description: 'Having issues? Our technical team is ready to support you.',
+        docs: 'Help Docs',
+        faq: 'FAQ',
+        contact: 'Contact Support'
+      }
+    }
+  }
+};
+
+const languages = ['fr', 'de', 'es', 'ja', 'ko', 'ru', 'ar', 'pt', 'it', 'nl'];
+
+// Simple dictionary for common terms to make it look a bit more "translated"
+const dictionary = {
+  fr: {
+    'Home': 'Accueil',
+    'Features': 'Fonctionnalités',
+    'Team': 'Équipe',
+    'Documentation': 'Documentation',
+    'Get Started': 'Commencer',
+    'Search': 'Rechercher',
+    'Login': 'Connexion',
+    'User Dashboard': 'Tableau de bord utilisateur',
+    'Wallet Balance': 'Solde du portefeuille',
+    'Recent Transactions': 'Transactions récentes',
+    'Send': 'Envoyer',
+    'Receive': 'Recevoir',
+    'Loading...': 'Chargement...',
+    'Coming Soon': 'Bientôt disponible',
+    'Developer Resources': 'Ressources pour développeurs',
+    'Technical Documentation': 'Documentation technique',
+    'API Reference': 'Référence API',
+    'SDK Download': 'Télécharger le SDK',
+    'Explore': 'Explorer',
+    'Quick Start': 'Démarrage rapide',
+    'Code Example': 'Exemple de code',
+    'Developer Community': 'Communauté de développeurs',
+    'Technical Support': 'Support technique',
+    'Connect Quantaureum Network': 'Connecter le réseau Quantaureum',
+    'Network': 'Réseau',
+    'Symbol': 'Symbole',
+    'Connected': 'Connecté',
+    'Connecting...': 'Connexion...',
+    'Network Added': 'Réseau ajouté',
+    'Add to MetaMask': 'Ajouter à MetaMask',
+    'Install MetaMask': 'Installer MetaMask',
+    'Enter Quantum Wallet': 'Entrer dans le portefeuille quantique'
+  },
+  de: {
+    'Home': 'Startseite',
+    'Features': 'Funktionen',
+    'Team': 'Team',
+    'Documentation': 'Dokumentation',
+    'Get Started': 'Loslegen',
+    'Search': 'Suchen',
+    'Login': 'Anmelden',
+    'User Dashboard': 'Benutzer-Dashboard',
+    'Wallet Balance': 'Wallet-Guthaben',
+    'Recent Transactions': 'Letzte Transaktionen',
+    'Send': 'Senden',
+    'Receive': 'Empfangen',
+    'Loading...': 'Laden...',
+    'Coming Soon': 'Demnächst',
+    'Developer Resources': 'Entwicklerressourcen',
+    'Technical Documentation': 'Technische Dokumentation',
+    'API Reference': 'API-Referenz',
+    'SDK Download': 'SDK herunterladen',
+    'Explore': 'Erkunden',
+    'Quick Start': 'Schnellstart',
+    'Code Example': 'Codebeispiel',
+    'Developer Community': 'Entwickler-Community',
+    'Technical Support': 'Technischer Support',
+    'Connect Quantaureum Network': 'Quantaureum-Netzwerk verbinden',
+    'Network': 'Netzwerk',
+    'Symbol': 'Symbol',
+    'Connected': 'Verbunden',
+    'Connecting...': 'Verbinden...',
+    'Network Added': 'Netzwerk hinzugefügt',
+    'Add to MetaMask': 'Zu MetaMask hinzufügen',
+    'Install MetaMask': 'MetaMask installieren',
+    'Enter Quantum Wallet': 'Quantum Wallet betreten'
+  },
+  es: {
+    'Home': 'Inicio',
+    'Features': 'Características',
+    'Team': 'Equipo',
+    'Documentation': 'Documentación',
+    'Get Started': 'Empezar',
+    'Search': 'Buscar',
+    'Login': 'Iniciar sesión',
+    'User Dashboard': 'Panel de usuario',
+    'Wallet Balance': 'Saldo de la billetera',
+    'Recent Transactions': 'Transacciones recientes',
+    'Send': 'Enviar',
+    'Receive': 'Recibir',
+    'Loading...': 'Cargando...',
+    'Coming Soon': 'Próximamente',
+    'Developer Resources': 'Recursos para desarrolladores',
+    'Technical Documentation': 'Documentación técnica',
+    'API Reference': 'Referencia de API',
+    'SDK Download': 'Descargar SDK',
+    'Explore': 'Explorar',
+    'Quick Start': 'Inicio rápido',
+    'Code Example': 'Ejemplo de código',
+    'Developer Community': 'Comunidad de desarrolladores',
+    'Technical Support': 'Soporte técnico',
+    'Connect Quantaureum Network': 'Conectar red Quantaureum',
+    'Network': 'Red',
+    'Symbol': 'Símbolo',
+    'Connected': 'Conectado',
+    'Connecting...': 'Conectando...',
+    'Network Added': 'Red añadida',
+    'Add to MetaMask': 'Añadir a MetaMask',
+    'Install MetaMask': 'Instalar MetaMask',
+    'Enter Quantum Wallet': 'Entrar a la billetera cuántica'
+  },
+  ja: {
+    'Home': 'ホーム',
+    'Features': '特徴',
+    'Team': 'チーム',
+    'Documentation': 'ドキュメント',
+    'Get Started': '始める',
+    'Search': '検索',
+    'Login': 'ログイン',
+    'User Dashboard': 'ユーザーダッシュボード',
+    'Wallet Balance': 'ウォレット残高',
+    'Recent Transactions': '最近の取引',
+    'Send': '送信',
+    'Receive': '受信',
+    'Loading...': '読み込み中...',
+    'Coming Soon': '近日公開',
+    'Developer Resources': '開発者リソース',
+    'Technical Documentation': '技術ドキュメント',
+    'API Reference': 'APIリファレンス',
+    'SDK Download': 'SDKダウンロード',
+    'Explore': '探索',
+    'Quick Start': 'クイックスタート',
+    'Code Example': 'コード例',
+    'Developer Community': '開発者コミュニティ',
+    'Technical Support': 'テクニカルサポート',
+    'Connect Quantaureum Network': 'Quantaureumネットワークに接続',
+    'Network': 'ネットワーク',
+    'Symbol': 'シンボル',
+    'Connected': '接続済み',
+    'Connecting...': '接続中...',
+    'Network Added': 'ネットワーク追加済み',
+    'Add to MetaMask': 'MetaMaskに追加',
+    'Install MetaMask': 'MetaMaskをインストール',
+    'Enter Quantum Wallet': '量子ウォレットに入る'
+  },
+  ko: {
+    'Home': '홈',
+    'Features': '기능',
+    'Team': '팀',
+    'Documentation': '문서',
+    'Get Started': '시작하기',
+    'Search': '검색',
+    'Login': '로그인',
+    'User Dashboard': '사용자 대시보드',
+    'Wallet Balance': '지갑 잔액',
+    'Recent Transactions': '최근 거래',
+    'Send': '보내기',
+    'Receive': '받기',
+    'Loading...': '로딩 중...',
+    'Coming Soon': '곧 출시',
+    'Developer Resources': '개발자 리소스',
+    'Technical Documentation': '기술 문서',
+    'API Reference': 'API 참조',
+    'SDK Download': 'SDK 다운로드',
+    'Explore': '탐색',
+    'Quick Start': '빠른 시작',
+    'Code Example': '코드 예제',
+    'Developer Community': '개발자 커뮤니티',
+    'Technical Support': '기술 지원',
+    'Connect Quantaureum Network': 'Quantaureum 네트워크 연결',
+    'Network': '네트워크',
+    'Symbol': '심볼',
+    'Connected': '연결됨',
+    'Connecting...': '연결 중...',
+    'Network Added': '네트워크 추가됨',
+    'Add to MetaMask': 'MetaMask에 추가',
+    'Install MetaMask': 'MetaMask 설치',
+    'Enter Quantum Wallet': '양자 지갑 입장'
+  },
+  ru: {
+    'Home': 'Главная',
+    'Features': 'Функции',
+    'Team': 'Команда',
+    'Documentation': 'Документация',
+    'Get Started': 'Начать',
+    'Search': 'Поиск',
+    'Login': 'Войти',
+    'User Dashboard': 'Панель пользователя',
+    'Wallet Balance': 'Баланс кошелька',
+    'Recent Transactions': 'Недавние транзакции',
+    'Send': 'Отправить',
+    'Receive': 'Получить',
+    'Loading...': 'Загрузка...',
+    'Coming Soon': 'Скоро',
+    'Developer Resources': 'Ресурсы для разработчиков',
+    'Technical Documentation': 'Техническая документация',
+    'API Reference': 'Справочник API',
+    'SDK Download': 'Скачать SDK',
+    'Explore': 'Обзор',
+    'Quick Start': 'Быстрый старт',
+    'Code Example': 'Пример кода',
+    'Developer Community': 'Сообщество разработчиков',
+    'Technical Support': 'Техническая поддержка',
+    'Connect Quantaureum Network': 'Подключить сеть Quantaureum',
+    'Network': 'Сеть',
+    'Symbol': 'Символ',
+    'Connected': 'Подключено',
+    'Connecting...': 'Подключение...',
+    'Network Added': 'Сеть добавлена',
+    'Add to MetaMask': 'Добавить в MetaMask',
+    'Install MetaMask': 'Установить MetaMask',
+    'Enter Quantum Wallet': 'Войти в квантовый кошелек'
+  },
+  ar: {
+    'Home': 'الرئيسية',
+    'Features': 'الميزات',
+    'Team': 'الفريق',
+    'Documentation': 'وثائق',
+    'Get Started': 'ابدأ',
+    'Search': 'بحث',
+    'Login': 'تسجيل الدخول',
+    'User Dashboard': 'لوحة تحكم المستخدم',
+    'Wallet Balance': 'رصيد المحفظة',
+    'Recent Transactions': 'المعاملات الأخيرة',
+    'Send': 'إرسال',
+    'Receive': 'استلام',
+    'Loading...': 'جار التحميل...',
+    'Coming Soon': 'قريبا',
+    'Developer Resources': 'موارد المطورين',
+    'Technical Documentation': 'وثائق تقنية',
+    'API Reference': 'مرجع API',
+    'SDK Download': 'تنزيل SDK',
+    'Explore': 'اكتشف',
+    'Quick Start': 'بداية سريعة',
+    'Code Example': 'مثال على الكود',
+    'Developer Community': 'مجتمع المطورين',
+    'Technical Support': 'الدعم الفني',
+    'Connect Quantaureum Network': 'اتصال شبكة Quantaureum',
+    'Network': 'شبكة',
+    'Symbol': 'رمز',
+    'Connected': 'متصل',
+    'Connecting...': 'جار الاتصال...',
+    'Network Added': 'تم إضافة الشبكة',
+    'Add to MetaMask': 'إضافة إلى MetaMask',
+    'Install MetaMask': 'تثبيت MetaMask',
+    'Enter Quantum Wallet': 'أدخل المحفظة الكمومية'
+  },
+  pt: {
+    'Home': 'Início',
+    'Features': 'Recursos',
+    'Team': 'Equipe',
+    'Documentation': 'Documentação',
+    'Get Started': 'Começar',
+    'Search': 'Buscar',
+    'Login': 'Entrar',
+    'User Dashboard': 'Painel do Usuário',
+    'Wallet Balance': 'Saldo da Carteira',
+    'Recent Transactions': 'Transações Recentes',
+    'Send': 'Enviar',
+    'Receive': 'Receber',
+    'Loading...': 'Carregando...',
+    'Coming Soon': 'Em breve',
+    'Developer Resources': 'Recursos para Desenvolvedores',
+    'Technical Documentation': 'Documentação Técnica',
+    'API Reference': 'Referência da API',
+    'SDK Download': 'Baixar SDK',
+    'Explore': 'Explorar',
+    'Quick Start': 'Início Rápido',
+    'Code Example': 'Exemplo de Código',
+    'Developer Community': 'Comunidade de Desenvolvedores',
+    'Technical Support': 'Suporte Técnico',
+    'Connect Quantaureum Network': 'Conectar Rede Quantaureum',
+    'Network': 'Rede',
+    'Symbol': 'Símbolo',
+    'Connected': 'Conectado',
+    'Connecting...': 'Conectando...',
+    'Network Added': 'Rede Adicionada',
+    'Add to MetaMask': 'Adicionar ao MetaMask',
+    'Install MetaMask': 'Instalar MetaMask',
+    'Enter Quantum Wallet': 'Entrar na Carteira Quântica'
+  },
+  it: {
+    'Home': 'Home',
+    'Features': 'Funzionalità',
+    'Team': 'Squadra',
+    'Documentation': 'Documentazione',
+    'Get Started': 'Inizia',
+    'Search': 'Cerca',
+    'Login': 'Accedi',
+    'User Dashboard': 'Dashboard Utente',
+    'Wallet Balance': 'Saldo Portafoglio',
+    'Recent Transactions': 'Transazioni Recenti',
+    'Send': 'Invia',
+    'Receive': 'Ricevi',
+    'Loading...': 'Caricamento...',
+    'Coming Soon': 'Prossimamente',
+    'Developer Resources': 'Risorse per sviluppatori',
+    'Technical Documentation': 'Documentazione tecnica',
+    'API Reference': 'Riferimento API',
+    'SDK Download': 'Scarica SDK',
+    'Explore': 'Esplora',
+    'Quick Start': 'Avvio rapido',
+    'Code Example': 'Esempio di codice',
+    'Developer Community': 'Comunità di sviluppatori',
+    'Technical Support': 'Supporto tecnico',
+    'Connect Quantaureum Network': 'Connetti Rete Quantaureum',
+    'Network': 'Rete',
+    'Symbol': 'Simbolo',
+    'Connected': 'Connesso',
+    'Connecting...': 'Connessione...',
+    'Network Added': 'Rete Aggiunta',
+    'Add to MetaMask': 'Aggiungi a MetaMask',
+    'Install MetaMask': 'Installa MetaMask',
+    'Enter Quantum Wallet': 'Entra nel Portafoglio Quantistico'
+  },
+  nl: {
+    'Home': 'Home',
+    'Features': 'Kenmerken',
+    'Team': 'Team',
+    'Documentation': 'Documentatie',
+    'Get Started': 'Aan de slag',
+    'Search': 'Zoeken',
+    'Login': 'Inloggen',
+    'User Dashboard': 'Gebruikersdashboard',
+    'Wallet Balance': 'Portemonnee Saldo',
+    'Recent Transactions': 'Recente Transacties',
+    'Send': 'Verzenden',
+    'Receive': 'Ontvangen',
+    'Loading...': 'Laden...',
+    'Coming Soon': 'Binnenkort',
+    'Developer Resources': 'Ontwikkelaarsbronnen',
+    'Technical Documentation': 'Technische documentatie',
+    'API Reference': 'API-referentie',
+    'SDK Download': 'SDK downloaden',
+    'Explore': 'Verkennen',
+    'Quick Start': 'Snelstart',
+    'Code Example': 'Codevoorbeeld',
+    'Developer Community': 'Ontwikkelaarscommunity',
+    'Technical Support': 'Technische ondersteuning',
+    'Connect Quantaureum Network': 'Verbind Quantaureum Netwerk',
+    'Network': 'Netwerk',
+    'Symbol': 'Symbool',
+    'Connected': 'Verbonden',
+    'Connecting...': 'Verbinden...',
+    'Network Added': 'Netwerk Toegevoegd',
+    'Add to MetaMask': 'Toevoegen aan MetaMask',
+    'Install MetaMask': 'Installeer MetaMask',
+    'Enter Quantum Wallet': 'Open Quantum Portemonnee'
+  }
+};
+
+function translate(obj, lang) {
+  if (typeof obj === 'string') {
+    // Check if exact match in dictionary
+    if (dictionary[lang] && dictionary[lang][obj]) {
+      return dictionary[lang][obj];
+    }
+    // Simple mock translation for demo purposes if not in dictionary
+    // Ideally we would use a translation API here
+    return `[${lang}] ${obj}`;
+  }
+  
+  if (Array.isArray(obj)) {
+    return obj.map(item => translate(item, lang));
+  }
+  
+  if (typeof obj === 'object' && obj !== null) {
+    const result = {};
+    for (const key in obj) {
+      result[key] = translate(obj[key], lang);
+    }
+    return result;
+  }
+  
+  return obj;
+}
+
+languages.forEach(lang => {
+  const translated = translate(en.translation, lang);
+  const content = `export const ${lang} = {\n  translation: ${JSON.stringify(translated, null, 2)}\n};\n`;
+  const filePath = path.join(__dirname, '..', 'src', 'i18n', 'locales', `${lang}.ts`);
+  fs.writeFileSync(filePath, content);
+  console.log(`Generated ${lang}.ts`);
+});
