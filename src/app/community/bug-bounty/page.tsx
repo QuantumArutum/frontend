@@ -9,16 +9,16 @@ import EnhancedFooter from '../../components/EnhancedFooter';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
 
-const getSeverityLevels = (t: (key: string, options?: object) => string | string[]) => [
-  { level: t('community_sub.bug_bounty.severity.critical.level'), reward: t('community_sub.bug_bounty.severity.critical.reward'), color: 'from-red-500 to-rose-500', description: t('community_sub.bug_bounty.severity.critical.desc') },
-  { level: t('community_sub.bug_bounty.severity.high.level'), reward: t('community_sub.bug_bounty.severity.high.reward'), color: 'from-orange-500 to-amber-500', description: t('community_sub.bug_bounty.severity.high.desc') },
-  { level: t('community_sub.bug_bounty.severity.medium.level'), reward: t('community_sub.bug_bounty.severity.medium.reward'), color: 'from-yellow-500 to-lime-500', description: t('community_sub.bug_bounty.severity.medium.desc') },
-  { level: t('community_sub.bug_bounty.severity.low.level'), reward: t('community_sub.bug_bounty.severity.low.reward'), color: 'from-green-500 to-emerald-500', description: t('community_sub.bug_bounty.severity.low.desc') },
-];
-
 export default function BugBountyPage() {
   const { t } = useTranslation();
-  const severityLevels = getSeverityLevels(t);
+  
+  const severityLevels = [
+    { level: t('community_sub.bug_bounty.severity.critical.level'), reward: t('community_sub.bug_bounty.severity.critical.reward'), color: 'from-red-500 to-rose-500', description: t('community_sub.bug_bounty.severity.critical.desc') },
+    { level: t('community_sub.bug_bounty.severity.high.level'), reward: t('community_sub.bug_bounty.severity.high.reward'), color: 'from-orange-500 to-amber-500', description: t('community_sub.bug_bounty.severity.high.desc') },
+    { level: t('community_sub.bug_bounty.severity.medium.level'), reward: t('community_sub.bug_bounty.severity.medium.reward'), color: 'from-yellow-500 to-lime-500', description: t('community_sub.bug_bounty.severity.medium.desc') },
+    { level: t('community_sub.bug_bounty.severity.low.level'), reward: t('community_sub.bug_bounty.severity.low.reward'), color: 'from-green-500 to-emerald-500', description: t('community_sub.bug_bounty.severity.low.desc') },
+  ];
+  
   const inScope = t('community_sub.bug_bounty.scope.items_in', { returnObjects: true }) as string[];
   const outOfScope = t('community_sub.bug_bounty.scope.items_out', { returnObjects: true }) as string[];
 
