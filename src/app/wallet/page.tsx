@@ -76,24 +76,30 @@ const QuantumWalletPage = () => {
     { icon: Sparkles, text: t('wallet.security_guarantee.list.quantum_rng') }
   ];
 
-  const handleLaunchWallet = () => {
-    window.open('/quantum-wallet', '_blank');
-    setIsConnected(true);
-  };
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   const handleConnectWallet = async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof window !== 'undefined' && (window as any).ethereum) {
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
-        setIsConnected(true);
+        const accounts = await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+        if (accounts && accounts.length > 0) {
+          setWalletAddress(accounts[0]);
+          setIsConnected(true);
+        }
       } catch (error) {
         console.error('Wallet connection failed:', error);
+        alert('Failed to connect wallet. Please make sure MetaMask is installed.');
       }
     } else {
-      handleLaunchWallet();
+      // MetaMask not installed
+      window.open('https://metamask.io/download/', '_blank');
     }
+  };
+
+  const handleLaunchWallet = () => {
+    handleConnectWallet();
   };
 
   return (
@@ -182,16 +188,24 @@ const QuantumWalletPage = () => {
                 <h3 className="text-2xl font-bold mb-4 text-emerald-400">
                   {t('wallet.launch_card.connected.title')}
                 </h3>
-                <p className="mb-8 text-gray-300">
+                <p className="mb-4 text-gray-300">
                   {t('wallet.launch_card.connected.desc')}
                 </p>
-                <button
-                  onClick={handleLaunchWallet}
+                {walletAddress && (
+                  <div className="mb-6 p-4 bg-white/5 rounded-xl border border-white/10">
+                    <p className="text-gray-400 text-sm mb-1">Connected Address:</p>
+                    <p className="text-cyan-400 font-mono text-sm break-all">
+                      {walletAddress}
+                    </p>
+                  </div>
+                )}
+                <a
+                  href="/explorer"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 bg-emerald-500 text-white hover:bg-emerald-600"
                 >
                   {t('wallet.launch_card.connected.btn')}
                   <ArrowRight className="w-5 h-5" />
-                </button>
+                </a>
               </div>
             ) : (
               <div className="relative text-center">
