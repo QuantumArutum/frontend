@@ -948,10 +948,6 @@ export const ja = {
       },
       error: 'DeFiデータの読み込みに失敗しました。接続を確認してください。'
     },
-    faq_page: {
-      title: 'FAQページ',
-      content: 'これはFAQページのコンテンツです。'
-    },
     auth: {
       login: {
         title: 'おかえりなさい',

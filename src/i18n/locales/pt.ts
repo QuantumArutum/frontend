@@ -948,10 +948,6 @@ export const pt = {
       },
       error: 'Falha ao carregar dados DeFi. Verifique sua conexão.'
     },
-    faq_page: {
-      title: 'Página de Perguntas Frequentes',
-      content: 'Este é o conteúdo da página de perguntas frequentes.'
-    },
     auth: {
       login: {
         title: 'Bem-vindo de Volta',

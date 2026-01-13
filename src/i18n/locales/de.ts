@@ -933,10 +933,6 @@ export const de = {
       },
       error: 'Fehler beim Laden der DeFi-Daten. Bitte überprüfen Sie Ihre Verbindung.'
     },
-    faq_page: {
-      title: 'FAQ-Seite',
-      content: 'Dies ist der Inhalt der FAQ-Seite.'
-    },
     auth: {
       login: {
         title: 'Willkommen zurück',

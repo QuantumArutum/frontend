@@ -933,10 +933,6 @@ export const nl = {
       },
       error: 'Kan DeFi-gegevens niet laden. Controleer uw verbinding.'
     },
-    faq_page: {
-      title: 'FAQ Pagina',
-      content: 'Dit is de inhoud van de FAQ pagina.'
-    },
     auth: {
       login: {
         title: 'Welkom Terug',

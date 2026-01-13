@@ -948,10 +948,6 @@ export const it = {
       },
       error: 'Impossibile caricare i dati DeFi. Verifica la tua connessione.'
     },
-    faq_page: {
-      title: 'Pagina FAQ',
-      content: 'Questo è il contenuto della pagina FAQ.'
-    },
     auth: {
       login: {
         title: 'Bentornato',

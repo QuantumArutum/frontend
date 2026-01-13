@@ -1330,10 +1330,6 @@ export const en = {
       },
       error: 'Failed to load DeFi data. Please check your connection.'
     },
-    faq_page: {
-      title: 'FAQ Page',
-      content: 'This is the FAQ page content.'
-    },
     auth: {
       login: {
         title: 'Welcome Back',

@@ -948,10 +948,6 @@ export const vi = {
       },
       error: 'Không thể tải dữ liệu DeFi. Vui lòng kiểm tra kết nối.'
     },
-    faq_page: {
-      title: 'Trang Câu hỏi Thường gặp',
-      content: 'Đây là nội dung trang Câu hỏi Thường gặp.'
-    },
     auth: {
       login: {
         title: 'Chào mừng Trở lại',

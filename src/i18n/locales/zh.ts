@@ -1330,10 +1330,6 @@ export const zh = {
       },
       error: '加载 DeFi 数据失败。请检查您的网络连接。'
     },
-    faq_page: {
-      title: '常见问题',
-      content: '这是常见问题页面内容。'
-    },
     auth: {
       login: {
         title: '欢迎回来',
@@ -2699,54 +2695,6 @@ export const zh = {
       quantum_secure: '量子安全',
       active: '活跃'
     },
-    utilities_page: {
-      title: '公用事业缴费',
-      subtitle: '使用加密货币支付公用事业账单',
-      electricity: '电费',
-      water: '水费',
-      gas: '燃气费',
-      internet: '网络费',
-      phone: '电话费',
-      account_number: '账户号码',
-      amount: '金额',
-      pay_now: '立即支付',
-      payment_history: '支付历史'
-    },
-    crowdfunding_page: {
-      title: '去中心化众筹',
-      subtitle: '通过区块链透明度支持创新项目',
-      all_projects: '全部项目',
-      technology: '科技',
-      art: '艺术',
-      charity: '公益',
-      business: '商业',
-      raised: '已筹集',
-      goal: '目标',
-      backers: '支持者',
-      days_left: '剩余天数',
-      back_project: '支持此项目',
-      project_details: '项目详情',
-      rewards: '回报',
-      updates: '更新',
-      comments: '评论'
-    },
-    concerts_page: {
-      title: '演唱会门票',
-      subtitle: '区块链验证的演唱会门票预订',
-      upcoming: '即将开始',
-      popular: '热门',
-      near_me: '附近',
-      venue: '场馆',
-      date: '日期',
-      price_from: '起价',
-      buy_tickets: '购买门票',
-      select_tickets: '选择门票',
-      ticket_type: '票种',
-      quantity: '数量',
-      vip: 'VIP',
-      standard: '标准',
-      standing: '站票'
-    },
     // 众筹页面
     crowdfunding_page: {
       title: '众筹平台',
@@ -2935,7 +2883,7 @@ export const zh = {
       payment_success: '支付成功！',
       continue_payment: '继续缴费',
       download_receipt: '下载收据',
-      processing: '处理中...',
+      processing_status: '处理中...',
       form: {
         country: '国家/地区',
         country_placeholder: '输入国家或地区',

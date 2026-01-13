@@ -933,10 +933,6 @@ export const fr = {
       },
       error: 'Échec du chargement des données DeFi. Veuillez vérifier votre connexion.'
     },
-    faq_page: {
-      title: 'Page FAQ',
-      content: 'Ceci est le contenu de la page FAQ.'
-    },
     auth: {
       login: {
         title: 'Bon Retour',

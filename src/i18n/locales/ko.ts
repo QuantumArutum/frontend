@@ -948,10 +948,6 @@ export const ko = {
       },
       error: 'DeFi 데이터 로드 실패. 연결을 확인하십시오.'
     },
-    faq_page: {
-      title: 'FAQ 페이지',
-      content: '이것은 FAQ 페이지 콘텐츠입니다.'
-    },
     auth: {
       login: {
         title: '다시 오신 것을 환영합니다',
