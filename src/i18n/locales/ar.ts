@@ -597,7 +597,10 @@ export const ar = {
       staking: 'التخزين'
     },
     common: {
-      loading: 'جاري التحميل...'
+      loading: 'جاري التحميل...',
+      features: 'الميزات',
+      benefits: 'الفوائد',
+      case_study: 'دراسة حالة'
     },
     developers: {
       title: 'موارد المطورين',
@@ -1766,6 +1769,1534 @@ export const ar = {
         user_replies: 'ردود المستخدم',
         posts_displayed: 'ستظهر المنشورات هنا...',
         replies_displayed: 'ستظهر الردود هنا...'
+      }
+    },
+    // صفحة التخزين
+    staking_page: {
+      title: 'التخزين الكمي',
+      subtitle: 'اكسب دخلاً سلبياً من خلال تأمين الشبكة. عائد سنوي مرتفع، آمن ومرن.',
+      active_pools: 'المجمعات النشطة',
+      my_stakes: 'تخزيناتي',
+      duration: 'المدة',
+      days: 'أيام',
+      min_stake: 'الحد الأدنى للتخزين',
+      total_staked: 'إجمالي المخزن',
+      stake_now: 'خزّن الآن',
+      stake: 'تخزين',
+      unlocks: 'فتح القفل',
+      active: 'نشط',
+      confirm_stake: 'تأكيد التخزين',
+      cancel: 'إلغاء',
+      available_balance: 'الرصيد المتاح',
+      mock: 'محاكاة',
+      amount_placeholder: 'مبلغ التخزين',
+      lock_period: 'فترة القفل',
+      early_withdrawal_warning: 'السحب المبكر غير مسموح.',
+      staked_success: 'تم التخزين بنجاح!',
+      staking_failed: 'فشل التخزين'
+    },
+    // صفحة الإعدادات
+    settings_page: {
+      title: 'الإعدادات',
+      appearance: {
+        title: 'المظهر',
+        dark_mode: 'الوضع الداكن',
+        dark_mode_desc: 'استخدام السمة الداكنة'
+      },
+      notifications: {
+        title: 'الإشعارات',
+        push: 'إشعارات الدفع',
+        push_desc: 'تلقي إشعارات المعاملات والنظام',
+        sound: 'تنبيهات صوتية',
+        sound_desc: 'تشغيل أصوات الإشعارات'
+      },
+      language: {
+        title: 'اللغة',
+        interface: 'لغة الواجهة',
+        interface_desc: 'اختر لغتك المفضلة'
+      },
+      security: {
+        title: 'الأمان',
+        two_factor: 'المصادقة الثنائية',
+        two_factor_desc: 'تعزيز أمان الحساب',
+        quantum_encryption: 'التشفير الكمي',
+        quantum_encryption_desc: 'محمي بالتشفير ما بعد الكمي',
+        enabled: 'مفعّل',
+        change_password: 'تغيير كلمة المرور'
+      }
+    },
+    // صفحة الملف الشخصي
+    profile_page: {
+      title: 'الملف الشخصي',
+      username: 'اسم المستخدم',
+      email: 'البريد الإلكتروني',
+      registered: 'تاريخ التسجيل',
+      basic_info: 'المعلومات الأساسية',
+      security_settings: 'إعدادات الأمان',
+      two_factor: 'المصادقة الثنائية',
+      quantum_encryption: 'التشفير الكمي',
+      enabled: 'مفعّل',
+      save_changes: 'حفظ التغييرات'
+    },
+    // صفحة الأسئلة الشائعة
+    faq_page: {
+      title: 'الأسئلة الشائعة',
+      subtitle: 'اعثر على الإجابات التي تحتاجها وتعرف على المزيد حول Quantaureum',
+      search_placeholder: 'البحث في الأسئلة...',
+      no_results: 'لم يتم العثور على أسئلة ذات صلة',
+      more_questions: 'لديك المزيد من الأسئلة؟',
+      support_team: 'فريق الدعم لدينا جاهز لمساعدتك',
+      contact_us: 'اتصل بنا',
+      categories: {
+        all: 'الكل',
+        basics: 'الأساسيات',
+        security: 'الأمان',
+        wallet: 'المحفظة',
+        trading: 'التداول',
+        developer: 'المطور'
+      },
+      questions: {
+        what_is_quantaureum: {
+          q: 'ما هو Quantaureum؟',
+          a: 'Quantaureum هي منصة بلوكتشين آمنة كمياً من الجيل التالي تستخدم التشفير ما بعد الكمي (CRYSTALS-Dilithium و CRYSTALS-Kyber) لتوفير بنية تحتية بلوكتشين آمنة وفعالة للمؤسسات والمطورين.'
+        },
+        what_is_qau: {
+          q: 'ما هو رمز QAU؟',
+          a: 'QAU هو الرمز الأصلي لشبكة Quantaureum، مرتبط 1:1 بالذهب الفعلي. 1 QAU = 1 جرام من الذهب. يتم تخزين جميع احتياطيات الذهب في خزائن معتمدة من LBMA ويتم تدقيقها بانتظام من قبل مدققين مستقلين.'
+        },
+        quantum_safe: {
+          q: 'ماذا يعني آمن كمياً؟',
+          a: 'يستخدم Quantaureum خوارزميات تشفير ما بعد الكمي القياسية من NIST التي يمكنها مقاومة هجمات الحواسيب الكمية المستقبلية. قد يتم كسر خوارزميات التشفير التقليدية (مثل RSA، ECDSA) بواسطة الحواسيب الكمية، لكن خوارزمياتنا مصممة لمقاومة مثل هذه التهديدات.'
+        },
+        asset_security: {
+          q: 'هل أصولي آمنة؟',
+          a: 'نعم. نستخدم طبقات أمان متعددة: توقيعات تشفير ما بعد الكمي، محافظ متعددة التوقيع، التخزين البارد، عمليات تدقيق أمنية منتظمة، واحتياطيات ذهب مؤمنة بالكامل. يتم تدقيق جميع العقود الذكية من قبل شركات أمان خارجية.'
+        },
+        create_wallet: {
+          q: 'كيف أنشئ محفظة كمية؟',
+          a: 'يمكنك إنشاء محفظة مباشرة في متصفحك من خلال محفظة Web3 الخاصة بنا دون تنزيل أي برنامج. تدعم المحفظة التوقيعات الآمنة كمياً، وإدارة الأصول متعددة السلاسل، وفتح القفل البيومتري.'
+        },
+        supported_assets: {
+          q: 'ما الأصول المدعومة؟',
+          a: 'تدعم Quantum Wallet رموز QAU و ETH و BTC و USDT و USDC والأصول الرقمية الرئيسية الأخرى، بالإضافة إلى جميع الرموز على شبكة Quantaureum. ندعم أيضاً عمليات نقل الأصول عبر السلاسل.'
+        },
+        transaction_fees: {
+          q: 'ما هي رسوم المعاملات؟',
+          a: 'يتم تعديل رسوم معاملات الشبكة ديناميكياً بناءً على ازدحام الشبكة، عادةً بين 0.001-0.01 QAU. يتم فرض رسوم منصة بنسبة 0.5% عند شراء رموز QAU، لتغطية تخزين الذهب والتأمين.'
+        },
+        confirmation_time: {
+          q: 'كم يستغرق تأكيد المعاملة؟',
+          a: 'متوسط وقت الكتلة في شبكة Quantaureum حوالي 12 ثانية، مع تأكيد معظم المعاملات في 1-2 كتلة. يمكن أن يصل TPS لدينا إلى 100,000+، مما يضمن معالجة فعالة للمعاملات.'
+        },
+        start_developing: {
+          q: 'كيف أبدأ التطوير؟',
+          a: 'قم بزيارة وثائق المطورين (/developers/docs) للحصول على مرجع API و SDK كامل. نوفر SDK بلغات متعددة بما في ذلك JavaScript و Python و Go و Rust، إلى جانب دروس تفصيلية وأكواد نموذجية.'
+        },
+        smart_contract_languages: {
+          q: 'ما اللغات التي تدعمها العقود الذكية؟',
+          a: 'QVM (الآلة الافتراضية الكمية) لدينا متوافقة تماماً مع EVM وتدعم Solidity. نقوم أيضاً بتطوير QSL (لغة العقود الذكية الكمية) الخاصة بنا لتوفير ميزات أمان كمي أقوى.'
+        }
+      }
+    },
+    // تطبيقات النظام البيئي
+    lottery_page: {
+      title: 'اليانصيب الكمي',
+      subtitle: 'سوبر لوتو قائم على الأرقام العشوائية الكمية',
+      tabs: {
+        buy: 'شراء التذاكر',
+        results: 'النتائج',
+        mybets: 'رهاناتي',
+        stats: 'الإحصائيات'
+      },
+      select_numbers: 'اختر أرقامك المحظوظة',
+      random: 'عشوائي',
+      clear: 'مسح',
+      front_zone: 'المنطقة الأمامية',
+      back_zone: 'المنطقة الخلفية',
+      select_from: 'اختر {{count}} من 1-{{max}}',
+      bet_info: 'معلومات الرهان',
+      quantum_secure: 'آمن كمياً',
+      bets: 'رهانات',
+      single_bet: 'رهان فردي',
+      total_amount: 'المبلغ الإجمالي',
+      selected_numbers: 'الأرقام المختارة',
+      place_bet: 'ضع الرهان الآن',
+      select_complete: 'يرجى اختيار مجموعة كاملة',
+      prize_levels: 'مستويات الجوائز',
+      probability: 'الاحتمالية',
+      floating_prize: 'جائزة متغيرة',
+      history_results: 'النتائج التاريخية',
+      draw_number: 'رقم السحب',
+      winning_numbers: 'الأرقام الفائزة',
+      quantum_verified: 'تم التحقق كمياً',
+      sales: 'المبيعات',
+      total_bets: 'إجمالي الرهانات',
+      prize_pool: 'مجموع الجوائز',
+      no_bets: 'لا يوجد سجل رهانات',
+      connect_wallet_view: 'اربط المحفظة لعرض السجل',
+      bet_now: 'راهن الآن',
+      total_draws: 'إجمالي السحوبات',
+      total_sales: 'إجمالي المبيعات',
+      total_prizes: 'إجمالي الجوائز',
+      total_players: 'إجمالي اللاعبين',
+      number_frequency: 'تكرار الأرقام',
+      times: 'مرات',
+      quantum_security: {
+        title: 'ضمان الأمان الكمي',
+        desc: 'استخدام مولد أرقام عشوائية كمية لضمان العشوائية الحقيقية',
+        qrng: 'QRNG الكمي',
+        encryption: 'التشفير الكمي',
+        verification: 'التحقق الكمي'
+      },
+      current_draw: 'السحب الحالي',
+      estimated_jackpot: 'الجائزة الكبرى المقدرة',
+      time_remaining: 'الوقت المتبقي',
+      calculating: 'جاري الحساب...',
+      other_combinations: 'تركيبات فائزة أخرى'
+    },
+    movies_page: {
+      title: 'تذاكر السينما العالمية',
+      subtitle: 'اكتشف أفلاماً رائعة واستمتع بالتجربة',
+      steps: {
+        select_movie: 'اختر الفيلم',
+        select_showtime: 'اختر وقت العرض',
+        select_seats: 'اختر المقاعد',
+        payment: 'تأكيد الدفع'
+      },
+      loading: 'جاري التحميل...',
+      city: 'المدينة',
+      date: 'التاريخ',
+      genre: 'النوع',
+      all_genres: 'جميع الأنواع',
+      action: 'أكشن',
+      comedy: 'كوميديا',
+      drama: 'دراما',
+      scifi: 'خيال علمي',
+      horror: 'رعب',
+      search: 'بحث',
+      director: 'المخرج',
+      duration: 'المدة',
+      minutes: 'دقائق',
+      rotten_tomatoes: 'Rotten Tomatoes',
+      select_showtime_btn: 'اختر وقت العرض',
+      select_showtime_for: 'اختر وقت العرض - {{title}}',
+      back_to_movies: 'العودة للقائمة',
+      cinema: 'السينما',
+      start_time: 'وقت البدء',
+      remaining_tickets: 'المتبقي',
+      screen_type: 'نوع الشاشة',
+      standard: 'قياسي',
+      language: 'اللغة',
+      sold_out: 'نفدت',
+      select_seats_btn: 'اختر المقاعد',
+      select_seats_title: 'اختر المقاعد',
+      back_to_showtimes: 'العودة لأوقات العرض',
+      screen: 'الشاشة',
+      seat_selection_dev: 'ميزة اختيار المقاعد قيد التطوير...',
+      total: 'الإجمالي',
+      confirm_seats: 'تأكيد المقاعد',
+      confirm_order: 'تأكيد الطلب',
+      back_to_seats: 'العودة للاختيار',
+      order_details: 'تفاصيل الطلب',
+      movie: 'الفيلم',
+      time: 'الوقت',
+      confirm_pay: 'تأكيد الدفع',
+      per_ticket: 'للتذكرة'
+    },
+    hotels_page: {
+      title: 'حجز الفنادق العالمية',
+      subtitle: 'اكتشف فنادق بوتيك مع حجز آمن كمياً',
+      destination: 'الوجهة',
+      destination_placeholder: 'المدينة أو اسم الفندق أو المعلم',
+      check_in: 'تسجيل الوصول',
+      check_out: 'تسجيل المغادرة',
+      guests_rooms: 'الضيوف والغرف',
+      search_hotels: 'البحث عن فنادق',
+      searching: 'جاري البحث...',
+      popular_destinations: 'الوجهات الشائعة',
+      hotels_count: '{{count}} فندق',
+      modify_search: 'تعديل البحث',
+      filter: 'تصفية',
+      all_stars: 'جميع النجوم',
+      star: 'نجمة',
+      price: 'السعر',
+      apply_filter: 'تطبيق التصفية',
+      per_night: 'لليلة',
+      view_details: 'عرض التفاصيل',
+      reviews: 'تقييمات',
+      load_more: 'تحميل المزيد',
+      back_to_results: 'العودة للنتائج',
+      select_room: 'اختر نوع الغرفة',
+      max_guests: 'حد أقصى {{count}} ضيوف',
+      rooms_left: '{{count}} غرف متبقية',
+      book_now: 'احجز الآن',
+      amenities: 'المرافق',
+      free: 'مجاني',
+      paid: 'مدفوع',
+      hotel_policies: 'سياسات الفندق',
+      check_in_out: 'الوصول/المغادرة',
+      cancellation_policy: 'سياسة الإلغاء',
+      pet_policy: 'سياسة الحيوانات',
+      smoking_policy: 'سياسة التدخين',
+      booking_info: 'معلومات الحجز',
+      name: 'الاسم',
+      email: 'البريد الإلكتروني',
+      phone: 'الهاتف',
+      special_requests: 'طلبات خاصة',
+      nights: 'ليالي',
+      rooms: 'غرف',
+      room_rate: 'سعر الغرفة',
+      taxes_fees: 'الضرائب والرسوم',
+      confirm_booking: 'تأكيد الحجز',
+      booking_success: 'تم الحجز بنجاح!',
+      confirmation_number: 'رقم التأكيد',
+      booking_details: 'تفاصيل الحجز',
+      guest_info: 'معلومات الضيف',
+      payment_info: 'معلومات الدفع',
+      back_to_home: 'العودة للرئيسية'
+    },
+    flights_page: {
+      title: 'حجز الرحلات العالمية',
+      subtitle: 'احجز رحلات بمعاملات آمنة كمياً',
+      departure_city: 'مدينة المغادرة',
+      arrival_city: 'مدينة الوصول',
+      departure_date: 'تاريخ المغادرة',
+      return_date: 'تاريخ العودة',
+      passengers: 'المسافرون',
+      class_type: 'الدرجة',
+      economy: 'اقتصادية',
+      business: 'رجال الأعمال',
+      first_class: 'الدرجة الأولى',
+      one_way: 'ذهاب فقط',
+      round_trip: 'ذهاب وعودة',
+      search_flights: 'البحث عن رحلات',
+      searching: 'جاري البحث...',
+      outbound_flights: 'رحلات الذهاب',
+      return_flights: 'رحلات العودة',
+      select_flight: 'اختر',
+      duration: 'المدة',
+      stops: 'توقفات',
+      direct: 'مباشر',
+      stop: 'توقف',
+      departure: 'المغادرة',
+      arrival: 'الوصول',
+      fare_class: 'فئة السعر',
+      baggage: 'الأمتعة',
+      seat_selection: 'اختيار المقعد',
+      refundable: 'قابل للاسترداد',
+      non_refundable: 'غير قابل للاسترداد',
+      select_fare: 'اختر السعر',
+      passenger_info: 'معلومات المسافر',
+      contact_info: 'معلومات الاتصال',
+      total_fare: 'السعر الإجمالي',
+      confirm_booking: 'تأكيد الحجز'
+    },
+    market_page: {
+      title: 'سوق التداول الكمي',
+      subtitle: 'منصة تداول آمنة قائمة على التشفير الكمي',
+      trading_pairs: 'أزواج التداول',
+      search_pairs: 'البحث عن أزواج...',
+      volume: 'الحجم',
+      latest_price: 'آخر سعر',
+      change_24h: 'التغير 24س',
+      high_24h: 'الأعلى 24س',
+      low_24h: 'الأدنى 24س',
+      order_book: 'دفتر الأوامر',
+      asks: 'البيع',
+      bids: 'الشراء',
+      recent_trades: 'الصفقات الأخيرة',
+      trading_panel: 'لوحة التداول',
+      spot: 'فوري',
+      margin: 'هامش',
+      futures: 'عقود آجلة',
+      buy: 'شراء',
+      sell: 'بيع',
+      order_type: 'نوع الأمر',
+      market_order: 'أمر سوق',
+      limit_order: 'أمر محدد',
+      stop_limit: 'وقف محدد',
+      buy_price: 'سعر الشراء',
+      sell_price: 'سعر البيع',
+      buy_amount: 'كمية الشراء',
+      sell_amount: 'كمية البيع',
+      available_balance: 'الرصيد المتاح',
+      estimated_fee: 'الرسوم المقدرة',
+      estimated_income: 'الدخل المقدر',
+      my_trades: 'صفقاتي',
+      current_orders: 'الأوامر الحالية',
+      order_history: 'سجل الأوامر',
+      positions: 'المراكز',
+      assets: 'الأصول',
+      no_orders: 'لا توجد أوامر معلقة',
+      no_history: 'لا يوجد سجل أوامر',
+      no_positions: 'لا توجد مراكز',
+      cancel: 'إلغاء',
+      unfilled: 'غير منفذ',
+      partial: 'جزئي',
+      order_success: 'تم إرسال الأمر بنجاح!',
+      order_failed: 'فشل الأمر، يرجى المحاولة مرة أخرى',
+      quantum_secure: 'آمن كمياً',
+      active: 'نشط'
+    },
+    utilities_page: {
+      title: 'دفع المرافق',
+      subtitle: 'ادفع فواتير المرافق بالعملات المشفرة',
+      electricity: 'الكهرباء',
+      water: 'المياه',
+      gas: 'الغاز',
+      internet: 'الإنترنت',
+      phone: 'الهاتف',
+      account_number: 'رقم الحساب',
+      amount: 'المبلغ',
+      pay_now: 'ادفع الآن',
+      payment_history: 'سجل الدفع'
+    },
+    crowdfunding_page: {
+      title: 'التمويل الجماعي اللامركزي',
+      subtitle: 'ادعم المشاريع المبتكرة بشفافية البلوكتشين',
+      all_projects: 'جميع المشاريع',
+      technology: 'التكنولوجيا',
+      art: 'الفن',
+      charity: 'الخيرية',
+      business: 'الأعمال',
+      raised: 'تم جمعه',
+      goal: 'الهدف',
+      backers: 'الداعمون',
+      days_left: 'الأيام المتبقية',
+      back_project: 'ادعم المشروع',
+      project_details: 'تفاصيل المشروع',
+      rewards: 'المكافآت',
+      updates: 'التحديثات',
+      comments: 'التعليقات'
+    },
+    concerts_page: {
+      title: 'تذاكر الحفلات',
+      subtitle: 'احجز تذاكر الحفلات مع التحقق بالبلوكتشين',
+      upcoming: 'القادمة',
+      popular: 'الشائعة',
+      near_me: 'بالقرب مني',
+      venue: 'المكان',
+      date: 'التاريخ',
+      price_from: 'من',
+      buy_tickets: 'شراء التذاكر',
+      select_tickets: 'اختر التذاكر',
+      ticket_type: 'نوع التذكرة',
+      quantity: 'الكمية',
+      vip: 'VIP',
+      standard: 'قياسي',
+      standing: 'وقوف'
+    },
+    // صفحة التمويل الجماعي
+    crowdfunding_page: {
+      title: 'منصة التمويل الجماعي',
+      subtitle: 'ادعم المشاريع المبتكرة، اصنع مستقبلاً أفضل معاً',
+      create_project: 'بدء التمويل الجماعي',
+      search: 'بحث',
+      search_placeholder: 'البحث عن مشاريع مبتكرة...',
+      featured: 'مميز',
+      days_left: 'أيام متبقية',
+      quantum_security: 'أمان كمي',
+      anonymous: 'مجهول',
+      funding_progress: 'تقدم التمويل',
+      raised: 'تم جمعه',
+      backers: 'الداعمون',
+      days_remaining: 'الأيام المتبقية',
+      support: 'دعم',
+      no_results: 'لم يتم العثور على مشاريع',
+      try_different_search: 'حاول تعديل معايير البحث أو تصفح فئات أخرى',
+      view_all_projects: 'عرض جميع المشاريع',
+      cancel: 'إلغاء',
+      categories: {
+        all: 'الكل',
+        technology: 'التكنولوجيا',
+        design: 'التصميم',
+        games: 'الألعاب',
+        music: 'الموسيقى',
+        film: 'السينما',
+        food: 'الطعام',
+        fashion: 'الموضة',
+        health: 'الصحة',
+        other: 'أخرى'
+      },
+      sort: {
+        trending: 'الرائج',
+        newest: 'الأحدث',
+        ending_soon: 'ينتهي قريباً',
+        most_funded: 'الأكثر تمويلاً'
+      },
+      stats: {
+        total_projects: 'إجمالي المشاريع',
+        active_projects: 'المشاريع النشطة',
+        total_raised: 'إجمالي المجموع',
+        total_backers: 'إجمالي الداعمين'
+      },
+      support_modal: {
+        title: 'دعم المشروع',
+        amount_label: 'مبلغ الدعم (QAU)',
+        custom_amount: 'أدخل مبلغاً مخصصاً',
+        confirm: 'تأكيد الدعم',
+        success_message: 'تم دعم {{amount}} QAU بنجاح!\nالمشروع: {{title}}\n\n(ميزة تجريبية، الدفع الفعلي يتطلب اتصال المحفظة)'
+      },
+      create_modal: {
+        title: 'بدء مشروع تمويل جماعي',
+        project_name: 'اسم المشروع',
+        project_name_placeholder: 'أدخل اسم المشروع',
+        category: 'الفئة',
+        goal_amount: 'الهدف (QAU)',
+        description: 'الوصف',
+        description_placeholder: 'صف مشروعك بالتفصيل...',
+        end_date: 'تاريخ الانتهاء',
+        submit: 'إرسال المشروع',
+        success_message: 'تم إنشاء المشروع بنجاح!\n\n(ميزة تجريبية، الإنشاء الفعلي يتطلب اتصال المحفظة والرسوم)'
+      },
+      errors: {
+        fetch_projects_failed: 'فشل في تحميل مشاريع التمويل الجماعي:',
+        fetch_stats_failed: 'فشل في تحميل الإحصائيات:',
+        search_failed: 'فشل البحث:'
+      }
+    },
+    // صفحة الحفلات
+    concerts_page: {
+      title: 'الحفلات العالمية',
+      subtitle: 'اكتشف عروضاً مذهلة، اشعر بسحر الموسيقى',
+      search: 'بحث',
+      seats: 'مقاعد',
+      from: 'من',
+      view_details: 'عرض التفاصيل',
+      concert_details: 'تفاصيل الحفل',
+      back_to_list: 'العودة للقائمة',
+      artist_info: 'معلومات الفنان',
+      show_info: 'معلومات العرض',
+      description: 'الوصف',
+      expected_setlist: 'قائمة الأغاني المتوقعة',
+      more: 'المزيد',
+      select_ticket: 'اختر التذكرة',
+      service_fee: 'رسوم الخدمة',
+      remaining_tickets: 'المتبقي',
+      benefits: 'المزايا',
+      select_this_ticket: 'اختر هذه التذكرة',
+      confirm_booking: 'تأكيد الحجز',
+      back_to_details: 'العودة للتفاصيل',
+      order_details: 'تفاصيل الطلب',
+      concert: 'الحفل',
+      artist: 'الفنان',
+      venue: 'المكان',
+      time: 'الوقت',
+      ticket_category: 'فئة التذكرة',
+      quantity: 'الكمية',
+      subtotal: 'المجموع الفرعي',
+      tax: 'الضرائب',
+      total: 'الإجمالي',
+      buyer_info: 'معلومات المشتري',
+      payment_method: 'طريقة الدفع',
+      payment_note: 'ادفع برموز QAU الآمنة كمياً لمعاملات آمنة.',
+      purchase_notice: 'إشعار الشراء',
+      confirm_purchase: 'تأكيد الشراء',
+      filters: {
+        city: 'المدينة',
+        genre: 'النوع',
+        start_date: 'تاريخ البدء',
+        artist: 'الفنان',
+        search_artist: 'البحث عن فنان'
+      },
+      cities: {
+        new_york: 'نيويورك',
+        los_angeles: 'لوس أنجلوس',
+        london: 'لندن',
+        tokyo: 'طوكيو',
+        seoul: 'سيول'
+      },
+      genres: {
+        all: 'جميع الأنواع',
+        pop: 'بوب',
+        rock: 'روك',
+        kpop: 'كي-بوب',
+        hiphop: 'هيب هوب',
+        classical: 'كلاسيكي'
+      },
+      status: {
+        on_sale: 'للبيع',
+        sold_out: 'نفدت',
+        coming_soon: 'قريباً'
+      },
+      availability: {
+        available: 'متاح',
+        limited: 'محدود',
+        sold_out: 'نفدت'
+      },
+      steps: {
+        select_show: 'اختر العرض',
+        show_details: 'تفاصيل العرض',
+        confirm_booking: 'تأكيد الحجز',
+        complete_payment: 'إتمام الدفع'
+      },
+      form: {
+        name: 'الاسم',
+        name_placeholder: 'أدخل اسمك الحقيقي',
+        email: 'البريد الإلكتروني',
+        email_placeholder: 'أدخل بريدك الإلكتروني',
+        phone: 'الهاتف',
+        phone_placeholder: 'أدخل رقم هاتفك',
+        id_number: 'رقم الهوية',
+        id_placeholder: 'تذاكر شخصية، أدخل رقم الهوية',
+        emergency_contact: 'جهة اتصال الطوارئ',
+        emergency_placeholder: 'اسم وهاتف جهة اتصال الطوارئ',
+        special_requests: 'طلبات خاصة',
+        special_placeholder: 'وصول الكراسي المتحركة، متطلبات غذائية، إلخ.'
+      },
+      notice: {
+        real_name: 'تذاكر شخصية، الهوية مطلوبة عند الدخول',
+        no_refund: 'التذاكر غير قابلة للاسترداد بعد الشراء',
+        no_camera: 'معدات التصوير الاحترافية ممنوعة',
+        time_change: 'أوقات العرض قابلة للتغيير'
+      },
+      errors: {
+        fetch_list_failed: 'فشل في تحميل قائمة الحفلات',
+        fetch_details_failed: 'فشل في تحميل تفاصيل الحفل'
+      }
+    },
+    // صفحة المرافق
+    utilities_page: {
+      title: 'منصة دفع المرافق العالمية',
+      subtitle: 'دعم شركات الكهرباء العالمية، ادفع الفواتير بأمان باستخدام QAU والعملات المشفرة الأخرى',
+      find_provider: 'البحث عن مزود الكهرباء',
+      search_providers: 'البحث عن المزودين',
+      searching: 'جاري البحث...',
+      found_providers: 'تم العثور على {{count}} مزود كهرباء',
+      search_again: 'البحث مرة أخرى',
+      query_bill: 'استعلام الفاتورة',
+      supported_currencies: 'العملات المدعومة',
+      processing_time: 'وقت المعالجة',
+      fees: 'الرسوم',
+      electricity_bill: 'فاتورة الكهرباء',
+      select_payment: 'اختر طريقة الدفع',
+      back: 'رجوع',
+      payment_success: 'تم الدفع بنجاح!',
+      continue_payment: 'متابعة الدفع',
+      download_receipt: 'تحميل الإيصال',
+      processing: 'جاري المعالجة...',
+      form: {
+        country: 'البلد/المنطقة',
+        country_placeholder: 'أدخل البلد أو المنطقة',
+        region: 'المحافظة/الولاية',
+        region_placeholder: 'أدخل المحافظة أو الولاية',
+        account_number: 'رقم العداد',
+        account_placeholder: 'أدخل رقم العداد',
+        customer_name: 'صاحب الحساب',
+        customer_placeholder: 'أدخل اسم صاحب الحساب'
+      },
+      providers: {
+        singapore: 'Singapore Power',
+        china_grid: 'State Grid',
+        tokyo_electric: 'Tokyo Electric Power'
+      },
+      countries: {
+        singapore: 'سنغافورة',
+        usa: 'الولايات المتحدة',
+        china: 'الصين',
+        japan: 'اليابان'
+      },
+      regions: {
+        nationwide: 'على مستوى البلاد',
+        california: 'كاليفورنيا',
+        kanto: 'منطقة كانتو'
+      },
+      processing: {
+        instant: 'فوري',
+        one_to_two: '1-2 دقيقة',
+        one_to_three: '1-3 دقائق'
+      },
+      bill: {
+        provider: 'المزود',
+        account: 'رقم الحساب',
+        customer: 'اسم العميل',
+        period: 'فترة الفوترة',
+        usage: 'الاستهلاك',
+        due_date: 'تاريخ الاستحقاق',
+        amount_due: 'المبلغ المستحق'
+      },
+      confirmation: {
+        transaction_id: 'معرف المعاملة',
+        payment_method: 'طريقة الدفع',
+        amount: 'المبلغ',
+        time: 'الوقت'
+      }
+    },
+    // صفحة التطبيقات
+    applications_page: {
+      hero: {
+        title: 'جسر عبر السلاسل &',
+        title_highlight: 'حلول المؤسسات',
+        description: 'خدمات جسر الأصول عبر السلاسل الآمنة كمياً وحلول البلوكتشين للمؤسسات'
+      },
+      stats: { chains: 'السلاسل المدعومة', transactions: 'معاملات عبر السلاسل', tvl: 'TVL', enterprise_clients: 'عملاء المؤسسات' },
+      status: { online: 'نشط', developing: 'قيد التطوير', planned: 'مخطط' },
+      bridge: {
+        title: 'جسر عبر السلاسل الآمن كمياً',
+        description: 'حل نقل الأصول عبر السلاسل آمن وسريع وموثوق',
+        supported_chains: 'شبكات البلوكتشين المدعومة',
+        features: {
+          quantum_secure: { title: 'عبر السلاسل الآمن كمياً', description: 'التشفير ما بعد الكمي يحمي نقل الأصول عبر السلاسل' },
+          fast_confirm: { title: 'تأكيد سريع', description: 'بروتوكول عبر السلاسل محسّن للتأكيد في دقائق' },
+          multi_verify: { title: 'التحقق المتعدد', description: 'شبكة عقد المدققين الموزعة تضمن أمان المعاملات' },
+          multi_chain: { title: 'دعم متعدد السلاسل', description: 'يدعم Ethereum و BSC و Polygon وشبكات البلوكتشين الرئيسية الأخرى' }
+        }
+      },
+      enterprise: {
+        title: 'حلول المؤسسات',
+        description: 'حلول بلوكتشين مخصصة للمؤسسات',
+        blockchain: { title: 'بلوكتشين المؤسسات', description: 'حلول السلاسل الخاصة والاتحادية', features: { private: 'نشر خاص', permission: 'إدارة الأذونات', audit: 'تدقيق الامتثال', privacy: 'خصوصية البيانات' } },
+        supply_chain: { title: 'تتبع سلسلة التوريد', description: 'نظام إدارة سلسلة التوريد القائم على البلوكتشين', features: { tracing: 'تتبع المنتجات', anti_fake: 'مكافحة التزوير', logistics: 'تتبع اللوجستيات', quality: 'إدارة الجودة' } },
+        asset_mgmt: { title: 'إدارة الأصول الرقمية', description: 'منصة حفظ الأصول الرقمية على مستوى المؤسسات', features: { multi_sig: 'محفظة متعددة التوقيعات', cold_hot: 'فصل بارد/ساخن', approval: 'سير عمل الموافقة', reports: 'تحليل التقارير' } },
+        identity: { title: 'مصادقة الهوية', description: 'حل الهوية اللامركزية (DID)', features: { did: 'معيار DID', credentials: 'بيانات اعتماد قابلة للتحقق', privacy: 'حماية الخصوصية', cross_platform: 'عبر المنصات' } }
+      },
+      use_cases: {
+        title: 'حالات الاستخدام الصناعية',
+        description: 'حلول تطبيقات البلوكتشين لصناعات متعددة',
+        finance: { title: 'الخدمات المالية', cases: { cross_border: 'المدفوعات عبر الحدود', tokenization: 'ترميز الأصول', settlement: 'المقاصة والتسوية', defi: 'بروتوكولات DeFi' } },
+        supply_chain: { title: 'سلسلة التوريد', cases: { tracing: 'تتبع المنتجات', logistics: 'إدارة اللوجستيات', inventory: 'تحسين المخزون', supplier: 'إدارة الموردين' } },
+        healthcare: { title: 'الرعاية الصحية', cases: { records: 'السجلات الطبية', drug_trace: 'تتبع الأدوية', clinical: 'التجارب السريرية', insurance: 'مطالبات التأمين' } },
+        government: { title: 'الخدمات الحكومية', cases: { e_gov: 'الحكومة الإلكترونية', digital_id: 'الهوية الرقمية', voting: 'أنظمة التصويت', certificates: 'إدارة الشهادات' } }
+      },
+      cta: { title: 'ابدأ', description: 'جرب خدمات جسر عبر السلاسل الآمنة كمياً', launch_bridge: 'تشغيل الجسر', contact_us: 'اتصل بنا' }
+    },
+    apps_page: {
+      title: 'نظام Quantaureum البيئي',
+      subtitle: 'اكتشف التطبيقات اللامركزية المدعومة بشبكة الكم',
+      launch_app: 'تشغيل التطبيق',
+      coming_soon: 'قريباً',
+      apps: {
+        travel: { title: 'Quantum Travel', description: 'احجز الرحلات والفنادق بـ QAU/USDT. بدون رسوم، تأكيد فوري.' },
+        mall: { title: 'Quantum Mall', description: 'تسوق السلع الفاخرة بالعملات المشفرة. شحن عالمي.' },
+        pay: { title: 'Quantum Pay', description: 'بوابة دفع عالمية للتجار.' }
+      }
+    },
+    quantum_security_page: {
+      title: 'مركز إدارة الأمان الكمي',
+      description: 'إدارة ومراقبة حالة الأمان لنظام البلوكتشين الكمي بأكمله'
+    },
+    support_help: {
+      title: 'المساعدة والدعم',
+      subtitle: 'احصل على دعم فني متخصص لحل المشاكل أثناء استخدام Quantaureum',
+      view_help: 'عرض المساعدة',
+      quick_help: {
+        title: 'مساعدة سريعة',
+        subtitle: 'حلول سريعة للمشاكل الشائعة',
+        wallet: { title: 'مشاكل المحفظة', desc: 'إنشاء المحفظة والاستيراد والأمان' },
+        transaction: { title: 'مشاكل المعاملات', desc: 'إرسال المعاملات والتأكيد والرسوم' },
+        development: { title: 'مشاكل التطوير', desc: 'استخدام API وتكامل SDK والتطوير' },
+        account: { title: 'مشاكل الحساب', desc: 'التسجيل وتسجيل الدخول وإعدادات الأمان' }
+      },
+      contact: {
+        title: 'اتصل بالدعم',
+        subtitle: 'طرق متعددة للحصول على دعم فني متخصص',
+        live_chat: { title: 'الدردشة المباشرة', desc: 'دعم عبر الإنترنت 24/7', button: 'بدء الدردشة', response_time: 'متوسط وقت الاستجابة: 2 دقيقة' },
+        email: { title: 'دعم البريد الإلكتروني', desc: 'أرسل وصفاً مفصلاً للمشكلة', button: 'إرسال بريد إلكتروني' },
+        ticket: { title: 'نظام التذاكر', desc: 'قدم تذاكر فنية وتتبع التقدم', button: 'إنشاء تذكرة', resolution_time: 'متوسط وقت الحل: 24 ساعة' }
+      },
+      faq: {
+        title: 'الأسئلة الشائعة',
+        subtitle: 'إجابات سريعة على الأسئلة الأكثر شيوعاً',
+        view_more: 'عرض المزيد من الأسئلة',
+        q1: { question: 'كيف أنشئ محفظة Quantaureum؟', answer: 'يمكنك إنشاء محفظة من خلال التطبيق الرسمي أو SDK. تستخدم المحفظة خوارزميات تشفير آمنة كمياً.' },
+        q2: { question: 'كيف يتم حساب رسوم المعاملات؟', answer: 'يتم حساب الرسوم ديناميكياً بناءً على ازدحام الشبكة وتعقيد المعاملة.' },
+        q3: { question: 'ما هو الأمان الكمي؟ لماذا هو مهم؟', answer: 'الأمان الكمي هو تقنية تشفير يمكنها مقاومة هجمات الحواسيب الكمية.' },
+        q4: { question: 'كيف أشارك في حوكمة Quantaureum؟', answer: 'يمكن للمستخدمين الذين يمتلكون رموز QAU المشاركة في حوكمة الشبكة.' },
+        q5: { question: 'كيف يحمي التشفير ما بعد الكمي الأمان؟', answer: 'نستخدم توقيعات Dilithium3 الرقمية وخوارزميات تغليف المفاتيح Kyber المعتمدة من NIST.' }
+      },
+      knowledge: {
+        title: 'قاعدة المعرفة',
+        subtitle: 'أدلة مستخدم مفصلة ووثائق فنية',
+        view_guide: 'عرض الدليل',
+        view_docs: 'عرض الوثائق',
+        watch_videos: 'مشاهدة الفيديوهات',
+        view_updates: 'عرض التحديثات',
+        user_guide: { title: 'دليل المستخدم', desc: 'دليل كامل من المبتدئ إلى المتقدم' },
+        dev_docs: { title: 'وثائق المطور', desc: 'مرجع API واستخدام SDK وأفضل الممارسات' },
+        security_guide: { title: 'دليل الأمان', desc: 'أفضل ممارسات الأمان لحماية أصولك' },
+        troubleshooting: { title: 'استكشاف الأخطاء', desc: 'التشخيص والحلول للمشاكل الشائعة' },
+        video_tutorials: { title: 'دروس فيديو', desc: 'دروس مرئية وعروض توضيحية' },
+        release_notes: { title: 'ملاحظات الإصدار', desc: 'أحدث التحديثات والتحسينات' }
+      }
+    },
+    developer_docs: {
+      title: 'وثائق المطور',
+      subtitle: 'وثائق API كاملة وأدلة تطوير لبناء تطبيقات بلوكتشين آمنة كمياً',
+      view_docs: 'عرض الوثائق',
+      quick_start: {
+        title: 'البدء السريع',
+        subtitle: 'ابدأ تطبيق Quantaureum الأول في دقائق',
+        step1: { title: 'تثبيت SDK', desc: 'قم بتنزيل وتثبيت مجموعة أدوات تطوير Quantaureum' },
+        step2: { title: 'إنشاء محفظة', desc: 'أنشئ محفظتك الأولى باستخدام خوارزميات آمنة كمياً' },
+        step3: { title: 'إرسال معاملة', desc: 'أرسل معاملتك الأولى باستخدام التوقيعات الكمية' }
+      },
+      api: {
+        title: 'وثائق API',
+        subtitle: 'مرجع API كامل يغطي جميع الوظائف الأساسية',
+        wallet: { title: 'API المحفظة', desc: 'إنشاء وإدارة ومعاملات المحفظة الآمنة كمياً' },
+        transaction: { title: 'API المعاملات', desc: 'معالجة معاملات عالية الأداء' },
+        smart_contract: { title: 'API العقود الذكية', desc: 'نشر واستدعاء العقود الذكية الآمنة' },
+        data: { title: 'API البيانات', desc: 'استعلام وتحليل بيانات البلوكتشين' },
+        crosschain: { title: 'API عبر السلاسل', desc: 'نقل الأصول وتبادل البيانات عبر السلاسل' },
+        ai: { title: 'API الذكاء الاصطناعي', desc: 'واجهات للتفاعل مع نظام تطور الذكاء الاصطناعي' }
+      },
+      examples: {
+        title: 'أمثلة الكود',
+        subtitle: 'أمثلة عملية للبدء بسرعة',
+        create_wallet: 'إنشاء محفظة كمية',
+        send_transaction: 'إرسال معاملة آمنة',
+        deploy_contract: 'نشر عقد ذكي',
+        crosschain_transfer: 'نقل عبر السلاسل'
+      },
+      tutorials: {
+        title: 'أدلة الدروس',
+        subtitle: 'سلسلة دروس كاملة من المبتدئ إلى المتقدم',
+        start_learning: 'ابدأ التعلم',
+        basics: { title: 'درس أساسي', desc: 'تعلم المفاهيم الأساسية وإعداد البيئة' },
+        smart_contracts: { title: 'تطوير العقود الذكية', desc: 'تطوير ونشر العقود الآمنة' },
+        dapp: { title: 'تطوير DApp', desc: 'بناء تطبيقات لامركزية كاملة' },
+        crosschain: { title: 'تطوير عبر السلاسل', desc: 'تنفيذ التشغيل البيني عبر السلاسل' },
+        security: { title: 'أفضل ممارسات الأمان', desc: 'تعلم أنماط الأمان وأفضل الممارسات' },
+        optimization: { title: 'تحسين الأداء', desc: 'تقنيات متقدمة لتحسين الأداء' }
+      }
+    },
+    legal: {
+      home: 'الرئيسية',
+      last_updated: 'آخر تحديث',
+      privacy: {
+        title: 'سياسة الخصوصية',
+        overview: { title: 'نظرة عامة', content: 'تأخذ Quantaureum ("نحن") خصوصيتك على محمل الجد. توضح هذه السياسة كيف نجمع ونستخدم ونكشف ونحمي معلوماتك الشخصية.' },
+        collection: { title: 'المعلومات التي نجمعها', provided: { title: 'المعلومات التي تقدمها', item1: 'معلومات التسجيل (البريد الإلكتروني، اسم المستخدم)', item2: 'عناوين المحفظة وسجلات المعاملات', item3: 'اتصالات الدعم', item4: 'معلومات أخرى تختار تقديمها' }, automatic: { title: 'المعلومات المجمعة تلقائياً', item1: 'معلومات الجهاز', item2: 'عنوان IP والموقع', item3: 'بيانات الاستخدام والتحليلات', item4: 'معلومات ملفات تعريف الارتباط' } },
+        use: { title: 'كيف نستخدم المعلومات', item1: 'تقديم وتحسين الخدمات', item2: 'معالجة المعاملات', item3: 'الرد على الطلبات', item4: 'إرسال الإشعارات', item5: 'اكتشاف الاحتيال', item6: 'الامتثال للالتزامات القانونية', item7: 'البحث والتحليل' },
+        security: { title: 'أمان المعلومات', intro: 'نستخدم تدابير أمان قياسية:', item1: 'تشفير آمن كمياً', item2: 'تخزين آمن', item3: 'تدقيقات أمنية', item4: 'تدريب الموظفين' },
+        rights: { title: 'حقوقك', intro: 'قد يكون لديك الحقوق التالية:', item1: 'الوصول إلى المعلومات', item2: 'تصحيح المعلومات', item3: 'حذف المعلومات', item4: 'تقييد المعالجة', item5: 'قابلية نقل البيانات', item6: 'سحب الموافقة' },
+        contact: { title: 'اتصل بنا', intro: 'إذا كانت لديك أسئلة:', email: 'البريد الإلكتروني', address: 'العنوان' },
+        updates: { title: 'تحديثات السياسة', content: 'قد نقوم بتحديث هذه السياسة بشكل دوري.' }
+      },
+      terms: {
+        title: 'شروط الخدمة',
+        acceptance: { title: 'قبول الشروط', content: 'باستخدام خدماتنا، فإنك توافق على هذه الشروط.' },
+        services: { title: 'وصف الخدمة', intro: 'تقدم Quantaureum:', item1: 'خدمات المحفظة الرقمية', item2: 'معاملات البلوكتشين', item3: 'خدمات DeFi', item4: 'العقود الذكية', item5: 'بيع الرموز', item6: 'أدوات المطورين' },
+        responsibilities: { title: 'مسؤوليات المستخدم', security: { title: 'أمان الحساب', item1: 'احمِ بيانات اعتمادك', item2: 'لا تشارك معلومات تسجيل الدخول', item3: 'أبلغ عن الوصول غير المصرح به', item4: 'مسؤول عن أنشطة الحساب' }, compliance: { title: 'الاستخدام المتوافق', item1: 'الامتثال للقوانين', item2: 'عدم الاستخدام لأنشطة غير قانونية', item3: 'تقديم معلومات دقيقة', item4: 'احترام المستخدمين الآخرين' } },
+        prohibited: { title: 'الأنشطة المحظورة', intro: 'يجب ألا:', item1: 'أنشطة احتيالية', item2: 'التدخل في الخدمات', item3: 'الوصول غير المصرح به', item4: 'توزيع البرامج الضارة', item5: 'انتهاك الملكية الفكرية', item6: 'التلاعب بالسوق', item7: 'تجاوز الأمان' },
+        risks: { title: 'تحذير المخاطر', intro: 'تشمل المخاطر:', item1: 'تقلب الأسعار', item2: 'الأعطال الفنية', item3: 'التغييرات التنظيمية', item4: 'فقدان المفاتيح الخاصة', item5: 'ثغرات العقود', warning: 'استثمر فقط ما يمكنك تحمل خسارته.' },
+        disclaimer: { title: 'إخلاء المسؤولية', content: 'الخدمات مقدمة "كما هي".' },
+        ip: { title: 'الملكية الفكرية', content: 'جميع المحتويات ملك لـ Quantaureum.' },
+        termination: { title: 'الإنهاء', content: 'يمكننا إنهاء الوصول في أي وقت.' },
+        law: { title: 'القانون المعمول به', content: 'تخضع هذه الشروط للقانون المعمول به.' }
+      },
+      cookies: {
+        title: 'سياسة ملفات تعريف الارتباط',
+        what: { title: 'ما هي ملفات تعريف الارتباط؟', content: 'ملفات تعريف الارتباط هي ملفات نصية صغيرة مخزنة على جهازك.' },
+        types: { title: 'أنواع ملفات تعريف الارتباط', essential: { title: 'ملفات تعريف الارتباط الأساسية', desc: 'ضرورية للوظائف الأساسية.', item1: 'إدارة الجلسة', item2: 'المصادقة', item3: 'موازنة الحمل' }, functional: { title: 'ملفات تعريف الارتباط الوظيفية', desc: 'تتذكر تفضيلاتك.', item1: 'تفضيلات اللغة', item2: 'إعدادات السمة', item3: 'تخصيص الواجهة' }, analytics: { title: 'ملفات تعريف الارتباط التحليلية', desc: 'تساعدنا على فهم الاستخدام.', item1: 'إحصائيات الزيارات', item2: 'تحليل السلوك', item3: 'مراقبة الأداء' }, marketing: { title: 'ملفات تعريف الارتباط التسويقية', desc: 'للإعلانات ذات الصلة.', item1: 'استهداف الإعلانات', item2: 'تكامل وسائل التواصل الاجتماعي', item3: 'تتبع التحويل' } },
+        list: { title: 'قائمة ملفات تعريف الارتباط', name: 'الاسم', type: 'النوع', duration: 'المدة', purpose: 'الغرض', session: 'الجلسة', session_mgmt: 'إدارة الجلسة', days: 'أيام', year: 'سنة', years: 'سنوات', auth: 'المصادقة', language: 'تفضيل اللغة', theme: 'إعداد السمة' },
+        manage: { title: 'إدارة التفضيلات', intro: 'يمكنك إدارة ملفات تعريف الارتباط:', browser: { title: 'إعدادات المتصفح', desc: 'معظم المتصفحات تسمح بالتحكم في ملفات تعريف الارتباط.' }, center: { title: 'مركز التفضيلات', desc: 'استخدم مركز تفضيلات ملفات تعريف الارتباط لدينا.' }, optout: { title: 'إلغاء الاشتراك', desc: 'استخدم إضافة إلغاء الاشتراك في Google Analytics.' }, warning: 'قد يؤثر تعطيل ملفات تعريف الارتباط على الوظائف.' },
+        updates: { title: 'تحديثات السياسة', content: 'قد نقوم بتحديث هذه السياسة.' }
+      },
+      security: {
+        title: 'بيان الأمان',
+        commitment: { title: 'التزامنا', content: 'الأمان هو أولويتنا القصوى.' },
+        quantum: { title: 'تقنية الأمان الكمي', pqc: { title: 'التشفير ما بعد الكمي', desc: 'نستخدم خوارزميات معتمدة من NIST:', dilithium: 'خوارزمية التوقيع الرقمي', kyber: 'آلية تغليف المفاتيح', sphincs: 'مخطط التوقيع القائم على التجزئة' }, standards: { title: 'معايير التشفير', item1: 'TLS 1.3 للنقل', item2: 'AES-256 للتخزين', item3: 'HSM للمفاتيح الخاصة', item4: 'QRNG لتوليد المفاتيح' } },
+        measures: { title: 'تدابير الأمان', infrastructure: { title: 'أمان البنية التحتية', item1: 'جدار حماية متعدد الطبقات', item2: 'حماية DDoS', item3: 'كشف التسلل', item4: 'مراقبة 24/7' }, application: { title: 'أمان التطبيق', item1: 'مراجعة الكود', item2: 'اختبار الاختراق', item3: 'فحص الثغرات', item4: 'دورة تطوير آمنة' }, account: { title: 'أمان الحساب', item1: 'MFA', item2: 'القياسات الحيوية', item3: 'كشف الشذوذ', item4: 'إدارة الجلسات' }, operational: { title: 'الأمان التشغيلي', item1: 'تدريب الموظفين', item2: 'الحد الأدنى من الامتيازات', item3: 'تدقيق الوصول', item4: 'خطة الاستجابة' } },
+        audits: { title: 'التدقيقات والشهادات', intro: 'تدقيقات منتظمة من طرف ثالث:', certik: 'تدقيق العقود', soc2: 'شهادة الامتثال', iso: 'إدارة الأمان' },
+        vulnerability: { title: 'الإبلاغ عن الثغرات', intro: 'نقدر مساهمات الباحثين:', bounty: 'برنامج مكافآت الأخطاء' },
+        tips: { title: 'نصائح الأمان', intro: 'نوصي بـ:', item1: 'تفعيل MFA', item2: 'استخدام كلمات مرور قوية', item3: 'نسخ المفاتيح احتياطياً بأمان', item4: 'الحذر من التصيد', item5: 'تحديث البرامج', item6: 'النظر في محفظة الأجهزة' },
+        contact: { title: 'الاتصال بفريق الأمان', intro: 'لأسئلة الأمان:', security: 'مشاكل الأمان', bounty: 'تقارير الثغرات', pgp: 'مفتاح PGP', pgp_note: 'متاح على GitHub' }
+      }
+    },
+    // صفحات المؤسسات
+    enterprise: {
+      solutions: {
+        title: 'حلول المؤسسات',
+        subtitle: 'حلول بلوكتشين مخصصة للمؤسسات، تمكين التحول الرقمي',
+        finance: { title: 'الخدمات المالية', desc: 'حلول بلوكتشين آمنة كمياً للبنوك والتأمين وإدارة الأصول', features: ['المدفوعات عبر الحدود', 'ترميز الأصول', 'تدقيق الامتثال', 'إدارة المخاطر'], benefits: ['تخفيض 60% في تكاليف المعاملات', 'التسوية من T+2 إلى الوقت الفعلي', 'امتثال تنظيمي كامل'], case_study: 'بنك دولي يوفر 20 مليون دولار سنوياً باستخدام حلنا' },
+        supply_chain: { title: 'إدارة سلسلة التوريد', desc: 'تتبع والتحقق من سلسلة التوريد من البداية إلى النهاية', features: ['تتبع المنتجات', 'إدارة المخزون', 'تتبع اللوجستيات', 'شهادة الجودة'], benefits: ['100% شفافية سلسلة التوريد', '95% تقليل المنتجات المقلدة', '40% تحسين دوران المخزون'], case_study: 'مصنع متعدد الجنسيات يحقق رؤية في الوقت الفعلي لسلسلة التوريد العالمية' },
+        healthcare: { title: 'الرعاية الصحية', desc: 'إدارة ومشاركة آمنة للبيانات الطبية', features: ['السجلات الطبية', 'تتبع الأدوية', 'التجارب السريرية', 'مطالبات التأمين'], benefits: ['أمان بيانات المرضى', 'الامتثال التنظيمي', 'تحسين الكفاءة'] },
+        government: { title: 'الخدمات الحكومية', desc: 'حلول الحكومة الرقمية والخدمات العامة', features: ['الحكومة الإلكترونية', 'الهوية الرقمية', 'أنظمة التصويت', 'إدارة الشهادات'], benefits: ['الشفافية', 'الكفاءة', 'الأمان'] },
+        deployment: {
+          title: 'خيارات النشر',
+          subtitle: 'حلول نشر مرنة لتلبية احتياجات مؤسستك',
+          cloud: { title: 'النشر السحابي', desc: 'حل سحابي مُدار بالكامل مع توفر عالٍ', features: ['التوسع التلقائي', 'CDN عالمي', '99.99% SLA', 'تحديثات مُدارة'] },
+          private: { title: 'النشر الخاص', desc: 'نشر محلي للتحكم الأقصى', features: ['تحكم كامل بالبيانات', 'أمان مخصص', 'خيار معزول', 'دعم مخصص'] },
+          hybrid: { title: 'النشر الهجين', desc: 'أفضل ما في العالمين مع بنية مرنة', features: ['توسع مرن', 'سيادة البيانات', 'تحسين التكاليف', 'تكامل سلس'] }
+        },
+        cta: { title: 'ابدأ الآن', contact: 'اتصل بنا', demo: 'طلب عرض توضيحي' }
+      },
+      partners: {
+        title: 'برنامج الشركاء',
+        subtitle: 'انضم إلى نظام Quantaureum البيئي وانمو معنا',
+        hero: { title_prefix: 'نبني معاً', title_highlight: 'الأمان الكمي', title_suffix: 'النظام البيئي' },
+        view_solutions: 'عرض الحلول',
+        types_title: 'أنواع الشركاء',
+        types_subtitle: 'نماذج شراكة متعددة لتلبية احتياجات الأعمال المختلفة',
+        types: {
+          technology: { title: 'شركاء التكنولوجيا', desc: 'التعاون مع شركات التكنولوجيا الرائدة لبناء نظام بيئي آمن كمياً', benefits: ['دعم التكامل التقني', 'تطوير حلول مشتركة', 'التسويق المشترك', 'الشهادة التقنية'], examples: ['مزودو السحابة', 'موردو الأمان', 'مكاملو الأنظمة'] },
+          developer: { title: 'شركاء المطورين', desc: 'أدوات وموارد للمطورين لبناء تطبيقات مبتكرة', benefits: ['وصول API ذو أولوية', 'دعم تقني ذو أولوية', 'التعرض لمجتمع المطورين', 'مشاركة الإيرادات'], examples: ['المطورون المستقلون', 'استوديوهات التطوير', 'الاستشاريون التقنيون'] },
+          channel: { title: 'شركاء القنوات', desc: 'توسيع الأسواق العالمية وخدمة عملاء المؤسسات معاً', benefits: ['عمولة المبيعات', 'دعم التسويق', 'تدريب المبيعات', 'مدير حساب مخصص'], examples: ['الموزعون', 'الموزعون', 'المستشارون'] }
+        },
+        featured_title: 'الشركاء المميزون',
+        featured_subtitle: 'شراكة مع الشركات الرائدة عالمياً',
+        categories: { cloud: 'خدمات السحابة', consulting: 'الاستشارات', audit: 'التدقيق', technology: 'التكنولوجيا' },
+        benefits: { title: 'مزايا الشركاء', subtitle: 'كن شريكاً واستمتع بمزايا سخية' },
+        benefits_list: {
+          growth: { title: 'تسريع النمو', desc: 'استفد من تكنولوجيا وموارد سوق Quantaureum لتسريع نمو الأعمال' },
+          revenue: { title: 'مشاركة الإيرادات', desc: 'احصل على مشاركة إيرادات سخية من خلال إحالات العملاء والمبيعات المشتركة' },
+          support: { title: 'دعم مخصص', desc: 'احصل على دعم تقني مخصص وخدمات فريق نجاح العملاء' },
+          certification: { title: 'شهادة العلامة التجارية', desc: 'احصل على شهادة شريك رسمية لتعزيز مصداقية السوق' }
+        },
+        suitable_for: 'مناسب لـ',
+        levels_title: 'مستويات الشركاء',
+        levels_subtitle: 'ارتقِ بناءً على الأداء واحصل على المزيد من المزايا',
+        requirements: 'المتطلبات',
+        levels: {
+          registered: { name: 'شريك مسجل', requirements: ['إكمال تسجيل الشريك', 'توقيع اتفاقية الشراكة'], benefits: ['الوصول إلى بوابة الشركاء', 'موارد التدريب الأساسية', 'مواد التسويق'] },
+          silver: { name: 'شريك فضي', requirements: ['مبيعات سنوية $50K+', '2+ مهندسين معتمدين'], benefits: ['جميع مزايا المسجلين', 'دعم تقني ذو أولوية', 'فرص التسويق المشترك', '10% عمولة مبيعات'] },
+          gold: { name: 'شريك ذهبي', requirements: ['مبيعات سنوية $200K+', '5+ مهندسين معتمدين'], benefits: ['جميع مزايا الفضي', 'مدير حساب مخصص', 'فرص مشاريع ذات أولوية', '15% عمولة مبيعات'] },
+          platinum: { name: 'شريك بلاتيني', requirements: ['مبيعات سنوية $500K+', '10+ مهندسين معتمدين'], benefits: ['جميع مزايا الذهبي', 'تخطيط شراكة استراتيجية', 'تطوير منتجات مشتركة', '20% عمولة مبيعات'] }
+        },
+        cta: { title: 'مستعد للانضمام؟', subtitle: 'قدم الآن لتصبح شريك Quantaureum وابدأ رحلة الفوز للجميع' },
+        apply: { title: 'كن شريكاً', button: 'قدم الآن' }
+      },
+      audit: {
+        title: 'تدقيقات الأمان',
+        subtitle: 'أمان شفاف من خلال تدقيقات مستقلة من طرف ثالث',
+        reports: { title: 'تقارير التدقيق', download: 'تحميل التقرير', view: 'عرض التفاصيل' },
+        smart_contract: { title: 'تدقيق العقود الذكية', auditor: 'CertiK', status: 'ناجح', score: '98/100', desc: 'تدقيق أمني شامل للعقود الذكية الأساسية' },
+        quantum_crypto: { title: 'تدقيق التشفير الكمي', auditor: 'Trail of Bits', status: 'ناجح', score: '99/100', desc: 'تدقيق عميق لتطبيقات التشفير ما بعد الكم' },
+        penetration: { title: 'اختبار الاختراق', auditor: 'HackerOne', status: 'ناجح', desc: 'اختبار اختراق شامل للبنية التحتية' },
+        findings: { critical: 'حرج', high: 'عالي', medium: 'متوسط', low: 'منخفض' },
+        certifications: { title: 'الشهادات', soc2: 'SOC 2 Type II', iso27001: 'ISO 27001', gdpr: 'متوافق مع GDPR' }
+      },
+      support: {
+        title: 'دعم المؤسسات',
+        subtitle: 'دعم تقني احترافي لعملاء المؤسسات',
+        plans: {
+          basic: { name: 'الدعم الأساسي', price: 'مجاني', desc: 'للتطوير والاختبار', features: ['دعم منتدى المجتمع', 'الوصول للوثائق', 'دعم البريد الإلكتروني (استجابة 48 ساعة)', 'أدلة استكشاف الأخطاء الأساسية'] },
+          professional: { name: 'الدعم الاحترافي', price: '$999/شهر', desc: 'لنشر الإنتاج', features: ['جميع الميزات الأساسية', 'بريد إلكتروني ذو أولوية (استجابة 24 ساعة)', 'دعم هاتفي', 'مهندس مخصص'] },
+          enterprise: { name: 'دعم المؤسسات', price: 'مخصص', desc: 'للنشر الحرج للمهام', features: ['جميع الميزات الاحترافية', 'دعم 24/7', 'ضمان SLA', 'دعم في الموقع'] }
+        },
+        contact: { title: 'اتصل بالدعم', email: 'البريد الإلكتروني', phone: 'الهاتف', chat: 'الدردشة المباشرة' }
+      }
+    },
+    // صفحات التكنولوجيا
+    technology: {
+      blockchain: {
+        title: 'تقنية البلوكتشين',
+        subtitle: 'بنية تحتية بلوكتشين آمنة كمياً من الجيل التالي',
+        architecture: { title: 'الهندسة المعمارية', desc: 'هندسة متعددة الطبقات مصممة للأمان وقابلية التوسع' },
+        consensus: { title: 'آلية الإجماع', desc: 'إجماع إثبات الحصة الآمن كمياً (QPOS)', features: ['كفاءة الطاقة', 'إنتاجية عالية', 'نهائية سريعة', 'مقاوم للكم'] },
+        smart_contracts: { title: 'العقود الذكية', desc: 'منصة عقود ذكية آمنة وفعالة', features: ['متوافق مع EVM', 'التحقق الرسمي', 'تحسين الغاز', 'قابل للترقية'] },
+        performance: { title: 'الأداء', tps: '100,000+ TPS', finality: '< 1 ثانية نهائية', nodes: 'شبكة عقد عالمية' }
+      },
+      quantum_security: {
+        title: 'الأمان الكمي',
+        subtitle: 'تشفير ما بعد الكم يحمي أصولك من تهديدات الحوسبة الكمية المستقبلية',
+        badges: {
+          nist: 'معيار NIST',
+          quantum_resistant: 'مقاوم للكم',
+          audit: 'تدقيق أمني'
+        },
+        pqc: {
+          title: 'تشفير ما بعد الكم',
+          subtitle: 'خوارزميات معتمدة من NIST تضمن أماناً طويل المدى ضد الهجمات الكمية'
+        },
+        algorithms: {
+          dilithium: {
+            desc: 'خوارزمية توقيع رقمي ما بعد الكم معتمدة من NIST، توفر توقيع معاملات آمن',
+            specs: ['أمان NIST المستوى 3', 'تشفير قائم على الشبكات', 'توليد توقيع سريع', 'حجم مفتاح مضغوط']
+          },
+          kyber: {
+            desc: 'آلية تغليف المفاتيح معتمدة من NIST لتبادل مفاتيح آمن',
+            specs: ['أمان NIST المستوى 3', 'قائم على Module-LWE', 'تغليف فعال', 'سرية أمامية']
+          },
+          sha3: {
+            desc: 'دالة تجزئة مقاومة للكم لسلامة البيانات والتحقق',
+            specs: ['أمان 256 بت', 'بناء الإسفنج', 'مقاوم للتصادم', 'مقاوم للصورة الأولية']
+          },
+          qrng: {
+            title: 'مولد أرقام عشوائية كمي',
+            desc: 'عشوائية حقيقية من الظواهر الكمية لتوليد مفاتيح التشفير',
+            specs: ['عشوائية كمية حقيقية', 'إنتروبيا قائمة على الأجهزة', 'مخرجات غير متوقعة', 'إنتاجية عالية']
+          }
+        },
+        audit: {
+          title: 'عملية التدقيق الأمني',
+          subtitle: 'تحقق أمني صارم متعدد المراحل يضمن سلامة النظام',
+          step: 'خطوة',
+          steps: {
+            review: { title: 'مراجعة الكود', desc: 'مراجعة يدوية من خبراء لجميع مسارات الكود الحرجة' },
+            scan: { title: 'فحص آلي', desc: 'أدوات تحليل ثابتة وديناميكية لاكتشاف الثغرات' },
+            verify: { title: 'التحقق الرسمي', desc: 'إثبات رياضي لصحة التشفير' },
+            pentest: { title: 'اختبار الاختراق', desc: 'محاكاة هجوم حقيقي من خبراء الأمان' },
+            report: { title: 'تقرير التدقيق', desc: 'توثيق شامل ومعالجة' }
+          }
+        },
+        vulnerabilities: {
+          title: 'اكتشاف الثغرات',
+          subtitle: 'مراقبة واكتشاف شامل للتهديدات الأمنية المحتملة',
+          items: [
+            { name: 'هجوم إعادة الدخول', severity: 'عالي', description: 'يمنع استغلال الاستدعاءات المتكررة في العقود الذكية' },
+            { name: 'تجاوز الأعداد الصحيحة', severity: 'عالي', description: 'عمليات رياضية آمنة تمنع ثغرات الحساب' },
+            { name: 'التحكم في الوصول', severity: 'عالي', description: 'تحقق صارم من الأذونات لجميع العمليات' },
+            { name: 'التشغيل المسبق', severity: 'متوسط', description: 'آليات حماية ترتيب المعاملات' },
+            { name: 'التلاعب بالأوراكل', severity: 'متوسط', description: 'تغذيات أسعار متعددة المصادر تمنع التلاعب' },
+            { name: 'تحسين الغاز', severity: 'منخفض', description: 'استخدام غاز فعال يمنع هجمات DoS' }
+          ]
+        },
+        severity: {
+          high: 'عالي',
+          medium: 'متوسط',
+          low: 'منخفض'
+        },
+        certifications: {
+          title: 'شهادات الأمان',
+          items: [
+            { name: 'SOC 2 Type II', desc: 'امتثال أمان المؤسسات', status: 'معتمد' },
+            { name: 'ISO 27001', desc: 'إدارة أمن المعلومات', status: 'معتمد' },
+            { name: 'NIST PQC', desc: 'معيار تشفير ما بعد الكم', status: 'معتمد' },
+            { name: 'Common Criteria', desc: 'تقييم أمني دولي', status: 'قيد التنفيذ' }
+          ]
+        },
+        status: {
+          certified: 'معتمد',
+          in_progress: 'قيد التنفيذ',
+          planned: 'مخطط'
+        },
+        cta: {
+          title: 'هل أنت مستعد لحماية أصولك؟',
+          subtitle: 'انضم إلى آلاف المستخدمين الذين يثقون في Quantaureum للأمان الكمي',
+          apply: 'ابدأ الآن',
+          docs: 'وثائق الأمان'
+        }
+      },
+      whitepaper: {
+        title: 'الورقة البيضاء التقنية',
+        subtitle: 'تعمق في هندسة تقنية Quantaureum والابتكار',
+        download: 'تحميل الورقة البيضاء',
+        sections: { abstract: 'الملخص', introduction: 'المقدمة', architecture: 'الهندسة المعمارية', consensus: 'الإجماع', cryptography: 'التشفير', economics: 'اقتصاديات الرمز', roadmap: 'خارطة الطريق' },
+        versions: { latest: 'أحدث إصدار', previous: 'الإصدارات السابقة' }
+      },
+      whitepaper_page: {
+        hero: {
+          title: 'الورقة البيضاء التقنية',
+          subtitle: 'تعمق في هندسة تقنية Quantaureum ومفاهيم الابتكار وخارطة طريق التطوير'
+        },
+        download: {
+          title: 'الورقة البيضاء التقنية لـ Quantaureum',
+          desc: 'وثائق تقنية كاملة تشمل هندسة النظام وتصميم الخوارزميات وآليات الأمان وتفاصيل التنفيذ',
+          pdf_btn: 'تحميل النسخة الكاملة (PDF)',
+          online_btn: 'القراءة عبر الإنترنت'
+        },
+        abstract: {
+          title: 'الملخص',
+          p1: 'Quantaureum هو نظام بيئي ثوري للبلوكتشين الآمن كمياً مصمم لمعالجة تحديات الأمان التي تواجهها البلوكتشين التقليدية في عصر الحوسبة الكمية. توضح هذه الورقة البيضاء ابتكاراتنا التقنية، بما في ذلك تطبيقات تشفير ما بعد الكم ونظام بيئي كامل للتطبيقات اللامركزية.',
+          p2: 'نستخدم خوارزميات تشفير ما بعد الكم المعتمدة من NIST مثل CRYSTALS-Dilithium و Kyber لضمان أن النظام يوفر أماناً موثوقاً حتى بعد ظهور الحواسيب الكمية. في الوقت نفسه، تحقق آلية إجماع Quantum Proof of Stake (QPoS) المبتكرة مع تقنية التجزئة أداءً عالياً وقابلية للتوسع.',
+          p3: 'يغطي النظام البيئي الكامل للتطبيقات مجالات متعددة بما في ذلك المالية والترفيه والسفر والبنية التحتية، مما يوفر للمستخدمين خدمات بلوكتشين شاملة.'
+        },
+        toc: {
+          title: 'جدول المحتويات',
+          items: [
+            { title: 'المقدمة', page: '3' },
+            { title: 'تقنية الأمان الكمي', page: '8' },
+            { title: 'تصميم هندسة البلوكتشين', page: '15' },
+            { title: 'آلية الإجماع', page: '22' },
+            { title: 'نظام التطور الذاتي للذكاء الاصطناعي', page: '28' },
+            { title: 'الآلة الافتراضية للعقود الذكية', page: '35' },
+            { title: 'التشغيل البيني عبر السلاسل', page: '42' },
+            { title: 'النظام البيئي للتطبيقات', page: '48' },
+            { title: 'النموذج الاقتصادي', page: '55' },
+            { title: 'تحليل الأمان', page: '62' },
+            { title: 'تقييم الأداء', page: '68' },
+            { title: 'خارطة طريق التطوير', page: '74' },
+            { title: 'الخاتمة', page: '80' }
+          ]
+        },
+        highlights: {
+          title: 'أبرز التقنيات الأساسية',
+          items: [
+            { title: 'تشفير ما بعد الكم', desc: 'خوارزميات تشفير ما بعد الكم المعتمدة من NIST تضمن الأمان في عصر الحوسبة الكمية' },
+            { title: 'التطور الذاتي للذكاء الاصطناعي', desc: 'نظام ذكاء اصطناعي مع قدرات التعلم الفوقي والتحسين الذاتي المتكرر، يحسن أداء المنصة باستمرار' },
+            { title: 'إجماع عالي الأداء', desc: 'آلية إجماع QPoS المبتكرة تحقق إنتاجية عالية ومعالجة معاملات منخفضة الكمون' },
+            { title: 'التشغيل البيني عبر السلاسل', desc: 'ربط سلس لشبكات بلوكتشين متعددة لبناء نظام بيئي اقتصادي رقمي موحد' },
+            { title: 'العقود الذكية', desc: 'بيئة تنفيذ عقود ذكية آمنة كمياً تدعم التطبيقات اللامركزية المعقدة' },
+            { title: 'النظام البيئي للتطبيقات', desc: 'نظام بيئي كامل للتطبيقات يغطي المالية والترفيه والسفر والمزيد' }
+          ]
+        },
+        team: {
+          title: 'فريق البحث',
+          members: [
+            { role: 'كبير العلماء', degree: 'دكتوراه في التشفير', background: 'MIT، 50+ ورقة منشورة', emoji: '👨‍🔬' },
+            { role: 'خبير الحوسبة الكمية', degree: 'دكتوراه في الفيزياء', background: 'فريق Google Quantum AI السابق', emoji: '👨‍🔬' },
+            { role: 'مهندس البلوكتشين', degree: 'دكتوراه في علوم الحاسوب', background: 'مطور Ethereum Core السابق', emoji: '👩‍💻' },
+            { role: 'خبير أنظمة الذكاء الاصطناعي', degree: 'دكتوراه في الذكاء الاصطناعي', background: 'باحث OpenAI السابق', emoji: '🤖' }
+          ]
+        }
+      },
+      blog: {
+        title: 'المدونة التقنية',
+        subtitle: 'آخر التحديثات والرؤى التقنية',
+        categories: { all: 'الكل', development: 'التطوير', security: 'الأمان', research: 'البحث', announcements: 'الإعلانات' },
+        read_more: 'اقرأ المزيد',
+        published: 'نُشر',
+        author: 'المؤلف'
+      }
+    },
+    // صفحات المصادقة
+    auth: {
+      login: {
+        title: 'مرحباً بعودتك',
+        subtitle: 'سجل الدخول إلى حساب Quantaureum الخاص بك',
+        email: 'عنوان البريد الإلكتروني',
+        password: 'كلمة المرور',
+        remember: 'تذكرني',
+        forgot: 'نسيت كلمة المرور؟',
+        submit: 'تسجيل الدخول',
+        no_account: 'ليس لديك حساب؟',
+        register: 'سجل',
+        or: 'أو تابع مع',
+        google: 'تابع مع Google',
+        github: 'تابع مع GitHub',
+        errors: { invalid: 'بريد إلكتروني أو كلمة مرور غير صالحة', required: 'هذا الحقل مطلوب' }
+      },
+      register: {
+        title: 'إنشاء حساب',
+        subtitle: 'انضم إلى ثورة البلوكتشين الآمنة كمياً',
+        username: 'اسم المستخدم',
+        email: 'عنوان البريد الإلكتروني',
+        password: 'كلمة المرور',
+        confirm_password: 'تأكيد كلمة المرور',
+        terms: 'أوافق على شروط الخدمة وسياسة الخصوصية',
+        submit: 'إنشاء حساب',
+        have_account: 'لديك حساب بالفعل؟',
+        login: 'تسجيل الدخول',
+        password_requirements: { title: 'يجب أن تحتوي كلمة المرور على:', length: '8 أحرف على الأقل', uppercase: 'حرف كبير واحد', lowercase: 'حرف صغير واحد', number: 'رقم واحد', special: 'حرف خاص واحد' }
+      },
+      forgot_password: {
+        title: 'إعادة تعيين كلمة المرور',
+        subtitle: 'أدخل بريدك الإلكتروني لتلقي تعليمات إعادة التعيين',
+        email: 'عنوان البريد الإلكتروني',
+        submit: 'إرسال رابط إعادة التعيين',
+        back: 'العودة لتسجيل الدخول',
+        success: 'تم إرسال رابط إعادة التعيين! تحقق من بريدك الإلكتروني.'
+      }
+    },
+    // صفحات المجتمع الفرعية
+    community_sub: {
+      bug_bounty: {
+        title: 'برنامج مكافآت الأخطاء',
+        subtitle: 'ساعدنا في تحسين الأمان واكسب مكافآت',
+        severity: { critical: { level: 'حرج', reward: '$10,000 - $50,000', desc: 'ثغرات قد تؤدي إلى خسارة الأموال أو فشل النظام الكامل' }, high: { level: 'عالي', reward: '$5,000 - $10,000', desc: 'مشاكل أمنية خطيرة أو بيانات المستخدم' }, medium: { level: 'متوسط', reward: '$1,000 - $5,000', desc: 'مشاكل أمنية متوسطة التأثير' }, low: { level: 'منخفض', reward: '$100 - $1,000', desc: 'مشاكل أمنية بسيطة أو اقتراحات تحسين' } },
+        scope: { in_scope: 'ضمن النطاق', out_scope: 'خارج النطاق', items_in: ['عقود الشبكة الرئيسية الذكية', 'تطبيقات المحفظة الكمية', 'مستكشف البلوكتشين', 'عقود بروتوكول DeFi', 'نقاط نهاية API و RPC', 'عقود جسر السلسلة المتقاطعة'], items_out: ['خدمات الطرف الثالث', 'الهندسة الاجتماعية', 'هجمات DoS/DDoS', 'مشاكل معروفة قيد الإصلاح'] },
+        rules: { title: 'قواعد البرنامج', items: ['الإبلاغ عن الثغرات بمسؤولية', 'عدم استغلال الثغرات', 'تقديم خطوات إعادة إنتاج مفصلة', 'انتظار الإصلاح قبل الكشف'] },
+        submit: 'إرسال التقرير'
+      },
+      guidelines: {
+        title: 'إرشادات المجتمع',
+        subtitle: 'قواعد لمجتمع محترم ومنتج',
+        rules: { respect: { title: 'كن محترماً', desc: 'عامل جميع أعضاء المجتمع باحترام' }, constructive: { title: 'كن بناءً', desc: 'قدم ملاحظات مفيدة وبناءة' }, no_spam: { title: 'لا للرسائل المزعجة', desc: 'تجنب الرسائل المزعجة والترويج الذاتي والمحتوى خارج الموضوع' }, no_illegal: { title: 'لا للمحتوى غير القانوني', desc: 'لا تشارك محتوى غير قانوني أو ضار' } },
+        enforcement: { title: 'التنفيذ', warning: 'تحذير', temp_ban: 'حظر مؤقت', perm_ban: 'حظر دائم' }
+      },
+      members: {
+        title: 'أعضاء المجتمع',
+        subtitle: 'تعرف على مجتمعنا النابض بالحياة',
+        search: 'البحث عن أعضاء...',
+        filters: { all: 'جميع الأعضاء', active: 'الأكثر نشاطاً', new: 'الأحدث', top: 'أفضل المساهمين' },
+        stats: { posts: 'المنشورات', reputation: 'السمعة', joined: 'انضم' },
+        follow: 'متابعة',
+        following: 'متابَع'
+      },
+      notifications: {
+        title: 'الإشعارات',
+        mark_all_read: 'تحديد الكل كمقروء',
+        types: { mention: 'ذكرك', reply: 'رد على منشورك', like: 'أعجب بمنشورك', follow: 'بدأ متابعتك', announcement: 'إعلان جديد' },
+        empty: 'لا توجد إشعارات بعد'
+      }
+    },
+    // صفحات المطورين الفرعية
+    developers_sub: {
+      api: {
+        title: 'مرجع API',
+        subtitle: 'وثائق API الكاملة لـ Quantaureum',
+        sections: { authentication: 'المصادقة', wallet: 'API المحفظة', transaction: 'API المعاملات', blockchain: 'API البلوكتشين', smart_contract: 'API العقود الذكية' },
+        endpoints: 'نقاط النهاية',
+        parameters: 'المعلمات',
+        response: 'الاستجابة',
+        example: 'مثال',
+        try_it: 'جربه'
+      },
+      sdk: {
+        title: 'تحميلات SDK',
+        subtitle: 'SDKs رسمية لعدة لغات برمجة',
+        languages: { javascript: 'JavaScript/TypeScript', python: 'Python', go: 'Go', rust: 'Rust', java: 'Java' },
+        download: 'تحميل',
+        docs: 'الوثائق',
+        github: 'GitHub',
+        version: 'الإصدار',
+        install: 'التثبيت'
+      },
+      examples: {
+        title: 'أمثلة الكود',
+        subtitle: 'تعلم من خلال أمثلة الكود',
+        categories: { wallet: 'عمليات المحفظة', transactions: 'المعاملات', smart_contracts: 'العقود الذكية', defi: 'تكامل DeFi' },
+        copy: 'نسخ الكود',
+        run: 'تشغيل المثال',
+        language: 'اللغة'
+      }
+    },
+    // صفحات الإعدادات الفرعية
+    settings_sub: {
+      kyc: {
+        title: 'التحقق من الهوية KYC',
+        subtitle: 'أكمل التحقق من الهوية لفتح جميع الميزات',
+        steps: { personal: 'المعلومات الشخصية', document: 'رفع المستندات', verification: 'التحقق' },
+        personal: { first_name: 'الاسم الأول', last_name: 'اسم العائلة', dob: 'تاريخ الميلاد', nationality: 'الجنسية', address: 'العنوان' },
+        document: { type: 'نوع المستند', passport: 'جواز السفر', id_card: 'بطاقة الهوية', drivers_license: 'رخصة القيادة', front: 'الجهة الأمامية', back: 'الجهة الخلفية', selfie: 'صورة شخصية مع المستند' },
+        status: { pending: 'قيد المراجعة', approved: 'موافق عليه', rejected: 'مرفوض' },
+        submit: 'إرسال للتحقق'
+      }
+    },
+    // صفحات بيع الرموز الفرعية
+    token_sale_sub: {
+      orders: {
+        title: 'طلباتي',
+        subtitle: 'عرض سجل شراء الرموز الخاص بك',
+        columns: { order_id: 'رقم الطلب', date: 'التاريخ', amount: 'الكمية', price: 'السعر', status: 'الحالة', action: 'الإجراء' },
+        status: { pending: 'قيد الانتظار', completed: 'مكتمل', failed: 'فشل', refunded: 'مسترد' },
+        empty: 'لا توجد طلبات بعد',
+        view_details: 'عرض التفاصيل'
+      },
+      referral: {
+        title: 'برنامج الإحالة',
+        subtitle: 'ادعُ أصدقاءك واكسب مكافآت',
+        your_link: 'رابط الإحالة الخاص بك',
+        copy: 'نسخ الرابط',
+        stats: { referrals: 'إجمالي الإحالات', earnings: 'إجمالي الأرباح', pending: 'المكافآت المعلقة' },
+        how_it_works: { title: 'كيف يعمل', step1: 'شارك رابط الإحالة الفريد الخاص بك', step2: 'يسجل الأصدقاء ويشترون الرموز', step3: 'اكسب 5% عمولة على مشترياتهم' },
+        history: { title: 'سجل الإحالات', columns: { user: 'المستخدم', date: 'التاريخ', amount: 'مبلغ الشراء', commission: 'العمولة' } }
+      }
+    },
+    // صفحة الإشعارات
+    notifications_page: {
+      title: 'الإشعارات',
+      unread_count: '{{count}} غير مقروءة',
+      mark_all_read: 'تحديد الكل كمقروء',
+      loading: 'جاري التحميل...',
+      no_notifications: 'لا توجد إشعارات',
+      filters: {
+        all: 'الكل',
+        unread: 'غير مقروء',
+        like: 'إعجاب',
+        comment: 'تعليقات',
+        follow: 'متابعات',
+        system: 'النظام'
+      },
+      time: {
+        just_now: 'الآن',
+        minutes_ago: 'منذ {{count}} دقائق',
+        hours_ago: 'منذ {{count}} ساعات',
+        days_ago: 'منذ {{count}} أيام'
+      }
+    },
+    // صفحة البحث
+    search_page: {
+      title: 'نتائج البحث',
+      search_placeholder: 'البحث في المناقشات...',
+      searching: 'جاري البحث...',
+      loading: 'جاري التحميل...',
+      no_results: 'لا توجد نتائج لـ "{{query}}"',
+      try_different: 'جرب كلمات مفتاحية مختلفة',
+      found_results: 'تم العثور على {{count}} نتيجة',
+      enter_keywords: 'أدخل كلمات مفتاحية للبحث'
+    },
+    // صفحة شركاء المجتمع
+    community_partners: {
+      title: 'برنامج الشراكة',
+      subtitle: 'ابنِ مستقبلاً آمناً كمياً مع Quantaureum',
+      breadcrumb: {
+        community: 'المجتمع',
+        partners: 'الشركاء'
+      },
+      types: {
+        enterprise: {
+          title: 'شركاء المؤسسات',
+          description: 'تعاون معنا لدمج تقنية البلوكتشين الآمنة كمياً في عملك',
+          benefits: ['دعم تقني ذو أولوية', 'حلول مخصصة', 'فرص تسويق مشتركة', 'وصول مبكر للميزات']
+        },
+        technology: {
+          title: 'شركاء التكنولوجيا',
+          description: 'طور بشكل مشترك حلول وأدوات بلوكتشين مبتكرة',
+          benefits: ['مشاركة الموارد التقنية', 'وصول API ذو أولوية', 'مشاريع تطوير مشتركة', 'دعم التدريب التقني']
+        },
+        ecosystem: {
+          title: 'شركاء النظام البيئي',
+          description: 'انضم إلى نظامنا البيئي لتطوير صناعة البلوكتشين معاً',
+          benefits: ['دعم صندوق النظام البيئي', 'موارد المجتمع', 'التعاون في الفعاليات', 'عرض العلامة التجارية']
+        }
+      },
+      partner_categories: {
+        gold_storage: 'تخزين الذهب',
+        oracle: 'أوراكل',
+        hardware_wallet: 'محفظة الأجهزة',
+        security_audit: 'تدقيق الأمان',
+        cloud_service: 'خدمة سحابية',
+        cross_chain: 'عبر السلاسل'
+      },
+      our_partners: 'شركاؤنا',
+      cta: {
+        title: 'كن شريكاً',
+        description: 'سواء كنت شركة أو مطوراً أو فريق مشروع، نرحب بك في نظام Quantaureum البيئي',
+        apply: 'التقدم للشراكة'
+      }
+    },
+    // صفحة تفاصيل المنشور
+    post_detail: {
+      loading: 'جاري التحميل...',
+      error: {
+        not_found: 'المنشور غير موجود',
+        load_failed: 'فشل التحميل، يرجى المحاولة مرة أخرى'
+      },
+      back_to_community: 'العودة إلى المجتمع',
+      categories: {
+        general: 'مناقشة عامة',
+        technical: 'أسئلة تقنية',
+        defi: 'DeFi والتداول',
+        governance: 'مقترحات الحوكمة'
+      },
+      comments: 'التعليقات',
+      comments_count: '{{count}} تعليقات',
+      comment_placeholder: 'اكتب تعليقك...',
+      submit_comment: 'نشر التعليق',
+      submitting: 'جاري الإرسال...',
+      login_to_comment: 'سجل الدخول للتعليق',
+      login_now: 'تسجيل الدخول',
+      no_comments: 'لا توجد تعليقات بعد، كن الأول!',
+      time: {
+        just_now: 'الآن',
+        minutes_ago: 'منذ {{count}} دقائق',
+        hours_ago: 'منذ {{count}} ساعات',
+        days_ago: 'منذ {{count}} أيام'
+      }
+    },
+    // صفحة الموضوع
+    topic_page: {
+      sample_content: 'هذه مناقشة مفصلة حول "{{topic}}". هنا يمكننا استكشاف التفاصيل التقنية وحالات الاستخدام واتجاهات التطوير المستقبلية.',
+      levels: {
+        quantum_expert: 'خبير كمي',
+        active_member: 'عضو نشط',
+        newbie: 'مبتدئ'
+      },
+      joined_year: 'انضم في {{year}}',
+      categories: {
+        quantum_computing: 'الحوسبة الكمية'
+      },
+      views: '{{count}} مشاهدات',
+      replies_count: '{{count}} ردود',
+      reply: 'رد',
+      share: 'مشاركة',
+      replies_title: 'الردود ({{count}})',
+      reply_placeholder: 'اكتب ردك...',
+      post_reply: 'نشر الرد',
+      time: {
+        hours_ago: 'منذ {{count}} ساعات'
+      },
+      sample_replies: {
+        reply1: 'تحليل ثاقب جداً! أتفق بشكل خاص مع الآراء حول اتجاهات تطوير التكنولوجيا الكمية.',
+        reply2: 'كمبتدئ، علمني هذا الموضوع الكثير. هل يمكنك التوصية ببعض الموارد التمهيدية؟'
+      }
+    },
+    // صفحة ملف المستخدم
+    user_profile_page: {
+      title_quantum_expert: 'خبير التكنولوجيا الكمية',
+      sample_bio: 'أنا باحث متخصص في الحوسبة الكمية والتشفير الكمي. شغوف بمشاركة المعرفة ومساعدة أعضاء المجتمع على فهم أحدث التطورات في التكنولوجيا الكمية.',
+      sample_location: 'دبي، الإمارات',
+      joined_date: 'مارس {{date}}',
+      joined_at: 'انضم',
+      personal_website: 'الموقع الشخصي',
+      stats: {
+        posts: 'المنشورات',
+        likes: 'الإعجابات',
+        followers: 'المتابعون',
+        following: 'يتابع'
+      },
+      follow: 'متابعة',
+      send_message: 'إرسال رسالة',
+      achievement_badges: 'شارات الإنجاز',
+      badges: {
+        quantum_pioneer: 'رائد كمي',
+        knowledge_sharer: 'ناشر المعرفة',
+        community_contributor: 'مساهم في المجتمع'
+      },
+      recent_posts: 'المنشورات الأخيرة',
+      view_more_posts: 'عرض المزيد من المنشورات',
+      time: {
+        days_ago: 'منذ {{count}} أيام',
+        week_ago: 'منذ {{count}} أسبوع'
+      },
+      sample_posts: {
+        post1: {
+          title: 'تطبيقات التشابك الكمي في التشفير',
+          category: 'التشفير الكمي'
+        },
+        post2: {
+          title: 'فهم التراكب الكمي',
+          category: 'الفيزياء الكمية'
+        },
+        post3: {
+          title: 'الوضع الحالي لتطوير الحوسبة الكمية',
+          category: 'الحوسبة الكمية'
+        }
+      }
+    },
+    // صفحة فئة المنتدى
+    forum_category: {
+      category_not_found: 'الفئة غير موجودة',
+      back_to_community: 'العودة إلى المجتمع',
+      categories: {
+        general: { name: 'مناقشة عامة', description: 'مناقشات عامة حول Quantaureum، بما في ذلك الخبرات والنصائح' },
+        technical: { name: 'تبادل تقني', description: 'مناقشات تقنية، مشاركة الكود، تبادل الحلول' },
+        defi: { name: 'مناقشة DeFi', description: 'بروتوكولات DeFi، تعدين السيولة، استراتيجيات العائد' },
+        trading: { name: 'مناقشة التداول', description: 'تحليل السوق، استراتيجيات التداول، مناقشات الأسعار' },
+        governance: { name: 'حوكمة المجتمع', description: 'حوكمة DAO، مناقشات المقترحات، التصويت' },
+        events: { name: 'الفعاليات', description: 'معلومات الفعاليات عبر الإنترنت وغير المتصلة، تقارير الفعاليات' }
+      },
+      stats: {
+        total_posts: 'إجمالي المنشورات',
+        total_topics: 'المواضيع',
+        latest_post: 'آخر منشور'
+      },
+      by: 'بواسطة',
+      filters: {
+        all: 'جميع المنشورات',
+        pinned: 'المنشورات المثبتة',
+        unlocked: 'المنشورات المفتوحة'
+      },
+      sort: {
+        latest: 'الأحدث',
+        popular: 'الأكثر ردوداً',
+        views: 'الأكثر مشاهدة'
+      },
+      new_topic: 'موضوع جديد',
+      pinned: 'مثبت',
+      locked: 'مقفل',
+      last_reply: 'آخر رد',
+      pagination: {
+        prev: 'السابق',
+        next: 'التالي'
+      },
+      time: {
+        minutes_ago: 'منذ {{count}} دقيقة',
+        hours_ago: 'منذ {{count}} ساعة',
+        days_ago: 'منذ {{count}} يوم'
+      },
+      sample_posts: {
+        general: 'نصائح استخدام المحفظة الكمية',
+        technical: 'تحسين خوارزميات ما بعد الكم',
+        defi: 'مناقشة مجمع السيولة الجديد',
+        trading: 'تحليل سعر QAU',
+        governance: 'التصويت على مقترح الحوكمة الجديد',
+        events: 'معاينة AMA الأسبوع القادم'
+      },
+      sample_post_titles: {
+        post1: '🚀 إطلاق المحفظة الكمية v2.0 مع دعم متعدد السلاسل',
+        post2: '💡 كيف تخزن المفاتيح الكمية بأمان؟',
+        post3: '📊 تحليل عميق لاقتصاديات رمز QAU'
+      },
+      sample_post_contents: {
+        post1: 'يسعدنا الإعلان عن الإطلاق الرسمي للمحفظة الكمية v2.0! يجلب هذا التحديث العديد من الميزات المهمة...',
+        post2: 'مع تطور الحوسبة الكمية، تواجه طرق التشفير التقليدية تحديات...',
+        post3: 'رمز QAU كنواة لنظام Quantaureum البيئي لديه نموذج اقتصادي مصمم بأناقة...'
+      },
+      tags: {
+        update: 'تحديث',
+        wallet: 'محفظة',
+        new_feature: 'ميزة جديدة',
+        security: 'أمان',
+        quantum_key: 'مفتاح كمي',
+        tutorial: 'دليل',
+        tokenomics: 'اقتصاديات الرمز',
+        analysis: 'تحليل'
+      }
+    },
+    // صفحة أمثلة المطورين
+    dev_examples: {
+      badge: 'أمثلة الكود',
+      title: 'البدء السريع',
+      title_highlight: 'أمثلة الكود',
+      subtitle: 'أمثلة كود جاهزة للنسخ واللصق لمساعدتك على دمج Quantaureum بسرعة',
+      full_docs: 'التوثيق الكامل',
+      view_docs: 'عرض التوثيق',
+      run_online: 'تشغيل عبر الإنترنت',
+      categories: {
+        all: 'الكل',
+        wallet: 'المحفظة',
+        transaction: 'المعاملة',
+        smart_contract: 'العقد الذكي',
+        defi: 'DeFi',
+        quantum_security: 'الأمان الكمي'
+      },
+      examples: {
+        connect_wallet: {
+          title: 'ربط المحفظة',
+          description: 'الاتصال بمحفظة Quantaureum باستخدام JavaScript SDK'
+        },
+        send_transaction: {
+          title: 'إرسال معاملة',
+          description: 'إرسال رموز QAU إلى عنوان محدد'
+        },
+        deploy_contract: {
+          title: 'نشر عقد ذكي',
+          description: 'نشر عقد رمز بسيط'
+        },
+        staking: {
+          title: 'تخزين QAU',
+          description: 'تخزين QAU في عقد المدققين للحصول على مكافآت'
+        },
+        quantum_signature: {
+          title: 'توقيع آمن كمياً',
+          description: 'توقيع الرسائل باستخدام خوارزميات تشفير ما بعد الكم'
+        }
+      },
+      cta: {
+        title: 'مستعد للبناء؟',
+        description: 'راجع التوثيق الكامل للميزات المتقدمة وأفضل الممارسات',
+        view_docs: 'عرض التوثيق الكامل',
+        download_sdk: 'تحميل SDK'
+      }
+    },
+    // صفحة الرسائل
+    messages_page: {
+      search_placeholder: 'البحث في المحادثات...',
+      no_conversations: 'لا توجد محادثات',
+      select_conversation: 'اختر محادثة لبدء الدردشة',
+      message_placeholder: 'اكتب رسالة...',
+      time: {
+        just_now: 'الآن',
+        minutes_ago: 'منذ {{count}} دقائق',
+        hours_ago: 'منذ {{count}} ساعات',
+        days_ago: 'منذ {{count}} أيام',
+        you: 'أنت: '
+      }
+    },
+    // صفحة تحميل SDK
+    sdk_page: {
+      title: 'تحميل SDK',
+      subtitle: 'قم بتحميل مجموعة تطوير Quantaureum لبناء تطبيقات بلوكتشين آمنة كمياً',
+      available: 'متاح',
+      version: 'الإصدار',
+      size: 'الحجم',
+      sdks: {
+        typescript: { title: 'TypeScript SDK', description: 'SDK كامل لتطبيقات الويب و Node.js مع دعم TypeScript', download: 'تحميل TypeScript SDK' },
+        python: { title: 'Python SDK', description: 'مكتبة Python لتحليل البيانات وخدمات الخلفية مع دعم async', download: 'تحميل Python SDK' },
+        go: { title: 'Go SDK', description: 'مجموعة تطوير Go عالية الأداء مع دعم التزامن', view: 'عرض Go SDK' },
+        rust: { title: 'Rust SDK', description: 'مجموعة تطوير Rust آمنة وفعالة مع async وأمان الأنواع', view: 'عرض Rust SDK' },
+        java: { title: 'Java SDK', description: 'مجموعة تطوير Java للمؤسسات مع async وأمان الأنواع', view: 'عرض Java SDK' },
+        cpp: { title: 'C++ SDK', description: 'مجموعة أدوات نظام عالية الأداء مع C++17 الحديث', download: 'تحميل C++ SDK' }
+      },
+      requirements: {
+        title: 'متطلبات النظام',
+        subtitle: 'تأكد من أن بيئة التطوير الخاصة بك تلبي المتطلبات التالية',
+        minimum: { title: 'الحد الأدنى من المتطلبات', os: 'نظام التشغيل: Windows 10، macOS 10.15، Ubuntu 18.04+', memory: 'الذاكرة: 4GB RAM', storage: 'التخزين: 2GB مساحة متاحة', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
+        recommended: { title: 'الموصى به', os: 'نظام التشغيل: أحدث إصدار', memory: 'الذاكرة: 8GB+ RAM', storage: 'التخزين: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
   }

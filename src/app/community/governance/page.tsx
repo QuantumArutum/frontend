@@ -20,6 +20,8 @@ import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
 import { governanceService, Proposal, Delegate } from '../../../services/communityService';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 interface GovernanceStats {
   totalStaked: number;
@@ -29,6 +31,7 @@ interface GovernanceStats {
 }
 
 export default function GovernancePage() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'proposals' | 'delegates' | 'create'>('proposals');
   const [loading, setLoading] = useState(true);
   const [voting, setVoting] = useState<string | null>(null);
@@ -165,12 +168,12 @@ export default function GovernancePage() {
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'active': return '投票中';
-      case 'pending': return '即将开始';
-      case 'discussion': return '讨论中';
-      case 'passed': return '已通过';
-      case 'rejected': return '已拒绝';
-      default: return '未知';
+      case 'active': return t('governance_page.status.active');
+      case 'pending': return t('governance_page.status.pending');
+      case 'discussion': return t('governance_page.status.discussion');
+      case 'passed': return t('governance_page.status.passed');
+      case 'rejected': return t('governance_page.status.rejected');
+      default: return t('governance_page.status.unknown');
     }
   };
 
@@ -182,10 +185,10 @@ export default function GovernancePage() {
         <div className="text-center mb-12">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
             <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-4">
-              社区治理
+              {t('governance_page.title')}
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              参与Quantaureum的去中心化治理，共同决定生态系统的未来发展方向
+              {t('governance_page.subtitle')}
             </p>
           </motion.div>
 
@@ -196,7 +199,7 @@ export default function GovernancePage() {
             className="bg-gradient-to-r from-purple-500 to-cyan-500 text-white px-8 py-3 rounded-xl font-medium hover:from-purple-600 hover:to-cyan-600 transition-all flex items-center gap-2 mx-auto"
           >
             <Plus className="h-5 w-5" />
-            创建治理提案
+            {t('governance_page.create_proposal')}
           </motion.button>
         </div>
 
@@ -208,7 +211,7 @@ export default function GovernancePage() {
               <TrendingUp className="h-5 w-5 text-green-400" />
             </div>
             <div className="text-3xl font-bold text-white mb-1">{stats.totalStaked.toLocaleString()}</div>
-            <div className="text-gray-400">QAU质押总量</div>
+            <div className="text-gray-400">{t('governance_page.stats.total_staked')}</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
             <div className="flex items-center justify-between mb-2">
@@ -216,7 +219,7 @@ export default function GovernancePage() {
               <TrendingUp className="h-5 w-5 text-green-400" />
             </div>
             <div className="text-3xl font-bold text-white mb-1">{stats.activeVoters.toLocaleString()}</div>
-            <div className="text-gray-400">活跃投票者</div>
+            <div className="text-gray-400">{t('governance_page.stats.active_voters')}</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
             <div className="flex items-center justify-between mb-2">
@@ -224,7 +227,7 @@ export default function GovernancePage() {
               <TrendingUp className="h-5 w-5 text-green-400" />
             </div>
             <div className="text-3xl font-bold text-white mb-1">{stats.passedProposals}</div>
-            <div className="text-gray-400">已通过提案</div>
+            <div className="text-gray-400">{t('governance_page.stats.passed_proposals')}</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
             <div className="flex items-center justify-between mb-2">
@@ -232,7 +235,7 @@ export default function GovernancePage() {
               <TrendingUp className="h-5 w-5 text-green-400" />
             </div>
             <div className="text-3xl font-bold text-white mb-1">{stats.participationRate}%</div>
-            <div className="text-gray-400">平均参与率</div>
+            <div className="text-gray-400">{t('governance_page.stats.participation_rate')}</div>
           </div>
         </motion.div>
 
@@ -250,7 +253,7 @@ export default function GovernancePage() {
                       : 'text-white hover:bg-white/10'
                   }`}
                 >
-                  {tab === 'proposals' ? '治理提案' : tab === 'delegates' ? '投票代表' : '创建提案'}
+                  {tab === 'proposals' ? t('governance_page.tabs.proposals') : tab === 'delegates' ? t('governance_page.tabs.delegates') : t('governance_page.tabs.create')}
                 </button>
               ))}
             </div>
@@ -260,7 +263,7 @@ export default function GovernancePage() {
         {loading && (
           <div className="text-center py-12">
             <RefreshCw className="w-8 h-8 text-purple-400 animate-spin mx-auto" />
-            <p className="text-gray-400 mt-4">加载中...</p>
+            <p className="text-gray-400 mt-4">{t('governance_page.loading')}</p>
           </div>
         )}
 
@@ -309,7 +312,7 @@ export default function GovernancePage() {
                       <div className="text-2xl font-bold text-white mb-1">
                         {((proposal.votes.for / proposal.totalVotes) * 100).toFixed(1)}%
                       </div>
-                      <div className="text-sm text-gray-400">支持率</div>
+                      <div className="text-sm text-gray-400">{t('governance_page.voting.support_rate')}</div>
                     </div>
                   )}
                 </div>
@@ -317,7 +320,7 @@ export default function GovernancePage() {
                 {proposal.status === 'active' && (
                   <div className="mb-4">
                     <div className="flex items-center justify-between text-sm mb-2">
-                      <span className="text-gray-400">投票进度</span>
+                      <span className="text-gray-400">{t('governance_page.voting.progress')}</span>
                       <span className="text-white">{proposal.totalVotes.toLocaleString()} / {proposal.quorum.toLocaleString()} QAU</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
@@ -341,15 +344,15 @@ export default function GovernancePage() {
                   <div className="grid grid-cols-3 gap-4 mb-4">
                     <div className="text-center">
                       <div className="text-lg font-bold text-green-400">{proposal.votes.for.toLocaleString()}</div>
-                      <div className="text-sm text-gray-400">支持</div>
+                      <div className="text-sm text-gray-400">{t('governance_page.voting.for')}</div>
                     </div>
                     <div className="text-center">
                       <div className="text-lg font-bold text-red-400">{proposal.votes.against.toLocaleString()}</div>
-                      <div className="text-sm text-gray-400">反对</div>
+                      <div className="text-sm text-gray-400">{t('governance_page.voting.against')}</div>
                     </div>
                     <div className="text-center">
                       <div className="text-lg font-bold text-gray-400">{proposal.votes.abstain.toLocaleString()}</div>
-                      <div className="text-sm text-gray-400">弃权</div>
+                      <div className="text-sm text-gray-400">{t('governance_page.voting.abstain')}</div>
                     </div>
                   </div>
                 )}
@@ -363,7 +366,7 @@ export default function GovernancePage() {
                         className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 rounded-lg font-medium hover:from-green-600 hover:to-emerald-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                       >
                         {voting === proposal.id && <RefreshCw className="w-4 h-4 animate-spin" />}
-                        投票支持
+                        {t('governance_page.voting.vote_for')}
                       </button>
                       <button 
                         onClick={() => handleVote(proposal.id, 'against')}
@@ -371,12 +374,12 @@ export default function GovernancePage() {
                         className="flex-1 bg-gradient-to-r from-red-500 to-pink-500 text-white py-2 rounded-lg font-medium hover:from-red-600 hover:to-pink-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                       >
                         {voting === proposal.id && <RefreshCw className="w-4 h-4 animate-spin" />}
-                        投票反对
+                        {t('governance_page.voting.vote_against')}
                       </button>
                     </>
                   )}
                   <button className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-all flex items-center gap-2">
-                    查看详情
+                    {t('governance_page.voting.view_details')}
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </div>
@@ -408,15 +411,15 @@ export default function GovernancePage() {
                 
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">委托票数</span>
+                    <span className="text-gray-400">{t('governance_page.delegates.delegated_votes')}</span>
                     <span className="text-white font-medium">{delegate.delegatedVotes.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">参与率</span>
+                    <span className="text-gray-400">{t('governance_page.delegates.participation')}</span>
                     <span className="text-white font-medium">{delegate.participationRate}%</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">关注者</span>
+                    <span className="text-gray-400">{t('governance_page.delegates.followers')}</span>
                     <span className="text-white font-medium">{delegate.followers.toLocaleString()}</span>
                   </div>
                 </div>
@@ -427,7 +430,7 @@ export default function GovernancePage() {
                   className="w-full mt-4 bg-gradient-to-r from-purple-500 to-cyan-500 text-white py-2 rounded-lg font-medium hover:from-purple-600 hover:to-cyan-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {delegating === delegate.id && <RefreshCw className="w-4 h-4 animate-spin" />}
-                  {delegating === delegate.id ? '委托中...' : '委托投票权'}
+                  {delegating === delegate.id ? t('governance_page.delegates.delegating') : t('governance_page.delegates.delegate_to')}
                 </button>
               </motion.div>
             ))}
@@ -438,14 +441,14 @@ export default function GovernancePage() {
         {!loading && activeTab === 'create' && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl mx-auto">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <h2 className="text-2xl font-bold text-white mb-6">创建治理提案</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">{t('governance_page.create_form.title')}</h2>
               
               <form onSubmit={handleSubmitProposal} className="space-y-6">
                 <div>
-                  <label className="block text-white font-medium mb-2">提案标题</label>
+                  <label className="block text-white font-medium mb-2">{t('governance_page.create_form.proposal_title')}</label>
                   <input
                     type="text"
-                    placeholder="输入提案标题..."
+                    placeholder={t('governance_page.create_form.proposal_title_placeholder')}
                     value={proposalForm.title}
                     onChange={(e) => setProposalForm({ ...proposalForm, title: e.target.value })}
                     className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
@@ -454,24 +457,24 @@ export default function GovernancePage() {
                 </div>
                 
                 <div>
-                  <label className="block text-white font-medium mb-2">提案分类</label>
+                  <label className="block text-white font-medium mb-2">{t('governance_page.create_form.category')}</label>
                   <select 
                     value={proposalForm.category}
                     onChange={(e) => setProposalForm({ ...proposalForm, category: e.target.value })}
                     className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-500/50"
                   >
-                    <option value="tech">技术升级</option>
-                    <option value="economy">经济模型</option>
-                    <option value="ecosystem">生态发展</option>
-                    <option value="governance">社区治理</option>
-                    <option value="security">安全改进</option>
+                    <option value="tech">{t('governance_page.create_form.categories.tech')}</option>
+                    <option value="economy">{t('governance_page.create_form.categories.economy')}</option>
+                    <option value="ecosystem">{t('governance_page.create_form.categories.ecosystem')}</option>
+                    <option value="governance">{t('governance_page.create_form.categories.governance')}</option>
+                    <option value="security">{t('governance_page.create_form.categories.security')}</option>
                   </select>
                 </div>
                 
                 <div>
-                  <label className="block text-white font-medium mb-2">提案描述</label>
+                  <label className="block text-white font-medium mb-2">{t('governance_page.create_form.description')}</label>
                   <textarea
-                    placeholder="详细描述您的提案内容..."
+                    placeholder={t('governance_page.create_form.description_placeholder')}
                     rows={6}
                     value={proposalForm.description}
                     onChange={(e) => setProposalForm({ ...proposalForm, description: e.target.value })}
@@ -481,10 +484,10 @@ export default function GovernancePage() {
                 </div>
                 
                 <div>
-                  <label className="block text-white font-medium mb-2">提案标签</label>
+                  <label className="block text-white font-medium mb-2">{t('governance_page.create_form.tags')}</label>
                   <input
                     type="text"
-                    placeholder="输入标签，用逗号分隔..."
+                    placeholder={t('governance_page.create_form.tags_placeholder')}
                     value={proposalForm.tags}
                     onChange={(e) => setProposalForm({ ...proposalForm, tags: e.target.value })}
                     className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
@@ -492,12 +495,12 @@ export default function GovernancePage() {
                 </div>
                 
                 <div className="bg-white/5 rounded-lg p-4">
-                  <h3 className="text-white font-medium mb-2">提案要求</h3>
+                  <h3 className="text-white font-medium mb-2">{t('governance_page.create_form.requirements.title')}</h3>
                   <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• 需要持有至少10,000 QAU</li>
-                    <li>• 提案需要经过7天讨论期</li>
-                    <li>• 投票需要达到100万QAU的法定人数</li>
-                    <li>• 通过需要超过50%的支持率</li>
+                    <li>• {t('governance_page.create_form.requirements.stake')}</li>
+                    <li>• {t('governance_page.create_form.requirements.discussion')}</li>
+                    <li>• {t('governance_page.create_form.requirements.quorum')}</li>
+                    <li>• {t('governance_page.create_form.requirements.threshold')}</li>
                   </ul>
                 </div>
                 
@@ -507,7 +510,7 @@ export default function GovernancePage() {
                   className="w-full bg-gradient-to-r from-purple-500 to-cyan-500 text-white py-3 rounded-lg font-medium hover:from-purple-600 hover:to-cyan-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {submitting && <RefreshCw className="w-5 h-5 animate-spin" />}
-                  {submitting ? '提交中...' : '提交提案'}
+                  {submitting ? t('governance_page.create_form.submitting') : t('governance_page.create_form.submit')}
                 </button>
               </form>
             </div>
@@ -517,16 +520,16 @@ export default function GovernancePage() {
         {/* 治理流程说明 */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-16">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white mb-4">治理流程</h2>
-            <p className="text-gray-300">了解Quantaureum的去中心化治理流程</p>
+            <h2 className="text-3xl font-bold text-white mb-4">{t('governance_page.process.title')}</h2>
+            <p className="text-gray-300">{t('governance_page.process.subtitle')}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { icon: '1', title: '提案创建', desc: '持有10,000+ QAU的用户可以创建治理提案', color: 'from-purple-500 to-pink-500' },
-              { icon: '2', title: '社区讨论', desc: '7天讨论期，社区成员可以提出意见和建议', color: 'from-blue-500 to-cyan-500' },
-              { icon: '3', title: '投票表决', desc: '7天投票期，QAU持有者进行量子安全投票', color: 'from-green-500 to-emerald-500' },
-              { icon: '4', title: '执行实施', desc: '通过提案进入48小时时间锁，然后自动执行', color: 'from-orange-500 to-red-500' }
+              { icon: '1', title: t('governance_page.process.steps.create.title'), desc: t('governance_page.process.steps.create.desc'), color: 'from-purple-500 to-pink-500' },
+              { icon: '2', title: t('governance_page.process.steps.discussion.title'), desc: t('governance_page.process.steps.discussion.desc'), color: 'from-blue-500 to-cyan-500' },
+              { icon: '3', title: t('governance_page.process.steps.voting.title'), desc: t('governance_page.process.steps.voting.desc'), color: 'from-green-500 to-emerald-500' },
+              { icon: '4', title: t('governance_page.process.steps.execution.title'), desc: t('governance_page.process.steps.execution.desc'), color: 'from-orange-500 to-red-500' }
             ].map((step, index) => (
               <motion.div
                 key={index}

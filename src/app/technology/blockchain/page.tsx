@@ -21,6 +21,8 @@ import {
 import EnhancedNavbar from '@/app/components/EnhancedNavbar';
 import EnhancedFooter from '../../../components/EnhancedFooter';
 import ParticlesBackground from '../../components/ParticlesBackground';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 const colors = {
   primary: '#F59E0B',
@@ -37,94 +39,65 @@ const colors = {
 };
 
 export default function BlockchainPage() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(0);
 
   const coreFeatures = [
     {
       icon: Shield,
-      title: '后量子密码学',
-      description: '采用NIST标准化的CRYSTALS-Dilithium和CRYSTALS-Kyber算法，提供抵御量子计算攻击的安全保障',
-      details: ['Dilithium3数字签名', 'Kyber768密钥封装', 'NIST安全级别3'],
+      title: t('technology.quantum_security.algorithms.dilithium.name'),
+      description: t('technology.quantum_security.algorithms.dilithium.desc'),
+      details: ['Dilithium3', 'Kyber768', 'NIST Level 3'],
       color: colors.accent.green
     },
     {
       icon: Zap,
-      title: '高性能共识',
-      description: '创新的量子增强PoS共识机制，实现高吞吐量和低延迟的交易确认',
-      details: ['10,000+ TPS', '3秒出块时间', '即时最终性'],
+      title: t('technology.blockchain.consensus.title'),
+      description: t('technology.blockchain.consensus.desc'),
+      details: t('technology.blockchain.consensus.features', { returnObjects: true }) as string[],
       color: colors.primary
     },
     {
       icon: Network,
-      title: '分片架构',
-      description: '动态分片技术实现水平扩展，支持大规模并行交易处理',
-      details: ['动态分片', '跨分片通信', '线性扩展'],
+      title: t('technology.blockchain.architecture.title'),
+      description: t('technology.blockchain.architecture.desc'),
+      details: ['Dynamic Sharding', 'Cross-shard', 'Linear Scaling'],
       color: colors.accent.cyan
     },
     {
       icon: Database,
-      title: '状态存储',
-      description: '优化的Merkle Patricia Trie结构，高效存储和验证区块链状态',
-      details: ['增量同步', '状态裁剪', '快照恢复'],
+      title: t('technology.quantum_security.protection.storage'),
+      description: 'Optimized Merkle Patricia Trie structure for efficient blockchain state storage and verification',
+      details: ['Incremental Sync', 'State Pruning', 'Snapshot Recovery'],
       color: colors.secondary
     }
   ];
 
   const architectureLayers = [
-    {
-      name: '应用层',
-      description: 'DApp、智能合约、钱包接口',
-      icon: Globe,
-      items: ['Web3 API', 'JSON-RPC', 'WebSocket', 'GraphQL']
-    },
-    {
-      name: '合约层',
-      description: '量子虚拟机(QVM)执行环境',
-      icon: Code,
-      items: ['Solidity兼容', 'WASM支持', '量子安全库', '预编译合约']
-    },
-    {
-      name: '共识层',
-      description: '量子增强权益证明(QPoS)',
-      icon: GitBranch,
-      items: ['验证者选举', '区块提议', '最终性确认', '惩罚机制']
-    },
-    {
-      name: '网络层',
-      description: 'P2P通信和数据传输',
-      icon: Network,
-      items: ['Gossip协议', '节点发现', '消息广播', '分片路由']
-    },
-    {
-      name: '数据层',
-      description: '区块和状态存储',
-      icon: Database,
-      items: ['区块存储', '状态树', '交易池', '索引服务']
-    },
-    {
-      name: '密码层',
-      description: '后量子密码学原语',
-      icon: Lock,
-      items: ['Dilithium签名', 'Kyber加密', '哈希函数', '随机数生成']
-    }
+    { name: 'Application Layer', description: 'DApp, Smart Contracts, Wallet Interface', icon: Globe, items: ['Web3 API', 'JSON-RPC', 'WebSocket', 'GraphQL'] },
+    { name: 'Contract Layer', description: 'Quantum Virtual Machine (QVM)', icon: Code, items: ['Solidity Compatible', 'WASM Support', 'Quantum Safe Lib', 'Precompiled'] },
+    { name: 'Consensus Layer', description: 'Quantum Enhanced Proof of Stake (QPoS)', icon: GitBranch, items: ['Validator Election', 'Block Proposal', 'Finality', 'Slashing'] },
+    { name: 'Network Layer', description: 'P2P Communication', icon: Network, items: ['Gossip Protocol', 'Node Discovery', 'Message Broadcast', 'Shard Routing'] },
+    { name: 'Data Layer', description: 'Block and State Storage', icon: Database, items: ['Block Storage', 'State Tree', 'TX Pool', 'Index Service'] },
+    { name: 'Crypto Layer', description: 'Post-Quantum Cryptographic Primitives', icon: Lock, items: ['Dilithium Sig', 'Kyber Enc', 'Hash Functions', 'RNG'] }
   ];
 
   const consensusSteps = [
-    { step: 1, title: '验证者选举', desc: '基于质押权重和量子随机数选择区块提议者' },
-    { step: 2, title: '区块提议', desc: '被选中的验证者打包交易并提议新区块' },
-    { step: 3, title: '投票确认', desc: '其他验证者验证并投票确认区块有效性' },
-    { step: 4, title: '最终确认', desc: '达到2/3多数票后区块获得最终性' }
+    { step: 1, title: 'Validator Election', desc: 'Select block proposer based on stake weight and quantum random number' },
+    { step: 2, title: 'Block Proposal', desc: 'Selected validator packages transactions and proposes new block' },
+    { step: 3, title: 'Vote Confirmation', desc: 'Other validators verify and vote to confirm block validity' },
+    { step: 4, title: 'Final Confirmation', desc: 'Block achieves finality after reaching 2/3 majority votes' }
   ];
 
   const specs = [
-    { label: '出块时间', value: '3秒' },
-    { label: '交易吞吐量', value: '10,000+ TPS' },
-    { label: '最终确认', value: '6秒' },
-    { label: '签名算法', value: 'Dilithium3' },
-    { label: '加密算法', value: 'Kyber768' },
-    { label: '哈希算法', value: 'SHA3-256' },
-    { label: '地址长度', value: '32字节' },
-    { label: '最大区块大小', value: '2MB' }
+    { label: 'Block Time', value: '3s' },
+    { label: 'TPS', value: t('technology.blockchain.performance.tps') },
+    { label: 'Finality', value: t('technology.blockchain.performance.finality') },
+    { label: 'Signature', value: 'Dilithium3' },
+    { label: 'Encryption', value: 'Kyber768' },
+    { label: 'Hash', value: 'SHA3-256' },
+    { label: 'Address', value: '32 bytes' },
+    { label: 'Max Block', value: '2MB' }
   ];
 
   return (
@@ -152,14 +125,10 @@ export default function BlockchainPage() {
               </div>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: colors.text.primary }}>
-              区块链
-              <span className="bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${colors.secondary}, ${colors.accent.cyan})` }}>
-                核心架构
-              </span>
+              {t('technology.blockchain.title')}
             </h1>
             <p className="text-xl max-w-3xl mx-auto mb-10" style={{ color: colors.text.secondary }}>
-              Quantaureum采用创新的量子安全区块链架构，结合后量子密码学和高性能共识机制，
-              为下一代去中心化应用提供安全、可扩展的基础设施
+              {t('technology.blockchain.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               {specs.slice(0, 4).map((spec, i) => (
@@ -177,9 +146,9 @@ export default function BlockchainPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>核心技术特性</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>{t('common.features')}</h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: colors.text.secondary }}>
-              融合量子安全与高性能的下一代区块链技术
+              {t('technology.blockchain.subtitle')}
             </p>
           </motion.div>
 
@@ -219,9 +188,9 @@ export default function BlockchainPage() {
       <section className="py-20 bg-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>分层架构</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>{t('technology.blockchain.architecture.title')}</h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: colors.text.secondary }}>
-              模块化设计，每一层专注于特定功能
+              {t('technology.blockchain.architecture.desc')}
             </p>
           </motion.div>
 
@@ -261,9 +230,9 @@ export default function BlockchainPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>共识机制</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>{t('technology.blockchain.consensus.title')}</h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: colors.text.secondary }}>
-              量子增强权益证明(QPoS)共识流程
+              {t('technology.blockchain.consensus.desc')}
             </p>
           </motion.div>
 
@@ -296,7 +265,7 @@ export default function BlockchainPage() {
       <section className="py-20 bg-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>技术规格</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>{t('technology.blockchain.performance.title')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -326,18 +295,18 @@ export default function BlockchainPage() {
             className="p-10 rounded-3xl"
             style={{ background: `linear-gradient(135deg, ${colors.secondary}20, ${colors.accent.cyan}20)`, border: `1px solid ${colors.glass.border}` }}
           >
-            <h2 className="text-3xl font-bold mb-4" style={{ color: colors.text.primary }}>开始构建</h2>
+            <h2 className="text-3xl font-bold mb-4" style={{ color: colors.text.primary }}>{t('common.get_started')}</h2>
             <p className="text-lg mb-8" style={{ color: colors.text.secondary }}>
-              探索Quantaureum的技术文档，开始构建量子安全的去中心化应用
+              {t('technology.blockchain.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a href="/developers/docs" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105"
                 style={{ background: `linear-gradient(135deg, ${colors.secondary}, ${colors.accent.cyan})`, color: colors.text.primary }}>
-                查看文档 <ArrowRight className="w-5 h-5" />
+                {t('developers_sub.sdk.docs')} <ArrowRight className="w-5 h-5" />
               </a>
               <a href="/developers/sdk" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105"
                 style={{ background: colors.glass.medium, border: `1px solid ${colors.glass.border}`, color: colors.text.primary }}>
-                下载SDK
+                {t('developers_sub.sdk.download')} SDK
               </a>
             </div>
           </motion.div>

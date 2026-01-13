@@ -7,100 +7,101 @@ import { FaHandshake, FaRocket, FaGlobe, FaAward, FaChartLine, FaUsers, FaCheckC
 import EnhancedNavbar from '@/app/components/EnhancedNavbar';
 import EnhancedFooter from '@/app/components/EnhancedFooter';
 import ParticlesBackground from '@/app/components/ParticlesBackground';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
-const partnerTypes = [
+const getPartnerTypes = (t: (key: string, options?: object) => string | string[]) => [
   {
     icon: FaBuilding,
-    title: '技术合作伙伴',
-    description: '与领先的技术公司合作，共同构建量子安全生态系统',
-    benefits: ['技术集成支持', '联合解决方案开发', '共同市场推广', '技术培训认证'],
-    examples: ['云服务提供商', '安全厂商', '系统集成商']
+    title: t('enterprise.partners.types.technology.title'),
+    description: t('enterprise.partners.types.technology.desc'),
+    benefits: t('enterprise.partners.types.technology.benefits', { returnObjects: true }) as string[],
+    examples: t('enterprise.partners.types.technology.examples', { returnObjects: true }) as string[]
   },
   {
     icon: FaCode,
-    title: '开发者合作伙伴',
-    description: '为开发者提供工具和资源，构建创新应用',
-    benefits: ['优先 API 访问', '技术支持优先级', '开发者社区曝光', '收益分成计划'],
-    examples: ['独立开发者', '开发工作室', '技术咨询公司']
+    title: t('enterprise.partners.types.developer.title'),
+    description: t('enterprise.partners.types.developer.desc'),
+    benefits: t('enterprise.partners.types.developer.benefits', { returnObjects: true }) as string[],
+    examples: t('enterprise.partners.types.developer.examples', { returnObjects: true }) as string[]
   },
   {
     icon: FaGlobe,
-    title: '渠道合作伙伴',
-    description: '拓展全球市场，共同服务企业客户',
-    benefits: ['销售佣金', '市场营销支持', '销售培训', '专属客户经理'],
-    examples: ['区域代理商', '行业解决方案商', '咨询公司']
-  },
-  {
-    icon: FaShieldAlt,
-    title: '安全合作伙伴',
-    description: '共同提升区块链安全标准',
-    benefits: ['安全审计合作', '漏洞赏金计划', '安全研究资助', '联合安全认证'],
-    examples: ['安全审计公司', '密码学研究机构', '安全实验室']
+    title: t('enterprise.partners.types.channel.title'),
+    description: t('enterprise.partners.types.channel.desc'),
+    benefits: t('enterprise.partners.types.channel.benefits', { returnObjects: true }) as string[],
+    examples: t('enterprise.partners.types.channel.examples', { returnObjects: true }) as string[]
   }
 ];
 
-const featuredPartners = [
-  { name: 'AWS', category: '云服务', logo: '☁️' },
-  { name: 'Microsoft Azure', category: '云服务', logo: '🔷' },
-  { name: 'Google Cloud', category: '云服务', logo: '🌐' },
-  { name: 'Deloitte', category: '咨询', logo: '📊' },
-  { name: 'PwC', category: '审计', logo: '📈' },
-  { name: 'IBM', category: '技术', logo: '💻' },
-  { name: 'Accenture', category: '咨询', logo: '🎯' },
-  { name: 'KPMG', category: '审计', logo: '📋' }
+const getFeaturedPartners = (t: (key: string) => string) => [
+  { name: 'AWS', category: t('enterprise.partners.categories.cloud'), logo: '☁️' },
+  { name: 'Microsoft Azure', category: t('enterprise.partners.categories.cloud'), logo: '🔷' },
+  { name: 'Google Cloud', category: t('enterprise.partners.categories.cloud'), logo: '🌐' },
+  { name: 'Deloitte', category: t('enterprise.partners.categories.consulting'), logo: '📊' },
+  { name: 'PwC', category: t('enterprise.partners.categories.audit'), logo: '📈' },
+  { name: 'IBM', category: t('enterprise.partners.categories.technology'), logo: '💻' },
+  { name: 'Accenture', category: t('enterprise.partners.categories.consulting'), logo: '🎯' },
+  { name: 'KPMG', category: t('enterprise.partners.categories.audit'), logo: '📋' }
 ];
 
-const partnerBenefits = [
+const getPartnerBenefits = (t: (key: string) => string) => [
   {
     icon: FaRocket,
-    title: '加速增长',
-    description: '借助 Quantaureum 的技术和市场资源，加速业务增长'
+    title: t('enterprise.partners.benefits_list.growth.title'),
+    description: t('enterprise.partners.benefits_list.growth.desc')
   },
   {
     icon: FaChartLine,
-    title: '收益分成',
-    description: '通过推荐客户和联合销售获得丰厚的收益分成'
+    title: t('enterprise.partners.benefits_list.revenue.title'),
+    description: t('enterprise.partners.benefits_list.revenue.desc')
   },
   {
     icon: FaUsers,
-    title: '专属支持',
-    description: '获得专属的技术支持和客户成功团队服务'
+    title: t('enterprise.partners.benefits_list.support.title'),
+    description: t('enterprise.partners.benefits_list.support.desc')
   },
   {
     icon: FaAward,
-    title: '品牌认证',
-    description: '获得官方合作伙伴认证，提升市场信誉'
+    title: t('enterprise.partners.benefits_list.certification.title'),
+    description: t('enterprise.partners.benefits_list.certification.desc')
   }
 ];
 
-const partnerLevels = [
+const getPartnerLevels = (t: (key: string, options?: object) => string | string[]) => [
   {
-    level: '注册合作伙伴',
+    level: t('enterprise.partners.levels.registered.name'),
     color: 'from-gray-500 to-gray-600',
-    requirements: ['完成合作伙伴注册', '签署合作协议'],
-    benefits: ['合作伙伴门户访问', '基础培训资源', '市场营销素材']
+    requirements: t('enterprise.partners.levels.registered.requirements', { returnObjects: true }) as string[],
+    benefits: t('enterprise.partners.levels.registered.benefits', { returnObjects: true }) as string[]
   },
   {
-    level: '银牌合作伙伴',
+    level: t('enterprise.partners.levels.silver.name'),
     color: 'from-gray-400 to-gray-500',
-    requirements: ['年度销售额 $50K+', '2+ 认证工程师'],
-    benefits: ['所有注册权益', '优先技术支持', '联合营销机会', '10% 销售佣金']
+    requirements: t('enterprise.partners.levels.silver.requirements', { returnObjects: true }) as string[],
+    benefits: t('enterprise.partners.levels.silver.benefits', { returnObjects: true }) as string[]
   },
   {
-    level: '金牌合作伙伴',
+    level: t('enterprise.partners.levels.gold.name'),
     color: 'from-yellow-500 to-yellow-600',
-    requirements: ['年度销售额 $200K+', '5+ 认证工程师'],
-    benefits: ['所有银牌权益', '专属客户经理', '优先项目机会', '15% 销售佣金']
+    requirements: t('enterprise.partners.levels.gold.requirements', { returnObjects: true }) as string[],
+    benefits: t('enterprise.partners.levels.gold.benefits', { returnObjects: true }) as string[]
   },
   {
-    level: '白金合作伙伴',
+    level: t('enterprise.partners.levels.platinum.name'),
     color: 'from-purple-400 to-purple-600',
-    requirements: ['年度销售额 $500K+', '10+ 认证工程师'],
-    benefits: ['所有金牌权益', '战略合作规划', '联合产品开发', '20% 销售佣金']
+    requirements: t('enterprise.partners.levels.platinum.requirements', { returnObjects: true }) as string[],
+    benefits: t('enterprise.partners.levels.platinum.benefits', { returnObjects: true }) as string[]
   }
 ];
 
 export default function EnterprisePartnersPage() {
+  const { t } = useTranslation();
+  const partnerTypes = getPartnerTypes(t);
+  const featuredPartners = getFeaturedPartners(t);
+  const partnerBenefits = getPartnerBenefits(t);
+  const partnerLevels = getPartnerLevels(t);
+
   return (
     <div className="min-h-screen relative">
       <ParticlesBackground />
@@ -115,15 +116,15 @@ export default function EnterprisePartnersPage() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-4 py-2 bg-blue-500/20 text-blue-300 rounded-full text-sm mb-6">
-              合作伙伴计划
+              {t('enterprise.partners.title')}
             </span>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              携手共建
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"> 量子安全 </span>
-              生态
+              {t('enterprise.partners.hero.title_prefix')}
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"> {t('enterprise.partners.hero.title_highlight')} </span>
+              {t('enterprise.partners.hero.title_suffix')}
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-              加入 Quantaureum 合作伙伴计划，共同开拓区块链市场新机遇
+              {t('enterprise.partners.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/contact">
@@ -132,7 +133,7 @@ export default function EnterprisePartnersPage() {
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-semibold flex items-center gap-2"
                 >
-                  <FaHandshake /> 成为合作伙伴
+                  <FaHandshake /> {t('enterprise.partners.apply.button')}
                 </motion.button>
               </Link>
               <Link href="/enterprise/solutions">
@@ -141,7 +142,7 @@ export default function EnterprisePartnersPage() {
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-4 bg-white/10 text-white rounded-xl font-semibold border border-white/20"
                 >
-                  了解解决方案
+                  {t('enterprise.partners.view_solutions')}
                 </motion.button>
               </Link>
             </div>
@@ -152,8 +153,8 @@ export default function EnterprisePartnersPage() {
       {/* Partner Types */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-4">合作伙伴类型</h2>
-          <p className="text-gray-400 text-center mb-12">多种合作模式，满足不同业务需求</p>
+          <h2 className="text-3xl font-bold text-white text-center mb-4">{t('enterprise.partners.types_title')}</h2>
+          <p className="text-gray-400 text-center mb-12">{t('enterprise.partners.types_subtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {partnerTypes.map((type, index) => {
               const IconComponent = type.icon;
@@ -176,7 +177,7 @@ export default function EnterprisePartnersPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <h4 className="text-sm font-semibold text-gray-300 mb-2">合作权益</h4>
+                      <h4 className="text-sm font-semibold text-gray-300 mb-2">{t('enterprise.partners.benefits.title')}</h4>
                       <ul className="space-y-1">
                         {type.benefits.map((benefit, idx) => (
                           <li key={idx} className="flex items-center gap-2 text-gray-400 text-sm">
@@ -187,7 +188,7 @@ export default function EnterprisePartnersPage() {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-gray-300 mb-2">适合对象</h4>
+                      <h4 className="text-sm font-semibold text-gray-300 mb-2">{t('enterprise.partners.suitable_for')}</h4>
                       <ul className="space-y-1">
                         {type.examples.map((example, idx) => (
                           <li key={idx} className="text-gray-400 text-sm">• {example}</li>
@@ -205,8 +206,8 @@ export default function EnterprisePartnersPage() {
       {/* Featured Partners */}
       <section className="py-16 px-4 bg-black/30">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-4">合作伙伴</h2>
-          <p className="text-gray-400 text-center mb-12">与全球领先企业携手合作</p>
+          <h2 className="text-3xl font-bold text-white text-center mb-4">{t('enterprise.partners.featured_title')}</h2>
+          <p className="text-gray-400 text-center mb-12">{t('enterprise.partners.featured_subtitle')}</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {featuredPartners.map((partner, index) => (
               <motion.div
@@ -228,8 +229,8 @@ export default function EnterprisePartnersPage() {
       {/* Partner Benefits */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-4">合作权益</h2>
-          <p className="text-gray-400 text-center mb-12">成为合作伙伴，享受丰厚权益</p>
+          <h2 className="text-3xl font-bold text-white text-center mb-4">{t('enterprise.partners.benefits.title')}</h2>
+          <p className="text-gray-400 text-center mb-12">{t('enterprise.partners.benefits.subtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {partnerBenefits.map((benefit, index) => {
               const IconComponent = benefit.icon;
@@ -256,8 +257,8 @@ export default function EnterprisePartnersPage() {
       {/* Partner Levels */}
       <section className="py-16 px-4 bg-black/30">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-4">合作伙伴等级</h2>
-          <p className="text-gray-400 text-center mb-12">根据业绩提升等级，获得更多权益</p>
+          <h2 className="text-3xl font-bold text-white text-center mb-4">{t('enterprise.partners.levels_title')}</h2>
+          <p className="text-gray-400 text-center mb-12">{t('enterprise.partners.levels_subtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {partnerLevels.map((level, index) => (
               <motion.div
@@ -272,7 +273,7 @@ export default function EnterprisePartnersPage() {
                 </div>
                 <div className="p-6">
                   <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-gray-300 mb-2">要求</h4>
+                    <h4 className="text-sm font-semibold text-gray-300 mb-2">{t('enterprise.partners.requirements')}</h4>
                     <ul className="space-y-1">
                       {level.requirements.map((req, idx) => (
                         <li key={idx} className="text-gray-400 text-sm">• {req}</li>
@@ -280,7 +281,7 @@ export default function EnterprisePartnersPage() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-gray-300 mb-2">权益</h4>
+                    <h4 className="text-sm font-semibold text-gray-300 mb-2">{t('enterprise.partners.benefits.title')}</h4>
                     <ul className="space-y-1">
                       {level.benefits.map((benefit, idx) => (
                         <li key={idx} className="flex items-center gap-2 text-gray-400 text-sm">
@@ -306,14 +307,14 @@ export default function EnterprisePartnersPage() {
             className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-3xl border border-blue-500/30 p-12"
           >
             <FaHandshake className="text-5xl text-blue-400 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-white mb-4">准备好加入我们了吗？</h2>
-            <p className="text-gray-300 mb-8">立即申请成为 Quantaureum 合作伙伴，开启合作共赢之旅</p>
+            <h2 className="text-3xl font-bold text-white mb-4">{t('enterprise.partners.cta.title')}</h2>
+            <p className="text-gray-300 mb-8">{t('enterprise.partners.cta.subtitle')}</p>
             <Link href="/contact">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-semibold flex items-center gap-2 mx-auto"
               >
-                申请合作 <FaArrowRight />
+                {t('enterprise.partners.apply.button')} <FaArrowRight />
               </motion.button>
             </Link>
           </motion.div>

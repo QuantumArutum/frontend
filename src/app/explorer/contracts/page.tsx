@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Database, Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 interface Contract {
   address: string;
@@ -24,6 +26,7 @@ const mockContracts = [
 
 export default function ContractsPage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [contracts] = useState(mockContracts);
 
@@ -36,7 +39,7 @@ export default function ContractsPage() {
     <div className="max-w-7xl mx-auto px-5">
       {/* Back Button */}
       <button onClick={() => router.push('/explorer')} className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
-        <ArrowLeft className="w-5 h-5" /> Back to Explorer
+        <ArrowLeft className="w-5 h-5" /> {t('explorer.contracts.back')}
       </button>
 
       {/* Title Section */}
@@ -45,8 +48,8 @@ export default function ContractsPage() {
           <Database className="w-7 h-7 text-white" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Smart Contracts</h1>
-          <p className="text-gray-400">View and verify contracts on Quantaureum</p>
+          <h1 className="text-3xl font-bold text-white">{t('explorer.contracts.title')}</h1>
+          <p className="text-gray-400">{t('explorer.contracts.subtitle')}</p>
         </div>
       </motion.div>
 
@@ -59,7 +62,7 @@ export default function ContractsPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by contract name or address..."
+              placeholder={t('explorer.contracts.search_placeholder')}
               className="w-full pl-12 pr-4 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all"
             />
           </div>
@@ -69,10 +72,10 @@ export default function ContractsPage() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
         className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Deployed Contracts', value: '1,234', color: 'text-blue-400' },
-          { label: 'Verified', value: '892', color: 'text-emerald-400' },
-          { label: 'Today Interactions', value: '45.2K', color: 'text-cyan-400' },
-          { label: 'TVL', value: '$12.5M', color: 'text-yellow-400' },
+          { label: t('explorer.contracts.stats.deployed'), value: '1,234', color: 'text-blue-400' },
+          { label: t('explorer.contracts.stats.verified'), value: '892', color: 'text-emerald-400' },
+          { label: t('explorer.contracts.stats.interactions'), value: '45.2K', color: 'text-cyan-400' },
+          { label: t('explorer.contracts.stats.tvl'), value: '$12.5M', color: 'text-yellow-400' },
         ].map((stat, i) => (
           <div key={i} className="bg-white/5 backdrop-blur-md rounded-xl p-4 border border-white/10 hover:bg-white/10 transition-colors">
             <p className="text-gray-400 text-sm">{stat.label}</p>
@@ -88,12 +91,12 @@ export default function ContractsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-white/10">
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">Name</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">Address</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">Type</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">Status</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">Balance</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">Txns</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">{t('explorer.contracts.columns.name')}</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">{t('explorer.contracts.columns.address')}</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">{t('explorer.contracts.columns.type')}</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">{t('explorer.contracts.columns.status')}</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">{t('explorer.contracts.columns.balance')}</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400">{t('explorer.contracts.columns.txns')}</th>
               </tr>
             </thead>
             <tbody>
@@ -109,6 +112,36 @@ export default function ContractsPage() {
                         'bg-gray-500/20 text-gray-400'
                       }`}>
                         {contract.type === 'ERC-20' ? '$' : contract.type === 'DEX' ? 'D' : contract.type === 'Staking' ? 'S' : '#'}
+                      </div>
+                      <span className="text-white font-medium">{contract.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-indigo-400 hover:text-indigo-300 cursor-pointer font-mono text-sm">{contract.address.slice(0, 10)}...{contract.address.slice(-8)}</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="px-2 py-1 bg-white/10 rounded text-xs text-gray-300">{contract.type}</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    {contract.verified ? (
+                      <span className="flex items-center gap-1 text-emerald-400 text-xs bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20 w-fit">
+                        {t('explorer.contracts.verified')}
+                      </span>
+                    ) : (
+                      <span className="text-gray-500 text-xs">{t('explorer.contracts.unverified')}</span>
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-gray-300 font-mono text-sm">{contract.balance} QAU</td>
+                  <td className="px-6 py-4 text-gray-300 text-sm">{contract.txCount.toLocaleString()}</td>
+                </motion.tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </motion.div>
+    </div>
+  );
+}$' : contract.type === 'DEX' ? 'D' : contract.type === 'Staking' ? 'S' : '#'}
                       </div>
                       <span className="text-white font-medium">{contract.name}</span>
                     </div>

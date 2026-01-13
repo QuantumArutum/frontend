@@ -7,130 +7,103 @@ import { FaHeadset, FaBook, FaVideo, FaComments, FaTicketAlt, FaClock, FaCheckCi
 import EnhancedNavbar from '@/app/components/EnhancedNavbar';
 import EnhancedFooter from '@/app/components/EnhancedFooter';
 import ParticlesBackground from '@/app/components/ParticlesBackground';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
-const supportPlans = [
+const getSupportPlans = (t: (key: string, options?: object) => string | string[]) => [
   {
-    name: '基础支持',
-    price: '免费',
-    description: '适合开发和测试阶段',
-    features: [
-      '社区论坛支持',
-      '文档和教程访问',
-      '邮件支持（48小时响应）',
-      '基础故障排除指南'
-    ],
+    name: t('enterprise.support.plans.basic.name'),
+    price: t('enterprise.support.plans.basic.price'),
+    description: t('enterprise.support.plans.basic.desc'),
+    features: t('enterprise.support.plans.basic.features', { returnObjects: true }) as string[],
     highlighted: false
   },
   {
-    name: '专业支持',
-    price: '$999/月',
-    description: '适合生产环境部署',
-    features: [
-      '所有基础支持功能',
-      '优先邮件支持（24小时响应）',
-      '电话支持（工作日）',
-      '专属技术顾问',
-      '季度业务回顾',
-      '性能优化建议'
-    ],
+    name: t('enterprise.support.plans.professional.name'),
+    price: t('enterprise.support.plans.professional.price'),
+    description: t('enterprise.support.plans.professional.desc'),
+    features: t('enterprise.support.plans.professional.features', { returnObjects: true }) as string[],
     highlighted: true
   },
   {
-    name: '企业支持',
-    price: '定制',
-    description: '适合大型企业部署',
-    features: [
-      '所有专业支持功能',
-      '7x24 全天候支持',
-      '15分钟紧急响应',
-      '现场技术支持',
-      '定制培训课程',
-      '专属客户成功经理',
-      'SLA 保证'
-    ],
+    name: t('enterprise.support.plans.enterprise.name'),
+    price: t('enterprise.support.plans.enterprise.price'),
+    description: t('enterprise.support.plans.enterprise.desc'),
+    features: t('enterprise.support.plans.enterprise.features', { returnObjects: true }) as string[],
     highlighted: false
   }
 ];
 
-const supportChannels = [
+const getSupportChannels = (t: (key: string) => string) => [
   {
     icon: FaTicketAlt,
-    title: '工单系统',
-    description: '提交技术支持工单，追踪问题解决进度',
-    action: '提交工单',
+    title: t('enterprise.support.channels.ticket.title'),
+    description: t('enterprise.support.channels.ticket.desc'),
+    action: t('enterprise.support.channels.ticket.action'),
     link: '/contact'
   },
   {
     icon: FaComments,
-    title: '在线聊天',
-    description: '与技术支持团队实时沟通',
-    action: '开始聊天',
+    title: t('enterprise.support.channels.chat.title'),
+    description: t('enterprise.support.channels.chat.desc'),
+    action: t('enterprise.support.channels.chat.action'),
     link: '#'
   },
   {
     icon: FaPhone,
-    title: '电话支持',
-    description: '专业支持及以上客户专享',
+    title: t('enterprise.support.channels.phone.title'),
+    description: t('enterprise.support.channels.phone.desc'),
     action: '+86 400-XXX-XXXX',
     link: 'tel:+86400XXXXXXX'
   },
   {
     icon: FaEnvelope,
-    title: '邮件支持',
-    description: '发送详细问题描述获取帮助',
+    title: t('enterprise.support.channels.email.title'),
+    description: t('enterprise.support.channels.email.desc'),
     action: 'support@quantaureum.com',
     link: 'mailto:support@quantaureum.com'
   }
 ];
 
-const resources = [
+const getResources = (t: (key: string) => string) => [
   {
     icon: FaBook,
-    title: '技术文档',
-    description: '完整的 API 文档和开发指南',
+    title: t('enterprise.support.resources.docs.title'),
+    description: t('enterprise.support.resources.docs.desc'),
     link: '/developers/docs'
   },
   {
     icon: FaVideo,
-    title: '视频教程',
-    description: '从入门到精通的视频课程',
+    title: t('enterprise.support.resources.videos.title'),
+    description: t('enterprise.support.resources.videos.desc'),
     link: '/developers/docs'
   },
   {
     icon: FaGlobe,
-    title: '知识库',
-    description: '常见问题和最佳实践',
+    title: t('enterprise.support.resources.kb.title'),
+    description: t('enterprise.support.resources.kb.desc'),
     link: '/faq'
   },
   {
     icon: FaComments,
-    title: '社区论坛',
-    description: '与其他开发者交流经验',
+    title: t('enterprise.support.resources.forum.title'),
+    description: t('enterprise.support.resources.forum.desc'),
     link: '/community/forum'
   }
 ];
 
-const faqs = [
-  {
-    question: '如何升级我的支持计划？',
-    answer: '您可以随时通过联系我们的销售团队或在账户设置中升级您的支持计划。升级后立即生效。'
-  },
-  {
-    question: '紧急问题如何处理？',
-    answer: '专业支持和企业支持客户可以通过专属热线报告紧急问题。我们承诺在 SLA 规定时间内响应。'
-  },
-  {
-    question: '是否提供现场支持？',
-    answer: '企业支持计划包含现场技术支持服务。我们的工程师可以到您的办公地点提供面对面的技术支持。'
-  },
-  {
-    question: '支持服务覆盖哪些时区？',
-    answer: '基础和专业支持在工作日提供服务（北京时间 9:00-18:00）。企业支持提供 7x24 全天候服务。'
-  }
-];
+const getFaqs = (t: (key: string, options?: object) => string | object) => {
+  const faqItems = t('enterprise.support.faqs.items', { returnObjects: true }) as Array<{ question: string; answer: string }>;
+  return faqItems;
+};
 
 export default function EnterpriseSupportPage() {
+  const { t } = useTranslation();
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const supportPlans = getSupportPlans(t);
+  const supportChannels = getSupportChannels(t);
+  const resources = getResources(t);
+  const faqs = getFaqs(t);
 
   return (
     <div className="min-h-screen relative">
@@ -146,15 +119,15 @@ export default function EnterpriseSupportPage() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-4 py-2 bg-green-500/20 text-green-300 rounded-full text-sm mb-6">
-              企业技术支持
+              {t('enterprise.support.title')}
             </span>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              专业的
-              <span className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent"> 技术支持 </span>
-              服务
+              {t('enterprise.support.hero.title_prefix')}
+              <span className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent"> {t('enterprise.support.hero.title_highlight')} </span>
+              {t('enterprise.support.hero.title_suffix')}
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-              我们的专家团队随时为您提供帮助，确保您的业务顺利运行
+              {t('enterprise.support.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/contact">
@@ -163,7 +136,7 @@ export default function EnterpriseSupportPage() {
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-4 bg-gradient-to-r from-green-600 to-cyan-600 text-white rounded-xl font-semibold flex items-center gap-2"
                 >
-                  <FaHeadset /> 联系支持
+                  <FaHeadset /> {t('enterprise.support.contact.title')}
                 </motion.button>
               </Link>
               <Link href="/faq">
@@ -172,7 +145,7 @@ export default function EnterpriseSupportPage() {
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-4 bg-white/10 text-white rounded-xl font-semibold border border-white/20"
                 >
-                  查看 FAQ
+                  {t('enterprise.support.view_faq')}
                 </motion.button>
               </Link>
             </div>
@@ -183,8 +156,8 @@ export default function EnterpriseSupportPage() {
       {/* Support Plans */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-4">支持计划</h2>
-          <p className="text-gray-400 text-center mb-12">选择适合您业务需求的支持级别</p>
+          <h2 className="text-3xl font-bold text-white text-center mb-4">{t('enterprise.support.plans_title')}</h2>
+          <p className="text-gray-400 text-center mb-12">{t('enterprise.support.plans_subtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {supportPlans.map((plan, index) => (
               <motion.div
@@ -200,7 +173,7 @@ export default function EnterpriseSupportPage() {
               >
                 {plan.highlighted && (
                   <div className="flex items-center gap-2 text-green-400 text-sm mb-4">
-                    <FaStar /> 最受欢迎
+                    <FaStar /> {t('enterprise.support.most_popular')}
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
@@ -223,7 +196,7 @@ export default function EnterpriseSupportPage() {
                         : 'bg-white/10 text-white border border-white/20'
                     }`}
                   >
-                    {plan.price === '定制' ? '联系销售' : '立即开始'}
+                    {plan.price === t('enterprise.support.plans.enterprise.price') ? t('enterprise.support.contact_sales') : t('enterprise.support.get_started')}
                   </motion.button>
                 </Link>
               </motion.div>
@@ -235,8 +208,8 @@ export default function EnterpriseSupportPage() {
       {/* Support Channels */}
       <section className="py-16 px-4 bg-black/30">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-4">联系方式</h2>
-          <p className="text-gray-400 text-center mb-12">多种渠道，随时为您服务</p>
+          <h2 className="text-3xl font-bold text-white text-center mb-4">{t('enterprise.support.channels_title')}</h2>
+          <p className="text-gray-400 text-center mb-12">{t('enterprise.support.channels_subtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {supportChannels.map((channel, index) => {
               const IconComponent = channel.icon;
@@ -268,8 +241,8 @@ export default function EnterpriseSupportPage() {
       {/* Resources */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-4">自助资源</h2>
-          <p className="text-gray-400 text-center mb-12">丰富的学习资源，助您快速上手</p>
+          <h2 className="text-3xl font-bold text-white text-center mb-4">{t('enterprise.support.resources_title')}</h2>
+          <p className="text-gray-400 text-center mb-12">{t('enterprise.support.resources_subtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {resources.map((resource, index) => {
               const IconComponent = resource.icon;
@@ -293,8 +266,8 @@ export default function EnterpriseSupportPage() {
       {/* FAQ */}
       <section className="py-16 px-4 bg-black/30">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-4">常见问题</h2>
-          <p className="text-gray-400 text-center mb-12">关于技术支持的常见问题</p>
+          <h2 className="text-3xl font-bold text-white text-center mb-4">{t('enterprise.support.faqs.title')}</h2>
+          <p className="text-gray-400 text-center mb-12">{t('enterprise.support.faqs.subtitle')}</p>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <motion.div
@@ -330,14 +303,14 @@ export default function EnterpriseSupportPage() {
             className="bg-gradient-to-r from-green-600/20 to-cyan-600/20 rounded-3xl border border-green-500/30 p-12"
           >
             <FaClock className="text-5xl text-green-400 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-white mb-4">需要紧急帮助？</h2>
-            <p className="text-gray-300 mb-8">我们的支持团队随时准备为您提供帮助</p>
+            <h2 className="text-3xl font-bold text-white mb-4">{t('enterprise.support.cta.title')}</h2>
+            <p className="text-gray-300 mb-8">{t('enterprise.support.cta.subtitle')}</p>
             <Link href="/contact">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 className="px-8 py-4 bg-gradient-to-r from-green-600 to-cyan-600 text-white rounded-xl font-semibold"
               >
-                立即联系支持
+                {t('enterprise.support.cta.button')}
               </motion.button>
             </Link>
           </motion.div>

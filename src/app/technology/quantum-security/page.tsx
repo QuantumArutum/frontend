@@ -21,62 +21,54 @@ import EnhancedNavbar from '@/app/components/EnhancedNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
 import ParticlesBackground from '../../components/ParticlesBackground';
 import { colors, typography, shadows } from '@/styles/design-tokens';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 export default function QuantumSecurityPage() {
+  const { t } = useTranslation();
+
   const securityFeatures = [
     {
       icon: Key,
       title: 'CRYSTALS-Dilithium',
-      description: 'NIST标准化的后量子数字签名算法，提供安全级别3的签名保护',
-      specs: ['签名大小: 2420字节', '公钥大小: 1312字节', '安全级别: NIST L3'],
+      description: t('technology.quantum_security.algorithms.dilithium.desc'),
+      specs: t('technology.quantum_security.algorithms.dilithium.specs', { returnObjects: true }) as string[],
       color: colors.accent.green
     },
     {
       icon: Lock,
       title: 'CRYSTALS-Kyber',
-      description: '基于格的密钥封装机制，用于安全的密钥交换和加密通信',
-      specs: ['密文大小: 1088字节', '共享密钥: 32字节', '安全级别: NIST L3'],
+      description: t('technology.quantum_security.algorithms.kyber.desc'),
+      specs: t('technology.quantum_security.algorithms.kyber.specs', { returnObjects: true }) as string[],
       color: colors.accent.cyan
     },
     {
       icon: Fingerprint,
-      title: 'SHA3-256哈希',
-      description: 'Keccak系列哈希函数，提供抗量子的哈希安全性',
-      specs: ['输出长度: 256位', '抗碰撞性', '抗原像攻击'],
+      title: 'SHA3-256',
+      description: t('technology.quantum_security.algorithms.sha3.desc'),
+      specs: t('technology.quantum_security.algorithms.sha3.specs', { returnObjects: true }) as string[],
       color: colors.secondary
     },
     {
       icon: Cpu,
-      title: '量子随机数',
-      description: '基于量子物理原理的真随机数生成，用于密钥生成和共识选举',
-      specs: ['真随机性', '不可预测', '高熵值'],
+      title: t('technology.quantum_security.algorithms.qrng.title'),
+      description: t('technology.quantum_security.algorithms.qrng.desc'),
+      specs: t('technology.quantum_security.algorithms.qrng.specs', { returnObjects: true }) as string[],
       color: colors.primary
     }
   ];
 
   const auditProcess = [
-    { step: 1, title: '代码审查', desc: '专业安全团队对智能合约源代码进行逐行审查', icon: Code },
-    { step: 2, title: '自动化扫描', desc: '使用多种静态分析工具检测已知漏洞模式', icon: Eye },
-    { step: 3, title: '形式化验证', desc: '数学证明合约逻辑的正确性和安全性', icon: FileCheck },
-    { step: 4, title: '渗透测试', desc: '模拟攻击场景测试合约的实际安全性', icon: AlertTriangle },
-    { step: 5, title: '报告生成', desc: '生成详细的审计报告和修复建议', icon: CheckCircle }
+    { step: 1, title: t('technology.quantum_security.audit.steps.review.title'), desc: t('technology.quantum_security.audit.steps.review.desc'), icon: Code },
+    { step: 2, title: t('technology.quantum_security.audit.steps.scan.title'), desc: t('technology.quantum_security.audit.steps.scan.desc'), icon: Eye },
+    { step: 3, title: t('technology.quantum_security.audit.steps.verify.title'), desc: t('technology.quantum_security.audit.steps.verify.desc'), icon: FileCheck },
+    { step: 4, title: t('technology.quantum_security.audit.steps.pentest.title'), desc: t('technology.quantum_security.audit.steps.pentest.desc'), icon: AlertTriangle },
+    { step: 5, title: t('technology.quantum_security.audit.steps.report.title'), desc: t('technology.quantum_security.audit.steps.report.desc'), icon: CheckCircle }
   ];
 
-  const vulnerabilityTypes = [
-    { name: '重入攻击', severity: '高危', description: '检测并防止递归调用漏洞' },
-    { name: '整数溢出', severity: '高危', description: '安全的数学运算库保护' },
-    { name: '访问控制', severity: '中危', description: '严格的权限验证机制' },
-    { name: '时间依赖', severity: '中危', description: '避免区块时间戳操纵' },
-    { name: '前端运行', severity: '中危', description: '交易排序保护机制' },
-    { name: 'Gas限制', severity: '低危', description: '防止DoS攻击的Gas优化' }
-  ];
+  const vulnerabilityTypes = t('technology.quantum_security.vulnerabilities.items', { returnObjects: true }) as Array<{ name: string; severity: string; description: string }>;
 
-  const certifications = [
-    { name: 'NIST PQC', desc: '后量子密码学标准认证', status: '已认证' },
-    { name: 'SOC 2 Type II', desc: '安全运营合规认证', status: '已认证' },
-    { name: 'ISO 27001', desc: '信息安全管理体系', status: '进行中' },
-    { name: 'FIPS 140-3', desc: '密码模块安全标准', status: '计划中' }
-  ];
+  const certifications = t('technology.quantum_security.certifications.items', { returnObjects: true }) as Array<{ name: string; desc: string; status: string }>;
 
   return (
     <div className="min-h-screen bg-quantum-dark relative">
@@ -103,24 +95,20 @@ export default function QuantumSecurityPage() {
               </div>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: colors.text.primary }}>
-              量子安全 &
-              <span className="bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${colors.accent.green}, ${colors.accent.cyan})` }}>
-                {' '}安全审计
-              </span>
+              {t('technology.quantum_security.title')}
             </h1>
             <p className="text-xl max-w-3xl mx-auto mb-10" style={{ color: colors.text.secondary }}>
-              采用NIST标准化的后量子密码学算法，结合专业的智能合约安全审计服务，
-              为您的数字资产提供面向未来的全方位安全保护
+              {t('technology.quantum_security.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <span className="px-4 py-2 rounded-full text-sm font-medium" style={{ background: `${colors.accent.green}20`, color: colors.accent.green, border: `1px solid ${colors.accent.green}40` }}>
-                <CheckCircle className="w-4 h-4 inline mr-2" />NIST L3 安全级别
+                <CheckCircle className="w-4 h-4 inline mr-2" />{t('technology.quantum_security.badges.nist')}
               </span>
               <span className="px-4 py-2 rounded-full text-sm font-medium" style={{ background: `${colors.accent.cyan}20`, color: colors.accent.cyan, border: `1px solid ${colors.accent.cyan}40` }}>
-                <Shield className="w-4 h-4 inline mr-2" />抗量子计算攻击
+                <Shield className="w-4 h-4 inline mr-2" />{t('technology.quantum_security.badges.quantum_resistant')}
               </span>
               <span className="px-4 py-2 rounded-full text-sm font-medium" style={{ background: `${colors.secondary}20`, color: colors.secondary, border: `1px solid ${colors.secondary}40` }}>
-                <FileCheck className="w-4 h-4 inline mr-2" />专业安全审计
+                <FileCheck className="w-4 h-4 inline mr-2" />{t('technology.quantum_security.badges.audit')}
               </span>
             </div>
           </motion.div>
@@ -131,9 +119,9 @@ export default function QuantumSecurityPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>后量子密码学</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>{t('technology.quantum_security.pqc.title')}</h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: colors.text.secondary }}>
-              采用经过NIST标准化认证的后量子密码学算法，确保在量子计算时代的安全性
+              {t('technology.quantum_security.pqc.subtitle')}
             </p>
           </motion.div>
 
@@ -174,9 +162,9 @@ export default function QuantumSecurityPage() {
       <section className="py-20 bg-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>智能合约安全审计</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>{t('technology.quantum_security.audit.title')}</h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: colors.text.secondary }}>
-              专业的五步审计流程，全面保障智能合约安全
+              {t('technology.quantum_security.audit.subtitle')}
             </p>
           </motion.div>
 
@@ -194,7 +182,7 @@ export default function QuantumSecurityPage() {
                   style={{ background: `linear-gradient(135deg, ${colors.secondary}, ${colors.accent.cyan})` }}>
                   <item.icon className="w-6 h-6" style={{ color: colors.text.primary }} />
                 </div>
-                <div className="text-xs font-medium mb-2" style={{ color: colors.accent.cyan }}>步骤 {item.step}</div>
+                <div className="text-xs font-medium mb-2" style={{ color: colors.accent.cyan }}>{t('technology.quantum_security.audit.step')} {item.step}</div>
                 <h3 className="font-bold mb-2" style={{ color: colors.text.primary }}>{item.title}</h3>
                 <p className="text-sm" style={{ color: colors.text.secondary }}>{item.desc}</p>
               </motion.div>
@@ -207,9 +195,9 @@ export default function QuantumSecurityPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>漏洞检测覆盖</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>{t('technology.quantum_security.vulnerabilities.title')}</h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: colors.text.secondary }}>
-              全面检测智能合约中的常见安全漏洞
+              {t('technology.quantum_security.vulnerabilities.subtitle')}
             </p>
           </motion.div>
 
@@ -226,8 +214,8 @@ export default function QuantumSecurityPage() {
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-bold" style={{ color: colors.text.primary }}>{vuln.name}</h3>
                   <span className={`px-2 py-1 rounded text-xs font-medium ${
-                    vuln.severity === '高危' ? 'bg-red-500/20 text-red-400' :
-                    vuln.severity === '中危' ? 'bg-yellow-500/20 text-yellow-400' :
+                    vuln.severity === t('technology.quantum_security.severity.high') ? 'bg-red-500/20 text-red-400' :
+                    vuln.severity === t('technology.quantum_security.severity.medium') ? 'bg-yellow-500/20 text-yellow-400' :
                     'bg-green-500/20 text-green-400'
                   }`}>
                     {vuln.severity}
@@ -244,7 +232,7 @@ export default function QuantumSecurityPage() {
       <section className="py-20 bg-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>安全认证</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: colors.text.primary }}>{t('technology.quantum_security.certifications.title')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -262,8 +250,8 @@ export default function QuantumSecurityPage() {
                   <p className="text-sm" style={{ color: colors.text.secondary }}>{cert.desc}</p>
                 </div>
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  cert.status === '已认证' ? 'bg-green-500/20 text-green-400' :
-                  cert.status === '进行中' ? 'bg-yellow-500/20 text-yellow-400' :
+                  cert.status === t('technology.quantum_security.status.certified') ? 'bg-green-500/20 text-green-400' :
+                  cert.status === t('technology.quantum_security.status.in_progress') ? 'bg-yellow-500/20 text-yellow-400' :
                   'bg-gray-500/20 text-gray-400'
                 }`}>
                   {cert.status}
@@ -283,18 +271,18 @@ export default function QuantumSecurityPage() {
             className="p-10 rounded-3xl"
             style={{ background: `linear-gradient(135deg, ${colors.accent.green}20, ${colors.accent.cyan}20)`, border: `1px solid ${colors.glass.border}` }}
           >
-            <h2 className="text-3xl font-bold mb-4" style={{ color: colors.text.primary }}>申请安全审计</h2>
+            <h2 className="text-3xl font-bold mb-4" style={{ color: colors.text.primary }}>{t('technology.quantum_security.cta.title')}</h2>
             <p className="text-lg mb-8" style={{ color: colors.text.secondary }}>
-              为您的智能合约提供专业的安全审计服务，确保代码安全可靠
+              {t('technology.quantum_security.cta.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105"
                 style={{ background: `linear-gradient(135deg, ${colors.accent.green}, ${colors.accent.cyan})`, color: colors.text.primary }}>
-                申请审计 <ArrowRight className="w-5 h-5" />
+                {t('technology.quantum_security.cta.apply')} <ArrowRight className="w-5 h-5" />
               </a>
               <a href="/developers/docs" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105"
                 style={{ background: colors.glass.medium, border: `1px solid ${colors.glass.border}`, color: colors.text.primary }}>
-                安全文档 <ExternalLink className="w-5 h-5" />
+                {t('technology.quantum_security.cta.docs')} <ExternalLink className="w-5 h-5" />
               </a>
             </div>
           </motion.div>

@@ -10,6 +10,22 @@ import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
 import { Tabs } from '@/components/ui/Tabs';
 import { Badge } from '@/components/ui/Badge';
+import { useTranslation } from 'react-i18next';
+
+const getCategoryName = (t: (key: string) => string, id: string): string => {
+  const categoryMap: Record<string, string> = {
+    '': t('crowdfunding_page.categories.all'),
+    'technology': t('crowdfunding_page.categories.technology'),
+    'design': t('crowdfunding_page.categories.design'),
+    'games': t('crowdfunding_page.categories.games'),
+    'music': t('crowdfunding_page.categories.music'),
+    'film': t('crowdfunding_page.categories.film'),
+    'food': t('crowdfunding_page.categories.food'),
+    'fashion': t('crowdfunding_page.categories.fashion'),
+    'health': t('crowdfunding_page.categories.health')
+  };
+  return categoryMap[id] || t('crowdfunding_page.categories.other');
+};
 
 interface Project {
   id: string;
@@ -43,19 +59,32 @@ interface Project {
   };
 }
 
-const categories = [
-  { id: '', name: '全部', icon: '🌟' },
-  { id: 'technology', name: '科技', icon: '💻' },
-  { id: 'design', name: '设计', icon: '🎨' },
-  { id: 'games', name: '游戏', icon: '🎮' },
-  { id: 'music', name: '音乐', icon: '🎵' },
-  { id: 'film', name: '影视', icon: '🎬' },
-  { id: 'food', name: '美食', icon: '🍽️' },
-  { id: 'fashion', name: '时尚', icon: '👗' },
-  { id: 'health', name: '健康', icon: '🏥' }
-];
+const categoryIcons: Record<string, string> = {
+  '': '🌟',
+  'technology': '💻',
+  'design': '🎨',
+  'games': '🎮',
+  'music': '🎵',
+  'film': '🎬',
+  'food': '🍽️',
+  'fashion': '👗',
+  'health': '🏥'
+};
 
 const CrowdfundingPage = () => {
+  const { t } = useTranslation();
+  
+  const categories = [
+    { id: '', name: t('crowdfunding_page.categories.all'), icon: '🌟' },
+    { id: 'technology', name: t('crowdfunding_page.categories.technology'), icon: '💻' },
+    { id: 'design', name: t('crowdfunding_page.categories.design'), icon: '🎨' },
+    { id: 'games', name: t('crowdfunding_page.categories.games'), icon: '🎮' },
+    { id: 'music', name: t('crowdfunding_page.categories.music'), icon: '🎵' },
+    { id: 'film', name: t('crowdfunding_page.categories.film'), icon: '🎬' },
+    { id: 'food', name: t('crowdfunding_page.categories.food'), icon: '🍽️' },
+    { id: 'fashion', name: t('crowdfunding_page.categories.fashion'), icon: '👗' },
+    { id: 'health', name: t('crowdfunding_page.categories.health'), icon: '🏥' }
+  ];
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -90,7 +119,7 @@ const CrowdfundingPage = () => {
         setProjects([]);
       }
     } catch (error) {
-      console.error('获取众筹项目失败:', error);
+      console.error(t('crowdfunding_page.errors.fetch_projects_failed'), error);
     } finally {
       setLoading(false);
     }
@@ -104,7 +133,7 @@ const CrowdfundingPage = () => {
         setStats(data.data);
       }
     } catch (error) {
-      console.error('获取统计数据失败:', error);
+      console.error(t('crowdfunding_page.errors.fetch_stats_failed'), error);
     }
   }, []);
 
@@ -129,7 +158,7 @@ const CrowdfundingPage = () => {
         setProjects([]);
       }
     } catch (error) {
-      console.error('搜索失败:', error);
+      console.error(t('crowdfunding_page.errors.search_failed'), error);
     } finally {
       setLoading(false);
     }
@@ -147,11 +176,11 @@ const CrowdfundingPage = () => {
       <div className="relative h-40 bg-gradient-to-br from-blue-600 to-purple-600">
         {project.featured && (
           <Badge variant="warning" className="absolute top-3 left-3 flex items-center gap-1">
-            <Star className="w-3 h-3" /> 精选
+            <Star className="w-3 h-3" /> {t('crowdfunding_page.featured')}
           </Badge>
         )}
         <div className="absolute top-3 right-3 bg-black/40 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs">
-          {project.funding?.days_left || 0} 天剩余
+          {project.funding?.days_left || 0} {t('crowdfunding_page.days_left')}
         </div>
         {project.quantum_security && (
           <div className="absolute bottom-3 right-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white p-2 rounded-full">
@@ -164,11 +193,11 @@ const CrowdfundingPage = () => {
         {/* 分类标签 */}
         <div className="flex items-center gap-2 mb-2">
           <Badge variant="default">
-            {categories.find(cat => cat.id === project.category)?.name || '其他'}
+            {getCategoryName(t, project.category)}
           </Badge>
           {project.quantum_security && (
             <Badge variant="info" className="flex items-center gap-1">
-              <Zap className="w-3 h-3" /> 量子安全
+              <Zap className="w-3 h-3" /> {t('crowdfunding_page.quantum_security')}
             </Badge>
           )}
         </div>
@@ -180,14 +209,14 @@ const CrowdfundingPage = () => {
         {/* 创作者信息 */}
         <div className="flex items-center gap-2 mb-3">
           <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
-          <span className="text-sm text-gray-300">{project.creator?.name || '匿名'}</span>
+          <span className="text-sm text-gray-300">{project.creator?.name || t('crowdfunding_page.anonymous')}</span>
           {project.creator?.verified && <Award className="w-4 h-4 text-blue-400" />}
         </div>
 
         {/* 筹资进度 */}
         <div className="mb-3">
           <div className="flex justify-between items-center mb-1">
-            <span className="text-sm text-gray-400">筹资进度</span>
+            <span className="text-sm text-gray-400">{t('crowdfunding_page.funding_progress')}</span>
             <span className="text-sm font-medium text-green-400">{(project.funding?.progress || 0).toFixed(1)}%</span>
           </div>
           <div className="w-full bg-gray-700 rounded-full h-2">
@@ -202,19 +231,19 @@ const CrowdfundingPage = () => {
         <div className="grid grid-cols-3 gap-2 text-center mb-3">
           <div>
             <div className="text-sm font-bold text-white">{formatCurrency(project.funding?.raised_amount || 0)}</div>
-            <div className="text-xs text-gray-500">已筹集</div>
+            <div className="text-xs text-gray-500">{t('crowdfunding_page.raised')}</div>
           </div>
           <div>
             <div className="text-sm font-bold text-white flex items-center justify-center gap-1">
               <Users className="w-3 h-3" /> {project.funding?.backers_count || 0}
             </div>
-            <div className="text-xs text-gray-500">支持者</div>
+            <div className="text-xs text-gray-500">{t('crowdfunding_page.backers')}</div>
           </div>
           <div>
             <div className="text-sm font-bold text-white flex items-center justify-center gap-1">
               <Clock className="w-3 h-3" /> {project.funding?.days_left || 0}
             </div>
-            <div className="text-xs text-gray-500">天剩余</div>
+            <div className="text-xs text-gray-500">{t('crowdfunding_page.days_remaining')}</div>
           </div>
         </div>
 
@@ -228,7 +257,7 @@ const CrowdfundingPage = () => {
               setShowSupportModal(true);
             }}
           >
-            <Heart className="w-4 h-4 mr-1" /> 支持
+            <Heart className="w-4 h-4 mr-1" /> {t('crowdfunding_page.support')}
           </Button>
           <Button variant="ghost" size="sm">
             <Share2 className="w-4 h-4" />
@@ -242,30 +271,30 @@ const CrowdfundingPage = () => {
   );
 
   const sortTabs = [
-    { id: 'trending', label: '热门推荐', icon: <TrendingUp className="w-4 h-4" /> },
-    { id: 'newest', label: '最新发布', icon: <Clock className="w-4 h-4" /> },
-    { id: 'ending_soon', label: '即将结束', icon: <Calendar className="w-4 h-4" /> },
-    { id: 'most_funded', label: '筹资最多', icon: <DollarSign className="w-4 h-4" /> },
+    { id: 'trending', label: t('crowdfunding_page.sort.trending'), icon: <TrendingUp className="w-4 h-4" /> },
+    { id: 'newest', label: t('crowdfunding_page.sort.newest'), icon: <Clock className="w-4 h-4" /> },
+    { id: 'ending_soon', label: t('crowdfunding_page.sort.ending_soon'), icon: <Calendar className="w-4 h-4" /> },
+    { id: 'most_funded', label: t('crowdfunding_page.sort.most_funded'), icon: <DollarSign className="w-4 h-4" /> },
   ];
 
   return (
     <PageLayout
-      title="众筹平台"
-      subtitle="支持创新项目，共创美好未来"
+      title={t('crowdfunding_page.title')}
+      subtitle={t('crowdfunding_page.subtitle')}
       icon={Heart}
       headerContent={
         <Button variant="primary" onClick={() => setShowCreateModal(true)}>
-          <Plus className="w-4 h-4 mr-2" /> 发起众筹
+          <Plus className="w-4 h-4 mr-2" /> {t('crowdfunding_page.create_project')}
         </Button>
       }
     >
       {/* 统计卡片 */}
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <StatCard title="总项目数" value={stats.total_projects.toLocaleString()} icon={TrendingUp} color="blue" />
-          <StatCard title="活跃项目" value={stats.active_projects.toLocaleString()} icon={Clock} color="green" />
-          <StatCard title="总筹资额" value={`${(stats.total_raised / 1e6).toFixed(1)}M`} icon={DollarSign} color="purple" />
-          <StatCard title="支持者总数" value={stats.total_backers.toLocaleString()} icon={Users} color="orange" />
+          <StatCard title={t('crowdfunding_page.stats.total_projects')} value={stats.total_projects.toLocaleString()} icon={TrendingUp} color="blue" />
+          <StatCard title={t('crowdfunding_page.stats.active_projects')} value={stats.active_projects.toLocaleString()} icon={Clock} color="green" />
+          <StatCard title={t('crowdfunding_page.stats.total_raised')} value={`${(stats.total_raised / 1e6).toFixed(1)}M`} icon={DollarSign} color="purple" />
+          <StatCard title={t('crowdfunding_page.stats.total_backers')} value={stats.total_backers.toLocaleString()} icon={Users} color="orange" />
         </div>
       )}
 
@@ -276,14 +305,14 @@ const CrowdfundingPage = () => {
             {/* 搜索框 */}
             <div className="flex-1 flex gap-2">
               <Input
-                placeholder="搜索创新项目..."
+                placeholder={t('crowdfunding_page.search_placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 icon={<Search className="w-4 h-4" />}
                 className="flex-1"
               />
-              <Button variant="primary" onClick={handleSearch}>搜索</Button>
+              <Button variant="primary" onClick={handleSearch}>{t('crowdfunding_page.search')}</Button>
             </div>
           </div>
 
@@ -353,8 +382,8 @@ const CrowdfundingPage = () => {
         <Card className="text-center py-16">
           <CardContent>
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-white mb-2">未找到相关项目</h3>
-            <p className="text-gray-400 mb-6">尝试调整搜索条件或浏览其他分类</p>
+            <h3 className="text-xl font-semibold text-white mb-2">{t('crowdfunding_page.no_results')}</h3>
+            <p className="text-gray-400 mb-6">{t('crowdfunding_page.try_different_search')}</p>
             <Button
               variant="primary"
               onClick={() => {
@@ -363,7 +392,7 @@ const CrowdfundingPage = () => {
                 setSortBy('trending');
               }}
             >
-              查看全部项目
+              {t('crowdfunding_page.view_all_projects')}
             </Button>
           </CardContent>
         </Card>
@@ -373,14 +402,14 @@ const CrowdfundingPage = () => {
       <Modal
         isOpen={showSupportModal}
         onClose={() => setShowSupportModal(false)}
-        title="支持项目"
+        title={t('crowdfunding_page.support_modal.title')}
       >
         {selectedProject && (
           <div>
             <p className="text-gray-400 mb-4">{selectedProject.title}</p>
             
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-300 mb-2">支持金额 (QAU)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">{t('crowdfunding_page.support_modal.amount_label')}</label>
               <div className="flex gap-2 mb-3">
                 {['50', '100', '500', '1000'].map(amount => (
                   <Button
@@ -397,23 +426,23 @@ const CrowdfundingPage = () => {
                 type="number"
                 value={supportAmount}
                 onChange={(e) => setSupportAmount(e.target.value)}
-                placeholder="输入自定义金额"
+                placeholder={t('crowdfunding_page.support_modal.custom_amount')}
               />
             </div>
 
             <div className="flex gap-3">
               <Button variant="ghost" className="flex-1" onClick={() => setShowSupportModal(false)}>
-                取消
+                {t('crowdfunding_page.cancel')}
               </Button>
               <Button
                 variant="primary"
                 className="flex-1"
                 onClick={() => {
-                  alert(`成功支持 ${supportAmount} QAU！\n项目: ${selectedProject.title}\n\n（演示功能，实际支付需连接钱包）`);
+                  alert(t('crowdfunding_page.support_modal.success_message', { amount: supportAmount, title: selectedProject.title }));
                   setShowSupportModal(false);
                 }}
               >
-                确认支持
+                {t('crowdfunding_page.support_modal.confirm')}
               </Button>
             </div>
           </div>
@@ -424,47 +453,47 @@ const CrowdfundingPage = () => {
       <Modal
         isOpen={showCreateModal}
         onClose={() => setShowCreateModal(false)}
-        title="发起众筹项目"
+        title={t('crowdfunding_page.create_modal.title')}
         size="lg"
       >
         <div className="space-y-4">
-          <Input label="项目名称" placeholder="输入项目名称" />
+          <Input label={t('crowdfunding_page.create_modal.project_name')} placeholder={t('crowdfunding_page.create_modal.project_name_placeholder')} />
           
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">项目分类</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">{t('crowdfunding_page.create_modal.category')}</label>
             <select className="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-blue-500 focus:outline-none">
               {categories.filter(c => c.id).map(cat => (
-                <option key={cat.id} value={cat.id}>{cat.icon} {cat.name}</option>
+                <option key={cat.id} value={cat.id}>{categoryIcons[cat.id]} {cat.name}</option>
               ))}
             </select>
           </div>
           
-          <Input label="目标金额 (QAU)" type="number" placeholder="10000" />
+          <Input label={t('crowdfunding_page.create_modal.goal_amount')} type="number" placeholder="10000" />
           
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">项目描述</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">{t('crowdfunding_page.create_modal.description')}</label>
             <textarea
               rows={4}
               className="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-blue-500 focus:outline-none"
-              placeholder="详细描述您的项目..."
+              placeholder={t('crowdfunding_page.create_modal.description_placeholder')}
             />
           </div>
           
-          <Input label="众筹截止日期" type="date" />
+          <Input label={t('crowdfunding_page.create_modal.end_date')} type="date" />
 
           <div className="flex gap-3 pt-4">
             <Button variant="ghost" className="flex-1" onClick={() => setShowCreateModal(false)}>
-              取消
+              {t('crowdfunding_page.cancel')}
             </Button>
             <Button
               variant="primary"
               className="flex-1"
               onClick={() => {
-                alert('项目创建成功！\n\n（演示功能，实际创建需连接钱包并支付手续费）');
+                alert(t('crowdfunding_page.create_modal.success_message'));
                 setShowCreateModal(false);
               }}
             >
-              提交项目
+              {t('crowdfunding_page.create_modal.submit')}
             </Button>
           </div>
         </div>

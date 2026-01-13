@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Bell, Heart, MessageSquare, UserPlus, AtSign, Check, Trash2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
@@ -18,6 +20,7 @@ interface UserInfo {
 
 export default function NotificationsPage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -127,11 +130,11 @@ export default function NotificationsPage() {
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
 
-    if (minutes < 1) return '刚刚';
-    if (minutes < 60) return `${minutes}分钟前`;
-    if (hours < 24) return `${hours}小时前`;
-    if (days < 7) return `${days}天前`;
-    return date.toLocaleDateString('zh-CN');
+    if (minutes < 1) return t('notifications_page.time.just_now');
+    if (minutes < 60) return t('notifications_page.time.minutes_ago', { count: minutes });
+    if (hours < 24) return t('notifications_page.time.hours_ago', { count: hours });
+    if (days < 7) return t('notifications_page.time.days_ago', { count: days });
+    return date.toLocaleDateString();
   };
 
   const filteredNotifications = notifications.filter(n => {
@@ -148,8 +151,8 @@ export default function NotificationsPage() {
         <div className="max-w-4xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-white">消息通知</h1>
-              {unreadCount > 0 && <p className="text-sm text-gray-400">{unreadCount} 条未读</p>}
+              <h1 className="text-2xl font-bold text-white">{t('notifications_page.title')}</h1>
+              {unreadCount > 0 && <p className="text-sm text-gray-400">{t('notifications_page.unread_count', { count: unreadCount })}</p>}
             </div>
             {unreadCount > 0 && (
               <button
@@ -157,7 +160,7 @@ export default function NotificationsPage() {
                 className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
               >
                 <Check className="w-4 h-4" />
-                全部标记为已读
+                {t('notifications_page.mark_all_read')}
               </button>
             )}
           </div>
@@ -166,12 +169,12 @@ export default function NotificationsPage() {
         <main className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
             {[
-              { id: 'all', label: '全部' },
-              { id: 'unread', label: '未读' },
-              { id: 'like', label: '点赞' },
-              { id: 'comment', label: '评论' },
-              { id: 'follow', label: '关注' },
-              { id: 'system', label: '系统' }
+              { id: 'all', label: t('notifications_page.filters.all') },
+              { id: 'unread', label: t('notifications_page.filters.unread') },
+              { id: 'like', label: t('notifications_page.filters.like') },
+              { id: 'comment', label: t('notifications_page.filters.comment') },
+              { id: 'follow', label: t('notifications_page.filters.follow') },
+              { id: 'system', label: t('notifications_page.filters.system') }
             ].map(item => (
               <button
                 key={item.id}
@@ -190,12 +193,12 @@ export default function NotificationsPage() {
           {loading ? (
             <div className="text-center py-12">
               <div className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-              <p className="text-white mt-4">加载中...</p>
+              <p className="text-white mt-4">{t('notifications_page.loading')}</p>
             </div>
           ) : filteredNotifications.length === 0 ? (
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-12 text-center">
               <Bell className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-400 text-lg">暂无通知</p>
+              <p className="text-gray-400 text-lg">{t('notifications_page.no_notifications')}</p>
             </div>
           ) : (
             <div className="space-y-3">

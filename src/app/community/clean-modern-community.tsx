@@ -29,6 +29,8 @@ import EnhancedFooter from '../../components/EnhancedFooter';
 import ParticlesBackground from '../components/ParticlesBackground';
 import Link from 'next/link';
 import { barongAPI } from '@/api/client';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 
 interface UserInfo {
   id: string;
@@ -63,6 +65,7 @@ const colors = {
 };
 
 export default function CleanModernCommunity() {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -120,10 +123,10 @@ export default function CleanModernCommunity() {
   };
 
   const categories = [
-    { name: 'General Discussion', description: 'Community discussions and announcements', icon: MessageSquare, posts: 15420, color: colors.accent.cyan },
-    { name: 'Technical', description: 'Development and technical topics', icon: Zap, posts: 8930, color: colors.secondary },
-    { name: 'DeFi & Trading', description: 'Decentralized finance discussions', icon: TrendingUp, posts: 12650, color: colors.accent.green },
-    { name: 'Governance', description: 'Community governance and voting', icon: Award, posts: 3420, color: colors.primary },
+    { name: t('community_page.categories.general'), description: t('community_page.categories.general_desc'), icon: MessageSquare, posts: 15420, color: colors.accent.cyan },
+    { name: t('community_page.categories.technical'), description: t('community_page.categories.technical_desc'), icon: Zap, posts: 8930, color: colors.secondary },
+    { name: t('community_page.categories.defi'), description: t('community_page.categories.defi_desc'), icon: TrendingUp, posts: 12650, color: colors.accent.green },
+    { name: t('community_page.categories.governance'), description: t('community_page.categories.governance_desc'), icon: Award, posts: 3420, color: colors.primary },
   ];
 
   const hotTopics = [
@@ -134,10 +137,10 @@ export default function CleanModernCommunity() {
   ];
 
   const activeUsers = [
-    { name: 'QuantumDev', level: 'Core Developer', reputation: 9850, isOnline: true },
-    { name: 'CryptoQueen', level: 'Community Leader', reputation: 8920, isOnline: true },
-    { name: 'BlockchainBob', level: 'Senior Member', reputation: 7650, isOnline: false },
-    { name: 'DeFiAlice', level: 'DeFi Expert', reputation: 6890, isOnline: true },
+    { name: 'QuantumDev', level: t('community_page.levels.core_developer'), reputation: 9850, isOnline: true },
+    { name: 'CryptoQueen', level: t('community_page.levels.community_leader'), reputation: 8920, isOnline: true },
+    { name: 'BlockchainBob', level: t('community_page.levels.senior_member'), reputation: 7650, isOnline: false },
+    { name: 'DeFiAlice', level: t('community_page.levels.defi_expert'), reputation: 6890, isOnline: true },
   ];
 
   return (
@@ -158,20 +161,20 @@ export default function CleanModernCommunity() {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
-            Quantaureum Community
+            {t('community_page.title')}
           </h1>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: colors.text.secondary }}>
-            Join the quantum blockchain revolution. Connect, discuss, and build the future together.
+            {t('community_page.subtitle')}
           </p>
         </motion.div>
 
         {/* Stats Row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {[
-            { label: 'Members', value: '125.8K', icon: Users, color: colors.accent.cyan, change: '+12%' },
-            { label: 'Posts', value: '520K', icon: MessageSquare, color: colors.secondary, change: '+8%' },
-            { label: 'Active Today', value: '85K', icon: Activity, color: colors.accent.green, change: '+15%' },
-            { label: 'Topics', value: '1.2K', icon: Hash, color: colors.primary, change: '+5%' }
+            { label: t('community_page.stats.members'), value: '125.8K', icon: Users, color: colors.accent.cyan, change: '+12%' },
+            { label: t('community_page.stats.posts'), value: '520K', icon: MessageSquare, color: colors.secondary, change: '+8%' },
+            { label: t('community_page.stats.active_today'), value: '85K', icon: Activity, color: colors.accent.green, change: '+15%' },
+            { label: t('community_page.stats.topics'), value: '1.2K', icon: Hash, color: colors.primary, change: '+5%' }
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -217,7 +220,7 @@ export default function CleanModernCommunity() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: colors.text.muted }} />
             <input
               type="text"
-              placeholder="Search discussions, topics, users..."
+              placeholder={t('community_page.search_placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3.5 rounded-xl outline-none transition-all duration-200"
@@ -243,7 +246,7 @@ export default function CleanModernCommunity() {
             }}
           >
             <Plus className="w-5 h-5" />
-            New Post
+            {t('community_page.new_post')}
           </motion.button>
         </div>
 
@@ -255,11 +258,11 @@ export default function CleanModernCommunity() {
             <section>
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-xl font-bold" style={{ color: colors.text.primary, fontFamily: "'Space Grotesk', sans-serif" }}>
-                  Forum Categories
+                  {t('community_page.categories.title')}
                 </h2>
                 <Link href="/community/forum/" className="text-sm flex items-center gap-1 transition-colors hover:opacity-80"
                   style={{ color: colors.secondary }}>
-                  View All <ChevronRight className="w-4 h-4" />
+                  {t('community_page.categories.view_all')} <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
 
@@ -313,13 +316,13 @@ export default function CleanModernCommunity() {
             <section>
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-xl font-bold" style={{ color: colors.text.primary, fontFamily: "'Space Grotesk', sans-serif" }}>
-                  Recent Discussions
+                  {t('community_page.hot_topics.title')}
                 </h2>
               </div>
 
               <div className="space-y-4">
                 {loading ? (
-                  <div className="text-center py-8 text-gray-500">Loading discussions...</div>
+                  <div className="text-center py-8 text-gray-500">{t('common.loading')}</div>
                 ) : posts.length > 0 ? (
                   posts.map((post) => (
                     <Link href={`/community/posts/${post.id}`} key={post.id} className="block">
@@ -380,7 +383,7 @@ export default function CleanModernCommunity() {
                 <div className="flex items-center gap-2">
                   <Flame className="w-5 h-5" style={{ color: colors.primary }} />
                   <h2 className="text-xl font-bold" style={{ color: colors.text.primary, fontFamily: "'Space Grotesk', sans-serif" }}>
-                    Hot Topics
+                    {t('community_page.hot_topics.title')}
                   </h2>
                 </div>
                 <div className="flex gap-2">
@@ -394,7 +397,7 @@ export default function CleanModernCommunity() {
                         color: activeTab === tab ? colors.secondary : colors.text.muted,
                       }}
                     >
-                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                      {t(`community_page.hot_topics.${tab}`)}
                     </button>
                   ))}
                 </div>
@@ -462,7 +465,7 @@ export default function CleanModernCommunity() {
               <div className="flex items-center gap-2 mb-4">
                 <Activity className="w-5 h-5" style={{ color: colors.accent.green }} />
                 <h3 className="font-semibold" style={{ color: colors.text.primary, fontFamily: "'Space Grotesk', sans-serif" }}>
-                  Active Members
+                  {t('community_page.active_members.title')}
                 </h3>
               </div>
 
@@ -505,7 +508,7 @@ export default function CleanModernCommunity() {
 
               <a href="/community/members" className="flex items-center justify-center gap-1 mt-4 py-2 text-sm transition-colors hover:opacity-80"
                 style={{ color: colors.secondary }}>
-                View All Members <ChevronRight className="w-4 h-4" />
+                {t('community_page.active_members.view_all')} <ChevronRight className="w-4 h-4" />
               </a>
             </div>
 
@@ -516,14 +519,14 @@ export default function CleanModernCommunity() {
               border: '1px solid rgba(255, 255, 255, 0.06)',
             }}>
               <h3 className="font-semibold mb-4" style={{ color: colors.text.primary, fontFamily: "'Space Grotesk', sans-serif" }}>
-                Quick Links
+                {t('community_page.quick_links.title')}
               </h3>
               <div className="space-y-2">
                 {[
-                  { name: 'Community Guidelines', href: '/community/guidelines' },
-                  { name: 'FAQ', href: '/community/faq' },
-                  { name: 'Bug Bounty Program', href: '/community/bug-bounty' },
-                  { name: 'Partnership Program', href: '/community/partners' },
+                  { name: t('community_page.quick_links.guidelines'), href: '/community/guidelines' },
+                  { name: t('community_page.quick_links.faq'), href: '/community/faq' },
+                  { name: t('community_page.quick_links.bug_bounty'), href: '/community/bug-bounty' },
+                  { name: t('community_page.quick_links.partners'), href: '/community/partners' },
                 ].map((link) => (
                   <a
                     key={link.name}
@@ -545,13 +548,13 @@ export default function CleanModernCommunity() {
               border: '1px solid rgba(255, 255, 255, 0.06)',
             }}>
               <h3 className="font-semibold mb-4" style={{ color: colors.text.primary, fontFamily: "'Space Grotesk', sans-serif" }}>
-                Community Stats
+                {t('community_page.community_stats.title')}
               </h3>
               <div className="space-y-3">
                 {[
-                  { label: 'Total Posts', value: '520,847' },
-                  { label: 'Total Members', value: '125,892' },
-                  { label: 'Online Now', value: '85,341' },
+                  { label: t('community_page.community_stats.total_posts'), value: '520,847' },
+                  { label: t('community_page.community_stats.total_members'), value: '125,892' },
+                  { label: t('community_page.community_stats.online_now'), value: '85,341' },
                 ].map((stat) => (
                   <div key={stat.label} className="flex items-center justify-between">
                     <span style={{ color: colors.text.muted }}>{stat.label}</span>

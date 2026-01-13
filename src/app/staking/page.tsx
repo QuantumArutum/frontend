@@ -6,10 +6,12 @@ import { barongAPI } from '@/api/client';
 import ParticlesBackground from '../components/ParticlesBackground';
 import EnhancedNavbar from '../components/EnhancedNavbar';
 import EnhancedFooter from '../components/EnhancedFooter';
+import { useTranslation } from 'react-i18next';
 
 const { Title, Paragraph } = Typography;
 
 export default function StakingPage() {
+  const { t } = useTranslation();
   const [pools, setPools] = useState<any[]>([]);
   const [myStakes, setMyStakes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -49,7 +51,7 @@ export default function StakingPage() {
         amount: Number(stakeAmount)
       });
       if (res.data.success) {
-        message.success('Staked successfully!');
+        message.success(t('staking_page.staked_success'));
         setStakeModalVisible(false);
         setStakeAmount('');
         fetchPools(); // Refresh total staked
@@ -58,7 +60,7 @@ export default function StakingPage() {
         message.error(res.data.message);
       }
     } catch (err: any) {
-      message.error(err.response?.data?.message || 'Staking failed');
+      message.error(err.response?.data?.message || t('staking_page.staking_failed'));
     }
   };
 
@@ -73,13 +75,13 @@ export default function StakingPage() {
       <EnhancedNavbar />
       <div className="relative z-10 container mx-auto px-4 py-12 pt-24">
       <div className="text-center mb-12">
-        <Title level={1} className="text-white">Quantum Staking</Title>
+        <Title level={1} className="text-white">{t('staking_page.title')}</Title>
         <Paragraph className="text-lg text-gray-400">
-          Earn passive income by securing the network. High APY, secure, and flexible.
+          {t('staking_page.subtitle')}
         </Paragraph>
       </div>
 
-      <Title level={2} className="text-white mb-6">Active Pools</Title>
+      <Title level={2} className="text-white mb-6">{t('staking_page.active_pools')}</Title>
       <Row gutter={[24, 24]}>
         {pools.map(pool => (
           <Col xs={24} md={8} key={pool.id}>
@@ -90,15 +92,15 @@ export default function StakingPage() {
               </div>
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between text-gray-400">
-                  <span>Duration</span>
-                  <span className="text-white">{pool.duration_days} Days</span>
+                  <span>{t('staking_page.duration')}</span>
+                  <span className="text-white">{pool.duration_days} {t('staking_page.days')}</span>
                 </div>
                 <div className="flex justify-between text-gray-400">
-                  <span>Min Stake</span>
+                  <span>{t('staking_page.min_stake')}</span>
                   <span className="text-white">{pool.min_stake} {pool.token_id}</span>
                 </div>
                 <div className="flex justify-between text-gray-400">
-                  <span>Total Staked</span>
+                  <span>{t('staking_page.total_staked')}</span>
                   <span className="text-white">{pool.total_staked} {pool.token_id}</span>
                 </div>
               </div>
@@ -109,7 +111,7 @@ export default function StakingPage() {
                 icon={<BankOutlined />}
                 onClick={() => openStakeModal(pool)}
               >
-                Stake Now
+                {t('staking_page.stake_now')}
               </Button>
             </Card>
           </Col>
@@ -118,7 +120,7 @@ export default function StakingPage() {
 
       {myStakes.length > 0 && (
         <div className="mt-16">
-          <Title level={2} className="text-white mb-6">My Stakes</Title>
+          <Title level={2} className="text-white mb-6">{t('staking_page.my_stakes')}</Title>
           <Card className="bg-gray-900 border-gray-800">
              <Row gutter={[16, 16]}>
                {myStakes.map(stake => (
@@ -126,9 +128,9 @@ export default function StakingPage() {
                    <div className="flex justify-between items-center p-4 bg-gray-800 rounded">
                      <div>
                        <div className="text-white font-bold text-lg">{stake.amount} {stake.token_id}</div>
-                       <div className="text-gray-400 text-sm">Unlocks: {new Date(stake.unlock_date).toLocaleDateString()}</div>
+                       <div className="text-gray-400 text-sm">{t('staking_page.unlocks')}: {new Date(stake.unlock_date).toLocaleDateString()}</div>
                      </div>
-                     <Tag color="blue">Active</Tag>
+                     <Tag color="blue">{t('staking_page.active')}</Tag>
                    </div>
                  </Col>
                ))}
@@ -138,22 +140,23 @@ export default function StakingPage() {
       )}
 
       <Modal
-        title={`Stake ${selectedPool?.token_id}`}
+        title={`${t('staking_page.stake')} ${selectedPool?.token_id}`}
         open={stakeModalVisible}
         onCancel={() => setStakeModalVisible(false)}
         onOk={handleStake}
-        okText="Confirm Stake"
+        okText={t('staking_page.confirm_stake')}
+        cancelText={t('staking_page.cancel')}
       >
-        <p>Available Balance: 10,000 {selectedPool?.token_id} (Mock)</p>
+        <p>{t('staking_page.available_balance')}: 10,000 {selectedPool?.token_id} ({t('staking_page.mock')})</p>
         <Input 
           prefix={<WalletOutlined />} 
-          placeholder="Amount to stake" 
+          placeholder={t('staking_page.amount_placeholder')} 
           value={stakeAmount}
           onChange={e => setStakeAmount(e.target.value)}
           type="number"
         />
         <div className="mt-4 text-gray-500 text-sm">
-          Lock period: {selectedPool?.duration_days} days. Early withdrawal is not allowed.
+          {t('staking_page.lock_period')}: {selectedPool?.duration_days} {t('staking_page.days')}. {t('staking_page.early_withdrawal_warning')}
         </div>
       </Modal>
       </div>

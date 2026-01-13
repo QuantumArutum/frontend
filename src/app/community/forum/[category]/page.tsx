@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MessageCircle, Eye, ThumbsUp } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import '../../../../i18n';
 import ParticlesBackground from '../../../../app/components/ParticlesBackground';
 import CommunityNavbar from '../../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../../../components/EnhancedFooter';
@@ -26,102 +28,104 @@ interface ForumPost {
   isLocked: boolean;
 }
 
-const categoryData: Record<string, { name: string; description: string; icon: string; color: string; stats: { totalPosts: number; totalTopics: number; lastPost: { title: string; author: string; time: string } } }> = {
-  general: {
-    name: '综合讨论',
-    description: '关于Quantaureum的一般性讨论，包括使用心得、经验分享等',
-    icon: '💬',
-    color: 'from-blue-500 to-cyan-500',
-    stats: { totalPosts: 45230, totalTopics: 1250, lastPost: { title: '量子安全钱包使用心得', author: 'CryptoExpert', time: '5分钟前' } }
-  },
-  technical: {
-    name: '技术交流',
-    description: '技术问题讨论、代码分享、解决方案交流',
-    icon: '⚙️',
-    color: 'from-purple-500 to-pink-500',
-    stats: { totalPosts: 38900, totalTopics: 890, lastPost: { title: '后量子算法性能优化', author: 'QuantumDev', time: '12分钟前' } }
-  },
-  defi: {
-    name: 'DeFi讨论',
-    description: 'DeFi协议、流动性挖矿、收益策略等讨论',
-    icon: '📊',
-    color: 'from-green-500 to-emerald-500',
-    stats: { totalPosts: 28500, totalTopics: 567, lastPost: { title: '新流动性池上线讨论', author: 'DeFiMaster', time: '8分钟前' } }
-  },
-  trading: {
-    name: '交易讨论',
-    description: '市场分析、交易策略、价格讨论',
-    icon: '📈',
-    color: 'from-orange-500 to-red-500',
-    stats: { totalPosts: 32100, totalTopics: 678, lastPost: { title: 'QAU价格走势分析', author: 'TradeKing', time: '3分钟前' } }
-  },
-  governance: {
-    name: '社区治理',
-    description: 'DAO治理、提案讨论、投票相关',
-    icon: '🏛️',
-    color: 'from-indigo-500 to-purple-500',
-    stats: { totalPosts: 15600, totalTopics: 234, lastPost: { title: '新治理提案投票', author: 'Governor', time: '15分钟前' } }
-  },
-  events: {
-    name: '活动专区',
-    description: '线上线下活动信息发布、活动回顾',
-    icon: '🎉',
-    color: 'from-yellow-500 to-orange-500',
-    stats: { totalPosts: 8900, totalTopics: 156, lastPost: { title: '下周AMA活动预告', author: 'EventTeam', time: '1小时前' } }
-  }
-};
-
 export default function ForumCategoryPage() {
   const params = useParams();
+  const { t } = useTranslation();
   const categoryId = (params?.category as string) || '';
+
+  const categoryData: Record<string, { name: string; description: string; icon: string; color: string; stats: { totalPosts: number; totalTopics: number; lastPost: { title: string; author: string; time: string } } }> = {
+    general: {
+      name: t('forum_category.categories.general.name'),
+      description: t('forum_category.categories.general.description'),
+      icon: '💬',
+      color: 'from-blue-500 to-cyan-500',
+      stats: { totalPosts: 45230, totalTopics: 1250, lastPost: { title: t('forum_category.sample_posts.general'), author: 'CryptoExpert', time: t('forum_category.time.minutes_ago', { count: 5 }) } }
+    },
+    technical: {
+      name: t('forum_category.categories.technical.name'),
+      description: t('forum_category.categories.technical.description'),
+      icon: '⚙️',
+      color: 'from-purple-500 to-pink-500',
+      stats: { totalPosts: 38900, totalTopics: 890, lastPost: { title: t('forum_category.sample_posts.technical'), author: 'QuantumDev', time: t('forum_category.time.minutes_ago', { count: 12 }) } }
+    },
+    defi: {
+      name: t('forum_category.categories.defi.name'),
+      description: t('forum_category.categories.defi.description'),
+      icon: '📊',
+      color: 'from-green-500 to-emerald-500',
+      stats: { totalPosts: 28500, totalTopics: 567, lastPost: { title: t('forum_category.sample_posts.defi'), author: 'DeFiMaster', time: t('forum_category.time.minutes_ago', { count: 8 }) } }
+    },
+    trading: {
+      name: t('forum_category.categories.trading.name'),
+      description: t('forum_category.categories.trading.description'),
+      icon: '📈',
+      color: 'from-orange-500 to-red-500',
+      stats: { totalPosts: 32100, totalTopics: 678, lastPost: { title: t('forum_category.sample_posts.trading'), author: 'TradeKing', time: t('forum_category.time.minutes_ago', { count: 3 }) } }
+    },
+    governance: {
+      name: t('forum_category.categories.governance.name'),
+      description: t('forum_category.categories.governance.description'),
+      icon: '🏛️',
+      color: 'from-indigo-500 to-purple-500',
+      stats: { totalPosts: 15600, totalTopics: 234, lastPost: { title: t('forum_category.sample_posts.governance'), author: 'Governor', time: t('forum_category.time.minutes_ago', { count: 15 }) } }
+    },
+    events: {
+      name: t('forum_category.categories.events.name'),
+      description: t('forum_category.categories.events.description'),
+      icon: '🎉',
+      color: 'from-yellow-500 to-orange-500',
+      stats: { totalPosts: 8900, totalTopics: 156, lastPost: { title: t('forum_category.sample_posts.events'), author: 'EventTeam', time: t('forum_category.time.hours_ago', { count: 1 }) } }
+    }
+  };
+
   const category = categoryData[categoryId];
   
   const [posts] = useState<ForumPost[]>([
     {
       id: '1',
-      title: '🚀 量子安全钱包v2.0发布，新增多链支持',
+      title: t('forum_category.sample_post_titles.post1'),
       author: 'QuantumTeam',
       authorAvatar: '👨‍💻',
-      content: '我们很高兴地宣布量子安全钱包v2.0正式发布！这次更新带来了多项重要功能...',
+      content: t('forum_category.sample_post_contents.post1'),
       replies: 234,
       views: 5678,
       likes: 445,
-      createdAt: '2小时前',
-      lastReply: '2分钟前',
+      createdAt: t('forum_category.time.hours_ago', { count: 2 }),
+      lastReply: t('forum_category.time.minutes_ago', { count: 2 }),
       lastReplyBy: 'CryptoFan',
-      tags: ['更新', '钱包', '新功能'],
+      tags: [t('forum_category.tags.update'), t('forum_category.tags.wallet'), t('forum_category.tags.new_feature')],
       isPinned: true,
       isLocked: false
     },
     {
       id: '2',
-      title: '💡 如何安全地存储量子密钥？',
+      title: t('forum_category.sample_post_titles.post2'),
       author: 'SecurityExpert',
       authorAvatar: '🛡️',
-      content: '随着量子计算的发展，传统的加密方式面临挑战...',
+      content: t('forum_category.sample_post_contents.post2'),
       replies: 156,
       views: 3421,
       likes: 289,
-      createdAt: '5小时前',
-      lastReply: '15分钟前',
+      createdAt: t('forum_category.time.hours_ago', { count: 5 }),
+      lastReply: t('forum_category.time.minutes_ago', { count: 15 }),
       lastReplyBy: 'QuantumDev',
-      tags: ['安全', '量子密钥', '教程'],
+      tags: [t('forum_category.tags.security'), t('forum_category.tags.quantum_key'), t('forum_category.tags.tutorial')],
       isPinned: false,
       isLocked: false
     },
     {
       id: '3',
-      title: '📊 QAU代币经济学深度分析',
+      title: t('forum_category.sample_post_titles.post3'),
       author: 'EconAnalyst',
       authorAvatar: '📊',
-      content: 'QAU代币作为Quantaureum生态的核心，其经济模型设计精妙...',
+      content: t('forum_category.sample_post_contents.post3'),
       replies: 89,
       views: 2156,
       likes: 167,
-      createdAt: '1天前',
-      lastReply: '1小时前',
+      createdAt: t('forum_category.time.days_ago', { count: 1 }),
+      lastReply: t('forum_category.time.hours_ago', { count: 1 }),
       lastReplyBy: 'TokenHolder',
-      tags: ['代币经济', '分析', 'QAU'],
+      tags: [t('forum_category.tags.tokenomics'), t('forum_category.tags.analysis'), 'QAU'],
       isPinned: false,
       isLocked: false
     }
@@ -136,8 +140,8 @@ export default function ForumCategoryPage() {
         <ParticlesBackground />
         <CommunityNavbar />
         <div className="text-center relative z-10">
-          <h1 className="text-4xl font-bold text-white mb-4">分类不存在</h1>
-          <Link href="/community" className="text-purple-400 hover:text-purple-300">返回社区首页</Link>
+          <h1 className="text-4xl font-bold text-white mb-4">{t('forum_category.category_not_found')}</h1>
+          <Link href="/community" className="text-purple-400 hover:text-purple-300">{t('forum_category.back_to_community')}</Link>
         </div>
       </div>
     );
@@ -168,16 +172,16 @@ export default function ForumCategoryPage() {
             <div className="grid grid-cols-3 gap-6 mt-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">{category.stats.totalPosts.toLocaleString()}</div>
-                <div className="text-sm text-gray-400">帖子总数</div>
+                <div className="text-sm text-gray-400">{t('forum_category.stats.total_posts')}</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">{category.stats.totalTopics}</div>
-                <div className="text-sm text-gray-400">主题数</div>
+                <div className="text-sm text-gray-400">{t('forum_category.stats.total_topics')}</div>
               </div>
               <div className="text-center">
-                <div className="text-sm text-gray-400 mb-1">最新帖子</div>
+                <div className="text-sm text-gray-400 mb-1">{t('forum_category.stats.latest_post')}</div>
                 <div className="text-sm text-white font-medium truncate">{category.stats.lastPost.title}</div>
-                <div className="text-xs text-gray-400">由 {category.stats.lastPost.author} · {category.stats.lastPost.time}</div>
+                <div className="text-xs text-gray-400">{t('forum_category.by')} {category.stats.lastPost.author} · {category.stats.lastPost.time}</div>
               </div>
             </div>
           </div>
@@ -187,19 +191,19 @@ export default function ForumCategoryPage() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <select value={filterBy} onChange={(e) => setFilterBy(e.target.value)} className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white">
-              <option value="all">全部帖子</option>
-              <option value="pinned">置顶帖子</option>
-              <option value="unlocked">未锁定帖子</option>
+              <option value="all">{t('forum_category.filters.all')}</option>
+              <option value="pinned">{t('forum_category.filters.pinned')}</option>
+              <option value="unlocked">{t('forum_category.filters.unlocked')}</option>
             </select>
             <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white">
-              <option value="latest">最新发布</option>
-              <option value="popular">最多回复</option>
-              <option value="views">最多浏览</option>
+              <option value="latest">{t('forum_category.sort.latest')}</option>
+              <option value="popular">{t('forum_category.sort.popular')}</option>
+              <option value="views">{t('forum_category.sort.views')}</option>
             </select>
           </div>
           <Link href={`/community/forum/${categoryId}/new`}>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="bg-gradient-to-r from-purple-500 to-cyan-500 text-white px-4 py-2 rounded-lg font-medium hover:from-purple-600 hover:to-cyan-600 transition-all">
-              发布新主题
+              {t('forum_category.new_topic')}
             </motion.button>
           </Link>
         </motion.div>
@@ -211,8 +215,8 @@ export default function ForumCategoryPage() {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    {post.isPinned && <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full text-xs font-medium">置顶</span>}
-                    {post.isLocked && <span className="bg-gray-500 text-white px-2 py-1 rounded-full text-xs font-medium">已锁定</span>}
+                    {post.isPinned && <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full text-xs font-medium">{t('forum_category.pinned')}</span>}
+                    {post.isLocked && <span className="bg-gray-500 text-white px-2 py-1 rounded-full text-xs font-medium">{t('forum_category.locked')}</span>}
                   </div>
                   <Link href={`/community/post/${post.id}`}>
                     <h3 className="text-xl font-bold text-white mb-2 hover:text-purple-400 transition-colors">{post.title}</h3>
@@ -235,7 +239,7 @@ export default function ForumCategoryPage() {
                     <span className="flex items-center gap-1"><Eye className="h-4 w-4" />{post.views}</span>
                     <span className="flex items-center gap-1"><ThumbsUp className="h-4 w-4" />{post.likes}</span>
                   </div>
-                  <div className="text-xs text-gray-400">最后回复: {post.lastReplyBy} · {post.lastReply}</div>
+                  <div className="text-xs text-gray-400">{t('forum_category.last_reply')}: {post.lastReplyBy} · {post.lastReply}</div>
                 </div>
               </div>
             </motion.div>
@@ -245,11 +249,11 @@ export default function ForumCategoryPage() {
         {/* 分页 */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex justify-center mt-8">
           <div className="flex gap-2">
-            <button className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors">上一页</button>
+            <button className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors">{t('forum_category.pagination.prev')}</button>
             <button className="px-4 py-2 bg-purple-500 text-white rounded-lg">1</button>
             <button className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors">2</button>
             <button className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors">3</button>
-            <button className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors">下一页</button>
+            <button className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors">{t('forum_category.pagination.next')}</button>
           </div>
         </motion.div>
       </div>

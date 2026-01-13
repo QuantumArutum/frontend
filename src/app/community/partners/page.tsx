@@ -3,41 +3,45 @@
 import React from 'react';
 import Link from 'next/link';
 import { ChevronRight, Handshake, Building, Rocket, Globe, CheckCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
 
-const partnerTypes = [
-  {
-    icon: Building,
-    title: '企业合作伙伴',
-    description: '与我们合作，将量子安全区块链技术集成到您的业务中',
-    benefits: ['优先技术支持', '定制化解决方案', '联合营销机会', '早期功能访问']
-  },
-  {
-    icon: Rocket,
-    title: '技术合作伙伴',
-    description: '共同开发创新的区块链解决方案和工具',
-    benefits: ['技术资源共享', 'API 优先访问', '联合开发项目', '技术培训支持']
-  },
-  {
-    icon: Globe,
-    title: '生态合作伙伴',
-    description: '加入我们的生态系统，共同推动区块链行业发展',
-    benefits: ['生态基金支持', '社区资源', '活动合作', '品牌曝光']
-  }
-];
-
-const currentPartners = [
-  { name: 'LBMA Gold', category: '黄金存储', logo: '🏦' },
-  { name: 'Chainlink', category: '预言机', logo: '🔗' },
-  { name: 'Ledger', category: '硬件钱包', logo: '💳' },
-  { name: 'CertiK', category: '安全审计', logo: '🛡️' },
-  { name: 'AWS', category: '云服务', logo: '☁️' },
-  { name: 'Polygon', category: '跨链', logo: '⬡' },
-];
-
 export default function PartnersPage() {
+  const { t } = useTranslation();
+
+  const partnerTypes = [
+    {
+      icon: Building,
+      title: t('community_partners.types.enterprise.title'),
+      description: t('community_partners.types.enterprise.description'),
+      benefits: t('community_partners.types.enterprise.benefits', { returnObjects: true }) as string[]
+    },
+    {
+      icon: Rocket,
+      title: t('community_partners.types.technology.title'),
+      description: t('community_partners.types.technology.description'),
+      benefits: t('community_partners.types.technology.benefits', { returnObjects: true }) as string[]
+    },
+    {
+      icon: Globe,
+      title: t('community_partners.types.ecosystem.title'),
+      description: t('community_partners.types.ecosystem.description'),
+      benefits: t('community_partners.types.ecosystem.benefits', { returnObjects: true }) as string[]
+    }
+  ];
+
+  const currentPartners = [
+    { name: 'LBMA Gold', category: t('community_partners.partner_categories.gold_storage'), logo: '🏦' },
+    { name: 'Chainlink', category: t('community_partners.partner_categories.oracle'), logo: '🔗' },
+    { name: 'Ledger', category: t('community_partners.partner_categories.hardware_wallet'), logo: '💳' },
+    { name: 'CertiK', category: t('community_partners.partner_categories.security_audit'), logo: '🛡️' },
+    { name: 'AWS', category: t('community_partners.partner_categories.cloud_service'), logo: '☁️' },
+    { name: 'Polygon', category: t('community_partners.partner_categories.cross_chain'), logo: '⬡' },
+  ];
+
   return (
     <div className="min-h-screen relative">
       <ParticlesBackground />
@@ -47,17 +51,17 @@ export default function PartnersPage() {
       <div className="bg-white/5 border-b border-white/10 pt-20">
         <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="flex items-center gap-2 text-gray-400 text-sm mb-4">
-            <Link href="/community" className="hover:text-white">Community</Link>
+            <Link href="/community" className="hover:text-white">{t('community_partners.breadcrumb.community')}</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-white">Partners</span>
+            <span className="text-white">{t('community_partners.breadcrumb.partners')}</span>
           </div>
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
               <Handshake className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white mb-1">合作伙伴计划</h1>
-              <p className="text-gray-400">与 Quantaureum 一起构建量子安全的未来</p>
+              <h1 className="text-3xl font-bold text-white mb-1">{t('community_partners.title')}</h1>
+              <p className="text-gray-400">{t('community_partners.subtitle')}</p>
             </div>
           </div>
         </div>
@@ -90,7 +94,7 @@ export default function PartnersPage() {
 
         {/* Current Partners */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">我们的合作伙伴</h2>
+          <h2 className="text-2xl font-bold text-white mb-6 text-center">{t('community_partners.our_partners')}</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {currentPartners.map((partner, index) => (
               <div key={index} className="bg-white/5 rounded-xl border border-white/10 p-4 text-center hover:border-white/20 transition-all">
@@ -104,16 +108,16 @@ export default function PartnersPage() {
 
         {/* CTA */}
         <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-xl p-8 border border-cyan-500/20 text-center">
-          <h3 className="text-2xl font-bold text-white mb-3">成为合作伙伴</h3>
+          <h3 className="text-2xl font-bold text-white mb-3">{t('community_partners.cta.title')}</h3>
           <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
-            无论您是企业、开发者还是项目方，我们都欢迎您加入 Quantaureum 生态系统
+            {t('community_partners.cta.description')}
           </p>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl hover:opacity-90 transition-opacity text-lg font-medium"
           >
             <Handshake className="w-5 h-5" />
-            申请合作
+            {t('community_partners.cta.apply')}
           </Link>
         </div>
       </div>

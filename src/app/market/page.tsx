@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { Badge } from '@/components/ui/Badge';
 import QuantumSecurityPanel from '@/app/components/QuantumSecurityPanel';
 import { formatNumber, formatCurrency, formatPercentage } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 import {
   TrendingUp,
   TrendingDown,
@@ -23,7 +24,7 @@ import {
   Zap
 } from 'lucide-react';
 
-// 类型定义
+// Type definitions
 interface TradingPair {
   symbol: string;
   price: number;
@@ -81,19 +82,20 @@ interface MarketData {
 }
 
 const TradingMarket = () => {
-  // 基础状态
+  const { t } = useTranslation();
+  // Basic state
   const [selectedPair, setSelectedPair] = useState<string>('QAU/USDT');
   const [orderType, setOrderType] = useState<string>('limit');
   const [tradeType, setTradeType] = useState<string>('spot');
   const [activeTab, setActiveTab] = useState<string>('buy');
   
-  // 订单状态
+  // Order state
   const [buyAmount, setBuyAmount] = useState<string>('');
   const [buyPrice, setBuyPrice] = useState<string>('');
   const [sellAmount, setSellAmount] = useState<string>('');
   const [sellPrice, setSellPrice] = useState<string>('');
   
-  // 数据状态
+  // Data state
   const [marketData, setMarketData] = useState<MarketData>({});
   const [orderBook, setOrderBook] = useState<OrderBook>({ bids: [], asks: [] });
   const [recentTrades, setRecentTrades] = useState<Trade[]>([]);
@@ -103,7 +105,7 @@ const TradingMarket = () => {
   const [balance, setBalance] = useState<Balance>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // 模拟数据
+  // Mock data
   const mockTradingPairs: TradingPair[] = [
     { symbol: 'QAU/USDT', price: 125.50, change: 2.45, volume: 1234567, high: 128.90, low: 122.10 },
     { symbol: 'BTC/USDT', price: 43250.00, change: -1.23, volume: 987654, high: 44100.00, low: 42800.00 },
@@ -158,7 +160,7 @@ const TradingMarket = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 处理订单提交
+  // Handle order submit
   const handleSubmitOrder = async (side: 'buy' | 'sell'): Promise<void> => {
     setIsLoading(true);
     try {
@@ -172,15 +174,15 @@ const TradingMarket = () => {
         setSellPrice('');
       }
       
-      alert(`${side === 'buy' ? '买入' : '卖出'}订单提交成功！`);
+      alert(t('market_page.order_success'));
     } catch {
-      alert('订单提交失败，请重试');
+      alert(t('market_page.order_failed'));
     } finally {
       setIsLoading(false);
     }
   };
 
-  // 快速填入价格
+  // Quick fill price
   const handleQuickPrice = (price: number, side: 'buy' | 'sell'): void => {
     if (side === 'buy') {
       setBuyPrice(price.toString());
@@ -189,7 +191,7 @@ const TradingMarket = () => {
     }
   };
 
-  // 快速设置数量百分比
+  // Quick set amount percentage
   const handleQuickAmount = (percentage: number, side: 'buy' | 'sell'): void => {
     const availableBalance = side === 'buy' 
       ? balance.USDT?.available || 0 
@@ -208,7 +210,7 @@ const TradingMarket = () => {
     }
   };
 
-  // 过滤交易对
+  // Filter trading pairs
   const filteredPairs = tradingPairs.filter(pair =>
     pair.symbol.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -216,7 +218,7 @@ const TradingMarket = () => {
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-      {/* 量子背景 */}
+      {/* Quantum background */}
       <div className="quantum-background">
         <div className="quantum-grid"></div>
         <div className="glow-orb glow-orb-1"></div>
@@ -226,12 +228,12 @@ const TradingMarket = () => {
 
       <div className="main-content">
         <div className="container mx-auto px-4 py-6">
-          {/* 量子安全面板 */}
+          {/* Quantum security panel */}
           <div className="mb-6">
             <QuantumSecurityPanel onSecurityChange={() => {}} />
           </div>
 
-          {/* 页面标题 */}
+          {/* Page title */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-2">
               <Image 
@@ -242,28 +244,28 @@ const TradingMarket = () => {
                 className="h-10 w-10"
               />
               <h1 className="text-responsive-3xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">
-                量子交易市场
+                {t('market_page.title')}
               </h1>
             </div>
             <p className="text-gray-300 mt-2 text-responsive-base">
-              基于量子加密技术的安全交易平台，对标币安交易体验
+              {t('market_page.subtitle')}
             </p>
           </div>
 
-          {/* 主要交易界面 */}
+          {/* Main trading interface */}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* 左侧：交易对列表 */}
+            {/* Left: Trading pairs list */}
             <div className="lg:col-span-1">
               <Card className="h-full">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <BarChart3 className="w-5 h-5" />
-                    交易对
+                    {t('market_page.trading_pairs')}
                   </CardTitle>
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <Input
-                      placeholder="搜索交易对..."
+                      placeholder={t('market_page.search_pairs')}
                       value={searchTerm}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
                       className="quantum-input pl-10"
@@ -316,9 +318,9 @@ const TradingMarket = () => {
               </Card>
             </div>
 
-            {/* 中间：价格图表和订单簿 */}
+            {/* Center: Price chart and order book */}
             <div className="lg:col-span-2 space-y-6">
-              {/* 价格信息卡片 */}
+              {/* Price info card */}
               <Card>
                 <CardHeader>
                   <div className="flex justify-between items-center">
@@ -328,11 +330,11 @@ const TradingMarket = () => {
                     <div className="flex gap-2">
                       <Badge className="quantum-badge-primary">
                         <Shield className="w-3 h-3" />
-                        量子安全
+                        {t('market_page.quantum_secure')}
                       </Badge>
                       <Badge className="quantum-badge-success">
                         <Activity className="w-3 h-3" />
-                        活跃
+                        {t('market_page.active')}
                       </Badge>
                     </div>
                   </div>
@@ -340,25 +342,25 @@ const TradingMarket = () => {
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div>
-                      <div className="text-gray-400 text-sm">最新价格</div>
+                      <div className="text-gray-400 text-sm">{t('market_page.latest_price')}</div>
                       <div className="text-responsive-lg font-bold truncate-number">
                         {formatNumber(marketData.price || 0)}
                       </div>
                     </div>
                     <div>
-                      <div className="text-gray-400 text-sm">24h涨跌</div>
+                      <div className="text-gray-400 text-sm">{t('market_page.change_24h')}</div>
                       <div className={`text-responsive-lg font-bold ${(marketData.change || 0) >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                         {(marketData.change || 0) >= 0 ? '+' : ''}{formatPercentage(marketData.change || 0)}
                       </div>
                     </div>
                     <div>
-                      <div className="text-gray-400 text-sm">24h最高</div>
+                      <div className="text-gray-400 text-sm">{t('market_page.high_24h')}</div>
                       <div className="text-responsive-lg font-bold truncate-number">
                         {formatNumber(marketData.high || 0)}
                       </div>
                     </div>
                     <div>
-                      <div className="text-gray-400 text-sm">24h最低</div>
+                      <div className="text-gray-400 text-sm">{t('market_page.low_24h')}</div>
                       <div className="text-responsive-lg font-bold truncate-number">
                         {formatNumber(marketData.low || 0)}
                       </div>
@@ -367,19 +369,19 @@ const TradingMarket = () => {
                 </CardContent>
               </Card>
 
-              {/* 订单簿 */}
+              {/* Order book */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Activity className="w-5 h-5" />
-                    订单簿
+                    {t('market_page.order_book')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 gap-4">
-                    {/* 卖单 */}
+                    {/* Asks */}
                     <div>
-                      <div className="text-sm text-gray-400 mb-2">卖单 (Ask)</div>
+                      <div className="text-sm text-gray-400 mb-2">{t('market_page.asks')}</div>
                       <div className="space-y-1">
                         {orderBook.asks.slice().reverse().map((ask, index) => (
                           <div
@@ -401,9 +403,9 @@ const TradingMarket = () => {
                       </div>
                     </div>
 
-                    {/* 买单 */}
+                    {/* Bids */}
                     <div>
-                      <div className="text-sm text-gray-400 mb-2">买单 (Bid)</div>
+                      <div className="text-sm text-gray-400 mb-2">{t('market_page.bids')}</div>
                       <div className="space-y-1">
                         {orderBook.bids.map((bid, index) => (
                           <div
@@ -428,12 +430,12 @@ const TradingMarket = () => {
                 </CardContent>
               </Card>
 
-              {/* 最近成交 */}
+              {/* Recent trades */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Clock className="w-5 h-5" />
-                    最近成交
+                    {t('market_page.recent_trades')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -453,13 +455,13 @@ const TradingMarket = () => {
             </div>
 
 
-            {/* 右侧：交易面板 */}
+            {/* Right: Trading panel */}
             <div className="lg:col-span-1">
               <Card className="h-full">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <ArrowUpDown className="w-5 h-5" />
-                    交易面板
+                    {t('market_page.trading_panel')}
                   </CardTitle>
                   <div className="flex gap-2">
                     <Select value={tradeType} onValueChange={setTradeType}>
@@ -467,9 +469,9 @@ const TradingMarket = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="spot">现货</SelectItem>
-                        <SelectItem value="margin">杠杆</SelectItem>
-                        <SelectItem value="futures">合约</SelectItem>
+                        <SelectItem value="spot">{t('market_page.spot')}</SelectItem>
+                        <SelectItem value="margin">{t('market_page.margin')}</SelectItem>
+                        <SelectItem value="futures">{t('market_page.futures')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -477,28 +479,28 @@ const TradingMarket = () => {
                 <CardContent>
                   <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsList className="grid w-full grid-cols-2 quantum-tabs">
-                      <TabsTrigger value="buy" className="quantum-tab">买入</TabsTrigger>
-                      <TabsTrigger value="sell" className="quantum-tab">卖出</TabsTrigger>
+                      <TabsTrigger value="buy" className="quantum-tab">{t('market_page.buy')}</TabsTrigger>
+                      <TabsTrigger value="sell" className="quantum-tab">{t('market_page.sell')}</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="buy" className="space-y-4">
                       <div>
-                        <label className="text-sm text-gray-400">订单类型</label>
+                        <label className="text-sm text-gray-400">{t('market_page.order_type')}</label>
                         <Select value={orderType} onValueChange={setOrderType}>
                           <SelectTrigger className="quantum-input">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="market">市价单</SelectItem>
-                            <SelectItem value="limit">限价单</SelectItem>
-                            <SelectItem value="stop-limit">止损限价</SelectItem>
+                            <SelectItem value="market">{t('market_page.market_order')}</SelectItem>
+                            <SelectItem value="limit">{t('market_page.limit_order')}</SelectItem>
+                            <SelectItem value="stop-limit">{t('market_page.stop_limit')}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
 
                       {orderType !== 'market' && (
                         <div>
-                          <label className="text-sm text-gray-400">买入价格</label>
+                          <label className="text-sm text-gray-400">{t('market_page.buy_price')}</label>
                           <Input
                             type="number"
                             placeholder="0.00"
@@ -510,7 +512,7 @@ const TradingMarket = () => {
                       )}
 
                       <div>
-                        <label className="text-sm text-gray-400">买入数量</label>
+                        <label className="text-sm text-gray-400">{t('market_page.buy_amount')}</label>
                         <Input
                           type="number"
                           placeholder="0.00"
@@ -535,11 +537,11 @@ const TradingMarket = () => {
 
                       <div className="text-sm text-gray-400">
                         <div className="flex justify-between">
-                          <span>可用余额:</span>
+                          <span>{t('market_page.available_balance')}:</span>
                           <span className="truncate-number">{formatCurrency(balance.USDT?.available || 0, 'USDT')}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>预计费用:</span>
+                          <span>{t('market_page.estimated_fee')}:</span>
                           <span className="truncate-number">
                             {formatCurrency((parseFloat(buyAmount) * parseFloat(buyPrice) * 0.001) || 0, 'USDT')}
                           </span>
@@ -556,7 +558,7 @@ const TradingMarket = () => {
                         ) : (
                           <>
                             <TrendingUp className="w-4 h-4 mr-2" />
-                            买入 {selectedPair.split('/')[0]}
+                            {t('market_page.buy')} {selectedPair.split('/')[0]}
                           </>
                         )}
                       </Button>
@@ -564,22 +566,22 @@ const TradingMarket = () => {
 
                     <TabsContent value="sell" className="space-y-4">
                       <div>
-                        <label className="text-sm text-gray-400">订单类型</label>
+                        <label className="text-sm text-gray-400">{t('market_page.order_type')}</label>
                         <Select value={orderType} onValueChange={setOrderType}>
                           <SelectTrigger className="quantum-input">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="market">市价单</SelectItem>
-                            <SelectItem value="limit">限价单</SelectItem>
-                            <SelectItem value="stop-limit">止损限价</SelectItem>
+                            <SelectItem value="market">{t('market_page.market_order')}</SelectItem>
+                            <SelectItem value="limit">{t('market_page.limit_order')}</SelectItem>
+                            <SelectItem value="stop-limit">{t('market_page.stop_limit')}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
 
                       {orderType !== 'market' && (
                         <div>
-                          <label className="text-sm text-gray-400">卖出价格</label>
+                          <label className="text-sm text-gray-400">{t('market_page.sell_price')}</label>
                           <Input
                             type="number"
                             placeholder="0.00"
@@ -591,7 +593,7 @@ const TradingMarket = () => {
                       )}
 
                       <div>
-                        <label className="text-sm text-gray-400">卖出数量</label>
+                        <label className="text-sm text-gray-400">{t('market_page.sell_amount')}</label>
                         <Input
                           type="number"
                           placeholder="0.00"
@@ -616,11 +618,11 @@ const TradingMarket = () => {
 
                       <div className="text-sm text-gray-400">
                         <div className="flex justify-between">
-                          <span>可用余额:</span>
+                          <span>{t('market_page.available_balance')}:</span>
                           <span className="truncate-number">{formatCurrency(balance.QAU?.available || 0, 'QAU')}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>预计收入:</span>
+                          <span>{t('market_page.estimated_income')}:</span>
                           <span className="truncate-number">
                             {formatCurrency((parseFloat(sellAmount) * parseFloat(sellPrice) * 0.999) || 0, 'USDT')}
                           </span>
@@ -637,7 +639,7 @@ const TradingMarket = () => {
                         ) : (
                           <>
                             <TrendingDown className="w-4 h-4 mr-2" />
-                            卖出 {selectedPair.split('/')[0]}
+                            {t('market_page.sell')} {selectedPair.split('/')[0]}
                           </>
                         )}
                       </Button>
@@ -649,22 +651,22 @@ const TradingMarket = () => {
           </div>
 
 
-          {/* 底部：用户订单和持仓 */}
+          {/* Bottom: User orders and positions */}
           <div className="mt-8">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Wallet className="w-5 h-5" />
-                  我的交易
+                  {t('market_page.my_trades')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <Tabs defaultValue="orders" className="w-full">
                   <TabsList className="quantum-tabs">
-                    <TabsTrigger value="orders" className="quantum-tab">当前委托</TabsTrigger>
-                    <TabsTrigger value="history" className="quantum-tab">历史订单</TabsTrigger>
-                    <TabsTrigger value="positions" className="quantum-tab">持仓</TabsTrigger>
-                    <TabsTrigger value="balance" className="quantum-tab">资产</TabsTrigger>
+                    <TabsTrigger value="orders" className="quantum-tab">{t('market_page.current_orders')}</TabsTrigger>
+                    <TabsTrigger value="history" className="quantum-tab">{t('market_page.order_history')}</TabsTrigger>
+                    <TabsTrigger value="positions" className="quantum-tab">{t('market_page.positions')}</TabsTrigger>
+                    <TabsTrigger value="balance" className="quantum-tab">{t('market_page.assets')}</TabsTrigger>
                   </TabsList>
 
                   <TabsContent value="orders" className="mt-4">
@@ -674,7 +676,7 @@ const TradingMarket = () => {
                           <div key={order.id} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
                             <div className="flex items-center gap-4">
                               <Badge className={order.type === 'buy' ? 'quantum-badge-success' : 'quantum-badge-error'}>
-                                {order.type === 'buy' ? '买入' : '卖出'}
+                                {order.type === 'buy' ? t('market_page.buy') : t('market_page.sell')}
                               </Badge>
                               <span className="font-medium truncate-number">{order.pair}</span>
                               <span className="text-gray-400 truncate-number">{formatNumber(order.amount)}</span>
@@ -683,17 +685,17 @@ const TradingMarket = () => {
                             <div className="flex items-center gap-4">
                               <span className="text-sm text-gray-400">{order.time}</span>
                               <Badge className="quantum-badge-warning">
-                                {order.status === 'open' ? '未成交' : '部分成交'}
+                                {order.status === 'open' ? t('market_page.unfilled') : t('market_page.partial')}
                               </Badge>
                               <Button variant="outline" size="sm" className="quantum-button-secondary">
-                                取消
+                                {t('market_page.cancel')}
                               </Button>
                             </div>
                           </div>
                         ))
                       ) : (
                         <div className="text-center py-8 text-gray-400">
-                          暂无委托订单
+                          {t('market_page.no_orders')}
                         </div>
                       )}
                     </div>
@@ -701,13 +703,13 @@ const TradingMarket = () => {
 
                   <TabsContent value="history" className="mt-4">
                     <div className="text-center py-8 text-gray-400">
-                      暂无历史订单
+                      {t('market_page.no_history')}
                     </div>
                   </TabsContent>
 
                   <TabsContent value="positions" className="mt-4">
                     <div className="text-center py-8 text-gray-400">
-                      暂无持仓
+                      {t('market_page.no_positions')}
                     </div>
                   </TabsContent>
 
@@ -719,20 +721,20 @@ const TradingMarket = () => {
                             <span className="font-medium">{currency}</span>
                             <Badge className="quantum-badge-primary">
                               <Zap className="w-3 h-3" />
-                              量子安全
+                              {t('market_page.quantum_secure')}
                             </Badge>
                           </div>
                           <div className="space-y-1">
                             <div className="flex justify-between text-sm">
-                              <span className="text-gray-400">可用:</span>
+                              <span className="text-gray-400">{t('common.available')}:</span>
                               <span className="truncate-number">{formatNumber(data.available)}</span>
                             </div>
                             <div className="flex justify-between text-sm">
-                              <span className="text-gray-400">冻结:</span>
+                              <span className="text-gray-400">{t('common.locked')}:</span>
                               <span className="truncate-number">{formatNumber(data.locked)}</span>
                             </div>
                             <div className="flex justify-between text-sm font-medium">
-                              <span>总计:</span>
+                              <span>{t('common.total')}:</span>
                               <span className="truncate-number">{formatNumber(data.available + data.locked)}</span>
                             </div>
                           </div>

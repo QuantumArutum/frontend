@@ -4,11 +4,13 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Search, Calendar, MapPin, Plane, Users, CreditCard, Star, Wifi, Tv, Utensils } from 'lucide-react';
 import DemoModuleWrapper, { DemoBadge, DemoModuleDisabledCard } from '../../components/DemoModuleWrapper';
+import { useTranslation } from 'react-i18next';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Flight = Record<string, any>;
 
 const FlightBookingPage = () => {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useState({
     departure_city: 'New York',
     arrival_city: 'Los Angeles',
@@ -33,7 +35,7 @@ const FlightBookingPage = () => {
   const [currentStep, setCurrentStep] = useState('search');
   const [loading, setLoading] = useState(false);
 
-  // 搜索航班
+  // Search flights
   const searchFlights = async () => {
     setLoading(true);
     try {
@@ -49,12 +51,12 @@ const FlightBookingPage = () => {
         setCurrentStep('results');
       }
     } catch (error) {
-      console.error('搜索航班失败:', error);
+      console.error('Failed to search flights:', error);
     }
     setLoading(false);
   };
 
-  // 获取航班详情和票价
+  // Get flight details and fares
   const getFlightDetails = async (flightId: string) => {
     try {
       const response = await fetch(`/api/flights/${flightId}/fares`);
@@ -64,12 +66,12 @@ const FlightBookingPage = () => {
         return data.data;
       }
     } catch (error) {
-      console.error('获取航班详情失败:', error);
+      console.error('Failed to get flight details:', error);
     }
     return null;
   };
 
-  // 选择航班
+  // Select flight
   const selectFlight = async (flight: Flight, type: string) => {
     const details = await getFlightDetails(flight.flight_id);
     if (details) {
@@ -82,7 +84,7 @@ const FlightBookingPage = () => {
     }
   };
 
-  // 选择票价
+  // Select fare
   const selectFare = (flightId: string, fareClass: Flight) => {
     setSelectedFares({
       ...selectedFares,
@@ -90,24 +92,24 @@ const FlightBookingPage = () => {
     });
   };
 
-  // 格式化时间
+  // Format time
   const formatTime = (timeString: string): string => {
     return timeString.slice(0, 5);
   };
 
-  // 格式化持续时间
+  // Format duration
   const formatDuration = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
-    return `${hours}小时${mins}分钟`;
+    return `${hours}h ${mins}m`;
   };
 
-  // 渲染搜索表单
+  // Render search form
   const renderSearchForm = () => (
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">行程类型</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.trip_type')}</label>
           <div className="flex space-x-4">
             <label className="flex items-center">
               <input
@@ -117,7 +119,7 @@ const FlightBookingPage = () => {
                 onChange={(e) => setSearchParams({...searchParams, trip_type: e.target.value, return_date: ''})}
                 className="mr-2"
               />
-              单程
+              {t('flights_page.one_way')}
             </label>
             <label className="flex items-center">
               <input
@@ -127,7 +129,7 @@ const FlightBookingPage = () => {
                 onChange={(e) => setSearchParams({...searchParams, trip_type: e.target.value})}
                 className="mr-2"
               />
-              往返
+              {t('flights_page.round_trip')}
             </label>
           </div>
         </div>
@@ -135,7 +137,7 @@ const FlightBookingPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">出发城市</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.departure_city')}</label>
           <div className="relative">
             <Plane className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <select
@@ -143,20 +145,20 @@ const FlightBookingPage = () => {
               onChange={(e) => setSearchParams({...searchParams, departure_city: e.target.value})}
               className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="New York">纽约 (JFK)</option>
-              <option value="Los Angeles">洛杉矶 (LAX)</option>
-              <option value="London">伦敦 (LHR)</option>
-              <option value="Dubai">迪拜 (DXB)</option>
-              <option value="Singapore">新加坡 (SIN)</option>
-              <option value="Tokyo">东京 (NRT)</option>
-              <option value="Paris">巴黎 (CDG)</option>
-              <option value="Frankfurt">法兰克福 (FRA)</option>
+              <option value="New York">New York (JFK)</option>
+              <option value="Los Angeles">Los Angeles (LAX)</option>
+              <option value="London">London (LHR)</option>
+              <option value="Dubai">Dubai (DXB)</option>
+              <option value="Singapore">Singapore (SIN)</option>
+              <option value="Tokyo">Tokyo (NRT)</option>
+              <option value="Paris">Paris (CDG)</option>
+              <option value="Frankfurt">Frankfurt (FRA)</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">到达城市</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.arrival_city')}</label>
           <div className="relative">
             <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <select
@@ -164,20 +166,20 @@ const FlightBookingPage = () => {
               onChange={(e) => setSearchParams({...searchParams, arrival_city: e.target.value})}
               className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="Los Angeles">洛杉矶 (LAX)</option>
-              <option value="New York">纽约 (JFK)</option>
-              <option value="London">伦敦 (LHR)</option>
-              <option value="Dubai">迪拜 (DXB)</option>
-              <option value="Singapore">新加坡 (SIN)</option>
-              <option value="Tokyo">东京 (NRT)</option>
-              <option value="Paris">巴黎 (CDG)</option>
-              <option value="Frankfurt">法兰克福 (FRA)</option>
+              <option value="Los Angeles">Los Angeles (LAX)</option>
+              <option value="New York">New York (JFK)</option>
+              <option value="London">London (LHR)</option>
+              <option value="Dubai">Dubai (DXB)</option>
+              <option value="Singapore">Singapore (SIN)</option>
+              <option value="Tokyo">Tokyo (NRT)</option>
+              <option value="Paris">Paris (CDG)</option>
+              <option value="Frankfurt">Frankfurt (FRA)</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">出发日期</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.departure_date')}</label>
           <div className="relative">
             <Calendar className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <input
@@ -191,7 +193,7 @@ const FlightBookingPage = () => {
 
         {searchParams.trip_type === 'round_trip' && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">返程日期</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.return_date')}</label>
             <div className="relative">
               <Calendar className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <input
@@ -207,7 +209,7 @@ const FlightBookingPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">乘客数量</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.passengers')}</label>
           <div className="relative">
             <Users className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <select
@@ -216,23 +218,23 @@ const FlightBookingPage = () => {
               className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {[1,2,3,4,5,6,7,8,9].map(num => (
-                <option key={num} value={num}>{num} 位乘客</option>
+                <option key={num} value={num}>{num}</option>
               ))}
             </select>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">舱位等级</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.class_type')}</label>
           <select
             value={searchParams.class_type}
             onChange={(e) => setSearchParams({...searchParams, class_type: e.target.value})}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="ECONOMY">经济舱</option>
-            <option value="PREMIUM_ECONOMY">超级经济舱</option>
-            <option value="BUSINESS">商务舱</option>
-            <option value="FIRST">头等舱</option>
+            <option value="ECONOMY">{t('flights_page.economy')}</option>
+            <option value="PREMIUM_ECONOMY">{t('flights_page.premium_economy')}</option>
+            <option value="BUSINESS">{t('flights_page.business')}</option>
+            <option value="FIRST">{t('flights_page.first_class')}</option>
           </select>
         </div>
 
@@ -247,7 +249,7 @@ const FlightBookingPage = () => {
             ) : (
               <>
                 <Search className="h-4 w-4 mr-2" />
-                搜索航班
+                {t('flights_page.search_flights')}
               </>
             )}
           </button>
@@ -256,7 +258,7 @@ const FlightBookingPage = () => {
     </div>
   );
 
-  // 渲染航班卡片
+  // Render flight card
   const renderFlightCard = (flight: Flight, type: string = 'outbound') => (
     <div key={flight.flight_id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
       <div className="flex items-center justify-between mb-4">
@@ -303,9 +305,9 @@ const FlightBookingPage = () => {
           </div>
           <div className="text-center mt-1">
             {flight.stops === 0 ? (
-              <span className="text-xs text-green-600">直飞</span>
+              <span className="text-xs text-green-600">{t('flights_page.direct')}</span>
             ) : (
-              <span className="text-xs text-orange-600">{flight.stops} 次中转</span>
+              <span className="text-xs text-orange-600">{flight.stops} {t('flights_page.stop')}</span>
             )}
           </div>
         </div>
@@ -322,54 +324,54 @@ const FlightBookingPage = () => {
           <span className="text-2xl font-bold text-blue-600">
             {flight.price_range?.min_price ?? 0} QAU
           </span>
-          <span className="text-sm text-gray-500 ml-1">起</span>
+          <span className="text-sm text-gray-500 ml-1">{t('flights_page.from')}</span>
         </div>
         
         <div className="flex items-center space-x-2">
           {(flight as Flight & { delay_minutes?: number }).delay_minutes && (flight as Flight & { delay_minutes?: number }).delay_minutes! > 0 && (
             <span className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded">
-              延误 {(flight as Flight & { delay_minutes?: number }).delay_minutes} 分钟
+              {t('flights_page.delayed')} {(flight as Flight & { delay_minutes?: number }).delay_minutes} {t('flights_page.minutes')}
             </span>
           )}
           <button
             onClick={() => selectFlight(flight, type)}
             className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
           >
-            选择航班
+            {t('flights_page.select_flight')}
           </button>
         </div>
       </div>
     </div>
   );
 
-  // 渲染搜索结果
+  // Render search results
   const renderSearchResults = () => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">搜索结果</h2>
+        <h2 className="text-2xl font-bold">{t('flights_page.search_results')}</h2>
         <button
           onClick={() => setCurrentStep('search')}
           className="text-blue-600 hover:text-blue-800"
         >
-          修改搜索
+          {t('flights_page.modify_search')}
         </button>
       </div>
 
-      {/* 出发航班 */}
+      {/* Outbound flights */}
       <div>
         <h3 className="text-lg font-semibold mb-4">
-          出发航班: {searchResults?.search_params.departure_city} → {searchResults?.search_params.arrival_city}
+          {t('flights_page.outbound_flights')}: {searchResults?.search_params.departure_city} → {searchResults?.search_params.arrival_city}
         </h3>
         <div className="space-y-4">
           {searchResults?.outbound_flights.map(flight => renderFlightCard(flight, 'outbound'))}
         </div>
       </div>
 
-      {/* 返程航班 */}
+      {/* Return flights */}
       {searchResults?.return_flights && searchResults.return_flights.length > 0 && (
         <div>
           <h3 className="text-lg font-semibold mb-4">
-            返程航班: {searchResults?.search_params.arrival_city} → {searchResults?.search_params.departure_city}
+            {t('flights_page.return_flights')}: {searchResults?.search_params.arrival_city} → {searchResults?.search_params.departure_city}
           </h3>
           <div className="space-y-4">
             {searchResults?.return_flights.map(flight => renderFlightCard(flight, 'return'))}
@@ -379,22 +381,22 @@ const FlightBookingPage = () => {
     </div>
   );
 
-  // 渲染航班详情和票价选择
+  // Render flight details and fare selection
   const renderFlightDetails = () => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">选择票价</h2>
+        <h2 className="text-2xl font-bold">{t('flights_page.select_fare')}</h2>
         <button
           onClick={() => setCurrentStep('results')}
           className="text-blue-600 hover:text-blue-800"
         >
-          返回搜索结果
+          {t('flights_page.back_to_results')}
         </button>
       </div>
 
       {selectedOutbound && (
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4">出发航班票价</h3>
+          <h3 className="text-lg font-semibold mb-4">{t('flights_page.outbound_fare')}</h3>
           <div className="mb-4">
             <div className="flex items-center justify-between">
               <div>
@@ -434,20 +436,20 @@ const FlightBookingPage = () => {
 
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span>座位间距:</span>
+                    <span>{t('flights_page.seat_pitch')}:</span>
                     <span>{fareClass.seat_details.pitch_inches}&quot;</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>行李:</span>
+                    <span>{t('flights_page.baggage')}:</span>
                     <span>{fareClass.inclusions.baggage_kg}kg</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>餐食:</span>
-                    <span>{fareClass.inclusions.meal_included ? '包含' : '不含'}</span>
+                    <span>{t('flights_page.meal')}:</span>
+                    <span>{fareClass.inclusions.meal_included ? t('flights_page.included') : t('flights_page.not_included')}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>可退票:</span>
-                    <span>{fareClass.policies.refundable ? '可退' : '不可退'}</span>
+                    <span>{t('flights_page.refundable')}:</span>
+                    <span>{fareClass.policies.refundable ? t('flights_page.yes') : t('flights_page.no')}</span>
                   </div>
                 </div>
 
@@ -457,7 +459,7 @@ const FlightBookingPage = () => {
                     fareClass.availability.availability_percentage > 20 ? 'bg-yellow-100 text-yellow-800' :
                     'bg-red-100 text-red-800'
                   }`}>
-                    余票 {fareClass.availability.available_seats}
+                    {t('flights_page.seats_left')} {fareClass.availability.available_seats}
                   </span>
                 </div>
               </div>
@@ -468,7 +470,7 @@ const FlightBookingPage = () => {
 
       {selectedReturn && (
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4">返程航班票价</h3>
+          <h3 className="text-lg font-semibold mb-4">{t('flights_page.return_fare')}</h3>
         </div>
       )}
 
@@ -478,7 +480,7 @@ const FlightBookingPage = () => {
             onClick={() => setCurrentStep('booking')}
             className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition-colors"
           >
-            继续预订
+            {t('flights_page.continue_booking')}
           </button>
         </div>
       )}
@@ -499,24 +501,24 @@ const FlightBookingPage = () => {
     >
       <div className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8">
-          {/* 页面标题 */}
+          {/* Page title */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <h1 className="text-4xl font-bold text-gray-900">全球飞机票</h1>
+              <h1 className="text-4xl font-bold text-gray-900">{t('flights_page.title')}</h1>
               <DemoBadge variant="demo" />
             </div>
-            <p className="text-gray-600">安全便捷的全球航班预订服务</p>
+            <p className="text-gray-600">{t('flights_page.subtitle')}</p>
           </div>
 
-        {/* 步骤指示器 */}
+        {/* Step indicator */}
         <div className="flex justify-center mb-8">
           <div className="flex items-center space-x-4">
             {[
-              { key: 'search', label: '搜索航班', icon: Search },
-              { key: 'results', label: '选择航班', icon: Plane },
-              { key: 'details', label: '选择票价', icon: Star },
-              { key: 'booking', label: '填写信息', icon: Users },
-              { key: 'payment', label: '完成支付', icon: CreditCard }
+              { key: 'search', label: t('flights_page.steps.search'), icon: Search },
+              { key: 'results', label: t('flights_page.steps.select'), icon: Plane },
+              { key: 'details', label: t('flights_page.steps.fare'), icon: Star },
+              { key: 'booking', label: t('flights_page.steps.info'), icon: Users },
+              { key: 'payment', label: t('flights_page.steps.payment'), icon: CreditCard }
             ].map((step, index) => {
               const Icon = step.icon;
               const isActive = currentStep === step.key;
@@ -549,7 +551,7 @@ const FlightBookingPage = () => {
           </div>
         </div>
 
-        {/* 主要内容 */}
+        {/* Main content */}
         {currentStep === 'search' && renderSearchForm()}
         {currentStep === 'results' && searchResults && renderSearchResults()}
         {currentStep === 'details' && renderFlightDetails()}

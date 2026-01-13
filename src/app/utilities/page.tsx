@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { MapPin, CheckCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Provider {
   id: string;
@@ -40,6 +41,7 @@ interface PaymentData {
 }
 
 const UtilitiesPage = () => {
+  const { t } = useTranslation();
   const [currentView, setCurrentView] = useState('search'); // search, results, payment, confirmation
   const [searchParams, setSearchParams] = useState({
     country: '',
@@ -58,42 +60,42 @@ const UtilitiesPage = () => {
   const mockProviders = [
     {
       id: 'sgp-001',
-      name: '新加坡电力公司',
-      country: '新加坡',
-      region: '全国',
+      name: t('utilities_page.providers.singapore'),
+      country: t('utilities_page.countries.singapore'),
+      region: t('utilities_page.regions.nationwide'),
       logo: '⚡',
       supportedCurrencies: ['QAU', 'USDT', 'ETH'],
-      processingTime: '即时',
+      processingTime: t('utilities_page.processing.instant'),
       fees: '0.5%'
     },
     {
       id: 'usa-001',
       name: 'Pacific Gas & Electric',
-      country: '美国',
-      region: '加利福尼亚州',
+      country: t('utilities_page.countries.usa'),
+      region: t('utilities_page.regions.california'),
       logo: '🔌',
       supportedCurrencies: ['QAU', 'USDT', 'BTC'],
-      processingTime: '1-3分钟',
+      processingTime: t('utilities_page.processing.one_to_three'),
       fees: '0.8%'
     },
     {
       id: 'chn-001',
-      name: '国家电网',
-      country: '中国',
-      region: '全国',
+      name: t('utilities_page.providers.china_grid'),
+      country: t('utilities_page.countries.china'),
+      region: t('utilities_page.regions.nationwide'),
       logo: '🏭',
       supportedCurrencies: ['QAU', 'USDT'],
-      processingTime: '即时',
+      processingTime: t('utilities_page.processing.instant'),
       fees: '0.3%'
     },
     {
       id: 'jpn-001',
-      name: '東京電力',
-      country: '日本',
-      region: '关东地区',
+      name: t('utilities_page.providers.tokyo_electric'),
+      country: t('utilities_page.countries.japan'),
+      region: t('utilities_page.regions.kanto'),
       logo: '🔋',
       supportedCurrencies: ['QAU', 'USDT', 'ETH'],
-      processingTime: '1-2分钟',
+      processingTime: t('utilities_page.processing.one_to_two'),
       fees: '0.6%'
     }
   ];
@@ -162,10 +164,10 @@ const UtilitiesPage = () => {
         {/* 页面标题 */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-            ⚡ 全球电费缴纳平台
+            ⚡ {t('utilities_page.title')}
           </h1>
           <p className="text-gray-300 text-lg">
-            支持全球电力公司，使用QAU和其他加密货币安全便捷地缴纳电费
+            {t('utilities_page.subtitle')}
           </p>
         </div>
 
@@ -173,52 +175,52 @@ const UtilitiesPage = () => {
         {currentView === 'search' && (
           <div className="max-w-2xl mx-auto">
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8">
-              <h2 className="text-2xl font-semibold mb-6 text-center">查找电力公司</h2>
+              <h2 className="text-2xl font-semibold mb-6 text-center">{t('utilities_page.find_provider')}</h2>
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">国家/地区</label>
+                  <label className="block text-sm font-medium mb-2">{t('utilities_page.form.country')}</label>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                     <input
                       type="text"
                       value={searchParams.country}
                       onChange={(e) => setSearchParams({...searchParams, country: e.target.value})}
-                      placeholder="输入国家或地区"
+                      placeholder={t('utilities_page.form.country_placeholder')}
                       className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">省份/州</label>
+                  <label className="block text-sm font-medium mb-2">{t('utilities_page.form.region')}</label>
                   <input
                     type="text"
                     value={searchParams.region}
                     onChange={(e) => setSearchParams({...searchParams, region: e.target.value})}
-                    placeholder="输入省份或州"
+                    placeholder={t('utilities_page.form.region_placeholder')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">电表账号</label>
+                  <label className="block text-sm font-medium mb-2">{t('utilities_page.form.account_number')}</label>
                   <input
                     type="text"
                     value={searchParams.accountNumber}
                     onChange={(e) => setSearchParams({...searchParams, accountNumber: e.target.value})}
-                    placeholder="输入电表账号"
+                    placeholder={t('utilities_page.form.account_placeholder')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">户主姓名</label>
+                  <label className="block text-sm font-medium mb-2">{t('utilities_page.form.customer_name')}</label>
                   <input
                     type="text"
                     value={searchParams.customerName}
                     onChange={(e) => setSearchParams({...searchParams, customerName: e.target.value})}
-                    placeholder="输入户主姓名"
+                    placeholder={t('utilities_page.form.customer_placeholder')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   />
                 </div>
@@ -228,7 +230,7 @@ const UtilitiesPage = () => {
                   disabled={loading}
                   className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 disabled:opacity-50"
                 >
-                  {loading ? '搜索中...' : '搜索电力公司'}
+                  {loading ? t('utilities_page.searching') : t('utilities_page.search_providers')}
                 </button>
               </div>
             </div>
@@ -239,12 +241,12 @@ const UtilitiesPage = () => {
         {currentView === 'results' && (
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-semibold">找到 {providers.length} 家电力公司</h2>
+              <h2 className="text-2xl font-semibold">{t('utilities_page.found_providers', { count: providers.length })}</h2>
               <button
                 onClick={() => setCurrentView('search')}
                 className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all duration-200"
               >
-                重新搜索
+                {t('utilities_page.search_again')}
               </button>
             </div>
 
@@ -264,13 +266,13 @@ const UtilitiesPage = () => {
                       disabled={!searchParams.accountNumber || !searchParams.customerName}
                       className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200 disabled:opacity-50"
                     >
-                      查询账单
+                      {t('utilities_page.query_bill')}
                     </button>
                   </div>
                   
                   <div className="mt-4 grid grid-cols-3 gap-4 text-sm">
                     <div>
-                      <span className="text-gray-400">支持币种:</span>
+                      <span className="text-gray-400">{t('utilities_page.supported_currencies')}:</span>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {provider.supportedCurrencies.map((currency) => (
                           <span key={currency} className="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">
@@ -280,11 +282,11 @@ const UtilitiesPage = () => {
                       </div>
                     </div>
                     <div>
-                      <span className="text-gray-400">处理时间:</span>
+                      <span className="text-gray-400">{t('utilities_page.processing_time')}:</span>
                       <p className="text-white">{provider.processingTime}</p>
                     </div>
                     <div>
-                      <span className="text-gray-400">手续费:</span>
+                      <span className="text-gray-400">{t('utilities_page.fees')}:</span>
                       <p className="text-white">{provider.fees}</p>
                     </div>
                   </div>
@@ -298,41 +300,41 @@ const UtilitiesPage = () => {
         {currentView === 'payment' && billData && (
           <div className="max-w-2xl mx-auto">
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8">
-              <h2 className="text-2xl font-semibold mb-6 text-center">电费账单</h2>
+              <h2 className="text-2xl font-semibold mb-6 text-center">{t('utilities_page.electricity_bill')}</h2>
               
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
-                  <span className="text-gray-400">电力公司:</span>
+                  <span className="text-gray-400">{t('utilities_page.bill.provider')}:</span>
                   <span>{billData.provider}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">账户号码:</span>
+                  <span className="text-gray-400">{t('utilities_page.bill.account')}:</span>
                   <span>{billData.accountNumber}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">户主姓名:</span>
+                  <span className="text-gray-400">{t('utilities_page.bill.customer')}:</span>
                   <span>{billData.customerName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">账单周期:</span>
+                  <span className="text-gray-400">{t('utilities_page.bill.period')}:</span>
                   <span>{billData.billingPeriod}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">用电量:</span>
+                  <span className="text-gray-400">{t('utilities_page.bill.usage')}:</span>
                   <span>{billData.usage} {billData.unit}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">到期日期:</span>
+                  <span className="text-gray-400">{t('utilities_page.bill.due_date')}:</span>
                   <span>{billData.dueDate}</span>
                 </div>
                 <div className="flex justify-between text-xl font-semibold">
-                  <span>应付金额:</span>
+                  <span>{t('utilities_page.bill.amount_due')}:</span>
                   <span className="text-yellow-400">${billData.amount} {billData.currency}</span>
                 </div>
               </div>
 
               <div className="border-t border-white/20 pt-6">
-                <h3 className="text-lg font-semibold mb-4">选择支付方式</h3>
+                <h3 className="text-lg font-semibold mb-4">{t('utilities_page.select_payment')}</h3>
                 <div className="grid gap-3">
                   {selectedProvider?.supportedCurrencies.map((currency) => (
                     <button
@@ -346,7 +348,7 @@ const UtilitiesPage = () => {
                         </div>
                         <span>{currency}</span>
                       </div>
-                      <span className="text-gray-400">手续费: {selectedProvider?.fees}</span>
+                      <span className="text-gray-400">{t('utilities_page.fees')}: {selectedProvider?.fees}</span>
                     </button>
                   ))}
                 </div>
@@ -356,7 +358,7 @@ const UtilitiesPage = () => {
                 onClick={() => setCurrentView('results')}
                 className="w-full mt-6 bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200"
               >
-                返回
+                {t('utilities_page.back')}
               </button>
             </div>
           </div>
@@ -367,23 +369,23 @@ const UtilitiesPage = () => {
           <div className="max-w-2xl mx-auto">
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8 text-center">
               <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-semibold mb-6">支付成功！</h2>
+              <h2 className="text-2xl font-semibold mb-6">{t('utilities_page.payment_success')}</h2>
               
               <div className="space-y-4 mb-6 text-left">
                 <div className="flex justify-between">
-                  <span className="text-gray-400">交易ID:</span>
+                  <span className="text-gray-400">{t('utilities_page.confirmation.transaction_id')}:</span>
                   <span className="font-mono">{paymentData.transactionId}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">支付方式:</span>
+                  <span className="text-gray-400">{t('utilities_page.confirmation.payment_method')}:</span>
                   <span>{paymentData.method}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">支付金额:</span>
+                  <span className="text-gray-400">{t('utilities_page.confirmation.amount')}:</span>
                   <span>${paymentData.amount} {paymentData.currency}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">支付时间:</span>
+                  <span className="text-gray-400">{t('utilities_page.confirmation.time')}:</span>
                   <span>{new Date(paymentData.timestamp).toLocaleString()}</span>
                 </div>
               </div>
@@ -393,10 +395,10 @@ const UtilitiesPage = () => {
                   onClick={() => setCurrentView('search')}
                   className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200"
                 >
-                  继续缴费
+                  {t('utilities_page.continue_payment')}
                 </button>
                 <button className="flex-1 bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200">
-                  下载收据
+                  {t('utilities_page.download_receipt')}
                 </button>
               </div>
             </div>
@@ -408,7 +410,7 @@ const UtilitiesPage = () => {
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8 text-center">
               <div className="animate-spin w-8 h-8 border-2 border-yellow-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-              <p className="text-white">处理中...</p>
+              <p className="text-white">{t('utilities_page.processing')}</p>
             </div>
           </div>
         )}

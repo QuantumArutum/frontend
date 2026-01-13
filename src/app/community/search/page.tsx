@@ -4,6 +4,8 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Search, MessageSquare, ThumbsUp, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
@@ -24,6 +26,7 @@ interface SearchResult {
 function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { t } = useTranslation();
   const query = searchParams?.get('q') || '';
 
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -68,14 +71,14 @@ function SearchContent() {
       <div className="max-w-6xl mx-auto p-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-4">搜索结果</h1>
+          <h1 className="text-3xl font-bold text-white mb-4">{t('search_page.title')}</h1>
           <form onSubmit={handleSearch} className="relative max-w-2xl">
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              placeholder="搜索讨论..."
+              placeholder={t('search_page.search_placeholder')}
               className="w-full pl-12 pr-4 py-3 bg-gray-800/80 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </form>
@@ -85,17 +88,17 @@ function SearchContent() {
         {loading ? (
           <div className="text-center py-12">
             <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-            <p className="text-white mt-4">搜索中...</p>
+            <p className="text-white mt-4">{t('search_page.searching')}</p>
           </div>
         ) : query && results.length === 0 ? (
           <div className="bg-gray-800/80 backdrop-blur-xl rounded-2xl border border-gray-700/50 p-12 text-center">
             <Search className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-400 text-lg">未找到与 &quot;{query}&quot; 相关的结果</p>
-            <p className="text-gray-500 mt-2">尝试使用不同的关键词</p>
+            <p className="text-gray-400 text-lg">{t('search_page.no_results', { query })}</p>
+            <p className="text-gray-500 mt-2">{t('search_page.try_different')}</p>
           </div>
         ) : query ? (
           <div>
-            <p className="text-gray-400 mb-6">找到 {results.length} 个结果</p>
+            <p className="text-gray-400 mb-6">{t('search_page.found_results', { count: results.length })}</p>
             <div className="space-y-4">
               {results.map((post, index) => (
                 <motion.div
@@ -129,7 +132,7 @@ function SearchContent() {
         ) : (
           <div className="bg-gray-800/80 backdrop-blur-xl rounded-2xl border border-gray-700/50 p-12 text-center">
             <Search className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-400 text-lg">输入关键词开始搜索</p>
+            <p className="text-gray-400 text-lg">{t('search_page.enter_keywords')}</p>
           </div>
         )}
       </div>
@@ -141,6 +144,7 @@ function SearchContent() {
 
 // Loading fallback component
 function SearchLoading() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen relative">
       <ParticlesBackground />
@@ -149,7 +153,7 @@ function SearchLoading() {
       <div className="max-w-6xl mx-auto p-4">
         <div className="text-center py-12">
           <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-white mt-4">加载中...</p>
+          <p className="text-white mt-4">{t('search_page.loading')}</p>
         </div>
       </div>
       </div>

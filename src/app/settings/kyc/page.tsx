@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import { Card, Upload, Button, Form, Input, Select, message, Typography } from 'antd';
 import { UploadOutlined, IdcardOutlined } from '@ant-design/icons';
 import { barongAPI } from '@/api/client';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 const { Title, Paragraph } = Typography;
 
 export default function KYCPage() {
+  const { t } = useTranslation();
   const [fileList, setFileList] = useState<any[]>([]);
   const [uploading, setUploading] = useState(false);
   const [form] = Form.useForm();
@@ -28,15 +31,15 @@ export default function KYCPage() {
       });
 
       if (res.data.success) {
-        message.success('Documents uploaded successfully. Verification pending.');
+        message.success(t('settings.kyc.messages.upload_success'));
         setFileList([]);
         form.resetFields();
       } else {
-        message.error('Upload failed');
+        message.error(t('settings.kyc.messages.upload_failed'));
       }
     } catch (error) {
       console.error(error);
-      message.error('Upload failed');
+      message.error(t('settings.kyc.messages.upload_failed'));
     } finally {
       setUploading(false);
     }
@@ -60,29 +63,29 @@ export default function KYCPage() {
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-12">
-          <Title level={1} className="text-white">Identity Verification</Title>
+          <Title level={1} className="text-white">{t('settings.kyc.title')}</Title>
           <Paragraph className="text-lg text-gray-400">
-            Verify your identity to unlock higher limits and features.
+            {t('settings.kyc.subtitle')}
           </Paragraph>
         </div>
 
         <Card className="bg-gray-900 border-gray-800">
           <Form form={form} layout="vertical" onFinish={handleUpload}>
-            <Form.Item name="doc_type" label={<span className="text-white">Document Type</span>} rules={[{ required: true }]}>
-              <Select className="bg-gray-800" placeholder="Select document type">
-                <Select.Option value="Identity Card">Identity Card</Select.Option>
-                <Select.Option value="Passport">Passport</Select.Option>
-                <Select.Option value="Driver License">Driver License</Select.Option>
+            <Form.Item name="doc_type" label={<span className="text-white">{t('settings.kyc.doc_type')}</span>} rules={[{ required: true }]}>
+              <Select className="bg-gray-800" placeholder={t('settings.kyc.select_doc_type')}>
+                <Select.Option value="Identity Card">{t('settings.kyc.doc_types.id_card')}</Select.Option>
+                <Select.Option value="Passport">{t('settings.kyc.doc_types.passport')}</Select.Option>
+                <Select.Option value="Driver License">{t('settings.kyc.doc_types.driver_license')}</Select.Option>
               </Select>
             </Form.Item>
 
-            <Form.Item name="doc_number" label={<span className="text-white">Document Number</span>} rules={[{ required: true }]}>
-              <Input className="bg-gray-800 text-white border-gray-700" placeholder="Enter document number" />
+            <Form.Item name="doc_number" label={<span className="text-white">{t('settings.kyc.doc_number')}</span>} rules={[{ required: true }]}>
+              <Input className="bg-gray-800 text-white border-gray-700" placeholder={t('settings.kyc.enter_doc_number')} />
             </Form.Item>
 
-            <Form.Item label={<span className="text-white">Upload Document</span>} required>
+            <Form.Item label={<span className="text-white">{t('settings.kyc.upload_doc')}</span>} required>
               <Upload {...props} maxCount={1} className="text-white">
-                <Button icon={<UploadOutlined />} className="bg-gray-800 text-white border-gray-700">Select File</Button>
+                <Button icon={<UploadOutlined />} className="bg-gray-800 text-white border-gray-700">{t('settings.kyc.select_file')}</Button>
               </Upload>
             </Form.Item>
 
@@ -95,7 +98,7 @@ export default function KYCPage() {
               size="large"
               icon={<IdcardOutlined />}
             >
-              Submit for Verification
+              {t('settings.kyc.submit')}
             </Button>
           </Form>
         </Card>

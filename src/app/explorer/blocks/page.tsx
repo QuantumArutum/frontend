@@ -6,8 +6,11 @@ import { motion } from 'framer-motion';
 import { Box, Clock, ArrowLeft, RefreshCw, Layers, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { explorerService, Block, explorerUtils } from '../../../services/explorerService';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 export default function BlocksPage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [loading, setLoading] = useState(true);
@@ -41,7 +44,7 @@ export default function BlocksPage() {
           onClick={() => router.push('/explorer')} 
           className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
         >
-          <ArrowLeft className="w-5 h-5" /> Back to Explorer
+          <ArrowLeft className="w-5 h-5" /> {t('explorer_page.blocks.back')}
         </button>
         <button 
           onClick={handleRefresh}
@@ -49,7 +52,7 @@ export default function BlocksPage() {
           className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-medium transition-colors disabled:opacity-50"
         >
           <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-          {refreshing ? 'Refreshing...' : 'Refresh'}
+          {refreshing ? t('explorer_page.blocks.refreshing') : t('explorer_page.blocks.refresh')}
         </button>
       </div>
 
@@ -62,8 +65,8 @@ export default function BlocksPage() {
           <Layers className="w-7 h-7 text-white" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Latest Blocks</h1>
-          <p className="text-gray-400">View the most recent blocks mined on Quantaureum</p>
+          <h1 className="text-3xl font-bold text-white">{t('explorer_page.blocks.title')}</h1>
+          <p className="text-gray-400">{t('explorer_page.blocks.subtitle')}</p>
         </div>
       </motion.div>
 
@@ -77,12 +80,12 @@ export default function BlocksPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-white/10 bg-white/5">
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Block</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Age</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Txns</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Miner</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Gas Used</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Limit</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer_page.blocks.columns.block')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer_page.blocks.columns.age')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer_page.blocks.columns.txns')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer_page.blocks.columns.miner')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer_page.blocks.columns.gas_used')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer_page.blocks.columns.limit')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -132,4 +135,3 @@ export default function BlocksPage() {
     </div>
   );
 }
-

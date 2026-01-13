@@ -4,11 +4,13 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { MapPin, Calendar, Users, Star, Wifi, Car, Utensils, Dumbbell, Waves, Shield, Filter, Heart, Share2, Phone, Mail, Globe, Clock, CheckCircle } from 'lucide-react';
 import DemoModuleWrapper, { DemoBadge, DemoModuleDisabledCard } from '../../components/DemoModuleWrapper';
+import { useTranslation } from 'react-i18next';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Hotel = Record<string, any>;
 
 const HotelBookingPage = () => {
+  const { t } = useTranslation();
   const [currentView, setCurrentView] = useState('search');
   const [searchParams, setSearchParams] = useState({
     destination: '',
@@ -105,28 +107,28 @@ const HotelBookingPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">Global Hotel Booking</h1>
-          <p className="text-xl text-gray-600">Discover boutique hotels worldwide with quantum-secure booking</p>
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">{t('hotels_page.title')}</h1>
+          <p className="text-xl text-gray-600">{t('hotels_page.subtitle')}</p>
         </div>
 
         <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <div className="lg:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Destination</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('hotels_page.destination')}</label>
               <div className="relative">
                 <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   value={searchParams.destination}
                   onChange={(e) => setSearchParams({...searchParams, destination: e.target.value})}
-                  placeholder="City, hotel name or landmark"
+                  placeholder={t('hotels_page.destination_placeholder')}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Check-in</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('hotels_page.check_in')}</label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <input
@@ -139,7 +141,7 @@ const HotelBookingPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Check-out</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('hotels_page.check_out')}</label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <input
@@ -152,7 +154,7 @@ const HotelBookingPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Guests & Rooms</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('hotels_page.guests_rooms')}</label>
               <div className="flex space-x-2">
                 <div className="relative flex-1">
                   <Users className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
@@ -185,13 +187,13 @@ const HotelBookingPage = () => {
               disabled={loading || !searchParams.destination || !searchParams.checkIn || !searchParams.checkOut}
               className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
             >
-              {loading ? 'Searching...' : 'Search Hotels'}
+              {loading ? t('hotels_page.searching') : t('hotels_page.search_hotels')}
             </button>
           </div>
         </div>
 
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Popular Destinations</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{t('hotels_page.popular_destinations')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { name: 'Beijing', country: 'China', image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400', hotels: 1250 },
@@ -241,7 +243,7 @@ const HotelBookingPage = () => {
             onClick={() => setCurrentView('search')}
             className="text-blue-600 hover:text-blue-800 font-medium"
           >
-            Modify Search
+            {t('hotels_page.modify_search')}
           </button>
         </div>
 
@@ -249,7 +251,7 @@ const HotelBookingPage = () => {
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center space-x-2">
               <Filter className="h-5 w-5 text-gray-500" />
-              <span className="font-medium">Filter</span>
+              <span className="font-medium">{t('hotels_page.filter')}</span>
             </div>
             
             <select
@@ -257,14 +259,14 @@ const HotelBookingPage = () => {
               onChange={(e) => setFilters({...filters, starRating: e.target.value})}
               className="px-3 py-2 border border-gray-300 rounded-md"
             >
-              <option value="">All Stars</option>
-              <option value="5">5 Star</option>
-              <option value="4">4 Star</option>
-              <option value="3">3 Star</option>
+              <option value="">{t('hotels_page.all_stars')}</option>
+              <option value="5">5 {t('hotels_page.star')}</option>
+              <option value="4">4 {t('hotels_page.star')}</option>
+              <option value="3">3 {t('hotels_page.star')}</option>
             </select>
 
             <div className="flex items-center space-x-2">
-              <span>Price:</span>
+              <span>{t('hotels_page.price')}:</span>
               <input
                 type="number"
                 value={filters.priceMin}
@@ -287,7 +289,7 @@ const HotelBookingPage = () => {
               onClick={searchHotels}
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
             >
-              Apply Filter
+              {t('hotels_page.apply_filter')}
             </button>
           </div>
         </div>
@@ -358,14 +360,14 @@ const HotelBookingPage = () => {
                         <span className="text-2xl font-bold text-blue-600">
                           {hotel.room_types ? Math.min(...hotel.room_types.map((room: Hotel) => room.price_per_night)) : 0} QAU
                         </span>
-                        <span className="text-gray-500 block text-sm">per night</span>
+                        <span className="text-gray-500 block text-sm">{t('hotels_page.per_night')}</span>
                       </div>
                       
                       <button
                         onClick={() => getHotelDetails(hotel.hotel_id)}
                         className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
                       >
-                        View Details
+                        {t('hotels_page.view_details')}
                       </button>
                       
                       <div className="flex items-center justify-end mt-2 space-x-2">
@@ -387,7 +389,7 @@ const HotelBookingPage = () => {
         {hotels.length > 0 && (
           <div className="text-center mt-8">
             <button className="bg-gray-200 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-300 transition-colors">
-              Load More Hotels
+              {t('hotels_page.load_more')}
             </button>
           </div>
         )}
@@ -406,7 +408,7 @@ const HotelBookingPage = () => {
             onClick={() => setCurrentView('results')}
             className="mb-6 text-blue-600 hover:text-blue-800 font-medium"
           >
-            Back to Search Results
+            {t('hotels_page.back_to_results')}
           </button>
 
           <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
@@ -484,7 +486,7 @@ const HotelBookingPage = () => {
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Select Room Type</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('hotels_page.select_room')}</h2>
             <div className="space-y-4">
               {selectedHotel.room_types?.map((room: Hotel) => (
                 <div key={room.room_type_id} className="border border-gray-200 rounded-lg p-4">
@@ -528,7 +530,7 @@ const HotelBookingPage = () => {
                         }}
                         className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
                       >
-                        Book Now
+                        {t('hotels_page.book_now')}
                       </button>
                     </div>
                   </div>
@@ -538,7 +540,7 @@ const HotelBookingPage = () => {
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Amenities</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('hotels_page.amenities')}</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {selectedHotel.amenities?.map((amenity: Hotel, index: number) => (
                 <div key={index} className="flex items-center">
@@ -563,7 +565,7 @@ const HotelBookingPage = () => {
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Hotel Policies</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('hotels_page.hotel_policies')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Check-in/Check-out</h3>
@@ -636,13 +638,13 @@ const HotelBookingPage = () => {
             onClick={() => setCurrentView('details')}
             className="mb-6 text-blue-600 hover:text-blue-800 font-medium"
           >
-            Back to Hotel Details
+            {t('hotels_page.back_to_details')}
           </button>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Booking Information</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('hotels_page.booking_info')}</h2>
                 
                 <div className="space-y-6">
                   <div>
@@ -739,7 +741,7 @@ const HotelBookingPage = () => {
                   disabled={loading || !guestInfo.name || !guestInfo.email || !guestInfo.phone}
                   className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
                 >
-                  {loading ? 'Processing...' : 'Confirm Booking'}
+                  {loading ? t('common.processing') : t('hotels_page.confirm_booking')}
                 </button>
               </div>
             </div>
@@ -791,7 +793,7 @@ const HotelBookingPage = () => {
             }}
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
-            Back to Home
+            {t('hotels_page.back_to_home')}
           </button>
         </div>
       </div>

@@ -4,82 +4,98 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FaCode, FaCopy, FaCheck, FaGithub, FaPlay, FaBook, FaRocket, FaWallet, FaExchangeAlt, FaFileContract, FaCoins } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 import EnhancedNavbar from '@/app/components/EnhancedNavbar';
 import EnhancedFooter from '@/app/components/EnhancedFooter';
 import ParticlesBackground from '@/app/components/ParticlesBackground';
 
-const codeExamples = [
-  {
-    id: 'connect-wallet',
-    category: '钱包',
-    icon: FaWallet,
-    title: '连接钱包',
-    description: '使用 JavaScript SDK 连接 Quantaureum 钱包',
-    language: 'javascript',
-    code: `import { QuantaureumSDK } from '@quantaureum/sdk';
+export default function DevelopersExamplesPage() {
+  const { t } = useTranslation();
+  const [selectedCategory, setSelectedCategory] = useState(t('dev_examples.categories.all'));
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
-// 初始化 SDK
+  const categories = [
+    t('dev_examples.categories.all'),
+    t('dev_examples.categories.wallet'),
+    t('dev_examples.categories.transaction'),
+    t('dev_examples.categories.smart_contract'),
+    t('dev_examples.categories.defi'),
+    t('dev_examples.categories.quantum_security')
+  ];
+
+  const codeExamples = [
+    {
+      id: 'connect-wallet',
+      category: t('dev_examples.categories.wallet'),
+      icon: FaWallet,
+      title: t('dev_examples.examples.connect_wallet.title'),
+      description: t('dev_examples.examples.connect_wallet.description'),
+      language: 'javascript',
+      code: `import { QuantaureumSDK } from '@quantaureum/sdk';
+
+// Initialize SDK
 const sdk = new QuantaureumSDK({
   network: 'mainnet',
   rpcUrl: 'https://rpc.quantaureum.com'
 });
 
-// 连接钱包
+// Connect wallet
 async function connectWallet() {
   try {
     const wallet = await sdk.wallet.connect();
-    console.log('钱包地址:', wallet.address);
-    console.log('余额:', await wallet.getBalance());
+    console.log('Wallet address:', wallet.address);
+    console.log('Balance:', await wallet.getBalance());
     return wallet;
   } catch (error) {
-    console.error('连接失败:', error);
+    console.error('Connection failed:', error);
   }
 }
 
-// 调用连接
+// Call connect
 connectWallet();`
-  },
-  {
-    id: 'send-transaction',
-    category: '交易',
-    icon: FaExchangeAlt,
-    title: '发送交易',
-    description: '发送 QAU 代币到指定地址',
-    language: 'javascript',
-    code: `import { QuantaureumSDK, parseQAU } from '@quantaureum/sdk';
+    },
+    {
+      id: 'send-transaction',
+      category: t('dev_examples.categories.transaction'),
+      icon: FaExchangeAlt,
+      title: t('dev_examples.examples.send_transaction.title'),
+      description: t('dev_examples.examples.send_transaction.description'),
+      language: 'javascript',
+      code: `import { QuantaureumSDK, parseQAU } from '@quantaureum/sdk';
 
 const sdk = new QuantaureumSDK({ network: 'mainnet' });
 
 async function sendTransaction(to, amount) {
   const wallet = await sdk.wallet.connect();
   
-  // 构建交易
+  // Build transaction
   const tx = await wallet.sendTransaction({
     to: to,
-    value: parseQAU(amount), // 转换为最小单位
+    value: parseQAU(amount), // Convert to smallest unit
     gasLimit: 21000
   });
   
-  console.log('交易哈希:', tx.hash);
+  console.log('Transaction hash:', tx.hash);
   
-  // 等待确认
+  // Wait for confirmation
   const receipt = await tx.wait();
-  console.log('交易已确认，区块:', receipt.blockNumber);
+  console.log('Transaction confirmed, block:', receipt.blockNumber);
   
   return receipt;
 }
 
-// 发送 10 QAU
+// Send 10 QAU
 sendTransaction('0x742d35Cc6634C0532925a3b844Bc9e7595f...', '10');`
-  },
-  {
-    id: 'deploy-contract',
-    category: '智能合约',
-    icon: FaFileContract,
-    title: '部署智能合约',
-    description: '部署一个简单的代币合约',
-    language: 'solidity',
-    code: `// SPDX-License-Identifier: MIT
+    },
+    {
+      id: 'deploy-contract',
+      category: t('dev_examples.categories.smart_contract'),
+      icon: FaFileContract,
+      title: t('dev_examples.examples.deploy_contract.title'),
+      description: t('dev_examples.examples.deploy_contract.description'),
+      language: 'solidity',
+      code: `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import "@quantaureum/contracts/token/QRC20.sol";
@@ -94,7 +110,7 @@ contract MyToken is QRC20, QuantumSafe {
         _mint(msg.sender, initialSupply * 10**decimals());
     }
     
-    // 量子安全的转账函数
+    // Quantum-safe transfer function
     function transfer(address to, uint256 amount) 
         public 
         override 
@@ -104,68 +120,20 @@ contract MyToken is QRC20, QuantumSafe {
         return super.transfer(to, amount);
     }
     
-    // 铸造新代币（仅管理员）
+    // Mint new tokens (admin only)
     function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 }`
-  },
-  {
-    id: 'interact-contract',
-    category: '智能合约',
-    icon: FaCode,
-    title: '调用智能合约',
-    description: '与已部署的智能合约交互',
-    language: 'javascript',
-    code: `import { QuantaureumSDK, Contract } from '@quantaureum/sdk';
-
-const sdk = new QuantaureumSDK({ network: 'mainnet' });
-
-// 合约 ABI
-const tokenABI = [
-  "function balanceOf(address) view returns (uint256)",
-  "function transfer(address to, uint256 amount) returns (bool)",
-  "function approve(address spender, uint256 amount) returns (bool)",
-  "event Transfer(address indexed from, address indexed to, uint256 value)"
-];
-
-async function interactWithContract() {
-  const wallet = await sdk.wallet.connect();
-  
-  // 创建合约实例
-  const tokenContract = new Contract(
-    '0x1234567890abcdef...', // 合约地址
-    tokenABI,
-    wallet
-  );
-  
-  // 读取余额
-  const balance = await tokenContract.balanceOf(wallet.address);
-  console.log('代币余额:', balance.toString());
-  
-  // 转账代币
-  const tx = await tokenContract.transfer(
-    '0xRecipientAddress...',
-    parseUnits('100', 18)
-  );
-  await tx.wait();
-  
-  // 监听事件
-  tokenContract.on('Transfer', (from, to, value) => {
-    console.log(\`转账: \${from} -> \${to}, 金额: \${value}\`);
-  });
-}
-
-interactWithContract();`
-  },
-  {
-    id: 'staking',
-    category: 'DeFi',
-    icon: FaCoins,
-    title: '质押 QAU',
-    description: '将 QAU 质押到验证节点获取收益',
-    language: 'javascript',
-    code: `import { QuantaureumSDK, parseQAU } from '@quantaureum/sdk';
+    },
+    {
+      id: 'staking',
+      category: t('dev_examples.categories.defi'),
+      icon: FaCoins,
+      title: t('dev_examples.examples.staking.title'),
+      description: t('dev_examples.examples.staking.description'),
+      language: 'javascript',
+      code: `import { QuantaureumSDK, parseQAU } from '@quantaureum/sdk';
 
 const sdk = new QuantaureumSDK({ network: 'mainnet' });
 
@@ -173,82 +141,76 @@ async function stakeQAU(validatorAddress, amount) {
   const wallet = await sdk.wallet.connect();
   const staking = sdk.staking;
   
-  // 检查验证者信息
+  // Check validator info
   const validator = await staking.getValidator(validatorAddress);
-  console.log('验证者:', validator.name);
-  console.log('当前 APY:', validator.apy + '%');
+  console.log('Validator:', validator.name);
+  console.log('Current APY:', validator.apy + '%');
   
-  // 执行质押
+  // Execute staking
   const tx = await staking.stake({
     validator: validatorAddress,
     amount: parseQAU(amount)
   });
   
-  console.log('质押交易:', tx.hash);
+  console.log('Staking transaction:', tx.hash);
   await tx.wait();
   
-  // 查询质押信息
+  // Query staking info
   const myStakes = await staking.getStakes(wallet.address);
-  console.log('我的质押:', myStakes);
+  console.log('My stakes:', myStakes);
   
   return myStakes;
 }
 
-// 质押 1000 QAU
+// Stake 1000 QAU
 stakeQAU('0xValidatorAddress...', '1000');`
-  },
-  {
-    id: 'quantum-signature',
-    category: '量子安全',
-    icon: FaRocket,
-    title: '量子安全签名',
-    description: '使用后量子密码算法签名消息',
-    language: 'javascript',
-    code: `import { QuantaureumSDK, QuantumCrypto } from '@quantaureum/sdk';
+    },
+    {
+      id: 'quantum-signature',
+      category: t('dev_examples.categories.quantum_security'),
+      icon: FaRocket,
+      title: t('dev_examples.examples.quantum_signature.title'),
+      description: t('dev_examples.examples.quantum_signature.description'),
+      language: 'javascript',
+      code: `import { QuantaureumSDK, QuantumCrypto } from '@quantaureum/sdk';
 
 const sdk = new QuantaureumSDK({ network: 'mainnet' });
 
 async function quantumSign() {
   const wallet = await sdk.wallet.connect();
   
-  // 使用 CRYSTALS-Dilithium 签名
+  // Sign using CRYSTALS-Dilithium
   const message = 'Hello, Quantum World!';
   
   const signature = await wallet.signMessage(message, {
     algorithm: 'dilithium3' // NIST Level 3
   });
   
-  console.log('消息:', message);
-  console.log('签名:', signature);
+  console.log('Message:', message);
+  console.log('Signature:', signature);
   
-  // 验证签名
+  // Verify signature
   const isValid = await QuantumCrypto.verify(
     message,
     signature,
     wallet.publicKey
   );
   
-  console.log('签名有效:', isValid);
+  console.log('Signature valid:', isValid);
   
-  // 获取签名详情
+  // Get signature details
   const signatureInfo = QuantumCrypto.parseSignature(signature);
-  console.log('算法:', signatureInfo.algorithm);
-  console.log('安全级别:', signatureInfo.securityLevel);
+  console.log('Algorithm:', signatureInfo.algorithm);
+  console.log('Security level:', signatureInfo.securityLevel);
   
   return { signature, isValid };
 }
 
 quantumSign();`
-  }
-];
+    }
+  ];
 
-const categories = ['全部', '钱包', '交易', '智能合约', 'DeFi', '量子安全'];
-
-export default function DevelopersExamplesPage() {
-  const [selectedCategory, setSelectedCategory] = useState('全部');
-  const [copiedId, setCopiedId] = useState<string | null>(null);
-
-  const filteredExamples = selectedCategory === '全部'
+  const filteredExamples = selectedCategory === t('dev_examples.categories.all')
     ? codeExamples
     : codeExamples.filter(ex => ex.category === selectedCategory);
 
@@ -272,14 +234,14 @@ export default function DevelopersExamplesPage() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-4 py-2 bg-cyan-500/20 text-cyan-300 rounded-full text-sm mb-6">
-              代码示例
+              {t('dev_examples.badge')}
             </span>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              快速上手
-              <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> 代码示例 </span>
+              {t('dev_examples.title')}
+              <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> {t('dev_examples.title_highlight')} </span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-              复制粘贴即可运行的代码示例，帮助您快速集成 Quantaureum
+              {t('dev_examples.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/developers/docs">
@@ -288,7 +250,7 @@ export default function DevelopersExamplesPage() {
                   whileTap={{ scale: 0.95 }}
                   className="px-6 py-3 bg-white/10 text-white rounded-xl font-semibold border border-white/20 flex items-center gap-2"
                 >
-                  <FaBook /> 完整文档
+                  <FaBook /> {t('dev_examples.full_docs')}
                 </motion.button>
               </Link>
               <a href="https://github.com/quantaureum" target="_blank" rel="noopener noreferrer">
@@ -390,14 +352,14 @@ export default function DevelopersExamplesPage() {
                   <div className="p-4 border-t border-white/10 flex justify-between items-center">
                     <Link href="/developers/docs">
                       <span className="text-cyan-400 hover:text-cyan-300 text-sm flex items-center gap-1">
-                        <FaBook /> 查看文档
+                        <FaBook /> {t('dev_examples.view_docs')}
                       </span>
                     </Link>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       className="px-4 py-2 bg-gradient-to-r from-cyan-600 to-purple-600 text-white rounded-lg text-sm font-medium flex items-center gap-2"
                     >
-                      <FaPlay /> 在线运行
+                      <FaPlay /> {t('dev_examples.run_online')}
                     </motion.button>
                   </div>
                 </motion.div>
@@ -416,15 +378,15 @@ export default function DevelopersExamplesPage() {
             className="bg-gradient-to-r from-cyan-600/20 to-purple-600/20 rounded-3xl border border-cyan-500/30 p-12"
           >
             <FaRocket className="text-5xl text-cyan-400 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-white mb-4">准备好开始构建了吗？</h2>
-            <p className="text-gray-300 mb-8">查看完整文档，了解更多高级功能和最佳实践</p>
+            <h2 className="text-3xl font-bold text-white mb-4">{t('dev_examples.cta.title')}</h2>
+            <p className="text-gray-300 mb-8">{t('dev_examples.cta.description')}</p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/developers/docs">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   className="px-8 py-4 bg-gradient-to-r from-cyan-600 to-purple-600 text-white rounded-xl font-semibold"
                 >
-                  查看完整文档
+                  {t('dev_examples.cta.view_docs')}
                 </motion.button>
               </Link>
               <Link href="/developers/sdk">
@@ -432,7 +394,7 @@ export default function DevelopersExamplesPage() {
                   whileHover={{ scale: 1.05 }}
                   className="px-8 py-4 bg-white/10 text-white rounded-xl font-semibold border border-white/20"
                 >
-                  下载 SDK
+                  {t('dev_examples.cta.download_sdk')}
                 </motion.button>
               </Link>
             </div>

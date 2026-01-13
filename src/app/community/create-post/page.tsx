@@ -7,6 +7,8 @@ import { Send, Image as ImageIcon, Link as LinkIcon, AlertCircle } from 'lucide-
 import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 interface UserInfo {
   id: string;
@@ -17,6 +19,7 @@ interface UserInfo {
 
 export default function CreatePostPage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,7 +53,7 @@ export default function CreatePostPage() {
     e.preventDefault();
 
     if (!formData.title.trim() || !formData.content.trim()) {
-      setError('标题和内容不能为空');
+      setError(t('community_page.create_post.error_empty'));
       return;
     }
 
@@ -74,10 +77,10 @@ export default function CreatePostPage() {
       if (data.success) {
         router.push('/community');
       } else {
-        setError(data.message || '发帖失败，请重试');
+        setError(data.message || t('community_page.create_post.error_failed'));
       }
     } catch {
-      setError('网络错误，请稍后重试');
+      setError(t('community_page.create_post.error_network'));
     } finally {
       setLoading(false);
     }
@@ -88,7 +91,7 @@ export default function CreatePostPage() {
       <div className="min-h-screen relative flex items-center justify-center">
         <ParticlesBackground />
         <CommunityNavbar />
-        <div className="text-white relative z-10">正在验证登录状态...</div>
+        <div className="text-white relative z-10">{t('community_page.create_post.verifying')}</div>
       </div>
     );
   }
@@ -101,8 +104,8 @@ export default function CreatePostPage() {
       
       <div className="max-w-4xl mx-auto p-4">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white" data-testid="create-post-title">创建新帖子</h1>
-          <p className="text-gray-400">分享您的想法与社区</p>
+          <h1 className="text-3xl font-bold text-white" data-testid="create-post-title">{t('community_page.create_post.title')}</h1>
+          <p className="text-gray-400">{t('community_page.create_post.subtitle')}</p>
         </div>
 
         {error && (
@@ -123,27 +126,27 @@ export default function CreatePostPage() {
           className="bg-gray-800/80 backdrop-blur-xl rounded-2xl border border-gray-700/50 p-8 space-y-6"
         >
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">分类</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">{t('community_page.create_post.category')}</label>
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
               className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="general">常规讨论</option>
-              <option value="technical">技术问答</option>
-              <option value="defi">DeFi 交易</option>
-              <option value="governance">治理提案</option>
+              <option value="general">{t('community_page.create_post.categories.general')}</option>
+              <option value="technical">{t('community_page.create_post.categories.technical')}</option>
+              <option value="defi">{t('community_page.create_post.categories.defi')}</option>
+              <option value="governance">{t('community_page.create_post.categories.governance')}</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">标题 *</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">{t('community_page.create_post.title_label')} *</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="输入帖子标题..."
+              placeholder={t('community_page.create_post.title_placeholder')}
               maxLength={200}
               required
             />
@@ -151,12 +154,12 @@ export default function CreatePostPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">内容 *</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">{t('community_page.create_post.content_label')} *</label>
             <textarea
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-              placeholder="分享您的想法..."
+              placeholder={t('community_page.create_post.content_placeholder')}
               rows={12}
               maxLength={10000}
               required
@@ -180,7 +183,7 @@ export default function CreatePostPage() {
               className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-medium transition-colors"
               disabled={loading}
             >
-              取消
+              {t('community_page.create_post.cancel')}
             </button>
             <button
               type="submit"
@@ -190,12 +193,12 @@ export default function CreatePostPage() {
               {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  发布中...
+                  {t('community_page.create_post.publishing')}
                 </>
               ) : (
                 <>
                   <Send className="w-5 h-5" />
-                  发布帖子
+                  {t('community_page.create_post.publish')}
                 </>
               )}
             </button>

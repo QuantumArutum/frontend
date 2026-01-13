@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Zap, CreditCard, Lightbulb, Leaf, BarChart3, TrendingUp, Clock, Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 
 // Type definitions
 interface BoundAccount {
@@ -41,6 +43,7 @@ interface Provider {
 }
 
 const UtilityBillPage = () => {
+  const { t } = useTranslation();
   const [currentView, setCurrentView] = useState('dashboard'); // dashboard, providers, bills, payment, analysis, smart-meter
   const [selectedProvider, setSelectedProvider] = useState<Provider | null>(null);
   const [boundAccounts, setBoundAccounts] = useState<BoundAccount[]>([]);
@@ -165,8 +168,8 @@ const UtilityBillPage = () => {
   const renderDashboard = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">全球电费管理</h1>
-        <p className="text-gray-600">智能电费查询、缴费和用电分析服务</p>
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">{t('utility.title')}</h1>
+        <p className="text-gray-600">{t('utility.subtitle')}</p>
       </div>
 
       {/* 快速统计 */}
@@ -177,7 +180,7 @@ const UtilityBillPage = () => {
               <Zap className="h-6 w-6 text-blue-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">本月用电</p>
+              <p className="text-sm font-medium text-gray-600">{t('utility.stats.monthly_usage')}</p>
               <p className="text-2xl font-bold text-gray-900">450.5 kWh</p>
             </div>
           </div>
@@ -189,7 +192,7 @@ const UtilityBillPage = () => {
               <CreditCard className="h-6 w-6 text-green-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">本月电费</p>
+              <p className="text-sm font-medium text-gray-600">{t('utility.stats.monthly_bill')}</p>
               <p className="text-2xl font-bold text-gray-900">359.00 QAU</p>
             </div>
           </div>
@@ -201,7 +204,7 @@ const UtilityBillPage = () => {
               <TrendingUp className="h-6 w-6 text-yellow-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">较上月</p>
+              <p className="text-sm font-medium text-gray-600">{t('utility.stats.vs_last_month')}</p>
               <p className="text-2xl font-bold text-gray-900">+7.1%</p>
             </div>
           </div>
@@ -213,7 +216,7 @@ const UtilityBillPage = () => {
               <Leaf className="h-6 w-6 text-purple-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">碳足迹</p>
+              <p className="text-sm font-medium text-gray-600">{t('utility.stats.carbon_footprint')}</p>
               <p className="text-2xl font-bold text-gray-900">225.8 kg</p>
             </div>
           </div>
@@ -230,8 +233,8 @@ const UtilityBillPage = () => {
             <div className="p-4 bg-blue-100 rounded-full w-16 h-16 mx-auto mb-4">
               <Search className="h-8 w-8 text-blue-600" />
             </div>
-            <h3 className="text-lg font-semibold mb-2">绑定电力账户</h3>
-            <p className="text-gray-600">搜索并绑定全球电力公司账户</p>
+            <h3 className="text-lg font-semibold mb-2">{t('utility.actions.bind_account')}</h3>
+            <p className="text-gray-600">{t('utility.actions.bind_account_desc')}</p>
           </div>
         </div>
 
@@ -243,8 +246,8 @@ const UtilityBillPage = () => {
             <div className="p-4 bg-green-100 rounded-full w-16 h-16 mx-auto mb-4">
               <CreditCard className="h-8 w-8 text-green-600" />
             </div>
-            <h3 className="text-lg font-semibold mb-2">查看账单</h3>
-            <p className="text-gray-600">查询和缴纳电费账单</p>
+            <h3 className="text-lg font-semibold mb-2">{t('utility.actions.view_bills')}</h3>
+            <p className="text-gray-600">{t('utility.actions.view_bills_desc')}</p>
           </div>
         </div>
 
@@ -256,32 +259,32 @@ const UtilityBillPage = () => {
             <div className="p-4 bg-purple-100 rounded-full w-16 h-16 mx-auto mb-4">
               <BarChart3 className="h-8 w-8 text-purple-600" />
             </div>
-            <h3 className="text-lg font-semibold mb-2">用电分析</h3>
-            <p className="text-gray-600">智能用电分析和节能建议</p>
+            <h3 className="text-lg font-semibold mb-2">{t('utility.actions.usage_analysis')}</h3>
+            <p className="text-gray-600">{t('utility.actions.usage_analysis_desc')}</p>
           </div>
         </div>
       </div>
 
       {/* 最近账单 */}
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold mb-4">最近账单</h3>
+        <h3 className="text-lg font-semibold mb-4">{t('utility.recent_bills')}</h3>
         <div className="space-y-4">
           {[
-            { period: '2024年1月', amount: 359.00, status: 'paid', dueDate: '2024-02-15' },
-            { period: '2023年12月', amount: 335.00, status: 'paid', dueDate: '2024-01-15' },
-            { period: '2023年11月', amount: 298.50, status: 'paid', dueDate: '2023-12-15' }
+            { period: '2024-01', amount: 359.00, status: 'paid', dueDate: '2024-02-15' },
+            { period: '2023-12', amount: 335.00, status: 'paid', dueDate: '2024-01-15' },
+            { period: '2023-11', amount: 298.50, status: 'paid', dueDate: '2023-12-15' }
           ].map((bill, index) => (
             <div key={index} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
               <div>
                 <h4 className="font-medium">{bill.period}</h4>
-                <p className="text-sm text-gray-600">到期日: {bill.dueDate}</p>
+                <p className="text-sm text-gray-600">{t('utility.due_date')}: {bill.dueDate}</p>
               </div>
               <div className="text-right">
                 <p className="text-lg font-bold">{bill.amount} QAU</p>
                 <span className={`px-2 py-1 rounded text-xs ${
                   bill.status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                 }`}>
-                  {bill.status === 'paid' ? '已缴费' : '待缴费'}
+                  {bill.status === 'paid' ? t('utility.status.paid') : t('utility.status.pending')}
                 </span>
               </div>
             </div>
@@ -308,12 +311,12 @@ const UtilityBillPage = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">选择电力公司</h2>
+          <h2 className="text-2xl font-bold">{t('utility.providers.title')}</h2>
           <button
             onClick={() => setCurrentView('dashboard')}
             className="text-blue-600 hover:text-blue-800"
           >
-            返回仪表板
+            {t('utility.back_to_dashboard')}
           </button>
         </div>
 
@@ -321,32 +324,32 @@ const UtilityBillPage = () => {
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">国家/地区</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('utility.providers.country')}</label>
               <select
                 value={searchCountry}
                 onChange={(e) => setSearchCountry(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">全部国家</option>
-                <option value="China">中国</option>
-                <option value="USA">美国</option>
-                <option value="France">法国</option>
-                <option value="Japan">日本</option>
-                <option value="Germany">德国</option>
+                <option value="">{t('utility.providers.all_countries')}</option>
+                <option value="China">{t('utility.providers.countries.china')}</option>
+                <option value="USA">{t('utility.providers.countries.usa')}</option>
+                <option value="France">{t('utility.providers.countries.france')}</option>
+                <option value="Japan">{t('utility.providers.countries.japan')}</option>
+                <option value="Germany">{t('utility.providers.countries.germany')}</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">城市/州</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('utility.providers.region')}</label>
               <select
                 value={searchRegion}
                 onChange={(e) => setSearchRegion(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">全部地区</option>
-                <option value="Beijing">北京</option>
-                <option value="New York">纽约</option>
-                <option value="Paris">巴黎</option>
-                <option value="Tokyo">东京</option>
+                <option value="">{t('utility.providers.all_regions')}</option>
+                <option value="Beijing">{t('utility.providers.regions.beijing')}</option>
+                <option value="New York">{t('utility.providers.regions.new_york')}</option>
+                <option value="Paris">{t('utility.providers.regions.paris')}</option>
+                <option value="Tokyo">{t('utility.providers.regions.tokyo')}</option>
               </select>
             </div>
           </div>
@@ -371,7 +374,7 @@ const UtilityBillPage = () => {
               </div>
 
               <div className="mb-4">
-                <p className="text-sm text-gray-600 mb-2">服务区域:</p>
+                <p className="text-sm text-gray-600 mb-2">{t('utility.providers.service_areas')}:</p>
                 <div className="flex flex-wrap gap-1">
                   {provider.service_areas.slice(0, 3).map((area, index) => (
                     <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
@@ -387,7 +390,7 @@ const UtilityBillPage = () => {
               </div>
 
               <div className="mb-4">
-                <p className="text-sm text-gray-600 mb-2">支持服务:</p>
+                <p className="text-sm text-gray-600 mb-2">{t('utility.providers.services')}:</p>
                 <div className="flex flex-wrap gap-1">
                   {provider.services.slice(0, 3).map((service, index) => (
                     <span key={index} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
@@ -401,7 +404,7 @@ const UtilityBillPage = () => {
                 <div className="flex items-center">
                   {provider.quantum_security && (
                     <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded mr-2">
-                      量子安全
+                      {t('utility.providers.quantum_secure')}
                     </span>
                   )}
                   <span className="text-sm text-gray-500">
@@ -415,7 +418,7 @@ const UtilityBillPage = () => {
                   }}
                   className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
                 >
-                  绑定账户
+                  {t('utility.providers.bind_account')}
                 </button>
               </div>
             </div>
@@ -429,12 +432,12 @@ const UtilityBillPage = () => {
   const renderBills = () => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">电费账单</h2>
+        <h2 className="text-2xl font-bold">{t('utility.bills.title')}</h2>
         <button
           onClick={() => setCurrentView('dashboard')}
           className="text-blue-600 hover:text-blue-800"
         >
-          返回仪表板
+          {t('utility.back_to_dashboard')}
         </button>
       </div>
 
@@ -462,7 +465,7 @@ const UtilityBillPage = () => {
                 <h3 className="text-lg font-semibold">
                   {bill.billing_period.start_date} - {bill.billing_period.end_date}
                 </h3>
-                <p className="text-sm text-gray-600">账单号: {bill.bill_id}</p>
+                <p className="text-sm text-gray-600">{t('utility.bills.bill_id')}: {bill.bill_id}</p>
               </div>
               <div className="text-right">
                 <p className="text-2xl font-bold text-blue-600">{bill.charges.total_amount} QAU</p>
@@ -471,35 +474,35 @@ const UtilityBillPage = () => {
                     ? 'bg-green-100 text-green-800' 
                     : 'bg-red-100 text-red-800'
                 }`}>
-                  {bill.payment_info.payment_status === 'paid' ? '已缴费' : '待缴费'}
+                  {bill.payment_info.payment_status === 'paid' ? t('utility.status.paid') : t('utility.status.pending')}
                 </span>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div>
-                <p className="text-sm text-gray-600">用电量</p>
+                <p className="text-sm text-gray-600">{t('utility.bills.usage')}</p>
                 <p className="text-lg font-semibold">{bill.usage_details.total_kwh} kWh</p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">到期日</p>
+                <p className="text-sm text-gray-600">{t('utility.due_date')}</p>
                 <p className="text-lg font-semibold">{bill.payment_info.due_date}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">状态</p>
+                <p className="text-sm text-gray-600">{t('utility.bills.status')}</p>
                 <p className="text-lg font-semibold">
-                  {bill.payment_info.payment_status === 'paid' ? '已缴费' : '待缴费'}
+                  {bill.payment_info.payment_status === 'paid' ? t('utility.status.paid') : t('utility.status.pending')}
                 </p>
               </div>
             </div>
 
             <div className="flex justify-end space-x-2">
               <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
-                查看详情
+                {t('utility.bills.view_details')}
               </button>
               {bill.payment_info.payment_status !== 'paid' && (
                 <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                  立即缴费
+                  {t('utility.bills.pay_now')}
                 </button>
               )}
             </div>
@@ -513,39 +516,39 @@ const UtilityBillPage = () => {
   const renderAnalysis = () => (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">用电分析</h2>
+        <h2 className="text-2xl font-bold">{t('utility.analysis.title')}</h2>
         <button
           onClick={() => setCurrentView('dashboard')}
           className="text-blue-600 hover:text-blue-800"
         >
-          返回仪表板
+          {t('utility.back_to_dashboard')}
         </button>
       </div>
 
       {/* 用电趋势 */}
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold mb-4">用电趋势</h3>
+        <h3 className="text-lg font-semibold mb-4">{t('utility.analysis.usage_trend')}</h3>
         <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-          <p className="text-gray-500">用电趋势图表区域</p>
+          <p className="text-gray-500">{t('utility.analysis.chart_area')}</p>
         </div>
       </div>
 
       {/* 节能建议 */}
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold mb-4">节能建议</h3>
+        <h3 className="text-lg font-semibold mb-4">{t('utility.analysis.energy_tips')}</h3>
         <div className="space-y-4">
           {[
             {
               type: 'energy_saving',
-              title: '调整空调温度',
-              description: '将空调温度调高1-2度可节省10-15%的电费',
+              title: t('utility.analysis.tips.ac_title'),
+              description: t('utility.analysis.tips.ac_desc'),
               potential_savings: 45.00,
               icon: <Lightbulb className="h-5 w-5" />
             },
             {
               type: 'time_shifting',
-              title: '错峰用电',
-              description: '将洗衣机、洗碗机等设备安排在非高峰时段使用',
+              title: t('utility.analysis.tips.offpeak_title'),
+              description: t('utility.analysis.tips.offpeak_desc'),
               potential_savings: 25.00,
               icon: <Clock className="h-5 w-5" />
             }
@@ -558,7 +561,7 @@ const UtilityBillPage = () => {
                 <h4 className="font-medium mb-1">{recommendation.title}</h4>
                 <p className="text-sm text-gray-600 mb-2">{recommendation.description}</p>
                 <p className="text-sm font-medium text-green-600">
-                  预计节省: {recommendation.potential_savings} QAU/月
+                  {t('utility.analysis.estimated_savings')}: {recommendation.potential_savings} QAU/{t('utility.analysis.month')}
                 </p>
               </div>
             </div>
@@ -575,11 +578,11 @@ const UtilityBillPage = () => {
         <div className="flex justify-center mb-8">
           <div className="flex space-x-1 bg-white rounded-lg shadow-md p-1">
             {[
-              { key: 'dashboard', label: '仪表板', icon: BarChart3 },
-              { key: 'providers', label: '电力公司', icon: Search },
-              { key: 'bills', label: '账单管理', icon: CreditCard },
-              { key: 'analysis', label: '用电分析', icon: TrendingUp },
-              { key: 'smart-meter', label: '智能电表', icon: Zap }
+              { key: 'dashboard', label: t('utility.nav.dashboard'), icon: BarChart3 },
+              { key: 'providers', label: t('utility.nav.providers'), icon: Search },
+              { key: 'bills', label: t('utility.nav.bills'), icon: CreditCard },
+              { key: 'analysis', label: t('utility.nav.analysis'), icon: TrendingUp },
+              { key: 'smart-meter', label: t('utility.nav.smart_meter'), icon: Zap }
             ].map((item) => {
               const Icon = item.icon;
               return (

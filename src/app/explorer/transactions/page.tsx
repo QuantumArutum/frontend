@@ -6,8 +6,11 @@ import { motion } from 'framer-motion';
 import { Activity, ArrowLeft, RefreshCw, CheckCircle, XCircle, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { explorerService, Transaction, explorerUtils } from '../../../services/explorerService';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 export default function TransactionsPage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,6 +37,14 @@ export default function TransactionsPage() {
     loadTransactions();
   };
 
+  const getStatusText = (status: string | undefined) => {
+    switch (status) {
+      case 'success': return t('explorer.transactions.status.success');
+      case 'failed': return t('explorer.transactions.status.failed');
+      default: return t('explorer.transactions.status.pending');
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-5">
       <div className="flex items-center justify-between mb-8">
@@ -41,7 +52,7 @@ export default function TransactionsPage() {
           onClick={() => router.push('/explorer')} 
           className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
         >
-          <ArrowLeft className="w-5 h-5" /> Back to Explorer
+          <ArrowLeft className="w-5 h-5" /> {t('explorer.transactions.back')}
         </button>
         <button 
           onClick={handleRefresh}
@@ -49,7 +60,7 @@ export default function TransactionsPage() {
           className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-medium transition-colors disabled:opacity-50"
         >
           <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-          {refreshing ? 'Refreshing...' : 'Refresh'}
+          {refreshing ? t('explorer.transactions.refreshing') : t('explorer.transactions.refresh')}
         </button>
       </div>
 
@@ -62,8 +73,8 @@ export default function TransactionsPage() {
           <Activity className="w-7 h-7 text-white" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">Latest Transactions</h1>
-          <p className="text-gray-400">View the most recent transactions on Quantaureum</p>
+          <h1 className="text-3xl font-bold text-white">{t('explorer.transactions.title')}</h1>
+          <p className="text-gray-400">{t('explorer.transactions.subtitle')}</p>
         </div>
       </motion.div>
 
@@ -77,13 +88,13 @@ export default function TransactionsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-white/10 bg-white/5">
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Tx Hash</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Block</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Age</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">From</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">To</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Value</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Status</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.transactions.columns.hash')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.transactions.columns.block')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.transactions.columns.age')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.transactions.columns.from')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.transactions.columns.to')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.transactions.columns.value')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.transactions.status.title')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -134,7 +145,7 @@ export default function TransactionsPage() {
                         tx.status === 'failed' ? 'bg-red-500/10 text-red-400 border-red-500/30' :
                         'bg-yellow-500/10 text-yellow-400 border-yellow-500/30'
                       }`}>
-                        {tx.status === 'success' ? 'Success' : tx.status === 'failed' ? 'Failed' : 'Pending'}
+                        {getStatusText(tx.status)}
                       </span>
                     </td>
                   </tr>
@@ -147,4 +158,3 @@ export default function TransactionsPage() {
     </div>
   );
 }
-

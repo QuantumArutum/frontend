@@ -3,6 +3,8 @@
 import React from 'react';
 import { useParams } from 'next/navigation';
 import { Heart, MessageSquare, Share2, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import '../../../../i18n';
 import ParticlesBackground from '../../../../app/components/ParticlesBackground';
 import CommunityNavbar from '../../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../../../components/EnhancedFooter';
@@ -19,6 +21,7 @@ const generateConsistentNumber = (seed: string, max: number, min: number = 0) =>
 
 export default function TopicPage() {
   const params = useParams();
+  const { t } = useTranslation();
   const topicId = (params?.topicId as string) || 'default-topic';
 
   const handleBack = () => {
@@ -29,44 +32,35 @@ export default function TopicPage() {
   const topicData = {
     id: topicId,
     title: topicId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-    content: `这是关于 "${topicId.replace(/-/g, ' ')}" 的详细讨论内容。在这里我们可以深入探讨相关的技术细节、应用场景和未来发展方向。
-
-量子技术正在快速发展，我们需要跟上最新的趋势和突破。这个话题涵盖了多个重要方面：
-
-1. 技术原理和基础概念
-2. 实际应用案例分析  
-3. 未来发展趋势预测
-4. 相关工具和资源推荐
-
-欢迎大家积极参与讨论，分享你们的见解和经验！`,
+    content: t('topic_page.sample_content', { topic: topicId.replace(/-/g, ' ') }),
     author: {
       name: 'QuantumPioneer',
       avatar: 'QP',
-      level: '量子专家',
-      joinDate: '2023年加入'
+      level: t('topic_page.levels.quantum_expert'),
+      joinDate: t('topic_page.joined_year', { year: '2023' })
     },
     stats: {
       views: generateConsistentNumber(topicId + 'views', 5000, 1000),
       likes: generateConsistentNumber(topicId + 'likes', 200, 50),
       replies: generateConsistentNumber(topicId + 'replies', 100, 20)
     },
-    createdAt: '2024年1月15日 14:30',
-    category: '量子计算'
+    createdAt: '2024-01-15 14:30',
+    category: t('topic_page.categories.quantum_computing')
   };
 
   const replies = [
     {
       id: 1,
-      author: { name: 'TechEnthusiast', avatar: 'TE', level: '活跃成员' },
-      content: '非常有见地的分析！我特别认同关于量子技术发展趋势的观点。',
-      createdAt: '2小时前',
+      author: { name: 'TechEnthusiast', avatar: 'TE', level: t('topic_page.levels.active_member') },
+      content: t('topic_page.sample_replies.reply1'),
+      createdAt: t('topic_page.time.hours_ago', { count: 2 }),
       likes: 12
     },
     {
       id: 2,
-      author: { name: 'QuantumStudent', avatar: 'QS', level: '新手' },
-      content: '作为初学者，这个话题让我学到了很多。能否推荐一些入门资源？',
-      createdAt: '4小时前',
+      author: { name: 'QuantumStudent', avatar: 'QS', level: t('topic_page.levels.newbie') },
+      content: t('topic_page.sample_replies.reply2'),
+      createdAt: t('topic_page.time.hours_ago', { count: 4 }),
       likes: 8
     }
   ];
@@ -104,8 +98,8 @@ export default function TopicPage() {
                 </div>
                 
                 <div className="flex items-center gap-4 text-sm text-white/60">
-                  <span>{topicData.stats.views} 浏览</span>
-                  <span>{topicData.stats.replies} 回复</span>
+                  <span>{t('topic_page.views', { count: topicData.stats.views })}</span>
+                  <span>{t('topic_page.replies_count', { count: topicData.stats.replies })}</span>
                 </div>
               </div>
             </div>
@@ -126,11 +120,11 @@ export default function TopicPage() {
                 </button>
                 <button className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white">
                   <MessageSquare className="w-4 h-4" />
-                  <span>回复</span>
+                  <span>{t('topic_page.reply')}</span>
                 </button>
                 <button className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white">
                   <Share2 className="w-4 h-4" />
-                  <span>分享</span>
+                  <span>{t('topic_page.share')}</span>
                 </button>
               </div>
             </div>
@@ -139,7 +133,7 @@ export default function TopicPage() {
           {/* Replies */}
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
             <div className="p-6 border-b border-white/10">
-              <h3 className="text-lg font-semibold text-white">回复 ({replies.length})</h3>
+              <h3 className="text-lg font-semibold text-white">{t('topic_page.replies_title', { count: replies.length })}</h3>
             </div>
             
             <div className="divide-y divide-white/10">
@@ -164,7 +158,7 @@ export default function TopicPage() {
                           <span>{reply.likes}</span>
                         </button>
                         <button className="text-white/60 hover:text-white transition-colors text-sm">
-                          回复
+                          {t('topic_page.reply')}
                         </button>
                       </div>
                     </div>
@@ -181,13 +175,13 @@ export default function TopicPage() {
                 </div>
                 <div className="flex-1">
                   <textarea
-                    placeholder="写下你的回复..."
+                    placeholder={t('topic_page.reply_placeholder')}
                     className="w-full p-4 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-purple-500 resize-none"
                     rows={4}
                   />
                   <div className="mt-4 flex justify-end">
                     <button className="px-6 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all font-medium">
-                      发布回复
+                      {t('topic_page.post_reply')}
                     </button>
                   </div>
                 </div>

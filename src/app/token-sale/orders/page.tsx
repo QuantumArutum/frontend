@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
 import { 
   ShoppingCart, Clock, CheckCircle, XCircle, AlertCircle, 
-  Search, RefreshCw, ExternalLink, Copy, ArrowLeft 
+  Search, RefreshCw, Copy, ArrowLeft 
 } from 'lucide-react';
 import Link from 'next/link';
 import { PageLayout } from '@/components/ui/PageLayout';
@@ -14,6 +13,8 @@ import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
 import { Table } from '@/components/ui/Table';
 import { Loading } from '@/components/ui/Loading';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 interface Order {
   id: string;
@@ -35,6 +36,7 @@ interface OrderStats {
 }
 
 export default function OrdersPage() {
+  const { t } = useTranslation();
   const [address, setAddress] = useState('');
   const [searchAddress, setSearchAddress] = useState('');
   const [orders, setOrders] = useState<Order[]>([]);
@@ -46,7 +48,7 @@ export default function OrdersPage() {
     if (!searchAddress) return;
     
     if (!/^0x[a-fA-F0-9]{40}$/.test(searchAddress)) {
-      setError('请输入有效的钱包地址');
+      setError(t('token_sale.orders.errors.invalid_address'));
       return;
     }
 
@@ -61,14 +63,14 @@ export default function OrdersPage() {
         setOrders(data.data.orders || []);
         setStats(data.data.stats || null);
       } else {
-        setError(data.error || '查询失败');
+        setError(data.error || t('token_sale.orders.errors.query_failed'));
       }
     } catch (err: unknown) {
-      setError('网络错误: ' + (err instanceof Error ? err.message : '未知错误'));
+      setError(t('token_sale.orders.errors.network_error') + ': ' + (err instanceof Error ? err.message : t('token_sale.orders.errors.unknown')));
     } finally {
       setLoading(false);
     }
-  }, [searchAddress]);
+  }, [searchAddress, t]);
 
   const handleSearch = () => {
     setSearchAddress(address);
@@ -83,11 +85,11 @@ export default function OrdersPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'completed':
-        return <Badge variant="success"><CheckCircle className="w-3 h-3 mr-1" /> 已完成</Badge>;
+        return <Badge variant="success"><CheckCircle className="w-3 h-3 mr-1" /> {t('token_sale.orders.status.completed')}</Badge>;
       case 'pending':
-        return <Badge variant="warning"><Clock className="w-3 h-3 mr-1" /> 处理中</Badge>;
+        return <Badge variant="warning"><Clock className="w-3 h-3 mr-1" /> {t('token_sale.orders.status.pending')}</Badge>;
       case 'failed':
-        return <Badge variant="danger"><XCircle className="w-3 h-3 mr-1" /> 失败</Badge>;
+        return <Badge variant="danger"><XCircle className="w-3 h-3 mr-1" /> {t('token_sale.orders.status.failed')}</Badge>;
       default:
         return <Badge variant="default">{status}</Badge>;
     }
@@ -100,40 +102,40 @@ export default function OrdersPage() {
   const columns = [
     {
       key: 'id',
-      header: '订单ID',
+      header: t('token_sale.orders.columns.order_id'),
       render: (_: unknown, order: Order) => (
         <span className="font-mono text-xs">{order.id.slice(0, 8)}...</span>
       ),
     },
     {
       key: 'amountUSD',
-      header: '金额',
+      header: t('token_sale.orders.columns.amount'),
       render: (_: unknown, order: Order) => (
         <span className="text-white font-medium">${order.amountUSD.toLocaleString()}</span>
       ),
     },
     {
       key: 'tokensTotal',
-      header: '代币数量',
+      header: t('token_sale.orders.columns.tokens'),
       render: (_: unknown, order: Order) => (
         <span className="text-yellow-400">{order.tokensTotal.toLocaleString()} QAU</span>
       ),
     },
     {
       key: 'paymentMethod',
-      header: '支付方式',
+      header: t('token_sale.orders.columns.payment_method'),
       render: (_: unknown, order: Order) => (
         <Badge variant="default">{order.paymentMethod}</Badge>
       ),
     },
     {
       key: 'status',
-      header: '状态',
+      header: t('token_sale.orders.columns.status'),
       render: (_: unknown, order: Order) => getStatusBadge(order.status),
     },
     {
       key: 'txHash',
-      header: '交易哈希',
+      header: t('token_sale.orders.columns.tx_hash'),
       render: (_: unknown, order: Order) => order.txHash ? (
         <div className="flex items-center gap-1">
           <span className="font-mono text-xs text-blue-400">
@@ -149,7 +151,7 @@ export default function OrdersPage() {
     },
     {
       key: 'createdAt',
-      header: '时间',
+      header: t('token_sale.orders.columns.time'),
       render: (_: unknown, order: Order) => (
         <span className="text-gray-400 text-sm">
           {new Date(order.createdAt).toLocaleDateString()}
@@ -160,23 +162,22 @@ export default function OrdersPage() {
 
   return (
     <PageLayout
-      title="购买记录"
-      subtitle="查看您的代币购买历史"
+      title={t('token_sale.orders.title')}
+      subtitle={t('token_sale.orders.subtitle')}
       icon={ShoppingCart}
       headerContent={
         <Link href="/token-sale">
           <Button variant="ghost">
-            <ArrowLeft className="w-4 h-4 mr-2" /> 返回购买
+            <ArrowLeft className="w-4 h-4 mr-2" /> {t('token_sale.orders.back_to_buy')}
           </Button>
         </Link>
       }
     >
-      {/* 搜索框 */}
       <Card className="mb-6">
         <CardContent className="p-4">
           <div className="flex gap-4">
             <Input
-              placeholder="输入您的钱包地址 (0x...)"
+              placeholder={t('token_sale.orders.search_placeholder')}
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
@@ -184,7 +185,7 @@ export default function OrdersPage() {
               icon={<Search className="w-4 h-4" />}
             />
             <Button variant="primary" onClick={handleSearch} disabled={loading}>
-              {loading ? <RefreshCw className="w-4 h-4 animate-spin" /> : '查询'}
+              {loading ? <RefreshCw className="w-4 h-4 animate-spin" /> : t('token_sale.orders.search')}
             </Button>
           </div>
           {error && (
@@ -195,23 +196,21 @@ export default function OrdersPage() {
         </CardContent>
       </Card>
 
-      {/* 统计卡片 */}
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-          <StatCard title="总订单" value={stats.totalOrders.toString()} icon={ShoppingCart} color="blue" />
-          <StatCard title="已完成" value={stats.completedOrders.toString()} icon={CheckCircle} color="green" />
-          <StatCard title="处理中" value={stats.pendingOrders.toString()} icon={Clock} color="orange" />
-          <StatCard title="总花费" value={`$${stats.totalSpent.toLocaleString()}`} icon={ShoppingCart} color="purple" />
-          <StatCard title="总代币" value={`${stats.totalTokens.toLocaleString()}`} icon={ShoppingCart} color="purple" />
+          <StatCard title={t('token_sale.orders.stats.total_orders')} value={stats.totalOrders.toString()} icon={ShoppingCart} color="blue" />
+          <StatCard title={t('token_sale.orders.stats.completed')} value={stats.completedOrders.toString()} icon={CheckCircle} color="green" />
+          <StatCard title={t('token_sale.orders.stats.pending')} value={stats.pendingOrders.toString()} icon={Clock} color="orange" />
+          <StatCard title={t('token_sale.orders.stats.total_spent')} value={`${stats.totalSpent.toLocaleString()}`} icon={ShoppingCart} color="purple" />
+          <StatCard title={t('token_sale.orders.stats.total_tokens')} value={`${stats.totalTokens.toLocaleString()}`} icon={ShoppingCart} color="purple" />
         </div>
       )}
 
-      {/* 订单列表 */}
       {loading ? (
-        <Loading text="加载订单中..." />
+        <Loading text={t('token_sale.orders.loading')} />
       ) : orders.length > 0 ? (
         <Card>
-          <CardHeader title="订单列表" />
+          <CardHeader title={t('token_sale.orders.list_title')} />
           <CardContent>
             <Table columns={columns} data={orders} />
           </CardContent>
@@ -220,10 +219,10 @@ export default function OrdersPage() {
         <Card className="text-center py-12">
           <CardContent>
             <div className="text-6xl mb-4">📭</div>
-            <h3 className="text-xl font-semibold text-white mb-2">暂无订单</h3>
-            <p className="text-gray-400 mb-6">该地址还没有购买记录</p>
+            <h3 className="text-xl font-semibold text-white mb-2">{t('token_sale.orders.no_orders')}</h3>
+            <p className="text-gray-400 mb-6">{t('token_sale.orders.no_orders_desc')}</p>
             <Link href="/token-sale">
-              <Button variant="primary">立即购买</Button>
+              <Button variant="primary">{t('token_sale.orders.buy_now')}</Button>
             </Link>
           </CardContent>
         </Card>
@@ -231,12 +230,11 @@ export default function OrdersPage() {
         <Card className="text-center py-12">
           <CardContent>
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-white mb-2">输入钱包地址</h3>
-            <p className="text-gray-400">请在上方输入您的钱包地址查询购买记录</p>
+            <h3 className="text-xl font-semibold text-white mb-2">{t('token_sale.orders.enter_address')}</h3>
+            <p className="text-gray-400">{t('token_sale.orders.enter_address_desc')}</p>
           </CardContent>
         </Card>
       )}
     </PageLayout>
   );
 }
-

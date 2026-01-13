@@ -597,7 +597,10 @@ export const ja = {
       staking: 'ステーキング'
     },
     common: {
-      loading: '読み込み中...'
+      loading: '読み込み中...',
+      features: '機能',
+      benefits: 'メリット',
+      case_study: '導入事例'
     },
     developers: {
       title: '開発者リソース',
@@ -1808,6 +1811,1575 @@ export const ja = {
         user_replies: 'ユーザー返信',
         posts_displayed: '投稿がここに表示されます...',
         replies_displayed: '返信がここに表示されます...'
+      }
+    },
+    // ステーキングページ
+    staking_page: {
+      title: '量子ステーキング',
+      subtitle: 'ネットワークを保護して受動的収入を得ましょう。高APY、安全で柔軟。',
+      active_pools: 'アクティブプール',
+      my_stakes: 'マイステーク',
+      duration: '期間',
+      days: '日',
+      min_stake: '最小ステーク',
+      total_staked: '総ステーク量',
+      stake_now: '今すぐステーク',
+      stake: 'ステーク',
+      unlocks: 'ロック解除',
+      active: 'アクティブ',
+      confirm_stake: 'ステーク確認',
+      cancel: 'キャンセル',
+      available_balance: '利用可能残高',
+      mock: 'モック',
+      amount_placeholder: 'ステーク金額',
+      lock_period: 'ロック期間',
+      early_withdrawal_warning: '早期引き出しは許可されていません。',
+      staked_success: 'ステーキング成功！',
+      staking_failed: 'ステーキング失敗'
+    },
+    // 設定ページ
+    settings_page: {
+      title: '設定',
+      appearance: {
+        title: '外観',
+        dark_mode: 'ダークモード',
+        dark_mode_desc: 'ダークテーマを使用'
+      },
+      notifications: {
+        title: '通知',
+        push: 'プッシュ通知',
+        push_desc: '取引とシステム通知を受信',
+        sound: 'サウンドアラート',
+        sound_desc: '通知音を再生'
+      },
+      language: {
+        title: '言語',
+        interface: 'インターフェース言語',
+        interface_desc: '希望の言語を選択'
+      },
+      security: {
+        title: 'セキュリティ',
+        two_factor: '二要素認証',
+        two_factor_desc: 'アカウントセキュリティを強化',
+        quantum_encryption: '量子暗号化',
+        quantum_encryption_desc: 'ポスト量子暗号で保護',
+        enabled: '有効',
+        change_password: 'パスワード変更'
+      }
+    },
+    // プロフィールページ
+    profile_page: {
+      title: 'ユーザープロフィール',
+      username: 'ユーザー名',
+      email: 'メール',
+      registered: '登録日',
+      basic_info: '基本情報',
+      security_settings: 'セキュリティ設定',
+      two_factor: '二要素認証',
+      quantum_encryption: '量子暗号化',
+      enabled: '有効',
+      save_changes: '変更を保存'
+    },
+    // FAQページ
+    faq_page: {
+      title: 'よくある質問',
+      subtitle: '必要な回答を見つけて、Quantaureumについてもっと学びましょう',
+      search_placeholder: '質問を検索...',
+      no_results: '関連する質問が見つかりません',
+      more_questions: '他に質問がありますか？',
+      support_team: 'サポートチームがお手伝いします',
+      contact_us: 'お問い合わせ',
+      categories: {
+        all: 'すべて',
+        basics: '基本',
+        security: 'セキュリティ',
+        wallet: 'ウォレット',
+        trading: '取引',
+        developer: '開発者'
+      },
+      questions: {
+        what_is_quantaureum: {
+          q: 'Quantaureumとは？',
+          a: 'Quantaureumは、ポスト量子暗号（CRYSTALS-DilithiumとCRYSTALS-Kyber）を使用して、企業と開発者に安全で効率的なブロックチェーンインフラを提供する次世代の量子安全ブロックチェーンプラットフォームです。'
+        },
+        what_is_qau: {
+          q: 'QAUトークンとは？',
+          a: 'QAUはQuantaureumネットワークのネイティブトークンで、物理的な金と1:1でペッグされています。1 QAU = 1グラムの金。すべての金準備はLBMA認定の金庫に保管され、独立した監査人によって定期的に監査されます。'
+        },
+        quantum_safe: {
+          q: '量子安全とはどういう意味ですか？',
+          a: 'QuantaureumはNIST標準のポスト量子暗号アルゴリズムを使用しており、将来の量子コンピュータからの攻撃に耐えることができます。従来の暗号化アルゴリズム（RSA、ECDSAなど）は量子コンピュータによって破られる可能性がありますが、私たちのアルゴリズムはそのような脅威に耐えるように設計されています。'
+        },
+        asset_security: {
+          q: '私の資産は安全ですか？',
+          a: 'はい。私たちは複数のセキュリティ層を採用しています：ポスト量子暗号署名、マルチシグウォレット、コールドストレージ、定期的なセキュリティ監査、完全保険付きの金準備。すべてのスマートコントラクトはサードパーティのセキュリティ会社によって監査されています。'
+        },
+        create_wallet: {
+          q: '量子ウォレットを作成するには？',
+          a: 'ソフトウェアをダウンロードせずに、Web3ウォレットを通じてブラウザで直接ウォレットを作成できます。ウォレットは量子安全署名、マルチチェーン資産管理、生体認証ロック解除をサポートしています。'
+        },
+        supported_assets: {
+          q: 'どの資産がサポートされていますか？',
+          a: 'Quantum WalletはQAU、ETH、BTC、USDT、USDCおよびその他の主要なデジタル資産、およびQuantaureumネットワーク上のすべてのトークンをサポートしています。クロスチェーン資産転送もサポートしています。'
+        },
+        transaction_fees: {
+          q: '取引手数料はいくらですか？',
+          a: 'ネットワーク取引手数料はネットワークの混雑状況に基づいて動的に調整され、通常0.001-0.01 QAUの間です。QAUトークン購入時には0.5%のプラットフォーム手数料がかかり、金の保管と保険をカバーします。'
+        },
+        confirmation_time: {
+          q: '取引確認にはどのくらい時間がかかりますか？',
+          a: 'Quantaureumネットワークの平均ブロック時間は約12秒で、ほとんどの取引は1-2ブロック以内に確認されます。TPSは100,000+に達し、効率的な取引処理を保証します。'
+        },
+        start_developing: {
+          q: '開発を始めるには？',
+          a: '完全なAPIリファレンスとSDKについては、開発者ドキュメント（/developers/docs）をご覧ください。JavaScript、Python、Go、Rustを含む複数の言語でSDKを提供しており、詳細なチュートリアルとサンプルコードも用意しています。'
+        },
+        smart_contract_languages: {
+          q: 'スマートコントラクトはどの言語をサポートしていますか？',
+          a: '私たちのQVM（量子仮想マシン）は完全にEVM互換で、Solidityをサポートしています。より強力な量子セキュリティ機能を提供するために、独自のQSL（Quantum Smart Language）も開発中です。'
+        }
+      }
+    },
+    // エコシステムアプリ
+    lottery_page: {
+      title: '量子宝くじ',
+      subtitle: '量子乱数に基づくスーパーロト',
+      tabs: {
+        buy: 'チケット購入',
+        results: '抽選結果',
+        mybets: 'マイベット',
+        stats: '統計'
+      },
+      select_numbers: 'ラッキーナンバーを選択',
+      random: 'ランダム',
+      clear: 'クリア',
+      front_zone: 'フロントゾーン',
+      back_zone: 'バックゾーン',
+      select_from: '1-{{max}}から{{count}}個選択',
+      bet_info: 'ベット情報',
+      quantum_secure: '量子安全',
+      bets: 'ベット',
+      single_bet: 'シングルベット',
+      total_amount: '合計金額',
+      selected_numbers: '選択した番号',
+      place_bet: '今すぐベット',
+      select_complete: '完全な組み合わせを選択してください',
+      prize_levels: '賞金レベル',
+      probability: '確率',
+      floating_prize: '変動賞金',
+      history_results: '過去の抽選結果',
+      draw_number: '抽選番号',
+      winning_numbers: '当選番号',
+      quantum_verified: '量子検証済み',
+      sales: '売上',
+      total_bets: '総ベット数',
+      prize_pool: '賞金プール',
+      no_bets: 'ベット履歴なし',
+      connect_wallet_view: 'ウォレットを接続して履歴を表示',
+      bet_now: '今すぐベット',
+      total_draws: '総抽選数',
+      total_sales: '総売上',
+      total_prizes: '総賞金',
+      total_players: '総プレイヤー',
+      number_frequency: '番号出現頻度',
+      times: '回',
+      quantum_security: {
+        title: '量子セキュリティ保証',
+        desc: '量子乱数生成器を使用して結果の真のランダム性を保証',
+        qrng: '量子QRNG',
+        encryption: '量子暗号化',
+        verification: '量子検証'
+      },
+      current_draw: '現在の抽選',
+      estimated_jackpot: '推定ジャックポット',
+      time_remaining: '残り時間',
+      calculating: '計算中...',
+      other_combinations: 'その他の当選組み合わせ'
+    },
+    movies_page: {
+      title: 'グローバル映画チケット',
+      subtitle: '素晴らしい映画を発見し、体験を楽しむ',
+      steps: {
+        select_movie: '映画を選択',
+        select_showtime: '上映時間を選択',
+        select_seats: '座席を選択',
+        payment: '支払い確認'
+      },
+      loading: '読み込み中...',
+      city: '都市',
+      date: '日付',
+      genre: 'ジャンル',
+      all_genres: 'すべてのジャンル',
+      action: 'アクション',
+      comedy: 'コメディ',
+      drama: 'ドラマ',
+      scifi: 'SF',
+      horror: 'ホラー',
+      search: '検索',
+      director: '監督',
+      duration: '上映時間',
+      minutes: '分',
+      rotten_tomatoes: 'Rotten Tomatoes',
+      select_showtime_btn: '上映時間を選択',
+      select_showtime_for: '上映時間を選択 - {{title}}',
+      back_to_movies: '映画リストに戻る',
+      cinema: '映画館',
+      start_time: '開始時間',
+      remaining_tickets: '残り',
+      screen_type: 'スクリーンタイプ',
+      standard: 'スタンダード',
+      language: '言語',
+      sold_out: '完売',
+      select_seats_btn: '座席を選択',
+      select_seats_title: '座席を選択',
+      back_to_showtimes: '上映時間に戻る',
+      screen: 'スクリーン',
+      seat_selection_dev: '座席選択機能は開発中...',
+      total: '合計',
+      confirm_seats: '座席を確認',
+      confirm_order: '注文を確認',
+      back_to_seats: '座席選択に戻る',
+      order_details: '注文詳細',
+      movie: '映画',
+      time: '時間',
+      confirm_pay: '支払いを確認',
+      per_ticket: 'チケットあたり'
+    },
+    hotels_page: {
+      title: 'グローバルホテル予約',
+      subtitle: '量子安全予約でブティックホテルを発見',
+      destination: '目的地',
+      destination_placeholder: '都市、ホテル名、またはランドマーク',
+      check_in: 'チェックイン',
+      check_out: 'チェックアウト',
+      guests_rooms: 'ゲスト＆部屋',
+      search_hotels: 'ホテルを検索',
+      searching: '検索中...',
+      popular_destinations: '人気の目的地',
+      hotels_count: '{{count}}件のホテル',
+      modify_search: '検索を変更',
+      filter: 'フィルター',
+      all_stars: 'すべての星',
+      star: '星',
+      price: '価格',
+      apply_filter: 'フィルターを適用',
+      per_night: '1泊あたり',
+      view_details: '詳細を見る',
+      reviews: 'レビュー',
+      load_more: 'もっと読み込む',
+      back_to_results: '結果に戻る',
+      select_room: '部屋タイプを選択',
+      max_guests: '最大{{count}}名',
+      rooms_left: '残り{{count}}室',
+      book_now: '今すぐ予約',
+      amenities: 'アメニティ',
+      free: '無料',
+      paid: '有料',
+      hotel_policies: 'ホテルポリシー',
+      check_in_out: 'チェックイン/アウト',
+      cancellation_policy: 'キャンセルポリシー',
+      pet_policy: 'ペットポリシー',
+      smoking_policy: '喫煙ポリシー',
+      booking_info: '予約情報',
+      name: '名前',
+      email: 'メール',
+      phone: '電話',
+      special_requests: '特別リクエスト',
+      nights: '泊',
+      rooms: '室',
+      room_rate: '部屋料金',
+      taxes_fees: '税金＆手数料',
+      confirm_booking: '予約を確認',
+      booking_success: '予約成功！',
+      confirmation_number: '確認番号',
+      booking_details: '予約詳細',
+      guest_info: 'ゲスト情報',
+      payment_info: '支払い情報',
+      back_to_home: 'ホームに戻る'
+    },
+    flights_page: {
+      title: 'グローバルフライト予約',
+      subtitle: '量子安全取引でフライトを予約',
+      departure_city: '出発都市',
+      arrival_city: '到着都市',
+      departure_date: '出発日',
+      return_date: '帰国日',
+      passengers: '乗客',
+      class_type: 'クラス',
+      economy: 'エコノミー',
+      business: 'ビジネス',
+      first_class: 'ファーストクラス',
+      one_way: '片道',
+      round_trip: '往復',
+      search_flights: 'フライトを検索',
+      searching: '検索中...',
+      outbound_flights: '往路便',
+      return_flights: '復路便',
+      select_flight: '選択',
+      duration: '所要時間',
+      stops: '経由',
+      direct: '直行',
+      stop: '経由',
+      departure: '出発',
+      arrival: '到着',
+      fare_class: '運賃クラス',
+      baggage: '手荷物',
+      seat_selection: '座席選択',
+      refundable: '払い戻し可',
+      non_refundable: '払い戻し不可',
+      select_fare: '運賃を選択',
+      passenger_info: '乗客情報',
+      contact_info: '連絡先情報',
+      total_fare: '合計運賃',
+      confirm_booking: '予約を確認'
+    },
+    market_page: {
+      title: '量子取引市場',
+      subtitle: '量子暗号化技術に基づく安全な取引プラットフォーム',
+      trading_pairs: '取引ペア',
+      search_pairs: 'ペアを検索...',
+      volume: '出来高',
+      latest_price: '最新価格',
+      change_24h: '24時間変動',
+      high_24h: '24時間高値',
+      low_24h: '24時間安値',
+      order_book: '注文板',
+      asks: '売り',
+      bids: '買い',
+      recent_trades: '最近の取引',
+      trading_panel: '取引パネル',
+      spot: 'スポット',
+      margin: 'マージン',
+      futures: '先物',
+      buy: '買い',
+      sell: '売り',
+      order_type: '注文タイプ',
+      market_order: '成行注文',
+      limit_order: '指値注文',
+      stop_limit: 'ストップリミット',
+      buy_price: '買い価格',
+      sell_price: '売り価格',
+      buy_amount: '買い数量',
+      sell_amount: '売り数量',
+      available_balance: '利用可能残高',
+      estimated_fee: '推定手数料',
+      estimated_income: '推定収入',
+      my_trades: 'マイトレード',
+      current_orders: '現在の注文',
+      order_history: '注文履歴',
+      positions: 'ポジション',
+      assets: '資産',
+      no_orders: '保留中の注文なし',
+      no_history: '注文履歴なし',
+      no_positions: 'ポジションなし',
+      cancel: 'キャンセル',
+      unfilled: '未約定',
+      partial: '部分約定',
+      order_success: '注文が正常に送信されました！',
+      order_failed: '注文失敗、再試行してください',
+      quantum_secure: '量子安全',
+      active: 'アクティブ'
+    },
+    utilities_page: {
+      title: '公共料金支払い',
+      subtitle: '暗号通貨で公共料金を支払う',
+      electricity: '電気',
+      water: '水道',
+      gas: 'ガス',
+      internet: 'インターネット',
+      phone: '電話',
+      account_number: 'アカウント番号',
+      amount: '金額',
+      pay_now: '今すぐ支払う',
+      payment_history: '支払い履歴'
+    },
+    crowdfunding_page: {
+      title: '分散型クラウドファンディング',
+      subtitle: 'ブロックチェーンの透明性で革新的なプロジェクトを支援',
+      all_projects: 'すべてのプロジェクト',
+      technology: 'テクノロジー',
+      art: 'アート',
+      charity: 'チャリティ',
+      business: 'ビジネス',
+      raised: '調達額',
+      goal: '目標',
+      backers: '支援者',
+      days_left: '残り日数',
+      back_project: 'プロジェクトを支援',
+      project_details: 'プロジェクト詳細',
+      rewards: 'リワード',
+      updates: '更新',
+      comments: 'コメント'
+    },
+    concerts_page: {
+      title: 'コンサートチケット',
+      subtitle: 'ブロックチェーン検証でコンサートチケットを予約',
+      upcoming: '近日開催',
+      popular: '人気',
+      near_me: '近くで',
+      venue: '会場',
+      date: '日付',
+      price_from: 'から',
+      buy_tickets: 'チケットを購入',
+      select_tickets: 'チケットを選択',
+      ticket_type: 'チケットタイプ',
+      quantity: '数量',
+      vip: 'VIP',
+      standard: 'スタンダード',
+      standing: 'スタンディング'
+    },
+    // クラウドファンディングページ
+    crowdfunding_page: {
+      title: 'クラウドファンディングプラットフォーム',
+      subtitle: '革新的なプロジェクトを支援し、より良い未来を共に創造',
+      create_project: 'プロジェクトを開始',
+      search: '検索',
+      search_placeholder: '革新的なプロジェクトを検索...',
+      featured: '注目',
+      days_left: '日残り',
+      quantum_security: '量子セキュア',
+      anonymous: '匿名',
+      funding_progress: '資金調達進捗',
+      raised: '調達済み',
+      backers: '支援者',
+      days_remaining: '残り日数',
+      support: '支援する',
+      no_results: 'プロジェクトが見つかりません',
+      try_different_search: '検索条件を変更するか、他のカテゴリを閲覧してください',
+      view_all_projects: 'すべてのプロジェクトを見る',
+      cancel: 'キャンセル',
+      categories: {
+        all: 'すべて',
+        technology: 'テクノロジー',
+        design: 'デザイン',
+        games: 'ゲーム',
+        music: '音楽',
+        film: '映画',
+        food: 'フード',
+        fashion: 'ファッション',
+        health: 'ヘルスケア',
+        other: 'その他'
+      },
+      sort: {
+        trending: 'トレンド',
+        newest: '最新',
+        ending_soon: 'まもなく終了',
+        most_funded: '最も資金調達'
+      },
+      stats: {
+        total_projects: '総プロジェクト数',
+        active_projects: 'アクティブプロジェクト',
+        total_raised: '総調達額',
+        total_backers: '総支援者数'
+      },
+      support_modal: {
+        title: 'プロジェクトを支援',
+        amount_label: '支援金額 (QAU)',
+        custom_amount: 'カスタム金額を入力',
+        confirm: '支援を確認',
+        success_message: '{{amount}} QAUの支援に成功しました！\nプロジェクト: {{title}}\n\n（デモ機能、実際の支払いにはウォレット接続が必要です）'
+      },
+      create_modal: {
+        title: 'クラウドファンディングプロジェクトを開始',
+        project_name: 'プロジェクト名',
+        project_name_placeholder: 'プロジェクト名を入力',
+        category: 'カテゴリ',
+        goal_amount: '目標金額 (QAU)',
+        description: '説明',
+        description_placeholder: 'プロジェクトの詳細を説明...',
+        end_date: '終了日',
+        submit: 'プロジェクトを送信',
+        success_message: 'プロジェクトが正常に作成されました！\n\n（デモ機能、実際の作成にはウォレット接続と手数料が必要です）'
+      },
+      errors: {
+        fetch_projects_failed: 'クラウドファンディングプロジェクトの取得に失敗:',
+        fetch_stats_failed: '統計の取得に失敗:',
+        search_failed: '検索に失敗:'
+      }
+    },
+    // コンサートページ
+    concerts_page: {
+      title: 'グローバルコンサート',
+      subtitle: '素晴らしいショーを発見し、音楽の魔法を感じよう',
+      search: '検索',
+      seats: '席',
+      from: 'から',
+      view_details: '詳細を見る',
+      concert_details: 'コンサート詳細',
+      back_to_list: 'リストに戻る',
+      artist_info: 'アーティスト情報',
+      show_info: '公演情報',
+      description: '説明',
+      expected_setlist: '予定セットリスト',
+      more: 'もっと',
+      select_ticket: 'チケットを選択',
+      service_fee: 'サービス料',
+      remaining_tickets: '残り',
+      benefits: '特典',
+      select_this_ticket: 'このチケットを選択',
+      confirm_booking: '予約を確認',
+      back_to_details: '詳細に戻る',
+      order_details: '注文詳細',
+      concert: 'コンサート',
+      artist: 'アーティスト',
+      venue: '会場',
+      time: '時間',
+      ticket_category: 'チケットカテゴリ',
+      quantity: '枚数',
+      subtotal: '小計',
+      tax: '税金',
+      total: '合計',
+      buyer_info: '購入者情報',
+      payment_method: '支払い方法',
+      payment_note: '量子セキュアなQAUトークンで安全な取引を行います。',
+      purchase_notice: '購入に関する注意事項',
+      confirm_purchase: '購入を確認',
+      filters: {
+        city: '都市',
+        genre: 'ジャンル',
+        start_date: '開始日',
+        artist: 'アーティスト',
+        search_artist: 'アーティストを検索'
+      },
+      cities: {
+        new_york: 'ニューヨーク',
+        los_angeles: 'ロサンゼルス',
+        london: 'ロンドン',
+        tokyo: '東京',
+        seoul: 'ソウル'
+      },
+      genres: {
+        all: 'すべてのジャンル',
+        pop: 'ポップ',
+        rock: 'ロック',
+        kpop: 'K-Pop',
+        hiphop: 'ヒップホップ',
+        classical: 'クラシック'
+      },
+      status: {
+        on_sale: '販売中',
+        sold_out: '完売',
+        coming_soon: '近日発売'
+      },
+      availability: {
+        available: '在庫あり',
+        limited: '残りわずか',
+        sold_out: '完売'
+      },
+      steps: {
+        select_show: '公演を選択',
+        show_details: '公演詳細',
+        confirm_booking: '予約を確認',
+        complete_payment: '支払いを完了'
+      },
+      form: {
+        name: '氏名',
+        name_placeholder: '本名を入力してください',
+        email: 'メール',
+        email_placeholder: 'メールアドレスを入力',
+        phone: '電話番号',
+        phone_placeholder: '電話番号を入力',
+        id_number: '身分証明書番号',
+        id_placeholder: '実名チケット、身分証明書番号を入力',
+        emergency_contact: '緊急連絡先',
+        emergency_placeholder: '緊急連絡先の名前と電話番号',
+        special_requests: '特別なリクエスト',
+        special_placeholder: '車椅子アクセス、食事制限など'
+      },
+      notice: {
+        real_name: '実名チケット、入場時に身分証明書が必要です',
+        no_refund: 'チケットは購入後の返金不可',
+        no_camera: 'プロの撮影機材は禁止',
+        time_change: '公演時間は変更される場合があります'
+      },
+      errors: {
+        fetch_list_failed: 'コンサートリストの取得に失敗',
+        fetch_details_failed: 'コンサート詳細の取得に失敗'
+      }
+    },
+    // 公共料金ページ
+    utilities_page: {
+      title: 'グローバル公共料金支払いプラットフォーム',
+      subtitle: '世界中の電力会社をサポート、QAUや他の暗号通貨で安全に請求書を支払い',
+      find_provider: '電力会社を検索',
+      search_providers: 'プロバイダーを検索',
+      searching: '検索中...',
+      found_providers: '{{count}}件の電力会社が見つかりました',
+      search_again: '再検索',
+      query_bill: '請求書を照会',
+      supported_currencies: '対応通貨',
+      processing_time: '処理時間',
+      fees: '手数料',
+      electricity_bill: '電気料金請求書',
+      select_payment: '支払い方法を選択',
+      back: '戻る',
+      payment_success: '支払い成功！',
+      continue_payment: '支払いを続ける',
+      download_receipt: '領収書をダウンロード',
+      processing: '処理中...',
+      form: {
+        country: '国/地域',
+        country_placeholder: '国または地域を入力',
+        region: '都道府県/州',
+        region_placeholder: '都道府県または州を入力',
+        account_number: 'メーター番号',
+        account_placeholder: 'メーター番号を入力',
+        customer_name: '契約者名',
+        customer_placeholder: '契約者名を入力'
+      },
+      providers: {
+        singapore: 'シンガポール電力',
+        china_grid: '国家電網',
+        tokyo_electric: '東京電力'
+      },
+      countries: {
+        singapore: 'シンガポール',
+        usa: 'アメリカ',
+        china: '中国',
+        japan: '日本'
+      },
+      regions: {
+        nationwide: '全国',
+        california: 'カリフォルニア',
+        kanto: '関東地方'
+      },
+      processing: {
+        instant: '即時',
+        one_to_two: '1-2分',
+        one_to_three: '1-3分'
+      },
+      bill: {
+        provider: 'プロバイダー',
+        account: 'アカウント番号',
+        customer: '顧客名',
+        period: '請求期間',
+        usage: '使用量',
+        due_date: '支払期限',
+        amount_due: '請求金額'
+      },
+      confirmation: {
+        transaction_id: '取引ID',
+        payment_method: '支払い方法',
+        amount: '金額',
+        time: '時間'
+      }
+    },
+    // アプリケーションページ
+    applications_page: {
+      hero: {
+        title: 'クロスチェーンブリッジ &',
+        title_highlight: 'エンタープライズソリューション',
+        description: '量子安全なクロスチェーン資産ブリッジサービスと企業向けブロックチェーンソリューション'
+      },
+      stats: { chains: '対応チェーン', transactions: 'クロスチェーン取引', tvl: 'TVL', enterprise_clients: '企業顧客' },
+      status: { online: '稼働中', developing: '開発中', planned: '計画中' },
+      bridge: {
+        title: '量子安全クロスチェーンブリッジ',
+        description: '安全、高速、信頼性の高いクロスチェーン資産転送ソリューション',
+        supported_chains: '対応ブロックチェーンネットワーク',
+        features: {
+          quantum_secure: { title: '量子安全クロスチェーン', description: 'ポスト量子暗号がクロスチェーン資産転送を保護' },
+          fast_confirm: { title: '高速確認', description: '最適化されたクロスチェーンプロトコルで分単位の確認' },
+          multi_verify: { title: 'マルチ検証', description: '分散バリデータノードネットワークが取引の安全性を確保' },
+          multi_chain: { title: 'マルチチェーン対応', description: 'Ethereum、BSC、Polygon等の主要ブロックチェーンに対応' }
+        }
+      },
+      enterprise: {
+        title: 'エンタープライズソリューション',
+        description: '企業向けカスタマイズブロックチェーンソリューション',
+        blockchain: { title: 'エンタープライズブロックチェーン', description: 'プライベートチェーンとコンソーシアムチェーンソリューション', features: { private: 'プライベート展開', permission: '権限管理', audit: 'コンプライアンス監査', privacy: 'データプライバシー' } },
+        supply_chain: { title: 'サプライチェーントレーサビリティ', description: 'ブロックチェーンベースのサプライチェーン管理システム', features: { tracing: '製品トレース', anti_fake: '偽造防止', logistics: '物流追跡', quality: '品質管理' } },
+        asset_mgmt: { title: 'デジタル資産管理', description: 'エンタープライズグレードのデジタル資産カストディプラットフォーム', features: { multi_sig: 'マルチシグウォレット', cold_hot: 'コールド/ホット分離', approval: '承認ワークフロー', reports: 'レポート分析' } },
+        identity: { title: 'ID認証', description: '分散型ID（DID）ソリューション', features: { did: 'DID標準', credentials: '検証可能な資格情報', privacy: 'プライバシー保護', cross_platform: 'クロスプラットフォーム' } }
+      },
+      use_cases: {
+        title: '業界ユースケース',
+        description: '複数業界向けブロックチェーンアプリケーションソリューション',
+        finance: { title: '金融サービス', cases: { cross_border: '国際送金', tokenization: '資産トークン化', settlement: '清算決済', defi: 'DeFiプロトコル' } },
+        supply_chain: { title: 'サプライチェーン', cases: { tracing: '製品トレース', logistics: '物流管理', inventory: '在庫最適化', supplier: 'サプライヤー管理' } },
+        healthcare: { title: 'ヘルスケア', cases: { records: '医療記録', drug_trace: '医薬品トレース', clinical: '臨床試験', insurance: '保険請求' } },
+        government: { title: '政府サービス', cases: { e_gov: '電子政府', digital_id: 'デジタルID', voting: '投票システム', certificates: '証明書管理' } }
+      },
+      cta: { title: '始める', description: '量子安全なクロスチェーンブリッジサービスを体験', launch_bridge: 'ブリッジを起動', contact_us: 'お問い合わせ' }
+    },
+    apps_page: {
+      title: 'Quantauremエコシステム',
+      subtitle: '量子ネットワークで動作する分散型アプリケーションを発見',
+      launch_app: 'アプリを起動',
+      coming_soon: '近日公開',
+      apps: {
+        travel: { title: 'Quantum Travel', description: 'QAU/USDTでフライトとホテルを予約。手数料ゼロ、即時確認。' },
+        mall: { title: 'Quantum Mall', description: '暗号通貨で高級品をショッピング。グローバル配送。' },
+        pay: { title: 'Quantum Pay', description: '加盟店向けグローバル決済ゲートウェイ。' }
+      }
+    },
+    quantum_security_page: {
+      title: '量子セキュリティ管理センター',
+      description: '量子ブロックチェーンエコシステム全体のセキュリティ状態を管理・監視'
+    },
+    support_help: {
+      title: 'ヘルプ＆サポート',
+      subtitle: 'Quantaureumの使用中に発生した問題を解決するための専門的な技術サポートを受けられます',
+      view_help: 'ヘルプを見る',
+      quick_help: {
+        title: 'クイックヘルプ',
+        subtitle: 'よくある問題の迅速な解決策',
+        wallet: { title: 'ウォレットの問題', desc: 'ウォレットの作成、インポート、セキュリティ関連の問題' },
+        transaction: { title: '取引の問題', desc: '取引の送信、確認、手数料関連の問題' },
+        development: { title: '開発の問題', desc: 'API使用、SDK統合、開発関連の問題' },
+        account: { title: 'アカウントの問題', desc: 'アカウント登録、ログイン、セキュリティ設定の問題' }
+      },
+      contact: {
+        title: 'サポートに連絡',
+        subtitle: '専門的な技術サポートを受ける複数の方法',
+        live_chat: { title: 'ライブチャット', desc: '24時間年中無休のオンラインサポート', button: 'チャットを開始', response_time: '平均応答時間: 2分' },
+        email: { title: 'メールサポート', desc: '詳細な問題説明を送信して専門サポートを受ける', button: 'メールを送信' },
+        ticket: { title: 'チケットシステム', desc: '技術チケットを提出し、問題解決の進捗を追跡', button: 'チケットを作成', resolution_time: '平均解決時間: 24時間' }
+      },
+      faq: {
+        title: 'よくある質問',
+        subtitle: '最も一般的な質問への迅速な回答',
+        view_more: 'もっとFAQを見る',
+        q1: { question: 'Quantaureumウォレットの作成方法は？', answer: '公式ウォレットアプリまたはSDKを使用してウォレットを作成できます。ウォレットは量子安全な暗号アルゴリズムを使用して資産を保護します。' },
+        q2: { question: '取引手数料はどのように計算されますか？', answer: '取引手数料はネットワークの混雑状況と取引の複雑さに基づいて動的に計算されます。' },
+        q3: { question: '量子セキュリティとは何ですか？なぜ重要ですか？', answer: '量子セキュリティとは、量子コンピュータ攻撃に耐えられる暗号技術です。Quantaureumはポスト量子暗号アルゴリズムを使用して長期的なセキュリティを確保します。' },
+        q4: { question: 'Quantaureumのガバナンスに参加するには？', answer: 'QAUトークンを保有するユーザーはネットワークガバナンスに参加できます。投票権はQAU保有量に比例します。' },
+        q5: { question: 'ポスト量子暗号はどのようにセキュリティを保護しますか？', answer: 'NIST標準化されたDilithium3デジタル署名とKyber鍵カプセル化アルゴリズムを使用しています。' }
+      },
+      knowledge: {
+        title: 'ナレッジベース',
+        subtitle: '詳細なユーザーガイドと技術ドキュメント',
+        view_guide: 'ガイドを見る',
+        view_docs: 'ドキュメントを見る',
+        watch_videos: '動画を見る',
+        view_updates: '更新を見る',
+        user_guide: { title: 'ユーザーガイド', desc: '初心者から上級者までの完全なユーザーガイド' },
+        dev_docs: { title: '開発者ドキュメント', desc: 'APIリファレンス、SDK使用法、開発ベストプラクティス' },
+        security_guide: { title: 'セキュリティガイド', desc: '資産とプライバシーを保護するセキュリティベストプラクティス' },
+        troubleshooting: { title: 'トラブルシューティング', desc: '一般的な問題の診断と解決方法' },
+        video_tutorials: { title: 'ビデオチュートリアル', desc: '視覚的なビデオチュートリアルと操作デモ' },
+        release_notes: { title: 'リリースノート', desc: '最新バージョンの機能更新と改善' }
+      }
+    },
+    developer_docs: {
+      title: '開発者ドキュメント',
+      subtitle: '量子安全なブロックチェーンアプリケーションを迅速に構築するための完全なAPIドキュメントと開発ガイド',
+      view_docs: 'ドキュメントを見る',
+      quick_start: {
+        title: 'クイックスタート',
+        subtitle: '数分で最初のQuantaureumアプリケーション開発を開始',
+        step1: { title: 'SDKをインストール', desc: 'Quantaureum開発ツールキットをダウンロードしてインストール' },
+        step2: { title: 'ウォレットを作成', desc: '量子安全アルゴリズムを使用して最初のウォレットを作成' },
+        step3: { title: '取引を送信', desc: '量子署名を使用して最初の取引を送信' }
+      },
+      api: {
+        title: 'APIドキュメント',
+        subtitle: 'すべてのコア機能をカバーする完全なAPIリファレンス',
+        wallet: { title: 'ウォレットAPI', desc: '量子安全なウォレット作成、管理、取引機能' },
+        transaction: { title: '取引API', desc: '高性能な取引処理とクエリインターフェース' },
+        smart_contract: { title: 'スマートコントラクトAPI', desc: '量子安全なスマートコントラクトのデプロイと呼び出し' },
+        data: { title: 'データAPI', desc: 'ブロックチェーンデータのクエリと分析インターフェース' },
+        crosschain: { title: 'クロスチェーンAPI', desc: 'クロスチェーン資産転送とデータ交換インターフェース' },
+        ai: { title: 'AI API', desc: 'AI進化システムとの対話インターフェース' }
+      },
+      examples: {
+        title: 'コード例',
+        subtitle: '迅速に開始するための実用的なコード例',
+        create_wallet: '量子ウォレットを作成',
+        send_transaction: '量子安全取引を送信',
+        deploy_contract: 'スマートコントラクトをデプロイ',
+        crosschain_transfer: 'クロスチェーン資産転送'
+      },
+      tutorials: {
+        title: 'チュートリアルガイド',
+        subtitle: '初心者から上級者までの完全なチュートリアルシリーズ',
+        start_learning: '学習を開始',
+        basics: { title: '基本チュートリアル', desc: 'Quantaureumの基本概念と開発環境のセットアップを学ぶ' },
+        smart_contracts: { title: 'スマートコントラクト開発', desc: '量子安全なスマートコントラクトの開発とデプロイを深く学ぶ' },
+        dapp: { title: 'DApp開発', desc: '完全な分散型アプリケーションを構築' },
+        crosschain: { title: 'クロスチェーン開発', desc: 'クロスチェーン相互運用性と資産転送機能を実装' },
+        security: { title: 'セキュリティベストプラクティス', desc: '量子安全開発のベストプラクティスとセキュリティパターンを学ぶ' },
+        optimization: { title: 'パフォーマンス最適化', desc: 'アプリケーションパフォーマンスとユーザー体験を最適化する高度なテクニック' }
+      }
+    },
+    legal: {
+      home: 'ホーム',
+      last_updated: '最終更新',
+      privacy: {
+        title: 'プライバシーポリシー',
+        overview: { title: '概要', content: 'Quantaureum（以下「当社」）はお客様のプライバシーを非常に重視しています。このプライバシーポリシーは、当社がお客様の個人情報をどのように収集、使用、開示、保護するかを説明しています。' },
+        collection: {
+          title: '収集する情報',
+          provided: { title: 'お客様が提供する情報', item1: 'アカウント登録情報（メールアドレス、ユーザー名）', item2: 'ウォレットアドレスと取引記録', item3: 'カスタマーサポートの通信内容', item4: 'その他お客様が提供することを選択した情報' },
+          automatic: { title: '自動的に収集される情報', item1: 'デバイス情報（デバイスタイプ、OS、ブラウザタイプ）', item2: 'IPアドレスと地理的位置情報', item3: '使用データと分析情報', item4: 'Cookieと類似技術で収集される情報' }
+        },
+        use: { title: '情報の使用方法', item1: 'サービスの提供、維持、改善', item2: '取引の処理と関連通知の送信', item3: 'お客様のリクエストへの対応とカスタマーサポートの提供', item4: '技術通知、更新、セキュリティアラートの送信', item5: '詐欺とセキュリティ問題の検出、防止、解決', item6: '法的義務の遵守', item7: 'サービス改善のための調査と分析' },
+        security: { title: '情報セキュリティ', intro: '当社は業界標準のセキュリティ対策を採用してお客様の個人情報を保護しています：', item1: '量子安全暗号技術によるデータ転送の保護', item2: '安全なデータストレージとアクセス制御', item3: '定期的なセキュリティ監査と脆弱性評価', item4: '従業員のセキュリティトレーニングとアクセス制限' },
+        rights: { title: 'お客様の権利', intro: '適用されるデータ保護法に基づき、以下の権利を有する場合があります：', item1: '個人情報へのアクセス', item2: '不正確な情報の訂正', item3: '個人情報の削除', item4: '処理の制限または異議申し立て', item5: 'データポータビリティ', item6: '同意の撤回' },
+        contact: { title: 'お問い合わせ', intro: 'このプライバシーポリシーについてご質問がある場合、または権利を行使したい場合は、以下の方法でお問い合わせください：', email: 'メール', address: '住所' },
+        updates: { title: 'ポリシーの更新', content: '当社はこのプライバシーポリシーを随時更新する場合があります。更新されたポリシーはこのページに掲載され、最終更新日が記載されます。' }
+      },
+      terms: {
+        title: '利用規約',
+        acceptance: { title: '規約の承諾', content: 'Quantaureumプラットフォームへようこそ。当社のサービスにアクセスまたは使用することにより、この利用規約に拘束されることに同意したものとみなされます。' },
+        services: { title: 'サービスの説明', intro: 'Quantaureumは量子安全ブロックチェーン技術に基づく以下のサービスを提供します：', item1: '量子安全デジタルウォレットサービス', item2: 'ブロックチェーン取引と送金サービス', item3: '分散型金融（DeFi）サービス', item4: 'スマートコントラクトのデプロイと実行', item5: 'トークン販売と取引サービス', item6: '開発者ツールとAPI' },
+        responsibilities: { title: 'ユーザーの責任', security: { title: 'アカウントセキュリティ', item1: 'アカウント認証情報と秘密鍵の保護はお客様の責任です', item2: 'ログイン情報を他者と共有しないでください', item3: '不正アクセスを発見した場合は直ちに当社に通知してください', item4: 'アカウント下のすべての活動についてお客様が責任を負います' }, compliance: { title: 'コンプライアンス使用', item1: 'すべての適用法令を遵守', item2: '違法行為やマネーロンダリングに使用しない', item3: '正確で真実の情報を提供', item4: '他のユーザーの権利を尊重' } },
+        prohibited: { title: '禁止行為', intro: '当社のサービスを使用する際、以下の行為は禁止されています：', item1: '詐欺的、欺瞞的、または誤解を招く活動', item2: 'サービスの正常な運用への干渉または妨害', item3: 'システムまたはデータへの不正アクセスの試み', item4: 'マルウェアまたは有害なコードの拡散', item5: '他者の知的財産権の侵害', item6: '市場操作またはインサイダー取引', item7: 'セキュリティ対策またはアクセス制御の回避' },
+        risks: { title: 'リスク警告', intro: 'ブロックチェーンと暗号通貨サービスの使用には重大なリスクが伴います：', item1: 'デジタル資産価格の変動リスク', item2: '技術的障害またはセキュリティ脆弱性のリスク', item3: '規制変更のリスク', item4: '秘密鍵紛失による資産回復不能のリスク', item5: 'スマートコントラクトの脆弱性リスク', warning: '損失を許容できる金額のみを投資してください。' },
+        disclaimer: { title: '免責事項', content: 'サービスは「現状のまま」および「利用可能な状態で」提供され、明示または黙示の保証はありません。' },
+        ip: { title: '知的財産', content: 'Quantaureumプラットフォームとそのすべてのコンテンツ、機能、特徴はQuantaureumまたはそのライセンサーの財産であり、著作権、商標、その他の知的財産法によって保護されています。' },
+        termination: { title: '終了', content: '当社は、本規約の違反を含むがこれに限定されない理由により、いつでもお客様のサービスへのアクセスを停止または終了する権利を留保します。' },
+        law: { title: '準拠法', content: '本規約は適用法に準拠し、それに従って解釈されます。' }
+      },
+      cookies: {
+        title: 'Cookieポリシー',
+        what: { title: 'Cookieとは？', content: 'Cookieは、お客様の設定を記憶し、ブラウジング体験を向上させるためにデバイスに保存される小さなテキストファイルです。' },
+        types: { title: '使用するCookieの種類', essential: { title: '必須Cookie', desc: 'これらのCookieはウェブサイトの基本機能に必要であり、無効にすることはできません。', item1: 'セッション管理', item2: 'セキュリティ認証', item3: 'ロードバランシング' }, functional: { title: '機能Cookie', desc: 'これらのCookieにより、ウェブサイトはお客様の選択を記憶し、強化されたパーソナライズ機能を提供できます。', item1: '言語設定', item2: 'テーマ設定', item3: 'ユーザーインターフェースのカスタマイズ' }, analytics: { title: '分析Cookie', desc: 'これらのCookieは、訪問者がウェブサイトとどのように対話するかを理解するのに役立ちます。', item1: 'ページ訪問統計', item2: 'ユーザー行動分析', item3: 'パフォーマンス監視' }, marketing: { title: 'マーケティングCookie', desc: 'これらのCookieは、関連する広告を表示するためにウェブサイト間で訪問者を追跡するために使用されます。', item1: '広告ターゲティング', item2: 'ソーシャルメディア統合', item3: 'コンバージョン追跡' } },
+        list: { title: '具体的なCookieリスト', name: '名前', type: 'タイプ', duration: '期間', purpose: '目的', session: 'セッション', session_mgmt: 'ユーザーセッション管理', days: '日', year: '年', years: '年', auth: '認証', language: '言語設定', theme: 'テーマ設定' },
+        manage: { title: 'Cookie設定の管理', intro: '以下の方法でCookieを管理できます：', browser: { title: 'ブラウザ設定', desc: 'ほとんどのブラウザでは設定からCookieを制御できます。' }, center: { title: 'Cookie設定センター', desc: '当社ウェブサイトのCookie設定センターを使用して非必須Cookieを管理できます。' }, optout: { title: 'オプトアウト', desc: '分析Cookieについては、Google Analyticsオプトアウトブラウザアドオンを使用できます。' }, warning: '注意：特定のCookieを無効にすると、ウェブサイトの機能とユーザー体験に影響を与える可能性があります。' },
+        updates: { title: 'ポリシーの更新', content: '当社はこのCookieポリシーを随時更新する場合があります。' }
+      },
+      security: {
+        title: 'セキュリティ声明',
+        commitment: { title: '当社のセキュリティコミットメント', content: 'Quantaureumでは、セキュリティが最優先事項です。最先端の量子安全技術と業界のベストプラクティスを採用し、お客様のデジタル資産と個人情報が最高レベルの保護を受けることを保証します。' },
+        quantum: { title: '量子セキュリティ技術', pqc: { title: 'ポスト量子暗号', desc: 'NIST標準化されたポスト量子暗号アルゴリズムを使用して、量子コンピューティング時代でも資産が保護されることを保証します：', dilithium: 'デジタル署名アルゴリズム', kyber: '鍵カプセル化メカニズム', sphincs: 'ハッシュベース署名スキーム' }, standards: { title: '暗号化標準', item1: 'すべてのデータ転送にTLS 1.3暗号化を使用', item2: '機密データはAES-256暗号化で保存', item3: '秘密鍵はハードウェアセキュリティモジュール（HSM）で保護', item4: '鍵生成に量子乱数生成器（QRNG）を使用' } },
+        measures: { title: 'セキュリティ対策', infrastructure: { title: 'インフラストラクチャセキュリティ', item1: '多層ファイアウォール保護', item2: 'DDoS攻撃保護', item3: '侵入検知・防止システム', item4: '24時間365日セキュリティ監視' }, application: { title: 'アプリケーションセキュリティ', item1: 'セキュアコードレビュー', item2: '定期的なペネトレーションテスト', item3: '脆弱性スキャンと修復', item4: 'セキュア開発ライフサイクル' }, account: { title: 'アカウントセキュリティ', item1: '多要素認証（MFA）', item2: '生体認証サポート', item3: '異常ログイン検出', item4: 'セッション管理とタイムアウト' }, operational: { title: '運用セキュリティ', item1: '従業員セキュリティトレーニング', item2: '最小権限の原則', item3: 'アクセスログ監査', item4: 'インシデント対応計画' } },
+        audits: { title: 'セキュリティ監査と認証', intro: '当社は定期的に独立した第三者によるセキュリティ監査を受け、セキュリティ対策が最高基準を満たしていることを確認しています：', certik: 'スマートコントラクト監査', soc2: 'コンプライアンス認証', iso: '情報セキュリティ管理' },
+        vulnerability: { title: '脆弱性報告', intro: '当社はセキュリティ研究者の貢献を重視しています。セキュリティ脆弱性を発見した場合は、バグバウンティプログラムを通じて責任を持って開示してください：', bounty: 'バグバウンティプログラム' },
+        tips: { title: 'ユーザーセキュリティのヒント', intro: 'アカウントセキュリティを保護するために、以下をお勧めします：', item1: '多要素認証（MFA）を有効にしてアカウントセキュリティを強化', item2: '強力なパスワードを使用し、複数のウェブサイトでパスワードを再利用しない', item3: '秘密鍵とシードフレーズを安全にバックアップし、オンラインで保存しない', item4: 'フィッシング攻撃に注意し、常にウェブサイトURLを確認', item5: 'ソフトウェアとデバイスを最新バージョンに更新', item6: '大量の資産を保管するためにハードウェアウォレットの使用を検討' },
+        contact: { title: 'セキュリティチームへの連絡', intro: 'セキュリティに関するご質問やご懸念がある場合は、セキュリティチームにお問い合わせください：', security: 'セキュリティ問題', bounty: '脆弱性報告', pgp: 'PGPキー', pgp_note: 'GitHubページで入手可能' }
+      }
+    },
+    // エンタープライズページ
+    enterprise: {
+      solutions: {
+        title: 'エンタープライズソリューション',
+        subtitle: '企業向けカスタマイズブロックチェーンソリューション、デジタル変革を支援',
+        finance: { title: '金融サービス', desc: '銀行、保険、資産管理向けの量子安全ブロックチェーンソリューション', features: ['クロスボーダー決済', '資産トークン化', 'コンプライアンス監査', 'リスク管理'], benefits: ['取引コスト60%削減', '決済T+2からリアルタイムへ', '完全な規制準拠'], case_study: '国際銀行が当社ソリューションで年間2000万ドル節約' },
+        supply_chain: { title: 'サプライチェーン管理', desc: 'エンドツーエンドのサプライチェーン追跡と検証', features: ['製品追跡', '在庫管理', '物流追跡', '品質認証'], benefits: ['100%サプライチェーン透明性', '偽造品95%削減', '在庫回転率40%向上'], case_study: '多国籍メーカーがグローバルサプライチェーンのリアルタイム可視化を実現' },
+        healthcare: { title: 'ヘルスケア', desc: '安全な医療データ管理と共有', features: ['医療記録', '医薬品追跡', '臨床試験', '保険請求'], benefits: ['患者データセキュリティ', '規制準拠', '効率向上'] },
+        government: { title: '政府サービス', desc: 'デジタル政府と公共サービスソリューション', features: ['電子政府', 'デジタルID', '投票システム', '証明書管理'], benefits: ['透明性', '効率性', 'セキュリティ'] },
+        deployment: {
+          title: 'デプロイメントオプション',
+          subtitle: '企業ニーズに対応する柔軟なデプロイメントソリューション',
+          cloud: { title: 'クラウドデプロイメント', desc: '高可用性を備えたフルマネージドクラウドソリューション', features: ['自動スケーリング', 'グローバルCDN', '99.99% SLA', 'マネージドアップデート'] },
+          private: { title: 'プライベートデプロイメント', desc: '最大限の制御を実現するオンプレミスデプロイメント', features: ['完全なデータ制御', 'カスタムセキュリティ', 'エアギャップオプション', '専用サポート'] },
+          hybrid: { title: 'ハイブリッドデプロイメント', desc: '柔軟なアーキテクチャで両方の利点を活用', features: ['柔軟なスケーリング', 'データ主権', 'コスト最適化', 'シームレス統合'] }
+        },
+        cta: { title: '始める', contact: 'お問い合わせ', demo: 'デモをリクエスト' }
+      },
+      partners: {
+        title: 'パートナープログラム',
+        subtitle: 'Quantauneumエコシステムに参加し、共に成長',
+        hero: { title_prefix: '共に構築する', title_highlight: '量子安全', title_suffix: 'エコシステム' },
+        view_solutions: 'ソリューションを見る',
+        types_title: 'パートナータイプ',
+        types_subtitle: '様々なビジネスニーズに対応する複数のパートナーシップモデル',
+        types: {
+          technology: { title: 'テクノロジーパートナー', desc: '大手テック企業と協力し、量子安全エコシステムを構築', benefits: ['技術統合サポート', '共同ソリューション開発', '共同マーケティング', '技術認証'], examples: ['クラウドプロバイダー', 'セキュリティベンダー', 'システムインテグレーター'] },
+          developer: { title: '開発者パートナー', desc: '開発者向けツールとリソースで革新的アプリケーションを構築', benefits: ['優先APIアクセス', '技術サポート優先', '開発者コミュニティ露出', '収益分配'], examples: ['独立開発者', '開発スタジオ', '技術コンサルタント'] },
+          channel: { title: 'チャネルパートナー', desc: 'グローバル市場を拡大し、企業顧客にサービス提供', benefits: ['販売手数料', 'マーケティングサポート', '販売トレーニング', '専任アカウントマネージャー'], examples: ['リセラー', 'ディストリビューター', 'コンサルタント'] }
+        },
+        featured_title: '注目パートナー',
+        featured_subtitle: 'グローバルリーディング企業との提携',
+        categories: { cloud: 'クラウドサービス', consulting: 'コンサルティング', audit: '監査', technology: 'テクノロジー' },
+        benefits: { title: 'パートナー特典', subtitle: 'パートナーになって豊富な特典を享受' },
+        benefits_list: {
+          growth: { title: '成長加速', desc: 'Quantauneumの技術と市場リソースを活用してビジネス成長を加速' },
+          revenue: { title: '収益分配', desc: '顧客紹介と共同販売で豊富な収益分配を獲得' },
+          support: { title: '専任サポート', desc: '専任の技術サポートとカスタマーサクセスチームサービスを取得' },
+          certification: { title: 'ブランド認証', desc: '公式パートナー認証を取得し、市場信頼性を向上' }
+        },
+        suitable_for: '対象',
+        levels_title: 'パートナーレベル',
+        levels_subtitle: '実績に基づいてレベルアップし、より多くの特典を獲得',
+        requirements: '要件',
+        levels: {
+          registered: { name: '登録パートナー', requirements: ['パートナー登録完了', 'パートナー契約締結'], benefits: ['パートナーポータルアクセス', '基本トレーニングリソース', 'マーケティング資料'] },
+          silver: { name: 'シルバーパートナー', requirements: ['年間売上 $50K+', '2名以上の認定エンジニア'], benefits: ['全登録特典', '優先技術サポート', '共同マーケティング機会', '10%販売手数料'] },
+          gold: { name: 'ゴールドパートナー', requirements: ['年間売上 $200K+', '5名以上の認定エンジニア'], benefits: ['全シルバー特典', '専任アカウントマネージャー', '優先プロジェクト機会', '15%販売手数料'] },
+          platinum: { name: 'プラチナパートナー', requirements: ['年間売上 $500K+', '10名以上の認定エンジニア'], benefits: ['全ゴールド特典', '戦略的パートナーシップ計画', '共同製品開発', '20%販売手数料'] }
+        },
+        cta: { title: '参加する準備はできましたか？', subtitle: '今すぐQuantauneumパートナーに申請し、Win-Winの旅を始めましょう' },
+        apply: { title: 'パートナーになる', button: '今すぐ申請' }
+      },
+      audit: {
+        title: 'セキュリティ監査',
+        subtitle: '独立した第三者監査による透明なセキュリティ',
+        reports: { title: '監査レポート', download: 'レポートをダウンロード', view: '詳細を見る' },
+        smart_contract: { title: 'スマートコントラクト監査', auditor: 'CertiK', status: '合格', score: '98/100', desc: 'コアスマートコントラクトの包括的セキュリティ監査' },
+        quantum_crypto: { title: '量子暗号監査', auditor: 'Trail of Bits', status: '合格', score: '99/100', desc: 'ポスト量子暗号実装の詳細監査' },
+        penetration: { title: 'ペネトレーションテスト', auditor: 'HackerOne', status: '合格', desc: 'インフラストラクチャの包括的ペネトレーションテスト' },
+        findings: { critical: '重大', high: '高', medium: '中', low: '低' },
+        certifications: { title: '認証', soc2: 'SOC 2 Type II', iso27001: 'ISO 27001', gdpr: 'GDPR準拠' }
+      },
+      support: {
+        title: 'エンタープライズサポート',
+        subtitle: '企業顧客向けプロフェッショナル技術サポート',
+        plans: {
+          basic: { name: 'ベーシックサポート', price: '無料', desc: '開発とテスト向け', features: ['コミュニティフォーラムサポート', 'ドキュメントアクセス', 'メールサポート（48時間応答）', '基本トラブルシューティングガイド'] },
+          professional: { name: 'プロフェッショナルサポート', price: '$999/月', desc: '本番デプロイ向け', features: ['全ベーシック機能', '優先メール（24時間応答）', '電話サポート', '専任エンジニア'] },
+          enterprise: { name: 'エンタープライズサポート', price: 'カスタム', desc: 'ミッションクリティカルデプロイ向け', features: ['全プロフェッショナル機能', '24/7サポート', 'SLA保証', 'オンサイトサポート'] }
+        },
+        contact: { title: 'サポートに連絡', email: 'メール', phone: '電話', chat: 'ライブチャット' }
+      }
+    },
+    // テクノロジーページ
+    technology: {
+      blockchain: {
+        title: 'ブロックチェーン技術',
+        subtitle: '次世代量子安全ブロックチェーンインフラ',
+        architecture: { title: 'アーキテクチャ', desc: 'セキュリティとスケーラビリティのために設計された多層アーキテクチャ' },
+        consensus: { title: 'コンセンサスメカニズム', desc: '量子安全プルーフオブステーク（QPOS）コンセンサス', features: ['省エネ', '高スループット', '高速ファイナリティ', '量子耐性'] },
+        smart_contracts: { title: 'スマートコントラクト', desc: '安全で効率的なスマートコントラクトプラットフォーム', features: ['EVM互換', '形式検証', 'Gas最適化', 'アップグレード可能'] },
+        performance: { title: 'パフォーマンス', tps: '100,000+ TPS', finality: '< 1秒ファイナリティ', nodes: 'グローバルノードネットワーク' }
+      },
+      quantum_security: {
+        title: '量子セキュリティ',
+        subtitle: 'ポスト量子暗号で将来の量子コンピューティング脅威から資産を保護',
+        badges: {
+          nist: 'NIST標準',
+          quantum_resistant: '量子耐性',
+          audit: 'セキュリティ監査済み'
+        },
+        pqc: {
+          title: 'ポスト量子暗号',
+          subtitle: 'NIST標準化アルゴリズムで量子攻撃に対する長期的セキュリティを確保'
+        },
+        algorithms: {
+          dilithium: {
+            desc: 'NIST標準化ポスト量子デジタル署名アルゴリズム、安全なトランザクション署名を提供',
+            specs: ['NISTレベル3セキュリティ', '格子ベース暗号', '高速署名生成', 'コンパクトな鍵サイズ']
+          },
+          kyber: {
+            desc: 'NIST標準化鍵カプセル化メカニズム、安全な鍵交換用',
+            specs: ['NISTレベル3セキュリティ', 'Module-LWEベース', '効率的なカプセル化', '前方秘匿性']
+          },
+          sha3: {
+            desc: 'データ整合性と検証のための量子耐性ハッシュ関数',
+            specs: ['256ビットセキュリティ', 'スポンジ構造', '衝突耐性', '原像耐性']
+          },
+          qrng: {
+            title: '量子乱数生成器',
+            desc: '暗号鍵生成のための量子現象による真の乱数',
+            specs: ['真の量子乱数', 'ハードウェアエントロピー', '予測不可能な出力', '高スループット']
+          }
+        },
+        audit: {
+          title: 'セキュリティ監査プロセス',
+          subtitle: 'システム整合性を確保する厳格な多段階セキュリティ検証',
+          step: 'ステップ',
+          steps: {
+            review: { title: 'コードレビュー', desc: 'すべての重要なコードパスの専門家による手動レビュー' },
+            scan: { title: '自動スキャン', desc: '脆弱性検出のための静的・動的分析ツール' },
+            verify: { title: '形式検証', desc: '暗号の正確性の数学的証明' },
+            pentest: { title: 'ペネトレーションテスト', desc: 'セキュリティ専門家による実際の攻撃シミュレーション' },
+            report: { title: '監査レポート', desc: '包括的な文書化と修正' }
+          }
+        },
+        vulnerabilities: {
+          title: '脆弱性検出',
+          subtitle: '潜在的なセキュリティ脅威の包括的な監視と検出',
+          items: [
+            { name: 'リエントランシー攻撃', severity: '高', description: 'スマートコントラクトの再帰呼び出し悪用を防止' },
+            { name: '整数オーバーフロー', severity: '高', description: '安全な数学演算で算術脆弱性を防止' },
+            { name: 'アクセス制御', severity: '高', description: 'すべての操作に対する厳格な権限検証' },
+            { name: 'フロントランニング', severity: '中', description: 'トランザクション順序保護メカニズム' },
+            { name: 'オラクル操作', severity: '中', description: '複数ソース価格フィードで操作を防止' },
+            { name: 'ガス最適化', severity: '低', description: '効率的なガス使用でDoS攻撃を防止' }
+          ]
+        },
+        severity: {
+          high: '高',
+          medium: '中',
+          low: '低'
+        },
+        certifications: {
+          title: 'セキュリティ認証',
+          items: [
+            { name: 'SOC 2 Type II', desc: 'エンタープライズセキュリティコンプライアンス', status: '認証済み' },
+            { name: 'ISO 27001', desc: '情報セキュリティ管理', status: '認証済み' },
+            { name: 'NIST PQC', desc: 'ポスト量子暗号標準', status: '認証済み' },
+            { name: 'Common Criteria', desc: '国際セキュリティ評価', status: '進行中' }
+          ]
+        },
+        status: {
+          certified: '認証済み',
+          in_progress: '進行中',
+          planned: '計画中'
+        },
+        cta: {
+          title: '資産を保護する準備はできましたか？',
+          subtitle: '量子安全セキュリティでQuantauneumを信頼する数千人のユーザーに参加',
+          apply: '始める',
+          docs: 'セキュリティドキュメント'
+        }
+      },
+      whitepaper: {
+        title: '技術ホワイトペーパー',
+        subtitle: 'Quantaureum技術アーキテクチャとイノベーションの詳細',
+        download: 'ホワイトペーパーをダウンロード',
+        sections: { abstract: '要約', introduction: '序論', architecture: 'アーキテクチャ', consensus: 'コンセンサス', cryptography: '暗号', economics: 'トークンエコノミクス', roadmap: 'ロードマップ' },
+        versions: { latest: '最新バージョン', previous: '過去のバージョン' }
+      },
+      whitepaper_page: {
+        hero: {
+          title: '技術ホワイトペーパー',
+          subtitle: 'Quantauneumの技術アーキテクチャ、革新コンセプト、開発ロードマップの詳細'
+        },
+        download: {
+          title: 'Quantaureum技術ホワイトペーパー',
+          desc: 'システムアーキテクチャ、アルゴリズム設計、セキュリティメカニズム、実装詳細を含む完全な技術文書',
+          pdf_btn: '完全版をダウンロード(PDF)',
+          online_btn: 'オンラインで読む'
+        },
+        abstract: {
+          title: '要約',
+          p1: 'Quantauneumは、量子コンピューティング時代に従来のブロックチェーンが直面するセキュリティ課題に対処するために設計された革命的な量子安全ブロックチェーンエコシステムです。このホワイトペーパーでは、ポスト量子暗号の応用と完全な分散型アプリケーションエコシステムを含む技術革新について詳しく説明します。',
+          p2: 'CRYSTALS-DilithiumやKyberなどのNIST標準化ポスト量子暗号アルゴリズムを採用し、量子コンピュータが登場した後もシステムが信頼性の高いセキュリティを提供することを保証します。同時に、革新的なQuantum Proof of Stake (QPoS)コンセンサスメカニズムとシャーディング技術を組み合わせ、高性能と高スケーラビリティを実現します。',
+          p3: '完全なアプリケーションエコシステムは、金融、エンターテインメント、旅行、インフラストラクチャなど複数の分野をカバーし、ユーザーに包括的なブロックチェーンサービスを提供します。'
+        },
+        toc: {
+          title: '目次',
+          items: [
+            { title: '序論', page: '3' },
+            { title: '量子セキュリティ技術', page: '8' },
+            { title: 'ブロックチェーンアーキテクチャ設計', page: '15' },
+            { title: 'コンセンサスメカニズム', page: '22' },
+            { title: 'AI自律進化システム', page: '28' },
+            { title: 'スマートコントラクト仮想マシン', page: '35' },
+            { title: 'クロスチェーン相互運用性', page: '42' },
+            { title: 'アプリケーションエコシステム', page: '48' },
+            { title: '経済モデル', page: '55' },
+            { title: 'セキュリティ分析', page: '62' },
+            { title: 'パフォーマンス評価', page: '68' },
+            { title: '開発ロードマップ', page: '74' },
+            { title: '結論', page: '80' }
+          ]
+        },
+        highlights: {
+          title: 'コア技術ハイライト',
+          items: [
+            { title: 'ポスト量子暗号', desc: 'NIST標準化ポスト量子暗号アルゴリズムで量子コンピューティング時代のセキュリティを確保' },
+            { title: 'AI自律進化', desc: 'メタ学習と再帰的自己改善能力を持つAIシステムがプラットフォームパフォーマンスを継続的に最適化' },
+            { title: '高性能コンセンサス', desc: '革新的なQPoSコンセンサスメカニズムで高スループットと低レイテンシのトランザクション処理を実現' },
+            { title: 'クロスチェーン相互運用', desc: '複数のブロックチェーンネットワークをシームレスに接続し、統一されたデジタル経済エコシステムを構築' },
+            { title: 'スマートコントラクト', desc: '複雑な分散型アプリケーションをサポートする量子安全スマートコントラクト実行環境' },
+            { title: 'アプリケーションエコシステム', desc: '金融、エンターテインメント、旅行などをカバーする完全なアプリケーションエコシステム' }
+          ]
+        },
+        team: {
+          title: '研究チーム',
+          members: [
+            { role: 'チーフサイエンティスト', degree: '暗号学博士', background: 'MIT、50+の論文発表', emoji: '👨‍🔬' },
+            { role: '量子コンピューティング専門家', degree: '物理学博士', background: '元Google量子AIチーム', emoji: '👨‍🔬' },
+            { role: 'ブロックチェーンアーキテクト', degree: 'コンピュータサイエンス博士', background: '元Ethereumコア開発者', emoji: '👩‍💻' },
+            { role: 'AIシステム専門家', degree: '人工知能博士', background: '元OpenAI研究員', emoji: '🤖' }
+          ]
+        }
+      },
+      blog: {
+        title: '技術ブログ',
+        subtitle: '最新アップデートと技術インサイト',
+        categories: { all: 'すべて', development: '開発', security: 'セキュリティ', research: '研究', announcements: 'お知らせ' },
+        read_more: '続きを読む',
+        published: '公開日',
+        author: '著者'
+      }
+    },
+    // 認証ページ
+    auth: {
+      login: {
+        title: 'おかえりなさい',
+        subtitle: 'Quantauneumアカウントにサインイン',
+        email: 'メールアドレス',
+        password: 'パスワード',
+        remember: 'ログイン状態を保持',
+        forgot: 'パスワードをお忘れですか？',
+        submit: 'サインイン',
+        no_account: 'アカウントをお持ちでないですか？',
+        register: '新規登録',
+        or: 'または',
+        google: 'Googleでログイン',
+        github: 'GitHubでログイン',
+        errors: { invalid: 'メールまたはパスワードが無効です', required: 'この項目は必須です' }
+      },
+      register: {
+        title: 'アカウント作成',
+        subtitle: '量子安全ブロックチェーン革命に参加',
+        username: 'ユーザー名',
+        email: 'メールアドレス',
+        password: 'パスワード',
+        confirm_password: 'パスワード確認',
+        terms: '利用規約とプライバシーポリシーに同意します',
+        submit: 'アカウント作成',
+        have_account: 'すでにアカウントをお持ちですか？',
+        login: 'サインイン',
+        password_requirements: { title: 'パスワードの要件：', length: '8文字以上', uppercase: '大文字1つ', lowercase: '小文字1つ', number: '数字1つ', special: '特殊文字1つ' }
+      },
+      forgot_password: {
+        title: 'パスワードリセット',
+        subtitle: 'リセット手順を受け取るメールアドレスを入力',
+        email: 'メールアドレス',
+        submit: 'リセットリンクを送信',
+        back: 'ログインに戻る',
+        success: 'リセットリンクを送信しました！メールをご確認ください。'
+      }
+    },
+    // コミュニティサブページ
+    community_sub: {
+      bug_bounty: {
+        title: 'バグバウンティプログラム',
+        subtitle: 'セキュリティ向上に貢献して報酬を獲得',
+        severity: { critical: { level: '重大', reward: '$10,000 - $50,000', desc: '資金損失やシステム完全障害につながる可能性のある脆弱性' }, high: { level: '高', reward: '$5,000 - $10,000', desc: '深刻なセキュリティまたはユーザーデータの問題' }, medium: { level: '中', reward: '$1,000 - $5,000', desc: '中程度の影響のセキュリティ問題' }, low: { level: '低', reward: '$100 - $1,000', desc: '軽微なセキュリティ問題または改善提案' } },
+        scope: { in_scope: '対象範囲', out_scope: '対象外', items_in: ['メインネットスマートコントラクト', '量子ウォレットアプリ', 'ブロックチェーンエクスプローラー', 'DeFiプロトコルコントラクト', 'APIとRPCエンドポイント', 'クロスチェーンブリッジコントラクト'], items_out: ['サードパーティサービス', 'ソーシャルエンジニアリング', 'DoS/DDoS攻撃', '修正中の既知の問題'] },
+        rules: { title: 'プログラムルール', items: ['責任を持って脆弱性を報告', '脆弱性を悪用しない', '詳細な再現手順を提供', '修正まで開示を待つ'] },
+        submit: 'レポートを提出'
+      },
+      guidelines: {
+        title: 'コミュニティガイドライン',
+        subtitle: 'フレンドリーで安全で価値あるコミュニティ環境の維持にご協力ください',
+        welcome: {
+          title: 'Quantaureum コミュニティへようこそ',
+          desc: '私たちはオープンで包括的で建設的なコミュニティの構築に取り組んでいます。以下のガイドラインを読み、遵守して、良好なコミュニティの雰囲気を維持してください。違反は警告、ミュート、または永久禁止につながる可能性があります。'
+        },
+        recommended: '推奨事項',
+        prohibited: '禁止事項',
+        items: {
+          respect: {
+            title: '他者を尊重する',
+            desc: 'すべてのコミュニティメンバーに対して敬意と礼儀を持ちましょう。個人攻撃、嫌がらせ、差別的な発言は許可されていません。',
+            dos: ['丁寧な言葉を使う', '異なる意見を尊重する', '建設的な批判を行う'],
+            donts: ['個人攻撃', '他者への嫌がらせ', '差別的なコンテンツの投稿']
+          },
+          discussion: {
+            title: '価値ある議論',
+            desc: 'コミュニティに価値を加える意味のあるコンテンツを投稿してください。スパムや無関係なコンテンツは避けてください。',
+            dos: ['有用な情報を共有する', '思慮深い質問をする', '意味のある議論に参加する'],
+            donts: ['スパムの投稿', '重複投稿', '無関係なコンテンツの投稿']
+          },
+          privacy: {
+            title: 'プライバシーを保護する',
+            desc: '自分と他者のプライバシーを保護してください。個人の機密情報を共有しないでください。',
+            dos: ['個人情報を保護する', '安全な通信方法を使用する', '疑わしい活動を報告する'],
+            donts: ['他者の個人情報を共有する', '機密データを投稿する', 'フィッシング攻撃を行う']
+          },
+          legal: {
+            title: '法律を遵守する',
+            desc: 'すべての活動は適用される法律と規制に準拠する必要があります。違法な活動は禁止されています。',
+            dos: ['地域の法律に従う', '違法なコンテンツを報告する', 'プラットフォームを責任を持って使用する'],
+            donts: ['違法な活動を促進する', '侵害コンテンツを投稿する', '詐欺行為を行う']
+          }
+        },
+        report: {
+          title: '違反を報告する',
+          desc: 'コミュニティガイドラインに違反する行為を発見した場合は、すぐに報告してください。モデレーションチームができるだけ早く対処します。',
+          button: '違反を報告'
+        },
+        rules: { respect: { title: '敬意を持つ', desc: 'すべてのコミュニティメンバーを尊重' }, constructive: { title: '建設的に', desc: '有益で建設的なフィードバックを提供' }, no_spam: { title: 'スパム禁止', desc: 'スパム、自己宣伝、オフトピックコンテンツを避ける' }, no_illegal: { title: '違法コンテンツ禁止', desc: '違法または有害なコンテンツを共有しない' } },
+        enforcement: { title: '執行', warning: '警告', temp_ban: '一時的禁止', perm_ban: '永久禁止' }
+      },
+      members: {
+        title: 'コミュニティメンバー',
+        subtitle: '活気あるコミュニティに会う',
+        search: 'メンバーを検索...',
+        filters: { all: '全メンバー', active: '最もアクティブ', new: '最新', top: 'トップ貢献者' },
+        stats: { posts: '投稿', reputation: '評判', joined: '参加日' },
+        follow: 'フォロー',
+        following: 'フォロー中'
+      },
+      notifications: {
+        title: '通知',
+        mark_all_read: 'すべて既読にする',
+        types: { mention: 'あなたをメンション', reply: 'あなたの投稿に返信', like: 'あなたの投稿にいいね', follow: 'フォローを開始', announcement: '新しいお知らせ' },
+        empty: '通知はありません'
+      }
+    },
+    // 開発者サブページ
+    developers_sub: {
+      api: {
+        title: 'APIリファレンス',
+        subtitle: 'Quantaureum完全APIドキュメント',
+        sections: { authentication: '認証', wallet: 'ウォレットAPI', transaction: 'トランザクションAPI', blockchain: 'ブロックチェーンAPI', smart_contract: 'スマートコントラクトAPI' },
+        endpoints: 'エンドポイント',
+        parameters: 'パラメータ',
+        response: 'レスポンス',
+        example: '例',
+        try_it: '試してみる'
+      },
+      sdk: {
+        title: 'SDKダウンロード',
+        subtitle: '複数のプログラミング言語向け公式SDK',
+        languages: { javascript: 'JavaScript/TypeScript', python: 'Python', go: 'Go', rust: 'Rust', java: 'Java' },
+        download: 'ダウンロード',
+        docs: 'ドキュメント',
+        github: 'GitHub',
+        version: 'バージョン',
+        install: 'インストール'
+      },
+      examples: {
+        title: 'コード例',
+        subtitle: '例で学ぶ',
+        categories: { wallet: 'ウォレット操作', transactions: 'トランザクション', smart_contracts: 'スマートコントラクト', defi: 'DeFi統合' },
+        copy: 'コードをコピー',
+        run: '例を実行',
+        language: '言語'
+      }
+    },
+    // 設定サブページ
+    settings_sub: {
+      kyc: {
+        title: 'KYC認証',
+        subtitle: '本人確認を完了してすべての機能をアンロック',
+        steps: { personal: '個人情報', document: '書類アップロード', verification: '認証' },
+        personal: { first_name: '名', last_name: '姓', dob: '生年月日', nationality: '国籍', address: '住所' },
+        document: { type: '書類タイプ', passport: 'パスポート', id_card: '身分証明書', drivers_license: '運転免許証', front: '表面', back: '裏面', selfie: '書類を持った自撮り' },
+        status: { pending: '審査中', approved: '承認済み', rejected: '却下' },
+        submit: '認証を提出'
+      }
+    },
+    // トークンセールサブページ
+    token_sale_sub: {
+      orders: {
+        title: '注文履歴',
+        subtitle: 'トークン購入履歴を表示',
+        columns: { order_id: '注文ID', date: '日付', amount: '数量', price: '価格', status: 'ステータス', action: 'アクション' },
+        status: { pending: '保留中', completed: '完了', failed: '失敗', refunded: '返金済み' },
+        empty: '注文はありません',
+        view_details: '詳細を見る'
+      },
+      referral: {
+        title: '紹介プログラム',
+        subtitle: '友達を招待して報酬を獲得',
+        your_link: '紹介リンク',
+        copy: 'リンクをコピー',
+        stats: { referrals: '総紹介数', earnings: '総収益', pending: '保留中の報酬' },
+        how_it_works: { title: '仕組み', step1: '専用紹介リンクを共有', step2: '友達が登録してトークンを購入', step3: '購入額の5%のコミッションを獲得' },
+        history: { title: '紹介履歴', columns: { user: 'ユーザー', date: '日付', amount: '購入額', commission: 'コミッション' } }
+      }
+    },
+    // 通知ページ
+    notifications_page: {
+      title: '通知',
+      unread_count: '{{count}}件未読',
+      mark_all_read: 'すべて既読にする',
+      loading: '読み込み中...',
+      no_notifications: '通知はありません',
+      filters: {
+        all: 'すべて',
+        unread: '未読',
+        like: 'いいね',
+        comment: 'コメント',
+        follow: 'フォロー',
+        system: 'システム'
+      },
+      time: {
+        just_now: 'たった今',
+        minutes_ago: '{{count}}分前',
+        hours_ago: '{{count}}時間前',
+        days_ago: '{{count}}日前'
+      }
+    },
+    // 検索ページ
+    search_page: {
+      title: '検索結果',
+      search_placeholder: 'ディスカッションを検索...',
+      searching: '検索中...',
+      loading: '読み込み中...',
+      no_results: '「{{query}}」の結果が見つかりません',
+      try_different: '別のキーワードをお試しください',
+      found_results: '{{count}}件の結果が見つかりました',
+      enter_keywords: 'キーワードを入力して検索'
+    },
+    // コミュニティパートナーページ
+    community_partners: {
+      title: 'パートナープログラム',
+      subtitle: 'Quantaureumと共に量子安全な未来を構築',
+      breadcrumb: {
+        community: 'コミュニティ',
+        partners: 'パートナー'
+      },
+      types: {
+        enterprise: {
+          title: '企業パートナー',
+          description: '量子安全なブロックチェーン技術をビジネスに統合するために協力',
+          benefits: ['優先技術サポート', 'カスタマイズソリューション', '共同マーケティング機会', '機能への早期アクセス']
+        },
+        technology: {
+          title: 'テクノロジーパートナー',
+          description: '革新的なブロックチェーンソリューションとツールを共同開発',
+          benefits: ['技術リソースの共有', '優先APIアクセス', '共同開発プロジェクト', '技術トレーニングサポート']
+        },
+        ecosystem: {
+          title: 'エコシステムパートナー',
+          description: 'エコシステムに参加してブロックチェーン業界を共に発展',
+          benefits: ['エコシステムファンドサポート', 'コミュニティリソース', 'イベント協力', 'ブランド露出']
+        }
+      },
+      partner_categories: {
+        gold_storage: 'ゴールドストレージ',
+        oracle: 'オラクル',
+        hardware_wallet: 'ハードウェアウォレット',
+        security_audit: 'セキュリティ監査',
+        cloud_service: 'クラウドサービス',
+        cross_chain: 'クロスチェーン'
+      },
+      our_partners: 'パートナー一覧',
+      cta: {
+        title: 'パートナーになる',
+        description: '企業、開発者、プロジェクトチームを問わず、Quantaureumエコシステムへようこそ',
+        apply: 'パートナーシップを申請'
+      }
+    },
+    // 投稿詳細ページ
+    post_detail: {
+      loading: '読み込み中...',
+      error: {
+        not_found: '投稿が見つかりません',
+        load_failed: '読み込みに失敗しました。再試行してください'
+      },
+      back_to_community: 'コミュニティに戻る',
+      categories: {
+        general: '一般ディスカッション',
+        technical: '技術的な質問',
+        defi: 'DeFiとトレーディング',
+        governance: 'ガバナンス提案'
+      },
+      comments: 'コメント',
+      comments_count: '{{count}}件のコメント',
+      comment_placeholder: 'コメントを入力...',
+      submit_comment: 'コメントを投稿',
+      submitting: '送信中...',
+      login_to_comment: 'コメントするにはログインしてください',
+      login_now: 'ログイン',
+      no_comments: 'まだコメントはありません。最初のコメントを投稿しましょう！',
+      time: {
+        just_now: 'たった今',
+        minutes_ago: '{{count}}分前',
+        hours_ago: '{{count}}時間前',
+        days_ago: '{{count}}日前'
+      }
+    },
+    // トピックページ
+    topic_page: {
+      sample_content: 'これは「{{topic}}」についての詳細なディスカッションです。ここでは技術的な詳細、ユースケース、将来の開発方向を探ることができます。',
+      levels: {
+        quantum_expert: '量子エキスパート',
+        active_member: 'アクティブメンバー',
+        newbie: '初心者'
+      },
+      joined_year: '{{year}}年に参加',
+      categories: {
+        quantum_computing: '量子コンピューティング'
+      },
+      views: '{{count}}回閲覧',
+      replies_count: '{{count}}件の返信',
+      reply: '返信',
+      share: '共有',
+      replies_title: '返信 ({{count}})',
+      reply_placeholder: '返信を入力...',
+      post_reply: '返信を投稿',
+      time: {
+        hours_ago: '{{count}}時間前'
+      },
+      sample_replies: {
+        reply1: '非常に洞察力のある分析です！特に量子技術の発展トレンドに関する見解に同意します。',
+        reply2: '初心者として、このトピックから多くを学びました。入門リソースをいくつか推薦していただけますか？'
+      }
+    },
+    // ユーザープロフィールページ
+    user_profile_page: {
+      title_quantum_expert: '量子技術エキスパート',
+      sample_bio: '量子コンピューティングと量子暗号に焦点を当てた研究者です。知識を共有し、コミュニティメンバーが量子技術の最新動向を理解するのを助けることに情熱を持っています。',
+      sample_location: '東京、日本',
+      joined_date: '{{date}}年3月',
+      joined_at: '参加日',
+      personal_website: '個人ウェブサイト',
+      stats: {
+        posts: '投稿',
+        likes: 'いいね',
+        followers: 'フォロワー',
+        following: 'フォロー中'
+      },
+      follow: 'フォロー',
+      send_message: 'メッセージを送信',
+      achievement_badges: '実績バッジ',
+      badges: {
+        quantum_pioneer: '量子パイオニア',
+        knowledge_sharer: '知識共有者',
+        community_contributor: 'コミュニティ貢献者'
+      },
+      recent_posts: '最近の投稿',
+      view_more_posts: 'もっと見る',
+      time: {
+        days_ago: '{{count}}日前',
+        week_ago: '{{count}}週間前'
+      },
+      sample_posts: {
+        post1: {
+          title: '暗号における量子もつれの応用',
+          category: '量子暗号'
+        },
+        post2: {
+          title: '量子重ね合わせを理解する',
+          category: '量子物理学'
+        },
+        post3: {
+          title: '量子コンピューティング開発の現状',
+          category: '量子コンピューティング'
+        }
+      }
+    },
+    // フォーラムカテゴリページ
+    forum_category: {
+      category_not_found: 'カテゴリが見つかりません',
+      back_to_community: 'コミュニティに戻る',
+      categories: {
+        general: { name: '一般ディスカッション', description: 'Quantaureumに関する一般的な議論、経験やヒントを含む' },
+        technical: { name: '技術交流', description: '技術的な議論、コード共有、ソリューション交換' },
+        defi: { name: 'DeFiディスカッション', description: 'DeFiプロトコル、流動性マイニング、利回り戦略' },
+        trading: { name: 'トレーディングディスカッション', description: '市場分析、取引戦略、価格議論' },
+        governance: { name: 'コミュニティガバナンス', description: 'DAOガバナンス、提案議論、投票' },
+        events: { name: 'イベント', description: 'オンライン・オフラインイベント情報、イベントレポート' }
+      },
+      stats: {
+        total_posts: '総投稿数',
+        total_topics: 'トピック',
+        latest_post: '最新の投稿'
+      },
+      by: '投稿者',
+      filters: {
+        all: 'すべての投稿',
+        pinned: '固定投稿',
+        unlocked: 'ロック解除済み'
+      },
+      sort: {
+        latest: '最新',
+        popular: '返信が多い',
+        views: '閲覧が多い'
+      },
+      new_topic: '新しいトピック',
+      pinned: '固定',
+      locked: 'ロック済み',
+      last_reply: '最終返信',
+      pagination: {
+        prev: '前へ',
+        next: '次へ'
+      },
+      time: {
+        minutes_ago: '{{count}}分前',
+        hours_ago: '{{count}}時間前',
+        days_ago: '{{count}}日前'
+      },
+      sample_posts: {
+        general: '量子ウォレット使用のヒント',
+        technical: 'ポスト量子アルゴリズムの最適化',
+        defi: '新しい流動性プールの議論',
+        trading: 'QAU価格分析',
+        governance: '新しいガバナンス提案への投票',
+        events: '来週のAMAプレビュー'
+      },
+      sample_post_titles: {
+        post1: '🚀 量子ウォレットv2.0がマルチチェーンサポートでリリース',
+        post2: '💡 量子鍵を安全に保存する方法は？',
+        post3: '📊 QAUトークノミクスの詳細分析'
+      },
+      sample_post_contents: {
+        post1: '量子ウォレットv2.0の正式リリースを発表できることを嬉しく思います！このアップデートにはいくつかの重要な機能が含まれています...',
+        post2: '量子コンピューティングの発展に伴い、従来の暗号化方式は課題に直面しています...',
+        post3: 'Quantaureumエコシステムの中核としてのQAUトークンは、エレガントに設計された経済モデルを持っています...'
+      },
+      tags: {
+        update: 'アップデート',
+        wallet: 'ウォレット',
+        new_feature: '新機能',
+        security: 'セキュリティ',
+        quantum_key: '量子鍵',
+        tutorial: 'チュートリアル',
+        tokenomics: 'トークノミクス',
+        analysis: '分析'
+      }
+    },
+    // 開発者サンプルページ
+    dev_examples: {
+      badge: 'コードサンプル',
+      title: 'クイックスタート',
+      title_highlight: 'コードサンプル',
+      subtitle: 'Quantaureumを素早く統合するためのコピー＆ペースト可能なコードサンプル',
+      full_docs: '完全なドキュメント',
+      view_docs: 'ドキュメントを見る',
+      run_online: 'オンラインで実行',
+      categories: {
+        all: 'すべて',
+        wallet: 'ウォレット',
+        transaction: 'トランザクション',
+        smart_contract: 'スマートコントラクト',
+        defi: 'DeFi',
+        quantum_security: '量子セキュリティ'
+      },
+      examples: {
+        connect_wallet: {
+          title: 'ウォレット接続',
+          description: 'JavaScript SDKを使用してQuantaureumウォレットに接続'
+        },
+        send_transaction: {
+          title: 'トランザクション送信',
+          description: '指定アドレスにQAUトークンを送信'
+        },
+        deploy_contract: {
+          title: 'スマートコントラクトのデプロイ',
+          description: 'シンプルなトークンコントラクトをデプロイ'
+        },
+        staking: {
+          title: 'QAUステーキング',
+          description: 'バリデーターノードにQAUをステーキングして報酬を獲得'
+        },
+        quantum_signature: {
+          title: '量子安全署名',
+          description: 'ポスト量子暗号アルゴリズムでメッセージに署名'
+        }
+      },
+      cta: {
+        title: '構築を始める準備はできましたか？',
+        description: '高度な機能とベストプラクティスについては完全なドキュメントをご覧ください',
+        view_docs: '完全なドキュメントを見る',
+        download_sdk: 'SDKをダウンロード'
+      }
+    },
+    // メッセージページ
+    messages_page: {
+      search_placeholder: '会話を検索...',
+      no_conversations: '会話はありません',
+      select_conversation: '会話を選択してチャットを開始',
+      message_placeholder: 'メッセージを入力...',
+      time: {
+        just_now: 'たった今',
+        minutes_ago: '{{count}}分前',
+        hours_ago: '{{count}}時間前',
+        days_ago: '{{count}}日前',
+        you: 'あなた: '
+      }
+    },
+    // SDKダウンロードページ
+    sdk_page: {
+      title: 'SDKダウンロード',
+      subtitle: 'Quantaureum開発キットをダウンロードして、量子安全なブロックチェーンアプリケーションを構築',
+      available: '利用可能',
+      version: 'バージョン',
+      size: 'サイズ',
+      sdks: {
+        typescript: { title: 'TypeScript SDK', description: 'TypeScriptサポート付きのWeb・Node.jsアプリケーション向け完全SDK', download: 'TypeScript SDKをダウンロード' },
+        python: { title: 'Python SDK', description: 'async対応のデータ分析・バックエンドサービス向けPythonライブラリ', download: 'Python SDKをダウンロード' },
+        go: { title: 'Go SDK', description: '並行処理対応の高性能Go開発キット', view: 'Go SDKを見る' },
+        rust: { title: 'Rust SDK', description: 'async・型安全対応の安全で効率的なRust開発キット', view: 'Rust SDKを見る' },
+        java: { title: 'Java SDK', description: 'async・型安全対応のエンタープライズJava開発キット', view: 'Java SDKを見る' },
+        cpp: { title: 'C++ SDK', description: 'モダンC++17対応の高性能システムレベルツールキット', download: 'C++ SDKをダウンロード' }
+      },
+      requirements: {
+        title: 'システム要件',
+        subtitle: '開発環境が以下の要件を満たしていることを確認してください',
+        minimum: { title: '最小要件', os: 'OS: Windows 10、macOS 10.15、Ubuntu 18.04+', memory: 'メモリ: 4GB RAM', storage: 'ストレージ: 2GB空き容量', nodejs: 'Node.js: 18.0+（TypeScript SDK）' },
+        recommended: { title: '推奨', os: 'OS: 最新バージョン', memory: 'メモリ: 8GB+ RAM', storage: 'ストレージ: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
   }

@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useRouter, useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { MessageSquare, ThumbsUp, ThumbsDown, Send, Clock, Pin, Lock, AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import '../../../../i18n';
 import CommunityNavbar from '../../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../../../components/EnhancedFooter';
 
@@ -48,6 +50,7 @@ interface LikeStats {
 export default function PostDetailPage() {
   const router = useRouter();
   const params = useParams();
+  const { t, i18n } = useTranslation();
   const postId = (params?.postId as string) || '';
 
   const [post, setPost] = useState<Post | null>(null);
@@ -89,12 +92,12 @@ export default function PostDetailPage() {
       if (postData.success && postData.data.posts.length > 0) {
         setPost(postData.data.posts[0]);
       } else {
-        setError('帖子不存在');
+        setError(t('post_detail.error.not_found'));
       }
       if (commentsData.success) setComments(commentsData.data);
       if (likesData.success) setLikeStats(likesData.data);
     } catch {
-      setError('加载失败，请重试');
+      setError(t('post_detail.error.load_failed'));
     } finally {
       setLoading(false);
     }
@@ -167,17 +170,17 @@ export default function PostDetailPage() {
     const minutes = Math.floor(diff / 60000);
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
-    if (minutes < 1) return '刚刚';
-    if (minutes < 60) return `${minutes}分钟前`;
-    if (hours < 24) return `${hours}小时前`;
-    if (days < 7) return `${days}天前`;
-    return date.toLocaleDateString('zh-CN');
+    if (minutes < 1) return t('post_detail.time.just_now');
+    if (minutes < 60) return t('post_detail.time.minutes_ago', { count: minutes });
+    if (hours < 24) return t('post_detail.time.hours_ago', { count: hours });
+    if (days < 7) return t('post_detail.time.days_ago', { count: days });
+    return date.toLocaleDateString(i18n.language === 'zh' ? 'zh-CN' : 'en-US');
   };
 
   if (loading) {
     return (
       <div className="min-h-screen relative flex items-center justify-center">
-        <div className="text-white">加载中...</div>
+        <div className="text-white">{t('post_detail.loading')}</div>
       </div>
     );
   }
@@ -187,9 +190,9 @@ export default function PostDetailPage() {
       <div className="min-h-screen relative flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-          <div className="text-white text-xl mb-4">{error || '帖子不存在'}</div>
+          <div className="text-white text-xl mb-4">{error || t('post_detail.error.not_found')}</div>
           <button onClick={() => router.push('/community')} className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-            返回社区
+            {t('post_detail.back_to_community')}
           </button>
         </div>
       </div>
@@ -206,10 +209,10 @@ export default function PostDetailPage() {
             {post.isPinned && <Pin className="w-5 h-5 text-green-400" />}
             {post.isLocked && <Lock className="w-5 h-5 text-yellow-400" />}
             <span className="text-sm text-gray-400">
-              {post.category === 'general' && '常规讨论'}
-              {post.category === 'technical' && '技术问题'}
-              {post.category === 'defi' && 'DeFi & 交易'}
-              {post.category === 'governance' && '治理提案'}
+              {post.category === 'general' && t('post_detail.categories.general')}
+              {post.category === 'technical' && t('post_detail.categories.technical')}
+              {post.category === 'defi' && t('post_detail.categories.defi')}
+              {post.category === 'governance' && t('post_detail.categories.governance')}
             </span>
           </div>
 
@@ -259,14 +262,14 @@ export default function PostDetailPage() {
               </button>
               <div className="flex items-center gap-2 text-gray-400 ml-auto">
                 <MessageSquare className="w-5 h-5" />
-                <span>{comments.length} 条评论</span>
+                <span>{t('post_detail.comments_count', { count: comments.length })}</span>
               </div>
             </div>
           </motion.div>
 
           {/* Comments Section */}
           <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">评论</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t('post_detail.comments')}</h2>
             {isLoggedIn ? (
               <form onSubmit={handleSubmitComment} className="mb-8">
                 <textarea
@@ -274,7 +277,7 @@ export default function PostDetailPage() {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-                  placeholder="发表您的评论..."
+                  placeholder={t('post_detail.comment_placeholder')}
                   rows={4}
                   maxLength={2000}
                 />
@@ -285,24 +288,24 @@ export default function PostDetailPage() {
                     disabled={submitting || !newComment.trim()}
                     className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg transition-all disabled:opacity-50 flex items-center gap-2"
                   >
-                    {submitting ? '加载中...' : <><Send className="w-4 h-4" />发表评论</>}
+                    {submitting ? t('post_detail.submitting') : <><Send className="w-4 h-4" />{t('post_detail.submit_comment')}</>}
                   </button>
                 </div>
               </form>
             ) : (
               <div className="mb-8 p-4 bg-blue-900/30 border border-blue-700/50 rounded-lg text-center">
-                <p className="text-blue-300 mb-3">登录后可发表评论</p>
+                <p className="text-blue-300 mb-3">{t('post_detail.login_to_comment')}</p>
                 <button
                   onClick={() => router.push('/auth/login?redirect=/community/post/' + postId)}
                   className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
                 >
-                  立即登录
+                  {t('post_detail.login_now')}
                 </button>
               </div>
             )}
             <div className="space-y-4">
               {comments.length === 0 ? (
-                <div className="text-center py-8 text-gray-400">暂无评论，来发表第一条吧！</div>
+                <div className="text-center py-8 text-gray-400">{t('post_detail.no_comments')}</div>
               ) : (
                 comments.map((comment) => (
                   <motion.div

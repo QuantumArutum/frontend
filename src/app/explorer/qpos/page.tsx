@@ -8,6 +8,8 @@ import {
   RefreshCw, Users, Coins, GitBranch, Shield, Zap, Server
 } from 'lucide-react';
 import { explorerUtils } from '../../../services/explorerService';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 interface QPOSStatus {
   consensus: string;
@@ -84,6 +86,7 @@ interface EpochsData {
 
 export default function QPOSPage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [qposStatus, setQposStatus] = useState<QPOSStatus | null>(null);
   const [epochsData, setEpochsData] = useState<EpochsData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -127,7 +130,7 @@ export default function QPOSPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <button onClick={() => router.push('/explorer')} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-            <ArrowLeft className="w-5 h-5" /> Back to Explorer
+            <ArrowLeft className="w-5 h-5" /> {t('explorer.qpos.back')}
         </button>
         <button onClick={loadData} className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-all flex items-center gap-2 border border-white/10">
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -140,8 +143,8 @@ export default function QPOSPage() {
           <Layers className="w-7 h-7 text-white" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white">QPOS Consensus</h1>
-          <p className="text-gray-400">Quantaureum Proof of Stake Status</p>
+          <h1 className="text-3xl font-bold text-white">{t('explorer.qpos.title')}</h1>
+          <p className="text-gray-400">{t('explorer.qpos.subtitle')}</p>
         </div>
       </motion.div>
 
@@ -152,19 +155,19 @@ export default function QPOSPage() {
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-white flex items-center gap-2">
                 <Activity className="w-5 h-5 text-purple-400" />
-                Live Status
+                {t('explorer.qpos.live_status')}
               </h3>
               <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30 flex items-center gap-1">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                Live
+                {t('explorer.qpos.live')}
               </span>
             </div>
 
             {/* Slot Progress */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-gray-400 text-sm">Epoch {qposStatus.currentEpoch} Progress</span>
-                <span className="text-purple-400 font-mono text-sm">Slot {qposStatus.slotInEpoch + 1}/{qposStatus.slotsPerEpoch}</span>
+                <span className="text-gray-400 text-sm">{t('explorer.qpos.epoch_progress', { epoch: qposStatus.currentEpoch })}</span>
+                <span className="text-purple-400 font-mono text-sm">{t('explorer.qpos.slot_info', { current: qposStatus.slotInEpoch + 1, total: qposStatus.slotsPerEpoch })}</span>
               </div>
               <div className="h-3 bg-white/10 rounded-full overflow-hidden">
                 <motion.div 
@@ -178,10 +181,10 @@ export default function QPOSPage() {
 
             {/* Key Metrics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <StatCard label="Current Slot" value={qposStatus.currentSlot} icon={Clock} color="text-cyan-400" />
-              <StatCard label="Current Epoch" value={qposStatus.currentEpoch} icon={Layers} color="text-purple-400" />
-              <StatCard label="Justified Epoch" value={qposStatus.justifiedEpoch} icon={CheckCircle} color="text-blue-400" />
-              <StatCard label="Finalized Epoch" value={qposStatus.finalizedEpoch} icon={Shield} color="text-green-400" />
+              <StatCard label={t('explorer.qpos.stats.current_slot')} value={qposStatus.currentSlot} icon={Clock} color="text-cyan-400" />
+              <StatCard label={t('explorer.qpos.stats.current_epoch')} value={qposStatus.currentEpoch} icon={Layers} color="text-purple-400" />
+              <StatCard label={t('explorer.qpos.stats.justified_epoch')} value={qposStatus.justifiedEpoch} icon={CheckCircle} color="text-blue-400" />
+              <StatCard label={t('explorer.qpos.stats.finalized_epoch')} value={qposStatus.finalizedEpoch} icon={Shield} color="text-green-400" />
             </div>
           </motion.div>
         )}
@@ -189,9 +192,9 @@ export default function QPOSPage() {
         {/* Tabs */}
         <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
           {[
-            { id: 'overview', label: 'Overview', icon: Activity },
-            { id: 'epochs', label: 'Epochs', icon: Layers },
-            { id: 'advanced', label: 'Advanced', icon: Zap },
+            { id: 'overview', label: t('explorer.qpos.tabs.overview'), icon: Activity },
+            { id: 'epochs', label: t('explorer.qpos.tabs.epochs'), icon: Layers },
+            { id: 'advanced', label: t('explorer.qpos.tabs.advanced'), icon: Zap },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -216,27 +219,27 @@ export default function QPOSPage() {
               <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                   <Layers className="w-5 h-5 text-purple-400" />
-                  Current Epoch Summary
+                  {t('explorer.qpos.epoch_summary')}
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <p className="text-gray-400 text-xs">Attestations</p>
+                    <p className="text-gray-400 text-xs">{t('explorer.qpos.attestations')}</p>
                     <p className="text-white font-mono text-lg">{qposStatus.epochSummary.totalAttestations}</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <p className="text-gray-400 text-xs">Participation Rate</p>
+                    <p className="text-gray-400 text-xs">{t('explorer.qpos.participation_rate')}</p>
                     <p className="text-emerald-400 font-mono text-lg">{(qposStatus.epochSummary.participationRate * 100).toFixed(1)}%</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <p className="text-gray-400 text-xs">Justified</p>
+                    <p className="text-gray-400 text-xs">{t('explorer.qpos.justified')}</p>
                     <p className={`font-mono text-lg ${qposStatus.epochSummary.isJustified ? 'text-green-400' : 'text-gray-400'}`}>
-                      {qposStatus.epochSummary.isJustified ? 'Yes' : 'No'}
+                      {qposStatus.epochSummary.isJustified ? t('explorer.qpos.yes') : t('explorer.qpos.no')}
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <p className="text-gray-400 text-xs">Finalized</p>
+                    <p className="text-gray-400 text-xs">{t('explorer.qpos.finalized')}</p>
                     <p className={`font-mono text-lg ${qposStatus.epochSummary.isFinalized ? 'text-green-400' : 'text-gray-400'}`}>
-                      {qposStatus.epochSummary.isFinalized ? 'Yes' : 'No'}
+                      {qposStatus.epochSummary.isFinalized ? t('explorer.qpos.yes') : t('explorer.qpos.no')}
                     </p>
                   </div>
                 </div>
@@ -247,21 +250,21 @@ export default function QPOSPage() {
             <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <Users className="w-5 h-5 text-cyan-400" />
-                Validators
+                {t('explorer.qpos.validators_title')}
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                  <p className="text-gray-400 text-xs">Total Validators</p>
+                  <p className="text-gray-400 text-xs">{t('explorer.qpos.total_validators')}</p>
                   <p className="text-white font-mono text-lg">{qposStatus.validatorCount}</p>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                  <p className="text-gray-400 text-xs">Current Proposer</p>
+                  <p className="text-gray-400 text-xs">{t('explorer.qpos.current_proposer')}</p>
                   <p className="text-purple-400 font-mono text-sm truncate">
                     {qposStatus.currentProposer ? `0x${qposStatus.currentProposer.slice(0, 8)}...` : '-'}
                   </p>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                  <p className="text-gray-400 text-xs">Slashed</p>
+                  <p className="text-gray-400 text-xs">{t('explorer.qpos.slashed')}</p>
                   <p className={`font-mono text-lg ${qposStatus.slashedValidators.length > 0 ? 'text-red-400' : 'text-gray-400'}`}>
                     {qposStatus.slashedValidators.length}
                   </p>
@@ -269,7 +272,7 @@ export default function QPOSPage() {
               </div>
               <button onClick={() => router.push('/explorer/validators')} 
                 className="mt-4 w-full py-2 bg-white/5 hover:bg-white/10 rounded-lg text-gray-300 transition-all border border-white/5">
-                View All Validators →
+                {t('explorer.qpos.view_all_validators')} →
               </button>
             </div>
 
@@ -278,23 +281,23 @@ export default function QPOSPage() {
               <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                   <Coins className="w-5 h-5 text-yellow-400" />
-                  Epoch {qposStatus.lastEpochRewards.epoch} Rewards
+                  {t('explorer.qpos.epoch_rewards', { epoch: qposStatus.lastEpochRewards.epoch })}
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <p className="text-gray-400 text-xs">Total Rewards</p>
+                    <p className="text-gray-400 text-xs">{t('explorer.qpos.total_rewards')}</p>
                     <p className="text-green-400 font-mono">{explorerUtils.formatWei(qposStatus.lastEpochRewards.totalRewards)}</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <p className="text-gray-400 text-xs">Total Penalties</p>
+                    <p className="text-gray-400 text-xs">{t('explorer.qpos.total_penalties')}</p>
                     <p className="text-red-400 font-mono">{explorerUtils.formatWei(qposStatus.lastEpochRewards.totalPenalties)}</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <p className="text-gray-400 text-xs">Participating Stake</p>
+                    <p className="text-gray-400 text-xs">{t('explorer.qpos.participating_stake')}</p>
                     <p className="text-cyan-400 font-mono">{explorerUtils.formatWei(qposStatus.lastEpochRewards.participatingStake)}</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <p className="text-gray-400 text-xs">Total Stake</p>
+                    <p className="text-gray-400 text-xs">{t('explorer.qpos.total_stake')}</p>
                     <p className="text-white font-mono">{explorerUtils.formatWei(qposStatus.lastEpochRewards.totalStake)}</p>
                   </div>
                 </div>
@@ -303,22 +306,22 @@ export default function QPOSPage() {
 
             {/* QPOS Configuration */}
             <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">QPOS Configuration</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">{t('explorer.qpos.configuration')}</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <p className="text-gray-400">Slot Duration</p>
+                  <p className="text-gray-400">{t('explorer.qpos.config.slot_duration')}</p>
                   <p className="text-white font-mono">12 seconds</p>
                 </div>
                 <div>
-                  <p className="text-gray-400">Slots per Epoch</p>
+                  <p className="text-gray-400">{t('explorer.qpos.config.slots_per_epoch')}</p>
                   <p className="text-white font-mono">32</p>
                 </div>
                 <div>
-                  <p className="text-gray-400">Epoch Duration</p>
+                  <p className="text-gray-400">{t('explorer.qpos.config.epoch_duration')}</p>
                   <p className="text-white font-mono">~6.4 minutes</p>
                 </div>
                 <div>
-                  <p className="text-gray-400">Sync Committee Period</p>
+                  <p className="text-gray-400">{t('explorer.qpos.config.sync_committee')}</p>
                   <p className="text-white font-mono">256 epochs</p>
                 </div>
               </div>
@@ -333,11 +336,11 @@ export default function QPOSPage() {
               <div className="p-6 border-b border-white/10 flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-white flex items-center gap-2">
                   <Clock className="w-5 h-5 text-blue-400" />
-                  Recent Epochs History
+                  {t('explorer.qpos.epochs_history')}
                 </h3>
                 {epochsData && (
                   <span className="text-gray-400 text-sm">
-                    Finality: {epochsData.epochsToFinality} epochs behind
+                    {t('explorer.qpos.finality_behind', { count: epochsData.epochsToFinality })}
                   </span>
                 )}
               </div>
@@ -345,11 +348,11 @@ export default function QPOSPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="bg-white/5 border-b border-white/10">
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Epoch</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Slots</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Status</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Justified</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Finalized</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.qpos.columns.epoch')}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.qpos.columns.slots')}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.qpos.columns.status')}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.qpos.columns.justified')}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">{t('explorer.qpos.columns.finalized')}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">
@@ -359,7 +362,7 @@ export default function QPOSPage() {
                           <span className={`font-mono font-medium ${epoch.isCurrent ? 'text-purple-400' : 'text-cyan-400'}`}>
                             {epoch.epoch}
                           </span>
-                          {epoch.isCurrent && <span className="ml-2 text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded">Current</span>}
+                          {epoch.isCurrent && <span className="ml-2 text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded">{t('explorer.qpos.current')}</span>}
                         </td>
                         <td className="px-6 py-4 text-gray-400 font-mono text-sm">
                           {epoch.startSlot} - {epoch.endSlot}
@@ -392,7 +395,7 @@ export default function QPOSPage() {
                     ))}
                     {!epochsData && (
                       <tr className="animate-pulse">
-                        <td colSpan={5} className="px-6 py-8 text-center text-gray-500">Loading epochs...</td>
+                        <td colSpan={5} className="px-6 py-8 text-center text-gray-500">{t('explorer.qpos.loading_epochs')}</td>
                       </tr>
                     )}
                   </tbody>
@@ -409,33 +412,33 @@ export default function QPOSPage() {
               <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                   <GitBranch className="w-5 h-5 text-pink-400" />
-                  Fork Choice
+                  {t('explorer.qpos.fork_choice')}
                 </h3>
                 <div className="space-y-4">
-                  <DetailRow label="Head Root" value={qposStatus.advanced.forkChoice.head} mono />
-                  <DetailRow label="Justified Root" value={qposStatus.advanced.forkChoice.justifiedRoot} mono />
-                  <DetailRow label="Finalized Root" value={qposStatus.advanced.forkChoice.finalizedRoot} mono />
+                  <DetailRow label={t('explorer.qpos.head_root')} value={qposStatus.advanced.forkChoice.head} mono />
+                  <DetailRow label={t('explorer.qpos.justified_root')} value={qposStatus.advanced.forkChoice.justifiedRoot} mono />
+                  <DetailRow label={t('explorer.qpos.finalized_root')} value={qposStatus.advanced.forkChoice.finalizedRoot} mono />
                 </div>
               </div>
               
               <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                   <Server className="w-5 h-5 text-orange-400" />
-                  System State
+                  {t('explorer.qpos.system_state')}
                 </h3>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center py-2 border-b border-white/5">
-                    <span className="text-gray-400">Inactivity Leak</span>
+                    <span className="text-gray-400">{t('explorer.qpos.inactivity_leak')}</span>
                     <span className={`px-2 py-1 rounded text-xs ${qposStatus.advanced.inactivityLeakActive ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'}`}>
-                      {qposStatus.advanced.inactivityLeakActive ? 'Active' : 'Inactive'}
+                      {qposStatus.advanced.inactivityLeakActive ? t('explorer.qpos.active') : t('explorer.qpos.inactive')}
                     </span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/5">
-                    <span className="text-gray-400">Pending Withdrawals</span>
+                    <span className="text-gray-400">{t('explorer.qpos.pending_withdrawals')}</span>
                     <span className="text-white font-mono">{qposStatus.advanced.pendingWithdrawals}</span>
                   </div>
                   <div className="flex justify-between items-center py-2">
-                    <span className="text-gray-400">Sync Committee Size</span>
+                    <span className="text-gray-400">{t('explorer.qpos.sync_committee_size')}</span>
                     <span className="text-white font-mono">{qposStatus.syncCommittee?.size || 512}</span>
                   </div>
                 </div>
@@ -447,15 +450,15 @@ export default function QPOSPage() {
               <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                   <Zap className="w-5 h-5 text-yellow-400" />
-                  Proposer Boost
+                  {t('explorer.qpos.proposer_boost')}
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <p className="text-gray-400 text-xs">Block Root</p>
+                    <p className="text-gray-400 text-xs">{t('explorer.qpos.block_root')}</p>
                     <p className="text-yellow-400 font-mono text-sm truncate">{qposStatus.proposerBoost.blockRoot}</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <p className="text-gray-400 text-xs">Slot</p>
+                    <p className="text-gray-400 text-xs">{t('explorer.qpos.slot')}</p>
                     <p className="text-white font-mono text-lg">{qposStatus.proposerBoost.slot}</p>
                   </div>
                 </div>

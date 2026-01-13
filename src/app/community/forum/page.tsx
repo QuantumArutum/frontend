@@ -6,6 +6,8 @@ import { MessageSquare, Users, Clock, TrendingUp, Search, Filter, ChevronRight }
 import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 interface Category {
   id: string;
@@ -22,72 +24,76 @@ interface Category {
   color: string;
 }
 
-const categories: Category[] = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getCategories = (t: any): Category[] => [
   {
     id: 'general',
-    name: 'General Discussion',
-    description: '社区公告、新闻和一般性讨论',
+    name: t('community_page.forum.categories.general.name'),
+    description: t('community_page.forum.categories.general.desc'),
     icon: '💬',
     posts: 15420,
     topics: 2340,
-    lastPost: { title: 'Welcome to Quantaureum!', author: 'Admin', time: '5分钟前' },
+    lastPost: { title: 'Welcome to Quantaureum!', author: 'Admin', time: t('community_page.forum.time.minutes_ago', { count: 5 }) },
     color: 'from-blue-500 to-cyan-500'
   },
   {
     id: 'technical',
-    name: 'Technical',
-    description: '技术讨论、开发问题和代码分享',
+    name: t('community_page.forum.categories.technical.name'),
+    description: t('community_page.forum.categories.technical.desc'),
     icon: '⚙️',
     posts: 8930,
     topics: 1560,
-    lastPost: { title: 'How to implement quantum signatures', author: 'QuantumDev', time: '12分钟前' },
+    lastPost: { title: 'How to implement quantum signatures', author: 'QuantumDev', time: t('community_page.forum.time.minutes_ago', { count: 12 }) },
     color: 'from-purple-500 to-pink-500'
   },
   {
     id: 'defi',
-    name: 'DeFi & Trading',
-    description: '去中心化金融、交易策略和市场分析',
+    name: t('community_page.forum.categories.defi.name'),
+    description: t('community_page.forum.categories.defi.desc'),
     icon: '📈',
     posts: 12650,
     topics: 1890,
-    lastPost: { title: 'QAU/USDT price analysis', author: 'CryptoQueen', time: '23分钟前' },
+    lastPost: { title: 'QAU/USDT price analysis', author: 'CryptoQueen', time: t('community_page.forum.time.minutes_ago', { count: 23 }) },
     color: 'from-green-500 to-emerald-500'
   },
   {
     id: 'governance',
-    name: 'Governance',
-    description: '社区治理、提案投票和决策讨论',
+    name: t('community_page.forum.categories.governance.name'),
+    description: t('community_page.forum.categories.governance.desc'),
     icon: '🏛️',
     posts: 3420,
     topics: 456,
-    lastPost: { title: 'Proposal #15: Fee reduction', author: 'GovernanceDAO', time: '1小时前' },
+    lastPost: { title: 'Proposal #15: Fee reduction', author: 'GovernanceDAO', time: t('community_page.forum.time.hours_ago', { count: 1 }) },
     color: 'from-orange-500 to-amber-500'
   },
   {
     id: 'support',
-    name: 'Help & Support',
-    description: '获取帮助、报告问题和寻求支持',
+    name: t('community_page.forum.categories.support.name'),
+    description: t('community_page.forum.categories.support.desc'),
     icon: '🆘',
     posts: 5670,
     topics: 890,
-    lastPost: { title: 'Wallet connection issue', author: 'NewUser123', time: '45分钟前' },
+    lastPost: { title: 'Wallet connection issue', author: 'NewUser123', time: t('community_page.forum.time.minutes_ago', { count: 45 }) },
     color: 'from-red-500 to-rose-500'
   },
   {
     id: 'showcase',
-    name: 'Project Showcase',
-    description: '展示你的项目、dApp和创意',
+    name: t('community_page.forum.categories.showcase.name'),
+    description: t('community_page.forum.categories.showcase.desc'),
     icon: '🚀',
     posts: 2340,
     topics: 345,
-    lastPost: { title: 'My first quantum dApp', author: 'Builder', time: '2小时前' },
+    lastPost: { title: 'My first quantum dApp', author: 'Builder', time: t('community_page.forum.time.hours_ago', { count: 2 }) },
     color: 'from-indigo-500 to-violet-500'
   }
 ];
 
 export default function ForumPage() {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('activity');
+  
+  const categories = getCategories(t);
 
   const filteredCategories = categories.filter(cat =>
     cat.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -103,12 +109,12 @@ export default function ForumPage() {
       <div className="bg-white/5 border-b border-white/10 pt-20">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex items-center gap-2 text-gray-400 text-sm mb-4">
-            <Link href="/community" className="hover:text-white">Community</Link>
+            <Link href="/community" className="hover:text-white">{t('community_page.forum.breadcrumb.community')}</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-white">Forum</span>
+            <span className="text-white">{t('community_page.forum.breadcrumb.forum')}</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Community Forum</h1>
-          <p className="text-gray-400">探索讨论、分享知识、连接社区</p>
+          <h1 className="text-3xl font-bold text-white mb-2">{t('community_page.forum.title')}</h1>
+          <p className="text-gray-400">{t('community_page.forum.subtitle')}</p>
         </div>
       </div>
 
@@ -120,7 +126,7 @@ export default function ForumPage() {
               <MessageSquare className="w-8 h-8 text-blue-400" />
               <div>
                 <div className="text-2xl font-bold text-white">48.4K</div>
-                <div className="text-sm text-gray-400">Total Posts</div>
+                <div className="text-sm text-gray-400">{t('community_page.forum.stats.total_posts')}</div>
               </div>
             </div>
           </div>
@@ -129,7 +135,7 @@ export default function ForumPage() {
               <Users className="w-8 h-8 text-green-400" />
               <div>
                 <div className="text-2xl font-bold text-white">7.5K</div>
-                <div className="text-sm text-gray-400">Topics</div>
+                <div className="text-sm text-gray-400">{t('community_page.forum.stats.topics')}</div>
               </div>
             </div>
           </div>
@@ -138,7 +144,7 @@ export default function ForumPage() {
               <Clock className="w-8 h-8 text-purple-400" />
               <div>
                 <div className="text-2xl font-bold text-white">125.8K</div>
-                <div className="text-sm text-gray-400">Members</div>
+                <div className="text-sm text-gray-400">{t('community_page.forum.stats.members')}</div>
               </div>
             </div>
           </div>
@@ -147,7 +153,7 @@ export default function ForumPage() {
               <TrendingUp className="w-8 h-8 text-orange-400" />
               <div>
                 <div className="text-2xl font-bold text-white">85K</div>
-                <div className="text-sm text-gray-400">Online Now</div>
+                <div className="text-sm text-gray-400">{t('community_page.forum.stats.online_now')}</div>
               </div>
             </div>
           </div>
@@ -159,7 +165,7 @@ export default function ForumPage() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
-              placeholder="搜索分类..."
+              placeholder={t('community_page.forum.search_placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500/50"
@@ -172,9 +178,9 @@ export default function ForumPage() {
               onChange={(e) => setSortBy(e.target.value)}
               className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50"
             >
-              <option value="activity">最近活动</option>
-              <option value="posts">帖子数量</option>
-              <option value="topics">话题数量</option>
+              <option value="activity">{t('community_page.forum.sort.activity')}</option>
+              <option value="posts">{t('community_page.forum.sort.posts')}</option>
+              <option value="topics">{t('community_page.forum.sort.topics')}</option>
             </select>
           </div>
         </div>
@@ -204,13 +210,13 @@ export default function ForumPage() {
                   </div>
                   <div className="flex items-center gap-6 mt-4 text-sm">
                     <div className="text-gray-400">
-                      <span className="text-white font-medium">{category.posts.toLocaleString()}</span> 帖子
+                      <span className="text-white font-medium">{category.posts.toLocaleString()}</span> {t('community_page.forum.posts')}
                     </div>
                     <div className="text-gray-400">
-                      <span className="text-white font-medium">{category.topics.toLocaleString()}</span> 话题
+                      <span className="text-white font-medium">{category.topics.toLocaleString()}</span> {t('community_page.forum.topics_label')}
                     </div>
                     <div className="text-gray-400 flex-1 text-right">
-                      最新: <span className="text-cyan-400">{category.lastPost.title}</span>
+                      {t('community_page.forum.latest')}: <span className="text-cyan-400">{category.lastPost.title}</span>
                       <span className="text-gray-500"> by {category.lastPost.author} · {category.lastPost.time}</span>
                     </div>
                   </div>

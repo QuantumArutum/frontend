@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { MessageSquare, Send, Search, MoreVertical } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
@@ -17,6 +19,7 @@ interface UserInfo {
 
 export default function MessagesPage() {
   const router = useRouter();
+  const { t, i18n } = useTranslation();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -124,11 +127,11 @@ export default function MessagesPage() {
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
 
-    if (minutes < 1) return '刚刚';
-    if (minutes < 60) return `${minutes}分钟前`;
-    if (hours < 24) return `${hours}小时前`;
-    if (days < 7) return `${days}天前`;
-    return date.toLocaleDateString('zh-CN');
+    if (minutes < 1) return t('messages_page.time.just_now');
+    if (minutes < 60) return t('messages_page.time.minutes_ago', { count: minutes });
+    if (hours < 24) return t('messages_page.time.hours_ago', { count: hours });
+    if (days < 7) return t('messages_page.time.days_ago', { count: days });
+    return date.toLocaleDateString(i18n.language === 'zh' ? 'zh-CN' : 'en-US');
   };
 
   const getOtherParticipant = (conversation: Conversation) => {
@@ -156,7 +159,7 @@ export default function MessagesPage() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="搜索会话..."
+                  placeholder={t('messages_page.search_placeholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
@@ -170,7 +173,7 @@ export default function MessagesPage() {
                   <div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
                 </div>
               ) : filteredConversations.length === 0 ? (
-                <div className="text-center py-8 text-gray-400">暂无会话</div>
+                <div className="text-center py-8 text-gray-400">{t('messages_page.no_conversations')}</div>
               ) : (
                 filteredConversations.map(conversation => {
                   const other = getOtherParticipant(conversation);
@@ -195,7 +198,7 @@ export default function MessagesPage() {
                           </div>
                           {conversation.lastMessage && (
                             <p className="text-sm text-gray-400 truncate">
-                              {conversation.lastMessage.senderId === userInfo?.id ? '我: ' : ''}
+                              {conversation.lastMessage.senderId === userInfo?.id ? t('messages_page.time.you') : ''}
                               {conversation.lastMessage.content}
                             </p>
                           )}
@@ -255,7 +258,7 @@ export default function MessagesPage() {
                       type="text"
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
-                      placeholder="输入消息..."
+                      placeholder={t('messages_page.message_placeholder')}
                       className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
                     />
                     <button
@@ -272,7 +275,7 @@ export default function MessagesPage() {
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
                   <MessageSquare className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                  <p className="text-gray-400">选择一个会话开始聊天</p>
+                  <p className="text-gray-400">{t('messages_page.select_conversation')}</p>
                 </div>
               </div>
             )}

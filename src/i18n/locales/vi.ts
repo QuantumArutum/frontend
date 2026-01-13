@@ -597,7 +597,10 @@ export const vi = {
       staking: 'Staking'
     },
     common: {
-      loading: 'Đang tải...'
+      loading: 'Đang tải...',
+      features: 'Tính năng',
+      benefits: 'Lợi ích',
+      case_study: 'Nghiên cứu điển hình'
     },
     developers: {
       title: 'Tài nguyên Nhà phát triển',
@@ -1769,6 +1772,1580 @@ export const vi = {
         user_replies: 'Trả lời Người dùng',
         posts_displayed: 'Bài viết sẽ được hiển thị ở đây...',
         replies_displayed: 'Trả lời sẽ được hiển thị ở đây...'
+      }
+    },
+    // Trang Staking
+    staking_page: {
+      title: 'Staking Lượng tử',
+      subtitle: 'Kiếm thu nhập thụ động bằng cách bảo vệ mạng lưới. APY cao, an toàn và linh hoạt.',
+      active_pools: 'Pool Hoạt động',
+      my_stakes: 'Stake của Tôi',
+      duration: 'Thời hạn',
+      days: 'Ngày',
+      min_stake: 'Stake Tối thiểu',
+      total_staked: 'Tổng Đã Stake',
+      stake_now: 'Stake Ngay',
+      stake: 'Stake',
+      unlocks: 'Mở khóa',
+      active: 'Hoạt động',
+      confirm_stake: 'Xác nhận Stake',
+      cancel: 'Hủy',
+      available_balance: 'Số dư Khả dụng',
+      mock: 'Mô phỏng',
+      amount_placeholder: 'Số lượng stake',
+      lock_period: 'Thời gian khóa',
+      early_withdrawal_warning: 'Không cho phép rút sớm.',
+      staked_success: 'Stake thành công!',
+      staking_failed: 'Stake thất bại'
+    },
+    // Trang Cài đặt
+    settings_page: {
+      title: 'Cài đặt',
+      appearance: {
+        title: 'Giao diện',
+        dark_mode: 'Chế độ Tối',
+        dark_mode_desc: 'Sử dụng giao diện tối'
+      },
+      notifications: {
+        title: 'Thông báo',
+        push: 'Thông báo Đẩy',
+        push_desc: 'Nhận thông báo giao dịch và hệ thống',
+        sound: 'Âm thanh Cảnh báo',
+        sound_desc: 'Phát âm thanh thông báo'
+      },
+      language: {
+        title: 'Ngôn ngữ',
+        interface: 'Ngôn ngữ Giao diện',
+        interface_desc: 'Chọn ngôn ngữ ưa thích của bạn'
+      },
+      security: {
+        title: 'Bảo mật',
+        two_factor: 'Xác thực Hai yếu tố',
+        two_factor_desc: 'Tăng cường bảo mật tài khoản',
+        quantum_encryption: 'Mã hóa Lượng tử',
+        quantum_encryption_desc: 'Được bảo vệ bằng mật mã hậu lượng tử',
+        enabled: 'Đã bật',
+        change_password: 'Đổi Mật khẩu'
+      }
+    },
+    // Trang Hồ sơ
+    profile_page: {
+      title: 'Hồ sơ Người dùng',
+      username: 'Tên người dùng',
+      email: 'Email',
+      registered: 'Đã đăng ký',
+      basic_info: 'Thông tin Cơ bản',
+      security_settings: 'Cài đặt Bảo mật',
+      two_factor: 'Xác thực Hai yếu tố',
+      quantum_encryption: 'Mã hóa Lượng tử',
+      enabled: 'Đã bật',
+      save_changes: 'Lưu Thay đổi'
+    },
+    // Trang FAQ
+    faq_page: {
+      title: 'Câu hỏi Thường gặp',
+      subtitle: 'Tìm câu trả lời bạn cần và tìm hiểu thêm về Quantaureum',
+      search_placeholder: 'Tìm kiếm câu hỏi...',
+      no_results: 'Không tìm thấy câu hỏi liên quan',
+      more_questions: 'Có thêm câu hỏi?',
+      support_team: 'Đội ngũ hỗ trợ của chúng tôi sẵn sàng giúp đỡ bạn',
+      contact_us: 'Liên hệ Chúng tôi',
+      categories: {
+        all: 'Tất cả',
+        basics: 'Cơ bản',
+        security: 'Bảo mật',
+        wallet: 'Ví',
+        trading: 'Giao dịch',
+        developer: 'Nhà phát triển'
+      },
+      questions: {
+        what_is_quantaureum: {
+          q: 'Quantaureum là gì?',
+          a: 'Quantaureum là nền tảng blockchain an toàn lượng tử thế hệ mới sử dụng mật mã hậu lượng tử (CRYSTALS-Dilithium và CRYSTALS-Kyber) để cung cấp cơ sở hạ tầng blockchain an toàn và hiệu quả cho doanh nghiệp và nhà phát triển.'
+        },
+        what_is_qau: {
+          q: 'Token QAU là gì?',
+          a: 'QAU là token gốc của mạng Quantaureum, được neo 1:1 với vàng vật lý. 1 QAU = 1 gram vàng. Tất cả dự trữ vàng được lưu trữ trong các kho được LBMA chứng nhận và được kiểm toán định kỳ bởi các kiểm toán viên độc lập.'
+        },
+        quantum_safe: {
+          q: 'An toàn lượng tử nghĩa là gì?',
+          a: 'Quantaureum sử dụng các thuật toán mật mã hậu lượng tử tiêu chuẩn NIST có thể chống lại các cuộc tấn công từ máy tính lượng tử trong tương lai. Các thuật toán mã hóa truyền thống (như RSA, ECDSA) có thể bị phá vỡ bởi máy tính lượng tử, nhưng thuật toán của chúng tôi được thiết kế để chống lại các mối đe dọa như vậy.'
+        },
+        asset_security: {
+          q: 'Tài sản của tôi có an toàn không?',
+          a: 'Có. Chúng tôi sử dụng nhiều lớp bảo mật: chữ ký mật mã hậu lượng tử, ví đa chữ ký, lưu trữ lạnh, kiểm toán bảo mật định kỳ và dự trữ vàng được bảo hiểm đầy đủ. Tất cả hợp đồng thông minh đều được kiểm toán bởi các công ty bảo mật bên thứ ba.'
+        },
+        create_wallet: {
+          q: 'Làm thế nào để tạo ví lượng tử?',
+          a: 'Bạn có thể tạo ví trực tiếp trong trình duyệt thông qua ví Web3 của chúng tôi mà không cần tải xuống bất kỳ phần mềm nào. Ví hỗ trợ chữ ký an toàn lượng tử, quản lý tài sản đa chuỗi và mở khóa sinh trắc học.'
+        },
+        supported_assets: {
+          q: 'Những tài sản nào được hỗ trợ?',
+          a: 'Ví Lượng tử hỗ trợ QAU, ETH, BTC, USDT, USDC và các tài sản số chính khác, cũng như tất cả token trên mạng Quantaureum. Chúng tôi cũng hỗ trợ chuyển tài sản xuyên chuỗi.'
+        },
+        transaction_fees: {
+          q: 'Phí giao dịch là bao nhiêu?',
+          a: 'Phí giao dịch mạng được điều chỉnh động dựa trên tình trạng tắc nghẽn mạng, thường từ 0.001-0.01 QAU. Phí nền tảng 0.5% được tính khi mua token QAU, bao gồm lưu trữ vàng và bảo hiểm.'
+        },
+        confirmation_time: {
+          q: 'Xác nhận giao dịch mất bao lâu?',
+          a: 'Mạng Quantaureum có thời gian khối trung bình khoảng 12 giây, với hầu hết giao dịch được xác nhận trong 1-2 khối. TPS của chúng tôi có thể đạt 100,000+, đảm bảo xử lý giao dịch hiệu quả.'
+        },
+        start_developing: {
+          q: 'Làm thế nào để bắt đầu phát triển?',
+          a: 'Truy cập tài liệu nhà phát triển của chúng tôi (/developers/docs) để có tham chiếu API và SDK đầy đủ. Chúng tôi cung cấp SDK bằng nhiều ngôn ngữ bao gồm JavaScript, Python, Go, Rust, cùng với hướng dẫn chi tiết và mã mẫu.'
+        },
+        smart_contract_languages: {
+          q: 'Hợp đồng thông minh hỗ trợ những ngôn ngữ nào?',
+          a: 'QVM (Máy ảo Lượng tử) của chúng tôi hoàn toàn tương thích EVM và hỗ trợ Solidity. Chúng tôi cũng đang phát triển QSL (Ngôn ngữ Hợp đồng Thông minh Lượng tử) độc quyền để cung cấp các tính năng bảo mật lượng tử mạnh hơn.'
+        }
+      }
+    },
+    // Ứng dụng Hệ sinh thái
+    lottery_page: {
+      title: 'Xổ số Lượng tử',
+      subtitle: 'Siêu xổ số dựa trên số ngẫu nhiên lượng tử',
+      tabs: {
+        buy: 'Mua Vé',
+        results: 'Kết quả',
+        mybets: 'Cược của Tôi',
+        stats: 'Thống kê'
+      },
+      select_numbers: 'Chọn Số May mắn của Bạn',
+      random: 'Ngẫu nhiên',
+      clear: 'Xóa',
+      front_zone: 'Vùng Trước',
+      back_zone: 'Vùng Sau',
+      select_from: 'Chọn {{count}} từ 1-{{max}}',
+      bet_info: 'Thông tin Cược',
+      quantum_secure: 'An toàn Lượng tử',
+      bets: 'Cược',
+      single_bet: 'Cược Đơn',
+      total_amount: 'Tổng Số tiền',
+      selected_numbers: 'Số Đã chọn',
+      place_bet: 'Đặt Cược Ngay',
+      select_complete: 'Vui lòng chọn đủ số',
+      prize_levels: 'Cấp Giải thưởng',
+      probability: 'Xác suất',
+      floating_prize: 'Giải Thưởng Nổi',
+      history_results: 'Kết quả Lịch sử',
+      draw_number: 'Số Kỳ',
+      winning_numbers: 'Số Trúng thưởng',
+      quantum_verified: 'Đã Xác minh Lượng tử',
+      sales: 'Doanh số',
+      total_bets: 'Tổng Cược',
+      prize_pool: 'Quỹ Giải thưởng',
+      no_bets: 'Không có lịch sử cược',
+      connect_wallet_view: 'Kết nối ví để xem lịch sử cược',
+      bet_now: 'Cược Ngay',
+      total_draws: 'Tổng Kỳ',
+      total_sales: 'Tổng Doanh số',
+      total_prizes: 'Tổng Giải thưởng',
+      total_players: 'Tổng Người chơi',
+      number_frequency: 'Tần suất Số',
+      times: 'lần',
+      quantum_security: {
+        title: 'Bảo đảm An toàn Lượng tử',
+        desc: 'Sử dụng bộ tạo số ngẫu nhiên lượng tử để đảm bảo tính ngẫu nhiên thực sự của kết quả, mật mã hậu lượng tử bảo vệ tất cả cược và quy trình quay số',
+        qrng: 'QRNG Lượng tử',
+        encryption: 'Mã hóa Lượng tử',
+        verification: 'Xác minh Lượng tử'
+      },
+      current_draw: 'Kỳ Hiện tại',
+      estimated_jackpot: 'Jackpot Ước tính',
+      time_remaining: 'Thời gian Còn lại',
+      calculating: 'Đang tính...',
+      other_combinations: 'Các tổ hợp trúng thưởng khác'
+    },
+    movies_page: {
+      title: 'Vé Phim Toàn cầu',
+      subtitle: 'Khám phá phim hay, tận hưởng trải nghiệm xem phim',
+      steps: {
+        select_movie: 'Chọn Phim',
+        select_showtime: 'Chọn Suất chiếu',
+        select_seats: 'Chọn Ghế',
+        payment: 'Xác nhận Thanh toán'
+      },
+      loading: 'Đang tải...',
+      city: 'Thành phố',
+      date: 'Ngày',
+      genre: 'Thể loại',
+      all_genres: 'Tất cả Thể loại',
+      action: 'Hành động',
+      comedy: 'Hài',
+      drama: 'Chính kịch',
+      scifi: 'Khoa học Viễn tưởng',
+      horror: 'Kinh dị',
+      search: 'Tìm kiếm',
+      director: 'Đạo diễn',
+      duration: 'Thời lượng',
+      minutes: 'phút',
+      rotten_tomatoes: 'Rotten Tomatoes',
+      select_showtime_btn: 'Chọn Suất chiếu',
+      select_showtime_for: 'Chọn Suất chiếu - {{title}}',
+      back_to_movies: 'Quay lại Danh sách Phim',
+      cinema: 'Rạp',
+      start_time: 'Giờ Bắt đầu',
+      remaining_tickets: 'Còn lại',
+      screen_type: 'Loại Phòng chiếu',
+      standard: 'Tiêu chuẩn',
+      language: 'Ngôn ngữ',
+      sold_out: 'Hết vé',
+      select_seats_btn: 'Chọn Ghế',
+      select_seats_title: 'Chọn Ghế',
+      back_to_showtimes: 'Quay lại Suất chiếu',
+      screen: 'Màn hình',
+      seat_selection_dev: 'Tính năng chọn ghế đang phát triển...',
+      total: 'Tổng',
+      confirm_seats: 'Xác nhận Ghế',
+      confirm_order: 'Xác nhận Đơn hàng',
+      back_to_seats: 'Quay lại Chọn Ghế',
+      order_details: 'Chi tiết Đơn hàng',
+      movie: 'Phim',
+      time: 'Thời gian',
+      confirm_pay: 'Xác nhận Thanh toán',
+      per_ticket: 'mỗi vé'
+    },
+    hotels_page: {
+      title: 'Đặt Khách sạn Toàn cầu',
+      subtitle: 'Khám phá khách sạn boutique toàn cầu với đặt phòng an toàn lượng tử',
+      destination: 'Điểm đến',
+      destination_placeholder: 'Thành phố, tên khách sạn hoặc địa danh',
+      check_in: 'Nhận phòng',
+      check_out: 'Trả phòng',
+      guests_rooms: 'Khách & Phòng',
+      search_hotels: 'Tìm Khách sạn',
+      searching: 'Đang tìm...',
+      popular_destinations: 'Điểm đến Phổ biến',
+      hotels_count: '{{count}} khách sạn',
+      modify_search: 'Sửa Tìm kiếm',
+      filter: 'Lọc',
+      all_stars: 'Tất cả Sao',
+      star: 'Sao',
+      price: 'Giá',
+      apply_filter: 'Áp dụng Lọc',
+      per_night: 'mỗi đêm',
+      view_details: 'Xem Chi tiết',
+      reviews: 'đánh giá',
+      load_more: 'Tải thêm Khách sạn',
+      back_to_results: 'Quay lại Kết quả',
+      select_room: 'Chọn Loại Phòng',
+      max_guests: 'Tối đa {{count}} khách',
+      rooms_left: 'Còn {{count}} phòng',
+      book_now: 'Đặt Ngay',
+      amenities: 'Tiện nghi',
+      free: 'Miễn phí',
+      paid: 'Trả phí',
+      hotel_policies: 'Chính sách Khách sạn',
+      check_in_out: 'Nhận/Trả phòng',
+      cancellation_policy: 'Chính sách Hủy',
+      pet_policy: 'Chính sách Thú cưng',
+      smoking_policy: 'Chính sách Hút thuốc',
+      booking_info: 'Thông tin Đặt phòng',
+      name: 'Tên',
+      email: 'Email',
+      phone: 'Điện thoại',
+      special_requests: 'Yêu cầu Đặc biệt',
+      nights: 'đêm',
+      rooms: 'phòng',
+      room_rate: 'Giá Phòng',
+      taxes_fees: 'Thuế & Phí',
+      confirm_booking: 'Xác nhận Đặt phòng',
+      booking_success: 'Đặt phòng Thành công!',
+      confirmation_number: 'Số Xác nhận',
+      booking_details: 'Chi tiết Đặt phòng',
+      guest_info: 'Thông tin Khách',
+      payment_info: 'Thông tin Thanh toán',
+      back_to_home: 'Quay lại Trang chủ'
+    },
+    flights_page: {
+      title: 'Đặt Vé Máy bay Toàn cầu',
+      subtitle: 'Đặt vé máy bay toàn cầu với giao dịch an toàn lượng tử',
+      departure_city: 'Thành phố Khởi hành',
+      arrival_city: 'Thành phố Đến',
+      departure_date: 'Ngày Khởi hành',
+      return_date: 'Ngày Về',
+      passengers: 'Hành khách',
+      class_type: 'Hạng',
+      economy: 'Phổ thông',
+      business: 'Thương gia',
+      first_class: 'Hạng Nhất',
+      one_way: 'Một chiều',
+      round_trip: 'Khứ hồi',
+      search_flights: 'Tìm Chuyến bay',
+      searching: 'Đang tìm...',
+      outbound_flights: 'Chuyến bay Đi',
+      return_flights: 'Chuyến bay Về',
+      select_flight: 'Chọn',
+      duration: 'Thời gian bay',
+      stops: 'Dừng',
+      direct: 'Bay thẳng',
+      stop: 'dừng',
+      departure: 'Khởi hành',
+      arrival: 'Đến',
+      fare_class: 'Hạng Vé',
+      baggage: 'Hành lý',
+      seat_selection: 'Chọn Ghế',
+      refundable: 'Hoàn tiền được',
+      non_refundable: 'Không hoàn tiền',
+      select_fare: 'Chọn Giá vé',
+      passenger_info: 'Thông tin Hành khách',
+      contact_info: 'Thông tin Liên hệ',
+      total_fare: 'Tổng Giá vé',
+      confirm_booking: 'Xác nhận Đặt vé'
+    },
+    market_page: {
+      title: 'Thị trường Giao dịch Lượng tử',
+      subtitle: 'Nền tảng giao dịch an toàn dựa trên công nghệ mã hóa lượng tử',
+      trading_pairs: 'Cặp Giao dịch',
+      search_pairs: 'Tìm cặp giao dịch...',
+      volume: 'Khối lượng',
+      latest_price: 'Giá Mới nhất',
+      change_24h: 'Thay đổi 24h',
+      high_24h: 'Cao nhất 24h',
+      low_24h: 'Thấp nhất 24h',
+      order_book: 'Sổ Lệnh',
+      asks: 'Bán',
+      bids: 'Mua',
+      recent_trades: 'Giao dịch Gần đây',
+      trading_panel: 'Bảng Giao dịch',
+      spot: 'Spot',
+      margin: 'Ký quỹ',
+      futures: 'Tương lai',
+      buy: 'Mua',
+      sell: 'Bán',
+      order_type: 'Loại Lệnh',
+      market_order: 'Lệnh Thị trường',
+      limit_order: 'Lệnh Giới hạn',
+      stop_limit: 'Dừng Giới hạn',
+      buy_price: 'Giá Mua',
+      sell_price: 'Giá Bán',
+      buy_amount: 'Số lượng Mua',
+      sell_amount: 'Số lượng Bán',
+      available_balance: 'Số dư Khả dụng',
+      estimated_fee: 'Phí Ước tính',
+      estimated_income: 'Thu nhập Ước tính',
+      my_trades: 'Giao dịch của Tôi',
+      current_orders: 'Lệnh Hiện tại',
+      order_history: 'Lịch sử Lệnh',
+      positions: 'Vị thế',
+      assets: 'Tài sản',
+      no_orders: 'Không có lệnh chờ',
+      no_history: 'Không có lịch sử lệnh',
+      no_positions: 'Không có vị thế',
+      cancel: 'Hủy',
+      unfilled: 'Chưa khớp',
+      partial: 'Khớp một phần',
+      order_success: 'Đặt lệnh thành công!',
+      order_failed: 'Đặt lệnh thất bại, vui lòng thử lại',
+      quantum_secure: 'An toàn Lượng tử',
+      active: 'Hoạt động'
+    },
+    utilities_page: {
+      title: 'Thanh toán Tiện ích',
+      subtitle: 'Thanh toán hóa đơn tiện ích bằng tiền điện tử',
+      electricity: 'Điện',
+      water: 'Nước',
+      gas: 'Gas',
+      internet: 'Internet',
+      phone: 'Điện thoại',
+      account_number: 'Số Tài khoản',
+      amount: 'Số tiền',
+      pay_now: 'Thanh toán Ngay',
+      payment_history: 'Lịch sử Thanh toán'
+    },
+    crowdfunding_page: {
+      title: 'Gây quỹ Phi tập trung',
+      subtitle: 'Hỗ trợ các dự án sáng tạo với tính minh bạch blockchain',
+      all_projects: 'Tất cả Dự án',
+      technology: 'Công nghệ',
+      art: 'Nghệ thuật',
+      charity: 'Từ thiện',
+      business: 'Kinh doanh',
+      raised: 'Đã gây quỹ',
+      goal: 'Mục tiêu',
+      backers: 'Người ủng hộ',
+      days_left: 'Ngày Còn lại',
+      back_project: 'Ủng hộ Dự án',
+      project_details: 'Chi tiết Dự án',
+      rewards: 'Phần thưởng',
+      updates: 'Cập nhật',
+      comments: 'Bình luận'
+    },
+    concerts_page: {
+      title: 'Vé Hòa nhạc',
+      subtitle: 'Đặt vé hòa nhạc với xác minh blockchain',
+      upcoming: 'Sắp tới',
+      popular: 'Phổ biến',
+      near_me: 'Gần tôi',
+      venue: 'Địa điểm',
+      date: 'Ngày',
+      price_from: 'Từ',
+      buy_tickets: 'Mua Vé',
+      select_tickets: 'Chọn Vé',
+      ticket_type: 'Loại Vé',
+      quantity: 'Số lượng',
+      vip: 'VIP',
+      standard: 'Tiêu chuẩn',
+      standing: 'Đứng'
+    },
+    // Trang Gây Quỹ Cộng Đồng
+    crowdfunding_page: {
+      title: 'Nền Tảng Gây Quỹ',
+      subtitle: 'Hỗ trợ các dự án sáng tạo, cùng tạo nên tương lai tốt đẹp',
+      create_project: 'Bắt Đầu Gây Quỹ',
+      search: 'Tìm kiếm',
+      search_placeholder: 'Tìm kiếm dự án sáng tạo...',
+      featured: 'Nổi bật',
+      days_left: 'ngày còn lại',
+      quantum_security: 'Bảo mật Lượng tử',
+      anonymous: 'Ẩn danh',
+      funding_progress: 'Tiến độ gây quỹ',
+      raised: 'Đã huy động',
+      backers: 'Người ủng hộ',
+      days_remaining: 'Ngày còn lại',
+      support: 'Ủng hộ',
+      no_results: 'Không tìm thấy dự án',
+      try_different_search: 'Thử điều chỉnh tiêu chí tìm kiếm hoặc duyệt danh mục khác',
+      view_all_projects: 'Xem tất cả dự án',
+      cancel: 'Hủy',
+      categories: {
+        all: 'Tất cả',
+        technology: 'Công nghệ',
+        design: 'Thiết kế',
+        games: 'Trò chơi',
+        music: 'Âm nhạc',
+        film: 'Phim ảnh',
+        food: 'Ẩm thực',
+        fashion: 'Thời trang',
+        health: 'Sức khỏe',
+        other: 'Khác'
+      },
+      sort: {
+        trending: 'Xu hướng',
+        newest: 'Mới nhất',
+        ending_soon: 'Sắp kết thúc',
+        most_funded: 'Gây quỹ nhiều nhất'
+      },
+      stats: {
+        total_projects: 'Tổng dự án',
+        active_projects: 'Dự án đang hoạt động',
+        total_raised: 'Tổng số tiền huy động',
+        total_backers: 'Tổng người ủng hộ'
+      },
+      support_modal: {
+        title: 'Ủng hộ dự án',
+        amount_label: 'Số tiền ủng hộ (QAU)',
+        custom_amount: 'Nhập số tiền tùy chỉnh',
+        confirm: 'Xác nhận ủng hộ',
+        success_message: 'Đã ủng hộ thành công {{amount}} QAU!\nDự án: {{title}}\n\n(Tính năng demo, thanh toán thực tế cần kết nối ví)'
+      },
+      create_modal: {
+        title: 'Bắt đầu dự án gây quỹ',
+        project_name: 'Tên dự án',
+        project_name_placeholder: 'Nhập tên dự án',
+        category: 'Danh mục',
+        goal_amount: 'Mục tiêu (QAU)',
+        description: 'Mô tả',
+        description_placeholder: 'Mô tả chi tiết dự án của bạn...',
+        end_date: 'Ngày kết thúc',
+        submit: 'Gửi dự án',
+        success_message: 'Tạo dự án thành công!\n\n(Tính năng demo, tạo thực tế cần kết nối ví và phí)'
+      },
+      errors: {
+        fetch_projects_failed: 'Không thể tải dự án gây quỹ:',
+        fetch_stats_failed: 'Không thể tải thống kê:',
+        search_failed: 'Tìm kiếm thất bại:'
+      }
+    },
+    // Trang Hòa Nhạc
+    concerts_page: {
+      title: 'Hòa Nhạc Toàn Cầu',
+      subtitle: 'Khám phá các buổi biểu diễn tuyệt vời, cảm nhận sức mạnh của âm nhạc',
+      search: 'Tìm kiếm',
+      seats: 'chỗ ngồi',
+      from: 'từ',
+      view_details: 'Xem chi tiết',
+      concert_details: 'Chi tiết hòa nhạc',
+      back_to_list: 'Quay lại danh sách',
+      artist_info: 'Thông tin nghệ sĩ',
+      show_info: 'Thông tin buổi diễn',
+      description: 'Mô tả',
+      expected_setlist: 'Danh sách bài hát dự kiến',
+      more: 'thêm',
+      select_ticket: 'Chọn vé',
+      service_fee: 'phí dịch vụ',
+      remaining_tickets: 'Còn lại',
+      benefits: 'Quyền lợi',
+      select_this_ticket: 'Chọn vé này',
+      confirm_booking: 'Xác nhận đặt vé',
+      back_to_details: 'Quay lại chi tiết',
+      order_details: 'Chi tiết đơn hàng',
+      concert: 'Hòa nhạc',
+      artist: 'Nghệ sĩ',
+      venue: 'Địa điểm',
+      time: 'Thời gian',
+      ticket_category: 'Loại vé',
+      quantity: 'Số lượng',
+      subtotal: 'Tạm tính',
+      tax: 'Thuế',
+      total: 'Tổng cộng',
+      buyer_info: 'Thông tin người mua',
+      payment_method: 'Phương thức thanh toán',
+      payment_note: 'Thanh toán bằng token QAU bảo mật lượng tử để đảm bảo giao dịch an toàn.',
+      purchase_notice: 'Lưu ý mua vé',
+      confirm_purchase: 'Xác nhận mua',
+      filters: {
+        city: 'Thành phố',
+        genre: 'Thể loại',
+        start_date: 'Ngày bắt đầu',
+        artist: 'Nghệ sĩ',
+        search_artist: 'Tìm nghệ sĩ'
+      },
+      cities: {
+        new_york: 'New York',
+        los_angeles: 'Los Angeles',
+        london: 'London',
+        tokyo: 'Tokyo',
+        seoul: 'Seoul'
+      },
+      genres: {
+        all: 'Tất cả thể loại',
+        pop: 'Pop',
+        rock: 'Rock',
+        kpop: 'K-Pop',
+        hiphop: 'Hip-Hop',
+        classical: 'Cổ điển'
+      },
+      status: {
+        on_sale: 'Đang bán',
+        sold_out: 'Hết vé',
+        coming_soon: 'Sắp mở bán'
+      },
+      availability: {
+        available: 'Còn nhiều',
+        limited: 'Còn ít',
+        sold_out: 'Hết vé'
+      },
+      steps: {
+        select_show: 'Chọn buổi diễn',
+        show_details: 'Chi tiết buổi diễn',
+        confirm_booking: 'Xác nhận đặt vé',
+        complete_payment: 'Hoàn tất thanh toán'
+      },
+      form: {
+        name: 'Họ tên',
+        name_placeholder: 'Nhập họ tên thật',
+        email: 'Email',
+        email_placeholder: 'Nhập địa chỉ email',
+        phone: 'Số điện thoại',
+        phone_placeholder: 'Nhập số điện thoại',
+        id_number: 'Số CMND/CCCD',
+        id_placeholder: 'Đặt vé thực danh, nhập số CMND/CCCD',
+        emergency_contact: 'Liên hệ khẩn cấp',
+        emergency_placeholder: 'Tên và số điện thoại liên hệ khẩn cấp',
+        special_requests: 'Yêu cầu đặc biệt',
+        special_placeholder: 'Xe lăn, chế độ ăn đặc biệt, v.v.'
+      },
+      notice: {
+        real_name: 'Đặt vé thực danh, cần mang CMND/CCCD khi vào cửa',
+        no_refund: 'Vé đã mua không được hoàn trả',
+        no_camera: 'Cấm mang thiết bị quay phim chuyên nghiệp',
+        time_change: 'Thời gian biểu diễn có thể thay đổi, vui lòng theo dõi thông báo'
+      },
+      errors: {
+        fetch_list_failed: 'Không thể tải danh sách hòa nhạc',
+        fetch_details_failed: 'Không thể tải chi tiết hòa nhạc'
+      }
+    },
+    // Trang Thanh Toán Tiện Ích
+    utilities_page: {
+      title: 'Nền Tảng Thanh Toán Tiện Ích Toàn Cầu',
+      subtitle: 'Hỗ trợ các công ty điện lực toàn cầu, thanh toán hóa đơn an toàn bằng QAU và tiền điện tử khác',
+      find_provider: 'Tìm nhà cung cấp điện',
+      search_providers: 'Tìm kiếm nhà cung cấp',
+      searching: 'Đang tìm kiếm...',
+      found_providers: 'Tìm thấy {{count}} nhà cung cấp điện',
+      search_again: 'Tìm kiếm lại',
+      query_bill: 'Tra cứu hóa đơn',
+      supported_currencies: 'Tiền tệ hỗ trợ',
+      processing_time: 'Thời gian xử lý',
+      fees: 'Phí',
+      electricity_bill: 'Hóa đơn điện',
+      select_payment: 'Chọn phương thức thanh toán',
+      back: 'Quay lại',
+      payment_success: 'Thanh toán thành công!',
+      continue_payment: 'Tiếp tục thanh toán',
+      download_receipt: 'Tải biên lai',
+      processing: 'Đang xử lý...',
+      form: {
+        country: 'Quốc gia/Khu vực',
+        country_placeholder: 'Nhập quốc gia hoặc khu vực',
+        region: 'Tỉnh/Bang',
+        region_placeholder: 'Nhập tỉnh hoặc bang',
+        account_number: 'Số công tơ',
+        account_placeholder: 'Nhập số công tơ điện',
+        customer_name: 'Chủ hộ',
+        customer_placeholder: 'Nhập tên chủ hộ'
+      },
+      providers: {
+        singapore: 'Singapore Power',
+        china_grid: 'State Grid',
+        tokyo_electric: 'Tokyo Electric Power'
+      },
+      countries: {
+        singapore: 'Singapore',
+        usa: 'Hoa Kỳ',
+        china: 'Trung Quốc',
+        japan: 'Nhật Bản'
+      },
+      regions: {
+        nationwide: 'Toàn quốc',
+        california: 'California',
+        kanto: 'Vùng Kanto'
+      },
+      processing: {
+        instant: 'Tức thì',
+        one_to_two: '1-2 phút',
+        one_to_three: '1-3 phút'
+      },
+      bill: {
+        provider: 'Nhà cung cấp',
+        account: 'Số tài khoản',
+        customer: 'Tên khách hàng',
+        period: 'Kỳ thanh toán',
+        usage: 'Điện tiêu thụ',
+        due_date: 'Ngày đến hạn',
+        amount_due: 'Số tiền phải trả'
+      },
+      confirmation: {
+        transaction_id: 'Mã giao dịch',
+        payment_method: 'Phương thức thanh toán',
+        amount: 'Số tiền',
+        time: 'Thời gian'
+      }
+    },
+    // Trang Ứng dụng
+    applications_page: {
+      hero: {
+        title: 'Cầu nối chuỗi chéo &',
+        title_highlight: 'Giải pháp doanh nghiệp',
+        description: 'Dịch vụ cầu nối tài sản chuỗi chéo an toàn lượng tử và giải pháp blockchain cho doanh nghiệp'
+      },
+      stats: {
+        chains: 'Chuỗi hỗ trợ',
+        transactions: 'Giao dịch chuỗi chéo',
+        tvl: 'TVL',
+        enterprise_clients: 'Khách hàng doanh nghiệp'
+      },
+      status: {
+        online: 'Hoạt động',
+        developing: 'Đang phát triển',
+        planned: 'Đã lên kế hoạch'
+      },
+      bridge: {
+        title: 'Cầu nối chuỗi chéo an toàn lượng tử',
+        description: 'Giải pháp chuyển tài sản chuỗi chéo an toàn, nhanh chóng và đáng tin cậy',
+        supported_chains: 'Mạng blockchain được hỗ trợ',
+        features: {
+          quantum_secure: { title: 'Chuỗi chéo an toàn lượng tử', description: 'Mật mã hậu lượng tử bảo vệ chuyển tài sản chuỗi chéo' },
+          fast_confirm: { title: 'Xác nhận nhanh', description: 'Giao thức chuỗi chéo tối ưu cho xác nhận cấp phút' },
+          multi_verify: { title: 'Đa xác minh', description: 'Mạng nút xác minh phân tán đảm bảo an toàn giao dịch' },
+          multi_chain: { title: 'Hỗ trợ đa chuỗi', description: 'Hỗ trợ Ethereum, BSC, Polygon và các mạng blockchain chính' }
+        }
+      },
+      enterprise: {
+        title: 'Giải pháp doanh nghiệp',
+        description: 'Giải pháp blockchain tùy chỉnh cho doanh nghiệp',
+        blockchain: { title: 'Blockchain doanh nghiệp', description: 'Giải pháp chuỗi riêng và liên minh', features: { private: 'Triển khai riêng', permission: 'Quản lý quyền', audit: 'Kiểm toán tuân thủ', privacy: 'Bảo mật dữ liệu' } },
+        supply_chain: { title: 'Truy xuất chuỗi cung ứng', description: 'Hệ thống quản lý chuỗi cung ứng blockchain', features: { tracing: 'Truy xuất sản phẩm', anti_fake: 'Chống giả', logistics: 'Theo dõi logistics', quality: 'Quản lý chất lượng' } },
+        asset_mgmt: { title: 'Quản lý tài sản số', description: 'Nền tảng lưu ký tài sản số cấp doanh nghiệp', features: { multi_sig: 'Ví đa chữ ký', cold_hot: 'Tách nóng/lạnh', approval: 'Quy trình phê duyệt', reports: 'Phân tích báo cáo' } },
+        identity: { title: 'Xác thực danh tính', description: 'Giải pháp danh tính phi tập trung (DID)', features: { did: 'Tiêu chuẩn DID', credentials: 'Chứng chỉ có thể xác minh', privacy: 'Bảo vệ quyền riêng tư', cross_platform: 'Đa nền tảng' } }
+      },
+      use_cases: {
+        title: 'Trường hợp sử dụng ngành',
+        description: 'Giải pháp ứng dụng blockchain cho nhiều ngành',
+        finance: { title: 'Dịch vụ tài chính', cases: { cross_border: 'Thanh toán xuyên biên giới', tokenization: 'Token hóa tài sản', settlement: 'Thanh toán bù trừ', defi: 'Giao thức DeFi' } },
+        supply_chain: { title: 'Chuỗi cung ứng', cases: { tracing: 'Truy xuất sản phẩm', logistics: 'Quản lý logistics', inventory: 'Tối ưu kho', supplier: 'Quản lý nhà cung cấp' } },
+        healthcare: { title: 'Y tế', cases: { records: 'Hồ sơ y tế', drug_trace: 'Truy xuất thuốc', clinical: 'Thử nghiệm lâm sàng', insurance: 'Bồi thường bảo hiểm' } },
+        government: { title: 'Dịch vụ chính phủ', cases: { e_gov: 'Chính phủ điện tử', digital_id: 'Danh tính số', voting: 'Hệ thống bỏ phiếu', certificates: 'Quản lý chứng chỉ' } }
+      },
+      cta: { title: 'Bắt đầu', description: 'Trải nghiệm dịch vụ cầu nối chuỗi chéo an toàn lượng tử', launch_bridge: 'Khởi chạy cầu nối', contact_us: 'Liên hệ chúng tôi' }
+    },
+    apps_page: {
+      title: 'Hệ sinh thái Quantaureum',
+      subtitle: 'Khám phá các ứng dụng phi tập trung được hỗ trợ bởi Mạng lượng tử',
+      launch_app: 'Khởi chạy ứng dụng',
+      coming_soon: 'Sắp ra mắt',
+      apps: {
+        travel: { title: 'Quantum Travel', description: 'Đặt vé máy bay và khách sạn với QAU/USDT. Không phí, xác nhận tức thì.' },
+        mall: { title: 'Quantum Mall', description: 'Mua sắm hàng xa xỉ bằng crypto. Giao hàng toàn cầu.' },
+        pay: { title: 'Quantum Pay', description: 'Cổng thanh toán toàn cầu cho thương nhân.' }
+      }
+    },
+    quantum_security_page: {
+      title: 'Trung tâm quản lý bảo mật lượng tử',
+      description: 'Quản lý và giám sát trạng thái bảo mật của toàn bộ hệ sinh thái blockchain lượng tử'
+    },
+    support_help: {
+      title: 'Trợ giúp & Hỗ trợ',
+      subtitle: 'Nhận hỗ trợ kỹ thuật chuyên nghiệp để giải quyết các vấn đề khi sử dụng Quantaureum',
+      view_help: 'Xem Trợ giúp',
+      quick_help: {
+        title: 'Trợ giúp Nhanh',
+        subtitle: 'Giải pháp nhanh cho các vấn đề phổ biến',
+        wallet: { title: 'Vấn đề Ví', desc: 'Vấn đề tạo, nhập và bảo mật ví' },
+        transaction: { title: 'Vấn đề Giao dịch', desc: 'Vấn đề gửi, xác nhận và phí giao dịch' },
+        development: { title: 'Vấn đề Phát triển', desc: 'Vấn đề sử dụng API, tích hợp SDK và phát triển' },
+        account: { title: 'Vấn đề Tài khoản', desc: 'Vấn đề đăng ký, đăng nhập và cài đặt bảo mật' }
+      },
+      contact: {
+        title: 'Liên hệ Hỗ trợ',
+        subtitle: 'Nhiều cách để nhận hỗ trợ kỹ thuật chuyên nghiệp',
+        live_chat: { title: 'Chat Trực tiếp', desc: 'Hỗ trợ khách hàng trực tuyến 24/7', button: 'Bắt đầu Chat', response_time: 'Thời gian phản hồi trung bình: 2 phút' },
+        email: { title: 'Hỗ trợ Email', desc: 'Gửi mô tả chi tiết vấn đề', button: 'Gửi Email' },
+        ticket: { title: 'Hệ thống Ticket', desc: 'Gửi ticket kỹ thuật và theo dõi tiến độ', button: 'Tạo Ticket', resolution_time: 'Thời gian giải quyết trung bình: 24 giờ' }
+      },
+      faq: {
+        title: 'Câu hỏi Thường gặp',
+        subtitle: 'Câu trả lời nhanh cho các câu hỏi phổ biến nhất',
+        view_more: 'Xem thêm FAQ',
+        q1: { question: 'Làm thế nào để tạo ví Quantaureum?', answer: 'Bạn có thể tạo ví thông qua ứng dụng ví chính thức hoặc sử dụng SDK. Ví sử dụng thuật toán mã hóa an toàn lượng tử.' },
+        q2: { question: 'Phí giao dịch được tính như thế nào?', answer: 'Phí giao dịch được tính động dựa trên tắc nghẽn mạng và độ phức tạp của giao dịch.' },
+        q3: { question: 'Bảo mật lượng tử là gì? Tại sao quan trọng?', answer: 'Bảo mật lượng tử là công nghệ mã hóa có thể chống lại các cuộc tấn công từ máy tính lượng tử.' },
+        q4: { question: 'Làm thế nào để tham gia quản trị Quantaureum?', answer: 'Người dùng nắm giữ token QAU có thể tham gia quản trị mạng.' },
+        q5: { question: 'Mã hóa hậu lượng tử bảo vệ bảo mật như thế nào?', answer: 'Chúng tôi sử dụng chữ ký số Dilithium3 và thuật toán đóng gói khóa Kyber được NIST chuẩn hóa.' }
+      },
+      knowledge: {
+        title: 'Cơ sở Kiến thức',
+        subtitle: 'Hướng dẫn người dùng chi tiết và tài liệu kỹ thuật',
+        view_guide: 'Xem Hướng dẫn',
+        view_docs: 'Xem Tài liệu',
+        watch_videos: 'Xem Video',
+        view_updates: 'Xem Cập nhật',
+        user_guide: { title: 'Hướng dẫn Người dùng', desc: 'Hướng dẫn đầy đủ từ cơ bản đến nâng cao' },
+        dev_docs: { title: 'Tài liệu Nhà phát triển', desc: 'Tham chiếu API, sử dụng SDK và thực hành tốt nhất' },
+        security_guide: { title: 'Hướng dẫn Bảo mật', desc: 'Thực hành bảo mật tốt nhất để bảo vệ tài sản' },
+        troubleshooting: { title: 'Khắc phục Sự cố', desc: 'Chẩn đoán và giải pháp cho các vấn đề phổ biến' },
+        video_tutorials: { title: 'Video Hướng dẫn', desc: 'Video hướng dẫn trực quan và demo' },
+        release_notes: { title: 'Ghi chú Phát hành', desc: 'Cập nhật và cải tiến phiên bản mới nhất' }
+      }
+    },
+    developer_docs: {
+      title: 'Tài liệu Nhà phát triển',
+      subtitle: 'Tài liệu API đầy đủ và hướng dẫn phát triển để xây dựng ứng dụng blockchain an toàn lượng tử',
+      view_docs: 'Xem Tài liệu',
+      quick_start: {
+        title: 'Bắt đầu Nhanh',
+        subtitle: 'Bắt đầu phát triển ứng dụng Quantaureum đầu tiên trong vài phút',
+        step1: { title: 'Cài đặt SDK', desc: 'Tải và cài đặt bộ công cụ phát triển Quantaureum' },
+        step2: { title: 'Tạo Ví', desc: 'Tạo ví đầu tiên sử dụng thuật toán an toàn lượng tử' },
+        step3: { title: 'Gửi Giao dịch', desc: 'Gửi giao dịch đầu tiên sử dụng chữ ký lượng tử' }
+      },
+      api: {
+        title: 'Tài liệu API',
+        subtitle: 'Tham chiếu API đầy đủ bao gồm tất cả các tính năng cốt lõi',
+        wallet: { title: 'API Ví', desc: 'Tạo, quản lý và giao dịch ví an toàn lượng tử' },
+        transaction: { title: 'API Giao dịch', desc: 'Xử lý giao dịch hiệu suất cao' },
+        smart_contract: { title: 'API Hợp đồng Thông minh', desc: 'Triển khai và gọi hợp đồng thông minh an toàn' },
+        data: { title: 'API Dữ liệu', desc: 'Truy vấn và phân tích dữ liệu blockchain' },
+        crosschain: { title: 'API Cross-chain', desc: 'Chuyển tài sản và trao đổi dữ liệu cross-chain' },
+        ai: { title: 'API AI', desc: 'Giao diện tương tác với hệ thống tiến hóa AI' }
+      },
+      examples: {
+        title: 'Ví dụ Mã',
+        subtitle: 'Ví dụ mã thực tế để bắt đầu nhanh',
+        create_wallet: 'Tạo Ví Lượng tử',
+        send_transaction: 'Gửi Giao dịch An toàn',
+        deploy_contract: 'Triển khai Hợp đồng Thông minh',
+        crosschain_transfer: 'Chuyển Tài sản Cross-chain'
+      },
+      tutorials: {
+        title: 'Hướng dẫn Tutorial',
+        subtitle: 'Chuỗi tutorial đầy đủ từ cơ bản đến nâng cao',
+        start_learning: 'Bắt đầu Học',
+        basics: { title: 'Tutorial Cơ bản', desc: 'Học khái niệm cơ bản và thiết lập môi trường phát triển' },
+        smart_contracts: { title: 'Phát triển Hợp đồng Thông minh', desc: 'Phát triển và triển khai hợp đồng thông minh an toàn' },
+        dapp: { title: 'Phát triển DApp', desc: 'Xây dựng ứng dụng phi tập trung hoàn chỉnh' },
+        crosschain: { title: 'Phát triển Cross-chain', desc: 'Triển khai khả năng tương tác cross-chain' },
+        security: { title: 'Thực hành Bảo mật Tốt nhất', desc: 'Học các mẫu bảo mật và thực hành tốt nhất' },
+        optimization: { title: 'Tối ưu Hiệu suất', desc: 'Kỹ thuật nâng cao để tối ưu hiệu suất' }
+      }
+    },
+    legal: {
+      home: 'Trang chủ',
+      last_updated: 'Cập nhật Lần cuối',
+      privacy: {
+        title: 'Chính sách Bảo mật',
+        overview: { title: 'Tổng quan', content: 'Quantaureum ("chúng tôi") rất coi trọng quyền riêng tư của bạn. Chính sách này giải thích cách chúng tôi thu thập, sử dụng, tiết lộ và bảo vệ thông tin cá nhân của bạn.' },
+        collection: { title: 'Thông tin Chúng tôi Thu thập', provided: { title: 'Thông tin Bạn Cung cấp', item1: 'Thông tin đăng ký (email, tên người dùng)', item2: 'Địa chỉ ví và hồ sơ giao dịch', item3: 'Liên lạc hỗ trợ', item4: 'Thông tin khác bạn chọn cung cấp' }, automatic: { title: 'Thông tin Thu thập Tự động', item1: 'Thông tin thiết bị', item2: 'Địa chỉ IP và vị trí', item3: 'Dữ liệu sử dụng và phân tích', item4: 'Thông tin cookie' } },
+        use: { title: 'Cách Chúng tôi Sử dụng Thông tin', item1: 'Cung cấp và cải thiện dịch vụ', item2: 'Xử lý giao dịch', item3: 'Phản hồi yêu cầu', item4: 'Gửi thông báo', item5: 'Phát hiện gian lận', item6: 'Tuân thủ pháp luật', item7: 'Nghiên cứu và phân tích' },
+        security: { title: 'Bảo mật Thông tin', intro: 'Chúng tôi sử dụng các biện pháp bảo mật tiêu chuẩn:', item1: 'Mã hóa an toàn lượng tử', item2: 'Lưu trữ an toàn', item3: 'Kiểm toán bảo mật', item4: 'Đào tạo nhân viên' },
+        rights: { title: 'Quyền của Bạn', intro: 'Bạn có thể có các quyền sau:', item1: 'Truy cập thông tin', item2: 'Sửa thông tin', item3: 'Xóa thông tin', item4: 'Hạn chế xử lý', item5: 'Di chuyển dữ liệu', item6: 'Rút lại đồng ý' },
+        contact: { title: 'Liên hệ', intro: 'Nếu có câu hỏi:', email: 'Email', address: 'Địa chỉ' },
+        updates: { title: 'Cập nhật Chính sách', content: 'Chúng tôi có thể cập nhật chính sách này định kỳ.' }
+      },
+      terms: {
+        title: 'Điều khoản Dịch vụ',
+        acceptance: { title: 'Chấp nhận Điều khoản', content: 'Bằng cách sử dụng dịch vụ, bạn đồng ý với các điều khoản này.' },
+        services: { title: 'Mô tả Dịch vụ', intro: 'Quantaureum cung cấp:', item1: 'Dịch vụ ví số', item2: 'Giao dịch blockchain', item3: 'Dịch vụ DeFi', item4: 'Hợp đồng thông minh', item5: 'Bán token', item6: 'Công cụ nhà phát triển' },
+        responsibilities: { title: 'Trách nhiệm Người dùng', security: { title: 'Bảo mật Tài khoản', item1: 'Bảo vệ thông tin đăng nhập', item2: 'Không chia sẻ thông tin', item3: 'Thông báo truy cập trái phép', item4: 'Chịu trách nhiệm về hoạt động' }, compliance: { title: 'Sử dụng Tuân thủ', item1: 'Tuân thủ pháp luật', item2: 'Không dùng cho hoạt động bất hợp pháp', item3: 'Cung cấp thông tin chính xác', item4: 'Tôn trọng người dùng khác' } },
+        prohibited: { title: 'Hoạt động Bị cấm', intro: 'Bạn không được:', item1: 'Hoạt động gian lận', item2: 'Can thiệp dịch vụ', item3: 'Truy cập trái phép', item4: 'Phát tán malware', item5: 'Vi phạm sở hữu trí tuệ', item6: 'Thao túng thị trường', item7: 'Vượt qua bảo mật' },
+        risks: { title: 'Cảnh báo Rủi ro', intro: 'Rủi ro bao gồm:', item1: 'Biến động giá', item2: 'Lỗi kỹ thuật', item3: 'Thay đổi quy định', item4: 'Mất khóa riêng', item5: 'Lỗ hổng hợp đồng', warning: 'Chỉ đầu tư số tiền bạn có thể mất.' },
+        disclaimer: { title: 'Miễn trừ Trách nhiệm', content: 'Dịch vụ được cung cấp "nguyên trạng".' },
+        ip: { title: 'Sở hữu Trí tuệ', content: 'Tất cả nội dung thuộc sở hữu của Quantaureum.' },
+        termination: { title: 'Chấm dứt', content: 'Chúng tôi có thể chấm dứt quyền truy cập bất cứ lúc nào.' },
+        law: { title: 'Luật Áp dụng', content: 'Các điều khoản này được điều chỉnh bởi luật áp dụng.' }
+      },
+      cookies: {
+        title: 'Chính sách Cookie',
+        what: { title: 'Cookie là gì?', content: 'Cookie là các tệp văn bản nhỏ được lưu trữ trên thiết bị của bạn.' },
+        types: { title: 'Loại Cookie Chúng tôi Sử dụng', essential: { title: 'Cookie Thiết yếu', desc: 'Cần thiết cho chức năng cơ bản.', item1: 'Quản lý phiên', item2: 'Xác thực', item3: 'Cân bằng tải' }, functional: { title: 'Cookie Chức năng', desc: 'Ghi nhớ tùy chọn của bạn.', item1: 'Tùy chọn ngôn ngữ', item2: 'Cài đặt giao diện', item3: 'Tùy chỉnh giao diện' }, analytics: { title: 'Cookie Phân tích', desc: 'Giúp hiểu cách sử dụng.', item1: 'Thống kê truy cập', item2: 'Phân tích hành vi', item3: 'Giám sát hiệu suất' }, marketing: { title: 'Cookie Tiếp thị', desc: 'Cho quảng cáo liên quan.', item1: 'Nhắm mục tiêu quảng cáo', item2: 'Tích hợp mạng xã hội', item3: 'Theo dõi chuyển đổi' } },
+        list: { title: 'Danh sách Cookie', name: 'Tên', type: 'Loại', duration: 'Thời hạn', purpose: 'Mục đích', session: 'Phiên', session_mgmt: 'Quản lý phiên', days: 'ngày', year: 'năm', years: 'năm', auth: 'Xác thực', language: 'Tùy chọn ngôn ngữ', theme: 'Cài đặt giao diện' },
+        manage: { title: 'Quản lý Tùy chọn', intro: 'Bạn có thể quản lý cookie:', browser: { title: 'Cài đặt Trình duyệt', desc: 'Hầu hết trình duyệt cho phép kiểm soát cookie.' }, center: { title: 'Trung tâm Tùy chọn', desc: 'Sử dụng trung tâm tùy chọn cookie của chúng tôi.' }, optout: { title: 'Từ chối', desc: 'Sử dụng tiện ích từ chối Google Analytics.' }, warning: 'Tắt cookie có thể ảnh hưởng đến chức năng.' },
+        updates: { title: 'Cập nhật Chính sách', content: 'Chúng tôi có thể cập nhật chính sách này.' }
+      },
+      security: {
+        title: 'Tuyên bố Bảo mật',
+        commitment: { title: 'Cam kết của Chúng tôi', content: 'Bảo mật là ưu tiên hàng đầu của chúng tôi.' },
+        quantum: { title: 'Công nghệ Bảo mật Lượng tử', pqc: { title: 'Mã hóa Hậu Lượng tử', desc: 'Sử dụng thuật toán NIST chuẩn hóa:', dilithium: 'Thuật toán chữ ký số', kyber: 'Cơ chế đóng gói khóa', sphincs: 'Sơ đồ chữ ký dựa trên hash' }, standards: { title: 'Tiêu chuẩn Mã hóa', item1: 'TLS 1.3 cho truyền tải', item2: 'AES-256 cho lưu trữ', item3: 'HSM cho khóa riêng', item4: 'QRNG cho tạo khóa' } },
+        measures: { title: 'Biện pháp Bảo mật', infrastructure: { title: 'Bảo mật Hạ tầng', item1: 'Tường lửa đa lớp', item2: 'Bảo vệ DDoS', item3: 'Phát hiện xâm nhập', item4: 'Giám sát 24/7' }, application: { title: 'Bảo mật Ứng dụng', item1: 'Đánh giá mã', item2: 'Kiểm tra xâm nhập', item3: 'Quét lỗ hổng', item4: 'Vòng đời phát triển an toàn' }, account: { title: 'Bảo mật Tài khoản', item1: 'MFA', item2: 'Sinh trắc học', item3: 'Phát hiện bất thường', item4: 'Quản lý phiên' }, operational: { title: 'Bảo mật Vận hành', item1: 'Đào tạo nhân viên', item2: 'Quyền tối thiểu', item3: 'Kiểm toán truy cập', item4: 'Kế hoạch ứng phó' } },
+        audits: { title: 'Kiểm toán và Chứng nhận', intro: 'Kiểm toán bên thứ ba định kỳ:', certik: 'Kiểm toán hợp đồng', soc2: 'Chứng nhận tuân thủ', iso: 'Quản lý bảo mật thông tin' },
+        vulnerability: { title: 'Báo cáo Lỗ hổng', intro: 'Chúng tôi đánh giá cao đóng góp của nhà nghiên cứu:', bounty: 'Chương trình Bug Bounty' },
+        tips: { title: 'Mẹo Bảo mật', intro: 'Chúng tôi khuyến nghị:', item1: 'Bật MFA', item2: 'Dùng mật khẩu mạnh', item3: 'Sao lưu khóa an toàn', item4: 'Cẩn thận phishing', item5: 'Cập nhật phần mềm', item6: 'Cân nhắc ví phần cứng' },
+        contact: { title: 'Liên hệ Đội Bảo mật', intro: 'Cho câu hỏi bảo mật:', security: 'Vấn đề bảo mật', bounty: 'Báo cáo lỗ hổng', pgp: 'Khóa PGP', pgp_note: 'Có sẵn trên GitHub' }
+      }
+    },
+    // Trang Doanh nghiệp
+    enterprise: {
+      solutions: {
+        title: 'Giải pháp Doanh nghiệp',
+        subtitle: 'Giải pháp blockchain tùy chỉnh cho doanh nghiệp, hỗ trợ chuyển đổi số',
+        finance: { title: 'Dịch vụ Tài chính', desc: 'Giải pháp blockchain an toàn lượng tử cho ngân hàng, bảo hiểm và quản lý tài sản', features: ['Thanh toán Xuyên biên giới', 'Token hóa Tài sản', 'Kiểm toán Tuân thủ', 'Quản lý Rủi ro'], benefits: ['Giảm 60% chi phí giao dịch', 'Thanh toán từ T+2 xuống thời gian thực', 'Tuân thủ quy định hoàn toàn'], case_study: 'Một ngân hàng quốc tế tiết kiệm $20M hàng năm với giải pháp của chúng tôi' },
+        supply_chain: { title: 'Quản lý Chuỗi cung ứng', desc: 'Truy xuất và xác minh chuỗi cung ứng đầu cuối', features: ['Truy xuất Sản phẩm', 'Quản lý Kho', 'Theo dõi Logistics', 'Chứng nhận Chất lượng'], benefits: ['100% minh bạch chuỗi cung ứng', 'Giảm 95% sản phẩm giả', 'Cải thiện 40% vòng quay hàng tồn kho'], case_study: 'Nhà sản xuất đa quốc gia đạt được khả năng hiển thị thời gian thực chuỗi cung ứng toàn cầu' },
+        healthcare: { title: 'Y tế', desc: 'Quản lý và chia sẻ dữ liệu y tế an toàn', features: ['Hồ sơ Y tế', 'Truy xuất Thuốc', 'Thử nghiệm Lâm sàng', 'Yêu cầu Bảo hiểm'], benefits: ['Bảo mật dữ liệu bệnh nhân', 'Tuân thủ quy định', 'Cải thiện hiệu quả'] },
+        government: { title: 'Dịch vụ Chính phủ', desc: 'Giải pháp chính phủ số và dịch vụ công', features: ['Chính phủ điện tử', 'Danh tính Số', 'Hệ thống Bỏ phiếu', 'Quản lý Chứng chỉ'], benefits: ['Minh bạch', 'Hiệu quả', 'Bảo mật'] },
+        deployment: {
+          title: 'Tùy chọn Triển khai',
+          subtitle: 'Giải pháp triển khai linh hoạt đáp ứng nhu cầu doanh nghiệp',
+          cloud: { title: 'Triển khai Cloud', desc: 'Giải pháp cloud được quản lý hoàn toàn với độ sẵn sàng cao', features: ['Tự động mở rộng', 'CDN toàn cầu', '99.99% SLA', 'Cập nhật được quản lý'] },
+          private: { title: 'Triển khai Riêng', desc: 'Triển khai tại chỗ để kiểm soát tối đa', features: ['Kiểm soát dữ liệu hoàn toàn', 'Bảo mật tùy chỉnh', 'Tùy chọn air-gapped', 'Hỗ trợ chuyên dụng'] },
+          hybrid: { title: 'Triển khai Hybrid', desc: 'Tận dụng ưu điểm của cả hai với kiến trúc linh hoạt', features: ['Mở rộng linh hoạt', 'Chủ quyền dữ liệu', 'Tối ưu chi phí', 'Tích hợp liền mạch'] }
+        },
+        cta: { title: 'Bắt đầu', contact: 'Liên hệ', demo: 'Yêu cầu Demo' }
+      },
+      partners: {
+        title: 'Chương trình Đối tác',
+        subtitle: 'Tham gia hệ sinh thái Quantaureum và cùng phát triển',
+        hero: { title_prefix: 'Cùng Xây dựng', title_highlight: 'An toàn Lượng tử', title_suffix: 'Hệ sinh thái' },
+        view_solutions: 'Xem Giải pháp',
+        types_title: 'Loại Đối tác',
+        types_subtitle: 'Nhiều mô hình đối tác để đáp ứng các nhu cầu kinh doanh khác nhau',
+        types: {
+          technology: { title: 'Đối tác Công nghệ', desc: 'Hợp tác với các công ty công nghệ hàng đầu để xây dựng hệ sinh thái an toàn lượng tử', benefits: ['Hỗ trợ tích hợp kỹ thuật', 'Phát triển giải pháp chung', 'Đồng tiếp thị', 'Chứng nhận kỹ thuật'], examples: ['Nhà cung cấp đám mây', 'Nhà cung cấp bảo mật', 'Tích hợp hệ thống'] },
+          developer: { title: 'Đối tác Nhà phát triển', desc: 'Công cụ và tài nguyên cho nhà phát triển xây dựng ứng dụng sáng tạo', benefits: ['Truy cập API ưu tiên', 'Hỗ trợ kỹ thuật ưu tiên', 'Tiếp xúc cộng đồng nhà phát triển', 'Chia sẻ doanh thu'], examples: ['Nhà phát triển độc lập', 'Studio phát triển', 'Tư vấn kỹ thuật'] },
+          channel: { title: 'Đối tác Kênh', desc: 'Mở rộng thị trường toàn cầu và phục vụ khách hàng doanh nghiệp cùng nhau', benefits: ['Hoa hồng bán hàng', 'Hỗ trợ tiếp thị', 'Đào tạo bán hàng', 'Quản lý tài khoản chuyên dụng'], examples: ['Đại lý', 'Nhà phân phối', 'Tư vấn'] }
+        },
+        featured_title: 'Đối tác Nổi bật',
+        featured_subtitle: 'Hợp tác với các doanh nghiệp hàng đầu toàn cầu',
+        categories: { cloud: 'Dịch vụ Đám mây', consulting: 'Tư vấn', audit: 'Kiểm toán', technology: 'Công nghệ' },
+        benefits: { title: 'Quyền lợi Đối tác', subtitle: 'Trở thành đối tác và tận hưởng quyền lợi hấp dẫn' },
+        benefits_list: {
+          growth: { title: 'Tăng tốc Phát triển', desc: 'Tận dụng công nghệ và tài nguyên thị trường của Quantaureum để tăng tốc phát triển kinh doanh' },
+          revenue: { title: 'Chia sẻ Doanh thu', desc: 'Nhận chia sẻ doanh thu hấp dẫn thông qua giới thiệu khách hàng và bán hàng chung' },
+          support: { title: 'Hỗ trợ Chuyên dụng', desc: 'Nhận hỗ trợ kỹ thuật chuyên dụng và dịch vụ đội ngũ thành công khách hàng' },
+          certification: { title: 'Chứng nhận Thương hiệu', desc: 'Nhận chứng nhận đối tác chính thức để nâng cao uy tín thị trường' }
+        },
+        suitable_for: 'Phù hợp Cho',
+        levels_title: 'Cấp độ Đối tác',
+        levels_subtitle: 'Nâng cấp dựa trên hiệu suất và nhận thêm quyền lợi',
+        requirements: 'Yêu cầu',
+        levels: {
+          registered: { name: 'Đối tác Đăng ký', requirements: ['Hoàn thành đăng ký đối tác', 'Ký thỏa thuận đối tác'], benefits: ['Truy cập cổng đối tác', 'Tài nguyên đào tạo cơ bản', 'Tài liệu tiếp thị'] },
+          silver: { name: 'Đối tác Bạc', requirements: ['Doanh số hàng năm $50K+', '2+ kỹ sư được chứng nhận'], benefits: ['Tất cả quyền lợi đăng ký', 'Hỗ trợ kỹ thuật ưu tiên', 'Cơ hội đồng tiếp thị', '10% hoa hồng bán hàng'] },
+          gold: { name: 'Đối tác Vàng', requirements: ['Doanh số hàng năm $200K+', '5+ kỹ sư được chứng nhận'], benefits: ['Tất cả quyền lợi bạc', 'Quản lý tài khoản chuyên dụng', 'Cơ hội dự án ưu tiên', '15% hoa hồng bán hàng'] },
+          platinum: { name: 'Đối tác Bạch kim', requirements: ['Doanh số hàng năm $500K+', '10+ kỹ sư được chứng nhận'], benefits: ['Tất cả quyền lợi vàng', 'Lập kế hoạch đối tác chiến lược', 'Phát triển sản phẩm chung', '20% hoa hồng bán hàng'] }
+        },
+        cta: { title: 'Sẵn sàng Tham gia?', subtitle: 'Đăng ký ngay để trở thành đối tác Quantaureum và bắt đầu hành trình cùng thắng' },
+        apply: { title: 'Trở thành Đối tác', button: 'Đăng ký Ngay' }
+      },
+      audit: {
+        title: 'Kiểm toán Bảo mật',
+        subtitle: 'Bảo mật minh bạch thông qua kiểm toán bên thứ ba độc lập',
+        reports: { title: 'Báo cáo Kiểm toán', download: 'Tải Báo cáo', view: 'Xem Chi tiết' },
+        smart_contract: { title: 'Kiểm toán Hợp đồng Thông minh', auditor: 'CertiK', status: 'Đạt', score: '98/100', desc: 'Kiểm toán bảo mật toàn diện các hợp đồng thông minh cốt lõi' },
+        quantum_crypto: { title: 'Kiểm toán Mật mã Lượng tử', auditor: 'Trail of Bits', status: 'Đạt', score: '99/100', desc: 'Kiểm toán sâu triển khai mật mã hậu lượng tử' },
+        penetration: { title: 'Kiểm tra Xâm nhập', auditor: 'HackerOne', status: 'Đạt', desc: 'Kiểm tra xâm nhập toàn diện cơ sở hạ tầng' },
+        findings: { critical: 'Nghiêm trọng', high: 'Cao', medium: 'Trung bình', low: 'Thấp' },
+        certifications: { title: 'Chứng nhận', soc2: 'SOC 2 Type II', iso27001: 'ISO 27001', gdpr: 'Tuân thủ GDPR' }
+      },
+      support: {
+        title: 'Hỗ trợ Doanh nghiệp',
+        subtitle: 'Hỗ trợ kỹ thuật chuyên nghiệp cho khách hàng doanh nghiệp',
+        plans: {
+          basic: { name: 'Hỗ trợ Cơ bản', price: 'Miễn phí', desc: 'Cho phát triển và thử nghiệm', features: ['Hỗ trợ diễn đàn cộng đồng', 'Truy cập tài liệu', 'Hỗ trợ email (phản hồi 48h)', 'Hướng dẫn khắc phục sự cố cơ bản'] },
+          professional: { name: 'Hỗ trợ Chuyên nghiệp', price: '$999/tháng', desc: 'Cho triển khai sản xuất', features: ['Tất cả tính năng cơ bản', 'Email ưu tiên (phản hồi 24h)', 'Hỗ trợ điện thoại', 'Kỹ sư chuyên dụng'] },
+          enterprise: { name: 'Hỗ trợ Doanh nghiệp', price: 'Tùy chỉnh', desc: 'Cho triển khai quan trọng', features: ['Tất cả tính năng chuyên nghiệp', 'Hỗ trợ 24/7', 'Đảm bảo SLA', 'Hỗ trợ tại chỗ'] }
+        },
+        contact: { title: 'Liên hệ Hỗ trợ', email: 'Email', phone: 'Điện thoại', chat: 'Chat Trực tiếp' }
+      }
+    },
+    // Trang Công nghệ
+    technology: {
+      blockchain: {
+        title: 'Công nghệ Blockchain',
+        subtitle: 'Cơ sở hạ tầng blockchain an toàn lượng tử thế hệ tiếp theo',
+        architecture: { title: 'Kiến trúc', desc: 'Kiến trúc đa lớp được thiết kế cho bảo mật và khả năng mở rộng' },
+        consensus: { title: 'Cơ chế Đồng thuận', desc: 'Đồng thuận Proof of Stake An toàn Lượng tử (QPOS)', features: ['Tiết kiệm năng lượng', 'Thông lượng cao', 'Hoàn tất nhanh', 'Kháng lượng tử'] },
+        smart_contracts: { title: 'Hợp đồng Thông minh', desc: 'Nền tảng hợp đồng thông minh an toàn và hiệu quả', features: ['Tương thích EVM', 'Xác minh hình thức', 'Tối ưu Gas', 'Có thể nâng cấp'] },
+        performance: { title: 'Hiệu suất', tps: '100,000+ TPS', finality: '< 1 giây hoàn tất', nodes: 'Mạng lưới node toàn cầu' }
+      },
+      quantum_security: {
+        title: 'Bảo mật Lượng tử',
+        subtitle: 'Mật mã hậu lượng tử bảo vệ tài sản của bạn khỏi các mối đe dọa điện toán lượng tử trong tương lai',
+        badges: {
+          nist: 'Tiêu chuẩn NIST',
+          quantum_resistant: 'Kháng Lượng tử',
+          audit: 'Đã Kiểm toán Bảo mật'
+        },
+        pqc: {
+          title: 'Mật mã Hậu Lượng tử',
+          subtitle: 'Các thuật toán được NIST chuẩn hóa đảm bảo bảo mật dài hạn chống lại các cuộc tấn công lượng tử'
+        },
+        algorithms: {
+          dilithium: {
+            desc: 'Thuật toán chữ ký số hậu lượng tử được NIST chuẩn hóa, cung cấp ký giao dịch an toàn',
+            specs: ['Bảo mật NIST Cấp 3', 'Mật mã dựa trên lưới', 'Tạo chữ ký nhanh', 'Kích thước khóa nhỏ gọn']
+          },
+          kyber: {
+            desc: 'Cơ chế đóng gói khóa được NIST chuẩn hóa cho trao đổi khóa an toàn',
+            specs: ['Bảo mật NIST Cấp 3', 'Dựa trên Module-LWE', 'Đóng gói hiệu quả', 'Bí mật chuyển tiếp']
+          },
+          sha3: {
+            desc: 'Hàm băm kháng lượng tử cho tính toàn vẹn và xác minh dữ liệu',
+            specs: ['Bảo mật 256-bit', 'Cấu trúc bọt biển', 'Kháng va chạm', 'Kháng tiền ảnh']
+          },
+          qrng: {
+            title: 'Bộ Tạo Số Ngẫu nhiên Lượng tử',
+            desc: 'Tính ngẫu nhiên thực sự từ hiện tượng lượng tử cho việc tạo khóa mật mã',
+            specs: ['Ngẫu nhiên lượng tử thực', 'Entropy dựa trên phần cứng', 'Đầu ra không thể đoán trước', 'Thông lượng cao']
+          }
+        },
+        audit: {
+          title: 'Quy trình Kiểm toán Bảo mật',
+          subtitle: 'Xác minh bảo mật nhiều giai đoạn nghiêm ngặt đảm bảo tính toàn vẹn hệ thống',
+          step: 'Bước',
+          steps: {
+            review: { title: 'Đánh giá Mã', desc: 'Đánh giá thủ công của chuyên gia tất cả các đường dẫn mã quan trọng' },
+            scan: { title: 'Quét Tự động', desc: 'Công cụ phân tích tĩnh và động để phát hiện lỗ hổng' },
+            verify: { title: 'Xác minh Hình thức', desc: 'Chứng minh toán học về tính đúng đắn mật mã' },
+            pentest: { title: 'Kiểm tra Xâm nhập', desc: 'Mô phỏng tấn công thực tế bởi chuyên gia bảo mật' },
+            report: { title: 'Báo cáo Kiểm toán', desc: 'Tài liệu toàn diện và khắc phục' }
+          }
+        },
+        vulnerabilities: {
+          title: 'Phát hiện Lỗ hổng',
+          subtitle: 'Giám sát và phát hiện toàn diện các mối đe dọa bảo mật tiềm ẩn',
+          items: [
+            { name: 'Tấn công Tái nhập', severity: 'Cao', description: 'Ngăn chặn khai thác gọi đệ quy trong hợp đồng thông minh' },
+            { name: 'Tràn Số nguyên', severity: 'Cao', description: 'Các phép toán an toàn ngăn chặn lỗ hổng số học' },
+            { name: 'Kiểm soát Truy cập', severity: 'Cao', description: 'Xác thực quyền nghiêm ngặt cho tất cả các hoạt động' },
+            { name: 'Front-Running', severity: 'Trung bình', description: 'Cơ chế bảo vệ thứ tự giao dịch' },
+            { name: 'Thao túng Oracle', severity: 'Trung bình', description: 'Nguồn cấp giá đa nguồn ngăn chặn thao túng' },
+            { name: 'Tối ưu Gas', severity: 'Thấp', description: 'Sử dụng gas hiệu quả ngăn chặn tấn công DoS' }
+          ]
+        },
+        severity: {
+          high: 'Cao',
+          medium: 'Trung bình',
+          low: 'Thấp'
+        },
+        certifications: {
+          title: 'Chứng nhận Bảo mật',
+          items: [
+            { name: 'SOC 2 Type II', desc: 'Tuân thủ bảo mật doanh nghiệp', status: 'Đã Chứng nhận' },
+            { name: 'ISO 27001', desc: 'Quản lý bảo mật thông tin', status: 'Đã Chứng nhận' },
+            { name: 'NIST PQC', desc: 'Tiêu chuẩn mật mã hậu lượng tử', status: 'Đã Chứng nhận' },
+            { name: 'Common Criteria', desc: 'Đánh giá bảo mật quốc tế', status: 'Đang Tiến hành' }
+          ]
+        },
+        status: {
+          certified: 'Đã Chứng nhận',
+          in_progress: 'Đang Tiến hành',
+          planned: 'Đã Lên kế hoạch'
+        },
+        cta: {
+          title: 'Sẵn sàng Bảo vệ Tài sản của Bạn?',
+          subtitle: 'Tham gia cùng hàng nghìn người dùng tin tưởng Quantaureum cho bảo mật an toàn lượng tử',
+          apply: 'Bắt đầu',
+          docs: 'Tài liệu Bảo mật'
+        }
+      },
+      whitepaper: {
+        title: 'Whitepaper Kỹ thuật',
+        subtitle: 'Tìm hiểu sâu về kiến trúc công nghệ và đổi mới của Quantaureum',
+        download: 'Tải Whitepaper',
+        sections: { abstract: 'Tóm tắt', introduction: 'Giới thiệu', architecture: 'Kiến trúc', consensus: 'Đồng thuận', cryptography: 'Mật mã', economics: 'Kinh tế Token', roadmap: 'Lộ trình' },
+        versions: { latest: 'Phiên bản Mới nhất', previous: 'Phiên bản Trước' }
+      },
+      whitepaper_page: {
+        hero: {
+          title: 'Whitepaper Kỹ thuật',
+          subtitle: 'Tìm hiểu sâu về kiến trúc công nghệ, khái niệm đổi mới và lộ trình phát triển của Quantaureum'
+        },
+        download: {
+          title: 'Whitepaper Kỹ thuật Quantaureum',
+          desc: 'Tài liệu kỹ thuật đầy đủ bao gồm kiến trúc hệ thống, thiết kế thuật toán, cơ chế bảo mật và chi tiết triển khai',
+          pdf_btn: 'Tải Phiên bản Đầy đủ (PDF)',
+          online_btn: 'Đọc Trực tuyến'
+        },
+        abstract: {
+          title: 'Tóm tắt',
+          p1: 'Quantaureum là một hệ sinh thái blockchain an toàn lượng tử cách mạng được thiết kế để giải quyết các thách thức bảo mật mà blockchain truyền thống phải đối mặt trong kỷ nguyên điện toán lượng tử. Whitepaper này chi tiết các đổi mới kỹ thuật của chúng tôi, bao gồm ứng dụng mật mã hậu lượng tử và hệ sinh thái ứng dụng phi tập trung hoàn chỉnh.',
+          p2: 'Chúng tôi sử dụng các thuật toán mật mã hậu lượng tử được NIST chuẩn hóa như CRYSTALS-Dilithium và Kyber để đảm bảo hệ thống cung cấp bảo mật đáng tin cậy ngay cả sau khi máy tính lượng tử xuất hiện. Đồng thời, cơ chế đồng thuận Quantum Proof of Stake (QPoS) sáng tạo kết hợp với công nghệ sharding đạt được hiệu suất cao và khả năng mở rộng.',
+          p3: 'Hệ sinh thái ứng dụng hoàn chỉnh bao gồm nhiều lĩnh vực như tài chính, giải trí, du lịch và cơ sở hạ tầng, cung cấp cho người dùng các dịch vụ blockchain toàn diện.'
+        },
+        toc: {
+          title: 'Mục lục',
+          items: [
+            { title: 'Giới thiệu', page: '3' },
+            { title: 'Công nghệ Bảo mật Lượng tử', page: '8' },
+            { title: 'Thiết kế Kiến trúc Blockchain', page: '15' },
+            { title: 'Cơ chế Đồng thuận', page: '22' },
+            { title: 'Hệ thống Tiến hóa Tự chủ AI', page: '28' },
+            { title: 'Máy ảo Hợp đồng Thông minh', page: '35' },
+            { title: 'Khả năng Tương tác Xuyên chuỗi', page: '42' },
+            { title: 'Hệ sinh thái Ứng dụng', page: '48' },
+            { title: 'Mô hình Kinh tế', page: '55' },
+            { title: 'Phân tích Bảo mật', page: '62' },
+            { title: 'Đánh giá Hiệu suất', page: '68' },
+            { title: 'Lộ trình Phát triển', page: '74' },
+            { title: 'Kết luận', page: '80' }
+          ]
+        },
+        highlights: {
+          title: 'Điểm nổi bật Công nghệ Cốt lõi',
+          items: [
+            { title: 'Mật mã Hậu Lượng tử', desc: 'Thuật toán mật mã hậu lượng tử được NIST chuẩn hóa đảm bảo bảo mật trong kỷ nguyên điện toán lượng tử' },
+            { title: 'Tiến hóa Tự chủ AI', desc: 'Hệ thống AI với khả năng meta-learning và tự cải thiện đệ quy, liên tục tối ưu hóa hiệu suất nền tảng' },
+            { title: 'Đồng thuận Hiệu suất Cao', desc: 'Cơ chế đồng thuận QPoS sáng tạo đạt được thông lượng cao và xử lý giao dịch độ trễ thấp' },
+            { title: 'Khả năng Tương tác Xuyên chuỗi', desc: 'Kết nối liền mạch nhiều mạng blockchain để xây dựng hệ sinh thái kinh tế số thống nhất' },
+            { title: 'Hợp đồng Thông minh', desc: 'Môi trường thực thi hợp đồng thông minh an toàn lượng tử hỗ trợ các ứng dụng phi tập trung phức tạp' },
+            { title: 'Hệ sinh thái Ứng dụng', desc: 'Hệ sinh thái ứng dụng hoàn chỉnh bao gồm tài chính, giải trí, du lịch và nhiều hơn nữa' }
+          ]
+        },
+        team: {
+          title: 'Đội ngũ Nghiên cứu',
+          members: [
+            { role: 'Nhà Khoa học Trưởng', degree: 'Tiến sĩ Mật mã học', background: 'MIT, 50+ bài báo đã xuất bản', emoji: '👨‍🔬' },
+            { role: 'Chuyên gia Điện toán Lượng tử', degree: 'Tiến sĩ Vật lý', background: 'Cựu thành viên Google Quantum AI', emoji: '👨‍🔬' },
+            { role: 'Kiến trúc sư Blockchain', degree: 'Tiến sĩ Khoa học Máy tính', background: 'Cựu Nhà phát triển Core Ethereum', emoji: '👩‍💻' },
+            { role: 'Chuyên gia Hệ thống AI', degree: 'Tiến sĩ Trí tuệ Nhân tạo', background: 'Cựu Nghiên cứu viên OpenAI', emoji: '🤖' }
+          ]
+        }
+      },
+      blog: {
+        title: 'Blog Kỹ thuật',
+        subtitle: 'Cập nhật mới nhất và thông tin kỹ thuật',
+        categories: { all: 'Tất cả', development: 'Phát triển', security: 'Bảo mật', research: 'Nghiên cứu', announcements: 'Thông báo' },
+        read_more: 'Đọc thêm',
+        published: 'Đăng ngày',
+        author: 'Tác giả'
+      }
+    },
+    // Trang Xác thực
+    auth: {
+      login: {
+        title: 'Chào mừng Trở lại',
+        subtitle: 'Đăng nhập vào tài khoản Quantaureum của bạn',
+        email: 'Địa chỉ Email',
+        password: 'Mật khẩu',
+        remember: 'Ghi nhớ tôi',
+        forgot: 'Quên mật khẩu?',
+        submit: 'Đăng nhập',
+        no_account: 'Chưa có tài khoản?',
+        register: 'Đăng ký',
+        or: 'Hoặc tiếp tục với',
+        google: 'Tiếp tục với Google',
+        github: 'Tiếp tục với GitHub',
+        errors: { invalid: 'Email hoặc mật khẩu không hợp lệ', required: 'Trường này là bắt buộc' }
+      },
+      register: {
+        title: 'Tạo Tài khoản',
+        subtitle: 'Tham gia cuộc cách mạng blockchain an toàn lượng tử',
+        username: 'Tên người dùng',
+        email: 'Địa chỉ Email',
+        password: 'Mật khẩu',
+        confirm_password: 'Xác nhận Mật khẩu',
+        terms: 'Tôi đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật',
+        submit: 'Tạo Tài khoản',
+        have_account: 'Đã có tài khoản?',
+        login: 'Đăng nhập',
+        password_requirements: { title: 'Mật khẩu phải chứa:', length: 'Ít nhất 8 ký tự', uppercase: 'Một chữ hoa', lowercase: 'Một chữ thường', number: 'Một số', special: 'Một ký tự đặc biệt' }
+      },
+      forgot_password: {
+        title: 'Đặt lại Mật khẩu',
+        subtitle: 'Nhập email để nhận hướng dẫn đặt lại',
+        email: 'Địa chỉ Email',
+        submit: 'Gửi Liên kết Đặt lại',
+        back: 'Quay lại Đăng nhập',
+        success: 'Đã gửi liên kết đặt lại! Kiểm tra email của bạn.'
+      }
+    },
+    // Trang con Cộng đồng
+    community_sub: {
+      bug_bounty: {
+        title: 'Chương trình Bug Bounty',
+        subtitle: 'Giúp chúng tôi cải thiện bảo mật và nhận phần thưởng',
+        severity: { critical: { level: 'Nghiêm trọng', reward: '$10,000 - $50,000', desc: 'Lỗ hổng có thể dẫn đến mất tiền hoặc hệ thống sập hoàn toàn' }, high: { level: 'Cao', reward: '$5,000 - $10,000', desc: 'Vấn đề bảo mật hoặc dữ liệu người dùng nghiêm trọng' }, medium: { level: 'Trung bình', reward: '$1,000 - $5,000', desc: 'Vấn đề bảo mật ảnh hưởng trung bình' }, low: { level: 'Thấp', reward: '$100 - $1,000', desc: 'Vấn đề bảo mật nhỏ hoặc đề xuất cải tiến' } },
+        scope: { in_scope: 'Trong Phạm vi', out_scope: 'Ngoài Phạm vi', items_in: ['Hợp đồng thông minh mạng chính', 'Ứng dụng ví lượng tử', 'Trình duyệt blockchain', 'Hợp đồng giao thức DeFi', 'Điểm cuối API và RPC', 'Hợp đồng cầu nối cross-chain'], items_out: ['Dịch vụ bên thứ ba', 'Kỹ thuật xã hội', 'Tấn công DoS/DDoS', 'Vấn đề đã biết đang sửa'] },
+        rules: { title: 'Quy tắc Chương trình', items: ['Báo cáo lỗ hổng có trách nhiệm', 'Không khai thác lỗ hổng', 'Cung cấp các bước tái tạo chi tiết', 'Chờ sửa trước khi tiết lộ'] },
+        submit: 'Gửi Báo cáo'
+      },
+      guidelines: {
+        title: 'Hướng dẫn Cộng đồng',
+        subtitle: 'Giúp chúng tôi duy trì môi trường cộng đồng thân thiện, an toàn và có giá trị',
+        welcome: {
+          title: 'Chào mừng đến với Cộng đồng Quantaureum',
+          desc: 'Chúng tôi cam kết xây dựng một cộng đồng cởi mở, bao dung và xây dựng. Vui lòng đọc và tuân thủ các hướng dẫn sau để duy trì bầu không khí cộng đồng tích cực. Vi phạm có thể dẫn đến cảnh báo, tắt tiếng hoặc cấm vĩnh viễn.'
+        },
+        recommended: 'Khuyến nghị',
+        prohibited: 'Cấm',
+        items: {
+          respect: {
+            title: 'Tôn trọng Người khác',
+            desc: 'Duy trì sự tôn trọng và lịch sự với tất cả thành viên cộng đồng. Không cho phép tấn công cá nhân, quấy rối hoặc phát ngôn phân biệt đối xử.',
+            dos: ['Sử dụng ngôn ngữ lịch sự', 'Tôn trọng quan điểm khác nhau', 'Đưa ra phê bình xây dựng'],
+            donts: ['Tấn công cá nhân', 'Quấy rối người khác', 'Đăng nội dung phân biệt đối xử']
+          },
+          discussion: {
+            title: 'Thảo luận Có giá trị',
+            desc: 'Đăng nội dung có ý nghĩa để tăng giá trị cho cộng đồng. Tránh spam và nội dung không liên quan.',
+            dos: ['Chia sẻ thông tin hữu ích', 'Đặt câu hỏi sâu sắc', 'Tham gia thảo luận có ý nghĩa'],
+            donts: ['Đăng spam', 'Đăng trùng lặp', 'Đăng nội dung không liên quan']
+          },
+          privacy: {
+            title: 'Bảo vệ Quyền riêng tư',
+            desc: 'Bảo vệ quyền riêng tư của bạn và người khác. Không chia sẻ thông tin cá nhân nhạy cảm.',
+            dos: ['Bảo vệ thông tin cá nhân', 'Sử dụng phương thức liên lạc an toàn', 'Báo cáo hoạt động đáng ngờ'],
+            donts: ['Chia sẻ thông tin riêng tư của người khác', 'Đăng dữ liệu nhạy cảm', 'Thực hiện tấn công lừa đảo']
+          },
+          legal: {
+            title: 'Tuân thủ Pháp luật',
+            desc: 'Tất cả hoạt động phải tuân thủ luật pháp và quy định hiện hành. Mọi hoạt động bất hợp pháp đều bị cấm.',
+            dos: ['Tuân thủ luật địa phương', 'Báo cáo nội dung bất hợp pháp', 'Sử dụng nền tảng có trách nhiệm'],
+            donts: ['Quảng bá hoạt động bất hợp pháp', 'Đăng nội dung vi phạm', 'Tham gia gian lận']
+          }
+        },
+        report: {
+          title: 'Báo cáo Vi phạm',
+          desc: 'Nếu bạn phát hiện bất kỳ hành vi nào vi phạm hướng dẫn cộng đồng, vui lòng báo cáo ngay. Đội ngũ kiểm duyệt của chúng tôi sẽ xử lý sớm nhất có thể.',
+          button: 'Báo cáo Vi phạm'
+        },
+        rules: { respect: { title: 'Tôn trọng', desc: 'Đối xử với tất cả thành viên cộng đồng với sự tôn trọng' }, constructive: { title: 'Xây dựng', desc: 'Cung cấp phản hồi hữu ích và xây dựng' }, no_spam: { title: 'Không Spam', desc: 'Tránh spam, tự quảng cáo và nội dung lạc đề' }, no_illegal: { title: 'Không Nội dung Bất hợp pháp', desc: 'Không chia sẻ nội dung bất hợp pháp hoặc có hại' } },
+        enforcement: { title: 'Thực thi', warning: 'Cảnh báo', temp_ban: 'Cấm Tạm thời', perm_ban: 'Cấm Vĩnh viễn' }
+      },
+      members: {
+        title: 'Thành viên Cộng đồng',
+        subtitle: 'Gặp gỡ cộng đồng sôi động của chúng tôi',
+        search: 'Tìm kiếm thành viên...',
+        filters: { all: 'Tất cả Thành viên', active: 'Hoạt động Nhất', new: 'Mới Nhất', top: 'Đóng góp Hàng đầu' },
+        stats: { posts: 'Bài viết', reputation: 'Danh tiếng', joined: 'Tham gia' },
+        follow: 'Theo dõi',
+        following: 'Đang theo dõi'
+      },
+      notifications: {
+        title: 'Thông báo',
+        mark_all_read: 'Đánh dấu tất cả đã đọc',
+        types: { mention: 'đã nhắc đến bạn', reply: 'đã trả lời bài viết của bạn', like: 'đã thích bài viết của bạn', follow: 'bắt đầu theo dõi bạn', announcement: 'Thông báo mới' },
+        empty: 'Chưa có thông báo'
+      }
+    },
+    // Trang con Nhà phát triển
+    developers_sub: {
+      api: {
+        title: 'Tham chiếu API',
+        subtitle: 'Tài liệu API đầy đủ cho Quantaureum',
+        sections: { authentication: 'Xác thực', wallet: 'API Ví', transaction: 'API Giao dịch', blockchain: 'API Blockchain', smart_contract: 'API Hợp đồng Thông minh' },
+        endpoints: 'Điểm cuối',
+        parameters: 'Tham số',
+        response: 'Phản hồi',
+        example: 'Ví dụ',
+        try_it: 'Thử ngay'
+      },
+      sdk: {
+        title: 'Tải SDK',
+        subtitle: 'SDK chính thức cho nhiều ngôn ngữ lập trình',
+        languages: { javascript: 'JavaScript/TypeScript', python: 'Python', go: 'Go', rust: 'Rust', java: 'Java' },
+        download: 'Tải xuống',
+        docs: 'Tài liệu',
+        github: 'GitHub',
+        version: 'Phiên bản',
+        install: 'Cài đặt'
+      },
+      examples: {
+        title: 'Ví dụ Mã',
+        subtitle: 'Học qua ví dụ mã',
+        categories: { wallet: 'Thao tác Ví', transactions: 'Giao dịch', smart_contracts: 'Hợp đồng Thông minh', defi: 'Tích hợp DeFi' },
+        copy: 'Sao chép Mã',
+        run: 'Chạy Ví dụ',
+        language: 'Ngôn ngữ'
+      }
+    },
+    // Trang con Cài đặt
+    settings_sub: {
+      kyc: {
+        title: 'Xác minh KYC',
+        subtitle: 'Hoàn thành xác minh danh tính để mở khóa tất cả tính năng',
+        steps: { personal: 'Thông tin Cá nhân', document: 'Tải lên Tài liệu', verification: 'Xác minh' },
+        personal: { first_name: 'Tên', last_name: 'Họ', dob: 'Ngày sinh', nationality: 'Quốc tịch', address: 'Địa chỉ' },
+        document: { type: 'Loại Tài liệu', passport: 'Hộ chiếu', id_card: 'CMND/CCCD', drivers_license: 'Bằng lái xe', front: 'Mặt trước', back: 'Mặt sau', selfie: 'Selfie với Tài liệu' },
+        status: { pending: 'Đang Xem xét', approved: 'Đã Duyệt', rejected: 'Bị Từ chối' },
+        submit: 'Gửi Xác minh'
+      }
+    },
+    // Trang con Bán Token
+    token_sale_sub: {
+      orders: {
+        title: 'Đơn hàng của Tôi',
+        subtitle: 'Xem lịch sử mua token của bạn',
+        columns: { order_id: 'Mã Đơn hàng', date: 'Ngày', amount: 'Số lượng', price: 'Giá', status: 'Trạng thái', action: 'Hành động' },
+        status: { pending: 'Đang chờ', completed: 'Hoàn thành', failed: 'Thất bại', refunded: 'Đã hoàn tiền' },
+        empty: 'Chưa có đơn hàng',
+        view_details: 'Xem Chi tiết'
+      },
+      referral: {
+        title: 'Chương trình Giới thiệu',
+        subtitle: 'Mời bạn bè và nhận phần thưởng',
+        your_link: 'Liên kết Giới thiệu của Bạn',
+        copy: 'Sao chép Liên kết',
+        stats: { referrals: 'Tổng Giới thiệu', earnings: 'Tổng Thu nhập', pending: 'Phần thưởng Đang chờ' },
+        how_it_works: { title: 'Cách Hoạt động', step1: 'Chia sẻ liên kết giới thiệu độc quyền của bạn', step2: 'Bạn bè đăng ký và mua token', step3: 'Nhận 5% hoa hồng từ giao dịch của họ' },
+        history: { title: 'Lịch sử Giới thiệu', columns: { user: 'Người dùng', date: 'Ngày', amount: 'Số tiền Mua', commission: 'Hoa hồng' } }
+      }
+    },
+    // Trang Thông báo
+    notifications_page: {
+      title: 'Thông báo',
+      unread_count: '{{count}} chưa đọc',
+      mark_all_read: 'Đánh dấu tất cả đã đọc',
+      loading: 'Đang tải...',
+      no_notifications: 'Không có thông báo',
+      filters: {
+        all: 'Tất cả',
+        unread: 'Chưa đọc',
+        like: 'Thích',
+        comment: 'Bình luận',
+        follow: 'Theo dõi',
+        system: 'Hệ thống'
+      },
+      time: {
+        just_now: 'Vừa xong',
+        minutes_ago: '{{count}} phút trước',
+        hours_ago: '{{count}} giờ trước',
+        days_ago: '{{count}} ngày trước'
+      }
+    },
+    // Trang Tìm kiếm
+    search_page: {
+      title: 'Kết quả Tìm kiếm',
+      search_placeholder: 'Tìm kiếm thảo luận...',
+      searching: 'Đang tìm kiếm...',
+      loading: 'Đang tải...',
+      no_results: 'Không tìm thấy kết quả cho "{{query}}"',
+      try_different: 'Thử từ khóa khác',
+      found_results: 'Tìm thấy {{count}} kết quả',
+      enter_keywords: 'Nhập từ khóa để tìm kiếm'
+    },
+    // Trang Đối tác Cộng đồng
+    community_partners: {
+      title: 'Chương trình Đối tác',
+      subtitle: 'Xây dựng tương lai an toàn lượng tử với Quantaureum',
+      breadcrumb: {
+        community: 'Cộng đồng',
+        partners: 'Đối tác'
+      },
+      types: {
+        enterprise: {
+          title: 'Đối tác Doanh nghiệp',
+          description: 'Hợp tác với chúng tôi để tích hợp công nghệ blockchain an toàn lượng tử vào doanh nghiệp của bạn',
+          benefits: ['Hỗ trợ kỹ thuật ưu tiên', 'Giải pháp tùy chỉnh', 'Cơ hội tiếp thị chung', 'Truy cập sớm tính năng']
+        },
+        technology: {
+          title: 'Đối tác Công nghệ',
+          description: 'Đồng phát triển các giải pháp và công cụ blockchain sáng tạo',
+          benefits: ['Chia sẻ tài nguyên kỹ thuật', 'Truy cập API ưu tiên', 'Dự án phát triển chung', 'Hỗ trợ đào tạo kỹ thuật']
+        },
+        ecosystem: {
+          title: 'Đối tác Hệ sinh thái',
+          description: 'Tham gia hệ sinh thái của chúng tôi để cùng phát triển ngành blockchain',
+          benefits: ['Hỗ trợ quỹ hệ sinh thái', 'Tài nguyên cộng đồng', 'Hợp tác sự kiện', 'Quảng bá thương hiệu']
+        }
+      },
+      partner_categories: {
+        gold_storage: 'Lưu trữ Vàng',
+        oracle: 'Oracle',
+        hardware_wallet: 'Ví Phần cứng',
+        security_audit: 'Kiểm toán Bảo mật',
+        cloud_service: 'Dịch vụ Đám mây',
+        cross_chain: 'Cross-Chain'
+      },
+      our_partners: 'Đối tác của Chúng tôi',
+      cta: {
+        title: 'Trở thành Đối tác',
+        description: 'Dù bạn là doanh nghiệp, nhà phát triển hay đội dự án, chúng tôi chào đón bạn đến với hệ sinh thái Quantaureum',
+        apply: 'Đăng ký Đối tác'
+      }
+    },
+    // Trang Chi tiết Bài viết
+    post_detail: {
+      loading: 'Đang tải...',
+      error: {
+        not_found: 'Không tìm thấy bài viết',
+        load_failed: 'Tải thất bại, vui lòng thử lại'
+      },
+      back_to_community: 'Quay lại Cộng đồng',
+      categories: {
+        general: 'Thảo luận Chung',
+        technical: 'Câu hỏi Kỹ thuật',
+        defi: 'DeFi và Giao dịch',
+        governance: 'Đề xuất Quản trị'
+      },
+      comments: 'Bình luận',
+      comments_count: '{{count}} bình luận',
+      comment_placeholder: 'Viết bình luận của bạn...',
+      submit_comment: 'Đăng Bình luận',
+      submitting: 'Đang gửi...',
+      login_to_comment: 'Đăng nhập để bình luận',
+      login_now: 'Đăng nhập',
+      no_comments: 'Chưa có bình luận, hãy là người đầu tiên!',
+      time: {
+        just_now: 'Vừa xong',
+        minutes_ago: '{{count}} phút trước',
+        hours_ago: '{{count}} giờ trước',
+        days_ago: '{{count}} ngày trước'
+      }
+    },
+    // Trang Chủ đề
+    topic_page: {
+      sample_content: 'Đây là thảo luận chi tiết về "{{topic}}". Tại đây chúng ta có thể khám phá chi tiết kỹ thuật, trường hợp sử dụng và hướng phát triển tương lai.',
+      levels: {
+        quantum_expert: 'Chuyên gia Lượng tử',
+        active_member: 'Thành viên Tích cực',
+        newbie: 'Người mới'
+      },
+      joined_year: 'Tham gia năm {{year}}',
+      categories: {
+        quantum_computing: 'Điện toán Lượng tử'
+      },
+      views: '{{count}} lượt xem',
+      replies_count: '{{count}} phản hồi',
+      reply: 'Phản hồi',
+      share: 'Chia sẻ',
+      replies_title: 'Phản hồi ({{count}})',
+      reply_placeholder: 'Viết phản hồi của bạn...',
+      post_reply: 'Đăng Phản hồi',
+      time: {
+        hours_ago: '{{count}} giờ trước'
+      },
+      sample_replies: {
+        reply1: 'Phân tích rất sâu sắc! Tôi đặc biệt đồng ý với quan điểm về xu hướng phát triển công nghệ lượng tử.',
+        reply2: 'Là người mới, chủ đề này đã dạy tôi rất nhiều. Bạn có thể giới thiệu một số tài liệu nhập môn không?'
+      }
+    },
+    // Trang Hồ sơ Người dùng
+    user_profile_page: {
+      title_quantum_expert: 'Chuyên gia Công nghệ Lượng tử',
+      sample_bio: 'Tôi là nhà nghiên cứu tập trung vào điện toán lượng tử và mật mã lượng tử. Đam mê chia sẻ kiến thức và giúp các thành viên cộng đồng hiểu những phát triển mới nhất trong công nghệ lượng tử.',
+      sample_location: 'Hà Nội, Việt Nam',
+      joined_date: 'Tháng 3 {{date}}',
+      joined_at: 'Tham gia',
+      personal_website: 'Website Cá nhân',
+      stats: {
+        posts: 'Bài viết',
+        likes: 'Thích',
+        followers: 'Người theo dõi',
+        following: 'Đang theo dõi'
+      },
+      follow: 'Theo dõi',
+      send_message: 'Gửi Tin nhắn',
+      achievement_badges: 'Huy hiệu Thành tích',
+      badges: {
+        quantum_pioneer: 'Tiên phong Lượng tử',
+        knowledge_sharer: 'Người Chia sẻ Kiến thức',
+        community_contributor: 'Người Đóng góp Cộng đồng'
+      },
+      recent_posts: 'Bài viết Gần đây',
+      view_more_posts: 'Xem Thêm Bài viết',
+      time: {
+        days_ago: '{{count}} ngày trước',
+        week_ago: '{{count}} tuần trước'
+      },
+      sample_posts: {
+        post1: {
+          title: 'Ứng dụng của Rối lượng tử trong Mật mã học',
+          category: 'Mật mã Lượng tử'
+        },
+        post2: {
+          title: 'Hiểu về Chồng chất Lượng tử',
+          category: 'Vật lý Lượng tử'
+        },
+        post3: {
+          title: 'Tình trạng Hiện tại của Phát triển Điện toán Lượng tử',
+          category: 'Điện toán Lượng tử'
+        }
+      }
+    },
+    // Trang Danh mục Diễn đàn
+    forum_category: {
+      category_not_found: 'Không tìm thấy danh mục',
+      back_to_community: 'Quay lại Cộng đồng',
+      categories: {
+        general: { name: 'Thảo luận Chung', description: 'Thảo luận chung về Quantaureum, bao gồm kinh nghiệm và mẹo' },
+        technical: { name: 'Trao đổi Kỹ thuật', description: 'Thảo luận kỹ thuật, chia sẻ code, trao đổi giải pháp' },
+        defi: { name: 'Thảo luận DeFi', description: 'Giao thức DeFi, khai thác thanh khoản, chiến lược lợi nhuận' },
+        trading: { name: 'Thảo luận Giao dịch', description: 'Phân tích thị trường, chiến lược giao dịch, thảo luận giá' },
+        governance: { name: 'Quản trị Cộng đồng', description: 'Quản trị DAO, thảo luận đề xuất, bỏ phiếu' },
+        events: { name: 'Sự kiện', description: 'Thông tin sự kiện trực tuyến và ngoại tuyến, báo cáo sự kiện' }
+      },
+      stats: {
+        total_posts: 'Tổng Bài viết',
+        total_topics: 'Chủ đề',
+        latest_post: 'Bài viết Mới nhất'
+      },
+      by: 'bởi',
+      filters: {
+        all: 'Tất cả Bài viết',
+        pinned: 'Bài viết Ghim',
+        unlocked: 'Bài viết Mở khóa'
+      },
+      sort: {
+        latest: 'Mới nhất',
+        popular: 'Nhiều Phản hồi nhất',
+        views: 'Nhiều Lượt xem nhất'
+      },
+      new_topic: 'Chủ đề Mới',
+      pinned: 'Đã ghim',
+      locked: 'Đã khóa',
+      last_reply: 'Phản hồi cuối',
+      pagination: {
+        prev: 'Trước',
+        next: 'Sau'
+      },
+      time: {
+        minutes_ago: '{{count}} phút trước',
+        hours_ago: '{{count}} giờ trước',
+        days_ago: '{{count}} ngày trước'
+      },
+      sample_posts: {
+        general: 'Mẹo Sử dụng Ví Lượng tử',
+        technical: 'Tối ưu hóa Thuật toán Hậu Lượng tử',
+        defi: 'Thảo luận Pool Thanh khoản Mới',
+        trading: 'Phân tích Giá QAU',
+        governance: 'Bỏ phiếu Đề xuất Quản trị Mới',
+        events: 'Xem trước AMA Tuần tới'
+      },
+      sample_post_titles: {
+        post1: '🚀 Ví Lượng tử v2.0 Ra mắt với Hỗ trợ Đa chuỗi',
+        post2: '💡 Cách Lưu trữ Khóa Lượng tử An toàn?',
+        post3: '📊 Phân tích Sâu về Tokenomics QAU'
+      },
+      sample_post_contents: {
+        post1: 'Chúng tôi vui mừng thông báo ra mắt chính thức Ví Lượng tử v2.0! Bản cập nhật này mang đến nhiều tính năng quan trọng...',
+        post2: 'Với sự phát triển của điện toán lượng tử, các phương pháp mã hóa truyền thống đang đối mặt với thách thức...',
+        post3: 'Token QAU là cốt lõi của hệ sinh thái Quantaureum có mô hình kinh tế được thiết kế tinh tế...'
+      },
+      tags: {
+        update: 'Cập nhật',
+        wallet: 'Ví',
+        new_feature: 'Tính năng Mới',
+        security: 'Bảo mật',
+        quantum_key: 'Khóa Lượng tử',
+        tutorial: 'Hướng dẫn',
+        tokenomics: 'Tokenomics',
+        analysis: 'Phân tích'
+      }
+    },
+    // Trang Ví dụ cho Nhà phát triển
+    dev_examples: {
+      badge: 'Ví dụ Code',
+      title: 'Bắt đầu Nhanh',
+      title_highlight: 'Ví dụ Code',
+      subtitle: 'Ví dụ code sẵn sàng sao chép-dán giúp bạn tích hợp Quantaureum nhanh chóng',
+      full_docs: 'Tài liệu Đầy đủ',
+      view_docs: 'Xem Tài liệu',
+      run_online: 'Chạy Trực tuyến',
+      categories: {
+        all: 'Tất cả',
+        wallet: 'Ví',
+        transaction: 'Giao dịch',
+        smart_contract: 'Hợp đồng Thông minh',
+        defi: 'DeFi',
+        quantum_security: 'Bảo mật Lượng tử'
+      },
+      examples: {
+        connect_wallet: {
+          title: 'Kết nối Ví',
+          description: 'Kết nối với ví Quantaureum bằng JavaScript SDK'
+        },
+        send_transaction: {
+          title: 'Gửi Giao dịch',
+          description: 'Gửi token QAU đến địa chỉ được chỉ định'
+        },
+        deploy_contract: {
+          title: 'Triển khai Hợp đồng Thông minh',
+          description: 'Triển khai hợp đồng token đơn giản'
+        },
+        staking: {
+          title: 'Stake QAU',
+          description: 'Stake QAU tại các node xác thực để nhận phần thưởng'
+        },
+        quantum_signature: {
+          title: 'Chữ ký An toàn Lượng tử',
+          description: 'Ký tin nhắn bằng thuật toán mật mã hậu lượng tử'
+        }
+      },
+      cta: {
+        title: 'Sẵn sàng Xây dựng?',
+        description: 'Xem tài liệu đầy đủ để biết các tính năng nâng cao và thực hành tốt nhất',
+        view_docs: 'Xem Tài liệu Đầy đủ',
+        download_sdk: 'Tải SDK'
+      }
+    },
+    // Trang Tin nhắn
+    messages_page: {
+      search_placeholder: 'Tìm kiếm cuộc trò chuyện...',
+      no_conversations: 'Không có cuộc trò chuyện',
+      select_conversation: 'Chọn cuộc trò chuyện để bắt đầu chat',
+      message_placeholder: 'Nhập tin nhắn...',
+      time: {
+        just_now: 'Vừa xong',
+        minutes_ago: '{{count}} phút trước',
+        hours_ago: '{{count}} giờ trước',
+        days_ago: '{{count}} ngày trước',
+        you: 'Bạn: '
+      }
+    },
+    // Trang Tải SDK
+    sdk_page: {
+      title: 'Tải SDK',
+      subtitle: 'Tải bộ công cụ phát triển Quantaureum để xây dựng ứng dụng blockchain an toàn lượng tử',
+      available: 'Có sẵn',
+      version: 'Phiên bản',
+      size: 'Kích thước',
+      sdks: {
+        typescript: { title: 'TypeScript SDK', description: 'SDK hoàn chỉnh cho ứng dụng Web và Node.js với hỗ trợ TypeScript', download: 'Tải TypeScript SDK' },
+        python: { title: 'Python SDK', description: 'Thư viện Python cho phân tích dữ liệu và dịch vụ backend với hỗ trợ async', download: 'Tải Python SDK' },
+        go: { title: 'Go SDK', description: 'Bộ công cụ phát triển Go hiệu suất cao với hỗ trợ đồng thời', view: 'Xem Go SDK' },
+        rust: { title: 'Rust SDK', description: 'Bộ công cụ phát triển Rust an toàn và hiệu quả với async và an toàn kiểu', view: 'Xem Rust SDK' },
+        java: { title: 'Java SDK', description: 'Bộ công cụ phát triển Java doanh nghiệp với async và an toàn kiểu', view: 'Xem Java SDK' },
+        cpp: { title: 'C++ SDK', description: 'Bộ công cụ cấp hệ thống hiệu suất cao với C++17 hiện đại', download: 'Tải C++ SDK' }
+      },
+      requirements: {
+        title: 'Yêu cầu Hệ thống',
+        subtitle: 'Đảm bảo môi trường phát triển của bạn đáp ứng các yêu cầu sau',
+        minimum: { title: 'Yêu cầu Tối thiểu', os: 'HĐH: Windows 10, macOS 10.15, Ubuntu 18.04+', memory: 'Bộ nhớ: 4GB RAM', storage: 'Lưu trữ: 2GB dung lượng trống', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
+        recommended: { title: 'Khuyến nghị', os: 'HĐH: Phiên bản mới nhất', memory: 'Bộ nhớ: 8GB+ RAM', storage: 'Lưu trữ: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
   }
