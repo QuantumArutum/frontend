@@ -725,15 +725,26 @@ export const ja = {
       }
     },
     token_sale: {
-      title: 'デジタルゴールドに投資',
-      subtitle: '安全、監査済み、即時流動性。1 QAU = 1 グラムの金。',
+      title: 'QAUトークンセール',
+      subtitle: '1 QAU = 1 グラムの金',
       buy_title: 'QAUを購入',
       live_rate: 'ライブレート',
+      purchase_tokens: 'トークンを購入',
+      sale_progress: '販売進捗',
       input: {
-        pay_label: '支払い (USDT)',
+        pay_label: '支払い方法 (QAU)',
+        pay_hint: 'USD金額を入力、QAU相当額で支払い',
         placeholder: '金額を入力...',
-        receive_label: '受取 (QAU)'
+        receive_label: '受取 (QAU)',
+        balance: '残高'
       },
+      rate: 'レート',
+      sold: '販売済み',
+      available: '利用可能',
+      current_price: '現在価格 (1 QAU = 1g 金)',
+      available_for_sale: '販売可能 (オンチェーン)',
+      gold_reserve: '金準備金 (認証済み)',
+      round_ends: 'ラウンド終了まで',
       fee: {
         gross: '総額',
         platform_fee: 'プラットフォーム手数料',
@@ -742,11 +753,37 @@ export const ja = {
       },
       actions: {
         connect: 'ウォレット接続',
+        connect_to_buy: 'ウォレット接続して購入',
+        buy_now: '今すぐQAUを購入',
         confirm: '購入確認',
         processing: '処理中...',
         success_title: '購入成功！',
         success_desc: 'リクエストが記録されました。金の取得後にQAUが発行されます。',
         view_explorer: 'エクスプローラーで表示'
+      },
+      wallet: {
+        connected: '接続済み',
+        connect_title: 'ウォレットを接続',
+        connect_desc: 'MetaMaskを接続してQAUトークンを購入',
+        network: 'ネットワーク',
+        chain_id: 'チェーンID',
+        connecting: '接続中...',
+        install: 'MetaMaskをインストール'
+      },
+      steps: {
+        confirm: '確認',
+        confirm_desc: 'MetaMaskで',
+        processing: '処理中',
+        processing_desc: 'オンチェーン',
+        complete: '完了',
+        complete_desc: '成功'
+      },
+      messages: {
+        confirm_tx: 'MetaMaskでトランザクションを確認してください...',
+        tx_submitted: 'トランザクション送信済み、確認待ち...',
+        purchase_success: '購入成功！{{paid}} QAUを支払い、{{received}} QAUトークンを取得',
+        tx_cancelled: 'ユーザーによりトランザクションがキャンセルされました',
+        enter_valid_amount: '有効な金額を入力してください'
       },
       stats: {
         gold_price: '金価格 (24h)',
@@ -771,7 +808,8 @@ export const ja = {
         install_wallet: 'MetaMaskまたは互換性のあるウォレットをインストールしてください。',
         switch_network: 'Quantaureumネットワーク (Chain ID: {{chainId}}) に切り替えてください',
         connect_failed: 'ウォレット接続に失敗しました',
-        tx_failed: 'トランザクション失敗'
+        tx_failed: 'トランザクション失敗',
+        metamask_not_found: 'MetaMaskが見つかりません'
       }
     },
     about: {

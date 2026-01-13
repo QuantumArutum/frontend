@@ -725,15 +725,26 @@ export const ru = {
       }
     },
     token_sale: {
-      title: 'Инвестируйте в цифровое золото',
-      subtitle: 'Безопасно, проверено и мгновенно ликвидно. 1 QAU = 1 грамм золота.',
+      title: 'Продажа токенов QAU',
+      subtitle: '1 QAU = 1 грамм золота',
       buy_title: 'Купить QAU',
       live_rate: 'Живой курс',
+      purchase_tokens: 'Купить токены',
+      sale_progress: 'Прогресс продаж',
       input: {
-        pay_label: 'Вы платите (USDT)',
+        pay_label: 'Оплата (QAU)',
+        pay_hint: 'Введите сумму в USD, оплатите эквивалент в QAU',
         placeholder: 'Введите сумму...',
-        receive_label: 'Вы получаете (QAU)'
+        receive_label: 'Вы получаете (QAU)',
+        balance: 'Баланс'
       },
+      rate: 'Курс',
+      sold: 'Продано',
+      available: 'Доступно',
+      current_price: 'Текущая цена (1 QAU = 1г золота)',
+      available_for_sale: 'Доступно для продажи (On-Chain)',
+      gold_reserve: 'Золотой резерв (Сертифицировано)',
+      round_ends: 'Раунд заканчивается через',
       fee: {
         gross: 'Валовая сумма',
         platform_fee: 'Комиссия платформы',
@@ -742,11 +753,37 @@ export const ru = {
       },
       actions: {
         connect: 'Подключить кошелек',
+        connect_to_buy: 'Подключить кошелек для покупки',
+        buy_now: 'Купить QAU сейчас',
         confirm: 'Подтвердить покупку',
         processing: 'Обработка...',
         success_title: 'Покупка успешна!',
         success_desc: 'Ваш запрос записан. QAU будут отчеканены после приобретения золота.',
         view_explorer: 'Смотреть в обозревателе'
+      },
+      wallet: {
+        connected: 'Подключено',
+        connect_title: 'Подключите ваш кошелек',
+        connect_desc: 'Подключите MetaMask для покупки токенов QAU',
+        network: 'Сеть',
+        chain_id: 'Chain ID',
+        connecting: 'Подключение...',
+        install: 'Установить MetaMask'
+      },
+      steps: {
+        confirm: 'Подтвердить',
+        confirm_desc: 'В MetaMask',
+        processing: 'Обработка',
+        processing_desc: 'On-chain',
+        complete: 'Завершено',
+        complete_desc: 'Успех'
+      },
+      messages: {
+        confirm_tx: 'Пожалуйста, подтвердите транзакцию в MetaMask...',
+        tx_submitted: 'Транзакция отправлена, ожидание подтверждения...',
+        purchase_success: 'Покупка успешна! Оплачено {{paid}} QAU за {{received}} токенов QAU',
+        tx_cancelled: 'Транзакция отменена пользователем',
+        enter_valid_amount: 'Пожалуйста, введите корректную сумму'
       },
       stats: {
         gold_price: 'Цена золота (24ч)',
@@ -771,7 +808,8 @@ export const ru = {
         install_wallet: 'Пожалуйста, установите MetaMask или совместимый кошелек.',
         switch_network: 'Пожалуйста, переключитесь на сеть Quantaureum (Chain ID: {{chainId}})',
         connect_failed: 'Не удалось подключить кошелек',
-        tx_failed: 'Транзакция не удалась'
+        tx_failed: 'Транзакция не удалась',
+        metamask_not_found: 'MetaMask не найден'
       }
     },
     about: {

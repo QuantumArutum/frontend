@@ -710,15 +710,26 @@ export const de = {
       }
     },
     token_sale: {
-      title: 'In digitales Gold investieren',
-      subtitle: 'Sicher, geprüft und sofort liquide. 1 QAU = 1 Gramm Gold.',
+      title: 'QAU Token-Verkauf',
+      subtitle: '1 QAU = 1 Gramm Gold',
       buy_title: 'QAU Kaufen',
       live_rate: 'Live-Kurs',
+      purchase_tokens: 'Token Kaufen',
+      sale_progress: 'Verkaufsfortschritt',
       input: {
-        pay_label: 'Sie zahlen (USDT)',
+        pay_label: 'Zahlen mit (QAU)',
+        pay_hint: 'USD-Betrag eingeben, Äquivalent in QAU zahlen',
         placeholder: 'Betrag eingeben...',
-        receive_label: 'Sie erhalten (QAU)'
+        receive_label: 'Sie erhalten (QAU)',
+        balance: 'Guthaben'
       },
+      rate: 'Kurs',
+      sold: 'Verkauft',
+      available: 'Verfügbar',
+      current_price: 'Aktueller Preis (1 QAU = 1g Gold)',
+      available_for_sale: 'Zum Verkauf verfügbar (On-Chain)',
+      gold_reserve: 'Goldreserve (Zertifiziert)',
+      round_ends: 'Runde endet in',
       fee: {
         gross: 'Bruttobetrag',
         platform_fee: 'Plattformgebühr',
@@ -727,11 +738,37 @@ export const de = {
       },
       actions: {
         connect: 'Wallet verbinden',
+        connect_to_buy: 'Wallet verbinden zum Kaufen',
+        buy_now: 'Jetzt QAU kaufen',
         confirm: 'Kauf bestätigen',
         processing: 'Verarbeitung...',
         success_title: 'Kauf erfolgreich!',
         success_desc: 'Ihre Anfrage wurde aufgezeichnet. QAU wird nach dem Golderwerb geprägt.',
         view_explorer: 'Im Explorer ansehen'
+      },
+      wallet: {
+        connected: 'Verbunden',
+        connect_title: 'Verbinden Sie Ihre Wallet',
+        connect_desc: 'MetaMask verbinden um QAU-Token zu kaufen',
+        network: 'Netzwerk',
+        chain_id: 'Chain ID',
+        connecting: 'Verbinden...',
+        install: 'MetaMask installieren'
+      },
+      steps: {
+        confirm: 'Bestätigen',
+        confirm_desc: 'In MetaMask',
+        processing: 'Verarbeitung',
+        processing_desc: 'On-chain',
+        complete: 'Abgeschlossen',
+        complete_desc: 'Erfolg'
+      },
+      messages: {
+        confirm_tx: 'Bitte bestätigen Sie die Transaktion in MetaMask...',
+        tx_submitted: 'Transaktion eingereicht, warte auf Bestätigung...',
+        purchase_success: 'Kauf erfolgreich! {{paid}} QAU bezahlt für {{received}} QAU-Token',
+        tx_cancelled: 'Transaktion vom Benutzer abgebrochen',
+        enter_valid_amount: 'Bitte geben Sie einen gültigen Betrag ein'
       },
       stats: {
         gold_price: 'Goldpreis (24h)',
@@ -756,7 +793,8 @@ export const de = {
         install_wallet: 'Bitte installieren Sie MetaMask oder eine kompatible Wallet.',
         switch_network: 'Bitte wechseln Sie zum Quantaureum-Netzwerk (Chain ID: {{chainId}})',
         connect_failed: 'Verbindung zur Wallet fehlgeschlagen',
-        tx_failed: 'Transaktion fehlgeschlagen'
+        tx_failed: 'Transaktion fehlgeschlagen',
+        metamask_not_found: 'MetaMask nicht gefunden'
       }
     },
     about: {

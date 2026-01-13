@@ -725,15 +725,26 @@ export const ar = {
       }
     },
     token_sale: {
-      title: 'استثمر في الذهب الرقمي',
-      subtitle: 'آمن، ومدقق، وسائل فورًا. 1 QAU = 1 جرام ذهب.',
+      title: 'بيع رموز QAU',
+      subtitle: '1 QAU = 1 جرام ذهب',
       buy_title: 'شراء QAU',
       live_rate: 'السعر المباشر',
+      purchase_tokens: 'شراء الرموز',
+      sale_progress: 'تقدم البيع',
       input: {
-        pay_label: 'أنت تدفع (USDT)',
+        pay_label: 'الدفع بـ (QAU)',
+        pay_hint: 'أدخل المبلغ بالدولار، ادفع ما يعادله بـ QAU',
         placeholder: 'أدخل المبلغ...',
-        receive_label: 'أنت تستلم (QAU)'
+        receive_label: 'أنت تستلم (QAU)',
+        balance: 'الرصيد'
       },
+      rate: 'السعر',
+      sold: 'مباع',
+      available: 'متاح',
+      current_price: 'السعر الحالي (1 QAU = 1 جرام ذهب)',
+      available_for_sale: 'متاح للبيع (على السلسلة)',
+      gold_reserve: 'احتياطي الذهب (معتمد)',
+      round_ends: 'تنتهي الجولة في',
       fee: {
         gross: 'المبلغ الإجمالي',
         platform_fee: 'رسوم المنصة',
@@ -742,11 +753,37 @@ export const ar = {
       },
       actions: {
         connect: 'توصيل المحفظة',
+        connect_to_buy: 'وصّل المحفظة للشراء',
+        buy_now: 'اشترِ QAU الآن',
         confirm: 'تأكيد الشراء',
         processing: 'جاري المعالجة...',
         success_title: 'تم الشراء بنجاح!',
         success_desc: 'تم تسجيل طلبك. سيتم سك QAU بعد الاستحواذ على الذهب.',
         view_explorer: 'عرض في المستكشف'
+      },
+      wallet: {
+        connected: 'متصل',
+        connect_title: 'وصّل محفظتك',
+        connect_desc: 'وصّل MetaMask لشراء رموز QAU',
+        network: 'الشبكة',
+        chain_id: 'معرف السلسلة',
+        connecting: 'جاري التوصيل...',
+        install: 'تثبيت MetaMask'
+      },
+      steps: {
+        confirm: 'تأكيد',
+        confirm_desc: 'في MetaMask',
+        processing: 'معالجة',
+        processing_desc: 'على السلسلة',
+        complete: 'مكتمل',
+        complete_desc: 'نجاح'
+      },
+      messages: {
+        confirm_tx: 'يرجى تأكيد المعاملة في MetaMask...',
+        tx_submitted: 'تم إرسال المعاملة، في انتظار التأكيد...',
+        purchase_success: 'تم الشراء بنجاح! دفعت {{paid}} QAU مقابل {{received}} رموز QAU',
+        tx_cancelled: 'تم إلغاء المعاملة من قبل المستخدم',
+        enter_valid_amount: 'يرجى إدخال مبلغ صالح'
       },
       stats: {
         gold_price: 'سعر الذهب (24س)',
@@ -771,7 +808,8 @@ export const ar = {
         install_wallet: 'يرجى تثبيت MetaMask أو محفظة متوافقة.',
         switch_network: 'يرجى التبديل إلى شبكة Quantaureum (Chain ID: {{chainId}})',
         connect_failed: 'فشل توصيل المحفظة',
-        tx_failed: 'فشلت المعاملة'
+        tx_failed: 'فشلت المعاملة',
+        metamask_not_found: 'لم يتم العثور على MetaMask'
       }
     },
     about: {

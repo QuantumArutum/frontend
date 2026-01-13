@@ -725,15 +725,26 @@ export const ko = {
       }
     },
     token_sale: {
-      title: '디지털 골드에 투자',
-      subtitle: '안전, 감사됨, 즉시 유동성. 1 QAU = 1 그램 금.',
+      title: 'QAU 토큰 세일',
+      subtitle: '1 QAU = 1 그램 금',
       buy_title: 'QAU 구매',
       live_rate: '실시간 환율',
+      purchase_tokens: '토큰 구매',
+      sale_progress: '판매 진행률',
       input: {
-        pay_label: '지불 (USDT)',
+        pay_label: '결제 방법 (QAU)',
+        pay_hint: 'USD 금액 입력, QAU 상당액으로 결제',
         placeholder: '금액 입력...',
-        receive_label: '수령 (QAU)'
+        receive_label: '수령 (QAU)',
+        balance: '잔액'
       },
+      rate: '환율',
+      sold: '판매됨',
+      available: '이용 가능',
+      current_price: '현재 가격 (1 QAU = 1g 금)',
+      available_for_sale: '판매 가능 (온체인)',
+      gold_reserve: '금 보유량 (인증됨)',
+      round_ends: '라운드 종료까지',
       fee: {
         gross: '총액',
         platform_fee: '플랫폼 수수료',
@@ -742,11 +753,37 @@ export const ko = {
       },
       actions: {
         connect: '지갑 연결',
+        connect_to_buy: '지갑 연결하여 구매',
+        buy_now: '지금 QAU 구매',
         confirm: '구매 확인',
         processing: '처리 중...',
         success_title: '구매 성공!',
         success_desc: '요청이 기록되었습니다. 금 매입 후 QAU가 발행됩니다.',
         view_explorer: '탐색기에서 보기'
+      },
+      wallet: {
+        connected: '연결됨',
+        connect_title: '지갑 연결',
+        connect_desc: 'MetaMask를 연결하여 QAU 토큰 구매',
+        network: '네트워크',
+        chain_id: '체인 ID',
+        connecting: '연결 중...',
+        install: 'MetaMask 설치'
+      },
+      steps: {
+        confirm: '확인',
+        confirm_desc: 'MetaMask에서',
+        processing: '처리 중',
+        processing_desc: '온체인',
+        complete: '완료',
+        complete_desc: '성공'
+      },
+      messages: {
+        confirm_tx: 'MetaMask에서 트랜잭션을 확인해주세요...',
+        tx_submitted: '트랜잭션 제출됨, 확인 대기 중...',
+        purchase_success: '구매 성공! {{paid}} QAU를 지불하여 {{received}} QAU 토큰 획득',
+        tx_cancelled: '사용자가 트랜잭션을 취소했습니다',
+        enter_valid_amount: '유효한 금액을 입력해주세요'
       },
       stats: {
         gold_price: '금 가격 (24h)',
@@ -771,7 +808,8 @@ export const ko = {
         install_wallet: 'MetaMask 또는 호환되는 지갑을 설치해주세요.',
         switch_network: 'Quantaureum 네트워크 (Chain ID: {{chainId}})로 전환해주세요',
         connect_failed: '지갑 연결 실패',
-        tx_failed: '트랜잭션 실패'
+        tx_failed: '트랜잭션 실패',
+        metamask_not_found: 'MetaMask를 찾을 수 없습니다'
       }
     },
     about: {

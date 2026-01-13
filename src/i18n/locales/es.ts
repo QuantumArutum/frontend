@@ -710,15 +710,26 @@ export const es = {
       }
     },
     token_sale: {
-      title: 'Invertir en Oro Digital',
-      subtitle: 'Seguro, Auditado e Instantáneamente Líquido. 1 QAU = 1 Gramo de Oro.',
+      title: 'Venta de Tokens QAU',
+      subtitle: '1 QAU = 1 Gramo de Oro',
       buy_title: 'Comprar QAU',
       live_rate: 'Tasa en Vivo',
+      purchase_tokens: 'Comprar Tokens',
+      sale_progress: 'Progreso de Venta',
       input: {
-        pay_label: 'Usted Paga (USDT)',
+        pay_label: 'Pagar con (QAU)',
+        pay_hint: 'Ingrese cantidad en USD, pague equivalente en QAU',
         placeholder: 'Ingrese cantidad...',
-        receive_label: 'Usted Recibe (QAU)'
+        receive_label: 'Usted Recibe (QAU)',
+        balance: 'Saldo'
       },
+      rate: 'Tasa',
+      sold: 'Vendido',
+      available: 'Disponible',
+      current_price: 'Precio Actual (1 QAU = 1g Oro)',
+      available_for_sale: 'Disponible para Venta (On-Chain)',
+      gold_reserve: 'Reserva de Oro (Certificada)',
+      round_ends: 'Ronda Termina En',
       fee: {
         gross: 'Cantidad Bruta',
         platform_fee: 'Tarifa de Plataforma',
@@ -727,11 +738,37 @@ export const es = {
       },
       actions: {
         connect: 'Conectar Billetera',
+        connect_to_buy: 'Conectar Billetera para Comprar',
+        buy_now: 'Comprar QAU Ahora',
         confirm: 'Confirmar Compra',
         processing: 'Procesando...',
         success_title: '¡Compra Exitosa!',
         success_desc: 'Su solicitud ha sido registrada. QAU será acuñado después de la adquisición de oro.',
         view_explorer: 'Ver en Explorador'
+      },
+      wallet: {
+        connected: 'Conectado',
+        connect_title: 'Conecte Su Billetera',
+        connect_desc: 'Conecte MetaMask para comprar tokens QAU',
+        network: 'Red',
+        chain_id: 'ID de Cadena',
+        connecting: 'Conectando...',
+        install: 'Instalar MetaMask'
+      },
+      steps: {
+        confirm: 'Confirmar',
+        confirm_desc: 'En MetaMask',
+        processing: 'Procesando',
+        processing_desc: 'On-chain',
+        complete: 'Completado',
+        complete_desc: 'Éxito'
+      },
+      messages: {
+        confirm_tx: 'Por favor confirme la transacción en MetaMask...',
+        tx_submitted: 'Transacción enviada, esperando confirmación...',
+        purchase_success: '¡Compra exitosa! Pagó {{paid}} QAU por {{received}} tokens QAU',
+        tx_cancelled: 'Transacción cancelada por el usuario',
+        enter_valid_amount: 'Por favor ingrese una cantidad válida'
       },
       stats: {
         gold_price: 'Precio del Oro (24h)',
@@ -756,7 +793,8 @@ export const es = {
         install_wallet: 'Por favor instale MetaMask o una billetera compatible.',
         switch_network: 'Por favor cambie a la Red Quantaureum (ID de Cadena: {{chainId}})',
         connect_failed: 'Falló la conexión a la billetera',
-        tx_failed: 'Transacción fallida'
+        tx_failed: 'Transacción fallida',
+        metamask_not_found: 'MetaMask no encontrado'
       }
     },
     about: {

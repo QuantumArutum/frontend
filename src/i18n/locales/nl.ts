@@ -710,15 +710,26 @@ export const nl = {
       }
     },
     token_sale: {
-      title: 'Investeer in Digitaal Goud',
-      subtitle: 'Veilig, Gecontroleerd en Direct Liquide. 1 QAU = 1 Gram Goud.',
+      title: 'QAU Token Verkoop',
+      subtitle: '1 QAU = 1 Gram Goud',
       buy_title: 'Koop QAU',
       live_rate: 'Live Koers',
+      purchase_tokens: 'Koop Tokens',
+      sale_progress: 'Verkoopvoortgang',
       input: {
-        pay_label: 'U Betaalt (USDT)',
+        pay_label: 'Betaal met (QAU)',
+        pay_hint: 'Voer USD-bedrag in, betaal equivalent in QAU',
         placeholder: 'Voer bedrag in...',
-        receive_label: 'U Ontvangt (QAU)'
+        receive_label: 'U Ontvangt (QAU)',
+        balance: 'Saldo'
       },
+      rate: 'Koers',
+      sold: 'Verkocht',
+      available: 'Beschikbaar',
+      current_price: 'Huidige Prijs (1 QAU = 1g Goud)',
+      available_for_sale: 'Beschikbaar voor Verkoop (On-Chain)',
+      gold_reserve: 'Goudreserve (Gecertificeerd)',
+      round_ends: 'Ronde Eindigt Over',
       fee: {
         gross: 'Brutobedrag',
         platform_fee: 'Platformkosten',
@@ -727,11 +738,37 @@ export const nl = {
       },
       actions: {
         connect: 'Verbind Portemonnee',
+        connect_to_buy: 'Verbind Portemonnee om te Kopen',
+        buy_now: 'Koop QAU Nu',
         confirm: 'Bevestig Aankoop',
         processing: 'Verwerken...',
         success_title: 'Aankoop Succesvol!',
         success_desc: 'Uw verzoek is geregistreerd. QAU wordt gemunt na goudverwerving.',
         view_explorer: 'Bekijk op Verkenner'
+      },
+      wallet: {
+        connected: 'Verbonden',
+        connect_title: 'Verbind Uw Portemonnee',
+        connect_desc: 'Verbind MetaMask om QAU-tokens te kopen',
+        network: 'Netwerk',
+        chain_id: 'Chain ID',
+        connecting: 'Verbinden...',
+        install: 'Installeer MetaMask'
+      },
+      steps: {
+        confirm: 'Bevestigen',
+        confirm_desc: 'In MetaMask',
+        processing: 'Verwerken',
+        processing_desc: 'On-chain',
+        complete: 'Voltooid',
+        complete_desc: 'Succes'
+      },
+      messages: {
+        confirm_tx: 'Bevestig de transactie in MetaMask...',
+        tx_submitted: 'Transactie verzonden, wachten op bevestiging...',
+        purchase_success: 'Aankoop succesvol! {{paid}} QAU betaald voor {{received}} QAU-tokens',
+        tx_cancelled: 'Transactie geannuleerd door gebruiker',
+        enter_valid_amount: 'Voer een geldig bedrag in'
       },
       stats: {
         gold_price: 'Goudprijs (24u)',
@@ -756,7 +793,8 @@ export const nl = {
         install_wallet: 'Installeer MetaMask of een compatibele portemonnee.',
         switch_network: 'Schakel over naar Quantaureum Netwerk (Chain ID: {{chainId}})',
         connect_failed: 'Verbinden met portemonnee mislukt',
-        tx_failed: 'Transactie mislukt'
+        tx_failed: 'Transactie mislukt',
+        metamask_not_found: 'MetaMask niet gevonden'
       }
     },
     about: {

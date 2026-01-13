@@ -725,15 +725,26 @@ export const zh = {
       }
     },
     token_sale: {
-      title: '投资数字黄金',
-      subtitle: '安全、审计且即时流动。1 QAU = 1 克黄金。',
+      title: 'QAU 代币销售',
+      subtitle: '1 QAU = 1 克黄金',
       buy_title: '购买 QAU',
       live_rate: '实时汇率',
+      purchase_tokens: '购买代币',
+      sale_progress: '销售进度',
       input: {
-        pay_label: '支付 (USDT)',
+        pay_label: '支付方式 (QAU)',
+        pay_hint: '输入美元金额，以等值 QAU 支付',
         placeholder: '输入金额...',
-        receive_label: '收到 (QAU)'
+        receive_label: '您将收到 (QAU)',
+        balance: '余额'
       },
+      rate: '汇率',
+      sold: '已售',
+      available: '可用',
+      current_price: '当前价格 (1 QAU = 1克黄金)',
+      available_for_sale: '可售数量 (链上)',
+      gold_reserve: '黄金储备 (已认证)',
+      round_ends: '本轮结束倒计时',
       fee: {
         gross: '总金额',
         platform_fee: '平台费',
@@ -742,11 +753,37 @@ export const zh = {
       },
       actions: {
         connect: '连接钱包',
+        connect_to_buy: '连接钱包购买',
+        buy_now: '立即购买 QAU',
         confirm: '确认购买',
         processing: '处理中...',
         success_title: '购买成功！',
         success_desc: '您的请求已记录。QAU 将在黄金收购后铸造。',
         view_explorer: '在浏览器查看'
+      },
+      wallet: {
+        connected: '已连接',
+        connect_title: '连接您的钱包',
+        connect_desc: '连接 MetaMask 购买 QAU 代币',
+        network: '网络',
+        chain_id: '链 ID',
+        connecting: '连接中...',
+        install: '安装 MetaMask'
+      },
+      steps: {
+        confirm: '确认',
+        confirm_desc: '在 MetaMask 中',
+        processing: '处理中',
+        processing_desc: '链上',
+        complete: '完成',
+        complete_desc: '成功'
+      },
+      messages: {
+        confirm_tx: '请在 MetaMask 中确认交易...',
+        tx_submitted: '交易已提交，等待确认...',
+        purchase_success: '购买成功！支付 {{paid}} QAU 获得 {{received}} QAU 代币',
+        tx_cancelled: '用户取消交易',
+        enter_valid_amount: '请输入有效金额'
       },
       stats: {
         gold_price: '金价 (24小时)',
@@ -771,7 +808,8 @@ export const zh = {
         install_wallet: '请安装 MetaMask 或兼容的钱包。',
         switch_network: '请切换到 Quantaureum 网络 (Chain ID: {{chainId}})',
         connect_failed: '连接钱包失败',
-        tx_failed: '交易失败'
+        tx_failed: '交易失败',
+        metamask_not_found: '未找到 MetaMask'
       }
     },
     about: {
