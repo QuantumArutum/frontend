@@ -52,22 +52,17 @@ export function applyRTLDirection(languageCode: string): void {
   }
 }
 
-// Detect initial language from localStorage or browser
+// Detect initial language from localStorage only (default to English)
 function detectInitialLanguage(): string {
   if (typeof window === 'undefined') return 'en';
   
-  // Check localStorage first
+  // Only check localStorage - user must manually select language
   const savedLanguage = localStorage.getItem('quantaureum-global-language');
   if (savedLanguage && resources[savedLanguage as keyof typeof resources]) {
     return savedLanguage;
   }
   
-  // Check browser language
-  const browserLang = navigator.language.split('-')[0];
-  if (resources[browserLang as keyof typeof resources]) {
-    return browserLang;
-  }
-  
+  // Default to English
   return 'en';
 }
 
