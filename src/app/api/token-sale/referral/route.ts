@@ -162,8 +162,8 @@ export const POST = createSecureHandler(
       // 确定tier（可以根据用户购买历史等条件升级）
       const purchases = await db.findPurchasesByAddress(address);
       const totalPurchased = purchases
-        .filter(p => p.status === 'completed')
-        .reduce((sum, p) => sum + p.amountUSD, 0);
+        .filter((p: any) => p.status === 'completed')
+        .reduce((sum: number, p: any) => sum + p.amountUSD, 0);
 
       let tier: 'standard' | 'vip' | 'ambassador' = 'standard';
       if (totalPurchased >= 10000) tier = 'ambassador';
