@@ -80,7 +80,7 @@ export const POST = createSecureHandler(
     
     // 检查是否有未完成的购买
     const pendingPurchases = await db.findPurchasesByAddress(buyerAddress);
-    const hasPending = pendingPurchases.some(p => p.status === 'pending');
+    const hasPending = pendingPurchases.some((p: any) => p.status === 'pending');
     if (hasPending) {
       return errorResponse('您有未完成的购买订单，请等待处理完成', 400);
     }
