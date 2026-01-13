@@ -62,7 +62,7 @@ export default function MembersPage() {
             <span className="text-white">{t('community_page.members.title')}</span>
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">{t('community_page.members.title')}</h1>
-          <p className="text-gray-400">{t('community_page.members.discover', { count: '125,847' })}</p>
+          <p className="text-gray-400">{String(t('community_page.members.discover')).replace('{{count}}', '125,847')}</p>
         </div>
       </div>
 
