@@ -1,0 +1,422 @@
+'use client';
+
+import React, { useState } from 'react';
+import { MapPin, CheckCircle } from 'lucide-react';
+
+interface Provider {
+  id: string;
+  name: string;
+  country: string;
+  region: string;
+  logo: string;
+  supportedCurrencies: string[];
+  processingTime: string;
+  fees: string;
+}
+
+interface BillData {
+  accountNumber: string;
+  customerName: string;
+  provider: string;
+  billingPeriod: string;
+  dueDate: string;
+  amount: number;
+  currency: string;
+  usage: number;
+  unit: string;
+  status: string;
+  currentCharges?: number;
+}
+
+interface PaymentData {
+  transactionId: string;
+  status: string;
+  amount: number;
+  currency: string;
+  timestamp: string;
+  provider: string;
+  accountNumber: string;
+  method?: string;
+}
+
+const UtilitiesPage = () => {
+  const [currentView, setCurrentView] = useState('search'); // search, results, payment, confirmation
+  const [searchParams, setSearchParams] = useState({
+    country: '',
+    region: '',
+    provider: '',
+    accountNumber: '',
+    customerName: ''
+  });
+  const [providers, setProviders] = useState<Provider[]>([]);
+  const [selectedProvider, setSelectedProvider] = useState<Provider | null>(null);
+  const [billData, setBillData] = useState<BillData | null>(null);
+  const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  // 模拟电力公司数据
+  const mockProviders = [
+    {
+      id: 'sgp-001',
+      name: '新加坡电力公司',
+      country: '新加坡',
+      region: '全国',
+      logo: '⚡',
+      supportedCurrencies: ['QAU', 'USDT', 'ETH'],
+      processingTime: '即时',
+      fees: '0.5%'
+    },
+    {
+      id: 'usa-001',
+      name: 'Pacific Gas & Electric',
+      country: '美国',
+      region: '加利福尼亚州',
+      logo: '🔌',
+      supportedCurrencies: ['QAU', 'USDT', 'BTC'],
+      processingTime: '1-3分钟',
+      fees: '0.8%'
+    },
+    {
+      id: 'chn-001',
+      name: '国家电网',
+      country: '中国',
+      region: '全国',
+      logo: '🏭',
+      supportedCurrencies: ['QAU', 'USDT'],
+      processingTime: '即时',
+      fees: '0.3%'
+    },
+    {
+      id: 'jpn-001',
+      name: '東京電力',
+      country: '日本',
+      region: '关东地区',
+      logo: '🔋',
+      supportedCurrencies: ['QAU', 'USDT', 'ETH'],
+      processingTime: '1-2分钟',
+      fees: '0.6%'
+    }
+  ];
+
+  // 搜索电力公司
+  const searchProviders = () => {
+    setLoading(true);
+    setTimeout(() => {
+      const filtered = mockProviders.filter(provider => 
+        (!searchParams.country || provider.country.includes(searchParams.country)) &&
+        (!searchParams.region || provider.region.includes(searchParams.region))
+      );
+      setProviders(filtered);
+      setCurrentView('results');
+      setLoading(false);
+    }, 1000);
+  };
+
+  // 查询账单
+  const queryBill = async (provider: Provider) => {
+    setLoading(true);
+    setSelectedProvider(provider);
+    
+    setTimeout(() => {
+      // 模拟账单数据
+      setBillData({
+        accountNumber: searchParams.accountNumber,
+        customerName: searchParams.customerName,
+        provider: provider.name,
+        billingPeriod: '2024年6月',
+        dueDate: '2024-06-15',
+        amount: Math.floor(Math.random() * 500) + 100,
+        currency: 'USD',
+        usage: Math.floor(Math.random() * 1000) + 200,
+        unit: 'kWh',
+        status: 'pending'
+      });
+      setCurrentView('payment');
+      setLoading(false);
+    }, 1500);
+  };
+
+  // 处理支付
+  const processPayment = (_paymentMethod: string) => {
+    setLoading(true);
+    if (!billData) return;
+    setPaymentData({
+      transactionId: 'TX' + Date.now(),
+      status: 'completed',
+      amount: billData.amount || 0,
+      currency: 'USD',
+      timestamp: new Date().toISOString(),
+      provider: selectedProvider?.name || '',
+      accountNumber: billData.accountNumber
+    });
+    
+    setTimeout(() => {
+      setCurrentView('confirmation');
+      setLoading(false);
+    }, 2000);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+      <div className="container mx-auto px-4 py-8">
+        {/* 页面标题 */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+            ⚡ 全球电费缴纳平台
+          </h1>
+          <p className="text-gray-300 text-lg">
+            支持全球电力公司，使用QAU和其他加密货币安全便捷地缴纳电费
+          </p>
+        </div>
+
+        {/* 搜索界面 */}
+        {currentView === 'search' && (
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8">
+              <h2 className="text-2xl font-semibold mb-6 text-center">查找电力公司</h2>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">国家/地区</label>
+                  <div className="relative">
+                    <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                    <input
+                      type="text"
+                      value={searchParams.country}
+                      onChange={(e) => setSearchParams({...searchParams, country: e.target.value})}
+                      placeholder="输入国家或地区"
+                      className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">省份/州</label>
+                  <input
+                    type="text"
+                    value={searchParams.region}
+                    onChange={(e) => setSearchParams({...searchParams, region: e.target.value})}
+                    placeholder="输入省份或州"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">电表账号</label>
+                  <input
+                    type="text"
+                    value={searchParams.accountNumber}
+                    onChange={(e) => setSearchParams({...searchParams, accountNumber: e.target.value})}
+                    placeholder="输入电表账号"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">户主姓名</label>
+                  <input
+                    type="text"
+                    value={searchParams.customerName}
+                    onChange={(e) => setSearchParams({...searchParams, customerName: e.target.value})}
+                    placeholder="输入户主姓名"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  />
+                </div>
+
+                <button
+                  onClick={searchProviders}
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 disabled:opacity-50"
+                >
+                  {loading ? '搜索中...' : '搜索电力公司'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 电力公司列表 */}
+        {currentView === 'results' && (
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold">找到 {providers.length} 家电力公司</h2>
+              <button
+                onClick={() => setCurrentView('search')}
+                className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all duration-200"
+              >
+                重新搜索
+              </button>
+            </div>
+
+            <div className="grid gap-6">
+              {providers.map((provider) => (
+                <div key={provider.id} className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className="text-4xl">{provider.logo}</div>
+                      <div>
+                        <h3 className="text-xl font-semibold">{provider.name}</h3>
+                        <p className="text-gray-300">{provider.country} - {provider.region}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => queryBill(provider)}
+                      disabled={!searchParams.accountNumber || !searchParams.customerName}
+                      className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200 disabled:opacity-50"
+                    >
+                      查询账单
+                    </button>
+                  </div>
+                  
+                  <div className="mt-4 grid grid-cols-3 gap-4 text-sm">
+                    <div>
+                      <span className="text-gray-400">支持币种:</span>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {provider.supportedCurrencies.map((currency) => (
+                          <span key={currency} className="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">
+                            {currency}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-gray-400">处理时间:</span>
+                      <p className="text-white">{provider.processingTime}</p>
+                    </div>
+                    <div>
+                      <span className="text-gray-400">手续费:</span>
+                      <p className="text-white">{provider.fees}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 账单支付界面 */}
+        {currentView === 'payment' && billData && (
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8">
+              <h2 className="text-2xl font-semibold mb-6 text-center">电费账单</h2>
+              
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between">
+                  <span className="text-gray-400">电力公司:</span>
+                  <span>{billData.provider}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">账户号码:</span>
+                  <span>{billData.accountNumber}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">户主姓名:</span>
+                  <span>{billData.customerName}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">账单周期:</span>
+                  <span>{billData.billingPeriod}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">用电量:</span>
+                  <span>{billData.usage} {billData.unit}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">到期日期:</span>
+                  <span>{billData.dueDate}</span>
+                </div>
+                <div className="flex justify-between text-xl font-semibold">
+                  <span>应付金额:</span>
+                  <span className="text-yellow-400">${billData.amount} {billData.currency}</span>
+                </div>
+              </div>
+
+              <div className="border-t border-white/20 pt-6">
+                <h3 className="text-lg font-semibold mb-4">选择支付方式</h3>
+                <div className="grid gap-3">
+                  {selectedProvider?.supportedCurrencies.map((currency) => (
+                    <button
+                      key={currency}
+                      onClick={() => processPayment(currency)}
+                      className="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-lg transition-all duration-200"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center text-sm font-bold">
+                          {currency.charAt(0)}
+                        </div>
+                        <span>{currency}</span>
+                      </div>
+                      <span className="text-gray-400">手续费: {selectedProvider?.fees}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => setCurrentView('results')}
+                className="w-full mt-6 bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200"
+              >
+                返回
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* 支付确认界面 */}
+        {currentView === 'confirmation' && paymentData && (
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8 text-center">
+              <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-semibold mb-6">支付成功！</h2>
+              
+              <div className="space-y-4 mb-6 text-left">
+                <div className="flex justify-between">
+                  <span className="text-gray-400">交易ID:</span>
+                  <span className="font-mono">{paymentData.transactionId}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">支付方式:</span>
+                  <span>{paymentData.method}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">支付金额:</span>
+                  <span>${paymentData.amount} {paymentData.currency}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">支付时间:</span>
+                  <span>{new Date(paymentData.timestamp).toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setCurrentView('search')}
+                  className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200"
+                >
+                  继续缴费
+                </button>
+                <button className="flex-1 bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200">
+                  下载收据
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 加载状态 */}
+        {loading && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8 text-center">
+              <div className="animate-spin w-8 h-8 border-2 border-yellow-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+              <p className="text-white">处理中...</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default UtilitiesPage;
+
+

@@ -1,0 +1,727 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Google Fonts - UI UX Pro Max Design System */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Quantaureum Design System - Global Styles */
+:root {
+  /* 颜色系统 - 基于众筹平台风格 */
+  --color-primary: #0891b2; /* cyan-600 */
+  --color-primary-light: #06b6d4; /* cyan-500 */
+  --color-secondary: #7c3aed; /* violet-600 */
+  --color-secondary-light: #8b5cf6; /* violet-500 */
+  
+  /* 背景色 */
+  --bg-primary: #0f172a; /* slate-900 */
+  --bg-secondary: #1e293b; /* slate-800 */
+  --bg-card: rgba(255, 255, 255, 0.1);
+  --bg-card-hover: rgba(255, 255, 255, 0.15);
+  
+  /* 文本色 */
+  --text-primary: #ffffff;
+  --text-secondary: #d1d5db; /* gray-300 */
+  --text-muted: #9ca3af; /* gray-400 */
+  
+  /* 边框色 */
+  --border-primary: rgba(255, 255, 255, 0.2);
+  --border-secondary: rgba(255, 255, 255, 0.1);
+  
+  /* 状态色 */
+  --color-success: #10b981; /* emerald-500 */
+  --color-warning: #f59e0b; /* amber-500 */
+  --color-error: #ef4444; /* red-500 */
+  --color-info: #06b6d4; /* cyan-500 */
+  
+  /* 间距 */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* 圆角 */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  
+  /* 阴影 */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* 基础样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 全局字体和背景 */
+body {
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* 数字溢出处理工具类 */
+.number-container {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.responsive-number {
+  font-size: clamp(0.875rem, 2vw, 1.125rem);
+}
+
+.truncate-number {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  max-width: 100%;
+}
+
+/* 量子背景效果 */
+.quantum-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.quantum-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: grid-move 30s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(40px, 40px); }
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  animation: glow-pulse 8s ease-in-out infinite alternate;
+}
+
+.glow-orb-1 {
+  top: 10%;
+  left: 10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.4) 0%, transparent 70%);
+  animation-delay: 0s;
+}
+
+.glow-orb-2 {
+  top: 60%;
+  right: 10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.4) 0%, transparent 70%);
+  animation-delay: 4s;
+}
+
+.glow-orb-3 {
+  bottom: 10%;
+  left: 30%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
+  animation-delay: 2s;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.1); }
+}
+
+/* 主要内容区域 */
+.main-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* 统一的卡片样式 */
+.quantum-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.quantum-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* 统一的按钮样式 */
+.quantum-button-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.quantum-button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3);
+}
+
+.quantum-button-secondary {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.quantum-button-secondary:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+/* 统一的输入框样式 */
+.quantum-input {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.quantum-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+}
+
+.quantum-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* 统一的徽章样式 */
+.quantum-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  gap: var(--spacing-xs);
+}
+
+.quantum-badge-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: var(--text-primary);
+}
+
+.quantum-badge-success {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--color-success);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.quantum-badge-warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--color-warning);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.quantum-badge-error {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--color-error);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* 统一的标签页样式 */
+.quantum-tabs {
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.quantum-tab {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.quantum-tab:hover {
+  color: var(--text-secondary);
+}
+
+.quantum-tab.active {
+  color: var(--text-primary);
+}
+
+.quantum-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+}
+
+/* 统一的进度条样式 */
+.quantum-progress {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.quantum-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: var(--radius-sm);
+  transition: width 0.3s ease;
+}
+
+/* 响应式字体大小 */
+.text-responsive-xs { font-size: clamp(0.75rem, 1.5vw, 0.875rem); }
+.text-responsive-sm { font-size: clamp(0.875rem, 2vw, 1rem); }
+.text-responsive-base { font-size: clamp(1rem, 2.5vw, 1.125rem); }
+.text-responsive-lg { font-size: clamp(1.125rem, 3vw, 1.25rem); }
+.text-responsive-xl { font-size: clamp(1.25rem, 3.5vw, 1.5rem); }
+.text-responsive-2xl { font-size: clamp(1.5rem, 4vw, 2rem); }
+.text-responsive-3xl { font-size: clamp(2rem, 5vw, 3rem); }
+
+/* 动画效果 */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-primary-light), var(--color-secondary-light));
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .quantum-button-primary,
+  .quantum-button-secondary {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+  
+  .quantum-input {
+    padding: var(--spacing-sm);
+    font-size: 0.875rem;
+  }
+  
+  .glow-orb-1,
+  .glow-orb-2,
+  .glow-orb-3 {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .glow-orb-1,
+  .glow-orb-2,
+  .glow-orb-3 {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* 工具提示样式 */
+.quantum-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.quantum-tooltip .tooltip-content {
+  visibility: hidden;
+  width: max-content;
+  max-width: 200px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  text-align: center;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  position: absolute;
+  z-index: 1000;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.875rem;
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.quantum-tooltip:hover .tooltip-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* 加载动画 */
+.quantum-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-secondary);
+  border-radius: 50%;
+  border-top-color: var(--color-primary);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 特殊效果 */
+.quantum-glow {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+.quantum-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* RTL (Right-to-Left) 语言支持 - 专门为阿拉伯语 */
+.rtl-language {
+  direction: rtl;
+}
+
+/* RTL 语言下的特殊样式调整 */
+.rtl-language .flex {
+  /* 保持flex布局，但调整方向 */
+}
+
+.rtl-language .text-left {
+  text-align: right;
+}
+
+.rtl-language .text-right {
+  text-align: left;
+}
+
+/* 导航栏在RTL模式下的调整 */
+.rtl-language nav .flex {
+  flex-direction: row-reverse;
+}
+
+/* 语言切换器在RTL模式下的调整 */
+.rtl-language .language-switcher {
+  left: 0;
+  right: auto;
+}
+
+/* 按钮和链接在RTL模式下的调整 */
+.rtl-language .ml-auto {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.rtl-language .mr-auto {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+/* 间距调整 */
+.rtl-language .space-x-2 > * + * {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+.rtl-language .space-x-3 > * + * {
+  margin-left: 0;
+  margin-right: 0.75rem;
+}
+
+.rtl-language .space-x-4 > * + * {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+.rtl-language .space-x-6 > * + * {
+  margin-left: 0;
+  margin-right: 1.5rem;
+}
+
+.rtl-language .space-x-8 > * + * {
+  margin-left: 0;
+  margin-right: 2rem;
+}
+
+/* 图标和文本的对齐 */
+.rtl-language .flex.items-center.gap-3 {
+  flex-direction: row-reverse;
+}
+
+/* 确保某些组件在RTL模式下保持LTR */
+.rtl-language .keep-ltr {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+/* LOGO特殊保护 - 确保在所有语言下都保持一致 */
+.keep-ltr img {
+  direction: ltr !important;
+  transform: none !important;
+  width: auto !important;
+  height: 3rem !important; /* 固定高度 48px */
+  max-width: none !important;
+  max-height: 3rem !important;
+  min-width: auto !important;
+  min-height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* 防止LOGO在不同语言下被影响 */
+.rtl-language .keep-ltr img,
+html[dir="rtl"] .keep-ltr img,
+html[lang="ar"] .keep-ltr img {
+  direction: ltr !important;
+  transform: none !important;
+  scale: 1 !important;
+  rotate: 0deg !important;
+  translate: 0 0 !important;
+}
+
+/* 代码块、数字等应该保持LTR */
+.rtl-language code,
+.rtl-language .numeric,
+.rtl-language .stats-value {
+  direction: ltr;
+  text-align: left;
+}
+
+/* 左右边距调整 */
+.rtl-language .ml-2 {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+.rtl-language .ml-3 {
+  margin-left: 0;
+  margin-right: 0.75rem;
+}
+
+.rtl-language .ml-4 {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+.rtl-language .mr-2 {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+.rtl-language .mr-3 {
+  margin-right: 0;
+  margin-left: 0.75rem;
+}
+
+.rtl-language .mr-4 {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+/* 左右内边距调整 */
+.rtl-language .pl-2 {
+  padding-left: 0;
+  padding-right: 0.5rem;
+}
+
+.rtl-language .pl-4 {
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
+.rtl-language .pr-2 {
+  padding-right: 0;
+  padding-left: 0.5rem;
+}
+
+.rtl-language .pr-4 {
+  padding-right: 0;
+  padding-left: 1rem;
+}
+
+/* 左右定位调整 */
+.rtl-language .left-0 {
+  left: auto;
+  right: 0;
+}
+
+.rtl-language .right-0 {
+  right: auto;
+  left: 0;
+}
+
+/* 边框调整 */
+.rtl-language .border-l {
+  border-left: 0;
+  border-right-width: 1px;
+}
+
+.rtl-language .border-r {
+  border-right: 0;
+  border-left-width: 1px;
+}
+
+/* 圆角调整 */
+.rtl-language .rounded-l {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.rtl-language .rounded-r {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+/* Flex 行方向调整 */
+.rtl-language .flex-row {
+  flex-direction: row-reverse;
+}
+
+/* 保持某些flex布局不变 */
+.rtl-language .flex-row.keep-ltr,
+.rtl-language .keep-ltr .flex-row {
+  flex-direction: row !important;
+}
+
+/* 图标位置调整 */
+.rtl-language .icon-left {
+  order: 1;
+}
+
+.rtl-language .icon-right {
+  order: -1;
+}
+
+/* 表单元素调整 */
+.rtl-language input,
+.rtl-language textarea,
+.rtl-language select {
+  text-align: right;
+}
+
+.rtl-language input[type="number"],
+.rtl-language input[type="tel"],
+.rtl-language input[type="email"],
+.rtl-language input[type="url"] {
+  direction: ltr;
+  text-align: left;
+}
+
+/* 下拉菜单位置调整 */
+.rtl-language .dropdown-menu {
+  left: 0;
+  right: auto;
+}
+
+/* 模态框内容调整 */
+.rtl-language .modal-content {
+  text-align: right;
+}
+
+/* 列表项调整 */
+.rtl-language ul,
+.rtl-language ol {
+  padding-left: 0;
+  padding-right: 1.5rem;
+}
+
+/* 引用块调整 */
+.rtl-language blockquote {
+  border-left: 0;
+  border-right: 4px solid;
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
