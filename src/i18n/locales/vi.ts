@@ -2,201 +2,201 @@ export const vi = {
   translation: {
     // Navigation
     nav: {
-      home: 'Home',
-      features: 'Features',
-      specs: 'Specifications',
+      home: 'Trang chủ',
+      features: 'Tính năng',
+      specs: 'Thông số',
       demo: 'Demo',
-      ecosystem: 'Ecosystem',
-      team: 'Team',
-      explorer: 'Explorer',
-      community: 'Community',
-      tokenSale: 'Buy QAU',
-      exchange: 'Exchange',
-      docs: 'Documentation',
-      experience: 'Get Started'
+      ecosystem: 'Hệ sinh thái',
+      team: 'Đội ngũ',
+      explorer: 'Trình duyệt',
+      community: 'Cộng đồng',
+      tokenSale: 'Mua QAU',
+      exchange: 'Sàn giao dịch',
+      docs: 'Tài liệu',
+      experience: 'Bắt đầu'
     },
     // Hero Section
     hero: {
-      badge: '🚀 Next-Gen Quantum-Safe Blockchain',
+      badge: '🚀 Blockchain An toàn Lượng tử Thế hệ mới',
       title: 'Quantaureum',
-      subtitle: 'Quantum-Safe Blockchain Platform',
-      description: 'Next-generation blockchain infrastructure based on post-quantum cryptography, providing ',
-      highlight: 'enterprise-grade security and performance',
-      scroll_down: 'Scroll Down',
+      subtitle: 'Nền tảng Blockchain An toàn Lượng tử',
+      description: 'Cơ sở hạ tầng blockchain thế hệ mới dựa trên mật mã hậu lượng tử, cung cấp ',
+      highlight: 'bảo mật và hiệu suất cấp doanh nghiệp',
+      scroll_down: 'Cuộn xuống',
       stats: {
-        realtime: 'Real-time Performance',
-        tps: { value: '100,000+', label: 'Transactions Per Second', unit: ' TPS' },
-        score: { value: '99.9', label: 'Security Score', unit: '%' },
-        coverage: { value: '100', label: 'Quantum-Safe Coverage', unit: '%' },
-        languages: { value: '10+', label: 'Supported Languages', unit: '' },
-        vulnerabilities: { value: '0', label: 'Known Vulnerabilities', unit: '' },
-        availability: { value: '99.99', label: 'System Availability', unit: '%' }
+        realtime: 'Hiệu suất Thời gian thực',
+        tps: { value: '100,000+', label: 'Giao dịch mỗi giây', unit: ' TPS' },
+        score: { value: '99.9', label: 'Điểm Bảo mật', unit: '%' },
+        coverage: { value: '100', label: 'Phạm vi An toàn Lượng tử', unit: '%' },
+        languages: { value: '10+', label: 'Ngôn ngữ Hỗ trợ', unit: '' },
+        vulnerabilities: { value: '0', label: 'Lỗ hổng Đã biết', unit: '' },
+        availability: { value: '99.99', label: 'Khả dụng Hệ thống', unit: '%' }
       },
       cta: {
-        experience: 'Get Started',
-        docs: 'View Docs',
-        token_sale: 'Token Sale'
+        experience: 'Bắt đầu',
+        docs: 'Xem Tài liệu',
+        token_sale: 'Bán Token'
       },
       trust: {
-        nist: 'NIST Post-Quantum Standard',
-        audit: 'Third-Party Security Audit',
-        enterprise: 'Enterprise Deployment'
+        nist: 'Tiêu chuẩn Hậu Lượng tử NIST',
+        audit: 'Kiểm toán Bảo mật Bên thứ ba',
+        enterprise: 'Triển khai Doanh nghiệp'
       },
       modal: {
-        title: 'Connect Quantaureum Network',
-        description: 'Add Quantaureum Network to your MetaMask Wallet',
-        network: 'Network',
+        title: 'Kết nối Mạng Quantaureum',
+        description: 'Thêm Mạng Quantaureum vào Ví MetaMask của bạn',
+        network: 'Mạng',
         chainId: 'Chain ID',
-        symbol: 'Symbol',
+        symbol: 'Ký hiệu',
         rpc: 'RPC',
-        connected: 'Connected',
-        connect_failed: 'Connection failed, please try again',
-        connecting: 'Connecting...',
-        added: 'Network Added',
-        add_to_metamask: 'Add to MetaMask',
-        install_metamask: 'Install MetaMask',
-        enter_wallet: 'Enter Quantum Wallet',
-        download_metamask: 'No MetaMask? Click here to download →'
+        connected: 'Đã kết nối',
+        connect_failed: 'Kết nối thất bại, vui lòng thử lại',
+        connecting: 'Đang kết nối...',
+        added: 'Đã thêm Mạng',
+        add_to_metamask: 'Thêm vào MetaMask',
+        install_metamask: 'Cài đặt MetaMask',
+        enter_wallet: 'Vào Ví Lượng tử',
+        download_metamask: 'Chưa có MetaMask? Nhấn vào đây để tải →'
       }
     },
     // Concept Section
     concept: {
-      title: 'What is Quantum Blockchain?',
-      description: 'Combining quantum computing and blockchain technology to build future-proof secure infrastructure',
+      title: 'Blockchain Lượng tử là gì?',
+      description: 'Kết hợp điện toán lượng tử và công nghệ blockchain để xây dựng cơ sở hạ tầng an toàn cho tương lai',
       items: {
-        crypto: 'Post-Quantum Crypto',
-        hardware: 'Hardware Wallet',
-        mobile: 'Mobile App',
-        crosschain: 'Cross-Chain Bridge',
-        performance: 'High Performance',
-        contracts: 'Smart Contracts'
+        crypto: 'Mật mã Hậu Lượng tử',
+        hardware: 'Ví Phần cứng',
+        mobile: 'Ứng dụng Di động',
+        crosschain: 'Cầu Xuyên chuỗi',
+        performance: 'Hiệu suất Cao',
+        contracts: 'Hợp đồng Thông minh'
       }
     },
     // Benefits Section
     benefits: {
-      title: 'Core Advantages',
-      description: 'Why choose Quantaureum?',
+      title: 'Ưu điểm Cốt lõi',
+      description: 'Tại sao chọn Quantaureum?',
       items: {
-        security: { title: 'Quantum Security', desc: 'NIST-standard post-quantum cryptographic algorithms to resist quantum attacks' },
-        performance: { title: 'Ultimate Performance', desc: '100,000+ TPS, sub-second confirmation, meeting enterprise needs' },
-        evolution: { title: 'AI Evolution', desc: 'Built-in AI engine continuously optimizing network performance and security' },
-        global: { title: 'Global Coverage', desc: 'Distributed node network, 10+ languages, serving global users' },
-        economic: { title: 'Economic Model', desc: 'Innovative token economics incentivizing ecosystem participants' },
-        developer: { title: 'Developer Friendly', desc: 'Complete SDK and API for rapid dApp development' }
+        security: { title: 'Bảo mật Lượng tử', desc: 'Thuật toán mật mã hậu lượng tử tiêu chuẩn NIST chống lại tấn công lượng tử' },
+        performance: { title: 'Hiệu suất Tối ưu', desc: '100,000+ TPS, xác nhận dưới giây, đáp ứng nhu cầu doanh nghiệp' },
+        evolution: { title: 'Tiến hóa AI', desc: 'Động cơ AI tích hợp liên tục tối ưu hóa hiệu suất và bảo mật mạng' },
+        global: { title: 'Phạm vi Toàn cầu', desc: 'Mạng lưới node phân tán, 10+ ngôn ngữ, phục vụ người dùng toàn cầu' },
+        economic: { title: 'Mô hình Kinh tế', desc: 'Kinh tế token sáng tạo khuyến khích người tham gia hệ sinh thái' },
+        developer: { title: 'Thân thiện Nhà phát triển', desc: 'SDK và API hoàn chỉnh để phát triển dApp nhanh chóng' }
       }
     },
     // Roadmap
     roadmap: {
-      title: 'Development Roadmap',
-      description: 'Our development plan and milestones',
+      title: 'Lộ trình Phát triển',
+      description: 'Kế hoạch phát triển và các mốc quan trọng của chúng tôi',
       milestones: {
-        q4_2023: { title: 'Infrastructure', desc: 'Core protocol development, testnet launch' },
-        q2_2024: { title: 'Ecosystem Building', desc: 'Mainnet launch, wallet and explorer release' },
-        q4_2024: { title: 'Application Expansion', desc: 'DeFi ecosystem, cross-chain bridge' },
-        q2_2025: { title: 'Global Expansion', desc: 'Enterprise partnerships, global node deployment' }
+        q4_2023: { title: 'Cơ sở hạ tầng', desc: 'Phát triển giao thức cốt lõi, ra mắt testnet' },
+        q2_2024: { title: 'Xây dựng Hệ sinh thái', desc: 'Ra mắt mainnet, phát hành ví và trình duyệt' },
+        q4_2024: { title: 'Mở rộng Ứng dụng', desc: 'Hệ sinh thái DeFi, cầu xuyên chuỗi' },
+        q2_2025: { title: 'Mở rộng Toàn cầu', desc: 'Đối tác doanh nghiệp, triển khai node toàn cầu' }
       }
     },
     // Team
     team: {
-      title: 'Core Team',
-      description: 'Composed of top cryptographers and blockchain experts',
+      title: 'Đội ngũ Cốt lõi',
+      description: 'Bao gồm các chuyên gia mật mã và blockchain hàng đầu',
       members: {
-        ceo: { name: 'Zhang Ming', role: 'CEO & Founder' },
-        cto: { name: 'Li Hua', role: 'CTO & Chief Architect' },
-        scientist: { name: 'Dr. Wang', role: 'Chief Cryptographer' }
+        ceo: { name: 'Zhang Ming', role: 'CEO & Nhà sáng lập' },
+        cto: { name: 'Li Hua', role: 'CTO & Kiến trúc sư trưởng' },
+        scientist: { name: 'Dr. Wang', role: 'Chuyên gia Mật mã trưởng' }
       }
     },
     // Product Features
     features: {
-      title: 'Product Features',
-      description: 'Comprehensive blockchain solutions',
+      title: 'Tính năng Sản phẩm',
+      description: 'Giải pháp blockchain toàn diện',
       badges: {
-        tests: '✓ All Tests Passed',
-        vulnerabilities: '✓ 0 Known Vulnerabilities',
-        enterprise: '✓ Enterprise Deployment'
+        tests: '✓ Đã vượt qua Tất cả Kiểm tra',
+        vulnerabilities: '✓ 0 Lỗ hổng Đã biết',
+        enterprise: '✓ Triển khai Doanh nghiệp'
       },
       items: {
         wallet: { 
-          title: 'Quantum Wallet', 
-          desc: 'Secure and convenient digital asset management',
-          stats: { hardware: 'Hardware Support', biometric: 'Biometric Auth', mobile: 'Mobile App' },
-          values: { hardware: 'Full Support', biometric: 'Face/Fingerprint', mobile: 'iOS/Android' }
+          title: 'Ví Lượng tử', 
+          desc: 'Quản lý tài sản số an toàn và tiện lợi',
+          stats: { hardware: 'Hỗ trợ Phần cứng', biometric: 'Xác thực Sinh trắc', mobile: 'Ứng dụng Di động' },
+          values: { hardware: 'Hỗ trợ Đầy đủ', biometric: 'Khuôn mặt/Vân tay', mobile: 'iOS/Android' }
         },
-        explorer: { title: 'Block Explorer', desc: 'Real-time on-chain data viewing' },
-        defi: { title: 'DeFi Platform', desc: 'Decentralized financial services' },
-        bridge: { title: 'Cross-Chain Bridge', desc: 'Multi-chain asset interoperability' },
+        explorer: { title: 'Trình duyệt Khối', desc: 'Xem dữ liệu on-chain thời gian thực' },
+        defi: { title: 'Nền tảng DeFi', desc: 'Dịch vụ tài chính phi tập trung' },
+        bridge: { title: 'Cầu Xuyên chuỗi', desc: 'Tương tác tài sản đa chuỗi' },
         blockchain: {
-          title: 'Quantum Blockchain Core',
-          desc: 'High-performance blockchain core based on post-quantum cryptography with enterprise-grade security',
-          stats: { speed: 'Processing Speed', security: 'Security Level', coverage: 'Quantum Coverage' },
+          title: 'Lõi Blockchain Lượng tử',
+          desc: 'Lõi blockchain hiệu suất cao dựa trên mật mã hậu lượng tử với bảo mật cấp doanh nghiệp',
+          stats: { speed: 'Tốc độ Xử lý', security: 'Mức Bảo mật', coverage: 'Phạm vi Lượng tử' },
           values: { speed: '100,000 TPS', security: 'NIST L3', coverage: '100%' }
         },
         contracts: {
-          title: 'Smart Contract System',
-          desc: 'EVM-compatible smart contract platform supporting Solidity and proprietary QSL language',
-          stats: { vm: 'Virtual Machine', compiler: 'Compiler', speed: 'Execution Speed' },
-          values: { vm: 'QVM 2.0', compiler: 'Multi-lang', speed: '3x Faster' }
+          title: 'Hệ thống Hợp đồng Thông minh',
+          desc: 'Nền tảng hợp đồng thông minh tương thích EVM hỗ trợ Solidity và ngôn ngữ QSL độc quyền',
+          stats: { vm: 'Máy ảo', compiler: 'Trình biên dịch', speed: 'Tốc độ Thực thi' },
+          values: { vm: 'QVM 2.0', compiler: 'Đa ngôn ngữ', speed: 'Nhanh hơn 3x' }
         },
         crosschain: {
-          title: 'Cross-Chain Interoperability',
-          desc: 'Secure cross-chain bridging protocol supporting major public chain asset interoperability',
-          stats: { chains: 'Supported Chains', bridge: 'Bridge Protocol', verification: 'Verification' },
-          values: { chains: '10+', bridge: 'Quantum-Safe', verification: 'Multi-Sig' }
+          title: 'Tương tác Xuyên chuỗi',
+          desc: 'Giao thức cầu xuyên chuỗi an toàn hỗ trợ tương tác tài sản các chuỗi công khai chính',
+          stats: { chains: 'Chuỗi Hỗ trợ', bridge: 'Giao thức Cầu', verification: 'Xác minh' },
+          values: { chains: '10+', bridge: 'An toàn Lượng tử', verification: 'Đa chữ ký' }
         },
         i18n: {
-          title: 'Multi-Language Support',
-          desc: 'Complete internationalization support covering major global languages and regions',
-          stats: { languages: 'Languages', coverage: 'Translation Coverage', rtl: 'RTL Support' },
-          values: { languages: '10+', coverage: '100%', rtl: 'Full Support' }
+          title: 'Hỗ trợ Đa ngôn ngữ',
+          desc: 'Hỗ trợ quốc tế hóa hoàn chỉnh bao gồm các ngôn ngữ và khu vực chính trên toàn cầu',
+          stats: { languages: 'Ngôn ngữ', coverage: 'Phạm vi Dịch', rtl: 'Hỗ trợ RTL' },
+          values: { languages: '10+', coverage: '100%', rtl: 'Hỗ trợ Đầy đủ' }
         },
         enterprise: {
-          title: 'Enterprise Deployment',
-          desc: 'High-availability architecture design supporting private deployment and hybrid cloud solutions',
-          stats: { availability: 'Availability', balancer: 'Load Balancing', deployment: 'Deployment' },
-          values: { availability: '99.99%', balancer: 'Smart Allocation', deployment: 'Multi-Cloud' }
+          title: 'Triển khai Doanh nghiệp',
+          desc: 'Thiết kế kiến trúc khả dụng cao hỗ trợ triển khai riêng và giải pháp đám mây lai',
+          stats: { availability: 'Khả dụng', balancer: 'Cân bằng Tải', deployment: 'Triển khai' },
+          values: { availability: '99.99%', balancer: 'Phân bổ Thông minh', deployment: 'Đa đám mây' }
         }
       }
     },
     // Wallet
     wallet: {
-      title: 'Quantum Wallet',
-      description: 'Secure digital wallet based on quantum encryption technology',
-      current_network: 'Current Network',
+      title: 'Ví Lượng tử',
+      description: 'Ví số an toàn dựa trên công nghệ mã hóa lượng tử',
+      current_network: 'Mạng Hiện tại',
       networks: {
-        quantum_mainnet: 'Quantum Mainnet',
-        quantum_testnet: 'Quantum Testnet',
-        ethereum_mainnet: 'Ethereum Mainnet',
-        polygon_mainnet: 'Polygon Mainnet'
+        quantum_mainnet: 'Mainnet Lượng tử',
+        quantum_testnet: 'Testnet Lượng tử',
+        ethereum_mainnet: 'Mainnet Ethereum',
+        polygon_mainnet: 'Mainnet Polygon'
       },
-      total_balance: 'Total Balance',
-      hide_balance: 'Hide Balance',
-      show_balance: 'Show Balance',
-      send: 'Send',
-      receive: 'Receive',
-      swap: 'Swap',
-      assets: 'Assets',
-      nfts: 'NFT Collection',
-      history: 'Transaction History',
-      settings: 'Settings',
-      title_prefix: 'Quantum',
-      title_suffix: 'Wallet',
-      subtitle: 'Web3-based quantum-secure digital wallet, running directly in your browser',
+      total_balance: 'Tổng Số dư',
+      hide_balance: 'Ẩn Số dư',
+      show_balance: 'Hiện Số dư',
+      send: 'Gửi',
+      receive: 'Nhận',
+      swap: 'Hoán đổi',
+      assets: 'Tài sản',
+      nfts: 'Bộ sưu tập NFT',
+      history: 'Lịch sử Giao dịch',
+      settings: 'Cài đặt',
+      title_prefix: 'Ví',
+      title_suffix: 'Lượng tử',
+      subtitle: 'Ví số an toàn lượng tử dựa trên Web3, chạy trực tiếp trong trình duyệt của bạn',
       tags: {
-        quantum_secure: 'Quantum Secure',
-        web3_compatible: 'Web3 Compatible',
-        nist_standard: 'NIST Standard'
+        quantum_secure: 'An toàn Lượng tử',
+        web3_compatible: 'Tương thích Web3',
+        nist_standard: 'Tiêu chuẩn NIST'
       },
       launch_card: {
         connected: {
-          title: 'Wallet Connected',
-          desc: 'Your quantum-secure wallet is successfully connected and ready to use',
-          btn: 'Open Wallet Interface'
+          title: 'Ví Đã Kết nối',
+          desc: 'Ví an toàn lượng tử của bạn đã kết nối thành công và sẵn sàng sử dụng',
+          btn: 'Mở Giao diện Ví'
         },
         disconnected: {
-          title: 'Launch Quantum Wallet',
-          desc: 'Run QuantumWallet directly in your browser, no download required',
-          btn_launch: 'Launch Wallet',
-          btn_connect: 'Connect Wallet'
+          title: 'Khởi chạy Ví Lượng tử',
+          desc: 'Chạy QuantumWallet trực tiếp trong trình duyệt, không cần tải xuống',
+          btn_launch: 'Khởi chạy Ví',
+          btn_connect: 'Kết nối Ví'
         }
       },
       features: {
