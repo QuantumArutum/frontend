@@ -6,7 +6,7 @@ import { ChevronRight, Shield, Heart, MessageSquare, AlertTriangle, CheckCircle,
 import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, TFunction } from 'react-i18next';
 import '../../../i18n';
 
 interface Guideline {
@@ -17,7 +17,7 @@ interface Guideline {
   donts: string[];
 }
 
-const getGuidelines = (t: (key: string, options?: object) => unknown): Guideline[] => [
+const getGuidelines = (t: TFunction): Guideline[] => [
   {
     icon: Heart,
     title: t('community_page.guidelines.items.respect.title') as string,
