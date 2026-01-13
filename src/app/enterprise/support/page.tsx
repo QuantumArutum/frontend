@@ -10,7 +10,8 @@ import ParticlesBackground from '@/app/components/ParticlesBackground';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
 
-const getSupportPlans = (t: (key: string, options?: object) => string | string[]) => [
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const getSupportPlans = (t: any) => [
   {
     name: t('enterprise.support.plans.basic.name'),
     price: t('enterprise.support.plans.basic.price'),
@@ -34,7 +35,7 @@ const getSupportPlans = (t: (key: string, options?: object) => string | string[]
   }
 ];
 
-const getSupportChannels = (t: (key: string) => string) => [
+const getSupportChannels = (t: any) => [
   {
     icon: FaTicketAlt,
     title: t('enterprise.support.channels.ticket.title'),
@@ -65,7 +66,7 @@ const getSupportChannels = (t: (key: string) => string) => [
   }
 ];
 
-const getResources = (t: (key: string) => string) => [
+const getResources = (t: any) => [
   {
     icon: FaBook,
     title: t('enterprise.support.resources.docs.title'),
@@ -92,7 +93,7 @@ const getResources = (t: (key: string) => string) => [
   }
 ];
 
-const getFaqs = (t: (key: string, options?: object) => string | object) => {
+const getFaqs = (t: any) => {
   const faqItems = t('enterprise.support.faqs.items', { returnObjects: true }) as Array<{ question: string; answer: string }>;
   return faqItems;
 };
