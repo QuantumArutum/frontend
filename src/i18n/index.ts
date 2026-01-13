@@ -54,7 +54,7 @@ export function applyRTLDirection(languageCode: string): void {
 
 // Detect initial language from localStorage or browser
 function detectInitialLanguage(): string {
-  if (typeof window === 'undefined') return 'zh';
+  if (typeof window === 'undefined') return 'en';
   
   // Check localStorage first
   const savedLanguage = localStorage.getItem('quantaureum-global-language');
@@ -68,7 +68,7 @@ function detectInitialLanguage(): string {
     return browserLang;
   }
   
-  return 'zh';
+  return 'en';
 }
 
 const initialLanguage = detectInitialLanguage();
