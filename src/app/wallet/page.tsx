@@ -200,7 +200,7 @@ const QuantumWalletPage = () => {
                   </div>
                 )}
                 <a
-                  href="/explorer"
+                  href="/quantum-wallet"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 bg-emerald-500 text-white hover:bg-emerald-600"
                 >
                   {t('wallet.launch_card.connected.btn')}
