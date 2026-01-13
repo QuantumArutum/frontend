@@ -2734,41 +2734,6 @@ export const en = {
       pay_now: 'Pay Now',
       payment_history: 'Payment History'
     },
-    crowdfunding_page: {
-      title: 'Decentralized Crowdfunding',
-      subtitle: 'Support innovative projects with blockchain transparency',
-      all_projects: 'All Projects',
-      technology: 'Technology',
-      art: 'Art',
-      charity: 'Charity',
-      business: 'Business',
-      raised: 'Raised',
-      goal: 'Goal',
-      backers: 'Backers',
-      days_left: 'Days Left',
-      back_project: 'Back This Project',
-      project_details: 'Project Details',
-      rewards: 'Rewards',
-      updates: 'Updates',
-      comments: 'Comments'
-    },
-    concerts_page: {
-      title: 'Concert Tickets',
-      subtitle: 'Book concert tickets with blockchain verification',
-      upcoming: 'Upcoming',
-      popular: 'Popular',
-      near_me: 'Near Me',
-      venue: 'Venue',
-      date: 'Date',
-      price_from: 'From',
-      buy_tickets: 'Buy Tickets',
-      select_tickets: 'Select Tickets',
-      ticket_type: 'Ticket Type',
-      quantity: 'Quantity',
-      vip: 'VIP',
-      standard: 'Standard',
-      standing: 'Standing'
-    },
     // Crowdfunding Page
     crowdfunding_page: {
       title: 'Crowdfunding Platform',

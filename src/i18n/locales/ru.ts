@@ -2147,41 +2147,6 @@ export const ru = {
       pay_now: 'Оплатить Сейчас',
       payment_history: 'История Платежей'
     },
-    crowdfunding_page: {
-      title: 'Децентрализованный Краудфандинг',
-      subtitle: 'Поддержите инновационные проекты с прозрачностью блокчейна',
-      all_projects: 'Все Проекты',
-      technology: 'Технологии',
-      art: 'Искусство',
-      charity: 'Благотворительность',
-      business: 'Бизнес',
-      raised: 'Собрано',
-      goal: 'Цель',
-      backers: 'Спонсоры',
-      days_left: 'Дней Осталось',
-      back_project: 'Поддержать Проект',
-      project_details: 'Детали Проекта',
-      rewards: 'Награды',
-      updates: 'Обновления',
-      comments: 'Комментарии'
-    },
-    concerts_page: {
-      title: 'Билеты на Концерты',
-      subtitle: 'Бронируйте билеты на концерты с верификацией блокчейна',
-      upcoming: 'Предстоящие',
-      popular: 'Популярные',
-      near_me: 'Рядом',
-      venue: 'Место',
-      date: 'Дата',
-      price_from: 'От',
-      buy_tickets: 'Купить Билеты',
-      select_tickets: 'Выбрать Билеты',
-      ticket_type: 'Тип Билета',
-      quantity: 'Количество',
-      vip: 'VIP',
-      standard: 'Стандарт',
-      standing: 'Стоячие'
-    },
     // Страница краудфандинга
     crowdfunding_page: {
       title: 'Платформа краудфандинга',

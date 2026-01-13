@@ -2189,41 +2189,6 @@ export const ko = {
       pay_now: '지금 결제',
       payment_history: '결제 내역'
     },
-    crowdfunding_page: {
-      title: '탈중앙화 크라우드펀딩',
-      subtitle: '블록체인 투명성으로 혁신적인 프로젝트 지원',
-      all_projects: '모든 프로젝트',
-      technology: '기술',
-      art: '예술',
-      charity: '자선',
-      business: '비즈니스',
-      raised: '모금액',
-      goal: '목표',
-      backers: '후원자',
-      days_left: '남은 일수',
-      back_project: '프로젝트 후원',
-      project_details: '프로젝트 상세',
-      rewards: '리워드',
-      updates: '업데이트',
-      comments: '댓글'
-    },
-    concerts_page: {
-      title: '콘서트 티켓',
-      subtitle: '블록체인 검증으로 콘서트 티켓 예약',
-      upcoming: '예정',
-      popular: '인기',
-      near_me: '내 주변',
-      venue: '장소',
-      date: '날짜',
-      price_from: '부터',
-      buy_tickets: '티켓 구매',
-      select_tickets: '티켓 선택',
-      ticket_type: '티켓 유형',
-      quantity: '수량',
-      vip: 'VIP',
-      standard: '일반',
-      standing: '스탠딩'
-    },
     // 크라우드펀딩 페이지
     crowdfunding_page: {
       title: '크라우드펀딩 플랫폼',

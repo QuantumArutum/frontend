@@ -2132,41 +2132,6 @@ export const fr = {
       pay_now: 'Payer Maintenant',
       payment_history: 'Historique des Paiements'
     },
-    crowdfunding_page: {
-      title: 'Financement Participatif Décentralisé',
-      subtitle: 'Soutenez des projets innovants avec la transparence blockchain',
-      all_projects: 'Tous les Projets',
-      technology: 'Technologie',
-      art: 'Art',
-      charity: 'Charité',
-      business: 'Business',
-      raised: 'Collecté',
-      goal: 'Objectif',
-      backers: 'Contributeurs',
-      days_left: 'Jours Restants',
-      back_project: 'Soutenir ce Projet',
-      project_details: 'Détails du Projet',
-      rewards: 'Récompenses',
-      updates: 'Mises à Jour',
-      comments: 'Commentaires'
-    },
-    concerts_page: {
-      title: 'Billets de Concert',
-      subtitle: 'Réservez des billets de concert avec vérification blockchain',
-      upcoming: 'À Venir',
-      popular: 'Populaire',
-      near_me: 'Près de Moi',
-      venue: 'Lieu',
-      date: 'Date',
-      price_from: 'À partir de',
-      buy_tickets: 'Acheter des Billets',
-      select_tickets: 'Sélectionner des Billets',
-      ticket_type: 'Type de Billet',
-      quantity: 'Quantité',
-      vip: 'VIP',
-      standard: 'Standard',
-      standing: 'Debout'
-    },
     // Page de Financement Participatif
     crowdfunding_page: {
       title: 'Plateforme de Financement Participatif',

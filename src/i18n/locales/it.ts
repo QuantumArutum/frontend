@@ -2147,41 +2147,6 @@ export const it = {
       pay_now: 'Paga Ora',
       payment_history: 'Storico Pagamenti'
     },
-    crowdfunding_page: {
-      title: 'Crowdfunding Decentralizzato',
-      subtitle: 'Supporta progetti innovativi con trasparenza blockchain',
-      all_projects: 'Tutti i Progetti',
-      technology: 'Tecnologia',
-      art: 'Arte',
-      charity: 'Beneficenza',
-      business: 'Business',
-      raised: 'Raccolto',
-      goal: 'Obiettivo',
-      backers: 'Sostenitori',
-      days_left: 'Giorni Rimanenti',
-      back_project: 'Sostieni Progetto',
-      project_details: 'Dettagli Progetto',
-      rewards: 'Ricompense',
-      updates: 'Aggiornamenti',
-      comments: 'Commenti'
-    },
-    concerts_page: {
-      title: 'Biglietti Concerti',
-      subtitle: 'Prenota biglietti concerti con verifica blockchain',
-      upcoming: 'In Arrivo',
-      popular: 'Popolari',
-      near_me: 'Vicino a Me',
-      venue: 'Luogo',
-      date: 'Data',
-      price_from: 'Da',
-      buy_tickets: 'Acquista Biglietti',
-      select_tickets: 'Seleziona Biglietti',
-      ticket_type: 'Tipo Biglietto',
-      quantity: 'Quantità',
-      vip: 'VIP',
-      standard: 'Standard',
-      standing: 'In Piedi'
-    },
     // Pagina Crowdfunding
     crowdfunding_page: {
       title: 'Piattaforma di Crowdfunding',

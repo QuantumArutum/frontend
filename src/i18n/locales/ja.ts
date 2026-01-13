@@ -2189,41 +2189,6 @@ export const ja = {
       pay_now: '今すぐ支払う',
       payment_history: '支払い履歴'
     },
-    crowdfunding_page: {
-      title: '分散型クラウドファンディング',
-      subtitle: 'ブロックチェーンの透明性で革新的なプロジェクトを支援',
-      all_projects: 'すべてのプロジェクト',
-      technology: 'テクノロジー',
-      art: 'アート',
-      charity: 'チャリティ',
-      business: 'ビジネス',
-      raised: '調達額',
-      goal: '目標',
-      backers: '支援者',
-      days_left: '残り日数',
-      back_project: 'プロジェクトを支援',
-      project_details: 'プロジェクト詳細',
-      rewards: 'リワード',
-      updates: '更新',
-      comments: 'コメント'
-    },
-    concerts_page: {
-      title: 'コンサートチケット',
-      subtitle: 'ブロックチェーン検証でコンサートチケットを予約',
-      upcoming: '近日開催',
-      popular: '人気',
-      near_me: '近くで',
-      venue: '会場',
-      date: '日付',
-      price_from: 'から',
-      buy_tickets: 'チケットを購入',
-      select_tickets: 'チケットを選択',
-      ticket_type: 'チケットタイプ',
-      quantity: '数量',
-      vip: 'VIP',
-      standard: 'スタンダード',
-      standing: 'スタンディング'
-    },
     // クラウドファンディングページ
     crowdfunding_page: {
       title: 'クラウドファンディングプラットフォーム',

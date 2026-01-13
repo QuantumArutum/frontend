@@ -2150,41 +2150,6 @@ export const vi = {
       pay_now: 'Thanh toán Ngay',
       payment_history: 'Lịch sử Thanh toán'
     },
-    crowdfunding_page: {
-      title: 'Gây quỹ Phi tập trung',
-      subtitle: 'Hỗ trợ các dự án sáng tạo với tính minh bạch blockchain',
-      all_projects: 'Tất cả Dự án',
-      technology: 'Công nghệ',
-      art: 'Nghệ thuật',
-      charity: 'Từ thiện',
-      business: 'Kinh doanh',
-      raised: 'Đã gây quỹ',
-      goal: 'Mục tiêu',
-      backers: 'Người ủng hộ',
-      days_left: 'Ngày Còn lại',
-      back_project: 'Ủng hộ Dự án',
-      project_details: 'Chi tiết Dự án',
-      rewards: 'Phần thưởng',
-      updates: 'Cập nhật',
-      comments: 'Bình luận'
-    },
-    concerts_page: {
-      title: 'Vé Hòa nhạc',
-      subtitle: 'Đặt vé hòa nhạc với xác minh blockchain',
-      upcoming: 'Sắp tới',
-      popular: 'Phổ biến',
-      near_me: 'Gần tôi',
-      venue: 'Địa điểm',
-      date: 'Ngày',
-      price_from: 'Từ',
-      buy_tickets: 'Mua Vé',
-      select_tickets: 'Chọn Vé',
-      ticket_type: 'Loại Vé',
-      quantity: 'Số lượng',
-      vip: 'VIP',
-      standard: 'Tiêu chuẩn',
-      standing: 'Đứng'
-    },
     // Trang Gây Quỹ Cộng Đồng
     crowdfunding_page: {
       title: 'Nền Tảng Gây Quỹ',

@@ -2132,41 +2132,6 @@ export const nl = {
       pay_now: 'Nu Betalen',
       payment_history: 'Betalingsgeschiedenis'
     },
-    crowdfunding_page: {
-      title: 'Gedecentraliseerde Crowdfunding',
-      subtitle: 'Ondersteun innovatieve projecten met blockchain transparantie',
-      all_projects: 'Alle Projecten',
-      technology: 'Technologie',
-      art: 'Kunst',
-      charity: 'Liefdadigheid',
-      business: 'Business',
-      raised: 'Opgehaald',
-      goal: 'Doel',
-      backers: 'Backers',
-      days_left: 'Dagen Over',
-      back_project: 'Steun Project',
-      project_details: 'Projectdetails',
-      rewards: 'Beloningen',
-      updates: 'Updates',
-      comments: 'Reacties'
-    },
-    concerts_page: {
-      title: 'Concerttickets',
-      subtitle: 'Boek concerttickets met blockchain verificatie',
-      upcoming: 'Aankomend',
-      popular: 'Populair',
-      near_me: 'Bij Mij',
-      venue: 'Locatie',
-      date: 'Datum',
-      price_from: 'Vanaf',
-      buy_tickets: 'Koop Tickets',
-      select_tickets: 'Selecteer Tickets',
-      ticket_type: 'Tickettype',
-      quantity: 'Aantal',
-      vip: 'VIP',
-      standard: 'Standaard',
-      standing: 'Staanplaats'
-    },
     // Crowdfunding Pagina
     crowdfunding_page: {
       title: 'Crowdfunding Platform',
