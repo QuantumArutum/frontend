@@ -2147,24 +2147,6 @@ export const ar = {
       pay_now: 'ادفع الآن',
       payment_history: 'سجل الدفع'
     },
-    crowdfunding_page: {
-      title: 'التمويل الجماعي اللامركزي',
-      subtitle: 'ادعم المشاريع المبتكرة بشفافية البلوكتشين',
-      all_projects: 'جميع المشاريع',
-      technology: 'التكنولوجيا',
-      art: 'الفن',
-      charity: 'الخيرية',
-      business: 'الأعمال',
-      raised: 'تم جمعه',
-      goal: 'الهدف',
-      backers: 'الداعمون',
-      days_left: 'الأيام المتبقية',
-      back_project: 'ادعم المشروع',
-      project_details: 'تفاصيل المشروع',
-      rewards: 'المكافآت',
-      updates: 'التحديثات',
-      comments: 'التعليقات'
-    },
     concerts_page: {
       title: 'تذاكر الحفلات',
       subtitle: 'احجز تذاكر الحفلات مع التحقق بالبلوكتشين',
