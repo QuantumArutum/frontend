@@ -99,7 +99,8 @@ const QuantumWalletPage = () => {
   };
 
   const handleLaunchWallet = () => {
-    handleConnectWallet();
+    // 直接跳转到 MetaMask 钱包页面
+    window.open('https://portfolio.metamask.io/', '_blank');
   };
 
   return (
