@@ -114,7 +114,7 @@ export default function CommunityNavbar() {
     <div className="sticky top-0 z-[200] w-full">
       {/* 分类导航 - 放在最上面 */}
       <nav
-        className="relative border-b border-white/10 w-full"
+        className="relative border-b border-white/10 w-full z-[60]"
         style={{
           background: 'rgba(15, 23, 42, 0.8)', // slate-900 with opacity
           backdropFilter: 'blur(20px)',
@@ -218,7 +218,7 @@ export default function CommunityNavbar() {
 
       {/* 主导航头部 - 放在分类导航下面 */}
       <header
-        className="relative w-full"
+        className="relative w-full z-[50]"
         style={{
           background: 'rgba(15, 23, 42, 0.6)', // slate-900 with opacity
           backdropFilter: 'blur(15px)',
