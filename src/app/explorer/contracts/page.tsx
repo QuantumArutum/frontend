@@ -35,6 +35,20 @@ export default function ContractsPage() {
     c.address.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const getContractIcon = (type: string) => {
+    if (type === 'ERC-20') return '$';
+    if (type === 'DEX') return 'D';
+    if (type === 'Staking') return 'S';
+    return '#';
+  };
+
+  const getContractColor = (type: string) => {
+    if (type === 'ERC-20') return 'bg-purple-500/20 text-purple-400';
+    if (type === 'DEX') return 'bg-blue-500/20 text-blue-400';
+    if (type === 'Staking') return 'bg-emerald-500/20 text-emerald-400';
+    return 'bg-gray-500/20 text-gray-400';
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-5">
       {/* Back Button */}
@@ -105,13 +119,8 @@ export default function ContractsPage() {
                   className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                        contract.type === 'ERC-20' ? 'bg-purple-500/20 text-purple-400' :
-                        contract.type === 'DEX' ? 'bg-blue-500/20 text-blue-400' :
-                        contract.type === 'Staking' ? 'bg-emerald-500/20 text-emerald-400' :
-                        'bg-gray-500/20 text-gray-400'
-                      }`}>
-                        {contract.type === 'ERC-20' ? '$' : contract.type === 'DEX' ? 'D' : contract.type === 'Staking' ? 'S' : '#'}
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${getContractColor(contract.type)}`}>
+                        {getContractIcon(contract.type)}
                       </div>
                       <span className="text-white font-medium">{contract.name}</span>
                     </div>
@@ -129,36 +138,6 @@ export default function ContractsPage() {
                       </span>
                     ) : (
                       <span className="text-gray-500 text-xs">{t('explorer.contracts.unverified')}</span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 text-gray-300 font-mono text-sm">{contract.balance} QAU</td>
-                  <td className="px-6 py-4 text-gray-300 text-sm">{contract.txCount.toLocaleString()}</td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </motion.div>
-    </div>
-  );
-}$' : contract.type === 'DEX' ? 'D' : contract.type === 'Staking' ? 'S' : '#'}
-                      </div>
-                      <span className="text-white font-medium">{contract.name}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-indigo-400 hover:text-indigo-300 cursor-pointer font-mono text-sm">{contract.address.slice(0, 10)}...{contract.address.slice(-8)}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="px-2 py-1 bg-white/10 rounded text-xs text-gray-300">{contract.type}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    {contract.verified ? (
-                      <span className="flex items-center gap-1 text-emerald-400 text-xs bg-emerald-500/10 px-2 py-1 rounded border border-emerald-500/20 w-fit">
-                        Verified
-                      </span>
-                    ) : (
-                      <span className="text-gray-500 text-xs">Unverified</span>
                     )}
                   </td>
                   <td className="px-6 py-4 text-gray-300 font-mono text-sm">{contract.balance} QAU</td>

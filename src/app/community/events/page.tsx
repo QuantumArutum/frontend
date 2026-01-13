@@ -17,8 +17,11 @@ import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
 import { eventsService, Event } from '../../../services/communityService';
+import { useTranslation } from 'react-i18next';
+import '../../../i18n';
 
 export default function EventsPage() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
   const [selectedType, setSelectedType] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,7 +59,7 @@ export default function EventsPage() {
       if (result.success) {
         await loadEvents();
       } else {
-        alert(result.error || '报名失败');
+        alert(result.error || t('community_page.events.register_failed'));
       }
     } catch (error) {
       console.error('Registration failed:', error);
@@ -80,11 +83,11 @@ export default function EventsPage() {
 
   const getTypeLabel = (type: string) => {
     switch (type) {
-      case 'online': return '线上活动';
-      case 'offline': return '线下聚会';
-      case 'hackathon': return '黑客松';
-      case 'workshop': return '工作坊';
-      default: return '活动';
+      case 'online': return t('community_page.events.types.online');
+      case 'offline': return t('community_page.events.types.offline');
+      case 'hackathon': return t('community_page.events.types.hackathon');
+      case 'workshop': return t('community_page.events.types.workshop');
+      default: return t('community_page.events.types.event');
     }
   };
 
@@ -99,31 +102,29 @@ export default function EventsPage() {
       <CommunityNavbar />
       <div className="relative z-10">
       <div className="container mx-auto px-4 py-8">
-        {/* Hero */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
           <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-4">
-            社区活动
+            {t('community_page.events.title')}
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            参与Quantaureum社区活动，与全球开发者和用户共同探索量子区块链的未来
+            {t('community_page.events.subtitle')}
           </p>
         </motion.div>
 
-        {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
         >
           {[
-            { label: '即将举行', value: loading ? '-' : upcomingEvents.length, icon: Calendar, color: 'text-blue-400' },
-            { label: '总参与人数', value: loading ? '-' : events.reduce((sum, e) => sum + e.participants, 0).toLocaleString(), icon: Users, color: 'text-green-400' },
-            { label: '已举办活动', value: loading ? '-' : pastEvents.length, icon: Star, color: 'text-yellow-400' },
-            { label: '全球城市', value: '20+', icon: Globe, color: 'text-purple-400' }
+            { label: t('community_page.events.stats.upcoming'), value: loading ? '-' : upcomingEvents.length, icon: Calendar, color: 'text-blue-400' },
+            { label: t('community_page.events.stats.total_participants'), value: loading ? '-' : events.reduce((sum, e) => sum + e.participants, 0).toLocaleString(), icon: Users, color: 'text-green-400' },
+            { label: t('community_page.events.stats.past_events'), value: loading ? '-' : pastEvents.length, icon: Star, color: 'text-yellow-400' },
+            { label: t('community_page.events.stats.global_cities'), value: '20+', icon: Globe, color: 'text-purple-400' }
           ].map((stat) => (
             <div key={stat.label} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
               <div className="flex items-center justify-between mb-2">
@@ -135,7 +136,6 @@ export default function EventsPage() {
           ))}
         </motion.div>
 
-        {/* Filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -150,7 +150,7 @@ export default function EventsPage() {
                   : 'bg-white/10 text-white hover:bg-white/20'
               }`}
             >
-              即将举行
+              {t('community_page.events.tabs.upcoming')}
             </button>
             <button
               onClick={() => setActiveTab('past')}
@@ -160,7 +160,7 @@ export default function EventsPage() {
                   : 'bg-white/10 text-white hover:bg-white/20'
               }`}
             >
-              往期回顾
+              {t('community_page.events.tabs.past')}
             </button>
           </div>
 
@@ -169,7 +169,7 @@ export default function EventsPage() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="搜索活动..."
+                placeholder={t('community_page.events.search_placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
@@ -180,16 +180,15 @@ export default function EventsPage() {
               onChange={(e) => setSelectedType(e.target.value)}
               className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-500"
             >
-              <option value="all">全部类型</option>
-              <option value="online">线上活动</option>
-              <option value="offline">线下聚会</option>
-              <option value="hackathon">黑客松</option>
-              <option value="workshop">工作坊</option>
+              <option value="all">{t('community_page.events.filter.all')}</option>
+              <option value="online">{t('community_page.events.types.online')}</option>
+              <option value="offline">{t('community_page.events.types.offline')}</option>
+              <option value="hackathon">{t('community_page.events.types.hackathon')}</option>
+              <option value="workshop">{t('community_page.events.types.workshop')}</option>
             </select>
           </div>
         </motion.div>
 
-        {/* Events Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {filteredEvents.map((event, index) => (
             <motion.div
@@ -222,15 +221,15 @@ export default function EventsPage() {
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
                     <span>
-                      {event.participants.toLocaleString()}人
-                      {event.maxParticipants && ` / ${event.maxParticipants}人`}
-                      {event.status === 'past' ? '参与' : '已报名'}
+                      {event.participants.toLocaleString()}{t('community_page.events.people')}
+                      {event.maxParticipants && ` / ${event.maxParticipants}${t('community_page.events.people')}`}
+                      {event.status === 'past' ? t('community_page.events.participated') : t('community_page.events.registered')}
                     </span>
                   </div>
                   {event.prize && (
                     <div className="flex items-center gap-2 text-yellow-400">
                       <Trophy className="w-4 h-4" />
-                      <span>奖金池: {event.prize}</span>
+                      <span>{t('community_page.events.prize_pool')}: {event.prize}</span>
                     </div>
                   )}
                 </div>
@@ -245,7 +244,7 @@ export default function EventsPage() {
                   }`}
                 >
                   {registering === event.id && <RefreshCw className="w-4 h-4 animate-spin" />}
-                  {event.status === 'past' ? '已结束' : registering === event.id ? '报名中...' : '立即报名'}
+                  {event.status === 'past' ? t('community_page.events.ended') : registering === event.id ? t('community_page.events.registering') : t('community_page.events.register_now')}
                 </button>
               </div>
             </motion.div>
