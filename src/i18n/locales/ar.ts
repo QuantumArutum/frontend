@@ -2147,23 +2147,6 @@ export const ar = {
       pay_now: 'ادفع الآن',
       payment_history: 'سجل الدفع'
     },
-    concerts_page: {
-      title: 'تذاكر الحفلات',
-      subtitle: 'احجز تذاكر الحفلات مع التحقق بالبلوكتشين',
-      upcoming: 'القادمة',
-      popular: 'الشائعة',
-      near_me: 'بالقرب مني',
-      venue: 'المكان',
-      date: 'التاريخ',
-      price_from: 'من',
-      buy_tickets: 'شراء التذاكر',
-      select_tickets: 'اختر التذاكر',
-      ticket_type: 'نوع التذكرة',
-      quantity: 'الكمية',
-      vip: 'VIP',
-      standard: 'قياسي',
-      standing: 'وقوف'
-    },
     // صفحة التمويل الجماعي
     crowdfunding_page: {
       title: 'منصة التمويل الجماعي',
