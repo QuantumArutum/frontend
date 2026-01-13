@@ -140,7 +140,7 @@ export default function CommunityNavbar() {
             </div>
 
             {/* Language Switcher */}
-            <div className="relative ml-4" ref={langMenuRef}>
+            <div className="relative ml-4 z-[100]" ref={langMenuRef}>
               <button 
                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
                 className={`px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300 flex items-center gap-2 ${isLangMenuOpen ? 'bg-white/10 text-white' : ''}`}
