@@ -2134,19 +2134,6 @@ export const ar = {
       quantum_secure: 'آمن كمياً',
       active: 'نشط'
     },
-    utilities_page: {
-      title: 'دفع المرافق',
-      subtitle: 'ادفع فواتير المرافق بالعملات المشفرة',
-      electricity: 'الكهرباء',
-      water: 'المياه',
-      gas: 'الغاز',
-      internet: 'الإنترنت',
-      phone: 'الهاتف',
-      account_number: 'رقم الحساب',
-      amount: 'المبلغ',
-      pay_now: 'ادفع الآن',
-      payment_history: 'سجل الدفع'
-    },
     // صفحة التمويل الجماعي
     crowdfunding_page: {
       title: 'منصة التمويل الجماعي',
