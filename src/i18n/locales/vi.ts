@@ -1202,8 +1202,535 @@ export const vi = {
           selfie_instruction: 'Chụp ảnh selfie cầm giấy tờ',
           upload_button: 'Tải lên',
           submit: 'Gửi Xác minh',
-          cancel: 'Hủy'
+          cancel: 'Hủy',
+          validation_error: 'Vui lòng điền đầy đủ các trường bắt buộc'
         }
+      },
+      profile: {
+        title: 'Hồ sơ',
+        email: 'Địa chỉ Email',
+        username: 'Tên người dùng',
+        username_placeholder: 'Nhập tên người dùng',
+        wallet: 'Địa chỉ Ví',
+        wallet_placeholder: '0x...',
+        save: 'Lưu Thay đổi'
+      },
+      notifications: {
+        title: 'Cài đặt Thông báo',
+        transaction: {
+          label: 'Thông báo Giao dịch',
+          desc: 'Nhận thông báo cho các giao dịch mới'
+        },
+        security: {
+          label: 'Cảnh báo Bảo mật',
+          desc: 'Thông báo quan trọng về bảo mật tài khoản'
+        },
+        marketing: {
+          label: 'Email Tiếp thị',
+          desc: 'Cập nhật sản phẩm và thông tin khuyến mãi'
+        },
+        price: {
+          label: 'Cảnh báo Giá',
+          desc: 'Thông báo thay đổi giá token'
+        }
+      }
+    },
+    staking: {
+      title: 'Staking QAU',
+      subtitle: 'Stake token QAU để nhận phần thưởng, tham gia xác thực mạng và xây dựng hệ sinh thái an toàn lượng tử',
+      connect_wallet: {
+        title: 'Kết nối Ví để Bắt đầu Staking',
+        description: 'Kết nối ví Web3 của bạn để xem số dư và thực hiện các thao tác staking',
+        button: 'Kết nối Ví',
+        connecting: 'Đang kết nối...'
+      },
+      wallet: {
+        connected: 'Ví Đã kết nối',
+        network: 'Mạng',
+        correct_network: 'Quantaureum',
+        wrong_network: 'Sai Mạng',
+        balance: 'Số dư QAU',
+        pending_rewards: 'Phần thưởng Chờ',
+        switch_network: 'Chuyển Mạng',
+        switch_network_warning: 'Vui lòng chuyển sang mạng Quantaureum để stake'
+      },
+      stats: {
+        tvl: 'Tổng Giá trị Khóa',
+        avg_apy: 'APY Trung bình',
+        total_stakers: 'Tổng Stakers',
+        rewards_distributed: 'Phần thưởng Đã phân phối'
+      },
+      pool: {
+        select_title: 'Chọn Pool Staking',
+        stake: 'Stake',
+        unstake: 'Unstake',
+        claim_rewards: 'Nhận Phần thưởng',
+        your_stake: 'Stake của Bạn',
+        your_rewards: 'Phần thưởng của Bạn',
+        lock_period: 'Thời gian Khóa',
+        min_stake: 'Stake Tối thiểu',
+        days: 'Ngày',
+        amount_placeholder: 'Nhập số lượng',
+        max: 'TỐI ĐA',
+        confirm_stake: 'Xác nhận Stake',
+        confirm_unstake: 'Xác nhận Unstake',
+        no_lock: 'Không Khóa',
+        day_lock: '-Ngày Khóa',
+        early_penalty: 'Phạt Rút sớm',
+        total_staked: 'Tổng Đã Stake',
+        participants: 'Người tham gia',
+        my_stake: 'Stake của Tôi',
+        pending_rewards: 'Phần thưởng Chờ',
+        unlock_time: 'Thời gian Mở khóa',
+        stake_amount: 'Số lượng Stake',
+        unstake_amount: 'Số lượng Unstake',
+        available: 'Khả dụng',
+        estimated_rewards: 'Phần thưởng Ước tính Hàng năm',
+        processing: 'Đang xử lý...',
+        cancel: 'Hủy',
+        claim: 'Nhận',
+        rewards: 'Phần thưởng',
+        start_staking: 'Bắt đầu Staking',
+        connect_to_stake: 'Kết nối Ví để Stake'
+      },
+      info: {
+        title: 'Thông tin Staking',
+        rewards_calculated: 'Phần thưởng staking được tính theo khối và có thể nhận bất cứ lúc nào',
+        early_withdrawal: 'Rút sớm trong thời gian khóa sẽ bị phạt',
+        validator_staking: 'Staking validator yêu cầu chạy node validator để nhận phần thưởng cao hơn',
+        apy_dynamic: 'APY điều chỉnh động dựa trên tổng stake mạng và phần thưởng khối',
+        security_audited: 'Hợp đồng thông minh đã được kiểm toán bảo mật và mã nguồn mở'
+      },
+      contracts: {
+        title: 'Địa chỉ Hợp đồng Thông minh'
+      },
+      transaction: {
+        success: 'Giao dịch Thành công!',
+        hash: 'Hash Giao dịch',
+        block: 'Số Khối',
+        status: 'Trạng thái',
+        confirmed: 'Đã xác nhận',
+        pending: 'Đang chờ',
+        from: 'Từ',
+        to: 'Đến',
+        gas_used: 'Gas Đã dùng',
+        time: 'Thời gian',
+        waiting: 'Giao dịch đã gửi, đang chờ xác nhận...'
+      },
+      errors: {
+        connect_first: 'Vui lòng kết nối ví trước',
+        invalid_amount: 'Vui lòng nhập số lượng hợp lệ',
+        insufficient_balance: 'Số dư không đủ',
+        cancelled: 'Giao dịch bị hủy bởi người dùng',
+        failed: 'Giao dịch thất bại trên blockchain',
+        pending_check: 'Giao dịch đang chờ. Vui lòng kiểm tra trình duyệt để biết trạng thái.',
+        install_metamask: 'Vui lòng cài đặt ví MetaMask'
+      }
+    },
+    explorer_pages: {
+      address: {
+        loading: 'Đang tải thông tin địa chỉ...',
+        contract_address: 'Địa chỉ Hợp đồng',
+        wallet_address: 'Địa chỉ Ví',
+        smart_contract: 'Hợp đồng Thông minh',
+        balance: 'Số dư',
+        transactions: 'Giao dịch',
+        total_txns: 'Tổng Giao dịch',
+        more_stats: 'Thêm thống kê sắp ra mắt...',
+        latest_transactions: 'Giao dịch Mới nhất',
+        showing_records: 'Hiển thị 20 bản ghi gần nhất',
+        tx_hash: 'Hash Giao dịch',
+        method: 'Phương thức',
+        block: 'Khối',
+        from: 'Từ',
+        to: 'Đến',
+        value: 'Giá trị',
+        transfer: 'Chuyển',
+        self: 'Tự',
+        out: 'RA',
+        in: 'VÀO',
+        contract_creation: 'Tạo Hợp đồng',
+        no_transactions: 'Không tìm thấy giao dịch cho địa chỉ này',
+        not_found: 'Không tìm thấy địa chỉ'
+      },
+      validators: {
+        title: 'Validators',
+        subtitle: 'Validators Mạng & Trạng thái Staking',
+        showing_top: 'Hiển thị validators hàng đầu',
+        loading: 'Đang tải dữ liệu validator...',
+        index: 'Chỉ số',
+        validator_key: 'Khóa Validator',
+        stake: 'Stake',
+        status: 'Trạng thái',
+        activity: 'Hoạt động',
+        proposer: 'Proposer',
+        active: 'Hoạt động',
+        inactive: 'Không hoạt động',
+        no_validators: 'Không tìm thấy validators'
+      },
+      quantum_verify: {
+        title: 'Xác minh Chữ ký Hậu Lượng tử',
+        subtitle: 'Xác minh chữ ký giao dịch để đảm bảo kháng lượng tử',
+        tx_hash_label: 'Hash Giao dịch',
+        tx_hash_placeholder: 'Nhập hash giao dịch (0x...)',
+        verify_button: 'Xác minh Chữ ký',
+        verifying: 'Đang xác minh...'
+      }
+    },
+    exchange_page: {
+      redirecting: 'Đang chuyển hướng đến sàn giao dịch chuyên nghiệp...',
+      manual_redirect: 'Nếu trang không tự động chuyển hướng, vui lòng',
+      click_here: 'nhấn vào đây'
+    },
+    trading_page: {
+      title: 'Sàn Lượng tử',
+      subtitle: 'Nền tảng giao dịch tài sản số an toàn lượng tử chuyên nghiệp, chạy trực tiếp trong trình duyệt của bạn',
+      badges: {
+        quantum_secure: 'An toàn Lượng tử',
+        high_frequency: 'Tần suất Cao',
+        global_liquidity: 'Thanh khoản Toàn cầu'
+      },
+      launch: {
+        title: 'Khởi chạy Nền tảng Giao dịch Chuyên nghiệp',
+        description: 'Chạy Sàn Lượng tử trực tiếp trong trình duyệt, không cần tải xuống',
+        launch_button: 'Khởi chạy Sàn',
+        start_trading: 'Bắt đầu Giao dịch'
+      },
+      market: {
+        title: 'Dữ liệu Thị trường Thời gian thực',
+        pair: 'Cặp Giao dịch',
+        price: 'Giá',
+        change_24h: 'Thay đổi 24h',
+        volume_24h: 'Khối lượng 24h'
+      },
+      features: {
+        title: 'Tính năng Cốt lõi',
+        quantum_security: {
+          title: 'Giao dịch An toàn Lượng tử',
+          description: 'Tất cả giao dịch được bảo vệ bằng mật mã hậu lượng tử'
+        },
+        high_frequency: {
+          title: 'Hỗ trợ Giao dịch Tần suất Cao',
+          description: 'Thực thi lệnh mili giây, công cụ giao dịch chuyên nghiệp'
+        },
+        global_liquidity: {
+          title: 'Thanh khoản Toàn cầu',
+          description: 'Kết nối với các sàn toàn cầu, khám phá giá tốt nhất'
+        },
+        institutional: {
+          title: 'Dịch vụ Tổ chức',
+          description: 'Truy cập API, giao dịch OTC, hỗ trợ chuyên dụng'
+        }
+      },
+      stats: {
+        title: 'Thống kê Nền tảng',
+        volume_24h: 'Khối lượng 24h',
+        trading_pairs: 'Cặp Giao dịch',
+        registered_users: 'Người dùng Đăng ký',
+        avg_latency: 'Độ trễ Trung bình'
+      },
+      web_platform: {
+        title: 'Nền tảng Giao dịch Web',
+        description: 'Sàn Lượng tử là nền tảng giao dịch dựa trên web chạy trực tiếp trong trình duyệt của bạn, không cần tải xuống'
+      }
+    },
+
+    // Community Pages
+    community_page: {
+      title: 'Cộng đồng Quantaureum',
+      subtitle: 'Tham gia cuộc cách mạng blockchain lượng tử. Kết nối, thảo luận và cùng xây dựng tương lai.',
+      search_placeholder: 'Tìm kiếm thảo luận, chủ đề, người dùng...',
+      new_post: 'Bài viết Mới',
+      stats: {
+        members: 'Thành viên',
+        posts: 'Bài viết',
+        active_today: 'Hoạt động Hôm nay',
+        topics: 'Chủ đề'
+      },
+      categories: {
+        title: 'Danh mục Diễn đàn',
+        view_all: 'Xem Tất cả',
+        general: 'Thảo luận Chung',
+        general_desc: 'Thảo luận và thông báo cộng đồng',
+        technical: 'Kỹ thuật',
+        technical_desc: 'Phát triển và chủ đề kỹ thuật',
+        defi: 'DeFi & Giao dịch',
+        defi_desc: 'Thảo luận tài chính phi tập trung',
+        governance: 'Quản trị',
+        governance_desc: 'Quản trị và bỏ phiếu cộng đồng',
+        posts_count: '{{count}} bài viết'
+      },
+      hot_topics: {
+        title: 'Chủ đề Nóng',
+        all: 'Tất cả',
+        trending: 'Xu hướng',
+        new: 'Mới',
+        replies: 'trả lời',
+        views: 'lượt xem'
+      },
+      active_members: {
+        title: 'Thành viên Hoạt động',
+        view_all: 'Xem Tất cả Thành viên'
+      },
+      quick_links: {
+        title: 'Liên kết Nhanh',
+        guidelines: 'Hướng dẫn Cộng đồng',
+        faq: 'Câu hỏi Thường gặp',
+        bug_bounty: 'Chương trình Bug Bounty',
+        partners: 'Chương trình Đối tác'
+      },
+      community_stats: {
+        title: 'Thống kê Cộng đồng',
+        total_posts: 'Tổng Bài viết',
+        total_members: 'Tổng Thành viên',
+        online_now: 'Đang Trực tuyến'
+      },
+      levels: {
+        core_developer: 'Nhà phát triển Cốt lõi',
+        community_leader: 'Lãnh đạo Cộng đồng',
+        senior_member: 'Thành viên Cao cấp',
+        defi_expert: 'Chuyên gia DeFi',
+        member: 'Thành viên',
+        new_member: 'Thành viên Mới'
+      }
+    },
+    governance_page: {
+      title: 'Quản trị Cộng đồng',
+      subtitle: 'Tham gia quản trị phi tập trung Quantaureum, cùng quyết định hướng phát triển tương lai của hệ sinh thái',
+      create_proposal: 'Tạo Đề xuất Quản trị',
+      stats: {
+        total_staked: 'Tổng QAU Đã Stake',
+        active_voters: 'Cử tri Hoạt động',
+        passed_proposals: 'Đề xuất Đã thông qua',
+        participation_rate: 'Tỷ lệ Tham gia Trung bình'
+      },
+      tabs: {
+        proposals: 'Đề xuất Quản trị',
+        delegates: 'Đại biểu Bỏ phiếu',
+        create: 'Tạo Đề xuất'
+      },
+      status: {
+        active: 'Đang Bỏ phiếu',
+        pending: 'Sắp tới',
+        discussion: 'Thảo luận',
+        passed: 'Đã thông qua',
+        rejected: 'Bị từ chối',
+        unknown: 'Không xác định'
+      },
+      voting: {
+        progress: 'Tiến độ Bỏ phiếu',
+        for: 'Đồng ý',
+        against: 'Phản đối',
+        abstain: 'Bỏ phiếu trắng',
+        vote_for: 'Bỏ phiếu Đồng ý',
+        vote_against: 'Bỏ phiếu Phản đối',
+        support_rate: 'Tỷ lệ Ủng hộ',
+        view_details: 'Xem Chi tiết'
+      },
+      delegates: {
+        delegated_votes: 'Phiếu Được ủy quyền',
+        participation: 'Tham gia',
+        followers: 'Người theo dõi',
+        delegate_to: 'Ủy quyền Phiếu',
+        delegating: 'Đang ủy quyền...'
+      },
+      create_form: {
+        title: 'Tạo Đề xuất Quản trị',
+        proposal_title: 'Tiêu đề Đề xuất',
+        proposal_title_placeholder: 'Nhập tiêu đề đề xuất...',
+        category: 'Danh mục Đề xuất',
+        categories: {
+          tech: 'Nâng cấp Kỹ thuật',
+          economy: 'Mô hình Kinh tế',
+          ecosystem: 'Phát triển Hệ sinh thái',
+          governance: 'Quản trị Cộng đồng',
+          security: 'Cải thiện Bảo mật'
+        },
+        description: 'Mô tả Đề xuất',
+        description_placeholder: 'Mô tả chi tiết đề xuất của bạn...',
+        tags: 'Thẻ Đề xuất',
+        tags_placeholder: 'Nhập thẻ, phân cách bằng dấu phẩy...',
+        requirements: {
+          title: 'Yêu cầu Đề xuất',
+          stake: 'Phải nắm giữ ít nhất 10,000 QAU',
+          discussion: 'Đề xuất yêu cầu 7 ngày thảo luận',
+          quorum: 'Bỏ phiếu yêu cầu 1 triệu QAU quorum',
+          threshold: 'Thông qua yêu cầu trên 50% tỷ lệ ủng hộ'
+        },
+        submit: 'Gửi Đề xuất',
+        submitting: 'Đang gửi...'
+      },
+      process: {
+        title: 'Quy trình Quản trị',
+        subtitle: 'Tìm hiểu về quy trình quản trị phi tập trung Quantaureum',
+        steps: {
+          create: { title: 'Tạo Đề xuất', desc: 'Người dùng nắm giữ 10,000+ QAU có thể tạo đề xuất quản trị' },
+          discussion: { title: 'Thảo luận Cộng đồng', desc: '7 ngày thảo luận, thành viên cộng đồng có thể đưa ý kiến và đề xuất' },
+          voting: { title: 'Bỏ phiếu', desc: '7 ngày bỏ phiếu, người nắm giữ QAU tiến hành bỏ phiếu an toàn lượng tử' },
+          execution: { title: 'Thực thi', desc: 'Đề xuất được thông qua vào timelock 48 giờ, sau đó tự động thực thi' }
+        }
+      },
+      loading: 'Đang tải...'
+    },
+    messages_page: {
+      search_placeholder: 'Tìm kiếm cuộc trò chuyện...',
+      no_conversations: 'Không có cuộc trò chuyện',
+      select_conversation: 'Chọn một cuộc trò chuyện để bắt đầu chat',
+      message_placeholder: 'Nhập tin nhắn...',
+      time: {
+        just_now: 'Vừa xong',
+        minutes_ago: '{{count}} phút trước',
+        hours_ago: '{{count}} giờ trước',
+        days_ago: '{{count}} ngày trước',
+        you: 'Bạn: '
+      },
+      status: {
+        online: 'Trực tuyến',
+        offline: 'Ngoại tuyến',
+        send_message: 'Gửi tin nhắn'
+      }
+    },
+    events_page: {
+      title: 'Sự kiện Cộng đồng',
+      subtitle: 'Tham gia các sự kiện cộng đồng Quantaureum, khám phá tương lai blockchain lượng tử cùng các nhà phát triển và người dùng toàn cầu',
+      stats: {
+        upcoming: 'Sắp tới',
+        total_participants: 'Tổng Người tham gia',
+        past_events: 'Sự kiện Đã qua',
+        global_cities: 'Thành phố Toàn cầu'
+      },
+      tabs: {
+        upcoming: 'Sắp tới',
+        past: 'Sự kiện Đã qua'
+      },
+      filters: {
+        search_placeholder: 'Tìm kiếm sự kiện...',
+        all_types: 'Tất cả Loại',
+        online: 'Sự kiện Trực tuyến',
+        offline: 'Gặp mặt Ngoại tuyến',
+        hackathon: 'Hackathon',
+        workshop: 'Workshop'
+      },
+      event: {
+        participants: 'người tham gia',
+        registered: 'đã đăng ký',
+        participated: 'đã tham gia',
+        prize_pool: 'Giải thưởng: ',
+        register: 'Đăng ký Ngay',
+        registering: 'Đang đăng ký...',
+        ended: 'Đã kết thúc',
+        registration_failed: 'Đăng ký thất bại'
+      }
+    },
+    create_post_page: {
+      title: 'Tạo Bài viết Mới',
+      subtitle: 'Chia sẻ suy nghĩ của bạn với cộng đồng',
+      verifying_login: 'Đang xác minh trạng thái đăng nhập...',
+      form: {
+        category: 'Danh mục',
+        categories: {
+          general: 'Thảo luận Chung',
+          technical: 'Câu hỏi Kỹ thuật',
+          defi: 'Giao dịch DeFi',
+          governance: 'Đề xuất Quản trị'
+        },
+        title: 'Tiêu đề',
+        title_placeholder: 'Nhập tiêu đề bài viết...',
+        content: 'Nội dung',
+        content_placeholder: 'Chia sẻ suy nghĩ của bạn...',
+        cancel: 'Hủy',
+        publish: 'Đăng Bài viết',
+        publishing: 'Đang đăng...'
+      },
+      errors: {
+        empty_fields: 'Tiêu đề và nội dung không được để trống',
+        post_failed: 'Đăng bài thất bại, vui lòng thử lại',
+        network_error: 'Lỗi mạng, vui lòng thử lại sau'
+      }
+    },
+    forum: {
+      actions: {
+        edit: 'Sửa Bài viết',
+        pin: 'Ghim Bài viết',
+        copy_link: 'Sao chép Liên kết',
+        report: 'Báo cáo',
+        delete: 'Xóa',
+        reply: 'Trả lời',
+        cancel: 'Hủy',
+        post_reply: 'Đăng Trả lời'
+      },
+      status: {
+        pinned: 'Đã ghim',
+        locked: 'Đã khóa',
+        featured: 'Nổi bật',
+        edited: 'đã sửa'
+      },
+      reply: {
+        placeholder: 'Viết trả lời của bạn...'
+      }
+    },
+    governance_component: {
+      title: 'Quản trị',
+      subtitle: 'Tham gia ra quyết định cộng đồng',
+      create_proposal: 'Tạo Đề xuất',
+      stats: {
+        active_proposals: 'Đề xuất Hoạt động',
+        total_voters: 'Tổng Cử tri',
+        voting_power: 'Quyền Bỏ phiếu',
+        participation: 'Tham gia'
+      },
+      tabs: {
+        active: 'Đề xuất Hoạt động',
+        completed: 'Hoàn thành',
+        all: 'Tất cả Đề xuất'
+      },
+      voting: {
+        progress: 'Tiến độ Bỏ phiếu',
+        for: 'Đồng ý',
+        against: 'Phản đối',
+        abstain: 'Bỏ phiếu trắng',
+        vote_for: 'Bỏ phiếu Đồng ý',
+        vote_against: 'Bỏ phiếu Phản đối',
+        details: 'Chi tiết',
+        discussion: 'Thảo luận'
+      }
+    },
+    user_profile: {
+      follow: 'Theo dõi',
+      following: 'Đang theo dõi',
+      joined: 'Tham gia',
+      stats: {
+        posts: 'Bài viết',
+        replies: 'Trả lời',
+        likes: 'Thích',
+        views: 'Lượt xem',
+        followers: 'Người theo dõi',
+        following: 'Đang theo dõi'
+      },
+      tabs: {
+        posts: 'Bài viết',
+        replies: 'Trả lời',
+        badges: 'Huy hiệu',
+        activity: 'Hoạt động'
+      },
+      badges: {
+        title: 'Huy hiệu Hàng đầu',
+        rarity: {
+          common: 'PHỔ BIẾN',
+          rare: 'HIẾM',
+          epic: 'SỬ THI',
+          legendary: 'HUYỀN THOẠI'
+        }
+      },
+      activity: {
+        title: 'Hoạt động Gần đây',
+        coming_soon: 'Feed hoạt động sắp ra mắt...'
+      },
+      content: {
+        user_posts: 'Bài viết Người dùng',
+        user_replies: 'Trả lời Người dùng',
+        posts_displayed: 'Bài viết sẽ được hiển thị ở đây...',
+        replies_displayed: 'Trả lời sẽ được hiển thị ở đây...'
       }
     }
   }
