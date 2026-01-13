@@ -7,6 +7,7 @@ import { ethers } from 'ethers';
 import ParticlesBackground from '../components/ParticlesBackground';
 import EnhancedNavbar from '../components/EnhancedNavbar';
 import EnhancedFooter from '../components/EnhancedFooter';
+import { useTranslation } from 'react-i18next';
 
 const { Title, Paragraph } = Typography;
 
@@ -42,6 +43,7 @@ const ERC20_ABI = [
 ];
 
 export default function TokenSalePage() {
+  const { t } = useTranslation();
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string>('');
@@ -155,10 +157,10 @@ export default function TokenSalePage() {
       if (accounts?.length > 0) { 
         setWalletAddress(accounts[0]); 
         setShowWalletModal(false); 
-        message.success('Wallet connected!');
+        message.success(t('token_sale.wallet.connected') + '!');
         fetchQauBalance(accounts[0]);
       }
-    } catch (e: any) { message.error(e.message || 'Failed'); }
+    } catch (e: any) { message.error(e.message || t('token_sale.errors.connect_failed')); }
     finally { setConnecting(false); }
   };
 
@@ -167,7 +169,7 @@ export default function TokenSalePage() {
 
   const handleBuy = async () => {
     if (!amount || Number(amount) <= 0) {
-      message.error('Please enter a valid amount');
+      message.error(t('token_sale.messages.enter_valid_amount'));
       return;
     }
     if (!walletAddress) { 
@@ -181,7 +183,7 @@ export default function TokenSalePage() {
     try {
       // 检查 MetaMask 是否可用
       if (!window.ethereum) {
-        throw new Error('MetaMask not found');
+        throw new Error(t('token_sale.errors.metamask_not_found'));
       }
 
       // 使用 MetaMask 作为 provider
@@ -193,7 +195,7 @@ export default function TokenSalePage() {
       const qauToPay = Number(amount) / price; // QAU 数量
       const qauInWei = ethers.parseEther(qauToPay.toFixed(18)); // 转换为 wei
       
-      message.info('Please confirm the transaction in MetaMask...');
+      message.info(t('token_sale.messages.confirm_tx'));
       setBuyStep(1);
       
       // 发送原生 QAU 到 Treasury 地址
@@ -206,7 +208,7 @@ export default function TokenSalePage() {
       });
       setTxHash(tx.hash);
       
-      message.info('Transaction submitted, waiting for confirmation...');
+      message.info(t('token_sale.messages.tx_submitted'));
       
       // 等待交易确认
       const receipt = await tx.wait();
@@ -228,7 +230,7 @@ export default function TokenSalePage() {
           console.warn('Backend record failed, but on-chain tx succeeded:', backendErr);
         }
         
-        message.success(`Purchase successful! Paid ${qauToPay.toFixed(4)} QAU for ${qauAmount} QAU tokens`);
+        message.success(t('token_sale.messages.purchase_success', { paid: qauToPay.toFixed(4), received: qauAmount }));
         setAmount('');
         
         // 3秒后重置状态
@@ -237,16 +239,16 @@ export default function TokenSalePage() {
           setTxHash('');
         }, 5000);
       } else {
-        throw new Error('Transaction failed on-chain');
+        throw new Error(t('token_sale.errors.tx_failed'));
       }
     } catch (err: any) {
       console.error('Purchase error:', err);
       
       // 处理用户拒绝交易的情况
       if (err.code === 4001 || err.code === 'ACTION_REJECTED') {
-        message.warning('Transaction cancelled by user');
+        message.warning(t('token_sale.messages.tx_cancelled'));
       } else {
-        message.error(err.message || 'Purchase failed');
+        message.error(err.message || t('token_sale.errors.tx_failed'));
       }
       setBuyStep(-1);
       setTxHash('');
@@ -262,48 +264,48 @@ export default function TokenSalePage() {
       <div className="relative z-10 container mx-auto px-4 py-12 pt-24">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <Title level={1} style={{ color: '#fff' }}>QAU Token Sale</Title>
-          <Paragraph className="text-lg text-gray-400">1 QAU = 1 Gram of Gold</Paragraph>
+          <Title level={1} style={{ color: '#fff' }}>{t('token_sale.title')}</Title>
+          <Paragraph className="text-lg text-gray-400">{t('token_sale.subtitle')}</Paragraph>
         </div>
 
         <div className="mb-6 text-center">
           {walletAddress ? (
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-full">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-green-400">Connected: {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}</span>
+              <span className="text-green-400">{t('token_sale.wallet.connected')}: {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}</span>
             </div>
           ) : (
             <Button icon={<WalletOutlined />} onClick={() => setShowWalletModal(true)} type="primary"
-              style={{ background: 'linear-gradient(90deg, #f97316, #ea580c)' }}>Connect Wallet</Button>
+              style={{ background: 'linear-gradient(90deg, #f97316, #ea580c)' }}>{t('token_sale.actions.connect')}</Button>
           )}
         </div>
 
         <Row gutter={24}>
           <Col xs={24} md={12}>
             <Card className="bg-gray-900 border-gray-800 h-full">
-              <Title level={3} style={{ color: '#fff', marginBottom: '1.5rem' }}>Purchase Tokens</Title>
+              <Title level={3} style={{ color: '#fff', marginBottom: '1.5rem' }}>{t('token_sale.purchase_tokens')}</Title>
               <div className="mb-6">
                 <div className="flex justify-between text-gray-400 mb-2">
-                  <span>Pay with (QAU)</span>
-                  <span>Balance: {Number(qauBalance).toLocaleString(undefined, {maximumFractionDigits: 4})} QAU</span>
+                  <span>{t('token_sale.input.pay_label')}</span>
+                  <span>{t('token_sale.input.balance')}: {Number(qauBalance).toLocaleString(undefined, {maximumFractionDigits: 4})} QAU</span>
                 </div>
                 <Input size="large" prefix="$" placeholder="100" value={amount}
                   onChange={e => setAmount(e.target.value)} style={{ color: '#000' }} disabled={loading} />
                 <div className="text-xs text-gray-500 mt-1">
-                  Enter USD amount, pay equivalent in QAU
+                  {t('token_sale.input.pay_hint')}
                 </div>
               </div>
               <div className="mb-8">
                 <div className="flex justify-between text-gray-400 mb-2">
-                  <span>You Receive (QAU)</span>
-                  <span>Rate: ${price.toFixed(2)} / QAU</span>
+                  <span>{t('token_sale.input.receive_label')}</span>
+                  <span>{t('token_sale.rate')}: ${price.toFixed(2)} / QAU</span>
                 </div>
                 <Input size="large" value={qauAmount} disabled
                   style={{ color: '#fff', backgroundColor: '#1f2937', borderColor: '#374151' }} />
               </div>
               <Button type="primary" size="large" block icon={loading ? <LoadingOutlined /> : <RocketOutlined />} loading={loading}
                 onClick={handleBuy} className="h-12 text-lg font-bold" disabled={loading}>
-                {walletAddress ? (loading ? 'Processing...' : 'Buy QAU Now') : 'Connect Wallet to Buy'}
+                {walletAddress ? (loading ? t('token_sale.actions.processing') : t('token_sale.actions.buy_now')) : t('token_sale.actions.connect_to_buy')}
               </Button>
               
               {/* 交易进度 */}
@@ -313,9 +315,9 @@ export default function TokenSalePage() {
                     size="small"
                     current={buyStep}
                     items={[
-                      { title: 'Confirm', description: 'In MetaMask' },
-                      { title: 'Processing', description: 'On-chain' },
-                      { title: 'Complete', description: 'Success' },
+                      { title: t('token_sale.steps.confirm'), description: t('token_sale.steps.confirm_desc') },
+                      { title: t('token_sale.steps.processing'), description: t('token_sale.steps.processing_desc') },
+                      { title: t('token_sale.steps.complete'), description: t('token_sale.steps.complete_desc') },
                     ]}
                   />
                   {txHash && (
@@ -330,7 +332,7 @@ export default function TokenSalePage() {
 
           <Col xs={24} md={12}>
             <Card className="bg-gray-900 border-gray-800 h-full">
-              <Title level={3} style={{ color: '#fff', marginBottom: '1.5rem' }}>Sale Progress</Title>
+              <Title level={3} style={{ color: '#fff', marginBottom: '1.5rem' }}>{t('token_sale.sale_progress')}</Title>
               {(() => {
                 // 目标金额 = 可出售数量 × 黄金价格
                 const goalAmount = chainData.availableForSale * goldPrice;
@@ -345,8 +347,8 @@ export default function TokenSalePage() {
                     <Progress percent={Number(percent.toFixed(1))} status="active" strokeColor={{ '0%': '#108ee9', '100%': '#87d068' }} 
                       format={(p) => <span style={{ color: '#fff' }}>{p?.toFixed(1)}%</span>} />
                     <div className="flex justify-between mt-2 mb-6 text-gray-400">
-                      <span>${soldAmount.toLocaleString(undefined, {maximumFractionDigits: 0})} Sold</span>
-                      <span>Available: ${goalAmount.toLocaleString(undefined, {maximumFractionDigits: 0})}</span>
+                      <span>${soldAmount.toLocaleString(undefined, {maximumFractionDigits: 0})} {t('token_sale.sold')}</span>
+                      <span>{t('token_sale.available')}: ${goalAmount.toLocaleString(undefined, {maximumFractionDigits: 0})}</span>
                     </div>
                   </>
                 );
@@ -354,21 +356,21 @@ export default function TokenSalePage() {
               
               <div className="space-y-4">
                 <div className="bg-gray-800/50 rounded-lg p-4">
-                  <span className="text-gray-400 text-sm block mb-1">Current Price (1 QAU = 1g Gold)</span>
+                  <span className="text-gray-400 text-sm block mb-1">{t('token_sale.current_price')}</span>
                   <span className="text-white text-2xl font-bold">${price.toFixed(2)}</span>
                 </div>
                 <div className="bg-gray-800/50 rounded-lg p-4">
-                  <span className="text-gray-400 text-sm block mb-1">Available for Sale (On-Chain)</span>
+                  <span className="text-gray-400 text-sm block mb-1">{t('token_sale.available_for_sale')}</span>
                   <span className="text-cyan-400 text-xl font-bold">{chainData.availableForSale.toLocaleString()} QAU</span>
                 </div>
                 <div className="bg-gray-800/50 rounded-lg p-4">
-                  <span className="text-gray-400 text-sm block mb-1">Gold Reserve (Certified)</span>
+                  <span className="text-gray-400 text-sm block mb-1">{t('token_sale.gold_reserve')}</span>
                   <span className="text-amber-400 text-xl font-bold">{chainData.totalReserve.toLocaleString()} g</span>
                 </div>
               </div>
               
               <div className="mt-6 pt-6 border-t border-gray-800">
-                <Statistic.Timer type="countdown" title={<span style={{ color: '#9ca3af' }}>Round Ends In</span>}
+                <Statistic.Timer type="countdown" title={<span style={{ color: '#9ca3af' }}>{t('token_sale.round_ends')}</span>}
                   value={new Date(icoConfig.end_time).getTime()} format="D days H:m:s" styles={{ content: { color: '#fff' } }} />
               </div>
             </Card>
@@ -381,17 +383,17 @@ export default function TokenSalePage() {
           <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <WalletOutlined style={{ fontSize: 40, color: '#fff' }} />
           </div>
-          <h2 className="text-xl font-bold mb-2">Connect Your Wallet</h2>
-          <p className="text-gray-500 mb-6">Connect MetaMask to purchase QAU tokens</p>
+          <h2 className="text-xl font-bold mb-2">{t('token_sale.wallet.connect_title')}</h2>
+          <p className="text-gray-500 mb-6">{t('token_sale.wallet.connect_desc')}</p>
           <div className="bg-gray-100 rounded-xl p-4 mb-6">
             <div className="grid grid-cols-2 gap-4 text-sm">
-              <div><span className="text-gray-500">Network</span><p className="font-medium">Quantaureum</p></div>
-              <div><span className="text-gray-500">Chain ID</span><p className="font-medium">1668</p></div>
+              <div><span className="text-gray-500">{t('token_sale.wallet.network')}</span><p className="font-medium">Quantaureum</p></div>
+              <div><span className="text-gray-500">{t('token_sale.wallet.chain_id')}</span><p className="font-medium">1668</p></div>
             </div>
           </div>
           <Button type="primary" size="large" block loading={connecting} onClick={connectWallet}
             style={{ height: 48, background: 'linear-gradient(90deg, #f97316, #ea580c)' }}>
-            {connecting ? 'Connecting...' : (isMetaMaskInstalled() ? 'Connect MetaMask' : 'Install MetaMask')}
+            {connecting ? t('token_sale.wallet.connecting') : (isMetaMaskInstalled() ? t('token_sale.actions.connect') : t('token_sale.wallet.install'))}
           </Button>
         </div>
       </Modal>

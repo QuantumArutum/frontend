@@ -725,15 +725,26 @@ export const vi = {
       }
     },
     token_sale: {
-      title: 'Đầu tư vào Vàng Số',
-      subtitle: 'An toàn, Được kiểm toán và Thanh khoản Tức thì. 1 QAU = 1 Gram Vàng.',
+      title: 'Bán Token QAU',
+      subtitle: '1 QAU = 1 Gram Vàng',
       buy_title: 'Mua QAU',
       live_rate: 'Tỷ giá Trực tiếp',
+      purchase_tokens: 'Mua Token',
+      sale_progress: 'Tiến độ Bán',
       input: {
-        pay_label: 'Bạn Trả (USDT)',
+        pay_label: 'Thanh toán bằng (QAU)',
+        pay_hint: 'Nhập số tiền USD, thanh toán tương đương bằng QAU',
         placeholder: 'Nhập số lượng...',
-        receive_label: 'Bạn Nhận (QAU)'
+        receive_label: 'Bạn Nhận (QAU)',
+        balance: 'Số dư'
       },
+      rate: 'Tỷ giá',
+      sold: 'Đã bán',
+      available: 'Khả dụng',
+      current_price: 'Giá Hiện tại (1 QAU = 1g Vàng)',
+      available_for_sale: 'Khả dụng để Bán (On-Chain)',
+      gold_reserve: 'Dự trữ Vàng (Đã chứng nhận)',
+      round_ends: 'Vòng Kết thúc Trong',
       fee: {
         gross: 'Số tiền Gộp',
         platform_fee: 'Phí Nền tảng',
@@ -742,11 +753,37 @@ export const vi = {
       },
       actions: {
         connect: 'Kết nối Ví',
+        connect_to_buy: 'Kết nối Ví để Mua',
+        buy_now: 'Mua QAU Ngay',
         confirm: 'Xác nhận Mua',
         processing: 'Đang xử lý...',
         success_title: 'Mua Thành công!',
         success_desc: 'Yêu cầu của bạn đã được ghi nhận. QAU sẽ được đúc sau khi mua vàng.',
         view_explorer: 'Xem trên Trình duyệt'
+      },
+      wallet: {
+        connected: 'Đã kết nối',
+        connect_title: 'Kết nối Ví của Bạn',
+        connect_desc: 'Kết nối MetaMask để mua token QAU',
+        network: 'Mạng',
+        chain_id: 'Chain ID',
+        connecting: 'Đang kết nối...',
+        install: 'Cài đặt MetaMask'
+      },
+      steps: {
+        confirm: 'Xác nhận',
+        confirm_desc: 'Trong MetaMask',
+        processing: 'Đang xử lý',
+        processing_desc: 'On-chain',
+        complete: 'Hoàn thành',
+        complete_desc: 'Thành công'
+      },
+      messages: {
+        confirm_tx: 'Vui lòng xác nhận giao dịch trong MetaMask...',
+        tx_submitted: 'Giao dịch đã gửi, đang chờ xác nhận...',
+        purchase_success: 'Mua thành công! Đã thanh toán {{paid}} QAU để nhận {{received}} token QAU',
+        tx_cancelled: 'Giao dịch bị hủy bởi người dùng',
+        enter_valid_amount: 'Vui lòng nhập số lượng hợp lệ'
       },
       stats: {
         gold_price: 'Giá Vàng (24h)',
@@ -771,7 +808,8 @@ export const vi = {
         install_wallet: 'Vui lòng cài đặt MetaMask hoặc ví tương thích.',
         switch_network: 'Vui lòng chuyển sang Mạng Quantaureum (Chain ID: {{chainId}})',
         connect_failed: 'Kết nối ví thất bại',
-        tx_failed: 'Giao dịch thất bại'
+        tx_failed: 'Giao dịch thất bại',
+        metamask_not_found: 'Không tìm thấy MetaMask'
       }
     },
     about: {
