@@ -3209,20 +3209,6 @@ export const nl = {
         download_sdk: 'SDK Downloaden'
       }
     },
-    // Berichtenpagina
-    messages_page: {
-      search_placeholder: 'Gesprekken zoeken...',
-      no_conversations: 'Geen gesprekken',
-      select_conversation: 'Selecteer een gesprek om te beginnen met chatten',
-      message_placeholder: 'Typ een bericht...',
-      time: {
-        just_now: 'Zojuist',
-        minutes_ago: '{{count}} minuten geleden',
-        hours_ago: '{{count}} uur geleden',
-        days_ago: '{{count}} dagen geleden',
-        you: 'U: '
-      }
-    },
     // SDK-downloadpagina
     sdk_page: {
       title: 'SDK Downloaden',

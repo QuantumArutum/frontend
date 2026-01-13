@@ -3307,20 +3307,6 @@ export const ja = {
         download_sdk: 'SDKをダウンロード'
       }
     },
-    // メッセージページ
-    messages_page: {
-      search_placeholder: '会話を検索...',
-      no_conversations: '会話はありません',
-      select_conversation: '会話を選択してチャットを開始',
-      message_placeholder: 'メッセージを入力...',
-      time: {
-        just_now: 'たった今',
-        minutes_ago: '{{count}}分前',
-        hours_ago: '{{count}}時間前',
-        days_ago: '{{count}}日前',
-        you: 'あなた: '
-      }
-    },
     // SDKダウンロードページ
     sdk_page: {
       title: 'SDKダウンロード',

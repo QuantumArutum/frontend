@@ -3273,20 +3273,6 @@ export const vi = {
         download_sdk: 'Tải SDK'
       }
     },
-    // Trang Tin nhắn
-    messages_page: {
-      search_placeholder: 'Tìm kiếm cuộc trò chuyện...',
-      no_conversations: 'Không có cuộc trò chuyện',
-      select_conversation: 'Chọn cuộc trò chuyện để bắt đầu chat',
-      message_placeholder: 'Nhập tin nhắn...',
-      time: {
-        just_now: 'Vừa xong',
-        minutes_ago: '{{count}} phút trước',
-        hours_ago: '{{count}} giờ trước',
-        days_ago: '{{count}} ngày trước',
-        you: 'Bạn: '
-      }
-    },
     // Trang Tải SDK
     sdk_page: {
       title: 'Tải SDK',

@@ -3224,20 +3224,6 @@ export const it = {
         download_sdk: 'Scarica SDK'
       }
     },
-    // Pagina Messaggi
-    messages_page: {
-      search_placeholder: 'Cerca conversazioni...',
-      no_conversations: 'Nessuna conversazione',
-      select_conversation: 'Seleziona una conversazione per iniziare a chattare',
-      message_placeholder: 'Scrivi un messaggio...',
-      time: {
-        just_now: 'Proprio ora',
-        minutes_ago: '{{count}} minuti fa',
-        hours_ago: '{{count}} ore fa',
-        days_ago: '{{count}} giorni fa',
-        you: 'Tu: '
-      }
-    },
     // Pagina Download SDK
     sdk_page: {
       title: 'Download SDK',

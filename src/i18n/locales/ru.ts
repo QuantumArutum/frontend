@@ -3224,20 +3224,6 @@ export const ru = {
         download_sdk: 'Скачать SDK'
       }
     },
-    // Страница сообщений
-    messages_page: {
-      search_placeholder: 'Поиск разговоров...',
-      no_conversations: 'Нет разговоров',
-      select_conversation: 'Выберите разговор, чтобы начать общение',
-      message_placeholder: 'Введите сообщение...',
-      time: {
-        just_now: 'Только что',
-        minutes_ago: '{{count}} минут назад',
-        hours_ago: '{{count}} часов назад',
-        days_ago: '{{count}} дней назад',
-        you: 'Вы: '
-      }
-    },
     // Страница загрузки SDK
     sdk_page: {
       title: 'Загрузка SDK',

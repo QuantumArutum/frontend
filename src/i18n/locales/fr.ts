@@ -3209,20 +3209,6 @@ export const fr = {
         download_sdk: 'Télécharger le SDK'
       }
     },
-    // Page de Messages
-    messages_page: {
-      search_placeholder: 'Rechercher des conversations...',
-      no_conversations: 'Aucune conversation',
-      select_conversation: 'Sélectionnez une conversation pour commencer à discuter',
-      message_placeholder: 'Tapez un message...',
-      time: {
-        just_now: 'À l\'instant',
-        minutes_ago: 'il y a {{count}} minutes',
-        hours_ago: 'il y a {{count}} heures',
-        days_ago: 'il y a {{count}} jours',
-        you: 'Vous : '
-      }
-    },
     // Page de Téléchargement du SDK
     sdk_page: {
       title: 'Téléchargement du SDK',

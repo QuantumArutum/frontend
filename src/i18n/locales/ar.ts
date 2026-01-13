@@ -3172,20 +3172,6 @@ export const ar = {
         download_sdk: 'تحميل SDK'
       }
     },
-    // صفحة الرسائل
-    messages_page: {
-      search_placeholder: 'البحث في المحادثات...',
-      no_conversations: 'لا توجد محادثات',
-      select_conversation: 'اختر محادثة لبدء الدردشة',
-      message_placeholder: 'اكتب رسالة...',
-      time: {
-        just_now: 'الآن',
-        minutes_ago: 'منذ {{count}} دقائق',
-        hours_ago: 'منذ {{count}} ساعات',
-        days_ago: 'منذ {{count}} أيام',
-        you: 'أنت: '
-      }
-    },
     // صفحة تحميل SDK
     sdk_page: {
       title: 'تحميل SDK',

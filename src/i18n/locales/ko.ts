@@ -3303,20 +3303,6 @@ export const ko = {
         download_sdk: 'SDK 다운로드'
       }
     },
-    // 메시지 페이지
-    messages_page: {
-      search_placeholder: '대화 검색...',
-      no_conversations: '대화가 없습니다',
-      select_conversation: '대화를 선택하여 채팅 시작',
-      message_placeholder: '메시지 입력...',
-      time: {
-        just_now: '방금',
-        minutes_ago: '{{count}}분 전',
-        hours_ago: '{{count}}시간 전',
-        days_ago: '{{count}}일 전',
-        you: '나: '
-      }
-    },
     // SDK 다운로드 페이지
     sdk_page: {
       title: 'SDK 다운로드',

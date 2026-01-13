@@ -3054,14 +3054,6 @@ export const pt = {
       examples: { connect_wallet: { title: 'Conectar Carteira', description: 'Conectar à carteira Quantaureum usando JavaScript SDK' }, send_transaction: { title: 'Enviar Transação', description: 'Enviar tokens QAU para um endereço especificado' }, deploy_contract: { title: 'Implantar Contrato Inteligente', description: 'Implantar um contrato de token simples' }, staking: { title: 'Fazer Staking de QAU', description: 'Fazer staking de QAU em nós validadores para recompensas' }, quantum_signature: { title: 'Assinatura Quântica Segura', description: 'Assinar mensagens usando algoritmos criptográficos pós-quânticos' } },
       cta: { title: 'Pronto para Começar a Construir?', description: 'Confira a documentação completa para mais funcionalidades avançadas e melhores práticas', view_docs: 'Ver Documentação Completa', download_sdk: 'Baixar SDK' }
     },
-    // Página de Mensagens
-    messages_page: {
-      search_placeholder: 'Buscar conversas...',
-      no_conversations: 'Sem conversas',
-      select_conversation: 'Selecione uma conversa para começar a conversar',
-      message_placeholder: 'Digite uma mensagem...',
-      time: { just_now: 'Agora mesmo', minutes_ago: 'há {{count}} minutos', hours_ago: 'há {{count}} horas', days_ago: 'há {{count}} dias', you: 'Você: ' }
-    },
     // Página de Download do SDK
     sdk_page: {
       title: 'Download do SDK',

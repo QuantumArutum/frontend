@@ -3209,20 +3209,6 @@ export const de = {
         download_sdk: 'SDK herunterladen'
       }
     },
-    // Nachrichtenseite
-    messages_page: {
-      search_placeholder: 'Gespräche suchen...',
-      no_conversations: 'Keine Gespräche',
-      select_conversation: 'Wählen Sie ein Gespräch, um zu chatten',
-      message_placeholder: 'Nachricht eingeben...',
-      time: {
-        just_now: 'Gerade eben',
-        minutes_ago: 'vor {{count}} Minuten',
-        hours_ago: 'vor {{count}} Stunden',
-        days_ago: 'vor {{count}} Tagen',
-        you: 'Sie: '
-      }
-    },
     // SDK-Download-Seite
     sdk_page: {
       title: 'SDK-Download',
