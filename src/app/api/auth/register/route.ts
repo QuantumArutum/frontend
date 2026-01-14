@@ -62,32 +62,45 @@ export const POST = createSecureHandler(
     }
     
     try {
-      // 创建用户
-      const user = await db.createUser(email, password);
+      // 创建用户 - 需要先对密码进行哈希处理
+      const bcrypt = require('bcryptjs');
+      const password_hash = await bcrypt.hash(password, 12);
+      const uid = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(7);
+      
+      const user = await db.createUser({
+        uid,
+        email,
+        password_hash,
+        role: 'user',
+        level: 1,
+        status: 'active',
+        is_verified: false,
+        profile_data: walletAddress ? { walletAddress } : {},
+      });
       
       // 如果提供了钱包地址，更新用户
-      if (walletAddress) {
-        await db.updateUser(user.id, { walletAddress });
+      if (walletAddress && user) {
+        await db.updateUser(user.uid, { profile_data: { walletAddress } });
       }
       
       SecurityLogger.log(
         SecurityEventType.LOGIN_SUCCESS,
         'info',
-        { userId: user.id, email },
-        user.id,
+        { userId: user?.uid || user?.id, email },
+        user?.uid || user?.id,
         ip,
         userAgent
       );
       
       // 创建会话
-      const session = await db.createSession(user.id, ip, userAgent);
+      const session = await db.createSession(user?.uid || user?.id, ip, userAgent);
       
       return successResponse({
         message: '注册成功',
         user: {
-          id: user.id,
-          email: user.email,
-          isVerified: user.isVerified,
+          id: user?.uid || user?.id,
+          email: user?.email,
+          isVerified: user?.is_verified,
         },
         token: session.token,
       });
