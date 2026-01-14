@@ -27,6 +27,17 @@ const demoData = {
   pages: new Map<string, any>(),
   systemSettings: new Map<string, any>(),
   auditLogs: [] as any[],
+  menus: new Map<string, any>(),
+  footerLinks: new Map<string, any>(),
+  domains: new Map<string, any>(),
+  launchConfig: null as any,
+  blockchainNetworks: new Map<string, any>(),
+  blockchainContracts: new Map<string, any>(),
+  blockchainToken: null as any,
+  demoModules: new Map<string, any>(),
+  currencies: new Map<string, any>(),
+  deposits: new Map<string, any>(),
+  postLikes: new Map<string, Set<string>>(),
 };
 
 // Initialize demo data
@@ -90,6 +101,46 @@ function initDemoData() {
   demoData.systemSettings.set('site_name', { value: 'Quantaureum', type: 'string' });
   demoData.systemSettings.set('maintenance_mode', { value: false, type: 'boolean' });
   demoData.systemSettings.set('contact_email', { value: 'support@quantaureum.com', type: 'string' });
+
+  // Demo banners
+  demoData.banners.set('ban_1', { id: 'ban_1', title: 'Welcome to Quantaureum', image_url: '/images/banner1.jpg', link_url: '/token-sale', sort_order: 1, is_active: true });
+  demoData.banners.set('ban_2', { id: 'ban_2', title: 'QAU Token Sale', image_url: '/images/banner2.jpg', link_url: '/token-sale', sort_order: 2, is_active: true });
+
+  // Demo menus
+  demoData.menus.set('nav_1', { id: 'nav_1', label: 'Home', link: '/', sort_order: 1, is_active: true });
+  demoData.menus.set('nav_2', { id: 'nav_2', label: 'Token Sale', link: '/token-sale', sort_order: 2, is_active: true });
+  demoData.menus.set('nav_3', { id: 'nav_3', label: 'Staking', link: '/staking', sort_order: 3, is_active: true });
+
+  // Demo footer links
+  demoData.footerLinks.set('footer_1', { id: 'footer_1', section: 'about', label: 'About Us', link: '/about', sort_order: 1, is_active: true });
+  demoData.footerLinks.set('footer_2', { id: 'footer_2', section: 'about', label: 'Contact', link: '/contact', sort_order: 2, is_active: true });
+
+  // Demo pages
+  demoData.pages.set('about', { id: 'page_1', slug: 'about', title: 'About Us', content: 'About Quantaureum...', is_published: true });
+  demoData.pages.set('terms', { id: 'page_2', slug: 'terms', title: 'Terms of Service', content: 'Terms...', is_published: true });
+
+  // Demo domains
+  demoData.domains.set('domain_1', { id: 'domain_1', domain: 'quantaureum.com', type: 'primary', ssl_enabled: true, is_active: true });
+
+  // Demo launch config
+  demoData.launchConfig = { id: 'launch_1', launch_date: null, pre_launch_enabled: false, maintenance_mode: false };
+
+  // Demo blockchain networks
+  demoData.blockchainNetworks.set('network_1', { id: 'network_1', name: 'Quantaureum Mainnet', chain_id: 7777, rpc_url: 'https://rpc.quantaureum.com', is_active: true });
+
+  // Demo blockchain token
+  demoData.blockchainToken = { id: 'token_qau', name: 'Quantaureum', symbol: 'QAU', decimals: 18, total_supply: '1000000000' };
+
+  // Demo modules
+  demoData.demoModules.set('demo_flights', { id: 'demo_flights', name: 'Flight Booking', slug: 'flights', is_active: true, show_demo_badge: true });
+  demoData.demoModules.set('demo_hotels', { id: 'demo_hotels', name: 'Hotel Booking', slug: 'hotels', is_active: true, show_demo_badge: true });
+
+  // Demo currencies
+  demoData.currencies.set('qau', { id: 'qau', name: 'Quantaureum', symbol: 'QAU', type: 'coin' });
+  demoData.currencies.set('usdt', { id: 'usdt', name: 'Tether', symbol: 'USDT', type: 'token' });
+
+  // Demo comments
+  demoData.comments.set('cmt_1', { id: 'cmt_1', post_id: 'post_1', user_id: 'user_1', content: 'Great post!', created_at: new Date().toISOString() });
 }
 
 // Initialize on first import
@@ -314,6 +365,439 @@ export const db = {
       new_value: JSON.stringify(newValue),
       created_at: new Date().toISOString(),
     });
+  },
+
+  // Comments
+  getPostComments: async (postId: string): Promise<DBResult<any[]>> => {
+    const comments = Array.from(demoData.comments.values()).filter(c => c.post_id === postId);
+    return { success: true, data: comments };
+  },
+
+  createComment: async (comment: any): Promise<DBResult<any>> => {
+    const id = 'cmt_' + Date.now();
+    const newComment = { ...comment, id, created_at: new Date().toISOString() };
+    demoData.comments.set(id, newComment);
+    // Update post comment count
+    const post = demoData.posts.get(comment.post_id);
+    if (post) {
+      post.comment_count = (post.comment_count || 0) + 1;
+    }
+    return { success: true, data: newComment };
+  },
+
+  deleteComment: async (id: string): Promise<DBResult<void>> => {
+    const comment = demoData.comments.get(id);
+    if (!comment) return { success: false, error: 'Comment not found' };
+    demoData.comments.delete(id);
+    const post = demoData.posts.get(comment.post_id);
+    if (post) post.comment_count = Math.max(0, (post.comment_count || 0) - 1);
+    return { success: true };
+  },
+
+  // Categories
+  createCategory: async (category: any): Promise<DBResult<any>> => {
+    const id = Date.now().toString();
+    const newCat = { ...category, id };
+    demoData.categories.set(id, newCat);
+    return { success: true, data: newCat };
+  },
+
+  updateCategory: async (id: string, updates: any): Promise<DBResult<any>> => {
+    const cat = demoData.categories.get(id);
+    if (!cat) return { success: false, error: 'Category not found' };
+    const updated = { ...cat, ...updates };
+    demoData.categories.set(id, updated);
+    return { success: true, data: updated };
+  },
+
+  deleteCategory: async (id: string): Promise<DBResult<void>> => {
+    const posts = Array.from(demoData.posts.values()).filter(p => p.category_id === parseInt(id));
+    if (posts.length > 0) return { success: false, error: 'Cannot delete category with posts' };
+    demoData.categories.delete(id);
+    return { success: true };
+  },
+
+  getCommunityStats: async (): Promise<DBResult<any>> => {
+    return {
+      success: true,
+      data: {
+        totalPosts: demoData.posts.size,
+        totalComments: demoData.comments.size,
+        activeToday: 5,
+      },
+    };
+  },
+
+  // Banners
+  getBanners: async (onlyActive = false): Promise<DBResult<any[]>> => {
+    let banners = Array.from(demoData.banners.values());
+    if (onlyActive) banners = banners.filter(b => b.is_active);
+    return { success: true, data: banners.sort((a, b) => a.sort_order - b.sort_order) };
+  },
+
+  createBanner: async (banner: any): Promise<DBResult<any>> => {
+    const id = 'ban_' + Date.now();
+    const newBanner = { ...banner, id, is_active: true };
+    demoData.banners.set(id, newBanner);
+    return { success: true, data: newBanner };
+  },
+
+  updateBanner: async (id: string, updates: any): Promise<DBResult<any>> => {
+    const banner = demoData.banners.get(id);
+    if (!banner) return { success: false, error: 'Banner not found' };
+    const updated = { ...banner, ...updates };
+    demoData.banners.set(id, updated);
+    return { success: true, data: updated };
+  },
+
+  deleteBanner: async (id: string): Promise<DBResult<void>> => {
+    if (!demoData.banners.has(id)) return { success: false, error: 'Banner not found' };
+    demoData.banners.delete(id);
+    return { success: true };
+  },
+
+  // Menus
+  getMenus: async (onlyActive = false): Promise<DBResult<any[]>> => {
+    let menus = Array.from(demoData.menus.values());
+    if (onlyActive) menus = menus.filter(m => m.is_active);
+    return { success: true, data: menus.sort((a, b) => a.sort_order - b.sort_order) };
+  },
+
+  createMenu: async (menu: any): Promise<DBResult<any>> => {
+    const id = 'nav_' + Date.now();
+    const newMenu = { ...menu, id, is_active: true };
+    demoData.menus.set(id, newMenu);
+    return { success: true, data: newMenu };
+  },
+
+  updateMenu: async (id: string, updates: any): Promise<DBResult<any>> => {
+    const menu = demoData.menus.get(id);
+    if (!menu) return { success: false, error: 'Menu not found' };
+    const updated = { ...menu, ...updates };
+    demoData.menus.set(id, updated);
+    return { success: true, data: updated };
+  },
+
+  deleteMenu: async (id: string): Promise<DBResult<void>> => {
+    if (!demoData.menus.has(id)) return { success: false, error: 'Menu not found' };
+    demoData.menus.delete(id);
+    return { success: true };
+  },
+
+  // Footer Links
+  getFooterLinks: async (onlyActive = false): Promise<DBResult<any[]>> => {
+    let links = Array.from(demoData.footerLinks.values());
+    if (onlyActive) links = links.filter(l => l.is_active);
+    return { success: true, data: links.sort((a, b) => a.sort_order - b.sort_order) };
+  },
+
+  createFooterLink: async (link: any): Promise<DBResult<any>> => {
+    const id = 'footer_' + Date.now();
+    const newLink = { ...link, id, is_active: true };
+    demoData.footerLinks.set(id, newLink);
+    return { success: true, data: newLink };
+  },
+
+  updateFooterLink: async (id: string, updates: any): Promise<DBResult<any>> => {
+    const link = demoData.footerLinks.get(id);
+    if (!link) return { success: false, error: 'Footer link not found' };
+    const updated = { ...link, ...updates };
+    demoData.footerLinks.set(id, updated);
+    return { success: true, data: updated };
+  },
+
+  updateFooterLinks: async (links: any[]): Promise<DBResult<void>> => {
+    links.forEach(link => {
+      if (link.id && demoData.footerLinks.has(link.id)) {
+        demoData.footerLinks.set(link.id, { ...demoData.footerLinks.get(link.id), ...link });
+      }
+    });
+    return { success: true };
+  },
+
+  deleteFooterLink: async (id: string): Promise<DBResult<void>> => {
+    if (!demoData.footerLinks.has(id)) return { success: false, error: 'Footer link not found' };
+    demoData.footerLinks.delete(id);
+    return { success: true };
+  },
+
+  // Pages
+  getPages: async (): Promise<DBResult<any[]>> => {
+    return { success: true, data: Array.from(demoData.pages.values()) };
+  },
+
+  getPageBySlug: async (slug: string, onlyPublished = false): Promise<DBResult<any>> => {
+    const page = demoData.pages.get(slug);
+    if (!page) return { success: false, error: 'Page not found' };
+    if (onlyPublished && !page.is_published) return { success: false, error: 'Page not found' };
+    return { success: true, data: page };
+  },
+
+  createPage: async (page: any): Promise<DBResult<any>> => {
+    if (demoData.pages.has(page.slug)) return { success: false, error: 'Page with this slug already exists' };
+    const id = 'page_' + Date.now();
+    const newPage = { ...page, id, is_published: true, version: 1, created_at: new Date().toISOString() };
+    demoData.pages.set(page.slug, newPage);
+    return { success: true, data: newPage };
+  },
+
+  updatePage: async (slug: string, updates: any): Promise<DBResult<any>> => {
+    const page = demoData.pages.get(slug);
+    if (!page) return { success: false, error: 'Page not found' };
+    const updated = { ...page, ...updates, version: (page.version || 1) + 1, updated_at: new Date().toISOString() };
+    demoData.pages.set(slug, updated);
+    return { success: true, data: updated };
+  },
+
+  deletePage: async (slug: string): Promise<DBResult<void>> => {
+    if (!demoData.pages.has(slug)) return { success: false, error: 'Page not found' };
+    demoData.pages.delete(slug);
+    return { success: true };
+  },
+
+  // Domains
+  getDomains: async (): Promise<DBResult<any>> => {
+    const domains = Array.from(demoData.domains.values());
+    const primary = domains.find(d => d.type === 'primary' && d.is_active);
+    return { success: true, data: { domains, primary, alternates: domains.filter(d => d.type !== 'primary') } };
+  },
+
+  createDomain: async (domain: any): Promise<DBResult<any>> => {
+    const id = 'domain_' + Date.now();
+    const newDomain = { ...domain, id, is_active: true };
+    demoData.domains.set(id, newDomain);
+    return { success: true, data: newDomain };
+  },
+
+  updateDomains: async (domains: any[]): Promise<DBResult<void>> => {
+    domains.forEach(d => {
+      if (d.id) demoData.domains.set(d.id, d);
+    });
+    return { success: true };
+  },
+
+  deleteDomain: async (id: string): Promise<DBResult<void>> => {
+    if (!demoData.domains.has(id)) return { success: false, error: 'Domain not found' };
+    demoData.domains.delete(id);
+    return { success: true };
+  },
+
+  // Launch Config
+  getLaunchConfig: async (): Promise<DBResult<any>> => {
+    return { success: true, data: demoData.launchConfig || { pre_launch_enabled: false, maintenance_mode: false } };
+  },
+
+  updateLaunchConfig: async (config: any): Promise<DBResult<any>> => {
+    demoData.launchConfig = { ...demoData.launchConfig, ...config, updated_at: new Date().toISOString() };
+    return { success: true, data: demoData.launchConfig };
+  },
+
+  // Public System Settings
+  getPublicSystemSettings: async (): Promise<DBResult<any>> => {
+    const publicKeys = ['site_name', 'site_logo', 'meta_title', 'meta_description', 'social_twitter', 'social_telegram', 'contact_email', 'maintenance_mode'];
+    const settings: Record<string, any> = {};
+    publicKeys.forEach(key => {
+      const val = demoData.systemSettings.get(key);
+      if (val) settings[key] = val.value;
+    });
+    return { success: true, data: settings };
+  },
+
+  // Blockchain Networks
+  getBlockchainNetworks: async (onlyActive = false): Promise<DBResult<any[]>> => {
+    let networks = Array.from(demoData.blockchainNetworks.values());
+    if (onlyActive) networks = networks.filter(n => n.is_active);
+    return { success: true, data: networks };
+  },
+
+  createBlockchainNetwork: async (network: any): Promise<DBResult<any>> => {
+    const id = 'network_' + Date.now();
+    const newNetwork = { ...network, id, is_active: true };
+    demoData.blockchainNetworks.set(id, newNetwork);
+    return { success: true, data: newNetwork };
+  },
+
+  updateBlockchainNetwork: async (id: string, updates: any): Promise<DBResult<any>> => {
+    const network = demoData.blockchainNetworks.get(id);
+    if (!network) return { success: false, error: 'Network not found' };
+    const updated = { ...network, ...updates };
+    demoData.blockchainNetworks.set(id, updated);
+    return { success: true, data: updated };
+  },
+
+  updateBlockchainNetworks: async (networks: any[]): Promise<DBResult<void>> => {
+    networks.forEach(n => {
+      if (n.id) demoData.blockchainNetworks.set(n.id, n);
+    });
+    return { success: true };
+  },
+
+  deleteBlockchainNetwork: async (id: string): Promise<DBResult<void>> => {
+    if (!demoData.blockchainNetworks.has(id)) return { success: false, error: 'Network not found' };
+    demoData.blockchainNetworks.delete(id);
+    return { success: true };
+  },
+
+  // Blockchain Contracts
+  getBlockchainContracts: async (onlyActive = false): Promise<DBResult<any[]>> => {
+    let contracts = Array.from(demoData.blockchainContracts.values());
+    if (onlyActive) contracts = contracts.filter(c => !c.is_deprecated);
+    return { success: true, data: contracts };
+  },
+
+  createBlockchainContract: async (contract: any): Promise<DBResult<any>> => {
+    const id = 'contract_' + Date.now();
+    const newContract = { ...contract, id };
+    demoData.blockchainContracts.set(id, newContract);
+    return { success: true, data: newContract };
+  },
+
+  updateBlockchainContract: async (id: string, updates: any): Promise<DBResult<any>> => {
+    const contract = demoData.blockchainContracts.get(id);
+    if (!contract) return { success: false, error: 'Contract not found' };
+    const updated = { ...contract, ...updates };
+    demoData.blockchainContracts.set(id, updated);
+    return { success: true, data: updated };
+  },
+
+  deleteBlockchainContract: async (id: string): Promise<DBResult<void>> => {
+    if (!demoData.blockchainContracts.has(id)) return { success: false, error: 'Contract not found' };
+    demoData.blockchainContracts.delete(id);
+    return { success: true };
+  },
+
+  // Blockchain Token
+  getBlockchainToken: async (): Promise<DBResult<any>> => {
+    return { success: true, data: demoData.blockchainToken };
+  },
+
+  updateBlockchainToken: async (updates: any): Promise<DBResult<any>> => {
+    demoData.blockchainToken = { ...demoData.blockchainToken, ...updates, updated_at: new Date().toISOString() };
+    return { success: true, data: demoData.blockchainToken };
+  },
+
+  // Demo Modules
+  getDemoModules: async (onlyActive = false): Promise<DBResult<any[]>> => {
+    let modules = Array.from(demoData.demoModules.values());
+    if (onlyActive) modules = modules.filter(m => m.is_active);
+    return { success: true, data: modules };
+  },
+
+  updateDemoModule: async (id: string, updates: any): Promise<DBResult<any>> => {
+    const module = demoData.demoModules.get(id);
+    if (!module) return { success: false, error: 'Module not found' };
+    const updated = { ...module, ...updates };
+    demoData.demoModules.set(id, updated);
+    return { success: true, data: updated };
+  },
+
+  toggleAllDemoModules: async (isActive: boolean): Promise<DBResult<void>> => {
+    demoData.demoModules.forEach((module, id) => {
+      demoData.demoModules.set(id, { ...module, is_active: isActive });
+    });
+    return { success: true };
+  },
+
+  // Currencies
+  getCurrencies: async (): Promise<DBResult<any[]>> => {
+    return { success: true, data: Array.from(demoData.currencies.values()) };
+  },
+
+  createCurrency: async (currency: any): Promise<DBResult<any>> => {
+    demoData.currencies.set(currency.id.toLowerCase(), currency);
+    return { success: true, data: currency };
+  },
+
+  updateCurrency: async (id: string, updates: any): Promise<DBResult<any>> => {
+    const currency = demoData.currencies.get(id);
+    if (!currency) return { success: false, error: 'Currency not found' };
+    const updated = { ...currency, ...updates };
+    demoData.currencies.set(id, updated);
+    return { success: true, data: updated };
+  },
+
+  // Deposits
+  getDeposits: async (params: { page?: number; limit?: number }): Promise<DBResult<{ deposits: any[]; total: number }>> => {
+    const { page = 1, limit = 10 } = params;
+    const deposits = Array.from(demoData.deposits.values());
+    const total = deposits.length;
+    const start = (page - 1) * limit;
+    return { success: true, data: { deposits: deposits.slice(start, start + limit), total } };
+  },
+
+  // Audit Logs
+  getAuditLogs: async (params: { page?: number; limit?: number; action?: string; admin_id?: string }): Promise<DBResult<{ logs: any[]; total: number }>> => {
+    const { page = 1, limit = 50, action, admin_id } = params;
+    let logs = [...demoData.auditLogs];
+    if (action) logs = logs.filter(l => l.action === action);
+    if (admin_id) logs = logs.filter(l => l.admin_id === admin_id);
+    logs.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    const total = logs.length;
+    const start = (page - 1) * limit;
+    return { success: true, data: { logs: logs.slice(start, start + limit), total } };
+  },
+
+  // Token Purchases
+  createTokenPurchase: async (purchase: any): Promise<DBResult<any>> => {
+    const id = 'ord_' + Date.now();
+    const newPurchase = { ...purchase, id, created_at: new Date().toISOString() };
+    demoData.tokenPurchases.set(id, newPurchase);
+    return { success: true, data: newPurchase };
+  },
+
+  // User Stakes
+  getUserStakes: async (userId: string): Promise<DBResult<any[]>> => {
+    const stakes = Array.from(demoData.userStakes.values()).filter(s => s.user_id === userId);
+    return { success: true, data: stakes };
+  },
+
+  createStake: async (stake: any): Promise<DBResult<any>> => {
+    const pool = demoData.stakingPools.get(stake.pool_id);
+    if (!pool) return { success: false, error: 'Pool not found' };
+    if (stake.amount < pool.min_stake) return { success: false, error: `Minimum stake is ${pool.min_stake}` };
+    
+    const id = 'stake_' + Date.now();
+    const unlockDate = new Date(Date.now() + pool.duration_days * 24 * 60 * 60 * 1000);
+    const newStake = { ...stake, id, start_date: new Date().toISOString(), unlock_date: unlockDate.toISOString(), status: 'active' };
+    demoData.userStakes.set(id, newStake);
+    pool.total_staked = (pool.total_staked || 0) + stake.amount;
+    return { success: true, data: newStake };
+  },
+
+  deleteStakingPool: async (id: string): Promise<DBResult<void>> => {
+    if (!demoData.stakingPools.has(id)) return { success: false, error: 'Pool not found' };
+    demoData.stakingPools.delete(id);
+    return { success: true };
+  },
+
+  // Post operations
+  getPostById: async (id: string): Promise<DBResult<any>> => {
+    const post = demoData.posts.get(id);
+    if (!post) return { success: false, error: 'Post not found' };
+    return { success: true, data: post };
+  },
+
+  togglePostLike: async (postId: string, userId: string): Promise<DBResult<{ liked: boolean; like_count: number }>> => {
+    const post = demoData.posts.get(postId);
+    if (!post) return { success: false, error: 'Post not found' };
+    
+    if (!demoData.postLikes.has(postId)) {
+      demoData.postLikes.set(postId, new Set());
+    }
+    const likes = demoData.postLikes.get(postId)!;
+    
+    let liked: boolean;
+    if (likes.has(userId)) {
+      likes.delete(userId);
+      post.like_count = Math.max(0, (post.like_count || 0) - 1);
+      liked = false;
+    } else {
+      likes.add(userId);
+      post.like_count = (post.like_count || 0) + 1;
+      liked = true;
+    }
+    
+    return { success: true, data: { liked, like_count: post.like_count } };
   },
 };
 
