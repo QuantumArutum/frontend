@@ -4416,12 +4416,13 @@ export const en = {
           nodejs: 'Node.js: 20.0+'
         }
       }
-    },
-    // Settings Page
-    settings_page: {
-      title: 'Settings',
-      subtitle: 'Manage your account preferences',
-      save: 'Save Changes',
+    }
+  },
+  // Settings Page
+  settings_page: {
+    title: 'Settings',
+    subtitle: 'Manage your account preferences',
+    save: 'Save Changes',
     saved: 'Saved!',
     tabs: {
       profile: 'Profile',

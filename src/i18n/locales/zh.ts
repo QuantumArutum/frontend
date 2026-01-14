@@ -4390,13 +4390,14 @@ export const zh = {
           nodejs: 'Node.js：20.0+'
         }
       }
-    },
-    // 设置页面
-    settings_page: {
-      title: '设置',
-      subtitle: '管理您的账户偏好设置',
-      save: '保存更改',
-      saved: '已保存！',
+    }
+  },
+  // 设置页面
+  settings_page: {
+    title: '设置',
+    subtitle: '管理您的账户偏好设置',
+    save: '保存更改',
+    saved: '已保存！',
     tabs: {
       profile: '个人资料',
       security: '账户安全',
