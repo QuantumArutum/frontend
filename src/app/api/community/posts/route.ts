@@ -51,18 +51,21 @@ export const GET = createSecureHandler(
         try {
             // 使用数据库查询
             // @ts-ignore
-            const posts = await db.getPosts({
+            const result = await db.getPosts({
                 limit,
                 offset,
                 category: category || undefined,
                 id: id || undefined
             });
 
+            const postsArray = result?.posts || [];
+            const total = result?.total || postsArray.length;
+
             return successResponse({
                 data: {
-                    posts: posts,
-                    total: posts.length, // Should ideally get count separately
-                    hasMore: posts.length === limit
+                    posts: postsArray,
+                    total: total,
+                    hasMore: postsArray.length === limit
                 }
             });
         } catch (error: any) {
