@@ -3182,17 +3182,16 @@ export const ar = {
         minimum: { title: 'الحد الأدنى من المتطلبات', os: 'نظام التشغيل: Windows 10، macOS 10.15، Ubuntu 18.04+', memory: 'الذاكرة: 4GB RAM', storage: 'التخزين: 2GB مساحة متاحة', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
         recommended: { title: 'الموصى به', os: 'نظام التشغيل: أحدث إصدار', memory: 'الذاكرة: 8GB+ RAM', storage: 'التخزين: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
-    }
-  },
-  settings_page: {
-    title: 'الإعدادات',
-    subtitle: 'إدارة تفضيلات حسابك',
-    save: 'حفظ التغييرات',
-    saved: 'تم الحفظ!',
-    tabs: {
-      profile: 'الملف الشخصي',
-      security: 'الأمان',
-      notifications: 'الإشعارات',
+    },
+    settings_page: {
+      title: 'الإعدادات',
+      subtitle: 'إدارة تفضيلات حسابك',
+      save: 'حفظ التغييرات',
+      saved: 'تم الحفظ!',
+      tabs: {
+        profile: 'الملف الشخصي',
+        security: 'الأمان',
+        notifications: 'الإشعارات',
       privacy: 'الخصوصية',
       display: 'العرض',
       content: 'المحتوى'
@@ -3297,5 +3296,6 @@ export const ar = {
       placeholder: 'أدخل اسم المستخدم للحظر',
       confirm: 'حظر'
     }
+  }
   }
 };

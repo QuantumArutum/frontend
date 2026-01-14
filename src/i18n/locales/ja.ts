@@ -3264,20 +3264,19 @@ export const ja = {
         minimum: { title: '最小要件', os: 'OS: Windows 10、macOS 10.15、Ubuntu 18.04+', memory: 'メモリ: 4GB RAM', storage: 'ストレージ: 2GB空き容量', nodejs: 'Node.js: 18.0+（TypeScript SDK）' },
         recommended: { title: '推奨', os: 'OS: 最新バージョン', memory: 'メモリ: 8GB+ RAM', storage: 'ストレージ: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
-    }
-  },
-  settings_page: {
-    title: '設定',
-    subtitle: 'アカウント設定を管理',
-    save: '変更を保存',
-    saved: '保存しました！',
-    tabs: {
-      profile: 'プロフィール',
-      security: 'セキュリティ',
-      notifications: '通知',
-      privacy: 'プライバシー',
-      display: '表示',
-      content: 'コンテンツ'
+    },
+    settings_page: {
+      title: '設定',
+      subtitle: 'アカウント設定を管理',
+      save: '変更を保存',
+      saved: '保存しました！',
+      tabs: {
+        profile: 'プロフィール',
+        security: 'セキュリティ',
+        notifications: '通知',
+        privacy: 'プライバシー',
+        display: '表示',
+        content: 'コンテンツ'
     },
     profile: {
       display_name: '表示名',
@@ -3379,5 +3378,6 @@ export const ja = {
       placeholder: 'ブロックするユーザー名を入力',
       confirm: 'ブロック'
     }
+  }
   }
 };

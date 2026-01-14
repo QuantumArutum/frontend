@@ -3167,17 +3167,16 @@ export const nl = {
         minimum: { title: 'Minimale Vereisten', os: 'OS: Windows 10, macOS 10.15, Ubuntu 18.04+', memory: 'Geheugen: 4GB RAM', storage: 'Opslag: 2GB beschikbare ruimte', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
         recommended: { title: 'Aanbevolen', os: 'OS: Nieuwste versie', memory: 'Geheugen: 8GB+ RAM', storage: 'Opslag: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
-    }
-  },
-  settings_page: {
-    title: 'Instellingen',
-    subtitle: 'Beheer uw accountvoorkeuren',
-    save: 'Wijzigingen Opslaan',
-    saved: 'Opgeslagen!',
-    tabs: {
-      profile: 'Profiel',
-      security: 'Beveiliging',
-      notifications: 'Meldingen',
+    },
+    settings_page: {
+      title: 'Instellingen',
+      subtitle: 'Beheer uw accountvoorkeuren',
+      save: 'Wijzigingen Opslaan',
+      saved: 'Opgeslagen!',
+      tabs: {
+        profile: 'Profiel',
+        security: 'Beveiliging',
+        notifications: 'Meldingen',
       privacy: 'Privacy',
       display: 'Weergave',
       content: 'Inhoud'
@@ -3282,5 +3281,6 @@ export const nl = {
       placeholder: 'Voer gebruikersnaam in om te blokkeren',
       confirm: 'Blokkeren'
     }
+  }
   }
 };

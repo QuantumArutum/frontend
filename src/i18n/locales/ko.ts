@@ -3260,19 +3260,18 @@ export const ko = {
         minimum: { title: '최소 요구 사항', os: 'OS: Windows 10, macOS 10.15, Ubuntu 18.04+', memory: '메모리: 4GB RAM', storage: '저장소: 2GB 사용 가능 공간', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
         recommended: { title: '권장', os: 'OS: 최신 버전', memory: '메모리: 8GB+ RAM', storage: '저장소: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
-    }
-  },
-  settings_page: {
-    title: '설정',
-    subtitle: '계정 환경설정 관리',
-    save: '변경사항 저장',
-    saved: '저장됨!',
-    tabs: {
-      profile: '프로필',
-      security: '보안',
-      notifications: '알림',
-      privacy: '개인정보',
-      display: '표시',
+    },
+    settings_page: {
+      title: '설정',
+      subtitle: '계정 환경설정 관리',
+      save: '변경사항 저장',
+      saved: '저장됨!',
+      tabs: {
+        profile: '프로필',
+        security: '보안',
+        notifications: '알림',
+        privacy: '개인정보',
+        display: '표시',
       content: '콘텐츠'
     },
     profile: {
@@ -3375,5 +3374,6 @@ export const ko = {
       placeholder: '차단할 사용자 이름 입력',
       confirm: '차단'
     }
+  }
   }
 };

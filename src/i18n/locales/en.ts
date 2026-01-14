@@ -4416,18 +4416,17 @@ export const en = {
           nodejs: 'Node.js: 20.0+'
         }
       }
-    }
-  },
-  // Settings Page
-  settings_page: {
-    title: 'Settings',
-    subtitle: 'Manage your account preferences',
-    save: 'Save Changes',
-    saved: 'Saved!',
-    tabs: {
-      profile: 'Profile',
-      security: 'Security',
-      notifications: 'Notifications',
+    },
+    // Settings Page
+    settings_page: {
+      title: 'Settings',
+      subtitle: 'Manage your account preferences',
+      save: 'Save Changes',
+      saved: 'Saved!',
+      tabs: {
+        profile: 'Profile',
+        security: 'Security',
+        notifications: 'Notifications',
       privacy: 'Privacy',
       display: 'Display',
       content: 'Content'
@@ -4532,5 +4531,6 @@ export const en = {
       placeholder: 'Enter username to block',
       confirm: 'Block'
     }
+  }
   }
 };

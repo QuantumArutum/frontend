@@ -3231,18 +3231,17 @@ export const vi = {
         minimum: { title: 'Yêu cầu Tối thiểu', os: 'HĐH: Windows 10, macOS 10.15, Ubuntu 18.04+', memory: 'Bộ nhớ: 4GB RAM', storage: 'Lưu trữ: 2GB dung lượng trống', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
         recommended: { title: 'Khuyến nghị', os: 'HĐH: Phiên bản mới nhất', memory: 'Bộ nhớ: 8GB+ RAM', storage: 'Lưu trữ: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
-    }
-  },
-  settings_page: {
-    title: 'Cài đặt',
-    subtitle: 'Quản lý tùy chọn tài khoản của bạn',
-    save: 'Lưu Thay đổi',
-    saved: 'Đã lưu!',
-    tabs: {
-      profile: 'Hồ sơ',
-      security: 'Bảo mật',
-      notifications: 'Thông báo',
-      privacy: 'Quyền riêng tư',
+    },
+    settings_page: {
+      title: 'Cài đặt',
+      subtitle: 'Quản lý tùy chọn tài khoản của bạn',
+      save: 'Lưu Thay đổi',
+      saved: 'Đã lưu!',
+      tabs: {
+        profile: 'Hồ sơ',
+        security: 'Bảo mật',
+        notifications: 'Thông báo',
+        privacy: 'Quyền riêng tư',
       display: 'Hiển thị',
       content: 'Nội dung'
     },
@@ -3346,5 +3345,6 @@ export const vi = {
       placeholder: 'Nhập tên người dùng để chặn',
       confirm: 'Chặn'
     }
+  }
   }
 };

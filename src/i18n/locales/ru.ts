@@ -3182,17 +3182,16 @@ export const ru = {
         minimum: { title: 'Минимальные требования', os: 'ОС: Windows 10, macOS 10.15, Ubuntu 18.04+', memory: 'Память: 4GB RAM', storage: 'Хранилище: 2GB свободного места', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
         recommended: { title: 'Рекомендуемые', os: 'ОС: Последняя версия', memory: 'Память: 8GB+ RAM', storage: 'Хранилище: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
-    }
-  },
-  settings_page: {
-    title: 'Настройки',
-    subtitle: 'Управление настройками аккаунта',
-    save: 'Сохранить изменения',
-    saved: 'Сохранено!',
-    tabs: {
-      profile: 'Профиль',
-      security: 'Безопасность',
-      notifications: 'Уведомления',
+    },
+    settings_page: {
+      title: 'Настройки',
+      subtitle: 'Управление настройками аккаунта',
+      save: 'Сохранить изменения',
+      saved: 'Сохранено!',
+      tabs: {
+        profile: 'Профиль',
+        security: 'Безопасность',
+        notifications: 'Уведомления',
       privacy: 'Конфиденциальность',
       display: 'Отображение',
       content: 'Контент'
@@ -3297,5 +3296,6 @@ export const ru = {
       placeholder: 'Введите имя пользователя для блокировки',
       confirm: 'Заблокировать'
     }
+  }
   }
 };

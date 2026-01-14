@@ -3012,17 +3012,16 @@ export const pt = {
         minimum: { title: 'Requisitos Mínimos', os: 'SO: Windows 10, macOS 10.15, Ubuntu 18.04+', memory: 'Memória: 4GB RAM', storage: 'Armazenamento: 2GB de espaço disponível', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
         recommended: { title: 'Recomendado', os: 'SO: Última versão', memory: 'Memória: 8GB+ RAM', storage: 'Armazenamento: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
-    }
-  },
-  settings_page: {
-    title: 'Configurações',
-    subtitle: 'Gerencie as preferências da sua conta',
-    save: 'Salvar Alterações',
-    saved: 'Salvo!',
-    tabs: {
-      profile: 'Perfil',
-      security: 'Segurança',
-      notifications: 'Notificações',
+    },
+    settings_page: {
+      title: 'Configurações',
+      subtitle: 'Gerencie as preferências da sua conta',
+      save: 'Salvar Alterações',
+      saved: 'Salvo!',
+      tabs: {
+        profile: 'Perfil',
+        security: 'Segurança',
+        notifications: 'Notificações',
       privacy: 'Privacidade',
       display: 'Exibição',
       content: 'Conteúdo'
@@ -3127,5 +3126,6 @@ export const pt = {
       placeholder: 'Digite o nome de usuário para bloquear',
       confirm: 'Bloquear'
     }
+  }
   }
 };

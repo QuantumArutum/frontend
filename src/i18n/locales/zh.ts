@@ -4390,24 +4390,23 @@ export const zh = {
           nodejs: 'Node.js：20.0+'
         }
       }
-    }
-  },
-  // 设置页面
-  settings_page: {
-    title: '设置',
-    subtitle: '管理您的账户偏好设置',
-    save: '保存更改',
-    saved: '已保存！',
-    tabs: {
-      profile: '个人资料',
-      security: '账户安全',
-      notifications: '通知设置',
-      privacy: '隐私设置',
-      display: '显示偏好',
-      content: '内容设置'
     },
-    profile: {
-      display_name: '显示名称',
+    // 设置页面
+    settings_page: {
+      title: '设置',
+      subtitle: '管理您的账户偏好设置',
+      save: '保存更改',
+      saved: '已保存！',
+      tabs: {
+        profile: '个人资料',
+        security: '账户安全',
+        notifications: '通知设置',
+        privacy: '隐私设置',
+        display: '显示偏好',
+        content: '内容设置'
+      },
+      profile: {
+        display_name: '显示名称',
       display_name_placeholder: '您的显示名称',
       bio: '个人简介',
       bio_placeholder: '介绍一下自己...',
@@ -4506,5 +4505,6 @@ export const zh = {
       placeholder: '输入要屏蔽的用户名',
       confirm: '屏蔽'
     }
+  }
   }
 };

@@ -3204,20 +3204,19 @@ export const es = {
         minimum: { title: 'Requisitos Mínimos', os: 'SO: Windows 10, macOS 10.15, Ubuntu 18.04+', memory: 'Memoria: 4GB RAM', storage: 'Almacenamiento: 2GB de espacio disponible', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
         recommended: { title: 'Recomendado', os: 'SO: Última versión', memory: 'Memoria: 8GB+ RAM', storage: 'Almacenamiento: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
-    }
-  },
-  settings_page: {
-    title: 'Configuración',
-    subtitle: 'Administra las preferencias de tu cuenta',
-    save: 'Guardar Cambios',
-    saved: '¡Guardado!',
-    tabs: {
-      profile: 'Perfil',
-      security: 'Seguridad',
-      notifications: 'Notificaciones',
-      privacy: 'Privacidad',
-      display: 'Visualización',
-      content: 'Contenido'
+    },
+    settings_page: {
+      title: 'Configuración',
+      subtitle: 'Administra las preferencias de tu cuenta',
+      save: 'Guardar Cambios',
+      saved: '¡Guardado!',
+      tabs: {
+        profile: 'Perfil',
+        security: 'Seguridad',
+        notifications: 'Notificaciones',
+        privacy: 'Privacidad',
+        display: 'Visualización',
+        content: 'Contenido'
     },
     profile: {
       display_name: 'Nombre para mostrar',
@@ -3319,5 +3318,6 @@ export const es = {
       placeholder: 'Ingresa el nombre de usuario a bloquear',
       confirm: 'Bloquear'
     }
+  }
   }
 };

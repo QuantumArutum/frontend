@@ -3167,17 +3167,16 @@ export const fr = {
         minimum: { title: 'Configuration Minimale', os: 'OS: Windows 10, macOS 10.15, Ubuntu 18.04+', memory: 'Mémoire: 4GB RAM', storage: 'Stockage: 2GB d\'espace disponible', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
         recommended: { title: 'Recommandé', os: 'OS: Dernière version', memory: 'Mémoire: 8GB+ RAM', storage: 'Stockage: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
-    }
-  },
-  settings_page: {
-    title: 'Paramètres',
-    subtitle: 'Gérez les préférences de votre compte',
-    save: 'Enregistrer les modifications',
-    saved: 'Enregistré !',
-    tabs: {
-      profile: 'Profil',
-      security: 'Sécurité',
-      notifications: 'Notifications',
+    },
+    settings_page: {
+      title: 'Paramètres',
+      subtitle: 'Gérez les préférences de votre compte',
+      save: 'Enregistrer les modifications',
+      saved: 'Enregistré !',
+      tabs: {
+        profile: 'Profil',
+        security: 'Sécurité',
+        notifications: 'Notifications',
       privacy: 'Confidentialité',
       display: 'Affichage',
       content: 'Contenu'
@@ -3282,5 +3281,6 @@ export const fr = {
       placeholder: 'Entrez le nom d\'utilisateur à bloquer',
       confirm: 'Bloquer'
     }
+  }
   }
 };
