@@ -4421,5 +4421,120 @@ export const zh = {
         }
       }
     }
+  },
+  // 设置页面
+  settings_page: {
+    title: '设置',
+    subtitle: '管理您的账户偏好设置',
+    save: '保存更改',
+    saved: '已保存！',
+    tabs: {
+      profile: '个人资料',
+      security: '账户安全',
+      notifications: '通知设置',
+      privacy: '隐私设置',
+      display: '显示偏好',
+      content: '内容设置'
+    },
+    profile: {
+      display_name: '显示名称',
+      display_name_placeholder: '您的显示名称',
+      bio: '个人简介',
+      bio_placeholder: '介绍一下自己...',
+      location: '所在地',
+      location_placeholder: '城市，国家',
+      website: '个人网站'
+    },
+    security: {
+      email: '邮箱地址',
+      verified: '已验证',
+      password: '密码',
+      last_changed: '上次修改于30天前',
+      change_password: '修改',
+      current_password: '当前密码',
+      new_password: '新密码',
+      confirm_password: '确认新密码',
+      update_password: '更新密码',
+      password_mismatch: '两次输入的密码不一致',
+      password_changed: '密码修改成功',
+      two_factor: '两步验证',
+      two_factor_desc: '为账户添加额外的安全保护',
+      login_alerts: '登录提醒',
+      login_alerts_desc: '新设备登录时收到通知',
+      connected_accounts: '关联账户',
+      connected: '已关联',
+      danger_zone: '危险操作',
+      delete_account: '删除账户'
+    },
+    notifications: {
+      email_notifications: '邮件通知',
+      push_notifications: '推送通知',
+      replies: '帖子回复',
+      likes: '帖子点赞',
+      follows: '新粉丝',
+      mentions: '@提及',
+      newsletter: '订阅通讯',
+      announcements: '平台公告',
+      direct_messages: '私信消息',
+      quiet_hours: '免打扰时段',
+      quiet_hours_desc: '在特定时间段暂停通知',
+      start_time: '开始时间',
+      end_time: '结束时间'
+    },
+    privacy: {
+      profile_visibility: '个人资料可见性',
+      public: '公开',
+      public_desc: '任何人都可以查看您的资料',
+      members_only: '仅会员可见',
+      members_desc: '只有登录用户可以查看',
+      private: '私密',
+      private_desc: '只有您自己可以查看',
+      show_online: '显示在线状态',
+      show_online_desc: '让其他人看到您是否在线',
+      show_activity: '显示活动状态',
+      show_activity_desc: '向其他人展示您的最近活动',
+      show_email: '显示邮箱地址',
+      show_email_desc: '在个人资料中显示邮箱',
+      direct_messages: '谁可以给您发私信',
+      dm_everyone: '所有人',
+      dm_followers: '仅关注的人',
+      dm_none: '不允许任何人',
+      blocked_users: '已屏蔽用户',
+      block_user: '屏蔽用户',
+      no_blocked: '暂无屏蔽用户',
+      unblock: '取消屏蔽'
+    },
+    display: {
+      theme: '主题',
+      light: '浅色',
+      dark: '深色',
+      system: '跟随系统',
+      language: '语言',
+      posts_per_page: '每页帖子数',
+      default_sort: '默认排序方式',
+      newest: '最新',
+      popular: '热门',
+      trending: '趋势',
+      compact_mode: '紧凑模式',
+      compact_mode_desc: '减少间距显示更多内容'
+    },
+    content: {
+      signature: '签名档',
+      signature_placeholder: '您的签名将显示在帖子底部...',
+      default_category: '默认发帖分类',
+      auto_save: '自动保存草稿',
+      auto_save_desc: '自动保存您的帖子草稿'
+    },
+    delete_modal: {
+      title: '删除账户',
+      subtitle: '此操作无法撤销',
+      warning: '确定要删除您的账户吗？所有数据将被永久删除。',
+      confirm: '删除账户'
+    },
+    block_modal: {
+      title: '屏蔽用户',
+      placeholder: '输入要屏蔽的用户名',
+      confirm: '屏蔽'
+    }
   }
 };

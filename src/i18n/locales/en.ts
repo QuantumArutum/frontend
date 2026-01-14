@@ -4447,5 +4447,120 @@ export const en = {
         }
       }
     }
+  },
+  // Settings Page
+  settings_page: {
+    title: 'Settings',
+    subtitle: 'Manage your account preferences',
+    save: 'Save Changes',
+    saved: 'Saved!',
+    tabs: {
+      profile: 'Profile',
+      security: 'Security',
+      notifications: 'Notifications',
+      privacy: 'Privacy',
+      display: 'Display',
+      content: 'Content'
+    },
+    profile: {
+      display_name: 'Display Name',
+      display_name_placeholder: 'Your display name',
+      bio: 'Bio',
+      bio_placeholder: 'Tell us about yourself...',
+      location: 'Location',
+      location_placeholder: 'City, Country',
+      website: 'Website'
+    },
+    security: {
+      email: 'Email Address',
+      verified: 'Verified',
+      password: 'Password',
+      last_changed: 'Last changed 30 days ago',
+      change_password: 'Change',
+      current_password: 'Current password',
+      new_password: 'New password',
+      confirm_password: 'Confirm new password',
+      update_password: 'Update Password',
+      password_mismatch: 'Passwords do not match',
+      password_changed: 'Password changed successfully',
+      two_factor: 'Two-Factor Authentication',
+      two_factor_desc: 'Add an extra layer of security',
+      login_alerts: 'Login Alerts',
+      login_alerts_desc: 'Get notified of new logins',
+      connected_accounts: 'Connected Accounts',
+      connected: 'Connected',
+      danger_zone: 'Danger Zone',
+      delete_account: 'Delete Account'
+    },
+    notifications: {
+      email_notifications: 'Email Notifications',
+      push_notifications: 'Push Notifications',
+      replies: 'Replies to your posts',
+      likes: 'Likes on your posts',
+      follows: 'New followers',
+      mentions: 'Mentions',
+      newsletter: 'Newsletter',
+      announcements: 'Platform announcements',
+      direct_messages: 'Direct messages',
+      quiet_hours: 'Quiet Hours',
+      quiet_hours_desc: 'Pause notifications during specific hours',
+      start_time: 'Start',
+      end_time: 'End'
+    },
+    privacy: {
+      profile_visibility: 'Profile Visibility',
+      public: 'Public',
+      public_desc: 'Anyone can view your profile',
+      members_only: 'Members Only',
+      members_desc: 'Only logged-in members can view',
+      private: 'Private',
+      private_desc: 'Only you can view your profile',
+      show_online: 'Show Online Status',
+      show_online_desc: 'Let others see when you are online',
+      show_activity: 'Show Activity Status',
+      show_activity_desc: 'Show your recent activity to others',
+      show_email: 'Show Email Address',
+      show_email_desc: 'Display email on your profile',
+      direct_messages: 'Who can send you direct messages',
+      dm_everyone: 'Everyone',
+      dm_followers: 'Only people you follow',
+      dm_none: 'No one',
+      blocked_users: 'Blocked Users',
+      block_user: 'Block User',
+      no_blocked: 'No blocked users',
+      unblock: 'Unblock'
+    },
+    display: {
+      theme: 'Theme',
+      light: 'Light',
+      dark: 'Dark',
+      system: 'System',
+      language: 'Language',
+      posts_per_page: 'Posts Per Page',
+      default_sort: 'Default Sort Order',
+      newest: 'Newest',
+      popular: 'Popular',
+      trending: 'Trending',
+      compact_mode: 'Compact Mode',
+      compact_mode_desc: 'Show more content with less spacing'
+    },
+    content: {
+      signature: 'Signature',
+      signature_placeholder: 'Your signature will appear at the bottom of your posts...',
+      default_category: 'Default Post Category',
+      auto_save: 'Auto-save Drafts',
+      auto_save_desc: 'Automatically save your posts as drafts'
+    },
+    delete_modal: {
+      title: 'Delete Account',
+      subtitle: 'This action cannot be undone',
+      warning: 'Are you sure you want to delete your account? All your data will be permanently removed.',
+      confirm: 'Delete Account'
+    },
+    block_modal: {
+      title: 'Block User',
+      placeholder: 'Enter username to block',
+      confirm: 'Block'
+    }
   }
 };

@@ -215,7 +215,7 @@ export default function CommunityNavbar() {
                 <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text text-transparent">
                   {t('community_page.title', 'Community')}
                 </h1>
-                <p className="text-sm text-gray-300">{t('community_page.members_online', '125,847 members online')}</p>
+                <p className="text-sm text-gray-300">{t('community_page.members_online', { count: '125,847' })}</p>
               </div>
             </a>
 
@@ -264,9 +264,13 @@ export default function CommunityNavbar() {
               >
                 <MessageSquare className="w-5 h-5" />
               </a>
-              <button className="p-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/15 transition-all duration-300 hover:shadow-md hover:shadow-white/10">
+              <a
+                href="/community/settings"
+                className="p-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/15 transition-all duration-300 hover:shadow-md hover:shadow-white/10"
+                title={t('community_page.settings', '设置')}
+              >
                 <Settings className="w-5 h-5" />
-              </button>
+              </a>
 
               {isLoggedIn && userInfo ? (
                 <div className="flex items-center gap-3">
