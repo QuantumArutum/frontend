@@ -1794,36 +1794,7 @@ export const de = {
       staked_success: 'Erfolgreich gestaked!',
       staking_failed: 'Staking fehlgeschlagen'
     },
-    // Einstellungsseite
-    settings_page: {
-      title: 'Einstellungen',
-      appearance: {
-        title: 'Erscheinungsbild',
-        dark_mode: 'Dunkelmodus',
-        dark_mode_desc: 'Dunkles Design verwenden'
-      },
-      notifications: {
-        title: 'Benachrichtigungen',
-        push: 'Push-Benachrichtigungen',
-        push_desc: 'Transaktions- und Systembenachrichtigungen erhalten',
-        sound: 'Tonwarnungen',
-        sound_desc: 'Benachrichtigungstöne abspielen'
-      },
-      language: {
-        title: 'Sprache',
-        interface: 'Oberflächensprache',
-        interface_desc: 'Wählen Sie Ihre bevorzugte Sprache'
-      },
-      security: {
-        title: 'Sicherheit',
-        two_factor: 'Zwei-Faktor-Authentifizierung',
-        two_factor_desc: 'Kontosicherheit verbessern',
-        quantum_encryption: 'Quantenverschlüsselung',
-        quantum_encryption_desc: 'Geschützt durch Post-Quanten-Kryptographie',
-        enabled: 'Aktiviert',
-        change_password: 'Passwort Ändern'
-      }
-    },
+
     // Profilseite
     profile_page: {
       title: 'Benutzerprofil',

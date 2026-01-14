@@ -1850,36 +1850,7 @@ export const ja = {
       staked_success: 'ステーキング成功！',
       staking_failed: 'ステーキング失敗'
     },
-    // 設定ページ
-    settings_page: {
-      title: '設定',
-      appearance: {
-        title: '外観',
-        dark_mode: 'ダークモード',
-        dark_mode_desc: 'ダークテーマを使用'
-      },
-      notifications: {
-        title: '通知',
-        push: 'プッシュ通知',
-        push_desc: '取引とシステム通知を受信',
-        sound: 'サウンドアラート',
-        sound_desc: '通知音を再生'
-      },
-      language: {
-        title: '言語',
-        interface: 'インターフェース言語',
-        interface_desc: '希望の言語を選択'
-      },
-      security: {
-        title: 'セキュリティ',
-        two_factor: '二要素認証',
-        two_factor_desc: 'アカウントセキュリティを強化',
-        quantum_encryption: '量子暗号化',
-        quantum_encryption_desc: 'ポスト量子暗号で保護',
-        enabled: '有効',
-        change_password: 'パスワード変更'
-      }
-    },
+
     // プロフィールページ
     profile_page: {
       title: 'ユーザープロフィール',

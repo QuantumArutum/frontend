@@ -1850,36 +1850,7 @@ export const ko = {
       staked_success: '스테이킹 성공!',
       staking_failed: '스테이킹 실패'
     },
-    // 설정 페이지
-    settings_page: {
-      title: '설정',
-      appearance: {
-        title: '외관',
-        dark_mode: '다크 모드',
-        dark_mode_desc: '다크 테마 사용'
-      },
-      notifications: {
-        title: '알림',
-        push: '푸시 알림',
-        push_desc: '거래 및 시스템 알림 받기',
-        sound: '소리 알림',
-        sound_desc: '알림 소리 재생'
-      },
-      language: {
-        title: '언어',
-        interface: '인터페이스 언어',
-        interface_desc: '선호하는 언어 선택'
-      },
-      security: {
-        title: '보안',
-        two_factor: '2단계 인증',
-        two_factor_desc: '계정 보안 강화',
-        quantum_encryption: '양자 암호화',
-        quantum_encryption_desc: '포스트 양자 암호화로 보호',
-        enabled: '활성화됨',
-        change_password: '비밀번호 변경'
-      }
-    },
+
     // 프로필 페이지
     profile_page: {
       title: '사용자 프로필',

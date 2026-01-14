@@ -1812,36 +1812,7 @@ export const vi = {
       staked_success: 'Stake thành công!',
       staking_failed: 'Stake thất bại'
     },
-    // Trang Cài đặt
-    settings_page: {
-      title: 'Cài đặt',
-      appearance: {
-        title: 'Giao diện',
-        dark_mode: 'Chế độ Tối',
-        dark_mode_desc: 'Sử dụng giao diện tối'
-      },
-      notifications: {
-        title: 'Thông báo',
-        push: 'Thông báo Đẩy',
-        push_desc: 'Nhận thông báo giao dịch và hệ thống',
-        sound: 'Âm thanh Cảnh báo',
-        sound_desc: 'Phát âm thanh thông báo'
-      },
-      language: {
-        title: 'Ngôn ngữ',
-        interface: 'Ngôn ngữ Giao diện',
-        interface_desc: 'Chọn ngôn ngữ ưa thích của bạn'
-      },
-      security: {
-        title: 'Bảo mật',
-        two_factor: 'Xác thực Hai yếu tố',
-        two_factor_desc: 'Tăng cường bảo mật tài khoản',
-        quantum_encryption: 'Mã hóa Lượng tử',
-        quantum_encryption_desc: 'Được bảo vệ bằng mật mã hậu lượng tử',
-        enabled: 'Đã bật',
-        change_password: 'Đổi Mật khẩu'
-      }
-    },
+
     // Trang Hồ sơ
     profile_page: {
       title: 'Hồ sơ Người dùng',

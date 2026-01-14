@@ -1809,36 +1809,7 @@ export const ru = {
       staked_success: 'Стейкинг успешен!',
       staking_failed: 'Ошибка стейкинга'
     },
-    // Страница настроек
-    settings_page: {
-      title: 'Настройки',
-      appearance: {
-        title: 'Внешний вид',
-        dark_mode: 'Тёмный режим',
-        dark_mode_desc: 'Использовать тёмную тему'
-      },
-      notifications: {
-        title: 'Уведомления',
-        push: 'Push-уведомления',
-        push_desc: 'Получать уведомления о транзакциях и системе',
-        sound: 'Звуковые оповещения',
-        sound_desc: 'Воспроизводить звуки уведомлений'
-      },
-      language: {
-        title: 'Язык',
-        interface: 'Язык интерфейса',
-        interface_desc: 'Выберите предпочитаемый язык'
-      },
-      security: {
-        title: 'Безопасность',
-        two_factor: 'Двухфакторная аутентификация',
-        two_factor_desc: 'Повысить безопасность аккаунта',
-        quantum_encryption: 'Квантовое шифрование',
-        quantum_encryption_desc: 'Защищено постквантовой криптографией',
-        enabled: 'Включено',
-        change_password: 'Изменить пароль'
-      }
-    },
+
     // Страница профиля
     profile_page: {
       title: 'Профиль пользователя',

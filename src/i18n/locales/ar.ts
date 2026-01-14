@@ -1809,36 +1809,7 @@ export const ar = {
       staked_success: 'تم التخزين بنجاح!',
       staking_failed: 'فشل التخزين'
     },
-    // صفحة الإعدادات
-    settings_page: {
-      title: 'الإعدادات',
-      appearance: {
-        title: 'المظهر',
-        dark_mode: 'الوضع الداكن',
-        dark_mode_desc: 'استخدام السمة الداكنة'
-      },
-      notifications: {
-        title: 'الإشعارات',
-        push: 'إشعارات الدفع',
-        push_desc: 'تلقي إشعارات المعاملات والنظام',
-        sound: 'تنبيهات صوتية',
-        sound_desc: 'تشغيل أصوات الإشعارات'
-      },
-      language: {
-        title: 'اللغة',
-        interface: 'لغة الواجهة',
-        interface_desc: 'اختر لغتك المفضلة'
-      },
-      security: {
-        title: 'الأمان',
-        two_factor: 'المصادقة الثنائية',
-        two_factor_desc: 'تعزيز أمان الحساب',
-        quantum_encryption: 'التشفير الكمي',
-        quantum_encryption_desc: 'محمي بالتشفير ما بعد الكمي',
-        enabled: 'مفعّل',
-        change_password: 'تغيير كلمة المرور'
-      }
-    },
+
     // صفحة الملف الشخصي
     profile_page: {
       title: 'الملف الشخصي',

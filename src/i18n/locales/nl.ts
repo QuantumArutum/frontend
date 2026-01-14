@@ -1794,36 +1794,7 @@ export const nl = {
       staked_success: 'Staking succesvol!',
       staking_failed: 'Staking mislukt'
     },
-    // Instellingen Pagina
-    settings_page: {
-      title: 'Instellingen',
-      appearance: {
-        title: 'Uiterlijk',
-        dark_mode: 'Donkere Modus',
-        dark_mode_desc: 'Donker thema gebruiken'
-      },
-      notifications: {
-        title: 'Meldingen',
-        push: 'Push Meldingen',
-        push_desc: 'Transactie- en systeemmeldingen ontvangen',
-        sound: 'Geluidswaarschuwingen',
-        sound_desc: 'Meldingsgeluiden afspelen'
-      },
-      language: {
-        title: 'Taal',
-        interface: 'Interface Taal',
-        interface_desc: 'Selecteer uw voorkeurstaal'
-      },
-      security: {
-        title: 'Beveiliging',
-        two_factor: 'Twee-Factor Authenticatie',
-        two_factor_desc: 'Accountbeveiliging verbeteren',
-        quantum_encryption: 'Quantum Encryptie',
-        quantum_encryption_desc: 'Beschermd met post-quantum cryptografie',
-        enabled: 'Ingeschakeld',
-        change_password: 'Wachtwoord Wijzigen'
-      }
-    },
+
     // Profiel Pagina
     profile_page: {
       title: 'Gebruikersprofiel',

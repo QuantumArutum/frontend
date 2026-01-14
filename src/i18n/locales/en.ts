@@ -2369,36 +2369,6 @@ export const en = {
       staked_success: 'Staked successfully!',
       staking_failed: 'Staking failed'
     },
-    // Settings Page
-    settings_page: {
-      title: 'Settings',
-      appearance: {
-        title: 'Appearance',
-        dark_mode: 'Dark Mode',
-        dark_mode_desc: 'Use dark theme'
-      },
-      notifications: {
-        title: 'Notifications',
-        push: 'Push Notifications',
-        push_desc: 'Receive transaction and system notifications',
-        sound: 'Sound Alerts',
-        sound_desc: 'Play notification sounds'
-      },
-      language: {
-        title: 'Language',
-        interface: 'Interface Language',
-        interface_desc: 'Select your preferred language'
-      },
-      security: {
-        title: 'Security',
-        two_factor: 'Two-Factor Authentication',
-        two_factor_desc: 'Enhance account security',
-        quantum_encryption: 'Quantum Encryption',
-        quantum_encryption_desc: 'Protected with post-quantum cryptography',
-        enabled: 'Enabled',
-        change_password: 'Change Password'
-      }
-    },
     // Profile Page
     profile_page: {
       title: 'User Profile',
@@ -4446,13 +4416,12 @@ export const en = {
           nodejs: 'Node.js: 20.0+'
         }
       }
-    }
-  },
-  // Settings Page
-  settings_page: {
-    title: 'Settings',
-    subtitle: 'Manage your account preferences',
-    save: 'Save Changes',
+    },
+    // Settings Page
+    settings_page: {
+      title: 'Settings',
+      subtitle: 'Manage your account preferences',
+      save: 'Save Changes',
     saved: 'Saved!',
     tabs: {
       profile: 'Profile',

@@ -2369,36 +2369,6 @@ export const zh = {
       staked_success: '质押成功！',
       staking_failed: '质押失败'
     },
-    // 设置页面
-    settings_page: {
-      title: '设置',
-      appearance: {
-        title: '外观设置',
-        dark_mode: '深色模式',
-        dark_mode_desc: '使用深色主题'
-      },
-      notifications: {
-        title: '通知设置',
-        push: '推送通知',
-        push_desc: '接收交易和系统通知',
-        sound: '声音提醒',
-        sound_desc: '播放通知声音'
-      },
-      language: {
-        title: '语言设置',
-        interface: '界面语言',
-        interface_desc: '选择您偏好的语言'
-      },
-      security: {
-        title: '安全设置',
-        two_factor: '双因素认证',
-        two_factor_desc: '增强账户安全性',
-        quantum_encryption: '量子加密',
-        quantum_encryption_desc: '使用后量子密码学保护',
-        enabled: '已启用',
-        change_password: '修改密码'
-      }
-    },
     // 个人资料页面
     profile_page: {
       title: '用户资料',
@@ -4420,14 +4390,13 @@ export const zh = {
           nodejs: 'Node.js：20.0+'
         }
       }
-    }
-  },
-  // 设置页面
-  settings_page: {
-    title: '设置',
-    subtitle: '管理您的账户偏好设置',
-    save: '保存更改',
-    saved: '已保存！',
+    },
+    // 设置页面
+    settings_page: {
+      title: '设置',
+      subtitle: '管理您的账户偏好设置',
+      save: '保存更改',
+      saved: '已保存！',
     tabs: {
       profile: '个人资料',
       security: '账户安全',

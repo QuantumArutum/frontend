@@ -1809,36 +1809,7 @@ export const pt = {
       staked_success: 'Stake realizado com sucesso!',
       staking_failed: 'Falha no stake'
     },
-    // Página de Configurações
-    settings_page: {
-      title: 'Configurações',
-      appearance: {
-        title: 'Aparência',
-        dark_mode: 'Modo Escuro',
-        dark_mode_desc: 'Usar tema escuro'
-      },
-      notifications: {
-        title: 'Notificações',
-        push: 'Notificações Push',
-        push_desc: 'Receber notificações de transações e sistema',
-        sound: 'Alertas Sonoros',
-        sound_desc: 'Reproduzir sons de notificação'
-      },
-      language: {
-        title: 'Idioma',
-        interface: 'Idioma da Interface',
-        interface_desc: 'Selecione seu idioma preferido'
-      },
-      security: {
-        title: 'Segurança',
-        two_factor: 'Autenticação de Dois Fatores',
-        two_factor_desc: 'Melhorar a segurança da conta',
-        quantum_encryption: 'Criptografia Quântica',
-        quantum_encryption_desc: 'Protegido com criptografia pós-quântica',
-        enabled: 'Ativado',
-        change_password: 'Alterar Senha'
-      }
-    },
+
     // Página de Perfil
     profile_page: {
       title: 'Perfil do Usuário',
