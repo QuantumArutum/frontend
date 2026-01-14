@@ -649,6 +649,24 @@ export const db = {
     const result = await sql`SELECT * FROM sessions WHERE token = ${token} AND expires_at > NOW()`;
     return result[0] || null;
   },
+  invalidateSession: async (sessionId: string) => {
+    if (!sql) return false;
+    try {
+      await sql`DELETE FROM sessions WHERE id = ${sessionId} OR token = ${sessionId}`;
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+  invalidateAllUserSessions: async (userId: string) => {
+    if (!sql) return false;
+    try {
+      await sql`DELETE FROM sessions WHERE user_id = ${userId}`;
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
   
   // Token purchase methods
   createTokenPurchase: async (purchase: any) => {
