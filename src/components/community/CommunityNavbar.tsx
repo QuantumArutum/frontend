@@ -34,23 +34,74 @@ export default function CommunityNavbar() {
   ];
 
   useEffect(() => {
-    const token = localStorage.getItem('auth_token');
-    const userInfoStr = localStorage.getItem('user_info');
-    if (token && userInfoStr) {
-      try {
-        const user = JSON.parse(userInfoStr);
-        setUserInfo(user);
-        setIsLoggedIn(true);
-      } catch (error) {
-        setIsLoggedIn(false);
-        setUserInfo(null);
+    const checkAuth = () => {
+      // 首先检查 localStorage
+      const token = localStorage.getItem('auth_token');
+      const userInfoStr = localStorage.getItem('user_info');
+      
+      if (token && userInfoStr) {
+        try {
+          const user = JSON.parse(userInfoStr);
+          setUserInfo(user);
+          setIsLoggedIn(true);
+          return;
+        } catch (error) {
+          // 继续检查 cookie
+        }
       }
-    }
+      
+      // 检查 Google OAuth cookie (qau_user)
+      const getCookie = (name: string) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop()?.split(';').shift();
+        return null;
+      };
+      
+      const qauUserCookie = getCookie('qau_user');
+      if (qauUserCookie) {
+        try {
+          const googleUser = JSON.parse(decodeURIComponent(qauUserCookie));
+          // 转换 Google 用户信息格式并同步到 localStorage
+          const user: UserInfo = {
+            id: googleUser.email, // 使用 email 作为 id
+            email: googleUser.email,
+            name: googleUser.name,
+            avatar: googleUser.picture,
+          };
+          
+          // 同步到 localStorage 以便其他组件使用
+          localStorage.setItem('user_info', JSON.stringify(user));
+          localStorage.setItem('auth_token', 'google_oauth_session'); // 标记为 Google 登录
+          
+          setUserInfo(user);
+          setIsLoggedIn(true);
+          return;
+        } catch (error) {
+          console.error('Failed to parse Google user cookie:', error);
+        }
+      }
+      
+      setIsLoggedIn(false);
+      setUserInfo(null);
+    };
+    
+    checkAuth();
+    
+    // 监听 storage 变化（其他标签页登录/登出）
+    window.addEventListener('storage', checkAuth);
+    return () => window.removeEventListener('storage', checkAuth);
   }, []);
 
   const handleLogout = () => {
+    // 清除 localStorage
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_info');
+    
+    // 清除 Google OAuth cookies
+    document.cookie = 'qau_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    document.cookie = 'qau_user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    
     setIsLoggedIn(false);
     setUserInfo(null);
     window.location.reload();

@@ -77,15 +77,55 @@ export default function CleanModernCommunity() {
 
   useEffect(() => {
     const checkAuth = () => {
+      // 首先检查 localStorage
       const token = localStorage.getItem('auth_token');
       const userInfoStr = localStorage.getItem('user_info');
+      
       if (token && userInfoStr) {
         try {
           setUserInfo(JSON.parse(userInfoStr));
           setIsLoggedIn(true);
-        } catch { setIsLoggedIn(false); }
+          return;
+        } catch {
+          // 继续检查 cookie
+        }
       }
+      
+      // 检查 Google OAuth cookie (qau_user)
+      const getCookie = (name: string) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop()?.split(';').shift();
+        return null;
+      };
+      
+      const qauUserCookie = getCookie('qau_user');
+      if (qauUserCookie) {
+        try {
+          const googleUser = JSON.parse(decodeURIComponent(qauUserCookie));
+          // 转换 Google 用户信息格式并同步到 localStorage
+          const user: UserInfo = {
+            id: googleUser.email,
+            email: googleUser.email,
+            name: googleUser.name,
+            avatar: googleUser.picture,
+          };
+          
+          // 同步到 localStorage
+          localStorage.setItem('user_info', JSON.stringify(user));
+          localStorage.setItem('auth_token', 'google_oauth_session');
+          
+          setUserInfo(user);
+          setIsLoggedIn(true);
+          return;
+        } catch (error) {
+          console.error('Failed to parse Google user cookie:', error);
+        }
+      }
+      
+      setIsLoggedIn(false);
     };
+    
     checkAuth();
     window.addEventListener('focus', checkAuth);
     return () => window.removeEventListener('focus', checkAuth);
