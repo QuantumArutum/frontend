@@ -22,12 +22,19 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const code = searchParams.get('code');
   const error = searchParams.get('error');
+  const errorDescription = searchParams.get('error_description');
+
+  console.log('Google OAuth callback received');
+  console.log('Code present:', !!code);
+  console.log('Error:', error, errorDescription);
 
   if (error) {
-    return NextResponse.redirect(new URL('/auth/login?error=google_auth_failed', request.url));
+    console.error('Google auth error:', error, errorDescription);
+    return NextResponse.redirect(new URL(`/auth/login?error=google_auth_failed&details=${encodeURIComponent(errorDescription || error)}`, request.url));
   }
 
   if (!code) {
+    console.error('No authorization code received');
     return NextResponse.redirect(new URL('/auth/login?error=no_code', request.url));
   }
 
@@ -35,12 +42,18 @@ export async function GET(request: NextRequest) {
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   const redirectUri = process.env.GOOGLE_REDIRECT_URI || 'http://localhost:3000/api/auth/google/callback';
 
+  console.log('OAuth config - clientId present:', !!clientId);
+  console.log('OAuth config - clientSecret present:', !!clientSecret);
+  console.log('OAuth config - redirectUri:', redirectUri);
+
   if (!clientId || !clientSecret) {
+    console.error('OAuth not configured - missing clientId or clientSecret');
     return NextResponse.redirect(new URL('/auth/login?error=oauth_not_configured', request.url));
   }
 
   try {
     // Exchange code for tokens
+    console.log('Exchanging code for tokens...');
     const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -53,26 +66,33 @@ export async function GET(request: NextRequest) {
       }),
     });
 
+    const tokenData = await tokenResponse.text();
+    console.log('Token response status:', tokenResponse.status);
+
     if (!tokenResponse.ok) {
-      const errorData = await tokenResponse.text();
-      console.error('Token exchange failed:', errorData);
-      return NextResponse.redirect(new URL('/auth/login?error=token_exchange_failed', request.url));
+      console.error('Token exchange failed:', tokenData);
+      return NextResponse.redirect(new URL(`/auth/login?error=token_exchange_failed&status=${tokenResponse.status}`, request.url));
     }
 
-    const tokens: GoogleTokenResponse = await tokenResponse.json();
+    const tokens: GoogleTokenResponse = JSON.parse(tokenData);
+    console.log('Token exchange successful, access_token present:', !!tokens.access_token);
 
     // Get user info
+    console.log('Fetching user info...');
     const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
       headers: { Authorization: `Bearer ${tokens.access_token}` },
     });
 
     if (!userInfoResponse.ok) {
+      const userInfoError = await userInfoResponse.text();
+      console.error('User info fetch failed:', userInfoError);
       return NextResponse.redirect(new URL('/auth/login?error=user_info_failed', request.url));
     }
 
     const userInfo: GoogleUserInfo = await userInfoResponse.json();
+    console.log('User info received for:', userInfo.email);
 
-    // Create session token (简化版，实际应使用 JWT 或数据库 session)
+    // Create session token
     const sessionData = {
       id: userInfo.id,
       email: userInfo.email,
@@ -84,13 +104,14 @@ export async function GET(request: NextRequest) {
 
     const sessionToken = Buffer.from(JSON.stringify(sessionData)).toString('base64');
 
-    // Redirect to community with session
-    const response = NextResponse.redirect(new URL('/community', request.url));
+    // 使用绝对 URL 重定向到社区页面
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.quantaureum.com';
+    const response = NextResponse.redirect(new URL('/community', baseUrl));
     
     // Set session cookie
     response.cookies.set('qau_session', sessionToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',
@@ -103,15 +124,17 @@ export async function GET(request: NextRequest) {
       picture: userInfo.picture,
     }), {
       httpOnly: false,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7,
       path: '/',
     });
 
+    console.log('Login successful, redirecting to /community');
     return response;
-  } catch (error) {
-    console.error('Google OAuth error:', error);
-    return NextResponse.redirect(new URL('/auth/login?error=oauth_error', request.url));
+  } catch (err) {
+    console.error('Google OAuth error:', err);
+    const errorMessage = err instanceof Error ? err.message : 'unknown';
+    return NextResponse.redirect(new URL(`/auth/login?error=oauth_error&details=${encodeURIComponent(errorMessage)}`, request.url));
   }
 }
