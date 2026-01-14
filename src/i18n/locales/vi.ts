@@ -1474,7 +1474,27 @@ export const vi = {
 
     // Community Pages
     community_page: {
-      title: 'Cộng đồng Quantaureum',
+      // Điều hướng
+      nav: {
+        home: 'Trang chủ',
+        general: 'Thảo luận Chung',
+        technical: 'Kỹ thuật',
+        defi: 'Thảo luận DeFi',
+        governance: 'Quản trị',
+        events: 'Sự kiện',
+        menu: 'Menu Điều hướng'
+      },
+      // Chung
+      title: 'Cộng đồng',
+      members_online: '{{count}} thành viên trực tuyến',
+      search_placeholder: 'Tìm kiếm thảo luận...',
+      notifications: 'Thông báo',
+      messages: 'Tin nhắn',
+      logout: 'Đăng xuất',
+      login: 'Đăng nhập',
+      new_post: 'Bài viết Mới',
+      // Trang chính
+      main_title: 'Cộng đồng Quantaureum',
       subtitle: 'Tham gia cuộc cách mạng blockchain lượng tử. Kết nối, thảo luận và cùng xây dựng tương lai.',
       search_placeholder: 'Tìm kiếm thảo luận, chủ đề, người dùng...',
       new_post: 'Bài viết Mới',

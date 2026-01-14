@@ -1456,7 +1456,27 @@ export const nl = {
     },
     // Community Pagina's
     community_page: {
-      title: 'Quantaureum Community',
+      // Navigatie
+      nav: {
+        home: 'Home',
+        general: 'Algemene Discussie',
+        technical: 'Technisch',
+        defi: 'DeFi Discussie',
+        governance: 'Governance',
+        events: 'Evenementen',
+        menu: 'Navigatiemenu'
+      },
+      // Algemeen
+      title: 'Community',
+      members_online: '{{count}} leden online',
+      search_placeholder: 'Zoek discussies...',
+      notifications: 'Meldingen',
+      messages: 'Berichten',
+      logout: 'Uitloggen',
+      login: 'Inloggen',
+      new_post: 'Nieuw Bericht',
+      // Hoofdpagina
+      main_title: 'Quantaureum Community',
       subtitle: 'Sluit je aan bij de quantum blockchain revolutie. Verbind, discussieer en bouw samen de toekomst.',
       search_placeholder: 'Zoek discussies, onderwerpen, gebruikers...',
       new_post: 'Nieuw Bericht',

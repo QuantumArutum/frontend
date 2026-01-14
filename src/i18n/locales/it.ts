@@ -1471,7 +1471,27 @@ export const it = {
     },
     // Pagine della Community
     community_page: {
-      title: 'Community Quantaureum',
+      // Navigazione
+      nav: {
+        home: 'Home',
+        general: 'Discussione Generale',
+        technical: 'Tecnico',
+        defi: 'Discussione DeFi',
+        governance: 'Governance',
+        events: 'Eventi',
+        menu: 'Menu di Navigazione'
+      },
+      // Generale
+      title: 'Community',
+      members_online: '{{count}} membri online',
+      search_placeholder: 'Cerca discussioni...',
+      notifications: 'Notifiche',
+      messages: 'Messaggi',
+      logout: 'Esci',
+      login: 'Accedi',
+      new_post: 'Nuovo Post',
+      // Pagina Principale
+      main_title: 'Community Quantaureum',
       subtitle: 'Unisciti alla rivoluzione blockchain quantistica. Connettiti, discuti e costruisci il futuro insieme.',
       search_placeholder: 'Cerca discussioni, argomenti, utenti...',
       new_post: 'Nuovo Post',

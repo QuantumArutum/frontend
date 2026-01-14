@@ -1471,8 +1471,27 @@ export const ja = {
     },
     // コミュニティページ
     community_page: {
+      // ナビゲーション
+      nav: {
+        home: 'ホーム',
+        general: '一般ディスカッション',
+        technical: '技術',
+        defi: 'DeFiディスカッション',
+        governance: 'ガバナンス',
+        events: 'イベント',
+        menu: 'ナビゲーションメニュー'
+      },
+      // 共通
+      title: 'コミュニティ',
+      members_online: '{{count}}人がオンライン',
+      search_placeholder: 'ディスカッションを検索...',
+      notifications: '通知',
+      messages: 'メッセージ',
+      logout: 'ログアウト',
+      login: 'ログイン',
+      new_post: '新規投稿',
       // メインコミュニティページ
-      title: 'Quantaureum コミュニティ',
+      main_title: 'Quantaureum コミュニティ',
       subtitle: '量子ブロックチェーン革命に参加しましょう。つながり、議論し、共に未来を築きましょう。',
       search_placeholder: 'ディスカッション、トピック、ユーザーを検索...',
       new_post: '新規投稿',

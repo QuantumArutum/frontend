@@ -25,12 +25,12 @@ export default function CommunityNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const categories = [
-    { name: t('community.nav.home', '首页'), href: '/community', key: 'home' },
-    { name: t('community.nav.general', '综合讨论'), href: '/community/forum/general', key: 'general' },
-    { name: t('community.nav.technical', '技术交流'), href: '/community/forum/technical', key: 'technical' },
-    { name: t('community.nav.defi', 'DeFi讨论'), href: '/community/forum/defi', key: 'defi' },
-    { name: t('community.nav.governance', '治理提案'), href: '/community/governance', key: 'governance' },
-    { name: t('community.nav.events', '活动中心'), href: '/community/events', key: 'events' },
+    { name: t('community_page.nav.home', '首页'), href: '/community', key: 'home' },
+    { name: t('community_page.nav.general', '综合讨论'), href: '/community/forum/general', key: 'general' },
+    { name: t('community_page.nav.technical', '技术交流'), href: '/community/forum/technical', key: 'technical' },
+    { name: t('community_page.nav.defi', 'DeFi讨论'), href: '/community/forum/defi', key: 'defi' },
+    { name: t('community_page.nav.governance', '治理提案'), href: '/community/governance', key: 'governance' },
+    { name: t('community_page.nav.events', '活动中心'), href: '/community/events', key: 'events' },
   ];
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export default function CommunityNavbar() {
             <div className="flex items-center justify-between py-3">
               <span className="text-white font-medium flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-                {categories.find(c => isActive(c.href, c.key))?.name || t('community.nav.menu', '导航菜单')}
+                {categories.find(c => isActive(c.href, c.key))?.name || t('community_page.nav.menu', '导航菜单')}
               </span>
               <div className="flex items-center gap-2">
                 <LanguageSwitcher />
@@ -162,9 +162,9 @@ export default function CommunityNavbar() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text text-transparent">
-                  {t('community.title', 'Community')}
+                  {t('community_page.title', 'Community')}
                 </h1>
-                <p className="text-sm text-gray-300">{t('community.members_online', '125,847 members online')}</p>
+                <p className="text-sm text-gray-300">{t('community_page.members_online', '125,847 members online')}</p>
               </div>
             </a>
 
@@ -182,7 +182,7 @@ export default function CommunityNavbar() {
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 transition-colors group-focus-within:text-white" />
                 <input
                   type="text"
-                  placeholder={t('community.search_placeholder', '搜索讨论...')}
+                  placeholder={t('community_page.search_placeholder', '搜索讨论...')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 rounded-xl text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:border-purple-500 focus:shadow-lg focus:shadow-purple-500/25 transition-all duration-300"
@@ -199,7 +199,7 @@ export default function CommunityNavbar() {
               <a
                 href="/community/notifications"
                 className="relative p-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/15 transition-all duration-300 hover:shadow-md hover:shadow-white/10"
-                title={t('community.notifications', '通知')}
+                title={t('community_page.notifications', '通知')}
               >
                 <Bell className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center shadow-lg">
@@ -209,7 +209,7 @@ export default function CommunityNavbar() {
               <a
                 href="/community/messages"
                 className="relative p-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/15 transition-all duration-300 hover:shadow-md hover:shadow-white/10"
-                title={t('community.messages', '私信')}
+                title={t('community_page.messages', '私信')}
               >
                 <MessageSquare className="w-5 h-5" />
               </a>
@@ -232,7 +232,7 @@ export default function CommunityNavbar() {
                     )}
                     <span className="text-sm text-white font-medium hidden md:inline">{userInfo.name}</span>
                   </a>
-                  <button onClick={handleLogout} className="p-2.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/15 transition-all duration-300 hover:shadow-md hover:shadow-red-500/25" title={t('community.logout', '登出')}>
+                  <button onClick={handleLogout} className="p-2.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/15 transition-all duration-300 hover:shadow-md hover:shadow-red-500/25" title={t('community_page.logout', '登出')}>
                     <LogOut className="w-5 h-5" />
                   </button>
                 </div>
@@ -241,7 +241,7 @@ export default function CommunityNavbar() {
                   href={`/auth/login?redirect=${encodeURIComponent(pathname || '/community')}`}
                   className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 text-sm font-medium shadow-lg hover:shadow-blue-500/25"
                 >
-                  {t('community.login', '登录')}
+                  {t('community_page.login', '登录')}
                 </a>
               )}
 
@@ -254,7 +254,7 @@ export default function CommunityNavbar() {
                 }}
               >
                 <Plus className="w-4 h-4 inline mr-2" />
-                {t('community.new_post', '新建帖子')}
+                {t('community_page.new_post', '新建帖子')}
               </a>
             </div>
           </div>

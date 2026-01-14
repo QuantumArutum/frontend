@@ -1471,8 +1471,27 @@ export const ko = {
     },
     // 커뮤니티 페이지
     community_page: {
+      // 네비게이션
+      nav: {
+        home: '홈',
+        general: '일반 토론',
+        technical: '기술',
+        defi: 'DeFi 토론',
+        governance: '거버넌스',
+        events: '이벤트',
+        menu: '네비게이션 메뉴'
+      },
+      // 공통
+      title: '커뮤니티',
+      members_online: '{{count}}명 온라인',
+      search_placeholder: '토론 검색...',
+      notifications: '알림',
+      messages: '메시지',
+      logout: '로그아웃',
+      login: '로그인',
+      new_post: '새 게시물',
       // 메인 커뮤니티 페이지
-      title: 'Quantaureum 커뮤니티',
+      main_title: 'Quantaureum 커뮤니티',
       subtitle: '양자 블록체인 혁명에 참여하세요. 연결하고, 토론하고, 함께 미래를 만들어 갑니다.',
       search_placeholder: '토론, 주제, 사용자 검색...',
       new_post: '새 게시물',

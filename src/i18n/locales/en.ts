@@ -1870,8 +1870,27 @@ export const en = {
     },
     // Community Pages
     community_page: {
+      // Navigation
+      nav: {
+        home: 'Home',
+        general: 'General Discussion',
+        technical: 'Technical',
+        defi: 'DeFi Discussion',
+        governance: 'Governance',
+        events: 'Events',
+        menu: 'Navigation Menu'
+      },
+      // Common
+      title: 'Community',
+      members_online: '{{count}} members online',
+      search_placeholder: 'Search discussions...',
+      notifications: 'Notifications',
+      messages: 'Messages',
+      logout: 'Logout',
+      login: 'Login',
+      new_post: 'New Post',
       // Main Community Page
-      title: 'Quantaureum Community',
+      main_title: 'Quantaureum Community',
       subtitle: 'Join the quantum blockchain revolution. Connect, discuss, and build the future together.',
       search_placeholder: 'Search discussions, topics, users...',
       new_post: 'New Post',

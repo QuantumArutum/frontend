@@ -1870,8 +1870,27 @@ export const zh = {
     },
     // 社区页面
     community_page: {
+      // 导航条
+      nav: {
+        home: '首页',
+        general: '综合讨论',
+        technical: '技术交流',
+        defi: 'DeFi讨论',
+        governance: '治理提案',
+        events: '活动中心',
+        menu: '导航菜单'
+      },
+      // 通用
+      title: '社区',
+      members_online: '{{count}} 位成员在线',
+      search_placeholder: '搜索讨论...',
+      notifications: '通知',
+      messages: '私信',
+      logout: '登出',
+      login: '登录',
+      new_post: '新建帖子',
       // 主社区页面
-      title: 'Quantaureum 社区',
+      main_title: 'Quantaureum 社区',
       subtitle: '加入量子区块链革命。连接、讨论，共同构建未来。',
       search_placeholder: '搜索讨论、话题、用户...',
       new_post: '发布新帖',

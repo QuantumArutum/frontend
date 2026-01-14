@@ -1471,7 +1471,27 @@ export const ru = {
     },
     // Страницы сообщества
     community_page: {
-      title: 'Сообщество Quantaureum',
+      // Навигация
+      nav: {
+        home: 'Главная',
+        general: 'Общее обсуждение',
+        technical: 'Технические',
+        defi: 'DeFi обсуждение',
+        governance: 'Управление',
+        events: 'События',
+        menu: 'Меню навигации'
+      },
+      // Общее
+      title: 'Сообщество',
+      members_online: '{{count}} участников онлайн',
+      search_placeholder: 'Поиск обсуждений...',
+      notifications: 'Уведомления',
+      messages: 'Сообщения',
+      logout: 'Выйти',
+      login: 'Войти',
+      new_post: 'Новая публикация',
+      // Главная страница
+      main_title: 'Сообщество Quantaureum',
       subtitle: 'Присоединяйтесь к квантовой блокчейн-революции. Общайтесь, обсуждайте и стройте будущее вместе.',
       search_placeholder: 'Поиск обсуждений, тем, пользователей...',
       new_post: 'Новая публикация',

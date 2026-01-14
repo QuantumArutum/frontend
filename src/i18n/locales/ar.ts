@@ -1471,7 +1471,27 @@ export const ar = {
     },
     // صفحات المجتمع
     community_page: {
-      title: 'مجتمع Quantaureum',
+      // التنقل
+      nav: {
+        home: 'الرئيسية',
+        general: 'نقاش عام',
+        technical: 'تقني',
+        defi: 'نقاش DeFi',
+        governance: 'الحوكمة',
+        events: 'الفعاليات',
+        menu: 'قائمة التنقل'
+      },
+      // عام
+      title: 'المجتمع',
+      members_online: '{{count}} عضو متصل',
+      search_placeholder: 'البحث في المناقشات...',
+      notifications: 'الإشعارات',
+      messages: 'الرسائل',
+      logout: 'تسجيل الخروج',
+      login: 'تسجيل الدخول',
+      new_post: 'منشور جديد',
+      // الصفحة الرئيسية
+      main_title: 'مجتمع Quantaureum',
       subtitle: 'انضم إلى ثورة البلوكتشين الكمي. تواصل، ناقش، وابنِ المستقبل معاً.',
       search_placeholder: 'البحث في المناقشات، المواضيع، المستخدمين...',
       new_post: 'منشور جديد',
