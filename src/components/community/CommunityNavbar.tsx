@@ -215,7 +215,7 @@ export default function CommunityNavbar() {
                 <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text text-transparent">
                   {t('community_page.title', 'Community')}
                 </h1>
-                <p className="text-sm text-gray-300">{t('community_page.members_online', { count: '125,847' })}</p>
+                <p className="text-sm text-gray-300">{t('community_page.members_online', { count: '125,847', defaultValue: '{{count}} members online' })}</p>
               </div>
             </a>
 
