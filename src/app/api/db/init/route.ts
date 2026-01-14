@@ -1,8 +1,6 @@
 /**
  * Database Initialization API
- * POST /api/v2/admin/db/init
- * 
- * This endpoint initializes the database tables and creates default admin user
+ * POST /api/db/init
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -11,7 +9,6 @@ import bcrypt from 'bcryptjs';
 
 export async function POST(request: NextRequest) {
   try {
-    // Check for secret key (basic protection)
     const { secret } = await request.json().catch(() => ({}));
     
     if (secret !== 'quantaureum_init_2024') {
@@ -23,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     if (!sql) {
       return NextResponse.json(
-        { success: false, message: 'Database not configured' },
+        { success: false, message: 'Database not configured. Check DATABASE_URL environment variable.' },
         { status: 500 }
       );
     }
@@ -45,24 +42,15 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Create default categories if not exist
+    // Create default categories
     const categories = await dbQuery.getCategories();
     if (categories.length === 0) {
       await dbQuery.createCategory({ name: 'Announcements', slug: 'announcements', description: 'Official updates', sort_order: 1 });
       await dbQuery.createCategory({ name: 'General Discussion', slug: 'general', description: 'General talk', sort_order: 2 });
       await dbQuery.createCategory({ name: 'Technical Support', slug: 'support', description: 'Get help', sort_order: 3 });
-      await dbQuery.createCategory({ name: 'Trading Strategies', slug: 'trading', description: 'Trading tips', sort_order: 4 });
     }
 
-    // Create default system settings if not exist
-    const settings = await dbQuery.getSystemSettings();
-    if (Object.keys(settings).length === 0) {
-      await dbQuery.updateSystemSetting('site_name', 'Quantaureum', 'string');
-      await dbQuery.updateSystemSetting('maintenance_mode', 'false', 'boolean');
-      await dbQuery.updateSystemSetting('contact_email', 'support@quantaureum.com', 'string');
-    }
-
-    // Create default staking pools if not exist
+    // Create default staking pools
     const pools = await dbQuery.getStakingPools();
     if (pools.length === 0) {
       await dbQuery.createStakingPool({
@@ -108,5 +96,6 @@ export async function GET() {
     success: true,
     message: 'Database init endpoint. Use POST with secret key to initialize.',
     database_configured: !!sql,
+    database_url_set: !!process.env.DATABASE_URL || !!process.env.POSTGRES_URL,
   });
 }
