@@ -1,23 +1,28 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
 
 export default function ExchangePage() {
   const { t } = useTranslation();
-  
-  useEffect(() => {
-    // 重定向到专业交易所
-    window.location.href = 'http://localhost:3001';
-  }, []);
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-cyan-500 mx-auto mb-4"></div>
-        <h2 className="text-2xl font-bold text-white mb-2">{t('exchange_page.redirecting')}</h2>
-        <p className="text-gray-400">{t('exchange_page.manual_redirect')}<a href="http://localhost:3001" className="text-cyan-500 hover:text-cyan-400">{t('exchange_page.click_here')}</a></p>
+      <div className="text-center max-w-md mx-auto px-4">
+        <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h2 className="text-3xl font-bold text-white mb-4">{t('exchange_page.coming_soon', 'Exchange Coming Soon')}</h2>
+        <p className="text-gray-400 mb-6">{t('exchange_page.description', 'Our professional trading platform is under development. Stay tuned for updates!')}</p>
+        <a 
+          href="/" 
+          className="inline-block px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
+        >
+          {t('exchange_page.back_home', 'Back to Home')}
+        </a>
       </div>
     </div>
   );

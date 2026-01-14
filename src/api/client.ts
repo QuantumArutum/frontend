@@ -1,7 +1,17 @@
 import axios from 'axios';
 
+// 根据环境确定 API URL
+const getApiBaseUrl = () => {
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+    // 生产环境 - 使用 Next.js API routes 或禁用
+    return '/api/v2/barong';
+  }
+  // 本地开发环境
+  return 'http://localhost:3001/api/v2/barong';
+};
+
 export const barongAPI = axios.create({
-  baseURL: 'http://localhost:3001/api/v2/barong',
+  baseURL: getApiBaseUrl(),
   headers: {
     'Content-Type': 'application/json',
   },

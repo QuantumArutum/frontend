@@ -2,8 +2,13 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
-// API Base URL
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+// API Base URL - 在生产环境使用相对路径或禁用外部 API
+const API_BASE_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
+  ? '' // 生产环境使用相对路径（Next.js API routes）
+  : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001');
+
+// 是否启用外部 API（生产环境禁用，因为没有后端）
+const ENABLE_EXTERNAL_API = typeof window !== 'undefined' && window.location.hostname === 'localhost';
 
 // Types
 export interface SiteSettings {
@@ -88,6 +93,18 @@ export function useSiteConfig() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchConfig = useCallback(async () => {
+    // 生产环境使用默认配置
+    if (!ENABLE_EXTERNAL_API) {
+      setConfig({
+        site_name: 'Quantaureum',
+        contact_email: 'support@quantaureum.com',
+        meta_title: 'Quantaureum - Quantum-Secured Blockchain',
+        meta_description: 'The future of secure blockchain technology',
+      });
+      setLoading(false);
+      return;
+    }
+    
     try {
       setLoading(true);
       setError(null);
@@ -119,6 +136,13 @@ export function useNavigation() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchMenus = useCallback(async () => {
+    // 生产环境使用空数组（导航由前端静态定义）
+    if (!ENABLE_EXTERNAL_API) {
+      setMenus([]);
+      setLoading(false);
+      return;
+    }
+    
     try {
       setLoading(true);
       setError(null);
@@ -151,6 +175,14 @@ export function useFooter() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchFooter = useCallback(async () => {
+    // 生产环境使用空数组（页脚由前端静态定义）
+    if (!ENABLE_EXTERNAL_API) {
+      setFooterLinks([]);
+      setSections([]);
+      setLoading(false);
+      return;
+    }
+    
     try {
       setLoading(true);
       setError(null);
@@ -200,6 +232,18 @@ export function useLaunchStatus() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchStatus = useCallback(async () => {
+    // 生产环境使用默认状态（已上线）
+    if (!ENABLE_EXTERNAL_API) {
+      setStatus({
+        id: 'default',
+        is_launched: true,
+        pre_launch_enabled: false,
+        maintenance_mode: false,
+      });
+      setLoading(false);
+      return;
+    }
+    
     try {
       setLoading(true);
       setError(null);
@@ -234,6 +278,13 @@ export function useDemoModules() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchModules = useCallback(async () => {
+    // 生产环境使用空数组
+    if (!ENABLE_EXTERNAL_API) {
+      setModules([]);
+      setLoading(false);
+      return;
+    }
+    
     try {
       setLoading(true);
       setError(null);
@@ -298,6 +349,13 @@ export function usePageContent(slug: string) {
 
   const fetchPage = useCallback(async () => {
     if (!slug) {
+      setLoading(false);
+      return;
+    }
+    
+    // 生产环境返回 null（页面内容由前端静态定义）
+    if (!ENABLE_EXTERNAL_API) {
+      setPage(null);
       setLoading(false);
       return;
     }
