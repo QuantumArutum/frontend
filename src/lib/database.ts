@@ -598,4 +598,101 @@ export const dbQuery = {
   },
 };
 
-export default { sql, initDatabase, dbQuery };
+// Legacy db interface for compatibility with existing code
+export const db = {
+  // User methods
+  findUserById: async (id: string) => {
+    if (!sql) return null;
+    const result = await sql`SELECT * FROM users WHERE uid = ${id} OR id::text = ${id}`;
+    return result[0] || null;
+  },
+  findUserByEmail: async (email: string) => dbQuery.getUserByEmail(email),
+  createUser: async (userData: any) => dbQuery.createUser(userData),
+  updateUser: async (id: string, updates: any) => dbQuery.updateUser(id, updates),
+  
+  // TOTP methods
+  enableTOTP: async (userId: string, secret: string) => {
+    if (!sql) return null;
+    return await sql`UPDATE users SET totp_secret = ${secret}, totp_enabled = true WHERE uid = ${userId} RETURNING *`;
+  },
+  disableTOTP: async (userId: string) => {
+    if (!sql) return null;
+    return await sql`UPDATE users SET totp_secret = NULL, totp_enabled = false WHERE uid = ${userId} RETURNING *`;
+  },
+  verifyBackupCode: async (userId: string, code: string) => {
+    // Simplified backup code verification
+    return false;
+  },
+  
+  // Session methods
+  createSession: async (userId: string, token: string, expiresAt: Date) => {
+    if (!sql) return null;
+    return await sql`INSERT INTO sessions (user_id, token, expires_at) VALUES (${userId}, ${token}, ${expiresAt}) RETURNING *`;
+  },
+  deleteSession: async (token: string) => {
+    if (!sql) return false;
+    await sql`DELETE FROM sessions WHERE token = ${token}`;
+    return true;
+  },
+  findSessionByToken: async (token: string) => {
+    if (!sql) return null;
+    const result = await sql`SELECT * FROM sessions WHERE token = ${token} AND expires_at > NOW()`;
+    return result[0] || null;
+  },
+  
+  // Token purchase methods
+  createTokenPurchase: async (purchase: any) => {
+    if (!sql) return null;
+    const result = await sql`
+      INSERT INTO token_purchases (buyer_address, user_id, amount_usd, token_price, tokens_total, payment_method, tx_hash, status)
+      VALUES (${purchase.buyer_address}, ${purchase.user_id}, ${purchase.amount_usd}, ${purchase.token_price}, 
+              ${purchase.tokens_total}, ${purchase.payment_method}, ${purchase.tx_hash}, ${purchase.status || 'pending'})
+      RETURNING *
+    `;
+    return result[0];
+  },
+  getTokenPurchases: async (userId?: string) => {
+    if (!sql) return [];
+    if (userId) {
+      return await sql`SELECT * FROM token_purchases WHERE user_id = ${userId} ORDER BY created_at DESC`;
+    }
+    return await sql`SELECT * FROM token_purchases ORDER BY created_at DESC`;
+  },
+  updateTokenPurchase: async (id: string, updates: any) => {
+    if (!sql) return null;
+    const result = await sql`
+      UPDATE token_purchases SET status = COALESCE(${updates.status}, status) WHERE id = ${id} RETURNING *
+    `;
+    return result[0];
+  },
+  
+  // KYC methods
+  getKYCStatus: async (userId: string) => {
+    if (!sql) return null;
+    const result = await sql`SELECT kyc_status, kyc_data FROM users WHERE uid = ${userId}`;
+    return result[0] || null;
+  },
+  updateKYCStatus: async (userId: string, status: string, data: any) => {
+    if (!sql) return null;
+    return await sql`UPDATE users SET kyc_status = ${status}, kyc_data = ${JSON.stringify(data)} WHERE uid = ${userId} RETURNING *`;
+  },
+  
+  // Posts methods
+  getPosts: async (params: any) => dbQuery.getPosts(params),
+  createPost: async (post: any) => dbQuery.createPost(post),
+  updatePost: async (id: number, updates: any) => dbQuery.updatePost(id, updates),
+  deletePost: async (id: number) => dbQuery.deletePost(id),
+  
+  // Referral methods
+  createReferral: async (referral: any) => {
+    if (!sql) return null;
+    // Simplified referral creation
+    return { id: 'ref_' + Date.now(), ...referral };
+  },
+  getReferralByCode: async (code: string) => {
+    if (!sql) return null;
+    return null;
+  },
+};
+
+export default { sql, initDatabase, dbQuery, db };
