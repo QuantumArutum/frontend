@@ -2322,7 +2322,7 @@ export const it = {
       payment_success: 'Pagamento Riuscito!',
       continue_payment: 'Continua Pagamento',
       download_receipt: 'Scarica Ricevuta',
-      processing: 'Elaborazione...',
+      processing_status: 'Elaborazione...',
       form: {
         country: 'Paese/Regione',
         country_placeholder: 'Inserisci paese o regione',

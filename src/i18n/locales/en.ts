@@ -2909,7 +2909,7 @@ export const en = {
       payment_success: 'Payment Successful!',
       continue_payment: 'Continue Payment',
       download_receipt: 'Download Receipt',
-      processing: 'Processing...',
+      processing_status: 'Processing...',
       form: {
         country: 'Country/Region',
         country_placeholder: 'Enter country or region',

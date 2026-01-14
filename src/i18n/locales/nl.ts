@@ -2307,7 +2307,7 @@ export const nl = {
       payment_success: 'Betaling Geslaagd!',
       continue_payment: 'Doorgaan met Betalen',
       download_receipt: 'Download Bon',
-      processing: 'Verwerken...',
+      processing_status: 'Verwerken...',
       form: {
         country: 'Land/Regio',
         country_placeholder: 'Voer land of regio in',

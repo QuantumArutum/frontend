@@ -2364,7 +2364,7 @@ export const ja = {
       payment_success: '支払い成功！',
       continue_payment: '支払いを続ける',
       download_receipt: '領収書をダウンロード',
-      processing: '処理中...',
+      processing_status: '処理中...',
       form: {
         country: '国/地域',
         country_placeholder: '国または地域を入力',

@@ -2322,7 +2322,7 @@ export const pt = {
       payment_success: 'Pagamento Bem-sucedido!',
       continue_payment: 'Continuar Pagamento',
       download_receipt: 'Baixar Recibo',
-      processing: 'Processando...',
+      processing_status: 'Processando...',
       form: {
         country: 'País/Região',
         country_placeholder: 'Digite país ou região',

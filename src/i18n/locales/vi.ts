@@ -2325,7 +2325,7 @@ export const vi = {
       payment_success: 'Thanh toán thành công!',
       continue_payment: 'Tiếp tục thanh toán',
       download_receipt: 'Tải biên lai',
-      processing: 'Đang xử lý...',
+      processing_status: 'Đang xử lý...',
       form: {
         country: 'Quốc gia/Khu vực',
         country_placeholder: 'Nhập quốc gia hoặc khu vực',

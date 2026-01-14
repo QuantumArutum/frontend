@@ -2364,7 +2364,7 @@ export const ko = {
       payment_success: '결제 성공!',
       continue_payment: '계속 결제',
       download_receipt: '영수증 다운로드',
-      processing: '처리 중...',
+      processing_status: '처리 중...',
       form: {
         country: '국가/지역',
         country_placeholder: '국가 또는 지역 입력',

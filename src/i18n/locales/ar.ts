@@ -2322,7 +2322,7 @@ export const ar = {
       payment_success: 'تم الدفع بنجاح!',
       continue_payment: 'متابعة الدفع',
       download_receipt: 'تحميل الإيصال',
-      processing: 'جاري المعالجة...',
+      processing_status: 'جاري المعالجة...',
       form: {
         country: 'البلد/المنطقة',
         country_placeholder: 'أدخل البلد أو المنطقة',

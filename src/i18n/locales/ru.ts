@@ -2322,7 +2322,7 @@ export const ru = {
       payment_success: 'Оплата успешна!',
       continue_payment: 'Продолжить оплату',
       download_receipt: 'Скачать квитанцию',
-      processing: 'Обработка...',
+      processing_status: 'Обработка...',
       form: {
         country: 'Страна/Регион',
         country_placeholder: 'Введите страну или регион',

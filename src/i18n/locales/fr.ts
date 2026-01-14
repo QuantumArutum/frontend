@@ -2307,7 +2307,7 @@ export const fr = {
       payment_success: 'Paiement Réussi !',
       continue_payment: 'Continuer le Paiement',
       download_receipt: 'Télécharger le Reçu',
-      processing: 'Traitement en cours...',
+      processing_status: 'Traitement en cours...',
       form: {
         country: 'Pays/Région',
         country_placeholder: 'Entrez le pays ou la région',
