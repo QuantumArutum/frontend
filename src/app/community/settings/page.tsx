@@ -155,6 +155,9 @@ export default function CommunitySettingsPage() {
   });
   const [showPasswordChange, setShowPasswordChange] = useState(false);
 
+  // API base URL
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://api.quantaureum.com';
+
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
     const userInfoStr = localStorage.getItem('user_info');
@@ -176,7 +179,61 @@ export default function CommunitySettingsPage() {
   const loadSettings = async (userId: string) => {
     setLoading(true);
     try {
-      // Load from localStorage or API
+      const token = localStorage.getItem('auth_token');
+      
+      // Try to load from API first
+      try {
+        const response = await fetch(`${API_BASE}/api/v2/barong/resource/users/settings`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.data) {
+            const apiSettings = data.data;
+            setSettings({
+              ...defaultSettings,
+              displayName: apiSettings.display_name || '',
+              bio: apiSettings.bio || '',
+              avatar: apiSettings.avatar || '',
+              coverImage: apiSettings.cover_image || '',
+              location: apiSettings.location || '',
+              website: apiSettings.website || '',
+              twitter: apiSettings.twitter || '',
+              github: apiSettings.github || '',
+              linkedin: apiSettings.linkedin || '',
+              twoFactorEnabled: apiSettings.two_factor_enabled || false,
+              loginAlerts: apiSettings.login_alerts !== false,
+              emailNotifications: apiSettings.email_notifications || defaultSettings.emailNotifications,
+              pushNotifications: apiSettings.push_notifications || defaultSettings.pushNotifications,
+              quietHours: apiSettings.quiet_hours || defaultSettings.quietHours,
+              profileVisibility: apiSettings.profile_visibility || 'public',
+              showOnlineStatus: apiSettings.show_online_status !== false,
+              showActivityStatus: apiSettings.show_activity_status !== false,
+              allowDirectMessages: apiSettings.allow_direct_messages || 'everyone',
+              showEmail: apiSettings.show_email || false,
+              blockedUsers: apiSettings.blocked_users || [],
+              theme: apiSettings.theme || 'dark',
+              language: apiSettings.language || 'en',
+              postsPerPage: apiSettings.posts_per_page || 20,
+              defaultSort: apiSettings.default_sort || 'newest',
+              compactMode: apiSettings.compact_mode || false,
+              signature: apiSettings.signature || '',
+              defaultCategory: apiSettings.default_category || 'general',
+              autoSaveDrafts: apiSettings.auto_save_drafts !== false
+            });
+            setLoading(false);
+            return;
+          }
+        }
+      } catch (apiErr) {
+        console.log('API not available, using localStorage');
+      }
+      
+      // Fallback to localStorage
       const savedSettings = localStorage.getItem(`community_settings_${userId}`);
       if (savedSettings) {
         setSettings({ ...defaultSettings, ...JSON.parse(savedSettings) });
@@ -192,7 +249,31 @@ export default function CommunitySettingsPage() {
     if (!userInfo) return;
     setSaving(true);
     try {
-      // Save to localStorage (in production, save to API)
+      const token = localStorage.getItem('auth_token');
+      
+      // Try to save to API
+      try {
+        const response = await fetch(`${API_BASE}/api/v2/barong/resource/users/settings`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(settings)
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            setSaved(true);
+            setTimeout(() => setSaved(false), 3000);
+          }
+        }
+      } catch (apiErr) {
+        console.log('API not available, saving to localStorage');
+      }
+      
+      // Also save to localStorage as backup
       localStorage.setItem(`community_settings_${userInfo.id}`, JSON.stringify(settings));
       
       // Update user info if display name changed
@@ -257,16 +338,73 @@ export default function CommunitySettingsPage() {
       alert(t('settings_page.security.password_mismatch'));
       return;
     }
-    // In production, call API to change password
-    alert(t('settings_page.security.password_changed'));
-    setPasswordData({ current: '', new: '', confirm: '' });
-    setShowPasswordChange(false);
+    
+    if (passwordData.new.length < 8) {
+      alert(t('settings_page.security.password_too_short', 'Password must be at least 8 characters'));
+      return;
+    }
+    
+    try {
+      const token = localStorage.getItem('auth_token');
+      const response = await fetch(`${API_BASE}/api/v2/barong/resource/users/password`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          current_password: passwordData.current,
+          new_password: passwordData.new
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        alert(t('settings_page.security.password_changed'));
+        setPasswordData({ current: '', new: '', confirm: '' });
+        setShowPasswordChange(false);
+      } else {
+        alert(data.message || t('settings_page.security.password_change_failed', 'Failed to change password'));
+      }
+    } catch (err) {
+      console.error('Password change error:', err);
+      alert(t('settings_page.security.password_change_failed', 'Failed to change password'));
+    }
   };
 
   const handleDeleteAccount = async () => {
-    // In production, call API to delete account
-    localStorage.clear();
-    router.push('/');
+    const password = prompt(t('settings_page.delete_modal.enter_password', 'Enter your password to confirm:'));
+    
+    if (!password) {
+      return;
+    }
+    
+    try {
+      const token = localStorage.getItem('auth_token');
+      const response = await fetch(`${API_BASE}/api/v2/barong/resource/users/account`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password })
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        localStorage.clear();
+        router.push('/');
+      } else {
+        alert(data.message || t('settings_page.delete_modal.delete_failed', 'Failed to delete account'));
+      }
+    } catch (err) {
+      console.error('Delete account error:', err);
+      // Fallback: clear local storage anyway
+      localStorage.clear();
+      router.push('/');
+    }
   };
 
   const tabs: { id: SettingsTab; label: string; icon: React.ElementType }[] = [
