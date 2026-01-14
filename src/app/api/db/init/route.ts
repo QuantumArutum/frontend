@@ -97,5 +97,7 @@ export async function GET() {
     message: 'Database init endpoint. Use POST with secret key to initialize.',
     database_configured: !!sql,
     database_url_set: !!process.env.DATABASE_URL || !!process.env.POSTGRES_URL,
+    version: '1.0.1',
+    timestamp: new Date().toISOString(),
   });
 }
