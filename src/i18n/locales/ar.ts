@@ -3212,5 +3212,119 @@ export const ar = {
         recommended: { title: 'الموصى به', os: 'نظام التشغيل: أحدث إصدار', memory: 'الذاكرة: 8GB+ RAM', storage: 'التخزين: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: 'الإعدادات',
+    subtitle: 'إدارة تفضيلات حسابك',
+    save: 'حفظ التغييرات',
+    saved: 'تم الحفظ!',
+    tabs: {
+      profile: 'الملف الشخصي',
+      security: 'الأمان',
+      notifications: 'الإشعارات',
+      privacy: 'الخصوصية',
+      display: 'العرض',
+      content: 'المحتوى'
+    },
+    profile: {
+      display_name: 'اسم العرض',
+      display_name_placeholder: 'اسم العرض الخاص بك',
+      bio: 'نبذة',
+      bio_placeholder: 'أخبرنا عن نفسك...',
+      location: 'الموقع',
+      location_placeholder: 'المدينة، البلد',
+      website: 'الموقع الإلكتروني'
+    },
+    security: {
+      email: 'عنوان البريد الإلكتروني',
+      verified: 'تم التحقق',
+      password: 'كلمة المرور',
+      last_changed: 'تم التغيير منذ 30 يومًا',
+      change_password: 'تغيير',
+      current_password: 'كلمة المرور الحالية',
+      new_password: 'كلمة المرور الجديدة',
+      confirm_password: 'تأكيد كلمة المرور الجديدة',
+      update_password: 'تحديث كلمة المرور',
+      password_mismatch: 'كلمات المرور غير متطابقة',
+      password_changed: 'تم تغيير كلمة المرور بنجاح',
+      two_factor: 'المصادقة الثنائية',
+      two_factor_desc: 'أضف طبقة أمان إضافية',
+      login_alerts: 'تنبيهات تسجيل الدخول',
+      login_alerts_desc: 'تلقي إشعارات عند تسجيل الدخول الجديد',
+      connected_accounts: 'الحسابات المتصلة',
+      connected: 'متصل',
+      danger_zone: 'منطقة الخطر',
+      delete_account: 'حذف الحساب'
+    },
+    notifications: {
+      email_notifications: 'إشعارات البريد الإلكتروني',
+      push_notifications: 'الإشعارات الفورية',
+      replies: 'الردود على منشوراتك',
+      likes: 'الإعجابات على منشوراتك',
+      follows: 'المتابعون الجدد',
+      mentions: 'الإشارات',
+      newsletter: 'النشرة الإخبارية',
+      announcements: 'إعلانات المنصة',
+      direct_messages: 'الرسائل المباشرة',
+      quiet_hours: 'ساعات الهدوء',
+      quiet_hours_desc: 'إيقاف الإشعارات مؤقتًا خلال ساعات محددة',
+      start_time: 'البداية',
+      end_time: 'النهاية'
+    },
+    privacy: {
+      profile_visibility: 'ظهور الملف الشخصي',
+      public: 'عام',
+      public_desc: 'يمكن لأي شخص رؤية ملفك الشخصي',
+      members_only: 'الأعضاء فقط',
+      members_desc: 'فقط الأعضاء المسجلون يمكنهم الرؤية',
+      private: 'خاص',
+      private_desc: 'أنت فقط يمكنك رؤية ملفك الشخصي',
+      show_online: 'إظهار حالة الاتصال',
+      show_online_desc: 'السماح للآخرين برؤية متى تكون متصلاً',
+      show_activity: 'إظهار حالة النشاط',
+      show_activity_desc: 'إظهار نشاطك الأخير للآخرين',
+      show_email: 'إظهار عنوان البريد الإلكتروني',
+      show_email_desc: 'عرض البريد الإلكتروني في ملفك الشخصي',
+      direct_messages: 'من يمكنه إرسال رسائل مباشرة إليك',
+      dm_everyone: 'الجميع',
+      dm_followers: 'فقط الأشخاص الذين تتابعهم',
+      dm_none: 'لا أحد',
+      blocked_users: 'المستخدمون المحظورون',
+      block_user: 'حظر مستخدم',
+      no_blocked: 'لا يوجد مستخدمون محظورون',
+      unblock: 'إلغاء الحظر'
+    },
+    display: {
+      theme: 'المظهر',
+      light: 'فاتح',
+      dark: 'داكن',
+      system: 'النظام',
+      language: 'اللغة',
+      posts_per_page: 'المنشورات لكل صفحة',
+      default_sort: 'الترتيب الافتراضي',
+      newest: 'الأحدث',
+      popular: 'الأكثر شعبية',
+      trending: 'الرائج',
+      compact_mode: 'الوضع المضغوط',
+      compact_mode_desc: 'عرض المزيد من المحتوى بمساحة أقل'
+    },
+    content: {
+      signature: 'التوقيع',
+      signature_placeholder: 'سيظهر توقيعك في أسفل منشوراتك...',
+      default_category: 'الفئة الافتراضية',
+      auto_save: 'حفظ المسودات تلقائيًا',
+      auto_save_desc: 'حفظ منشوراتك تلقائيًا كمسودات'
+    },
+    delete_modal: {
+      title: 'حذف الحساب',
+      subtitle: 'لا يمكن التراجع عن هذا الإجراء',
+      warning: 'هل أنت متأكد أنك تريد حذف حسابك؟ سيتم حذف جميع بياناتك نهائيًا.',
+      confirm: 'حذف الحساب'
+    },
+    block_modal: {
+      title: 'حظر مستخدم',
+      placeholder: 'أدخل اسم المستخدم للحظر',
+      confirm: 'حظر'
+    }
   }
 };

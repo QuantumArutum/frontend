@@ -3197,5 +3197,119 @@ export const fr = {
         recommended: { title: 'Recommandé', os: 'OS: Dernière version', memory: 'Mémoire: 8GB+ RAM', storage: 'Stockage: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: 'Paramètres',
+    subtitle: 'Gérez les préférences de votre compte',
+    save: 'Enregistrer les modifications',
+    saved: 'Enregistré !',
+    tabs: {
+      profile: 'Profil',
+      security: 'Sécurité',
+      notifications: 'Notifications',
+      privacy: 'Confidentialité',
+      display: 'Affichage',
+      content: 'Contenu'
+    },
+    profile: {
+      display_name: 'Nom d\'affichage',
+      display_name_placeholder: 'Votre nom d\'affichage',
+      bio: 'Biographie',
+      bio_placeholder: 'Parlez-nous de vous...',
+      location: 'Localisation',
+      location_placeholder: 'Ville, Pays',
+      website: 'Site web'
+    },
+    security: {
+      email: 'Adresse e-mail',
+      verified: 'Vérifié',
+      password: 'Mot de passe',
+      last_changed: 'Modifié il y a 30 jours',
+      change_password: 'Modifier',
+      current_password: 'Mot de passe actuel',
+      new_password: 'Nouveau mot de passe',
+      confirm_password: 'Confirmer le nouveau mot de passe',
+      update_password: 'Mettre à jour le mot de passe',
+      password_mismatch: 'Les mots de passe ne correspondent pas',
+      password_changed: 'Mot de passe modifié avec succès',
+      two_factor: 'Authentification à deux facteurs',
+      two_factor_desc: 'Ajoutez une couche de sécurité supplémentaire',
+      login_alerts: 'Alertes de connexion',
+      login_alerts_desc: 'Recevoir des notifications pour les nouvelles connexions',
+      connected_accounts: 'Comptes connectés',
+      connected: 'Connecté',
+      danger_zone: 'Zone de danger',
+      delete_account: 'Supprimer le compte'
+    },
+    notifications: {
+      email_notifications: 'Notifications par e-mail',
+      push_notifications: 'Notifications push',
+      replies: 'Réponses à vos publications',
+      likes: 'J\'aime sur vos publications',
+      follows: 'Nouveaux abonnés',
+      mentions: 'Mentions',
+      newsletter: 'Newsletter',
+      announcements: 'Annonces de la plateforme',
+      direct_messages: 'Messages directs',
+      quiet_hours: 'Heures calmes',
+      quiet_hours_desc: 'Suspendre les notifications pendant des heures spécifiques',
+      start_time: 'Début',
+      end_time: 'Fin'
+    },
+    privacy: {
+      profile_visibility: 'Visibilité du profil',
+      public: 'Public',
+      public_desc: 'Tout le monde peut voir votre profil',
+      members_only: 'Membres uniquement',
+      members_desc: 'Seuls les membres connectés peuvent voir',
+      private: 'Privé',
+      private_desc: 'Vous seul pouvez voir votre profil',
+      show_online: 'Afficher le statut en ligne',
+      show_online_desc: 'Permettre aux autres de voir quand vous êtes en ligne',
+      show_activity: 'Afficher le statut d\'activité',
+      show_activity_desc: 'Montrer votre activité récente aux autres',
+      show_email: 'Afficher l\'adresse e-mail',
+      show_email_desc: 'Afficher l\'e-mail sur votre profil',
+      direct_messages: 'Qui peut vous envoyer des messages directs',
+      dm_everyone: 'Tout le monde',
+      dm_followers: 'Uniquement les personnes que vous suivez',
+      dm_none: 'Personne',
+      blocked_users: 'Utilisateurs bloqués',
+      block_user: 'Bloquer un utilisateur',
+      no_blocked: 'Aucun utilisateur bloqué',
+      unblock: 'Débloquer'
+    },
+    display: {
+      theme: 'Thème',
+      light: 'Clair',
+      dark: 'Sombre',
+      system: 'Système',
+      language: 'Langue',
+      posts_per_page: 'Publications par page',
+      default_sort: 'Tri par défaut',
+      newest: 'Plus récents',
+      popular: 'Populaires',
+      trending: 'Tendances',
+      compact_mode: 'Mode compact',
+      compact_mode_desc: 'Afficher plus de contenu avec moins d\'espacement'
+    },
+    content: {
+      signature: 'Signature',
+      signature_placeholder: 'Votre signature apparaîtra en bas de vos publications...',
+      default_category: 'Catégorie par défaut',
+      auto_save: 'Enregistrement automatique des brouillons',
+      auto_save_desc: 'Enregistrer automatiquement vos publications comme brouillons'
+    },
+    delete_modal: {
+      title: 'Supprimer le compte',
+      subtitle: 'Cette action est irréversible',
+      warning: 'Êtes-vous sûr de vouloir supprimer votre compte ? Toutes vos données seront définitivement supprimées.',
+      confirm: 'Supprimer le compte'
+    },
+    block_modal: {
+      title: 'Bloquer un utilisateur',
+      placeholder: 'Entrez le nom d\'utilisateur à bloquer',
+      confirm: 'Bloquer'
+    }
   }
 };

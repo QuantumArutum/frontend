@@ -3212,5 +3212,119 @@ export const ru = {
         recommended: { title: 'Рекомендуемые', os: 'ОС: Последняя версия', memory: 'Память: 8GB+ RAM', storage: 'Хранилище: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: 'Настройки',
+    subtitle: 'Управление настройками аккаунта',
+    save: 'Сохранить изменения',
+    saved: 'Сохранено!',
+    tabs: {
+      profile: 'Профиль',
+      security: 'Безопасность',
+      notifications: 'Уведомления',
+      privacy: 'Конфиденциальность',
+      display: 'Отображение',
+      content: 'Контент'
+    },
+    profile: {
+      display_name: 'Отображаемое имя',
+      display_name_placeholder: 'Ваше отображаемое имя',
+      bio: 'О себе',
+      bio_placeholder: 'Расскажите о себе...',
+      location: 'Местоположение',
+      location_placeholder: 'Город, Страна',
+      website: 'Веб-сайт'
+    },
+    security: {
+      email: 'Электронная почта',
+      verified: 'Подтверждено',
+      password: 'Пароль',
+      last_changed: 'Изменён 30 дней назад',
+      change_password: 'Изменить',
+      current_password: 'Текущий пароль',
+      new_password: 'Новый пароль',
+      confirm_password: 'Подтвердите новый пароль',
+      update_password: 'Обновить пароль',
+      password_mismatch: 'Пароли не совпадают',
+      password_changed: 'Пароль успешно изменён',
+      two_factor: 'Двухфакторная аутентификация',
+      two_factor_desc: 'Добавьте дополнительный уровень безопасности',
+      login_alerts: 'Оповещения о входе',
+      login_alerts_desc: 'Получать уведомления о новых входах',
+      connected_accounts: 'Связанные аккаунты',
+      connected: 'Подключено',
+      danger_zone: 'Опасная зона',
+      delete_account: 'Удалить аккаунт'
+    },
+    notifications: {
+      email_notifications: 'Email-уведомления',
+      push_notifications: 'Push-уведомления',
+      replies: 'Ответы на ваши публикации',
+      likes: 'Лайки на ваших публикациях',
+      follows: 'Новые подписчики',
+      mentions: 'Упоминания',
+      newsletter: 'Рассылка',
+      announcements: 'Объявления платформы',
+      direct_messages: 'Личные сообщения',
+      quiet_hours: 'Тихие часы',
+      quiet_hours_desc: 'Приостановить уведомления в определённое время',
+      start_time: 'Начало',
+      end_time: 'Конец'
+    },
+    privacy: {
+      profile_visibility: 'Видимость профиля',
+      public: 'Публичный',
+      public_desc: 'Любой может видеть ваш профиль',
+      members_only: 'Только участники',
+      members_desc: 'Только авторизованные пользователи могут видеть',
+      private: 'Приватный',
+      private_desc: 'Только вы можете видеть свой профиль',
+      show_online: 'Показывать онлайн-статус',
+      show_online_desc: 'Позволить другим видеть, когда вы онлайн',
+      show_activity: 'Показывать активность',
+      show_activity_desc: 'Показывать вашу недавнюю активность другим',
+      show_email: 'Показывать email',
+      show_email_desc: 'Отображать email в профиле',
+      direct_messages: 'Кто может отправлять личные сообщения',
+      dm_everyone: 'Все',
+      dm_followers: 'Только те, на кого вы подписаны',
+      dm_none: 'Никто',
+      blocked_users: 'Заблокированные пользователи',
+      block_user: 'Заблокировать пользователя',
+      no_blocked: 'Нет заблокированных пользователей',
+      unblock: 'Разблокировать'
+    },
+    display: {
+      theme: 'Тема',
+      light: 'Светлая',
+      dark: 'Тёмная',
+      system: 'Системная',
+      language: 'Язык',
+      posts_per_page: 'Публикаций на странице',
+      default_sort: 'Сортировка по умолчанию',
+      newest: 'Новые',
+      popular: 'Популярные',
+      trending: 'В тренде',
+      compact_mode: 'Компактный режим',
+      compact_mode_desc: 'Показывать больше контента с меньшими отступами'
+    },
+    content: {
+      signature: 'Подпись',
+      signature_placeholder: 'Ваша подпись будет отображаться внизу публикаций...',
+      default_category: 'Категория по умолчанию',
+      auto_save: 'Автосохранение черновиков',
+      auto_save_desc: 'Автоматически сохранять публикации как черновики'
+    },
+    delete_modal: {
+      title: 'Удалить аккаунт',
+      subtitle: 'Это действие нельзя отменить',
+      warning: 'Вы уверены, что хотите удалить свой аккаунт? Все ваши данные будут удалены навсегда.',
+      confirm: 'Удалить аккаунт'
+    },
+    block_modal: {
+      title: 'Заблокировать пользователя',
+      placeholder: 'Введите имя пользователя для блокировки',
+      confirm: 'Заблокировать'
+    }
   }
 };

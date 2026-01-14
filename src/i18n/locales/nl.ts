@@ -3197,5 +3197,119 @@ export const nl = {
         recommended: { title: 'Aanbevolen', os: 'OS: Nieuwste versie', memory: 'Geheugen: 8GB+ RAM', storage: 'Opslag: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: 'Instellingen',
+    subtitle: 'Beheer uw accountvoorkeuren',
+    save: 'Wijzigingen Opslaan',
+    saved: 'Opgeslagen!',
+    tabs: {
+      profile: 'Profiel',
+      security: 'Beveiliging',
+      notifications: 'Meldingen',
+      privacy: 'Privacy',
+      display: 'Weergave',
+      content: 'Inhoud'
+    },
+    profile: {
+      display_name: 'Weergavenaam',
+      display_name_placeholder: 'Uw weergavenaam',
+      bio: 'Biografie',
+      bio_placeholder: 'Vertel ons over uzelf...',
+      location: 'Locatie',
+      location_placeholder: 'Stad, Land',
+      website: 'Website'
+    },
+    security: {
+      email: 'E-mailadres',
+      verified: 'Geverifieerd',
+      password: 'Wachtwoord',
+      last_changed: '30 dagen geleden gewijzigd',
+      change_password: 'Wijzigen',
+      current_password: 'Huidig wachtwoord',
+      new_password: 'Nieuw wachtwoord',
+      confirm_password: 'Bevestig nieuw wachtwoord',
+      update_password: 'Wachtwoord Bijwerken',
+      password_mismatch: 'Wachtwoorden komen niet overeen',
+      password_changed: 'Wachtwoord succesvol gewijzigd',
+      two_factor: 'Tweefactorauthenticatie',
+      two_factor_desc: 'Voeg een extra beveiligingslaag toe',
+      login_alerts: 'Inlogwaarschuwingen',
+      login_alerts_desc: 'Ontvang meldingen bij nieuwe inlogpogingen',
+      connected_accounts: 'Gekoppelde accounts',
+      connected: 'Gekoppeld',
+      danger_zone: 'Gevarenzone',
+      delete_account: 'Account verwijderen'
+    },
+    notifications: {
+      email_notifications: 'E-mailmeldingen',
+      push_notifications: 'Pushmeldingen',
+      replies: 'Reacties op uw berichten',
+      likes: 'Likes op uw berichten',
+      follows: 'Nieuwe volgers',
+      mentions: 'Vermeldingen',
+      newsletter: 'Nieuwsbrief',
+      announcements: 'Platformaankondigingen',
+      direct_messages: 'Directe berichten',
+      quiet_hours: 'Stille uren',
+      quiet_hours_desc: 'Pauzeer meldingen tijdens specifieke uren',
+      start_time: 'Start',
+      end_time: 'Einde'
+    },
+    privacy: {
+      profile_visibility: 'Profielzichtbaarheid',
+      public: 'Openbaar',
+      public_desc: 'Iedereen kan uw profiel bekijken',
+      members_only: 'Alleen leden',
+      members_desc: 'Alleen ingelogde leden kunnen bekijken',
+      private: 'Privé',
+      private_desc: 'Alleen u kunt uw profiel bekijken',
+      show_online: 'Online status tonen',
+      show_online_desc: 'Laat anderen zien wanneer u online bent',
+      show_activity: 'Activiteitsstatus tonen',
+      show_activity_desc: 'Toon uw recente activiteit aan anderen',
+      show_email: 'E-mailadres tonen',
+      show_email_desc: 'E-mail weergeven op uw profiel',
+      direct_messages: 'Wie kan u directe berichten sturen',
+      dm_everyone: 'Iedereen',
+      dm_followers: 'Alleen mensen die u volgt',
+      dm_none: 'Niemand',
+      blocked_users: 'Geblokkeerde gebruikers',
+      block_user: 'Gebruiker blokkeren',
+      no_blocked: 'Geen geblokkeerde gebruikers',
+      unblock: 'Deblokkeren'
+    },
+    display: {
+      theme: 'Thema',
+      light: 'Licht',
+      dark: 'Donker',
+      system: 'Systeem',
+      language: 'Taal',
+      posts_per_page: 'Berichten per pagina',
+      default_sort: 'Standaard sortering',
+      newest: 'Nieuwste',
+      popular: 'Populair',
+      trending: 'Trending',
+      compact_mode: 'Compacte modus',
+      compact_mode_desc: 'Toon meer inhoud met minder ruimte'
+    },
+    content: {
+      signature: 'Handtekening',
+      signature_placeholder: 'Uw handtekening verschijnt onderaan uw berichten...',
+      default_category: 'Standaard categorie',
+      auto_save: 'Concepten automatisch opslaan',
+      auto_save_desc: 'Sla uw berichten automatisch op als concepten'
+    },
+    delete_modal: {
+      title: 'Account verwijderen',
+      subtitle: 'Deze actie kan niet ongedaan worden gemaakt',
+      warning: 'Weet u zeker dat u uw account wilt verwijderen? Al uw gegevens worden permanent verwijderd.',
+      confirm: 'Account verwijderen'
+    },
+    block_modal: {
+      title: 'Gebruiker blokkeren',
+      placeholder: 'Voer gebruikersnaam in om te blokkeren',
+      confirm: 'Blokkeren'
+    }
   }
 };

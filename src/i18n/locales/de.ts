@@ -3197,5 +3197,119 @@ export const de = {
         recommended: { title: 'Empfohlen', os: 'Betriebssystem: Neueste Version', memory: 'Speicher: 8GB+ RAM', storage: 'Speicherplatz: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: 'Einstellungen',
+    subtitle: 'Verwalten Sie Ihre Kontoeinstellungen',
+    save: 'Änderungen speichern',
+    saved: 'Gespeichert!',
+    tabs: {
+      profile: 'Profil',
+      security: 'Sicherheit',
+      notifications: 'Benachrichtigungen',
+      privacy: 'Datenschutz',
+      display: 'Anzeige',
+      content: 'Inhalt'
+    },
+    profile: {
+      display_name: 'Anzeigename',
+      display_name_placeholder: 'Ihr Anzeigename',
+      bio: 'Biografie',
+      bio_placeholder: 'Erzählen Sie uns von sich...',
+      location: 'Standort',
+      location_placeholder: 'Stadt, Land',
+      website: 'Webseite'
+    },
+    security: {
+      email: 'E-Mail-Adresse',
+      verified: 'Verifiziert',
+      password: 'Passwort',
+      last_changed: 'Vor 30 Tagen geändert',
+      change_password: 'Ändern',
+      current_password: 'Aktuelles Passwort',
+      new_password: 'Neues Passwort',
+      confirm_password: 'Neues Passwort bestätigen',
+      update_password: 'Passwort aktualisieren',
+      password_mismatch: 'Passwörter stimmen nicht überein',
+      password_changed: 'Passwort erfolgreich geändert',
+      two_factor: 'Zwei-Faktor-Authentifizierung',
+      two_factor_desc: 'Fügen Sie eine zusätzliche Sicherheitsebene hinzu',
+      login_alerts: 'Anmeldewarnungen',
+      login_alerts_desc: 'Benachrichtigungen bei neuen Anmeldungen erhalten',
+      connected_accounts: 'Verbundene Konten',
+      connected: 'Verbunden',
+      danger_zone: 'Gefahrenzone',
+      delete_account: 'Konto löschen'
+    },
+    notifications: {
+      email_notifications: 'E-Mail-Benachrichtigungen',
+      push_notifications: 'Push-Benachrichtigungen',
+      replies: 'Antworten auf Ihre Beiträge',
+      likes: 'Likes auf Ihre Beiträge',
+      follows: 'Neue Follower',
+      mentions: 'Erwähnungen',
+      newsletter: 'Newsletter',
+      announcements: 'Plattform-Ankündigungen',
+      direct_messages: 'Direktnachrichten',
+      quiet_hours: 'Ruhezeiten',
+      quiet_hours_desc: 'Benachrichtigungen während bestimmter Stunden pausieren',
+      start_time: 'Start',
+      end_time: 'Ende'
+    },
+    privacy: {
+      profile_visibility: 'Profilsichtbarkeit',
+      public: 'Öffentlich',
+      public_desc: 'Jeder kann Ihr Profil sehen',
+      members_only: 'Nur Mitglieder',
+      members_desc: 'Nur angemeldete Mitglieder können sehen',
+      private: 'Privat',
+      private_desc: 'Nur Sie können Ihr Profil sehen',
+      show_online: 'Online-Status anzeigen',
+      show_online_desc: 'Anderen zeigen, wenn Sie online sind',
+      show_activity: 'Aktivitätsstatus anzeigen',
+      show_activity_desc: 'Ihre aktuelle Aktivität anderen zeigen',
+      show_email: 'E-Mail-Adresse anzeigen',
+      show_email_desc: 'E-Mail in Ihrem Profil anzeigen',
+      direct_messages: 'Wer kann Ihnen Direktnachrichten senden',
+      dm_everyone: 'Jeder',
+      dm_followers: 'Nur Personen, denen Sie folgen',
+      dm_none: 'Niemand',
+      blocked_users: 'Blockierte Benutzer',
+      block_user: 'Benutzer blockieren',
+      no_blocked: 'Keine blockierten Benutzer',
+      unblock: 'Entsperren'
+    },
+    display: {
+      theme: 'Design',
+      light: 'Hell',
+      dark: 'Dunkel',
+      system: 'System',
+      language: 'Sprache',
+      posts_per_page: 'Beiträge pro Seite',
+      default_sort: 'Standard-Sortierung',
+      newest: 'Neueste',
+      popular: 'Beliebt',
+      trending: 'Trending',
+      compact_mode: 'Kompaktmodus',
+      compact_mode_desc: 'Mehr Inhalt mit weniger Abstand anzeigen'
+    },
+    content: {
+      signature: 'Signatur',
+      signature_placeholder: 'Ihre Signatur erscheint am Ende Ihrer Beiträge...',
+      default_category: 'Standard-Kategorie',
+      auto_save: 'Entwürfe automatisch speichern',
+      auto_save_desc: 'Ihre Beiträge automatisch als Entwürfe speichern'
+    },
+    delete_modal: {
+      title: 'Konto löschen',
+      subtitle: 'Diese Aktion kann nicht rückgängig gemacht werden',
+      warning: 'Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Alle Ihre Daten werden dauerhaft entfernt.',
+      confirm: 'Konto löschen'
+    },
+    block_modal: {
+      title: 'Benutzer blockieren',
+      placeholder: 'Benutzernamen zum Blockieren eingeben',
+      confirm: 'Blockieren'
+    }
   }
 };

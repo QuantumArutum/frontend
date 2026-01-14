@@ -3261,5 +3261,119 @@ export const vi = {
         recommended: { title: 'Khuyến nghị', os: 'HĐH: Phiên bản mới nhất', memory: 'Bộ nhớ: 8GB+ RAM', storage: 'Lưu trữ: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: 'Cài đặt',
+    subtitle: 'Quản lý tùy chọn tài khoản của bạn',
+    save: 'Lưu Thay đổi',
+    saved: 'Đã lưu!',
+    tabs: {
+      profile: 'Hồ sơ',
+      security: 'Bảo mật',
+      notifications: 'Thông báo',
+      privacy: 'Quyền riêng tư',
+      display: 'Hiển thị',
+      content: 'Nội dung'
+    },
+    profile: {
+      display_name: 'Tên hiển thị',
+      display_name_placeholder: 'Tên hiển thị của bạn',
+      bio: 'Tiểu sử',
+      bio_placeholder: 'Giới thiệu về bản thân...',
+      location: 'Vị trí',
+      location_placeholder: 'Thành phố, Quốc gia',
+      website: 'Website'
+    },
+    security: {
+      email: 'Địa chỉ email',
+      verified: 'Đã xác minh',
+      password: 'Mật khẩu',
+      last_changed: 'Đã thay đổi 30 ngày trước',
+      change_password: 'Thay đổi',
+      current_password: 'Mật khẩu hiện tại',
+      new_password: 'Mật khẩu mới',
+      confirm_password: 'Xác nhận mật khẩu mới',
+      update_password: 'Cập nhật Mật khẩu',
+      password_mismatch: 'Mật khẩu không khớp',
+      password_changed: 'Mật khẩu đã được thay đổi thành công',
+      two_factor: 'Xác thực hai yếu tố',
+      two_factor_desc: 'Thêm một lớp bảo mật bổ sung',
+      login_alerts: 'Cảnh báo đăng nhập',
+      login_alerts_desc: 'Nhận thông báo khi có đăng nhập mới',
+      connected_accounts: 'Tài khoản đã kết nối',
+      connected: 'Đã kết nối',
+      danger_zone: 'Vùng nguy hiểm',
+      delete_account: 'Xóa tài khoản'
+    },
+    notifications: {
+      email_notifications: 'Thông báo email',
+      push_notifications: 'Thông báo đẩy',
+      replies: 'Trả lời bài viết của bạn',
+      likes: 'Lượt thích bài viết của bạn',
+      follows: 'Người theo dõi mới',
+      mentions: 'Đề cập',
+      newsletter: 'Bản tin',
+      announcements: 'Thông báo nền tảng',
+      direct_messages: 'Tin nhắn trực tiếp',
+      quiet_hours: 'Giờ yên tĩnh',
+      quiet_hours_desc: 'Tạm dừng thông báo trong giờ cụ thể',
+      start_time: 'Bắt đầu',
+      end_time: 'Kết thúc'
+    },
+    privacy: {
+      profile_visibility: 'Hiển thị hồ sơ',
+      public: 'Công khai',
+      public_desc: 'Bất kỳ ai cũng có thể xem hồ sơ của bạn',
+      members_only: 'Chỉ thành viên',
+      members_desc: 'Chỉ thành viên đã đăng nhập mới có thể xem',
+      private: 'Riêng tư',
+      private_desc: 'Chỉ bạn mới có thể xem hồ sơ của mình',
+      show_online: 'Hiển thị trạng thái trực tuyến',
+      show_online_desc: 'Cho phép người khác thấy khi bạn trực tuyến',
+      show_activity: 'Hiển thị trạng thái hoạt động',
+      show_activity_desc: 'Hiển thị hoạt động gần đây của bạn cho người khác',
+      show_email: 'Hiển thị địa chỉ email',
+      show_email_desc: 'Hiển thị email trên hồ sơ của bạn',
+      direct_messages: 'Ai có thể gửi tin nhắn trực tiếp cho bạn',
+      dm_everyone: 'Tất cả mọi người',
+      dm_followers: 'Chỉ những người bạn theo dõi',
+      dm_none: 'Không ai',
+      blocked_users: 'Người dùng bị chặn',
+      block_user: 'Chặn người dùng',
+      no_blocked: 'Không có người dùng bị chặn',
+      unblock: 'Bỏ chặn'
+    },
+    display: {
+      theme: 'Giao diện',
+      light: 'Sáng',
+      dark: 'Tối',
+      system: 'Hệ thống',
+      language: 'Ngôn ngữ',
+      posts_per_page: 'Bài viết mỗi trang',
+      default_sort: 'Sắp xếp mặc định',
+      newest: 'Mới nhất',
+      popular: 'Phổ biến',
+      trending: 'Xu hướng',
+      compact_mode: 'Chế độ thu gọn',
+      compact_mode_desc: 'Hiển thị nhiều nội dung hơn với ít khoảng cách hơn'
+    },
+    content: {
+      signature: 'Chữ ký',
+      signature_placeholder: 'Chữ ký của bạn sẽ xuất hiện ở cuối bài viết...',
+      default_category: 'Danh mục mặc định',
+      auto_save: 'Tự động lưu bản nháp',
+      auto_save_desc: 'Tự động lưu bài viết của bạn dưới dạng bản nháp'
+    },
+    delete_modal: {
+      title: 'Xóa tài khoản',
+      subtitle: 'Hành động này không thể hoàn tác',
+      warning: 'Bạn có chắc chắn muốn xóa tài khoản của mình không? Tất cả dữ liệu của bạn sẽ bị xóa vĩnh viễn.',
+      confirm: 'Xóa tài khoản'
+    },
+    block_modal: {
+      title: 'Chặn người dùng',
+      placeholder: 'Nhập tên người dùng để chặn',
+      confirm: 'Chặn'
+    }
   }
 };

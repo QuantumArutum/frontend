@@ -3212,5 +3212,119 @@ export const it = {
         recommended: { title: 'Raccomandato', os: 'SO: Ultima versione', memory: 'Memoria: 8GB+ RAM', storage: 'Archiviazione: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: 'Impostazioni',
+    subtitle: 'Gestisci le preferenze del tuo account',
+    save: 'Salva Modifiche',
+    saved: 'Salvato!',
+    tabs: {
+      profile: 'Profilo',
+      security: 'Sicurezza',
+      notifications: 'Notifiche',
+      privacy: 'Privacy',
+      display: 'Visualizzazione',
+      content: 'Contenuto'
+    },
+    profile: {
+      display_name: 'Nome visualizzato',
+      display_name_placeholder: 'Il tuo nome visualizzato',
+      bio: 'Biografia',
+      bio_placeholder: 'Parlaci di te...',
+      location: 'Posizione',
+      location_placeholder: 'Città, Paese',
+      website: 'Sito web'
+    },
+    security: {
+      email: 'Indirizzo email',
+      verified: 'Verificato',
+      password: 'Password',
+      last_changed: 'Modificata 30 giorni fa',
+      change_password: 'Modifica',
+      current_password: 'Password attuale',
+      new_password: 'Nuova password',
+      confirm_password: 'Conferma nuova password',
+      update_password: 'Aggiorna Password',
+      password_mismatch: 'Le password non corrispondono',
+      password_changed: 'Password modificata con successo',
+      two_factor: 'Autenticazione a due fattori',
+      two_factor_desc: 'Aggiungi un ulteriore livello di sicurezza',
+      login_alerts: 'Avvisi di accesso',
+      login_alerts_desc: 'Ricevi notifiche per nuovi accessi',
+      connected_accounts: 'Account collegati',
+      connected: 'Collegato',
+      danger_zone: 'Zona pericolosa',
+      delete_account: 'Elimina account'
+    },
+    notifications: {
+      email_notifications: 'Notifiche email',
+      push_notifications: 'Notifiche push',
+      replies: 'Risposte ai tuoi post',
+      likes: 'Mi piace sui tuoi post',
+      follows: 'Nuovi follower',
+      mentions: 'Menzioni',
+      newsletter: 'Newsletter',
+      announcements: 'Annunci della piattaforma',
+      direct_messages: 'Messaggi diretti',
+      quiet_hours: 'Ore silenziose',
+      quiet_hours_desc: 'Sospendi le notifiche durante ore specifiche',
+      start_time: 'Inizio',
+      end_time: 'Fine'
+    },
+    privacy: {
+      profile_visibility: 'Visibilità del profilo',
+      public: 'Pubblico',
+      public_desc: 'Chiunque può vedere il tuo profilo',
+      members_only: 'Solo membri',
+      members_desc: 'Solo i membri registrati possono vedere',
+      private: 'Privato',
+      private_desc: 'Solo tu puoi vedere il tuo profilo',
+      show_online: 'Mostra stato online',
+      show_online_desc: 'Permetti agli altri di vedere quando sei online',
+      show_activity: 'Mostra stato attività',
+      show_activity_desc: 'Mostra la tua attività recente agli altri',
+      show_email: 'Mostra indirizzo email',
+      show_email_desc: 'Mostra email sul tuo profilo',
+      direct_messages: 'Chi può inviarti messaggi diretti',
+      dm_everyone: 'Tutti',
+      dm_followers: 'Solo persone che segui',
+      dm_none: 'Nessuno',
+      blocked_users: 'Utenti bloccati',
+      block_user: 'Blocca utente',
+      no_blocked: 'Nessun utente bloccato',
+      unblock: 'Sblocca'
+    },
+    display: {
+      theme: 'Tema',
+      light: 'Chiaro',
+      dark: 'Scuro',
+      system: 'Sistema',
+      language: 'Lingua',
+      posts_per_page: 'Post per pagina',
+      default_sort: 'Ordinamento predefinito',
+      newest: 'Più recenti',
+      popular: 'Popolari',
+      trending: 'Di tendenza',
+      compact_mode: 'Modalità compatta',
+      compact_mode_desc: 'Mostra più contenuti con meno spaziatura'
+    },
+    content: {
+      signature: 'Firma',
+      signature_placeholder: 'La tua firma apparirà in fondo ai tuoi post...',
+      default_category: 'Categoria predefinita',
+      auto_save: 'Salvataggio automatico bozze',
+      auto_save_desc: 'Salva automaticamente i tuoi post come bozze'
+    },
+    delete_modal: {
+      title: 'Elimina account',
+      subtitle: 'Questa azione non può essere annullata',
+      warning: 'Sei sicuro di voler eliminare il tuo account? Tutti i tuoi dati verranno rimossi permanentemente.',
+      confirm: 'Elimina account'
+    },
+    block_modal: {
+      title: 'Blocca utente',
+      placeholder: 'Inserisci il nome utente da bloccare',
+      confirm: 'Blocca'
+    }
   }
 };

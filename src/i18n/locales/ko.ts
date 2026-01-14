@@ -3290,5 +3290,119 @@ export const ko = {
         recommended: { title: '권장', os: 'OS: 최신 버전', memory: '메모리: 8GB+ RAM', storage: '저장소: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: '설정',
+    subtitle: '계정 환경설정 관리',
+    save: '변경사항 저장',
+    saved: '저장됨!',
+    tabs: {
+      profile: '프로필',
+      security: '보안',
+      notifications: '알림',
+      privacy: '개인정보',
+      display: '표시',
+      content: '콘텐츠'
+    },
+    profile: {
+      display_name: '표시 이름',
+      display_name_placeholder: '표시 이름 입력',
+      bio: '소개',
+      bio_placeholder: '자기소개를 입력하세요...',
+      location: '위치',
+      location_placeholder: '도시, 국가',
+      website: '웹사이트'
+    },
+    security: {
+      email: '이메일 주소',
+      verified: '인증됨',
+      password: '비밀번호',
+      last_changed: '30일 전 변경됨',
+      change_password: '변경',
+      current_password: '현재 비밀번호',
+      new_password: '새 비밀번호',
+      confirm_password: '새 비밀번호 확인',
+      update_password: '비밀번호 업데이트',
+      password_mismatch: '비밀번호가 일치하지 않습니다',
+      password_changed: '비밀번호가 변경되었습니다',
+      two_factor: '2단계 인증',
+      two_factor_desc: '추가 보안 계층 추가',
+      login_alerts: '로그인 알림',
+      login_alerts_desc: '새 로그인 알림 받기',
+      connected_accounts: '연결된 계정',
+      connected: '연결됨',
+      danger_zone: '위험 구역',
+      delete_account: '계정 삭제'
+    },
+    notifications: {
+      email_notifications: '이메일 알림',
+      push_notifications: '푸시 알림',
+      replies: '게시물 답글',
+      likes: '게시물 좋아요',
+      follows: '새 팔로워',
+      mentions: '멘션',
+      newsletter: '뉴스레터',
+      announcements: '플랫폼 공지',
+      direct_messages: '다이렉트 메시지',
+      quiet_hours: '방해 금지 시간',
+      quiet_hours_desc: '특정 시간대 알림 일시 중지',
+      start_time: '시작',
+      end_time: '종료'
+    },
+    privacy: {
+      profile_visibility: '프로필 공개 범위',
+      public: '공개',
+      public_desc: '누구나 프로필을 볼 수 있음',
+      members_only: '회원만',
+      members_desc: '로그인한 회원만 볼 수 있음',
+      private: '비공개',
+      private_desc: '본인만 볼 수 있음',
+      show_online: '온라인 상태 표시',
+      show_online_desc: '다른 사용자에게 온라인 상태 표시',
+      show_activity: '활동 상태 표시',
+      show_activity_desc: '다른 사용자에게 최근 활동 표시',
+      show_email: '이메일 주소 표시',
+      show_email_desc: '프로필에 이메일 표시',
+      direct_messages: '다이렉트 메시지 허용',
+      dm_everyone: '모든 사람',
+      dm_followers: '팔로우하는 사람만',
+      dm_none: '아무도 허용 안 함',
+      blocked_users: '차단된 사용자',
+      block_user: '사용자 차단',
+      no_blocked: '차단된 사용자 없음',
+      unblock: '차단 해제'
+    },
+    display: {
+      theme: '테마',
+      light: '라이트',
+      dark: '다크',
+      system: '시스템',
+      language: '언어',
+      posts_per_page: '페이지당 게시물 수',
+      default_sort: '기본 정렬 순서',
+      newest: '최신',
+      popular: '인기',
+      trending: '트렌딩',
+      compact_mode: '컴팩트 모드',
+      compact_mode_desc: '더 많은 콘텐츠 표시'
+    },
+    content: {
+      signature: '서명',
+      signature_placeholder: '게시물 하단에 표시될 서명...',
+      default_category: '기본 게시 카테고리',
+      auto_save: '임시 저장 자동 저장',
+      auto_save_desc: '게시물을 자동으로 임시 저장'
+    },
+    delete_modal: {
+      title: '계정 삭제',
+      subtitle: '이 작업은 취소할 수 없습니다',
+      warning: '계정을 삭제하시겠습니까? 모든 데이터가 영구적으로 삭제됩니다.',
+      confirm: '계정 삭제'
+    },
+    block_modal: {
+      title: '사용자 차단',
+      placeholder: '차단할 사용자 이름 입력',
+      confirm: '차단'
+    }
   }
 };

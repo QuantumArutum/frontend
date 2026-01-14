@@ -3294,5 +3294,119 @@ export const ja = {
         recommended: { title: '推奨', os: 'OS: 最新バージョン', memory: 'メモリ: 8GB+ RAM', storage: 'ストレージ: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: '設定',
+    subtitle: 'アカウント設定を管理',
+    save: '変更を保存',
+    saved: '保存しました！',
+    tabs: {
+      profile: 'プロフィール',
+      security: 'セキュリティ',
+      notifications: '通知',
+      privacy: 'プライバシー',
+      display: '表示',
+      content: 'コンテンツ'
+    },
+    profile: {
+      display_name: '表示名',
+      display_name_placeholder: '表示名を入力',
+      bio: '自己紹介',
+      bio_placeholder: '自己紹介を入力...',
+      location: '場所',
+      location_placeholder: '都市、国',
+      website: 'ウェブサイト'
+    },
+    security: {
+      email: 'メールアドレス',
+      verified: '確認済み',
+      password: 'パスワード',
+      last_changed: '30日前に変更',
+      change_password: '変更',
+      current_password: '現在のパスワード',
+      new_password: '新しいパスワード',
+      confirm_password: '新しいパスワードを確認',
+      update_password: 'パスワードを更新',
+      password_mismatch: 'パスワードが一致しません',
+      password_changed: 'パスワードが変更されました',
+      two_factor: '二要素認証',
+      two_factor_desc: 'セキュリティを強化',
+      login_alerts: 'ログインアラート',
+      login_alerts_desc: '新しいログインの通知を受け取る',
+      connected_accounts: '連携アカウント',
+      connected: '連携済み',
+      danger_zone: '危険な操作',
+      delete_account: 'アカウントを削除'
+    },
+    notifications: {
+      email_notifications: 'メール通知',
+      push_notifications: 'プッシュ通知',
+      replies: '投稿への返信',
+      likes: '投稿へのいいね',
+      follows: '新しいフォロワー',
+      mentions: 'メンション',
+      newsletter: 'ニュースレター',
+      announcements: 'プラットフォームのお知らせ',
+      direct_messages: 'ダイレクトメッセージ',
+      quiet_hours: 'おやすみモード',
+      quiet_hours_desc: '特定の時間帯の通知を一時停止',
+      start_time: '開始',
+      end_time: '終了'
+    },
+    privacy: {
+      profile_visibility: 'プロフィールの公開範囲',
+      public: '公開',
+      public_desc: '誰でもプロフィールを閲覧可能',
+      members_only: 'メンバーのみ',
+      members_desc: 'ログインユーザーのみ閲覧可能',
+      private: '非公開',
+      private_desc: '自分のみ閲覧可能',
+      show_online: 'オンライン状態を表示',
+      show_online_desc: 'オンライン状態を他のユーザーに表示',
+      show_activity: 'アクティビティを表示',
+      show_activity_desc: '最近のアクティビティを他のユーザーに表示',
+      show_email: 'メールアドレスを表示',
+      show_email_desc: 'プロフィールにメールアドレスを表示',
+      direct_messages: 'ダイレクトメッセージの許可',
+      dm_everyone: '全員',
+      dm_followers: 'フォロー中のユーザーのみ',
+      dm_none: '誰も許可しない',
+      blocked_users: 'ブロックしたユーザー',
+      block_user: 'ユーザーをブロック',
+      no_blocked: 'ブロックしたユーザーはいません',
+      unblock: 'ブロック解除'
+    },
+    display: {
+      theme: 'テーマ',
+      light: 'ライト',
+      dark: 'ダーク',
+      system: 'システム',
+      language: '言語',
+      posts_per_page: '1ページあたりの投稿数',
+      default_sort: 'デフォルトの並び順',
+      newest: '新着',
+      popular: '人気',
+      trending: 'トレンド',
+      compact_mode: 'コンパクトモード',
+      compact_mode_desc: 'より多くのコンテンツを表示'
+    },
+    content: {
+      signature: '署名',
+      signature_placeholder: '投稿の下部に表示される署名...',
+      default_category: 'デフォルトのカテゴリ',
+      auto_save: '下書きを自動保存',
+      auto_save_desc: '投稿を自動的に下書きとして保存'
+    },
+    delete_modal: {
+      title: 'アカウントを削除',
+      subtitle: 'この操作は取り消せません',
+      warning: 'アカウントを削除してもよろしいですか？すべてのデータが完全に削除されます。',
+      confirm: 'アカウントを削除'
+    },
+    block_modal: {
+      title: 'ユーザーをブロック',
+      placeholder: 'ブロックするユーザー名を入力',
+      confirm: 'ブロック'
+    }
   }
 };

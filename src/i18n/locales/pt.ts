@@ -3042,5 +3042,119 @@ export const pt = {
         recommended: { title: 'Recomendado', os: 'SO: Última versão', memory: 'Memória: 8GB+ RAM', storage: 'Armazenamento: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: 'Configurações',
+    subtitle: 'Gerencie as preferências da sua conta',
+    save: 'Salvar Alterações',
+    saved: 'Salvo!',
+    tabs: {
+      profile: 'Perfil',
+      security: 'Segurança',
+      notifications: 'Notificações',
+      privacy: 'Privacidade',
+      display: 'Exibição',
+      content: 'Conteúdo'
+    },
+    profile: {
+      display_name: 'Nome de exibição',
+      display_name_placeholder: 'Seu nome de exibição',
+      bio: 'Biografia',
+      bio_placeholder: 'Conte-nos sobre você...',
+      location: 'Localização',
+      location_placeholder: 'Cidade, País',
+      website: 'Site'
+    },
+    security: {
+      email: 'Endereço de e-mail',
+      verified: 'Verificado',
+      password: 'Senha',
+      last_changed: 'Alterada há 30 dias',
+      change_password: 'Alterar',
+      current_password: 'Senha atual',
+      new_password: 'Nova senha',
+      confirm_password: 'Confirmar nova senha',
+      update_password: 'Atualizar Senha',
+      password_mismatch: 'As senhas não coincidem',
+      password_changed: 'Senha alterada com sucesso',
+      two_factor: 'Autenticação de dois fatores',
+      two_factor_desc: 'Adicione uma camada extra de segurança',
+      login_alerts: 'Alertas de login',
+      login_alerts_desc: 'Receba notificações de novos logins',
+      connected_accounts: 'Contas conectadas',
+      connected: 'Conectada',
+      danger_zone: 'Zona de perigo',
+      delete_account: 'Excluir conta'
+    },
+    notifications: {
+      email_notifications: 'Notificações por e-mail',
+      push_notifications: 'Notificações push',
+      replies: 'Respostas às suas publicações',
+      likes: 'Curtidas nas suas publicações',
+      follows: 'Novos seguidores',
+      mentions: 'Menções',
+      newsletter: 'Newsletter',
+      announcements: 'Anúncios da plataforma',
+      direct_messages: 'Mensagens diretas',
+      quiet_hours: 'Horário silencioso',
+      quiet_hours_desc: 'Pausar notificações durante horários específicos',
+      start_time: 'Início',
+      end_time: 'Fim'
+    },
+    privacy: {
+      profile_visibility: 'Visibilidade do perfil',
+      public: 'Público',
+      public_desc: 'Qualquer pessoa pode ver seu perfil',
+      members_only: 'Apenas membros',
+      members_desc: 'Apenas membros logados podem ver',
+      private: 'Privado',
+      private_desc: 'Apenas você pode ver seu perfil',
+      show_online: 'Mostrar status online',
+      show_online_desc: 'Permitir que outros vejam quando você está online',
+      show_activity: 'Mostrar status de atividade',
+      show_activity_desc: 'Mostrar sua atividade recente para outros',
+      show_email: 'Mostrar endereço de e-mail',
+      show_email_desc: 'Exibir e-mail no seu perfil',
+      direct_messages: 'Quem pode enviar mensagens diretas',
+      dm_everyone: 'Todos',
+      dm_followers: 'Apenas pessoas que você segue',
+      dm_none: 'Ninguém',
+      blocked_users: 'Usuários bloqueados',
+      block_user: 'Bloquear usuário',
+      no_blocked: 'Nenhum usuário bloqueado',
+      unblock: 'Desbloquear'
+    },
+    display: {
+      theme: 'Tema',
+      light: 'Claro',
+      dark: 'Escuro',
+      system: 'Sistema',
+      language: 'Idioma',
+      posts_per_page: 'Publicações por página',
+      default_sort: 'Ordenação padrão',
+      newest: 'Mais recentes',
+      popular: 'Populares',
+      trending: 'Em alta',
+      compact_mode: 'Modo compacto',
+      compact_mode_desc: 'Mostrar mais conteúdo com menos espaçamento'
+    },
+    content: {
+      signature: 'Assinatura',
+      signature_placeholder: 'Sua assinatura aparecerá no final das suas publicações...',
+      default_category: 'Categoria padrão',
+      auto_save: 'Salvar rascunhos automaticamente',
+      auto_save_desc: 'Salvar automaticamente suas publicações como rascunhos'
+    },
+    delete_modal: {
+      title: 'Excluir conta',
+      subtitle: 'Esta ação não pode ser desfeita',
+      warning: 'Tem certeza de que deseja excluir sua conta? Todos os seus dados serão removidos permanentemente.',
+      confirm: 'Excluir conta'
+    },
+    block_modal: {
+      title: 'Bloquear usuário',
+      placeholder: 'Digite o nome de usuário para bloquear',
+      confirm: 'Bloquear'
+    }
   }
 };

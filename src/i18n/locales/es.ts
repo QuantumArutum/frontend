@@ -3234,5 +3234,119 @@ export const es = {
         recommended: { title: 'Recomendado', os: 'SO: Última versión', memory: 'Memoria: 8GB+ RAM', storage: 'Almacenamiento: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
       }
     }
+  },
+  settings_page: {
+    title: 'Configuración',
+    subtitle: 'Administra las preferencias de tu cuenta',
+    save: 'Guardar Cambios',
+    saved: '¡Guardado!',
+    tabs: {
+      profile: 'Perfil',
+      security: 'Seguridad',
+      notifications: 'Notificaciones',
+      privacy: 'Privacidad',
+      display: 'Visualización',
+      content: 'Contenido'
+    },
+    profile: {
+      display_name: 'Nombre para mostrar',
+      display_name_placeholder: 'Tu nombre para mostrar',
+      bio: 'Biografía',
+      bio_placeholder: 'Cuéntanos sobre ti...',
+      location: 'Ubicación',
+      location_placeholder: 'Ciudad, País',
+      website: 'Sitio web'
+    },
+    security: {
+      email: 'Correo electrónico',
+      verified: 'Verificado',
+      password: 'Contraseña',
+      last_changed: 'Cambiada hace 30 días',
+      change_password: 'Cambiar',
+      current_password: 'Contraseña actual',
+      new_password: 'Nueva contraseña',
+      confirm_password: 'Confirmar nueva contraseña',
+      update_password: 'Actualizar Contraseña',
+      password_mismatch: 'Las contraseñas no coinciden',
+      password_changed: 'Contraseña cambiada exitosamente',
+      two_factor: 'Autenticación de dos factores',
+      two_factor_desc: 'Añade una capa extra de seguridad',
+      login_alerts: 'Alertas de inicio de sesión',
+      login_alerts_desc: 'Recibe notificaciones de nuevos inicios de sesión',
+      connected_accounts: 'Cuentas conectadas',
+      connected: 'Conectada',
+      danger_zone: 'Zona de peligro',
+      delete_account: 'Eliminar cuenta'
+    },
+    notifications: {
+      email_notifications: 'Notificaciones por correo',
+      push_notifications: 'Notificaciones push',
+      replies: 'Respuestas a tus publicaciones',
+      likes: 'Me gusta en tus publicaciones',
+      follows: 'Nuevos seguidores',
+      mentions: 'Menciones',
+      newsletter: 'Boletín',
+      announcements: 'Anuncios de la plataforma',
+      direct_messages: 'Mensajes directos',
+      quiet_hours: 'Horas de silencio',
+      quiet_hours_desc: 'Pausar notificaciones durante horas específicas',
+      start_time: 'Inicio',
+      end_time: 'Fin'
+    },
+    privacy: {
+      profile_visibility: 'Visibilidad del perfil',
+      public: 'Público',
+      public_desc: 'Cualquiera puede ver tu perfil',
+      members_only: 'Solo miembros',
+      members_desc: 'Solo usuarios registrados pueden ver',
+      private: 'Privado',
+      private_desc: 'Solo tú puedes ver tu perfil',
+      show_online: 'Mostrar estado en línea',
+      show_online_desc: 'Permitir que otros vean cuando estás en línea',
+      show_activity: 'Mostrar estado de actividad',
+      show_activity_desc: 'Mostrar tu actividad reciente a otros',
+      show_email: 'Mostrar correo electrónico',
+      show_email_desc: 'Mostrar correo en tu perfil',
+      direct_messages: 'Quién puede enviarte mensajes directos',
+      dm_everyone: 'Todos',
+      dm_followers: 'Solo personas que sigues',
+      dm_none: 'Nadie',
+      blocked_users: 'Usuarios bloqueados',
+      block_user: 'Bloquear usuario',
+      no_blocked: 'Sin usuarios bloqueados',
+      unblock: 'Desbloquear'
+    },
+    display: {
+      theme: 'Tema',
+      light: 'Claro',
+      dark: 'Oscuro',
+      system: 'Sistema',
+      language: 'Idioma',
+      posts_per_page: 'Publicaciones por página',
+      default_sort: 'Orden predeterminado',
+      newest: 'Más recientes',
+      popular: 'Populares',
+      trending: 'Tendencias',
+      compact_mode: 'Modo compacto',
+      compact_mode_desc: 'Mostrar más contenido con menos espacio'
+    },
+    content: {
+      signature: 'Firma',
+      signature_placeholder: 'Tu firma aparecerá al final de tus publicaciones...',
+      default_category: 'Categoría predeterminada',
+      auto_save: 'Guardar borradores automáticamente',
+      auto_save_desc: 'Guardar automáticamente tus publicaciones como borradores'
+    },
+    delete_modal: {
+      title: 'Eliminar cuenta',
+      subtitle: 'Esta acción no se puede deshacer',
+      warning: '¿Estás seguro de que quieres eliminar tu cuenta? Todos tus datos serán eliminados permanentemente.',
+      confirm: 'Eliminar cuenta'
+    },
+    block_modal: {
+      title: 'Bloquear usuario',
+      placeholder: 'Ingresa el nombre de usuario a bloquear',
+      confirm: 'Bloquear'
+    }
   }
 };
