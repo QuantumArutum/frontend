@@ -1892,8 +1892,6 @@ export const en = {
       // Main Community Page
       main_title: 'Quantaureum Community',
       subtitle: 'Join the quantum blockchain revolution. Connect, discuss, and build the future together.',
-      search_placeholder: 'Search discussions, topics, users...',
-      new_post: 'New Post',
       // Stats
       stats: {
         members: 'Members',

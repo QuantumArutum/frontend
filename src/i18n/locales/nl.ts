@@ -1478,8 +1478,6 @@ export const nl = {
       // Hoofdpagina
       main_title: 'Quantaureum Community',
       subtitle: 'Sluit je aan bij de quantum blockchain revolutie. Verbind, discussieer en bouw samen de toekomst.',
-      search_placeholder: 'Zoek discussies, onderwerpen, gebruikers...',
-      new_post: 'Nieuw Bericht',
       stats: {
         members: 'Leden',
         posts: 'Berichten',

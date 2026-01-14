@@ -1493,8 +1493,6 @@ export const ja = {
       // メインコミュニティページ
       main_title: 'Quantaureum コミュニティ',
       subtitle: '量子ブロックチェーン革命に参加しましょう。つながり、議論し、共に未来を築きましょう。',
-      search_placeholder: 'ディスカッション、トピック、ユーザーを検索...',
-      new_post: '新規投稿',
       // 統計
       stats: {
         members: 'メンバー',

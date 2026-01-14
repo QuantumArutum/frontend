@@ -1496,8 +1496,6 @@ export const vi = {
       // Trang chính
       main_title: 'Cộng đồng Quantaureum',
       subtitle: 'Tham gia cuộc cách mạng blockchain lượng tử. Kết nối, thảo luận và cùng xây dựng tương lai.',
-      search_placeholder: 'Tìm kiếm thảo luận, chủ đề, người dùng...',
-      new_post: 'Bài viết Mới',
       stats: {
         members: 'Thành viên',
         posts: 'Bài viết',

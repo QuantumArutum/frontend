@@ -1892,8 +1892,6 @@ export const zh = {
       // 主社区页面
       main_title: 'Quantaureum 社区',
       subtitle: '加入量子区块链革命。连接、讨论，共同构建未来。',
-      search_placeholder: '搜索讨论、话题、用户...',
-      new_post: '发布新帖',
       // 统计
       stats: {
         members: '成员',

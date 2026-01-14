@@ -1478,8 +1478,6 @@ export const de = {
       // Hauptseite
       main_title: 'Quantaureum Community',
       subtitle: 'Treten Sie der Quanten-Blockchain-Revolution bei. Verbinden, diskutieren und gemeinsam die Zukunft gestalten.',
-      search_placeholder: 'Diskussionen, Themen, Benutzer suchen...',
-      new_post: 'Neuer Beitrag',
       stats: {
         members: 'Mitglieder',
         posts: 'Beiträge',

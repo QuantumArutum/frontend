@@ -1493,8 +1493,6 @@ export const ko = {
       // 메인 커뮤니티 페이지
       main_title: 'Quantaureum 커뮤니티',
       subtitle: '양자 블록체인 혁명에 참여하세요. 연결하고, 토론하고, 함께 미래를 만들어 갑니다.',
-      search_placeholder: '토론, 주제, 사용자 검색...',
-      new_post: '새 게시물',
       // 통계
       stats: {
         members: '회원',

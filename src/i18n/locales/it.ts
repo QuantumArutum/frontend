@@ -1493,8 +1493,6 @@ export const it = {
       // Pagina Principale
       main_title: 'Community Quantaureum',
       subtitle: 'Unisciti alla rivoluzione blockchain quantistica. Connettiti, discuti e costruisci il futuro insieme.',
-      search_placeholder: 'Cerca discussioni, argomenti, utenti...',
-      new_post: 'Nuovo Post',
       stats: {
         members: 'Membri',
         posts: 'Post',
