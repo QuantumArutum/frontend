@@ -1,9 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Users, Search, Bell, MessageSquare, Settings, Plus, LogOut, Menu, X, Globe, ChevronDown, Check } from 'lucide-react';
+import { Users, Search, Bell, MessageSquare, Settings, Plus, LogOut, Menu, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../LanguageSwitcher';
+import '../../i18n';
 
 interface UserInfo {
   id: string;
@@ -12,60 +15,23 @@ interface UserInfo {
   avatar?: string;
 }
 
-// 12 Languages Configuration
-const languages = [
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'ja', name: '日本語', flag: '🇯🇵' },
-  { code: 'ko', name: '한국어', flag: '🇰🇷' },
-  { code: 'ru', name: 'Русский', flag: '🇷🇺' },
-  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-  { code: 'pt', name: 'Português', flag: '🇧🇷' },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-  { code: 'nl', name: 'Nederlands', flag: '🇳🇱' }
-];
-
-const categories = [
-  { name: '首页', href: '/community', key: 'home' },
-  { name: '综合讨论', href: '/community/forum/general', key: 'general' },
-  { name: '技术交流', href: '/community/forum/technical', key: 'technical' },
-  { name: 'DeFi讨论', href: '/community/forum/defi', key: 'defi' },
-  { name: '治理提案', href: '/community/governance', key: 'governance' },
-  { name: '活动中心', href: '/community/events', key: 'events' },
-];
-
 export default function CommunityNavbar() {
   const pathname = usePathname();
   const router = useRouter();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState('zh');
-  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
-  const langMenuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    // Click outside to close language menu
-    const handleClickOutside = (event: MouseEvent) => {
-      if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) {
-        setIsLangMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    // Load saved language
-    const savedLang = localStorage.getItem('quantaureum-language');
-    if (savedLang && languages.find(l => l.code === savedLang)) {
-      setCurrentLang(savedLang);
-    }
-  }, []);
+  const categories = [
+    { name: t('community.nav.home', '首页'), href: '/community', key: 'home' },
+    { name: t('community.nav.general', '综合讨论'), href: '/community/forum/general', key: 'general' },
+    { name: t('community.nav.technical', '技术交流'), href: '/community/forum/technical', key: 'technical' },
+    { name: t('community.nav.defi', 'DeFi讨论'), href: '/community/forum/defi', key: 'defi' },
+    { name: t('community.nav.governance', '治理提案'), href: '/community/governance', key: 'governance' },
+    { name: t('community.nav.events', '活动中心'), href: '/community/events', key: 'events' },
+  ];
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -90,18 +56,6 @@ export default function CommunityNavbar() {
     window.location.reload();
   };
 
-  const handleLangSelect = (langCode: string) => {
-    setCurrentLang(langCode);
-    localStorage.setItem('quantaureum-language', langCode);
-    setIsLangMenuOpen(false);
-    
-    // Simulate/Trigger translation effect
-    console.log(`Language switched to: ${langCode}`);
-    
-    // Optional: Dispatch event for other components if needed
-    window.dispatchEvent(new CustomEvent('languageChanged', { detail: langCode }));
-  };
-
   const isActive = (href: string, key: string) => {
     if (key === 'home' && pathname === '/community') return true;
     if (key === 'governance' && pathname?.includes('/governance')) return true;
@@ -112,11 +66,11 @@ export default function CommunityNavbar() {
 
   return (
     <div className="sticky top-0 z-[200] w-full">
-      {/* 分类导航 - 放在最上面 */}
+      {/* 分类导航 */}
       <nav
         className="relative border-b border-white/10 w-full z-[60]"
         style={{
-          background: 'rgba(15, 23, 42, 0.8)', // slate-900 with opacity
+          background: 'rgba(15, 23, 42, 0.8)',
           backdropFilter: 'blur(20px)',
         }}
       >
@@ -139,41 +93,9 @@ export default function CommunityNavbar() {
               ))}
             </div>
 
-            {/* Language Switcher */}
-            <div className="relative ml-4 z-[100]" ref={langMenuRef}>
-              <button 
-                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                className={`px-3 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-300 flex items-center gap-2 ${isLangMenuOpen ? 'bg-white/10 text-white' : ''}`}
-                title="Switch Language"
-              >
-                <Globe className="w-4 h-4" />
-                <span className="text-sm font-medium uppercase">{currentLang}</span>
-                <ChevronDown className={`w-3 h-3 transition-transform ${isLangMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {isLangMenuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 bg-[#0F172A]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl py-2 z-[100] animate-in fade-in zoom-in-95 duration-200">
-                  <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
-                    {languages.map((lang) => (
-                      <button
-                        key={lang.code}
-                        onClick={() => handleLangSelect(lang.code)}
-                        className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${
-                          currentLang === lang.code 
-                            ? 'bg-gradient-to-r from-purple-500/20 to-cyan-500/20 text-white border-l-2 border-cyan-500' 
-                            : 'text-gray-300 hover:bg-white/10 hover:text-white'
-                        }`}
-                      >
-                        <span className="flex items-center gap-3">
-                          <span className="text-lg">{lang.flag}</span>
-                          <span>{lang.name}</span>
-                        </span>
-                        {currentLang === lang.code && <Check className="w-3 h-3 text-cyan-400" />}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+            {/* Language Switcher - 使用主网站组件 */}
+            <div className="ml-4">
+              <LanguageSwitcher />
             </div>
           </div>
 
@@ -182,14 +104,17 @@ export default function CommunityNavbar() {
             <div className="flex items-center justify-between py-3">
               <span className="text-white font-medium flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-                {categories.find(c => isActive(c.href, c.key))?.name || '导航菜单'}
+                {categories.find(c => isActive(c.href, c.key))?.name || t('community.nav.menu', '导航菜单')}
               </span>
-              <button 
-                onClick={() => setIsMenuOpen(!isMenuOpen)} 
-                className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-              >
-                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
+              <div className="flex items-center gap-2">
+                <LanguageSwitcher />
+                <button 
+                  onClick={() => setIsMenuOpen(!isMenuOpen)} 
+                  className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                </button>
+              </div>
             </div>
 
             {/* Mobile Dropdown Menu */}
@@ -216,11 +141,11 @@ export default function CommunityNavbar() {
         </div>
       </nav>
 
-      {/* 主导航头部 - 放在分类导航下面 */}
+      {/* 主导航头部 */}
       <header
         className="relative w-full z-[50]"
         style={{
-          background: 'rgba(15, 23, 42, 0.6)', // slate-900 with opacity
+          background: 'rgba(15, 23, 42, 0.6)',
           backdropFilter: 'blur(15px)',
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
         }}
@@ -236,8 +161,10 @@ export default function CommunityNavbar() {
                 <Users className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text text-transparent">Community</h1>
-                <p className="text-sm text-gray-300">125,847 members online</p>
+                <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text text-transparent">
+                  {t('community.title', 'Community')}
+                </h1>
+                <p className="text-sm text-gray-300">{t('community.members_online', '125,847 members online')}</p>
               </div>
             </a>
 
@@ -255,7 +182,7 @@ export default function CommunityNavbar() {
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 transition-colors group-focus-within:text-white" />
                 <input
                   type="text"
-                  placeholder="搜索讨论..."
+                  placeholder={t('community.search_placeholder', '搜索讨论...')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 rounded-xl text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:border-purple-500 focus:shadow-lg focus:shadow-purple-500/25 transition-all duration-300"
@@ -272,7 +199,7 @@ export default function CommunityNavbar() {
               <a
                 href="/community/notifications"
                 className="relative p-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/15 transition-all duration-300 hover:shadow-md hover:shadow-white/10"
-                title="通知"
+                title={t('community.notifications', '通知')}
               >
                 <Bell className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center shadow-lg">
@@ -282,7 +209,7 @@ export default function CommunityNavbar() {
               <a
                 href="/community/messages"
                 className="relative p-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/15 transition-all duration-300 hover:shadow-md hover:shadow-white/10"
-                title="私信"
+                title={t('community.messages', '私信')}
               >
                 <MessageSquare className="w-5 h-5" />
               </a>
@@ -305,7 +232,7 @@ export default function CommunityNavbar() {
                     )}
                     <span className="text-sm text-white font-medium hidden md:inline">{userInfo.name}</span>
                   </a>
-                  <button onClick={handleLogout} className="p-2.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/15 transition-all duration-300 hover:shadow-md hover:shadow-red-500/25" title="登出">
+                  <button onClick={handleLogout} className="p-2.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/15 transition-all duration-300 hover:shadow-md hover:shadow-red-500/25" title={t('community.logout', '登出')}>
                     <LogOut className="w-5 h-5" />
                   </button>
                 </div>
@@ -314,7 +241,7 @@ export default function CommunityNavbar() {
                   href={`/auth/login?redirect=${encodeURIComponent(pathname || '/community')}`}
                   className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 text-sm font-medium shadow-lg hover:shadow-blue-500/25"
                 >
-                  登录
+                  {t('community.login', '登录')}
                 </a>
               )}
 
@@ -327,7 +254,7 @@ export default function CommunityNavbar() {
                 }}
               >
                 <Plus className="w-4 h-4 inline mr-2" />
-                新建帖子
+                {t('community.new_post', '新建帖子')}
               </a>
             </div>
           </div>
