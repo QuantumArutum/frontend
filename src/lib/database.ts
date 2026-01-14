@@ -718,6 +718,29 @@ export const db = {
     if (!sql) return null;
     return null;
   },
+  
+  // Auth methods
+  verifyUserPassword: async (email: string, password: string) => {
+    if (!sql) return null;
+    const result = await sql`SELECT * FROM users WHERE email = ${email}`;
+    const user = result[0];
+    if (!user) return null;
+    // Note: In production, use bcrypt.compare
+    const bcrypt = require('bcryptjs');
+    const isValid = await bcrypt.compare(password, user.password_hash);
+    return isValid ? user : null;
+  },
+  
+  // Order methods
+  getOrdersByUserId: async (userId: string) => {
+    if (!sql) return [];
+    return await sql`SELECT * FROM token_purchases WHERE user_id = ${userId} ORDER BY created_at DESC`;
+  },
+  getOrderById: async (orderId: string) => {
+    if (!sql) return null;
+    const result = await sql`SELECT * FROM token_purchases WHERE id = ${orderId}`;
+    return result[0] || null;
+  },
 };
 
 // Build timestamp: 2026-01-15
