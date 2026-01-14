@@ -693,6 +693,31 @@ export const db = {
     if (!sql) return null;
     return null;
   },
+  
+  // Backup codes methods
+  saveBackupCodes: async (userId: string, codes: string[]) => {
+    if (!sql) return null;
+    return await sql`UPDATE users SET backup_codes = ${JSON.stringify(codes)} WHERE uid = ${userId} RETURNING *`;
+  },
+  getBackupCodes: async (userId: string) => {
+    if (!sql) return [];
+    const result = await sql`SELECT backup_codes FROM users WHERE uid = ${userId}`;
+    return result[0]?.backup_codes || [];
+  },
+  
+  // Payment methods
+  createPayment: async (payment: any) => {
+    if (!sql) return null;
+    return { id: 'pay_' + Date.now(), ...payment };
+  },
+  getPaymentById: async (id: string) => {
+    if (!sql) return null;
+    return null;
+  },
+  updatePayment: async (id: string, updates: any) => {
+    if (!sql) return null;
+    return null;
+  },
 };
 
 // Build timestamp: 2026-01-15
