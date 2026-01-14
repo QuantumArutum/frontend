@@ -2137,19 +2137,6 @@ export const vi = {
       quantum_secure: 'An toàn Lượng tử',
       active: 'Hoạt động'
     },
-    utilities_page: {
-      title: 'Thanh toán Tiện ích',
-      subtitle: 'Thanh toán hóa đơn tiện ích bằng tiền điện tử',
-      electricity: 'Điện',
-      water: 'Nước',
-      gas: 'Gas',
-      internet: 'Internet',
-      phone: 'Điện thoại',
-      account_number: 'Số Tài khoản',
-      amount: 'Số tiền',
-      pay_now: 'Thanh toán Ngay',
-      payment_history: 'Lịch sử Thanh toán'
-    },
     // Trang Gây Quỹ Cộng Đồng
     crowdfunding_page: {
       title: 'Nền Tảng Gây Quỹ',

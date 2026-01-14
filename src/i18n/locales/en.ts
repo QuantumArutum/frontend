@@ -2721,19 +2721,6 @@ export const en = {
       quantum_secure: 'Quantum Secure',
       active: 'Active'
     },
-    utilities_page: {
-      title: 'Utility Payments',
-      subtitle: 'Pay utility bills with cryptocurrency',
-      electricity: 'Electricity',
-      water: 'Water',
-      gas: 'Gas',
-      internet: 'Internet',
-      phone: 'Phone',
-      account_number: 'Account Number',
-      amount: 'Amount',
-      pay_now: 'Pay Now',
-      payment_history: 'Payment History'
-    },
     // Crowdfunding Page
     crowdfunding_page: {
       title: 'Crowdfunding Platform',

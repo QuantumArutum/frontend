@@ -2176,19 +2176,6 @@ export const ko = {
       quantum_secure: '양자 보안',
       active: '활성'
     },
-    utilities_page: {
-      title: '공과금 결제',
-      subtitle: '암호화폐로 공과금 결제',
-      electricity: '전기',
-      water: '수도',
-      gas: '가스',
-      internet: '인터넷',
-      phone: '전화',
-      account_number: '계정 번호',
-      amount: '금액',
-      pay_now: '지금 결제',
-      payment_history: '결제 내역'
-    },
     // 크라우드펀딩 페이지
     crowdfunding_page: {
       title: '크라우드펀딩 플랫폼',

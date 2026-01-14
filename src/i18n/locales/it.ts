@@ -2134,19 +2134,6 @@ export const it = {
       quantum_secure: 'Sicuro Quantisticamente',
       active: 'Attivo'
     },
-    utilities_page: {
-      title: 'Pagamenti Utenze',
-      subtitle: 'Paga le bollette con criptovalute',
-      electricity: 'Elettricità',
-      water: 'Acqua',
-      gas: 'Gas',
-      internet: 'Internet',
-      phone: 'Telefono',
-      account_number: 'Numero Conto',
-      amount: 'Importo',
-      pay_now: 'Paga Ora',
-      payment_history: 'Storico Pagamenti'
-    },
     // Pagina Crowdfunding
     crowdfunding_page: {
       title: 'Piattaforma di Crowdfunding',

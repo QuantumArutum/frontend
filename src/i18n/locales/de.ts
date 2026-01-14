@@ -2119,19 +2119,6 @@ export const de = {
       quantum_secure: 'Quantensicher',
       active: 'Aktiv'
     },
-    utilities_page: {
-      title: 'Versorgungszahlungen',
-      subtitle: 'Bezahlen Sie Rechnungen mit Kryptowährung',
-      electricity: 'Strom',
-      water: 'Wasser',
-      gas: 'Gas',
-      internet: 'Internet',
-      phone: 'Telefon',
-      account_number: 'Kontonummer',
-      amount: 'Betrag',
-      pay_now: 'Jetzt Bezahlen',
-      payment_history: 'Zahlungshistorie'
-    },
     // Crowdfunding-Seite
     crowdfunding_page: {
       title: 'Crowdfunding-Plattform',

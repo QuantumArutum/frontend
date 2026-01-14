@@ -2134,19 +2134,6 @@ export const ru = {
       quantum_secure: 'Квантово Безопасно',
       active: 'Активен'
     },
-    utilities_page: {
-      title: 'Оплата Коммунальных Услуг',
-      subtitle: 'Оплачивайте счета криптовалютой',
-      electricity: 'Электричество',
-      water: 'Вода',
-      gas: 'Газ',
-      internet: 'Интернет',
-      phone: 'Телефон',
-      account_number: 'Номер Счёта',
-      amount: 'Сумма',
-      pay_now: 'Оплатить Сейчас',
-      payment_history: 'История Платежей'
-    },
     // Страница краудфандинга
     crowdfunding_page: {
       title: 'Платформа краудфандинга',

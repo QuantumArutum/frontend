@@ -2176,19 +2176,6 @@ export const ja = {
       quantum_secure: '量子安全',
       active: 'アクティブ'
     },
-    utilities_page: {
-      title: '公共料金支払い',
-      subtitle: '暗号通貨で公共料金を支払う',
-      electricity: '電気',
-      water: '水道',
-      gas: 'ガス',
-      internet: 'インターネット',
-      phone: '電話',
-      account_number: 'アカウント番号',
-      amount: '金額',
-      pay_now: '今すぐ支払う',
-      payment_history: '支払い履歴'
-    },
     // クラウドファンディングページ
     crowdfunding_page: {
       title: 'クラウドファンディングプラットフォーム',

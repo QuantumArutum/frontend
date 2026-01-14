@@ -2134,19 +2134,6 @@ export const pt = {
       quantum_secure: 'Seguro Quântico',
       active: 'Ativo'
     },
-    utilities_page: {
-      title: 'Pagamentos de Serviços',
-      subtitle: 'Pague contas de serviços com criptomoedas',
-      electricity: 'Eletricidade',
-      water: 'Água',
-      gas: 'Gás',
-      internet: 'Internet',
-      phone: 'Telefone',
-      account_number: 'Número da Conta',
-      amount: 'Valor',
-      pay_now: 'Pagar Agora',
-      payment_history: 'Histórico de Pagamentos'
-    },
     // Página de Crowdfunding
     crowdfunding_page: {
       title: 'Plataforma de Crowdfunding',

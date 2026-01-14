@@ -2119,19 +2119,6 @@ export const nl = {
       quantum_secure: 'Quantum Veilig',
       active: 'Actief'
     },
-    utilities_page: {
-      title: 'Nutsbetalingen',
-      subtitle: 'Betaal rekeningen met cryptocurrency',
-      electricity: 'Elektriciteit',
-      water: 'Water',
-      gas: 'Gas',
-      internet: 'Internet',
-      phone: 'Telefoon',
-      account_number: 'Rekeningnummer',
-      amount: 'Bedrag',
-      pay_now: 'Nu Betalen',
-      payment_history: 'Betalingsgeschiedenis'
-    },
     // Crowdfunding Pagina
     crowdfunding_page: {
       title: 'Crowdfunding Platform',

@@ -2119,19 +2119,6 @@ export const fr = {
       quantum_secure: 'Sécurisé Quantique',
       active: 'Actif'
     },
-    utilities_page: {
-      title: 'Paiements de Services',
-      subtitle: 'Payez vos factures avec des cryptomonnaies',
-      electricity: 'Électricité',
-      water: 'Eau',
-      gas: 'Gaz',
-      internet: 'Internet',
-      phone: 'Téléphone',
-      account_number: 'Numéro de Compte',
-      amount: 'Montant',
-      pay_now: 'Payer Maintenant',
-      payment_history: 'Historique des Paiements'
-    },
     // Page de Financement Participatif
     crowdfunding_page: {
       title: 'Plateforme de Financement Participatif',
