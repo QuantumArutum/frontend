@@ -102,6 +102,10 @@ export const POST = createSecureHandler(
                 categorySlug: category || 'general'
             });
 
+            if (!newPost) {
+                return errorResponse('创建帖子失败', 500);
+            }
+
             SecurityLogger.log(
                 SecurityEventType.TRANSACTION_COMPLETED,
                 'info',

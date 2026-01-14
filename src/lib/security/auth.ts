@@ -31,13 +31,13 @@ export async function validateAuth(request: NextRequest): Promise<AuthContext | 
   
   try {
     // 查找会话
-    const session = await db.findSessionByToken(token);
+    const session = await db.findSessionByToken(token) as Session | null;
     if (!session) {
       return null;
     }
     
     // 查找用户
-    const user = await db.findUserById(session.userId);
+    const user = await db.findUserById(session.userId) as User | null;
     if (!user || !user.isActive) {
       return null;
     }

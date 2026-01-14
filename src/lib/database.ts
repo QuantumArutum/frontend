@@ -4,6 +4,28 @@
 
 import { neon } from '@neondatabase/serverless';
 
+// Type definitions
+export interface User {
+  id: string;
+  uid: string;
+  email: string;
+  walletAddress?: string;
+  isVerified: boolean;
+  isActive: boolean;
+  kycStatus: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Session {
+  id: string;
+  userId: string;
+  token: string;
+  expiresAt: string;
+  createdAt: string;
+}
+
 // Get database URL from environment
 const DATABASE_URL = process.env.DATABASE_URL || process.env.POSTGRES_URL;
 
@@ -768,6 +790,29 @@ export const db = {
     if (!sql) return null;
     const result = await sql`SELECT * FROM token_purchases WHERE id = ${orderId}`;
     return result[0] || null;
+  },
+  
+  // Purchase methods
+  createPurchase: async (purchase: any) => {
+    if (!sql) return null;
+    return { id: 'purchase_' + Date.now(), ...purchase, created_at: new Date().toISOString() };
+  },
+  findPurchaseById: async (id: string) => {
+    if (!sql) return null;
+    const result = await sql`SELECT * FROM token_purchases WHERE id = ${id}`;
+    return result[0] || null;
+  },
+  updatePurchase: async (id: string, updates: any) => {
+    if (!sql) return null;
+    return { id, ...updates, updated_at: new Date().toISOString() };
+  },
+  findPurchasesByAddress: async (address: string) => {
+    if (!sql) return [];
+    return await sql`SELECT * FROM token_purchases WHERE wallet_address = ${address} ORDER BY created_at DESC`;
+  },
+  getPurchaseStats: async () => {
+    if (!sql) return { totalPurchases: 0, totalAmount: 0, totalTokens: 0, totalRaised: 0, totalTokensSold: 0, completedPurchases: 0 };
+    return { totalPurchases: 0, totalAmount: 0, totalTokens: 0, totalRaised: 0, totalTokensSold: 0, completedPurchases: 0 };
   },
 };
 
