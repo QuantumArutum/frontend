@@ -1,70 +1,87 @@
 /**
  * Comments Management API
- * Admin management for community comments
+ * Production-grade implementation using communityService
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { communityService } from '@/lib/communityService';
 
 // GET - List comments
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const postId = searchParams.get('post_id');
+    const userId = searchParams.get('user_id');
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '20');
 
-    // Get posts to find comments
-    const postsResult = await db.getPosts({ page: 1, limit: 100 });
-    const posts = postsResult.data?.posts || [];
-    
-    // Build comments list from posts
-    const comments: any[] = [];
-    for (const post of posts) {
-      const postComments = await db.getPostComments(post.id);
-      if (postComments.data) {
-        postComments.data.forEach((c: any) => {
-          comments.push({
-            ...c,
-            post_title: post.title,
-            user_email: 'user@example.com',
-            is_hidden: 0,
-            report_count: 0,
-          });
-        });
-      }
-    }
-
-    const filtered = postId ? comments.filter(c => c.post_id === postId) : comments;
-    const start = (page - 1) * limit;
-    const paged = filtered.slice(start, start + limit);
+    const result = await communityService.getComments({
+      post_id: postId ? parseInt(postId) : undefined,
+      user_id: userId || undefined,
+      page,
+      limit
+    });
 
     return NextResponse.json({
       success: true,
       data: {
-        comments: paged,
-        total: filtered.length,
+        comments: result.comments,
+        total: result.total,
         page,
         per_page: limit,
       }
     });
   } catch (error: any) {
+    console.error('Comments GET error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
 
-// PUT - Update comment (hide/unhide)
+// POST - Create comment
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { post_id, user_id, content, parent_id } = body;
+
+    const comment = await communityService.createComment({
+      post_id,
+      user_id,
+      content,
+      parent_id
+    });
+
+    return NextResponse.json({ success: true, data: comment });
+  } catch (error: any) {
+    console.error('Comments POST error:', error);
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  }
+}
+
+// PUT - Update comment
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id, action } = body;
+    const { id, action, content, post_id } = body;
 
-    if (action === 'hide' || action === 'unhide') {
-      return NextResponse.json({ success: true, data: { id, is_hidden: action === 'hide' ? 1 : 0 } });
+    if (action === 'update' && content) {
+      const comment = await communityService.updateComment(id, content);
+      return NextResponse.json({ success: true, data: comment });
     }
 
-    return NextResponse.json({ success: true });
+    if (action === 'like') {
+      const { user_id } = body;
+      const success = await communityService.likeComment(id, user_id);
+      return NextResponse.json({ success });
+    }
+
+    if (action === 'best_answer' && post_id) {
+      const success = await communityService.markBestAnswer(id, post_id);
+      return NextResponse.json({ success });
+    }
+
+    return NextResponse.json({ success: false, message: 'Invalid action' }, { status: 400 });
   } catch (error: any) {
+    console.error('Comments PUT error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
@@ -73,14 +90,16 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
+    const id = parseInt(searchParams.get('id') || '0');
 
     if (id) {
-      await db.deleteComment(id);
+      const success = await communityService.deleteComment(id);
+      return NextResponse.json({ success });
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: false, message: 'Missing id' }, { status: 400 });
   } catch (error: any) {
+    console.error('Comments DELETE error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }

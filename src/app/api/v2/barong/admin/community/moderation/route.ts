@@ -1,91 +1,68 @@
 /**
  * Content Moderation API
- * Handles content review queue and sensitive word filtering
+ * Production-grade implementation using communityService
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-
-// Demo data
-const demoModerationQueue: any[] = [];
-const demoSensitiveWords = [
-  { id: 1, word: 'spam', level: 'block', category: 'spam' },
-  { id: 2, word: 'scam', level: 'review', category: 'fraud' },
-];
+import { communityService } from '@/lib/communityService';
 
 // GET - Get moderation data
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const type = searchParams.get('type') || 'queue';
+    const type = searchParams.get('type') || 'logs';
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '50');
 
-    if (type === 'queue') {
+    if (type === 'logs') {
+      const result = await communityService.getModerationLogs(page, limit);
       return NextResponse.json({
         success: true,
         data: {
-          queue: demoModerationQueue,
-          stats: { pending: 0, approved: 0, rejected: 0 }
+          logs: result.logs,
+          total: result.total,
         }
       });
     }
 
-    if (type === 'words') {
-      return NextResponse.json({
-        success: true,
-        data: demoSensitiveWords
-      });
-    }
-
     if (type === 'stats') {
+      const stats = await communityService.getFullStats();
       return NextResponse.json({
         success: true,
         data: {
-          total_reviewed: 45,
-          approved: 38,
-          rejected: 7,
-          pending: 0,
+          total_reports: stats?.totalReports || 0,
+          pending_reports: stats?.pendingReports || 0,
+          total_bans: stats?.totalBans || 0,
+          active_bans: stats?.activeBans || 0,
         }
       });
     }
 
     return NextResponse.json({ success: true, data: {} });
   } catch (error: any) {
+    console.error('Moderation GET error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
 
-// POST - Add sensitive word or submit for review
+// POST - Create moderation action
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { type } = body;
+    const { action, moderator_id, target_type, target_id, reason, details } = body;
 
-    if (type === 'word') {
-      const newWord = { id: Date.now(), ...body };
-      return NextResponse.json({ success: true, data: newWord });
-    }
+    const success = await communityService.createModerationLog(
+      moderator_id,
+      action,
+      target_type,
+      target_id,
+      reason,
+      details
+    );
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success });
   } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
-  }
-}
-
-// PUT - Review content or update word
-export async function PUT(request: NextRequest) {
-  try {
-    const body = await request.json();
-    return NextResponse.json({ success: true, data: body });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
-  }
-}
-
-// DELETE - Delete sensitive word
-export async function DELETE(request: NextRequest) {
-  try {
-    return NextResponse.json({ success: true });
-  } catch (error: any) {
+    console.error('Moderation POST error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }

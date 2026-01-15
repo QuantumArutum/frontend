@@ -1,55 +1,55 @@
 /**
  * Community Activities & Events API
- * Handles events, polls, AMAs, and campaigns
+ * Production-grade implementation using communityService
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-
-// Demo data for activities
-const demoEvents = [
-  { id: 'evt_1', title: 'QAU Token Launch AMA', description: 'Ask Me Anything session', type: 'ama', status: 'scheduled', start_time: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), participant_count: 45, created_at: new Date().toISOString() },
-  { id: 'evt_2', title: 'Trading Competition', description: 'Win prizes!', type: 'contest', status: 'active', start_time: new Date().toISOString(), participant_count: 128, created_at: new Date().toISOString() },
-];
-
-const demoAnnouncements = [
-  { id: 1, title: 'Platform Update v2.0', content: 'New features released', type: 'info', is_pinned: 1, is_active: 1, created_at: new Date().toISOString() },
-  { id: 2, title: 'Scheduled Maintenance', content: 'Brief downtime expected', type: 'warning', is_pinned: 0, is_active: 1, created_at: new Date().toISOString() },
-];
-
-const demoPolls = [
-  { id: 'poll_1', question: 'Which feature should we build next?', options: JSON.stringify(['Mobile App', 'NFT Marketplace', 'Lending']), status: 'active', total_votes: 234, created_at: new Date().toISOString() },
-];
+import { communityService } from '@/lib/communityService';
 
 // GET - List activities
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'events';
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
+    const status = searchParams.get('status') || undefined;
 
     if (type === 'events') {
+      const result = await communityService.getEvents(status, page, limit);
       return NextResponse.json({
         success: true,
-        data: { events: demoEvents, stats: { total: demoEvents.length, active: 1, scheduled: 1 } }
+        data: {
+          events: result.events,
+          total: result.total,
+          stats: {
+            total: result.total,
+            active: result.events.filter(e => e.status === 'active').length,
+            scheduled: result.events.filter(e => e.status === 'upcoming').length
+          }
+        }
       });
     }
 
     if (type === 'announcements') {
+      const active = searchParams.get('active') === 'true' ? true : searchParams.get('active') === 'false' ? false : undefined;
+      const result = await communityService.getAnnouncements(active, page, limit);
       return NextResponse.json({
         success: true,
-        data: { announcements: demoAnnouncements, stats: { total: demoAnnouncements.length, active: 2 } }
-      });
-    }
-
-    if (type === 'polls') {
-      return NextResponse.json({
-        success: true,
-        data: { polls: demoPolls, stats: { total: demoPolls.length, active: 1 } }
+        data: {
+          announcements: result.announcements,
+          total: result.total,
+          stats: {
+            total: result.total,
+            active: result.announcements.filter(a => a.is_active).length
+          }
+        }
       });
     }
 
     return NextResponse.json({ success: true, data: {} });
   } catch (error: any) {
+    console.error('Activities GET error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
@@ -58,25 +58,21 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { type } = body;
+    const { type, ...data } = body;
 
     if (type === 'event') {
-      const newEvent = { id: 'evt_' + Date.now(), ...body, participant_count: 0, created_at: new Date().toISOString() };
-      return NextResponse.json({ success: true, data: newEvent });
+      const event = await communityService.createEvent(data);
+      return NextResponse.json({ success: true, data: event });
     }
 
     if (type === 'announcement') {
-      const newAnnouncement = { id: Date.now(), ...body, is_active: 1, created_at: new Date().toISOString() };
-      return NextResponse.json({ success: true, data: newAnnouncement });
-    }
-
-    if (type === 'poll') {
-      const newPoll = { id: 'poll_' + Date.now(), ...body, total_votes: 0, status: 'active', created_at: new Date().toISOString() };
-      return NextResponse.json({ success: true, data: newPoll });
+      const announcement = await communityService.createAnnouncement(data);
+      return NextResponse.json({ success: true, data: announcement });
     }
 
     return NextResponse.json({ success: false, message: 'Invalid type' }, { status: 400 });
   } catch (error: any) {
+    console.error('Activities POST error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
@@ -85,8 +81,21 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    return NextResponse.json({ success: true, data: body });
+    const { type, id, ...data } = body;
+
+    if (type === 'event') {
+      const event = await communityService.updateEvent(id, data);
+      return NextResponse.json({ success: true, data: event });
+    }
+
+    if (type === 'announcement') {
+      const announcement = await communityService.updateAnnouncement(id, data);
+      return NextResponse.json({ success: true, data: announcement });
+    }
+
+    return NextResponse.json({ success: false, message: 'Invalid type' }, { status: 400 });
   } catch (error: any) {
+    console.error('Activities PUT error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
@@ -94,8 +103,23 @@ export async function PUT(request: NextRequest) {
 // DELETE - Delete activity
 export async function DELETE(request: NextRequest) {
   try {
-    return NextResponse.json({ success: true });
+    const { searchParams } = new URL(request.url);
+    const type = searchParams.get('type');
+    const id = parseInt(searchParams.get('id') || '0');
+
+    if (type === 'event') {
+      await communityService.deleteEvent(id);
+      return NextResponse.json({ success: true });
+    }
+
+    if (type === 'announcement') {
+      await communityService.deleteAnnouncement(id);
+      return NextResponse.json({ success: true });
+    }
+
+    return NextResponse.json({ success: false, message: 'Invalid type' }, { status: 400 });
   } catch (error: any) {
+    console.error('Activities DELETE error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }

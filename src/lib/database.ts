@@ -457,6 +457,61 @@ export async function initDatabase() {
       )
     `;
 
+    // Private messages table
+    await sql`
+      CREATE TABLE IF NOT EXISTS private_messages (
+        id SERIAL PRIMARY KEY,
+        sender_id VARCHAR(50) REFERENCES users(uid),
+        receiver_id VARCHAR(50) REFERENCES users(uid),
+        subject VARCHAR(200) NOT NULL,
+        content TEXT NOT NULL,
+        is_read BOOLEAN DEFAULT false,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Community tasks table
+    await sql`
+      CREATE TABLE IF NOT EXISTS community_tasks (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(200) NOT NULL,
+        description TEXT,
+        task_type VARCHAR(50) DEFAULT 'daily',
+        reward_points INTEGER DEFAULT 0,
+        reward_tokens DECIMAL(20,8) DEFAULT 0,
+        requirements JSONB DEFAULT '{}',
+        max_completions INTEGER DEFAULT 0,
+        current_completions INTEGER DEFAULT 0,
+        is_active BOOLEAN DEFAULT true,
+        start_date TIMESTAMP,
+        end_date TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Task completions table
+    await sql`
+      CREATE TABLE IF NOT EXISTS task_completions (
+        id SERIAL PRIMARY KEY,
+        task_id INTEGER REFERENCES community_tasks(id) ON DELETE CASCADE,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        reward_claimed BOOLEAN DEFAULT false,
+        UNIQUE(task_id, user_id)
+      )
+    `;
+
+    // Sessions table
+    await sql`
+      CREATE TABLE IF NOT EXISTS sessions (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        token VARCHAR(255) UNIQUE NOT NULL,
+        expires_at TIMESTAMP NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
     console.log('Database tables initialized successfully');
   } catch (error) {
     console.error('Failed to initialize database:', error);

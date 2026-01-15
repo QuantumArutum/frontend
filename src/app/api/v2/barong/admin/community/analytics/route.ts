@@ -1,89 +1,95 @@
 /**
  * Community Analytics API
- * Provides analytics data for community management
+ * Production-grade implementation using communityService
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { communityService } from '@/lib/communityService';
 
 // GET - Analytics data
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'overview';
+    const days = parseInt(searchParams.get('days') || '30');
 
     if (type === 'overview') {
-      const postsResult = await db.getPosts({ page: 1, limit: 1000 });
-      const usersResult = await db.getUsers({ page: 1, limit: 1000 });
-      
+      const stats = await communityService.getFullStats();
       return NextResponse.json({
         success: true,
         data: {
           totals: {
-            posts: postsResult.data?.total || 0,
-            comments: 0,
-            users: usersResult.data?.total || 0,
-            activeUsers: usersResult.data?.users?.filter((u: any) => u.is_active).length || 0,
+            posts: stats?.totalPosts || 0,
+            comments: stats?.totalComments || 0,
+            users: stats?.totalUsers || 0,
+            activeUsers: stats?.activeToday || 0,
           },
           growth: {
-            postsThisWeek: 5,
-            postsLastWeek: 3,
-            growthRate: 66.7,
+            postsThisWeek: stats?.postsThisWeek || 0,
+            commentsThisWeek: stats?.commentsThisWeek || 0,
+            newUsersThisWeek: stats?.newUsersThisWeek || 0,
+            engagementRate: stats?.engagementRate || 0,
           },
-          today: {
-            posts: 2,
-            comments: 8,
-            newUsers: 3,
+          reports: {
+            total: stats?.totalReports || 0,
+            pending: stats?.pendingReports || 0,
           },
+          bans: {
+            total: stats?.totalBans || 0,
+            active: stats?.activeBans || 0,
+          },
+          events: {
+            total: stats?.totalEvents || 0,
+            upcoming: stats?.upcomingEvents || 0,
+          },
+          announcements: {
+            total: stats?.totalAnnouncements || 0,
+            active: stats?.activeAnnouncements || 0,
+          },
+          topCategories: stats?.topCategories || [],
         }
       });
     }
 
-    if (type === 'trends') {
+    if (type === 'trends' || type === 'full') {
+      const analytics = await communityService.getAnalytics(days);
       return NextResponse.json({
         success: true,
-        data: {
-          daily: [
-            { date: '2026-01-09', posts: 5, comments: 12, views: 234 },
-            { date: '2026-01-10', posts: 8, comments: 18, views: 345 },
-            { date: '2026-01-11', posts: 6, comments: 15, views: 289 },
-            { date: '2026-01-12', posts: 10, comments: 22, views: 456 },
-            { date: '2026-01-13', posts: 7, comments: 19, views: 378 },
-            { date: '2026-01-14', posts: 9, comments: 25, views: 412 },
-            { date: '2026-01-15', posts: 4, comments: 11, views: 198 },
-          ],
-        }
+        data: analytics
       });
     }
 
     if (type === 'top_content') {
-      const postsResult = await db.getPosts({ page: 1, limit: 10 });
-      const categoriesResult = await db.getCategories();
-      
+      const analytics = await communityService.getAnalytics(days);
       return NextResponse.json({
         success: true,
         data: {
-          topPosts: postsResult.data?.posts || [],
-          topCategories: categoriesResult.data || [],
-          topUsers: [],
+          topPosters: analytics?.leaderboards?.topPosters || [],
+          topCommenters: analytics?.leaderboards?.topCommenters || [],
+          categoryStats: analytics?.categoryStats || [],
         }
       });
     }
 
     if (type === 'engagement') {
+      const stats = await communityService.getFullStats();
+      const totalPosts = stats?.totalPosts || 1;
+      const totalComments = stats?.totalComments || 0;
+      const totalUsers = stats?.totalUsers || 1;
+      
       return NextResponse.json({
         success: true,
         data: {
-          avgPostsPerUser: 2.5,
-          avgCommentsPerPost: 4.2,
-          avgLikesPerPost: 8.7,
-          engagementRate: 15.3,
+          avgPostsPerUser: Math.round((totalPosts / totalUsers) * 100) / 100,
+          avgCommentsPerPost: Math.round((totalComments / totalPosts) * 100) / 100,
+          engagementRate: stats?.engagementRate || 0,
         }
       });
     }
 
     return NextResponse.json({ success: true, data: {} });
   } catch (error: any) {
+    console.error('Analytics GET error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }

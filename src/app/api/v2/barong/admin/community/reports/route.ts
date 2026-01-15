@@ -1,37 +1,38 @@
 /**
  * Community Reports API
- * Handles user reports for posts, comments, and users
+ * Production-grade implementation using communityService
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-
-// Demo data
-const demoReports: any[] = [];
+import { communityService } from '@/lib/communityService';
 
 // GET - List reports
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const status = searchParams.get('status');
-    const targetType = searchParams.get('target_type');
+    const status = searchParams.get('status') || undefined;
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
 
-    let reports = [...demoReports];
-    if (status) reports = reports.filter(r => r.status === status);
-    if (targetType) reports = reports.filter(r => r.target_type === targetType);
+    const result = await communityService.getReports(status, page, limit);
 
     return NextResponse.json({
       success: true,
       data: {
-        reports,
+        reports: result.reports,
+        total: result.total,
+        page,
+        per_page: limit,
         stats: {
-          total: reports.length,
-          pending: reports.filter(r => r.status === 'pending').length,
-          resolved: reports.filter(r => r.status === 'resolved').length,
+          total: result.total,
+          pending: result.reports.filter(r => r.status === 'pending').length,
+          resolved: result.reports.filter(r => r.status === 'resolved').length,
+          rejected: result.reports.filter(r => r.status === 'rejected').length,
         }
       }
     });
   } catch (error: any) {
+    console.error('Reports GET error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
@@ -40,14 +41,20 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const newReport = {
-      id: 'rpt_' + Date.now(),
-      ...body,
-      status: 'pending',
-      created_at: new Date().toISOString()
-    };
-    return NextResponse.json({ success: true, data: newReport });
+    const { reporter_id, reported_user_id, target_type, target_id, reason, description } = body;
+
+    const report = await communityService.createReport({
+      reporter_id,
+      reported_user_id,
+      target_type,
+      target_id,
+      reason,
+      description
+    });
+
+    return NextResponse.json({ success: true, data: report });
   } catch (error: any) {
+    console.error('Reports POST error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
@@ -56,17 +63,13 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    return NextResponse.json({ success: true, data: body });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
-  }
-}
+    const { id, status, admin_notes, handled_by } = body;
 
-// DELETE - Delete report
-export async function DELETE(request: NextRequest) {
-  try {
-    return NextResponse.json({ success: true });
+    const success = await communityService.updateReportStatus(id, status, admin_notes || '', handled_by);
+
+    return NextResponse.json({ success });
   } catch (error: any) {
+    console.error('Reports PUT error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
