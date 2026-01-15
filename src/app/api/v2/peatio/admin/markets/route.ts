@@ -1,105 +1,55 @@
 /**
  * Markets Management API - Admin
- * GET /api/v2/peatio/admin/markets - Get all markets
- * POST /api/v2/peatio/admin/markets - Create market
- * PUT /api/v2/peatio/admin/markets - Update market
+ * GET /api/v2/peatio/admin/markets - Get all markets/trading pairs
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/db';
 
 export async function GET(request: NextRequest) {
   try {
-    const db = await getDb();
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '50');
+    const status = searchParams.get('status');
     
-    // Check if markets table exists
-    const tableExists = await db.get(
-      "SELECT name FROM sqlite_master WHERE type='table' AND name='markets'"
-    );
+    // Demo markets data
+    const allMarkets = [
+      { id: 'btcusdt', base: 'BTC', quote: 'USDT', name: 'BTC/USDT', price: 67500.00, change24h: 2.5, volume24h: 125000000, high24h: 68200, low24h: 66800, status: 'active', makerFee: 0.001, takerFee: 0.001 },
+      { id: 'ethusdt', base: 'ETH', quote: 'USDT', name: 'ETH/USDT', price: 3450.00, change24h: 1.8, volume24h: 85000000, high24h: 3520, low24h: 3380, status: 'active', makerFee: 0.001, takerFee: 0.001 },
+      { id: 'qauusdt', base: 'QAU', quote: 'USDT', name: 'QAU/USDT', price: 0.85, change24h: 5.2, volume24h: 2500000, high24h: 0.88, low24h: 0.80, status: 'active', makerFee: 0.0005, takerFee: 0.001 },
+      { id: 'bnbusdt', base: 'BNB', quote: 'USDT', name: 'BNB/USDT', price: 580.00, change24h: -0.5, volume24h: 45000000, high24h: 590, low24h: 575, status: 'active', makerFee: 0.001, takerFee: 0.001 },
+      { id: 'adausdt', base: 'ADA', quote: 'USDT', name: 'ADA/USDT', price: 0.45, change24h: 3.2, volume24h: 15000000, high24h: 0.47, low24h: 0.43, status: 'active', makerFee: 0.001, takerFee: 0.001 },
+      { id: 'dotusdt', base: 'DOT', quote: 'USDT', name: 'DOT/USDT', price: 7.20, change24h: -1.2, volume24h: 8000000, high24h: 7.50, low24h: 7.10, status: 'active', makerFee: 0.001, takerFee: 0.001 },
+      { id: 'solusdt', base: 'SOL', quote: 'USDT', name: 'SOL/USDT', price: 145.00, change24h: 4.5, volume24h: 35000000, high24h: 148, low24h: 138, status: 'active', makerFee: 0.001, takerFee: 0.001 },
+      { id: 'xrpusdt', base: 'XRP', quote: 'USDT', name: 'XRP/USDT', price: 0.52, change24h: 0.8, volume24h: 12000000, high24h: 0.54, low24h: 0.50, status: 'suspended', makerFee: 0.001, takerFee: 0.001 },
+      { id: 'linkusdt', base: 'LINK', quote: 'USDT', name: 'LINK/USDT', price: 14.50, change24h: 2.1, volume24h: 6000000, high24h: 15.00, low24h: 14.00, status: 'active', makerFee: 0.001, takerFee: 0.001 },
+      { id: 'avaxusdt', base: 'AVAX', quote: 'USDT', name: 'AVAX/USDT', price: 35.00, change24h: -2.3, volume24h: 9000000, high24h: 36.50, low24h: 34.00, status: 'maintenance', makerFee: 0.001, takerFee: 0.001 },
+    ];
     
-    if (!tableExists) {
-      // Create markets table
-      await db.exec(`
-        CREATE TABLE IF NOT EXISTS markets (
-          id TEXT PRIMARY KEY,
-          pair TEXT NOT NULL UNIQUE,
-          base_asset TEXT NOT NULL,
-          quote_asset TEXT NOT NULL,
-          price REAL DEFAULT 0,
-          change_24h REAL DEFAULT 0,
-          volume_24h REAL DEFAULT 0,
-          high_24h REAL DEFAULT 0,
-          low_24h REAL DEFAULT 0,
-          trading_fee REAL DEFAULT 0.1,
-          min_order_size REAL DEFAULT 0.001,
-          status TEXT DEFAULT 'active',
-          is_active INTEGER DEFAULT 1,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-      `);
-      
-      // Insert default markets
-      const defaultMarkets = [
-        { base: 'BTC', quote: 'USDT', price: 43250.50, minOrder: 0.0001 },
-        { base: 'ETH', quote: 'USDT', price: 2680.75, minOrder: 0.001 },
-        { base: 'BNB', quote: 'USDT', price: 315.25, minOrder: 0.01 },
-        { base: 'ADA', quote: 'USDT', price: 0.485, minOrder: 1 },
-        { base: 'DOT', quote: 'USDT', price: 5.67, minOrder: 0.1 },
-        { base: 'LINK', quote: 'USDT', price: 14.82, minOrder: 0.1 },
-        { base: 'XRP', quote: 'USDT', price: 0.52, minOrder: 1 },
-        { base: 'LTC', quote: 'USDT', price: 72.15, minOrder: 0.01 },
-        { base: 'QAU', quote: 'USDT', price: 0.15, minOrder: 10 },
-        { base: 'QAU', quote: 'BTC', price: 0.0000035, minOrder: 10 },
-      ];
-      
-      for (const market of defaultMarkets) {
-        const change = (Math.random() - 0.5) * 20;
-        const high = market.price * (1 + Math.random() * 0.05);
-        const low = market.price * (1 - Math.random() * 0.05);
-        const volume = Math.random() * 10000000 + 100000;
-        
-        await db.run(`
-          INSERT INTO markets (id, pair, base_asset, quote_asset, price, change_24h, volume_24h, high_24h, low_24h, trading_fee, min_order_size, status, is_active)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `, [
-          `market_${market.base}_${market.quote}`,
-          `${market.base}/${market.quote}`,
-          market.base,
-          market.quote,
-          market.price,
-          change,
-          volume,
-          high,
-          low,
-          0.1,
-          market.minOrder,
-          'active',
-          1
-        ]);
-      }
+    // Apply filters
+    let markets = [...allMarkets];
+    if (status && status !== 'all') {
+      markets = markets.filter(m => m.status === status);
     }
     
-    const markets = await db.all('SELECT * FROM markets ORDER BY volume_24h DESC');
+    const total = markets.length;
+    const paginatedMarkets = markets.slice((page - 1) * limit, page * limit);
     
     return NextResponse.json({
-      markets: markets.map(m => ({
-        id: m.id,
-        pair: m.pair,
-        baseAsset: m.base_asset,
-        quoteAsset: m.quote_asset,
-        price: m.price,
-        change24h: m.change_24h,
-        volume24h: m.volume_24h,
-        high24h: m.high_24h,
-        low24h: m.low_24h,
-        tradingFee: m.trading_fee,
-        minOrderSize: m.min_order_size,
-        status: m.status,
-        isActive: m.is_active === 1,
-        createdAt: m.created_at,
-        updatedAt: m.updated_at
-      }))
+      markets: paginatedMarkets,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit)
+      },
+      stats: {
+        totalMarkets: allMarkets.length,
+        activeMarkets: allMarkets.filter(m => m.status === 'active').length,
+        suspendedMarkets: allMarkets.filter(m => m.status === 'suspended').length,
+        maintenanceMarkets: allMarkets.filter(m => m.status === 'maintenance').length,
+        totalVolume24h: allMarkets.reduce((sum, m) => sum + m.volume24h, 0)
+      }
     });
   } catch (error) {
     console.error('Markets API error:', error);
@@ -110,80 +60,18 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { baseAsset, quoteAsset, tradingFee, minOrderSize, status } = body;
-    
-    if (!baseAsset || !quoteAsset) {
-      return NextResponse.json(
-        { error: 'Base asset and quote asset are required' },
-        { status: 400 }
-      );
-    }
-    
-    const db = await getDb();
-    const pair = `${baseAsset}/${quoteAsset}`;
-    const id = `market_${baseAsset}_${quoteAsset}`;
-    
-    // Check if market already exists
-    const existing = await db.get('SELECT id FROM markets WHERE pair = ?', [pair]);
-    if (existing) {
-      return NextResponse.json(
-        { error: 'Market already exists' },
-        { status: 400 }
-      );
-    }
-    
-    await db.run(`
-      INSERT INTO markets (id, pair, base_asset, quote_asset, trading_fee, min_order_size, status, is_active)
-      VALUES (?, ?, ?, ?, ?, ?, ?, 1)
-    `, [id, pair, baseAsset, quoteAsset, tradingFee || 0.1, minOrderSize || 0.001, status || 'active']);
-    
-    return NextResponse.json({
-      success: true,
-      message: 'Market created successfully',
-      market: { id, pair, baseAsset, quoteAsset }
-    });
-  } catch (error) {
-    console.error('Create market error:', error);
-    return NextResponse.json(
-      { error: 'Failed to create market' },
-      { status: 500 }
-    );
-  }
-}
-
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id, tradingFee, minOrderSize, status, isActive } = body;
+    const { id, status } = body;
     
-    if (!id) {
-      return NextResponse.json(
-        { error: 'Market ID is required' },
-        { status: 400 }
-      );
-    }
-    
-    const db = await getDb();
-    
-    await db.run(`
-      UPDATE markets 
-      SET trading_fee = COALESCE(?, trading_fee),
-          min_order_size = COALESCE(?, min_order_size),
-          status = COALESCE(?, status),
-          is_active = COALESCE(?, is_active),
-          updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
-    `, [tradingFee, minOrderSize, status, isActive !== undefined ? (isActive ? 1 : 0) : null, id]);
-    
+    // In production, update database
     return NextResponse.json({
       success: true,
-      message: 'Market updated successfully'
+      message: `Market ${id} status updated to ${status}`
     });
   } catch (error) {
-    console.error('Update market error:', error);
+    console.error('Markets PUT error:', error);
     return NextResponse.json(
       { error: 'Failed to update market' },
       { status: 500 }

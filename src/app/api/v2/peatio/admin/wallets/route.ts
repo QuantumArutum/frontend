@@ -4,108 +4,107 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/db';
 
 export async function GET(request: NextRequest) {
   try {
-    const db = await getDb();
-    
-    // Check if wallets table exists
-    const tableExists = await db.get(
-      "SELECT name FROM sqlite_master WHERE type='table' AND name='admin_wallets'"
-    );
-    
-    if (!tableExists) {
-      // Create wallets table
-      await db.exec(`
-        CREATE TABLE IF NOT EXISTS admin_wallets (
-          id TEXT PRIMARY KEY,
-          currency TEXT NOT NULL UNIQUE,
-          symbol TEXT NOT NULL,
-          total_balance REAL DEFAULT 0,
-          available_balance REAL DEFAULT 0,
-          frozen_balance REAL DEFAULT 0,
-          hot_wallet_balance REAL DEFAULT 0,
-          cold_wallet_balance REAL DEFAULT 0,
-          usd_value REAL DEFAULT 0,
-          price REAL DEFAULT 0,
-          change_24h REAL DEFAULT 0,
-          status TEXT DEFAULT 'normal',
-          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-      `);
-      
-      // Insert default wallet data
-      const currencies = [
-        { currency: 'Bitcoin', symbol: 'BTC', price: 43250.50 },
-        { currency: 'Ethereum', symbol: 'ETH', price: 2680.75 },
-        { currency: 'Binance Coin', symbol: 'BNB', price: 315.25 },
-        { currency: 'Cardano', symbol: 'ADA', price: 0.485 },
-        { currency: 'Polkadot', symbol: 'DOT', price: 5.67 },
-        { currency: 'Chainlink', symbol: 'LINK', price: 14.82 },
-        { currency: 'Tether', symbol: 'USDT', price: 1.00 },
-        { currency: 'USD Coin', symbol: 'USDC', price: 1.00 },
-        { currency: 'Quantaureum', symbol: 'QAU', price: 0.15 },
-      ];
-      
-      for (const curr of currencies) {
-        const totalBalance = Math.random() * 10000 + 1000;
-        const frozenBalance = totalBalance * (Math.random() * 0.1);
-        const availableBalance = totalBalance - frozenBalance;
-        const hotWalletRatio = Math.random() * 0.3 + 0.1;
-        const hotWalletBalance = totalBalance * hotWalletRatio;
-        const coldWalletBalance = totalBalance - hotWalletBalance;
-        
-        await db.run(`
-          INSERT INTO admin_wallets (id, currency, symbol, total_balance, available_balance, frozen_balance, hot_wallet_balance, cold_wallet_balance, usd_value, price, change_24h, status)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `, [
-          `wallet_${curr.symbol}`,
-          curr.currency,
-          curr.symbol,
-          totalBalance,
-          availableBalance,
-          frozenBalance,
-          hotWalletBalance,
-          coldWalletBalance,
-          totalBalance * curr.price,
-          curr.price,
-          (Math.random() - 0.5) * 20,
-          Math.random() > 0.1 ? 'normal' : 'maintenance'
-        ]);
-      }
-    }
-    
-    const wallets = await db.all('SELECT * FROM admin_wallets ORDER BY usd_value DESC');
+    // Demo wallet data
+    const wallets = [
+      { 
+        id: 'btc_hot', 
+        currency: 'BTC', 
+        name: 'Bitcoin Hot Wallet',
+        type: 'hot',
+        balance: 125.5,
+        usdValue: 8471250,
+        address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+        status: 'active',
+        lastActivity: new Date().toISOString()
+      },
+      { 
+        id: 'btc_cold', 
+        currency: 'BTC', 
+        name: 'Bitcoin Cold Wallet',
+        type: 'cold',
+        balance: 850.0,
+        usdValue: 57375000,
+        address: '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy',
+        status: 'active',
+        lastActivity: new Date(Date.now() - 86400000).toISOString()
+      },
+      { 
+        id: 'eth_hot', 
+        currency: 'ETH', 
+        name: 'Ethereum Hot Wallet',
+        type: 'hot',
+        balance: 2500.0,
+        usdValue: 8625000,
+        address: '0x742d35Cc6634C0532925a3b844Bc9e7595f',
+        status: 'active',
+        lastActivity: new Date().toISOString()
+      },
+      { 
+        id: 'eth_cold', 
+        currency: 'ETH', 
+        name: 'Ethereum Cold Wallet',
+        type: 'cold',
+        balance: 15000.0,
+        usdValue: 51750000,
+        address: '0x8ba1f109551bD432803012645Ac136ddd64DBA72',
+        status: 'active',
+        lastActivity: new Date(Date.now() - 172800000).toISOString()
+      },
+      { 
+        id: 'usdt_hot', 
+        currency: 'USDT', 
+        name: 'USDT Hot Wallet',
+        type: 'hot',
+        balance: 5000000.0,
+        usdValue: 5000000,
+        address: 'TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9',
+        status: 'active',
+        lastActivity: new Date().toISOString()
+      },
+      { 
+        id: 'qau_hot', 
+        currency: 'QAU', 
+        name: 'QAU Hot Wallet',
+        type: 'hot',
+        balance: 50000000.0,
+        usdValue: 42500000,
+        address: '0xQAU742d35Cc6634C0532925a3b844Bc9e7595f',
+        status: 'active',
+        lastActivity: new Date().toISOString()
+      },
+      { 
+        id: 'qau_cold', 
+        currency: 'QAU', 
+        name: 'QAU Cold Wallet',
+        type: 'cold',
+        balance: 200000000.0,
+        usdValue: 170000000,
+        address: '0xQAU8ba1f109551bD432803012645Ac136ddd64DBA72',
+        status: 'active',
+        lastActivity: new Date(Date.now() - 259200000).toISOString()
+      },
+    ];
     
     // Calculate totals
-    const totals = wallets.reduce((acc, w) => ({
-      totalUsdValue: acc.totalUsdValue + (w.usd_value || 0),
-      hotWalletTotal: acc.hotWalletTotal + (w.hot_wallet_balance * w.price || 0),
-      coldWalletTotal: acc.coldWalletTotal + (w.cold_wallet_balance * w.price || 0),
-      frozenTotal: acc.frozenTotal + (w.frozen_balance * w.price || 0)
-    }), { totalUsdValue: 0, hotWalletTotal: 0, coldWalletTotal: 0, frozenTotal: 0 });
+    const hotWallets = wallets.filter(w => w.type === 'hot');
+    const coldWallets = wallets.filter(w => w.type === 'cold');
+    
+    const stats = {
+      totalAssetValue: wallets.reduce((sum, w) => sum + w.usdValue, 0),
+      hotWalletAssets: hotWallets.reduce((sum, w) => sum + w.usdValue, 0),
+      coldWalletAssets: coldWallets.reduce((sum, w) => sum + w.usdValue, 0),
+      totalWallets: wallets.length,
+      hotWalletCount: hotWallets.length,
+      coldWalletCount: coldWallets.length,
+      hotWalletPercent: (hotWallets.reduce((sum, w) => sum + w.usdValue, 0) / wallets.reduce((sum, w) => sum + w.usdValue, 0) * 100).toFixed(2)
+    };
     
     return NextResponse.json({
-      wallets: wallets.map(w => ({
-        currency: w.currency,
-        symbol: w.symbol,
-        totalBalance: w.total_balance,
-        availableBalance: w.available_balance,
-        frozenBalance: w.frozen_balance,
-        hotWalletBalance: w.hot_wallet_balance,
-        coldWalletBalance: w.cold_wallet_balance,
-        usdValue: w.usd_value,
-        price: w.price,
-        change24h: w.change_24h,
-        status: w.status
-      })),
-      totals: {
-        totalUsdValue: totals.totalUsdValue,
-        hotWalletTotal: totals.hotWalletTotal,
-        coldWalletTotal: totals.coldWalletTotal,
-        frozenTotal: totals.frozenTotal
-      }
+      wallets,
+      stats
     });
   } catch (error) {
     console.error('Wallets API error:', error);

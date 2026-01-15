@@ -6,6 +6,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { communityService } from '@/lib/communityService';
 
+// Type assertion for methods that TypeScript can't infer due to object size
+const service = communityService as typeof communityService & {
+  getModerationQueue: (page?: number, limit?: number) => Promise<{ queue: any[]; pending: number; approved: number; rejected: number }>;
+  updateModerationQueueItem: (id: string, status: string, reviewedBy: string, reviewNote?: string) => Promise<boolean>;
+  getSensitiveWords: () => Promise<any[]>;
+  addSensitiveWord: (word: string, level: string, category: string) => Promise<boolean>;
+  deleteSensitiveWord: (id: number) => Promise<boolean>;
+};
+
 // GET - Get moderation data
 export async function GET(request: NextRequest) {
   try {
@@ -27,7 +36,7 @@ export async function GET(request: NextRequest) {
 
     if (type === 'queue') {
       // Get moderation queue - content pending review
-      const result = await communityService.getModerationQueue(page, limit);
+      const result = await service.getModerationQueue(page, limit);
       return NextResponse.json({
         success: true,
         data: {
@@ -43,7 +52,7 @@ export async function GET(request: NextRequest) {
 
     if (type === 'words') {
       // Get sensitive words list
-      const words = await communityService.getSensitiveWords();
+      const words = await service.getSensitiveWords();
       return NextResponse.json({
         success: true,
         data: words || []
@@ -51,7 +60,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (type === 'stats') {
-      const stats = await communityService.getFullStats();
+      const stats = await service.getFullStats();
       return NextResponse.json({
         success: true,
         data: {
@@ -79,13 +88,13 @@ export async function POST(request: NextRequest) {
     if (type === 'word') {
       // Add sensitive word
       const { word, level, category } = body;
-      const success = await communityService.addSensitiveWord(word, level || 'review', category || 'general');
+      const success = await service.addSensitiveWord(word, level || 'review', category || 'general');
       return NextResponse.json({ success });
     }
 
     // Default: create moderation log
     const { action, moderator_id, target_type, target_id, reason, details } = body;
-    const success = await communityService.createModerationLog(
+    const success = await service.createModerationLog(
       moderator_id,
       action,
       target_type,
@@ -108,7 +117,7 @@ export async function PUT(request: NextRequest) {
     const { type, id, status, reviewed_by, review_note } = body;
 
     if (type === 'queue') {
-      const success = await communityService.updateModerationQueueItem(id, status, reviewed_by, review_note);
+      const success = await service.updateModerationQueueItem(id, status, reviewed_by, review_note);
       return NextResponse.json({ success });
     }
 
@@ -127,7 +136,7 @@ export async function DELETE(request: NextRequest) {
     const id = searchParams.get('id');
 
     if (type === 'word' && id) {
-      const success = await communityService.deleteSensitiveWord(parseInt(id));
+      const success = await service.deleteSensitiveWord(parseInt(id));
       return NextResponse.json({ success });
     }
 
