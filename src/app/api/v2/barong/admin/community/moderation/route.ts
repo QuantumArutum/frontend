@@ -25,6 +25,31 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    if (type === 'queue') {
+      // Get moderation queue - content pending review
+      const result = await communityService.getModerationQueue(page, limit);
+      return NextResponse.json({
+        success: true,
+        data: {
+          queue: result.queue || [],
+          stats: {
+            pending: result.pending || 0,
+            approved: result.approved || 0,
+            rejected: result.rejected || 0,
+          }
+        }
+      });
+    }
+
+    if (type === 'words') {
+      // Get sensitive words list
+      const words = await communityService.getSensitiveWords();
+      return NextResponse.json({
+        success: true,
+        data: words || []
+      });
+    }
+
     if (type === 'stats') {
       const stats = await communityService.getFullStats();
       return NextResponse.json({
@@ -45,12 +70,21 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST - Create moderation action
+// POST - Create moderation action or add sensitive word
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { action, moderator_id, target_type, target_id, reason, details } = body;
+    const { type } = body;
 
+    if (type === 'word') {
+      // Add sensitive word
+      const { word, level, category } = body;
+      const success = await communityService.addSensitiveWord(word, level || 'review', category || 'general');
+      return NextResponse.json({ success });
+    }
+
+    // Default: create moderation log
+    const { action, moderator_id, target_type, target_id, reason, details } = body;
     const success = await communityService.createModerationLog(
       moderator_id,
       action,
@@ -63,6 +97,43 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success });
   } catch (error: any) {
     console.error('Moderation POST error:', error);
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  }
+}
+
+// PUT - Update moderation queue item
+export async function PUT(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { type, id, status, reviewed_by, review_note } = body;
+
+    if (type === 'queue') {
+      const success = await communityService.updateModerationQueueItem(id, status, reviewed_by, review_note);
+      return NextResponse.json({ success });
+    }
+
+    return NextResponse.json({ success: false, message: 'Invalid type' }, { status: 400 });
+  } catch (error: any) {
+    console.error('Moderation PUT error:', error);
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  }
+}
+
+// DELETE - Delete sensitive word
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const type = searchParams.get('type');
+    const id = searchParams.get('id');
+
+    if (type === 'word' && id) {
+      const success = await communityService.deleteSensitiveWord(parseInt(id));
+      return NextResponse.json({ success });
+    }
+
+    return NextResponse.json({ success: false, message: 'Invalid parameters' }, { status: 400 });
+  } catch (error: any) {
+    console.error('Moderation DELETE error:', error);
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
