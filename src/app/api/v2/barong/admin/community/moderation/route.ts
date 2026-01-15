@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/db';
+import getDb from '@/lib/db';
 
 // Initialize moderation tables
 async function ensureModerationTables() {
