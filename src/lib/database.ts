@@ -236,6 +236,227 @@ export async function initDatabase() {
       )
     `;
 
+    // ========== COMMUNITY EXTENDED TABLES ==========
+    
+    // User badges table
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_badges (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        badge_type VARCHAR(50) NOT NULL,
+        badge_name VARCHAR(100) NOT NULL,
+        badge_icon VARCHAR(200),
+        description TEXT,
+        earned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(user_id, badge_type)
+      )
+    `;
+
+    // User levels/reputation table
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_reputation (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(50) UNIQUE REFERENCES users(uid),
+        reputation_points INTEGER DEFAULT 0,
+        level INTEGER DEFAULT 1,
+        posts_count INTEGER DEFAULT 0,
+        comments_count INTEGER DEFAULT 0,
+        likes_received INTEGER DEFAULT 0,
+        likes_given INTEGER DEFAULT 0,
+        helpful_answers INTEGER DEFAULT 0,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Post likes table
+    await sql`
+      CREATE TABLE IF NOT EXISTS post_likes (
+        id SERIAL PRIMARY KEY,
+        post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(post_id, user_id)
+      )
+    `;
+
+    // Comment likes table
+    await sql`
+      CREATE TABLE IF NOT EXISTS comment_likes (
+        id SERIAL PRIMARY KEY,
+        comment_id INTEGER REFERENCES comments(id) ON DELETE CASCADE,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(comment_id, user_id)
+      )
+    `;
+
+    // User reports table
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_reports (
+        id SERIAL PRIMARY KEY,
+        reporter_id VARCHAR(50) REFERENCES users(uid),
+        reported_user_id VARCHAR(50) REFERENCES users(uid),
+        target_type VARCHAR(50) NOT NULL,
+        target_id INTEGER NOT NULL,
+        reason VARCHAR(100) NOT NULL,
+        description TEXT,
+        status VARCHAR(50) DEFAULT 'pending',
+        admin_notes TEXT,
+        handled_by VARCHAR(50),
+        handled_at TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // User bans table
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_bans (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        banned_by VARCHAR(50),
+        reason TEXT NOT NULL,
+        ban_type VARCHAR(50) DEFAULT 'temporary',
+        expires_at TIMESTAMP,
+        is_active BOOLEAN DEFAULT true,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Community notifications table
+    await sql`
+      CREATE TABLE IF NOT EXISTS community_notifications (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        type VARCHAR(50) NOT NULL,
+        title VARCHAR(200) NOT NULL,
+        content TEXT,
+        link VARCHAR(500),
+        is_read BOOLEAN DEFAULT false,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Community announcements table
+    await sql`
+      CREATE TABLE IF NOT EXISTS community_announcements (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(200) NOT NULL,
+        content TEXT NOT NULL,
+        type VARCHAR(50) DEFAULT 'info',
+        is_pinned BOOLEAN DEFAULT false,
+        is_active BOOLEAN DEFAULT true,
+        start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        end_date TIMESTAMP,
+        created_by VARCHAR(50),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Community events table
+    await sql`
+      CREATE TABLE IF NOT EXISTS community_events (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(200) NOT NULL,
+        description TEXT,
+        event_type VARCHAR(50) NOT NULL,
+        start_time TIMESTAMP NOT NULL,
+        end_time TIMESTAMP,
+        location VARCHAR(500),
+        max_participants INTEGER,
+        current_participants INTEGER DEFAULT 0,
+        reward_points INTEGER DEFAULT 0,
+        reward_tokens DECIMAL(20,8) DEFAULT 0,
+        status VARCHAR(50) DEFAULT 'upcoming',
+        image_url VARCHAR(500),
+        created_by VARCHAR(50),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Event participants table
+    await sql`
+      CREATE TABLE IF NOT EXISTS event_participants (
+        id SERIAL PRIMARY KEY,
+        event_id INTEGER REFERENCES community_events(id) ON DELETE CASCADE,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        status VARCHAR(50) DEFAULT 'registered',
+        registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        attended_at TIMESTAMP,
+        reward_claimed BOOLEAN DEFAULT false,
+        UNIQUE(event_id, user_id)
+      )
+    `;
+
+    // User follows table
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_follows (
+        id SERIAL PRIMARY KEY,
+        follower_id VARCHAR(50) REFERENCES users(uid),
+        following_id VARCHAR(50) REFERENCES users(uid),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(follower_id, following_id)
+      )
+    `;
+
+    // Post bookmarks table
+    await sql`
+      CREATE TABLE IF NOT EXISTS post_bookmarks (
+        id SERIAL PRIMARY KEY,
+        post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(post_id, user_id)
+      )
+    `;
+
+    // Post tags table
+    await sql`
+      CREATE TABLE IF NOT EXISTS post_tags (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(50) NOT NULL UNIQUE,
+        slug VARCHAR(50) NOT NULL UNIQUE,
+        usage_count INTEGER DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Post tag relations table
+    await sql`
+      CREATE TABLE IF NOT EXISTS post_tag_relations (
+        id SERIAL PRIMARY KEY,
+        post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+        tag_id INTEGER REFERENCES post_tags(id) ON DELETE CASCADE,
+        UNIQUE(post_id, tag_id)
+      )
+    `;
+
+    // Moderation logs table
+    await sql`
+      CREATE TABLE IF NOT EXISTS moderation_logs (
+        id SERIAL PRIMARY KEY,
+        moderator_id VARCHAR(50),
+        action VARCHAR(100) NOT NULL,
+        target_type VARCHAR(50) NOT NULL,
+        target_id INTEGER NOT NULL,
+        reason TEXT,
+        details JSONB,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // User activity logs table
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_activity_logs (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        activity_type VARCHAR(50) NOT NULL,
+        target_type VARCHAR(50),
+        target_id INTEGER,
+        points_earned INTEGER DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
     console.log('Database tables initialized successfully');
   } catch (error) {
     console.error('Failed to initialize database:', error);
