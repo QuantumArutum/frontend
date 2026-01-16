@@ -77,14 +77,14 @@ export default function PostDetailPage() {
         <div className="flex items-center mb-4">
           <Avatar size="large" icon={<UserOutlined />} className="bg-blue-500 mr-4" />
           <div>
-            <Title level={3} className="text-white m-0">{post.title}</Title>
-            <Text type="secondary" className="text-gray-400">
+            <Title level={3} style={{ color: 'white', margin: 0 }}>{post.title}</Title>
+            <Text style={{ color: '#9CA3AF' }}>
               Posted by {post.author_email} • {new Date(post.created_at).toLocaleString()}
             </Text>
           </div>
         </div>
         
-        <div className="text-lg text-gray-300 mb-8 whitespace-pre-wrap leading-relaxed">
+        <div className="text-lg mb-8 whitespace-pre-wrap leading-relaxed" style={{ color: 'white' }}>
           {post.content}
         </div>
 
@@ -104,13 +104,13 @@ export default function PostDetailPage() {
       </Card>
 
       <div className="mb-8">
-        <Title level={4} className="text-white mb-4">Leave a Comment</Title>
+        <Title level={4} style={{ color: 'white', marginBottom: '16px' }}>Leave a Comment</Title>
         <TextArea 
           rows={4} 
           value={commentContent}
           onChange={e => setCommentContent(e.target.value)}
           placeholder="Share your thoughts..."
-          className="bg-gray-800 text-white border-gray-700 mb-4"
+          style={{ backgroundColor: '#1f2937', color: 'white', borderColor: '#374151', marginBottom: '16px' }}
         />
         <Button type="primary" onClick={handleComment}>Post Comment</Button>
       </div>
@@ -123,8 +123,8 @@ export default function PostDetailPage() {
           <List.Item className="border-b border-gray-800 last:border-0">
             <List.Item.Meta
               avatar={<Avatar icon={<UserOutlined />} />}
-              title={<span className="text-gray-300">{item.user_email} <span className="text-gray-500 text-xs ml-2">{new Date(item.created_at).toLocaleString()}</span></span>}
-              description={<span className="text-white text-base mt-1 block">{item.content}</span>}
+              title={<span style={{ color: '#D1D5DB' }}>{item.user_email} <span style={{ color: '#6B7280', fontSize: '12px', marginLeft: '8px' }}>{new Date(item.created_at).toLocaleString()}</span></span>}
+              description={<span style={{ color: 'white', fontSize: '16px', marginTop: '4px', display: 'block' }}>{item.content}</span>}
             />
           </List.Item>
         )}
