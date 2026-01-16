@@ -457,13 +457,25 @@ export async function initDatabase() {
       )
     `;
 
+    // Conversations table (for private messaging)
+    await sql`
+      CREATE TABLE IF NOT EXISTS conversations (
+        id SERIAL PRIMARY KEY,
+        participant1_id VARCHAR(50) REFERENCES users(uid),
+        participant2_id VARCHAR(50) REFERENCES users(uid),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(participant1_id, participant2_id)
+      )
+    `;
+
     // Private messages table
     await sql`
       CREATE TABLE IF NOT EXISTS private_messages (
         id SERIAL PRIMARY KEY,
+        conversation_id INTEGER REFERENCES conversations(id) ON DELETE CASCADE,
         sender_id VARCHAR(50) REFERENCES users(uid),
         receiver_id VARCHAR(50) REFERENCES users(uid),
-        subject VARCHAR(200) NOT NULL,
         content TEXT NOT NULL,
         is_read BOOLEAN DEFAULT false,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

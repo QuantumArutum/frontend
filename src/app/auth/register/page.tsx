@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { 
-  Eye, EyeOff, Mail, Lock, User, Shield, Zap, CheckCircle, AlertCircle, ArrowRight, Phone, Calendar, MapPin, Sparkles
+  Eye, EyeOff, Mail, Lock, User, Shield, Zap, CheckCircle, AlertCircle, ArrowRight, Sparkles
 } from 'lucide-react';
 import { colors, typography, shadows } from '@/styles/design-tokens';
 import { useTranslation } from 'react-i18next';
@@ -14,57 +14,74 @@ const RegisterPage = () => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    firstName: '', lastName: '', email: '', phone: '',
-    dateOfBirth: '', country: '', password: '', confirmPassword: '',
-    securityQuestion: '', securityAnswer: '', twoFactorEnabled: false,
+    email: '', verificationCode: '', password: '', confirmPassword: '',
     agreeTerms: false, agreePrivacy: false, agreeMarketing: false
   });
   
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [sendingCode, setSendingCode] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
+  const [countdown, setCountdown] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState('');
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
-  const securityQuestions = [
-    { key: 'q1', label: t('auth.register.security_questions.q1') },
-    { key: 'q2', label: t('auth.register.security_questions.q2') },
-    { key: 'q3', label: t('auth.register.security_questions.q3') },
-    { key: 'q4', label: t('auth.register.security_questions.q4') }
-  ];
-  
-  const countries = [
-    { key: 'china', label: t('auth.register.countries.china') },
-    { key: 'usa', label: t('auth.register.countries.usa') },
-    { key: 'uk', label: t('auth.register.countries.uk') },
-    { key: 'canada', label: t('auth.register.countries.canada') },
-    { key: 'australia', label: t('auth.register.countries.australia') },
-    { key: 'singapore', label: t('auth.register.countries.singapore') },
-    { key: 'japan', label: t('auth.register.countries.japan') },
-    { key: 'korea', label: t('auth.register.countries.korea') },
-    { key: 'germany', label: t('auth.register.countries.germany') },
-    { key: 'france', label: t('auth.register.countries.france') }
-  ];
+  // 倒计时效果
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [countdown]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const target = e.target as HTMLInputElement;
-    const { name, value, type } = target;
-    const checked = type === 'checkbox' ? target.checked : false;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+  };
+
+  // 发送验证码
+  const sendVerificationCode = async () => {
+    if (!formData.email.trim()) {
+      setErrors({ email: t('auth.register.validation.email_required') });
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setErrors({ email: t('auth.register.validation.email_invalid') });
+      return;
+    }
+
+    setSendingCode(true);
+    try {
+      const response = await fetch('/api/auth/send-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formData.email, type: 'register' }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setCodeSent(true);
+        setCountdown(60);
+        setErrors({});
+      } else {
+        setErrors({ email: data.message || t('auth.register.send_code_failed') });
+      }
+    } catch {
+      setErrors({ email: t('auth.register.network_error') });
+    } finally {
+      setSendingCode(false);
+    }
   };
 
   const validateStep = (step: number): boolean => {
     const newErrors: Record<string, string> = {};
     if (step === 1) {
-      if (!formData.firstName.trim()) newErrors.firstName = t('auth.register.validation.first_name_required');
-      if (!formData.lastName.trim()) newErrors.lastName = t('auth.register.validation.last_name_required');
       if (!formData.email.trim()) newErrors.email = t('auth.register.validation.email_required');
       else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = t('auth.register.validation.email_invalid');
-      if (!formData.phone.trim()) newErrors.phone = t('auth.register.validation.phone_required');
-      if (!formData.dateOfBirth) newErrors.dateOfBirth = t('auth.register.validation.dob_required');
-      if (!formData.country) newErrors.country = t('auth.register.validation.country_required');
+      if (!formData.verificationCode.trim()) newErrors.verificationCode = t('auth.register.validation.code_required');
+      else if (formData.verificationCode.length !== 6) newErrors.verificationCode = t('auth.register.validation.code_invalid');
     }
     if (step === 2) {
       if (!formData.password) newErrors.password = t('auth.register.validation.password_required');
@@ -74,10 +91,6 @@ const RegisterPage = () => {
       else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = t('auth.register.validation.password_mismatch');
     }
     if (step === 3) {
-      if (!formData.securityQuestion) newErrors.securityQuestion = t('auth.register.validation.security_question_required');
-      if (!formData.securityAnswer.trim()) newErrors.securityAnswer = t('auth.register.validation.security_answer_required');
-    }
-    if (step === 4) {
       if (!formData.agreeTerms) newErrors.agreeTerms = t('auth.register.validation.terms_required');
       if (!formData.agreePrivacy) newErrors.agreePrivacy = t('auth.register.validation.privacy_required');
     }
@@ -90,16 +103,17 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!validateStep(4)) return;
+    if (!validateStep(3)) return;
     setLoading(true);
     try {
       const response = await fetch('/api/auth/register', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          first_name: formData.firstName, last_name: formData.lastName, email: formData.email,
-          phone: formData.phone, date_of_birth: formData.dateOfBirth, country: formData.country,
-          password: formData.password, security_question: formData.securityQuestion,
-          security_answer: formData.securityAnswer, two_factor_enabled: formData.twoFactorEnabled,
+          email: formData.email,
+          verificationCode: formData.verificationCode,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+          acceptTerms: formData.agreeTerms && formData.agreePrivacy,
           marketing_consent: formData.agreeMarketing
         }),
       });
@@ -118,7 +132,8 @@ const RegisterPage = () => {
     if (/[a-z]/.test(password)) strength++;
     if (/[A-Z]/.test(password)) strength++;
     if (/\d/.test(password)) strength++;
-    return Math.min(strength, 4);
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength++;
+    return Math.min(strength, 5);
   };
 
   const inputStyle = (fieldName: string, hasError?: boolean) => ({
@@ -129,81 +144,40 @@ const RegisterPage = () => {
     transition: 'all 0.3s ease'
   });
 
-  const selectStyle = (fieldName: string, hasError?: boolean) => ({
-    ...inputStyle(fieldName, hasError),
-    appearance: 'none' as const
-  });
-
-
   const renderStep = () => {
     switch (currentStep) {
       case 1:
         return (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-            <h3 className="text-lg font-semibold mb-4" style={{ color: colors.text.primary }}>{t('auth.register.step_basic_info')}</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: colors.text.secondary }}>{t('auth.register.first_name')}</label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: focusedField === 'firstName' ? colors.secondary : colors.text.muted }} />
-                  <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange}
-                    onFocus={() => setFocusedField('firstName')} onBlur={() => setFocusedField(null)}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl outline-none" style={inputStyle('firstName', !!errors.firstName)} placeholder={t('auth.register.first_name_placeholder')} />
-                </div>
-                {errors.firstName && <p className="text-sm mt-1" style={{ color: colors.status.error }}>{errors.firstName}</p>}
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: colors.text.secondary }}>{t('auth.register.last_name')}</label>
-                <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange}
-                  onFocus={() => setFocusedField('lastName')} onBlur={() => setFocusedField(null)}
-                  className="w-full px-4 py-3 rounded-xl outline-none" style={inputStyle('lastName', !!errors.lastName)} placeholder={t('auth.register.last_name_placeholder')} />
-                {errors.lastName && <p className="text-sm mt-1" style={{ color: colors.status.error }}>{errors.lastName}</p>}
-              </div>
-            </div>
+            <h3 className="text-lg font-semibold mb-4" style={{ color: colors.text.primary }}>{t('auth.register.step_email_verify')}</h3>
             <div>
               <label className="block text-sm font-medium mb-2" style={{ color: colors.text.secondary }}>{t('auth.register.email_label')}</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: focusedField === 'email' ? colors.secondary : colors.text.muted }} />
                 <input type="email" name="email" value={formData.email} onChange={handleInputChange}
                   onFocus={() => setFocusedField('email')} onBlur={() => setFocusedField(null)}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl outline-none" style={inputStyle('email', !!errors.email)} placeholder={t('auth.register.email_placeholder')} />
+                  className="w-full pl-10 pr-4 py-3 rounded-xl outline-none" style={inputStyle('email', !!errors.email)} 
+                  placeholder={t('auth.register.email_placeholder')} />
               </div>
               {errors.email && <p className="text-sm mt-1" style={{ color: colors.status.error }}>{errors.email}</p>}
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: colors.text.secondary }}>{t('auth.register.phone_label')}</label>
-              <div className="relative">
-                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: focusedField === 'phone' ? colors.secondary : colors.text.muted }} />
-                <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange}
-                  onFocus={() => setFocusedField('phone')} onBlur={() => setFocusedField(null)}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl outline-none" style={inputStyle('phone', !!errors.phone)} placeholder={t('auth.register.phone_placeholder')} />
+              <label className="block text-sm font-medium mb-2" style={{ color: colors.text.secondary }}>{t('auth.register.verification_code')}</label>
+              <div className="flex gap-3">
+                <input type="text" name="verificationCode" value={formData.verificationCode} onChange={handleInputChange}
+                  onFocus={() => setFocusedField('verificationCode')} onBlur={() => setFocusedField(null)}
+                  maxLength={6} className="flex-1 px-4 py-3 rounded-xl outline-none text-center tracking-widest text-lg"
+                  style={inputStyle('verificationCode', !!errors.verificationCode)} placeholder="000000" />
+                <button type="button" onClick={sendVerificationCode} disabled={sendingCode || countdown > 0}
+                  className="px-4 py-3 rounded-xl font-medium whitespace-nowrap transition-all disabled:opacity-50"
+                  style={{ background: countdown > 0 ? colors.glass.medium : `linear-gradient(135deg, ${colors.secondary} 0%, ${colors.accent.cyan} 100%)`, 
+                           color: colors.text.primary, border: `1px solid ${colors.glass.border}` }}>
+                  {sendingCode ? <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" /> :
+                   countdown > 0 ? `${countdown}s` : codeSent ? t('auth.register.resend_code') : t('auth.register.send_code')}
+                </button>
               </div>
-              {errors.phone && <p className="text-sm mt-1" style={{ color: colors.status.error }}>{errors.phone}</p>}
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: colors.text.secondary }}>{t('auth.register.dob_label')}</label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: focusedField === 'dateOfBirth' ? colors.secondary : colors.text.muted }} />
-                  <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange}
-                    onFocus={() => setFocusedField('dateOfBirth')} onBlur={() => setFocusedField(null)}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl outline-none" style={inputStyle('dateOfBirth', !!errors.dateOfBirth)} />
-                </div>
-                {errors.dateOfBirth && <p className="text-sm mt-1" style={{ color: colors.status.error }}>{errors.dateOfBirth}</p>}
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: colors.text.secondary }}>{t('auth.register.country_label')}</label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: focusedField === 'country' ? colors.secondary : colors.text.muted }} />
-                  <select name="country" value={formData.country} onChange={handleInputChange}
-                    onFocus={() => setFocusedField('country')} onBlur={() => setFocusedField(null)}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl outline-none" style={selectStyle('country', !!errors.country)}>
-                    <option value="">{t('auth.register.country_placeholder')}</option>
-                    {countries.map(c => <option key={c.key} value={c.key}>{c.label}</option>)}
-                  </select>
-                </div>
-                {errors.country && <p className="text-sm mt-1" style={{ color: colors.status.error }}>{errors.country}</p>}
-              </div>
+              {errors.verificationCode && <p className="text-sm mt-1" style={{ color: colors.status.error }}>{errors.verificationCode}</p>}
+              {codeSent && <p className="text-sm mt-2" style={{ color: colors.status.success }}>{t('auth.register.code_sent_hint')}</p>}
             </div>
           </motion.div>
         );
@@ -218,7 +192,8 @@ const RegisterPage = () => {
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: focusedField === 'password' ? colors.secondary : colors.text.muted }} />
                 <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleInputChange}
                   onFocus={() => setFocusedField('password')} onBlur={() => setFocusedField(null)}
-                  className="w-full pl-10 pr-12 py-3 rounded-xl outline-none" style={inputStyle('password', !!errors.password)} placeholder={t('auth.register.password_placeholder')} />
+                  className="w-full pl-10 pr-12 py-3 rounded-xl outline-none" style={inputStyle('password', !!errors.password)} 
+                  placeholder={t('auth.register.password_placeholder')} />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2" style={{ color: colors.text.muted }}>
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -232,7 +207,8 @@ const RegisterPage = () => {
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" style={{ color: focusedField === 'confirmPassword' ? colors.secondary : colors.text.muted }} />
                 <input type={showConfirmPassword ? 'text' : 'password'} name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange}
                   onFocus={() => setFocusedField('confirmPassword')} onBlur={() => setFocusedField(null)}
-                  className="w-full pl-10 pr-12 py-3 rounded-xl outline-none" style={inputStyle('confirmPassword', !!errors.confirmPassword)} placeholder={t('auth.register.confirm_password_placeholder')} />
+                  className="w-full pl-10 pr-12 py-3 rounded-xl outline-none" style={inputStyle('confirmPassword', !!errors.confirmPassword)} 
+                  placeholder={t('auth.register.confirm_password_placeholder')} />
                 <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2" style={{ color: colors.text.muted }}>
                   {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -242,9 +218,9 @@ const RegisterPage = () => {
             <div className="space-y-2">
               <p className="text-sm" style={{ color: colors.text.secondary }}>{t('auth.register.password_strength')}:</p>
               <div className="flex space-x-1">
-                {[1, 2, 3, 4].map((level) => {
+                {[1, 2, 3, 4, 5].map((level) => {
                   const strength = getPasswordStrength(formData.password);
-                  const strengthColors = [colors.status.error, colors.status.warning, colors.accent.cyan, colors.status.success];
+                  const strengthColors = [colors.status.error, colors.status.error, colors.status.warning, colors.accent.cyan, colors.status.success];
                   return <div key={level} className="h-2 flex-1 rounded" style={{ background: strength >= level ? strengthColors[strength - 1] : colors.background.tertiary }} />;
                 })}
               </div>
@@ -253,40 +229,6 @@ const RegisterPage = () => {
         );
 
       case 3:
-        return (
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-            <h3 className="text-lg font-semibold mb-4" style={{ color: colors.text.primary }}>{t('auth.register.step_security')}</h3>
-            <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: colors.text.secondary }}>{t('auth.register.security_question')}</label>
-              <select name="securityQuestion" value={formData.securityQuestion} onChange={handleInputChange}
-                onFocus={() => setFocusedField('securityQuestion')} onBlur={() => setFocusedField(null)}
-                className="w-full px-4 py-3 rounded-xl outline-none" style={selectStyle('securityQuestion', !!errors.securityQuestion)}>
-                <option value="">{t('auth.register.security_question_placeholder')}</option>
-                {securityQuestions.map((q) => <option key={q.key} value={q.key}>{q.label}</option>)}
-              </select>
-              {errors.securityQuestion && <p className="text-sm mt-1" style={{ color: colors.status.error }}>{errors.securityQuestion}</p>}
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: colors.text.secondary }}>{t('auth.register.security_answer')}</label>
-              <input type="text" name="securityAnswer" value={formData.securityAnswer} onChange={handleInputChange}
-                onFocus={() => setFocusedField('securityAnswer')} onBlur={() => setFocusedField(null)}
-                className="w-full px-4 py-3 rounded-xl outline-none" style={inputStyle('securityAnswer', !!errors.securityAnswer)} placeholder={t('auth.register.security_answer_placeholder')} />
-              {errors.securityAnswer && <p className="text-sm mt-1" style={{ color: colors.status.error }}>{errors.securityAnswer}</p>}
-            </div>
-            <div className="p-4 rounded-xl" style={{ background: `${colors.accent.cyan}10`, border: `1px solid ${colors.accent.cyan}30` }}>
-              <label className="flex items-start cursor-pointer">
-                <input type="checkbox" name="twoFactorEnabled" checked={formData.twoFactorEnabled} onChange={handleInputChange}
-                  className="w-4 h-4 rounded mt-1" style={{ accentColor: colors.secondary }} />
-                <div className="ml-3">
-                  <span className="text-sm font-medium" style={{ color: colors.text.primary }}>{t('auth.register.enable_2fa')}</span>
-                  <p className="text-xs mt-1" style={{ color: colors.text.muted }}>{t('auth.register.enable_2fa_desc')}</p>
-                </div>
-              </label>
-            </div>
-          </motion.div>
-        );
-
-      case 4:
         return (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
             <h3 className="text-lg font-semibold mb-4" style={{ color: colors.text.primary }}>{t('auth.register.step_terms')}</h3>
@@ -323,7 +265,6 @@ const RegisterPage = () => {
     }
   };
 
-
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative">
       <div className="w-full max-w-lg relative z-10">
@@ -339,14 +280,14 @@ const RegisterPage = () => {
             <p style={{ color: colors.text.muted }}>{t('auth.register.subtitle')}</p>
           </div>
 
-          <div className="flex items-center justify-between mb-8">
-            {[1, 2, 3, 4].map((step) => (
+          <div className="flex items-center justify-center mb-8">
+            {[1, 2, 3].map((step) => (
               <div key={step} className="flex items-center">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium"
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium"
                   style={{ background: step <= currentStep ? colors.secondary : colors.background.tertiary, color: colors.text.primary }}>
                   {step < currentStep ? <CheckCircle className="w-5 h-5" /> : step}
                 </div>
-                {step < 4 && <div className="w-8 md:w-12 h-1 mx-1 md:mx-2 rounded" style={{ background: step < currentStep ? colors.secondary : colors.background.tertiary }} />}
+                {step < 3 && <div className="w-12 md:w-16 h-1 mx-2 rounded" style={{ background: step < currentStep ? colors.secondary : colors.background.tertiary }} />}
               </div>
             ))}
           </div>
@@ -374,7 +315,7 @@ const RegisterPage = () => {
                   style={{ background: colors.glass.medium, border: `1px solid ${colors.glass.border}`, color: colors.text.primary }}>{t('auth.register.previous')}</button>
               )}
               <div className="ml-auto">
-                {currentStep < 4 ? (
+                {currentStep < 3 ? (
                   <motion.button type="button" onClick={handleNext} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                     className="px-6 py-3 rounded-xl font-semibold flex items-center transition-all"
                     style={{ background: `linear-gradient(135deg, ${colors.secondary} 0%, ${colors.accent.cyan} 100%)`, color: colors.text.primary, boxShadow: shadows.glow.secondary }}>

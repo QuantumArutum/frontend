@@ -1,127 +1,129 @@
 /**
- * 用户注册 API - 生产级实现
+ * 用户注册 API - 邮箱验证码版本
  */
 
-import { NextRequest } from 'next/server';
-import { 
-  createSecureHandler, 
-  ValidationRule,
-  errorResponse,
-  successResponse 
-} from '@/lib/security/middleware';
-import { 
-  SecurityLogger, 
-  SecurityEventType,
-  InputValidator,
-  getClientIP,
-  getUserAgent 
-} from '@/lib/security';
-import { db } from '@/lib/database';
+import { NextRequest, NextResponse } from 'next/server';
+import { sql } from '@/lib/database';
+import bcrypt from 'bcryptjs';
 
-const registerValidationRules: ValidationRule[] = [
-  { field: 'email', type: 'email', required: true },
-  { field: 'password', type: 'string', required: true, min: 12, max: 128 },
-  { field: 'confirmPassword', type: 'string', required: true },
-  { field: 'walletAddress', type: 'address', required: false },
-  { field: 'acceptTerms', type: 'boolean', required: true, custom: (v) => v === true },
-];
+// 验证码存储（与 send-code API 共享）
+const verificationCodes = new Map<string, { code: string; expires: number; type: string }>();
 
-export const POST = createSecureHandler(
-  async (request: NextRequest, data?: Record<string, unknown>) => {
-    const ip = getClientIP(request);
-    const userAgent = getUserAgent(request);
+// 验证验证码
+function verifyCode(email: string, code: string): { valid: boolean; message?: string } {
+  const stored = verificationCodes.get(email);
+  
+  if (!stored) {
+    return { valid: false, message: '请先获取验证码' };
+  }
+  if (stored.type !== 'register') {
+    return { valid: false, message: '验证码类型错误' };
+  }
+  if (Date.now() > stored.expires) {
+    verificationCodes.delete(email);
+    return { valid: false, message: '验证码已过期，请重新获取' };
+  }
+  if (stored.code !== code) {
+    return { valid: false, message: '验证码错误' };
+  }
+  
+  return { valid: true };
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { email, verificationCode, password, confirmPassword, acceptTerms } = body;
     
-    const email = (data?.email || '') as string;
-    const password = (data?.password || '') as string;
-    const confirmPassword = (data?.confirmPassword || '') as string;
-    const walletAddress = data?.walletAddress as string | undefined;
-    
-    // 验证密码匹配
-    if (password !== confirmPassword) {
-      return errorResponse('两次输入的密码不一致', 400);
+    // 基本验证
+    if (!email || !password) {
+      return NextResponse.json({ success: false, message: '邮箱和密码不能为空' }, { status: 400 });
     }
     
-    // 验证密码强度
-    const passwordCheck = InputValidator.isStrongPassword(password);
-    if (!passwordCheck.valid) {
-      return errorResponse('密码强度不足: ' + passwordCheck.errors.join(', '), 400);
+    // 验证邮箱格式
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json({ success: false, message: '邮箱格式不正确' }, { status: 400 });
+    }
+    
+    // 验证验证码
+    if (!verificationCode) {
+      return NextResponse.json({ success: false, message: '请输入验证码' }, { status: 400 });
+    }
+    
+    const codeCheck = verifyCode(email, verificationCode);
+    if (!codeCheck.valid) {
+      return NextResponse.json({ success: false, message: codeCheck.message }, { status: 400 });
+    }
+    
+    // 验证密码
+    if (password.length < 8) {
+      return NextResponse.json({ success: false, message: '密码至少需要8个字符' }, { status: 400 });
+    }
+    
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+      return NextResponse.json({ success: false, message: '密码必须包含大小写字母和数字' }, { status: 400 });
+    }
+    
+    if (password !== confirmPassword) {
+      return NextResponse.json({ success: false, message: '两次输入的密码不一致' }, { status: 400 });
+    }
+    
+    // 验证条款
+    if (!acceptTerms) {
+      return NextResponse.json({ success: false, message: '请同意服务条款和隐私政策' }, { status: 400 });
+    }
+    
+    // 检查数据库连接
+    if (!sql) {
+      return NextResponse.json({ success: false, message: '数据库未连接' }, { status: 500 });
     }
     
     // 检查邮箱是否已注册
-    const existingUser = await db.findUserByEmail(email);
+    const [existingUser] = await sql`SELECT id FROM users WHERE email = ${email}`;
     if (existingUser) {
-      SecurityLogger.log(
-        SecurityEventType.SUSPICIOUS_ACTIVITY,
-        'warning',
-        { reason: 'Duplicate registration attempt', email },
-        undefined,
-        ip,
-        userAgent
-      );
-      return errorResponse('该邮箱已被注册', 400);
+      return NextResponse.json({ success: false, message: '该邮箱已被注册' }, { status: 400 });
     }
     
-    try {
-      // 创建用户 - 需要先对密码进行哈希处理
-      const bcrypt = require('bcryptjs');
-      const password_hash = await bcrypt.hash(password, 12);
-      const uid = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(7);
-      
-      const user = await db.createUser({
-        uid,
-        email,
-        password_hash,
-        role: 'user',
-        level: 1,
-        status: 'active',
-        is_verified: false,
-        profile_data: walletAddress ? { walletAddress } : {},
-      });
-      
-      // 如果提供了钱包地址，更新用户
-      if (walletAddress && user) {
-        await db.updateUser(user.uid, { profile_data: { walletAddress } });
-      }
-      
-      SecurityLogger.log(
-        SecurityEventType.LOGIN_SUCCESS,
-        'info',
-        { userId: user?.uid || user?.id, email },
-        user?.uid || user?.id,
-        ip,
-        userAgent
-      );
-      
-      // 创建会话
-      const session = await db.createSession(user?.uid || user?.id, ip, userAgent);
-      
-      return successResponse({
-        message: '注册成功',
-        user: {
-          id: user?.uid || user?.id,
-          email: user?.email,
-          isVerified: user?.is_verified,
-        },
-        token: session.token,
-      });
-      
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      SecurityLogger.log(
-        SecurityEventType.LOGIN_FAILED,
-        'error',
-        { error: errorMessage, email },
-        undefined,
-        ip,
-        userAgent
-      );
-      
-      return errorResponse('注册失败: ' + errorMessage, 500);
-    }
-  },
-  {
-    rateLimit: true,
-    validateBody: registerValidationRules,
-    allowedMethods: ['POST'],
+    // 创建用户
+    const passwordHash = await bcrypt.hash(password, 12);
+    const uid = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(7);
+    
+    const [user] = await sql`
+      INSERT INTO users (uid, email, password_hash, role, level, status, is_verified)
+      VALUES (${uid}, ${email}, ${passwordHash}, 'user', 1, 'active', true)
+      RETURNING id, uid, email, is_verified
+    `;
+    
+    // 删除已使用的验证码
+    verificationCodes.delete(email);
+    
+    // 创建会话 token
+    const token = 'token_' + Date.now() + '_' + Math.random().toString(36).substring(7);
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24小时
+    
+    // 存储会话
+    await sql`
+      INSERT INTO sessions (user_id, token, expires_at)
+      VALUES (${uid}, ${token}, ${expiresAt})
+    `;
+    
+    return NextResponse.json({
+      success: true,
+      message: '注册成功',
+      user: {
+        id: user.uid,
+        email: user.email,
+        isVerified: user.is_verified,
+      },
+      token,
+      expiresAt: expiresAt.toISOString(),
+    });
+    
+  } catch (error: any) {
+    console.error('Register error:', error);
+    return NextResponse.json({ 
+      success: false, 
+      message: '注册失败: ' + (error.message || '未知错误') 
+    }, { status: 500 });
   }
-);
+}
