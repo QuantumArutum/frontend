@@ -16,6 +16,7 @@ import {
   getUserAgent 
 } from '@/lib/security';
 import { db } from '@/lib/database';
+import { generateToken } from '@/lib/auth';
 
 const loginValidationRules: ValidationRule[] = [
   { field: 'email', type: 'email', required: true },
@@ -91,8 +92,15 @@ export const POST = createSecureHandler(
       // 清除失败计数
       loginAttempts.delete(attemptKey);
       
-      // 创建新会话
-      const session = await db.createSession(user.id, ip, userAgent);
+      // 创建数据库会话（用于服务端验证）
+      await db.createSession(user.id, ip, userAgent);
+      
+      // 生成 JWT token（用于 API 认证）
+      const jwtToken = generateToken({
+        uid: user.id,
+        email: user.email,
+        role: user.role || 'user',
+      });
       
       SecurityLogger.log(
         SecurityEventType.LOGIN_SUCCESS,
@@ -117,8 +125,8 @@ export const POST = createSecureHandler(
           kycStatus: user.kycStatus,
           role: user.role,
         },
-        token: session.token,
-        expiresAt: session.expiresAt,
+        token: jwtToken,
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
       });
       
     } catch (error: unknown) {
