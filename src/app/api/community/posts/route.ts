@@ -94,12 +94,22 @@ export const POST = createSecureHandler(
         const { title, content, category, userId } = data as any;
 
         try {
+            // 获取分类ID
+            let categoryId = 1; // 默认为 general
+            if (category) {
+                // @ts-ignore
+                const categories = await db.getCategories();
+                const cat = categories?.data?.find((c: any) => c.slug === category);
+                if (cat) categoryId = cat.id;
+            }
+
             // @ts-ignore
             const newPost = await db.createPost({
-                userId,
+                user_id: userId,
                 title,
                 content,
-                categorySlug: category || 'general'
+                category_id: categoryId,
+                status: 'published'
             });
 
             if (!newPost) {
