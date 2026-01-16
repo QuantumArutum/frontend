@@ -2136,6 +2136,13 @@ export const zh = {
       no_conversations: '暂无会话',
       select_conversation: '选择一个会话开始聊天',
       message_placeholder: '输入消息...',
+      new_conversation: '新建会话',
+      search_user: '搜索用户',
+      enter_email: '输入邮箱搜索用户',
+      type_message: '输入消息...',
+      send: '发送',
+      searching: '搜索中...',
+      no_users_found: '未找到用户',
       // 时间
       time: {
         just_now: '刚刚',

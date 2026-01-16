@@ -2136,6 +2136,13 @@ export const en = {
       no_conversations: 'No conversations',
       select_conversation: 'Select a conversation to start chatting',
       message_placeholder: 'Enter message...',
+      new_conversation: 'New Conversation',
+      search_user: 'Search User',
+      enter_email: 'Enter email to search user',
+      type_message: 'Type a message...',
+      send: 'Send',
+      searching: 'Searching...',
+      no_users_found: 'No users found',
       // Time
       time: {
         just_now: 'Just now',
