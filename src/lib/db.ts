@@ -444,13 +444,30 @@ export const db = {
     }
   },
 
-  getAuditLogs: async (params: { page?: number; limit?: number }): Promise<DBResult<{ logs: any[]; total: number }>> => {
+  getAuditLogs: async (params: { page?: number; limit?: number; action?: string; admin_id?: string }): Promise<DBResult<{ logs: any[]; total: number }>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured', data: { logs: [], total: 0 } };
-      const { page = 1, limit = 50 } = params;
+      const { page = 1, limit = 50, action, admin_id } = params;
       const offset = (page - 1) * limit;
-      const logs = await sql`SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
-      const countResult = await sql`SELECT COUNT(*) as total FROM audit_logs`;
+      
+      // Build query with optional filters
+      let logs;
+      let countResult;
+      
+      if (action && admin_id) {
+        logs = await sql`SELECT * FROM audit_logs WHERE action = ${action} AND admin_id = ${admin_id} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        countResult = await sql`SELECT COUNT(*) as total FROM audit_logs WHERE action = ${action} AND admin_id = ${admin_id}`;
+      } else if (action) {
+        logs = await sql`SELECT * FROM audit_logs WHERE action = ${action} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        countResult = await sql`SELECT COUNT(*) as total FROM audit_logs WHERE action = ${action}`;
+      } else if (admin_id) {
+        logs = await sql`SELECT * FROM audit_logs WHERE admin_id = ${admin_id} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        countResult = await sql`SELECT COUNT(*) as total FROM audit_logs WHERE admin_id = ${admin_id}`;
+      } else {
+        logs = await sql`SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        countResult = await sql`SELECT COUNT(*) as total FROM audit_logs`;
+      }
+      
       return { success: true, data: { logs, total: parseInt(countResult[0]?.total || '0') } };
     } catch (error) {
       console.error('Error getting audit logs:', error);
