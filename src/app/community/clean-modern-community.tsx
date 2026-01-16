@@ -74,6 +74,12 @@ export default function CleanModernCommunity() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'all' | 'trending' | 'new'>('all');
+  const [stats, setStats] = useState({
+    totalMembers: 0,
+    totalPosts: 0,
+    activeToday: 0,
+    totalTopics: 0,
+  });
 
   useEffect(() => {
     const checkAuth = () => {
@@ -137,7 +143,19 @@ export default function CleanModernCommunity() {
     return () => window.removeEventListener('focus', checkAuth);
   }, []);
 
-  useEffect(() => { loadPosts(); }, []);
+  useEffect(() => { loadPosts(); loadStats(); }, []);
+
+  const loadStats = async () => {
+    try {
+      const response = await barongAPI.get('/public/community/stats');
+      const data = response.data;
+      if (data.success) {
+        setStats(data.data);
+      }
+    } catch (error) {
+      console.error('Failed to load stats:', error);
+    }
+  };
 
   const loadPosts = async () => {
     setLoading(true);
@@ -217,10 +235,10 @@ export default function CleanModernCommunity() {
         {/* Stats Row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {[
-            { label: t('community_page.stats.members'), value: '125.8K', icon: Users, color: colors.accent.cyan, change: '+12%' },
-            { label: t('community_page.stats.posts'), value: '520K', icon: MessageSquare, color: colors.secondary, change: '+8%' },
-            { label: t('community_page.stats.active_today'), value: '85K', icon: Activity, color: colors.accent.green, change: '+15%' },
-            { label: t('community_page.stats.topics'), value: '1.2K', icon: Hash, color: colors.primary, change: '+5%' }
+            { label: t('community_page.stats.members'), value: stats.totalMembers > 1000 ? `${(stats.totalMembers / 1000).toFixed(1)}K` : stats.totalMembers.toString(), icon: Users, color: colors.accent.cyan, change: '+12%' },
+            { label: t('community_page.stats.posts'), value: stats.totalPosts > 1000 ? `${(stats.totalPosts / 1000).toFixed(1)}K` : stats.totalPosts.toString(), icon: MessageSquare, color: colors.secondary, change: '+8%' },
+            { label: t('community_page.stats.active_today'), value: stats.activeToday > 1000 ? `${(stats.activeToday / 1000).toFixed(1)}K` : stats.activeToday.toString(), icon: Activity, color: colors.accent.green, change: '+15%' },
+            { label: t('community_page.stats.topics'), value: stats.totalTopics > 1000 ? `${(stats.totalTopics / 1000).toFixed(1)}K` : stats.totalTopics.toString(), icon: Hash, color: colors.primary, change: '+5%' }
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -598,9 +616,9 @@ export default function CleanModernCommunity() {
               </h3>
               <div className="space-y-3">
                 {[
-                  { label: t('community_page.community_stats.total_posts'), value: '520,847' },
-                  { label: t('community_page.community_stats.total_members'), value: '125,892' },
-                  { label: t('community_page.community_stats.online_now'), value: '85,341' },
+                  { label: t('community_page.community_stats.total_posts'), value: stats.totalPosts.toLocaleString() },
+                  { label: t('community_page.community_stats.total_members'), value: stats.totalMembers.toLocaleString() },
+                  { label: t('community_page.community_stats.online_now'), value: stats.activeToday.toLocaleString() },
                 ].map((stat) => (
                   <div key={stat.label} className="flex items-center justify-between">
                     <span style={{ color: colors.text.muted }}>{stat.label}</span>
