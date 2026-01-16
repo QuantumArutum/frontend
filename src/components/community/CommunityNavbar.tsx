@@ -42,6 +42,12 @@ export default function CommunityNavbar() {
       if (token && userInfoStr) {
         try {
           const user = JSON.parse(userInfoStr);
+          // 确保 user 有 name 字段，如果没有则从 email 生成
+          if (!user.name && user.email) {
+            user.name = user.email.split('@')[0];
+            // 更新 localStorage
+            localStorage.setItem('user_info', JSON.stringify(user));
+          }
           setUserInfo(user);
           setIsLoggedIn(true);
           return;
@@ -275,17 +281,17 @@ export default function CommunityNavbar() {
               {isLoggedIn && userInfo ? (
                 <div className="flex items-center gap-3">
                   <a
-                    href={`/community/user/${encodeURIComponent(userInfo.name)}`}
+                    href={`/community/user/${encodeURIComponent(userInfo.name || userInfo.email?.split('@')[0] || 'user')}`}
                     className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/15 transition-all duration-300 hover:shadow-md hover:shadow-white/10"
                   >
                     {userInfo.avatar ? (
-                      <Image src={userInfo.avatar} alt={userInfo.name} width={36} height={36} className="w-9 h-9 rounded-full border-2 border-purple-500 shadow-lg" />
+                      <Image src={userInfo.avatar} alt={userInfo.name || userInfo.email} width={36} height={36} className="w-9 h-9 rounded-full border-2 border-purple-500 shadow-lg" />
                     ) : (
                       <div className="w-9 h-9 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                        {userInfo.name?.[0]?.toUpperCase() || 'U'}
+                        {(userInfo.name || userInfo.email)?.[0]?.toUpperCase() || 'U'}
                       </div>
                     )}
-                    <span className="text-sm text-white font-medium hidden md:inline">{userInfo.name}</span>
+                    <span className="text-sm text-white font-medium hidden md:inline">{userInfo.name || userInfo.email?.split('@')[0] || 'User'}</span>
                   </a>
                   <button onClick={handleLogout} className="p-2.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/15 transition-all duration-300 hover:shadow-md hover:shadow-red-500/25" title={t('community_page.logout', '登出')}>
                     <LogOut className="w-5 h-5" />

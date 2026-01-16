@@ -103,11 +103,15 @@ export const POST = createSecureHandler(
         userAgent
       );
       
+      // 生成显示名称：优先使用邮箱前缀
+      const displayName = user.email.split('@')[0];
+      
       return successResponse({
         message: '登录成功',
         user: {
           id: user.id,
           email: user.email,
+          name: displayName, // 添加 name 字段用于社区显示
           walletAddress: user.walletAddress,
           isVerified: user.isVerified,
           kycStatus: user.kycStatus,

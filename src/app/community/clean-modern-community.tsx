@@ -83,7 +83,13 @@ export default function CleanModernCommunity() {
       
       if (token && userInfoStr) {
         try {
-          setUserInfo(JSON.parse(userInfoStr));
+          const user = JSON.parse(userInfoStr);
+          // 确保 user 有 name 字段，如果没有则从 email 生成
+          if (!user.name && user.email) {
+            user.name = user.email.split('@')[0];
+            localStorage.setItem('user_info', JSON.stringify(user));
+          }
+          setUserInfo(user);
           setIsLoggedIn(true);
           return;
         } catch {
