@@ -31,6 +31,9 @@ const LanguageSwitcher = () => {
     i18n.changeLanguage(langCode);
     setIsOpen(false);
     
+    // Save language preference to localStorage
+    localStorage.setItem('quantaureum-global-language', langCode);
+    
     // Update document direction for RTL languages
     const rtlLanguages = ['ar'];
     const isRTL = rtlLanguages.includes(langCode);
