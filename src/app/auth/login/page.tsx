@@ -251,12 +251,10 @@ const LoginPage = () => {
               </Link>
             </div>
 
-            <motion.button
+            <button
               type="submit"
               disabled={loading}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full py-3 px-4 rounded-xl font-semibold flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 rounded-xl font-semibold flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02] active:scale-[0.98]"
               style={{ 
                 background: `linear-gradient(135deg, ${colors.secondary} 0%, ${colors.accent.cyan} 100%)`,
                 color: colors.text.primary,
@@ -274,7 +272,7 @@ const LoginPage = () => {
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </>
               )}
-            </motion.button>
+            </button>
           </form>
 
           <div className="my-6 flex items-center">
