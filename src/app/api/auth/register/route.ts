@@ -4,31 +4,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/database';
+import { verifyCode, deleteCode } from '@/lib/verification';
 import bcrypt from 'bcryptjs';
-
-// 验证码存储（与 send-code API 共享）
-const verificationCodes = new Map<string, { code: string; expires: number; type: string }>();
-
-// 验证验证码
-function verifyCode(email: string, code: string): { valid: boolean; message?: string } {
-  const stored = verificationCodes.get(email);
-  
-  if (!stored) {
-    return { valid: false, message: '请先获取验证码' };
-  }
-  if (stored.type !== 'register') {
-    return { valid: false, message: '验证码类型错误' };
-  }
-  if (Date.now() > stored.expires) {
-    verificationCodes.delete(email);
-    return { valid: false, message: '验证码已过期，请重新获取' };
-  }
-  if (stored.code !== code) {
-    return { valid: false, message: '验证码错误' };
-  }
-  
-  return { valid: true };
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -50,7 +27,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: '请输入验证码' }, { status: 400 });
     }
     
-    const codeCheck = verifyCode(email, verificationCode);
+    const codeCheck = verifyCode(email, verificationCode, 'register');
     if (!codeCheck.valid) {
       return NextResponse.json({ success: false, message: codeCheck.message }, { status: 400 });
     }
@@ -95,7 +72,7 @@ export async function POST(request: NextRequest) {
     `;
     
     // 删除已使用的验证码
-    verificationCodes.delete(email);
+    deleteCode(email);
     
     // 创建会话 token
     const token = 'token_' + Date.now() + '_' + Math.random().toString(36).substring(7);

@@ -4,35 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/database';
-
-// 验证码存储（生产环境应使用 Redis）
-const verificationCodes = new Map<string, { code: string; expires: number; type: string }>();
-
-// 速率限制
-const rateLimits = new Map<string, { count: number; resetTime: number }>();
-const MAX_REQUESTS_PER_HOUR = 5;
-
-function generateCode(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString();
-}
-
-function checkRateLimit(email: string): { allowed: boolean; retryAfter?: number } {
-  const now = Date.now();
-  const limit = rateLimits.get(email);
-  
-  if (!limit || now > limit.resetTime) {
-    rateLimits.set(email, { count: 1, resetTime: now + 3600000 }); // 1小时
-    return { allowed: true };
-  }
-  
-  if (limit.count >= MAX_REQUESTS_PER_HOUR) {
-    const retryAfter = Math.ceil((limit.resetTime - now) / 1000 / 60);
-    return { allowed: false, retryAfter };
-  }
-  
-  limit.count++;
-  return { allowed: true };
-}
+import { generateCode, checkRateLimit, storeCode } from '@/lib/verification';
 
 export async function POST(request: NextRequest) {
   try {
@@ -64,12 +36,9 @@ export async function POST(request: NextRequest) {
       }
     }
     
-    // 生成验证码
+    // 生成并存储验证码
     const code = generateCode();
-    const expires = Date.now() + 10 * 60 * 1000; // 10分钟有效期
-    
-    // 存储验证码
-    verificationCodes.set(email, { code, expires, type });
+    storeCode(email, code, type);
     
     // 在生产环境中，这里应该发送真实的邮件
     // 目前仅在控制台输出验证码（开发模式）
@@ -94,23 +63,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: false, message: '发送验证码失败' }, { status: 500 });
   }
 }
-
-// 验证验证码（供其他 API 调用）
-export function verifyCode(email: string, code: string, type: string): boolean {
-  const stored = verificationCodes.get(email);
-  
-  if (!stored) return false;
-  if (stored.type !== type) return false;
-  if (Date.now() > stored.expires) {
-    verificationCodes.delete(email);
-    return false;
-  }
-  if (stored.code !== code) return false;
-  
-  // 验证成功后删除验证码
-  verificationCodes.delete(email);
-  return true;
-}
-
-// 导出验证函数供注册 API 使用
-export { verificationCodes };
