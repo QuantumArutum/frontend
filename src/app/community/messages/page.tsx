@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { MessageSquare, Send, Search, MoreVertical } from 'lucide-react';
+import { MessageSquare, Send, Search, MoreVertical, Plus, X, UserPlus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
 import ParticlesBackground from '../../components/ParticlesBackground';
@@ -15,6 +15,12 @@ interface UserInfo {
   email: string;
   name: string;
   avatar?: string;
+}
+
+interface UserSearchResult {
+  uid: string;
+  email: string;
+  name?: string;
 }
 
 export default function MessagesPage() {
@@ -30,6 +36,11 @@ export default function MessagesPage() {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showNewConversation, setShowNewConversation] = useState(false);
+  const [userSearchQuery, setUserSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<UserSearchResult[]>([]);
+  const [searchingUsers, setSearchingUsers] = useState(false);
+  const [directMessageContent, setDirectMessageContent] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -144,6 +155,69 @@ export default function MessagesPage() {
     return other?.name.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
+  // 搜索用户
+  const searchUsers = async (query: string) => {
+    if (!query.trim() || query.length < 2) {
+      setSearchResults([]);
+      return;
+    }
+    setSearchingUsers(true);
+    try {
+      const response = await fetch(`/api/community/users/search?q=${encodeURIComponent(query)}`);
+      const data = await response.json();
+      if (data.success && data.data?.users) {
+        // 过滤掉当前用户
+        const filtered = data.data.users.filter((u: UserSearchResult) => u.uid !== userInfo?.id);
+        setSearchResults(filtered);
+      } else {
+        setSearchResults([]);
+      }
+    } catch (err) {
+      console.error('Failed to search users:', err);
+      setSearchResults([]);
+    } finally {
+      setSearchingUsers(false);
+    }
+  };
+
+  // 发起新会话
+  const startNewConversation = async (targetUser: UserSearchResult) => {
+    if (!userInfo || !directMessageContent.trim()) return;
+    
+    setSending(true);
+    try {
+      const result = await messagesService.sendMessage({
+        senderId: userInfo.id,
+        senderName: userInfo.name || userInfo.email,
+        receiverId: targetUser.uid,
+        content: directMessageContent
+      });
+
+      if (result.success) {
+        // 重新加载会话列表
+        await loadConversations(userInfo.id);
+        setShowNewConversation(false);
+        setUserSearchQuery('');
+        setSearchResults([]);
+        setDirectMessageContent('');
+      }
+    } catch (err) {
+      console.error('Failed to start conversation:', err);
+    } finally {
+      setSending(false);
+    }
+  };
+
+  // 用户搜索防抖
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (userSearchQuery) {
+        searchUsers(userSearchQuery);
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [userSearchQuery]);
+
   return (
     <div className="min-h-screen relative">
       <ParticlesBackground />
@@ -155,15 +229,24 @@ export default function MessagesPage() {
           {/* Conversations List */}
           <div className="w-80 border-r border-white/10 flex flex-col bg-black/10">
             <div className="p-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder={t('messages_page.search_placeholder')}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
-                />
+              <div className="flex items-center gap-2 mb-3">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder={t('messages_page.search_placeholder')}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
+                  />
+                </div>
+                <button
+                  onClick={() => setShowNewConversation(true)}
+                  className="p-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all"
+                  title={t('messages_page.new_conversation') || '新建会话'}
+                >
+                  <Plus className="w-5 h-5" />
+                </button>
               </div>
             </div>
 
@@ -283,6 +366,109 @@ export default function MessagesPage() {
         </div>
       </div>
       </div>
+      
+      {/* 新建会话模态框 */}
+      {showNewConversation && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-gray-900 border border-white/20 rounded-2xl p-6 w-full max-w-md mx-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <UserPlus className="w-5 h-5" />
+                {t('messages_page.new_conversation') || '新建会话'}
+              </h3>
+              <button
+                onClick={() => {
+                  setShowNewConversation(false);
+                  setUserSearchQuery('');
+                  setSearchResults([]);
+                  setDirectMessageContent('');
+                }}
+                className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">
+                  {t('messages_page.search_user') || '搜索用户（输入邮箱）'}
+                </label>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder={t('messages_page.enter_email') || '输入用户邮箱...'}
+                    value={userSearchQuery}
+                    onChange={(e) => setUserSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
+                  />
+                </div>
+              </div>
+              
+              {/* 搜索结果 */}
+              {searchingUsers && (
+                <div className="text-center py-4">
+                  <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                </div>
+              )}
+              
+              {!searchingUsers && searchResults.length > 0 && (
+                <div className="space-y-2 max-h-40 overflow-y-auto">
+                  {searchResults.map(user => (
+                    <div
+                      key={user.uid}
+                      className="p-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center text-white font-bold">
+                          {user.email?.[0]?.toUpperCase() || 'U'}
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-white font-medium">{user.name || user.email}</p>
+                          <p className="text-sm text-gray-400">{user.email}</p>
+                        </div>
+                      </div>
+                      
+                      {/* 消息输入 */}
+                      <div className="mt-3">
+                        <textarea
+                          placeholder={t('messages_page.type_message') || '输入消息...'}
+                          value={directMessageContent}
+                          onChange={(e) => setDirectMessageContent(e.target.value)}
+                          className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 resize-none"
+                          rows={2}
+                        />
+                        <button
+                          onClick={() => startNewConversation(user)}
+                          disabled={sending || !directMessageContent.trim()}
+                          className="mt-2 w-full py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                        >
+                          <Send className="w-4 h-4" />
+                          {sending ? (t('messages_page.sending') || '发送中...') : (t('messages_page.send') || '发送')}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {!searchingUsers && userSearchQuery.length >= 2 && searchResults.length === 0 && (
+                <p className="text-center text-gray-400 py-4">
+                  {t('messages_page.no_users_found') || '未找到用户'}
+                </p>
+              )}
+              
+              {userSearchQuery.length < 2 && (
+                <p className="text-center text-gray-400 py-4 text-sm">
+                  {t('messages_page.search_hint') || '请输入至少2个字符搜索用户'}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      
       <EnhancedFooter />
     </div>
   );
