@@ -526,6 +526,124 @@ export async function initDatabase() {
       )
     `;
 
+    // ========== BLOCKCHAIN & SYSTEM TABLES ==========
+
+    // Blockchain networks table
+    await sql`
+      CREATE TABLE IF NOT EXISTS blockchain_networks (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        chain_id INTEGER NOT NULL,
+        rpc_url VARCHAR(500) NOT NULL,
+        explorer_url VARCHAR(500),
+        is_active BOOLEAN DEFAULT true,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Blockchain contracts table
+    await sql`
+      CREATE TABLE IF NOT EXISTS blockchain_contracts (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        address VARCHAR(100) NOT NULL,
+        network_id INTEGER REFERENCES blockchain_networks(id),
+        contract_type VARCHAR(50),
+        abi JSONB DEFAULT '{}',
+        is_deprecated BOOLEAN DEFAULT false,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Blockchain token table
+    await sql`
+      CREATE TABLE IF NOT EXISTS blockchain_token (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL DEFAULT 'Quantaureum',
+        symbol VARCHAR(20) NOT NULL DEFAULT 'QAU',
+        decimals INTEGER DEFAULT 18,
+        total_supply VARCHAR(100) DEFAULT '1000000000',
+        contract_address VARCHAR(100),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Launch config table
+    await sql`
+      CREATE TABLE IF NOT EXISTS launch_config (
+        id SERIAL PRIMARY KEY,
+        launch_date TIMESTAMP,
+        pre_launch_enabled BOOLEAN DEFAULT false,
+        maintenance_mode BOOLEAN DEFAULT false,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Domains table
+    await sql`
+      CREATE TABLE IF NOT EXISTS domains (
+        id SERIAL PRIMARY KEY,
+        domain VARCHAR(255) NOT NULL,
+        type VARCHAR(50) DEFAULT 'alternate',
+        ssl_enabled BOOLEAN DEFAULT true,
+        is_active BOOLEAN DEFAULT true,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Currencies table
+    await sql`
+      CREATE TABLE IF NOT EXISTS currencies (
+        id VARCHAR(50) PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        symbol VARCHAR(20) NOT NULL,
+        type VARCHAR(50) DEFAULT 'token',
+        decimals INTEGER DEFAULT 18,
+        is_active BOOLEAN DEFAULT true,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Deposits table
+    await sql`
+      CREATE TABLE IF NOT EXISTS deposits (
+        id SERIAL PRIMARY KEY,
+        user_id VARCHAR(50) REFERENCES users(uid),
+        currency_id VARCHAR(50),
+        amount DECIMAL(20,8) NOT NULL,
+        tx_hash VARCHAR(100),
+        status VARCHAR(50) DEFAULT 'pending',
+        confirmations INTEGER DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Demo modules table (for feature flags)
+    await sql`
+      CREATE TABLE IF NOT EXISTS demo_modules (
+        id VARCHAR(50) PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        description TEXT,
+        is_active BOOLEAN DEFAULT false,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Footer links table
+    await sql`
+      CREATE TABLE IF NOT EXISTS footer_links (
+        id SERIAL PRIMARY KEY,
+        section VARCHAR(50) NOT NULL,
+        label VARCHAR(100) NOT NULL,
+        link VARCHAR(500) NOT NULL,
+        sort_order INTEGER DEFAULT 0,
+        is_active BOOLEAN DEFAULT true,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
     console.log('Database tables initialized successfully');
   } catch (error) {
     console.error('Failed to initialize database:', error);
