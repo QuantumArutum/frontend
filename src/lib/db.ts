@@ -318,6 +318,38 @@ export const db = {
     }
   },
 
+  getUserStakes: async (userId: string): Promise<DBResult<any[]>> => {
+    try {
+      if (!sql) return { success: false, error: 'Database not configured', data: [] };
+      const stakes = await sql`
+        SELECT s.*, p.name as pool_name, p.apy 
+        FROM user_stakes s 
+        LEFT JOIN staking_pools p ON s.pool_id = p.pool_id 
+        WHERE s.user_id = ${userId}
+        ORDER BY s.created_at DESC
+      `;
+      return { success: true, data: stakes || [] };
+    } catch (error) {
+      console.error('Error getting user stakes:', error);
+      return { success: false, error: 'Database error', data: [] };
+    }
+  },
+
+  createStake: async (stake: { user_id: string; pool_id: string; amount: number }): Promise<DBResult<any>> => {
+    try {
+      if (!sql) return { success: false, error: 'Database not configured' };
+      const result = await sql`
+        INSERT INTO user_stakes (user_id, pool_id, amount, status)
+        VALUES (${stake.user_id}, ${stake.pool_id}, ${stake.amount}, 'active')
+        RETURNING *
+      `;
+      return { success: true, data: result[0] };
+    } catch (error) {
+      console.error('Error creating stake:', error);
+      return { success: false, error: 'Database error' };
+    }
+  },
+
   // ICO Settings
   getIcoSettings: async (): Promise<DBResult<Record<string, string>>> => {
     try {
