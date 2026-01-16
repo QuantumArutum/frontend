@@ -405,7 +405,7 @@ export default function CleanModernCommunity() {
                             <LikeOutlined /> {post.likeCount || 0} Likes
                           </span>
                           <span className="text-xs ml-auto">
-                            {new Date(post.createdAt).toLocaleDateString()}
+                            {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : ''}
                           </span>
                         </div>
                       </motion.div>
