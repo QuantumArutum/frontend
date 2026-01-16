@@ -444,6 +444,20 @@ export const db = {
     }
   },
 
+  getAuditLogs: async (params: { page?: number; limit?: number }): Promise<DBResult<{ logs: any[]; total: number }>> => {
+    try {
+      if (!sql) return { success: false, error: 'Database not configured', data: { logs: [], total: 0 } };
+      const { page = 1, limit = 50 } = params;
+      const offset = (page - 1) * limit;
+      const logs = await sql`SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+      const countResult = await sql`SELECT COUNT(*) as total FROM audit_logs`;
+      return { success: true, data: { logs, total: parseInt(countResult[0]?.total || '0') } };
+    } catch (error) {
+      console.error('Error getting audit logs:', error);
+      return { success: false, error: 'Database error', data: { logs: [], total: 0 } };
+    }
+  },
+
   // Banners
   getBanners: async (onlyActive = false): Promise<DBResult<any[]>> => {
     try {
