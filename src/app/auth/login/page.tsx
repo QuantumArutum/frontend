@@ -78,10 +78,10 @@ const LoginPage = () => {
 
       if (data.success) {
         setSuccess(t('auth.login.login_success'));
-        localStorage.setItem('auth_token', data.data.token);
-        localStorage.setItem('user_info', JSON.stringify(data.data.user));
+        localStorage.setItem('auth_token', data.token);
+        localStorage.setItem('user_info', JSON.stringify(data.user));
         setTimeout(() => {
-          window.location.href = data.data.redirect_url || '/dashboard';
+          window.location.href = '/community';
         }, 1500);
       } else {
         setError(data.message || t('auth.login.login_failed'));

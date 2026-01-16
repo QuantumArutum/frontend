@@ -1198,7 +1198,17 @@ export const db = {
     // Note: In production, use bcrypt.compare
     const bcrypt = require('bcryptjs');
     const isValid = await bcrypt.compare(password, user.password_hash);
-    return isValid ? user : null;
+    if (!isValid) return null;
+    // 转换为登录 API 期望的格式
+    return {
+      id: user.uid,
+      email: user.email,
+      walletAddress: user.wallet_address || null,
+      isVerified: user.is_verified || false,
+      isActive: user.status === 'active',
+      kycStatus: user.kyc_status || 'none',
+      role: user.role || 'user',
+    };
   },
   
   // Order methods

@@ -316,7 +316,7 @@ export function createSecureHandler(
 
 export function errorResponse(message: string, status: number = 400): NextResponse {
   return addSecurityHeaders(
-    NextResponse.json({ error: message, success: false }, { status })
+    NextResponse.json({ message, error: message, success: false }, { status })
   );
 }
 
