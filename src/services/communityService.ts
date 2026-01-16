@@ -3,7 +3,9 @@
  * Handles all community-related API calls with proper error handling and fallbacks
  */
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || ''; // Empty string for relative paths on client-side, or fallback to localhost:3000 if needed
+// 在生产环境使用相对路径，在开发环境使用环境变量
+const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+const BASE_URL = isProduction ? '' : (process.env.NEXT_PUBLIC_API_URL || '');
 const COMMUNITY_API = `${BASE_URL}/api/community`;
 
 // ==================== Type Definitions ====================
