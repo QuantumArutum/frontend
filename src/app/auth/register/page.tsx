@@ -65,6 +65,10 @@ const RegisterPage = () => {
         setCodeSent(true);
         setCountdown(60);
         setErrors({});
+        // 开发/测试模式：自动填充验证码
+        if (data.devCode) {
+          setFormData(prev => ({ ...prev, verificationCode: data.devCode }));
+        }
       } else {
         setErrors({ email: data.message || t('auth.register.send_code_failed') });
       }
@@ -73,6 +77,7 @@ const RegisterPage = () => {
     } finally {
       setSendingCode(false);
     }
+
   };
 
   const validateStep = (step: number): boolean => {
