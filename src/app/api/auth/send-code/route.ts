@@ -4,7 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/database';
-import { generateCode, checkRateLimit, storeCode } from '@/lib/verification';
+import { generateCode, checkRateLimitAsync, storeCodeAsync } from '@/lib/verification';
 
 // 发送邮件函数（使用 Resend API）
 async function sendVerificationEmail(email: string, code: string): Promise<boolean> {
@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
     }
     
     // 检查速率限制
-    const rateCheck = checkRateLimit(email);
+    const rateCheck = await checkRateLimitAsync(email);
     if (!rateCheck.allowed) {
       return NextResponse.json({ 
         success: false, 
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
     
     // 生成并存储验证码
     const code = generateCode();
-    storeCode(email, code, type);
+    await storeCodeAsync(email, code, type);
     
     // 发送验证码邮件
     const emailSent = await sendVerificationEmail(email, code);

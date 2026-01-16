@@ -4,7 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/database';
-import { verifyCode, deleteCode } from '@/lib/verification';
+import { verifyCodeAsync, deleteCodeAsync } from '@/lib/verification';
 import bcrypt from 'bcryptjs';
 
 export async function POST(request: NextRequest) {
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: '请输入验证码' }, { status: 400 });
     }
     
-    const codeCheck = verifyCode(email, verificationCode, 'register');
+    const codeCheck = await verifyCodeAsync(email, verificationCode, 'register');
     if (!codeCheck.valid) {
       return NextResponse.json({ success: false, message: codeCheck.message }, { status: 400 });
     }
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     `;
     
     // 删除已使用的验证码
-    deleteCode(email);
+    await deleteCodeAsync(email, 'register');
     
     // 创建会话 token
     const token = 'token_' + Date.now() + '_' + Math.random().toString(36).substring(7);
