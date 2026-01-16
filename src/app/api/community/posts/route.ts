@@ -5,7 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createSecureHandler, successResponse, errorResponse, ValidationRule } from '@/lib/security/middleware';
 import { InputValidator, SecurityLogger, SecurityEventType, getClientIP, getUserAgent } from '@/lib/security';
-import { db } from '@/lib/database';
+import { db } from '@/lib/db';
 
 // 类型定义
 interface Post {
@@ -106,7 +106,7 @@ export const POST = createSecureHandler(
             }
 
             // @ts-ignore
-            const newPost = await db.createPost({
+            const result = await db.createPost({
                 user_id: userId,
                 title,
                 content,
@@ -114,9 +114,11 @@ export const POST = createSecureHandler(
                 status: 'published'
             });
 
-            if (!newPost) {
+            if (!result.success || !result.data) {
                 return errorResponse('创建帖子失败', 500);
             }
+
+            const newPost = result.data;
 
             SecurityLogger.log(
                 SecurityEventType.TRANSACTION_COMPLETED,
