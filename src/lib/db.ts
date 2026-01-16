@@ -376,6 +376,21 @@ export const db = {
     }
   },
 
+  createTokenPurchase: async (purchase: any): Promise<DBResult<any>> => {
+    try {
+      if (!sql) return { success: false, error: 'Database not configured' };
+      const result = await sql`
+        INSERT INTO token_purchases (buyer_address, amount_usd, tokens_base, tokens_total, status)
+        VALUES (${purchase.buyer_address}, ${purchase.amount_usd}, ${purchase.tokens_base}, ${purchase.tokens_total}, ${purchase.status || 'pending'})
+        RETURNING *
+      `;
+      return { success: true, data: result[0] };
+    } catch (error) {
+      console.error('Error creating token purchase:', error);
+      return { success: false, error: 'Database error' };
+    }
+  },
+
   // System Settings
   getSystemSettings: async (): Promise<DBResult<any>> => {
     try {
