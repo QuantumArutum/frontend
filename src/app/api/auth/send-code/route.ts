@@ -23,7 +23,7 @@ async function sendVerificationEmail(email: string, code: string): Promise<boole
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: process.env.EMAIL_FROM || 'Quantaureum <noreply@quantaureum.com>',
+        from: process.env.EMAIL_FROM || 'Quantaureum <onboarding@resend.dev>',
         to: [email],
         subject: 'Quantaureum 验证码 / Verification Code',
         html: `
