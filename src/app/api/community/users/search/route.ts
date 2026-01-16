@@ -34,7 +34,7 @@ export async function GET(request: Request) {
              ) as name
       FROM users 
       WHERE email ILIKE ${'%' + query + '%'}
-      AND state = 'active'
+      AND status = 'active'
       LIMIT ${limit}
     `;
 
