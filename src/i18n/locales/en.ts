@@ -570,7 +570,12 @@ export const en = {
         title: 'Subscribe to Our Newsletter',
         description: 'Get the latest product updates, technical articles, and industry news',
         placeholder: 'Enter your email',
-        subscribe: 'Subscribe'
+        subscribe: 'Subscribe',
+        subscribing: 'Subscribing...',
+        success: 'Successfully subscribed!',
+        errorEmpty: 'Please enter your email',
+        errorInvalid: 'Please enter a valid email',
+        errorFailed: 'Subscription failed, please try again'
       },
       legal: {
         copyright: '© 2024 Quantaureum. All rights reserved.',

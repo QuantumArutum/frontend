@@ -512,6 +512,20 @@ export async function initDatabase() {
       )
     `;
 
+    // Newsletter subscriptions table
+    await sql`
+      CREATE TABLE IF NOT EXISTS newsletter_subscriptions (
+        id SERIAL PRIMARY KEY,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        status VARCHAR(50) DEFAULT 'active',
+        source VARCHAR(100) DEFAULT 'website',
+        subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        unsubscribed_at TIMESTAMP,
+        ip_address VARCHAR(50),
+        user_agent TEXT
+      )
+    `;
+
     console.log('Database tables initialized successfully');
   } catch (error) {
     console.error('Failed to initialize database:', error);

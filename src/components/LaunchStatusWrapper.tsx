@@ -52,6 +52,53 @@ const PreLaunchPage: React.FC<{
   launchDate?: string;
 }> = ({ message, launchDate }) => {
   const [countdown, setCountdown] = useState<CountdownTime>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [email, setEmail] = useState('');
+  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [subscribeMessage, setSubscribeMessage] = useState('');
+
+  const handleSubscribe = async () => {
+    if (!email.trim()) {
+      setSubscribeStatus('error');
+      setSubscribeMessage('Please enter your email');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setSubscribeStatus('error');
+      setSubscribeMessage('Please enter a valid email');
+      return;
+    }
+
+    setSubscribeStatus('loading');
+    setSubscribeMessage('');
+
+    try {
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), source: 'pre-launch' })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubscribeStatus('success');
+        setSubscribeMessage('Successfully subscribed! We\'ll notify you when we launch.');
+        setEmail('');
+        setTimeout(() => {
+          setSubscribeStatus('idle');
+          setSubscribeMessage('');
+        }, 5000);
+      } else {
+        setSubscribeStatus('error');
+        setSubscribeMessage(data.error || 'Subscription failed');
+      }
+    } catch {
+      setSubscribeStatus('error');
+      setSubscribeMessage('Subscription failed');
+    }
+  };
 
   useEffect(() => {
     if (!launchDate) return;
@@ -113,17 +160,32 @@ const PreLaunchPage: React.FC<{
             <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500/50"
+                disabled={subscribeStatus === 'loading'}
+                className="flex-1 px-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500/50 disabled:opacity-50"
               />
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] text-white rounded-lg font-semibold"
+                whileHover={{ scale: subscribeStatus === 'loading' ? 1 : 1.05 }}
+                whileTap={{ scale: subscribeStatus === 'loading' ? 1 : 0.95 }}
+                onClick={handleSubscribe}
+                disabled={subscribeStatus === 'loading'}
+                className="px-6 py-3 bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Notify Me
+                {subscribeStatus === 'loading' ? 'Subscribing...' : 'Notify Me'}
               </motion.button>
             </div>
+            {subscribeMessage && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`mt-3 text-sm ${subscribeStatus === 'success' ? 'text-green-400' : 'text-red-400'}`}
+              >
+                {subscribeMessage}
+              </motion.p>
+            )}
           </div>
         </motion.div>
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,53 @@ import '../../i18n';
 
 const EnhancedFooter = () => {
   const { t } = useTranslation();
+  const [email, setEmail] = useState('');
+  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [subscribeMessage, setSubscribeMessage] = useState('');
+
+  const handleSubscribe = async () => {
+    if (!email.trim()) {
+      setSubscribeStatus('error');
+      setSubscribeMessage(t('footer.newsletter.errorEmpty', 'Please enter your email'));
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setSubscribeStatus('error');
+      setSubscribeMessage(t('footer.newsletter.errorInvalid', 'Please enter a valid email'));
+      return;
+    }
+
+    setSubscribeStatus('loading');
+    setSubscribeMessage('');
+
+    try {
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), source: 'community-footer' })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubscribeStatus('success');
+        setSubscribeMessage(t('footer.newsletter.success', 'Successfully subscribed!'));
+        setEmail('');
+        setTimeout(() => {
+          setSubscribeStatus('idle');
+          setSubscribeMessage('');
+        }, 3000);
+      } else {
+        setSubscribeStatus('error');
+        setSubscribeMessage(data.error || t('footer.newsletter.errorFailed', 'Subscription failed'));
+      }
+    } catch {
+      setSubscribeStatus('error');
+      setSubscribeMessage(t('footer.newsletter.errorFailed', 'Subscription failed'));
+    }
+  };
 
   const footerSections = [
     {
@@ -133,9 +180,32 @@ const EnhancedFooter = () => {
               <h3 className="text-2xl font-bold text-white mb-4">{t('footer.newsletter.title')}</h3>
               <p className="text-gray-300">{t('footer.newsletter.description')}</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <input type="email" placeholder={t('footer.newsletter.placeholder')} className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 transition-colors duration-300" />
-              <button className="px-6 py-3 bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300">{t('footer.newsletter.subscribe')}</button>
+            <div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <input 
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
+                  placeholder={t('footer.newsletter.placeholder')} 
+                  disabled={subscribeStatus === 'loading'}
+                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 transition-colors duration-300 disabled:opacity-50" 
+                />
+                <button 
+                  onClick={handleSubscribe}
+                  disabled={subscribeStatus === 'loading'}
+                  className="px-6 py-3 bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {subscribeStatus === 'loading' 
+                    ? t('footer.newsletter.subscribing', 'Subscribing...') 
+                    : t('footer.newsletter.subscribe')}
+                </button>
+              </div>
+              {subscribeMessage && (
+                <p className={`mt-3 text-sm ${subscribeStatus === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                  {subscribeMessage}
+                </p>
+              )}
             </div>
           </div>
         </div>

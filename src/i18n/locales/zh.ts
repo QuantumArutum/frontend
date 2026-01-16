@@ -570,7 +570,12 @@ export const zh = {
         title: '订阅我们的新闻通讯',
         description: '获取最新的产品更新、技术文章和行业动态',
         placeholder: '输入您的邮箱',
-        subscribe: '订阅'
+        subscribe: '订阅',
+        subscribing: '订阅中...',
+        success: '订阅成功！',
+        errorEmpty: '请输入您的邮箱',
+        errorInvalid: '请输入有效的邮箱地址',
+        errorFailed: '订阅失败，请重试'
       },
       legal: {
         copyright: '© 2024 Quantaureum. 保留所有权利。',
