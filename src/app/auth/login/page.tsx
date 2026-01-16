@@ -58,8 +58,8 @@ const LoginPage = () => {
     setError('');
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const doLogin = async () => {
+    if (loading) return;
     setLoading(true);
     setError('');
 
@@ -91,6 +91,16 @@ const LoginPage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await doLogin();
+  };
+
+  const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    await doLogin();
   };
 
   const inputStyle = (fieldName: string) => ({
@@ -254,6 +264,7 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
+              onClick={handleButtonClick}
               className="w-full py-3 px-4 rounded-xl font-semibold flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02] active:scale-[0.98]"
               style={{ 
                 background: `linear-gradient(135deg, ${colors.secondary} 0%, ${colors.accent.cyan} 100%)`,
