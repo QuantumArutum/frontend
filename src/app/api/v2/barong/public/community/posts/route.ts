@@ -1,21 +1,23 @@
 /**
  * Public Community Posts API
+ * Provides public access to community posts with proper field transformation
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
-// Transform database fields to camelCase for frontend
+// Transform database fields to camelCase for frontend compatibility
 function transformPost(post: any) {
+  if (!post) return null;
   return {
     id: post.id?.toString() || `post_${post.id}`,
-    title: post.title,
-    content: post.content,
+    title: post.title || '',
+    content: post.content || '',
     category: post.category_id,
     userId: post.user_id,
     userName: post.author_email?.split('@')[0] || 'Anonymous',
-    userAvatar: post.user_avatar,
-    createdAt: post.created_at,
+    userAvatar: post.user_avatar || null,
+    createdAt: post.created_at ? new Date(post.created_at).toISOString() : new Date().toISOString(),
     commentCount: post.comment_count || 0,
     likeCount: post.like_count || 0,
     viewCount: post.view_count || 0,
@@ -31,7 +33,9 @@ export async function GET(request: NextRequest) {
 
   try {
     const result = await db.getPosts({ page, limit, category });
-    const posts = (result.data?.posts || []).map(transformPost);
+    const rawPosts = result.data?.posts || [];
+    const posts = rawPosts.map(transformPost).filter(Boolean);
+    
     return NextResponse.json({
       success: true,
       data: {
@@ -42,6 +46,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
+    console.error('Error fetching posts:', error);
     return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }
