@@ -93,16 +93,16 @@ export const POST = createSecureHandler(
         const { title, content, category, userId } = data as any;
 
         try {
-            // 获取分类ID
-            let categoryId = 1; // 默认为 general
-            if (category) {
-                // @ts-ignore
-                const categoriesResult = await db.getCategories();
-                if (categoriesResult.success && categoriesResult.data) {
-                    const cat = categoriesResult.data.find((c: any) => c.slug === category);
-                    if (cat) categoryId = cat.id;
-                }
-            }
+            // 获取分类ID - 使用简单的映射
+            const categoryMap: Record<string, number> = {
+                'general': 1,
+                'technology': 2,
+                'trading': 3,
+                'governance': 4,
+                'support': 5,
+                'announcements': 6
+            };
+            const categoryId = categoryMap[category || 'general'] || 1;
 
             // @ts-ignore
             const result = await db.createPost({
