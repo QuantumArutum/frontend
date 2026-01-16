@@ -52,14 +52,13 @@ export const GET = createSecureHandler(
             // 使用数据库查询
             // @ts-ignore
             const result = await db.getPosts({
+                page: Math.floor(offset / limit) + 1,
                 limit,
-                offset,
                 category: category || undefined,
-                id: id || undefined
             });
 
-            const postsArray = result?.posts || [];
-            const total = result?.total || postsArray.length;
+            const postsArray = result?.data?.posts || [];
+            const total = result?.data?.total || postsArray.length;
 
             return successResponse({
                 data: {
