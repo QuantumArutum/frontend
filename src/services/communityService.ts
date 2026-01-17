@@ -153,6 +153,13 @@ export interface UserProfile {
   email: string;
   avatar?: string;
   bio?: string;
+  location?: string;
+  website?: string;
+  socialLinks?: {
+    twitter?: string;
+    github?: string;
+    linkedin?: string;
+  };
   joinedAt: string;
   postCount: number;
   followerCount: number;
