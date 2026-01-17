@@ -10,6 +10,8 @@ import ParticlesBackground from '../../../app/components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../../components/EnhancedFooter';
 import MarkdownPreview from '../../../components/community/MarkdownPreview';
+import CommentTree from '../../../components/community/CommentTree';
+import CommentSort from '../../../components/community/CommentSort';
 import { barongAPI } from '@/api/client';
 
 interface UserInfo {
@@ -70,6 +72,7 @@ export default function PostDetailPage() {
   // 评论相关状态
   const [commentContent, setCommentContent] = useState('');
   const [submittingComment, setSubmittingComment] = useState(false);
+  const [commentSort, setCommentSort] = useState<'newest' | 'oldest' | 'hot' | 'best'>('newest');
 
   // 检查登录状态和加载数据
   useEffect(() => {
@@ -125,7 +128,7 @@ export default function PostDetailPage() {
   const loadComments = async (currentUserId: string | null) => {
     try {
       setCommentsLoading(true);
-      const url = `/public/community/post-comments?postId=${postId}${currentUserId ? `&currentUserId=${currentUserId}` : ''}`;
+      const url = `/public/community/post-comments?postId=${postId}&sort=${commentSort}${currentUserId ? `&currentUserId=${currentUserId}` : ''}`;
       const response = await barongAPI.get(url);
       
       if (response.data.success) {
@@ -269,6 +272,73 @@ export default function PostDetailPage() {
       console.error('Failed to like comment:', err);
       setComments(originalComments);
     }
+  };
+
+  // 回复评论
+  const handleReplyComment = async (
+    postId: number,
+    parentId: number,
+    replyToUserId: string,
+    replyToUserName: string,
+    content: string
+  ) => {
+    if (!isAuthenticated || !userInfo) {
+      throw new Error('请先登录');
+    }
+
+    try {
+      const response = await barongAPI.post('/public/community/reply-comment', {
+        postId,
+        parentId,
+        replyToUserId,
+        replyToUserName,
+        content,
+        currentUserId: userInfo.id,
+        currentUserName: userInfo.name,
+      });
+
+      if (response.data.success) {
+        // 重新加载评论列表
+        loadComments(userInfo.id);
+        
+        // 更新帖子评论数
+        if (post) {
+          setPost({
+            ...post,
+            commentCount: post.commentCount + 1,
+          });
+        }
+      } else {
+        throw new Error(response.data.message || '回复失败');
+      }
+    } catch (err: any) {
+      console.error('Failed to reply comment:', err);
+      throw err;
+    }
+  };
+
+  // 加载子评论
+  const handleLoadReplies = async (commentId: number): Promise<Comment[]> => {
+    try {
+      const url = `/public/community/comment-replies?commentId=${commentId}${userInfo ? `&currentUserId=${userInfo.id}` : ''}`;
+      const response = await barongAPI.get(url);
+      
+      if (response.data.success) {
+        return response.data.data.replies;
+      }
+      return [];
+    } catch (err) {
+      console.error('Failed to load replies:', err);
+      return [];
+    }
+  };
+
+  // 处理排序变化
+  const handleSortChange = (sort: 'newest' | 'oldest' | 'hot' | 'best') => {
+    setCommentSort(sort);
+    // 重新加载评论
+    const currentUserId = userInfo?.id || null;
+    loadComments(currentUserId);
   };
 
   // 删除帖子
@@ -503,6 +573,14 @@ export default function PostDetailPage() {
               </div>
             )}
 
+            {/* 评论排序 */}
+            {comments.length > 0 && (
+              <CommentSort
+                currentSort={commentSort}
+                onSortChange={handleSortChange}
+              />
+            )}
+
             {/* 评论列表 */}
             {commentsLoading ? (
               <div className="text-center py-8">
@@ -513,48 +591,14 @@ export default function PostDetailPage() {
                 暂无评论，快来发表第一条评论吧！
               </div>
             ) : (
-              <div className="space-y-4">
-                {comments.map((comment) => (
-                  <div
-                    key={comment.id}
-                    className="p-4 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors"
-                  >
-                    <div className="flex items-start gap-3">
-                      <Link href={`/community/user/${comment.userName}`}>
-                        <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform flex-shrink-0">
-                          {comment.userAvatar}
-                        </div>
-                      </Link>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Link href={`/community/user/${comment.userName}`}>
-                            <span className="text-white font-medium hover:text-purple-300 transition-colors cursor-pointer">
-                              {comment.userName}
-                            </span>
-                          </Link>
-                          <span className="text-sm text-white/50">
-                            {formatDate(comment.createdAt)}
-                          </span>
-                        </div>
-                        <p className="text-white/90 whitespace-pre-wrap mb-3">
-                          {comment.content}
-                        </p>
-                        <button
-                          onClick={() => handleLikeComment(comment.id)}
-                          className={`flex items-center gap-1 text-sm transition-colors ${
-                            comment.isLiked
-                              ? 'text-red-300'
-                              : 'text-white/60 hover:text-white'
-                          }`}
-                        >
-                          <Heart className={`w-4 h-4 ${comment.isLiked ? 'fill-current' : ''}`} />
-                          <span>{comment.likeCount}</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <CommentTree
+                comments={comments}
+                currentUserId={userInfo?.id}
+                currentUserName={userInfo?.name}
+                onLike={handleLikeComment}
+                onReply={handleReplyComment}
+                onLoadReplies={handleLoadReplies}
+              />
             )}
           </div>
         </main>
