@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronRight, Search, Star, MessageSquare } from 'lucide-react';
 import ParticlesBackground from '../../components/ParticlesBackground';
@@ -8,6 +8,7 @@ import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
+import { barongAPI } from '@/api/client';
 
 interface Member {
   id: string;
@@ -22,31 +23,54 @@ interface Member {
   isOnline: boolean;
 }
 
-const membersData: Member[] = [
-  { id: '1', username: 'QuantumDev', avatar: 'Q', roleKey: 'core_developer', reputation: 9850, posts: 1234, joined: '2023-01', lastActiveKey: 'just_now', badges: ['🏆', '⭐', '🔧'], isOnline: true },
-  { id: '2', username: 'CryptoQueen', avatar: 'C', roleKey: 'community_leader', reputation: 8920, posts: 987, joined: '2023-02', lastActiveKey: '5_min', badges: ['👑', '💎'], isOnline: true },
-  { id: '3', username: 'BlockchainBob', avatar: 'B', roleKey: 'senior_member', reputation: 7650, posts: 756, joined: '2023-03', lastActiveKey: '1_hour', badges: ['🎯', '📚'], isOnline: true },
-  { id: '4', username: 'DeFiAlice', avatar: 'D', roleKey: 'defi_expert', reputation: 6890, posts: 654, joined: '2023-04', lastActiveKey: '2_hours', badges: ['💰', '📈'], isOnline: false },
-  { id: '5', username: 'NodeMaster', avatar: 'N', roleKey: 'validator', reputation: 6540, posts: 543, joined: '2023-05', lastActiveKey: '3_hours', badges: ['🔗', '⚡'], isOnline: true },
-  { id: '6', username: 'SmartContract', avatar: 'S', roleKey: 'developer', reputation: 5890, posts: 432, joined: '2023-06', lastActiveKey: '4_hours', badges: ['📜', '🔐'], isOnline: false },
-  { id: '7', username: 'TokenTrader', avatar: 'T', roleKey: 'trader', reputation: 5430, posts: 321, joined: '2023-07', lastActiveKey: '5_hours', badges: ['📊', '💹'], isOnline: true },
-  { id: '8', username: 'GovernanceGuru', avatar: 'G', roleKey: 'dao_member', reputation: 4980, posts: 298, joined: '2023-08', lastActiveKey: '6_hours', badges: ['🏛️', '🗳️'], isOnline: false },
-];
-
 export default function MembersPage() {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('reputation');
   const [filterRole, setFilterRole] = useState('all');
+  const [members, setMembers] = useState<Member[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState({
+    totalMembers: 0,
+    onlineMembers: 0,
+    newToday: 0,
+    validators: 0,
+  });
 
-  const filteredMembers = membersData
-    .filter(m => m.username.toLowerCase().includes(searchQuery.toLowerCase()))
-    .filter(m => filterRole === 'all' || m.roleKey.toLowerCase().includes(filterRole.toLowerCase()))
-    .sort((a, b) => {
-      if (sortBy === 'reputation') return b.reputation - a.reputation;
-      if (sortBy === 'posts') return b.posts - a.posts;
-      return 0;
-    });
+  useEffect(() => {
+    loadMembers();
+    loadStats();
+  }, [sortBy, searchQuery]);
+
+  const loadMembers = async () => {
+    setLoading(true);
+    try {
+      const response = await barongAPI.get(`/public/community/members?limit=50&sortBy=${sortBy}&search=${searchQuery}`);
+      const data = response.data;
+      if (data.success) {
+        setMembers(data.data.members);
+      }
+    } catch (error) {
+      console.error('Failed to load members:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadStats = async () => {
+    try {
+      const response = await barongAPI.get('/public/community/members-stats');
+      const data = response.data;
+      if (data.success) {
+        setStats(data.data);
+      }
+    } catch (error) {
+      console.error('Failed to load stats:', error);
+    }
+  };
+
+  const filteredMembers = members
+    .filter(m => filterRole === 'all' || m.roleKey.toLowerCase().includes(filterRole.toLowerCase()));
 
   return (
     <div className="min-h-screen relative">
@@ -62,7 +86,7 @@ export default function MembersPage() {
             <span className="text-white">{t('community_page.members.title')}</span>
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">{t('community_page.members.title')}</h1>
-          <p className="text-gray-400">{String(t('community_page.members.discover')).replace('{{count}}', '125,847')}</p>
+          <p className="text-gray-400">{String(t('community_page.members.discover')).replace('{{count}}', stats.totalMembers.toLocaleString())}</p>
         </div>
       </div>
 
@@ -70,19 +94,19 @@ export default function MembersPage() {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-            <div className="text-2xl font-bold text-white">125,847</div>
+            <div className="text-2xl font-bold text-white">{stats.totalMembers.toLocaleString()}</div>
             <div className="text-sm text-gray-400">{t('community_page.members.stats.total')}</div>
           </div>
           <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-            <div className="text-2xl font-bold text-green-400">85,341</div>
+            <div className="text-2xl font-bold text-green-400">{stats.onlineMembers.toLocaleString()}</div>
             <div className="text-sm text-gray-400">{t('community_page.members.stats.online')}</div>
           </div>
           <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-            <div className="text-2xl font-bold text-purple-400">1,234</div>
+            <div className="text-2xl font-bold text-purple-400">{stats.newToday.toLocaleString()}</div>
             <div className="text-sm text-gray-400">{t('community_page.members.stats.new_today')}</div>
           </div>
           <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-            <div className="text-2xl font-bold text-orange-400">156</div>
+            <div className="text-2xl font-bold text-orange-400">{stats.validators.toLocaleString()}</div>
             <div className="text-sm text-gray-400">{t('community_page.members.stats.validators')}</div>
           </div>
         </div>
