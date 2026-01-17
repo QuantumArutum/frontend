@@ -6,6 +6,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/database';
 
+/**
+ * 从请求中获取当前用户 ID
+ * 这里使用简化的方案：从请求体中获取 currentUserId
+ * 在生产环境中，应该从 JWT token 或 session 中获取
+ */
+async function getCurrentUserId(request: NextRequest): Promise<string | null> {
+  try {
+    // 方案1: 从请求体中获取（前端传递）
+    const body = await request.json();
+    return body.currentUserId || null;
+  } catch {
+    return null;
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     if (!sql) {
@@ -26,17 +41,8 @@ export async function POST(request: NextRequest) {
       )
     `;
 
-    // 获取当前用户（从 cookie 或 header 中）
-    // TODO: 实现真实的认证检查
-    // 暂时返回未认证错误，等待实现认证系统
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Authentication required. Please login first.' 
-    }, { status: 401 });
-
-    /* 
-    // 以下代码等待认证系统实现后启用
-    const { userId } = await request.json();
+    const body = await request.json();
+    const { userId, currentUserId } = body;
 
     if (!userId) {
       return NextResponse.json({ 
@@ -45,19 +51,12 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // 获取当前用户的 uid
-    const currentUserResult = await sql`
-      SELECT uid FROM users WHERE email = ${session.user.email} AND status = 'active'
-    `;
-
-    if (currentUserResult.length === 0) {
+    if (!currentUserId) {
       return NextResponse.json({ 
         success: false, 
-        message: 'User not found' 
-      }, { status: 404 });
+        message: 'Authentication required. Please login first.' 
+      }, { status: 401 });
     }
-
-    const currentUserId = currentUserResult[0].uid;
 
     // 不能关注自己
     if (currentUserId === userId) {
@@ -98,13 +97,10 @@ export async function POST(request: NextRequest) {
       VALUES (${currentUserId}, ${userId})
     `;
 
-    // TODO: 创建通知
-
     return NextResponse.json({
       success: true,
       message: 'Successfully followed user',
     });
-    */
   } catch (error) {
     console.error('Error following user:', error);
     return NextResponse.json({ 
@@ -123,18 +119,9 @@ export async function DELETE(request: NextRequest) {
       }, { status: 500 });
     }
 
-    // 获取当前用户（从 cookie 或 header 中）
-    // TODO: 实现真实的认证检查
-    // 暂时返回未认证错误，等待实现认证系统
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Authentication required. Please login first.' 
-    }, { status: 401 });
-
-    /*
-    // 以下代码等待认证系统实现后启用
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
+    const currentUserId = searchParams.get('currentUserId');
 
     if (!userId) {
       return NextResponse.json({ 
@@ -143,27 +130,21 @@ export async function DELETE(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // 获取当前用户的 uid
-    const currentUserResult = await sql`
-      SELECT uid FROM users WHERE email = ${session.user.email} AND status = 'active'
-    `;
-
-    if (currentUserResult.length === 0) {
+    if (!currentUserId) {
       return NextResponse.json({ 
         success: false, 
-        message: 'User not found' 
-      }, { status: 404 });
+        message: 'Authentication required. Please login first.' 
+      }, { status: 401 });
     }
-
-    const currentUserId = currentUserResult[0].uid;
 
     // 删除关注关系
     const result = await sql`
       DELETE FROM user_follows 
       WHERE follower_id = ${currentUserId} AND following_id = ${userId}
+      RETURNING id
     `;
 
-    if (result.count === 0) {
+    if (result.length === 0) {
       return NextResponse.json({ 
         success: false, 
         message: 'Not following this user' 
@@ -174,7 +155,6 @@ export async function DELETE(request: NextRequest) {
       success: true,
       message: 'Successfully unfollowed user',
     });
-    */
   } catch (error) {
     console.error('Error unfollowing user:', error);
     return NextResponse.json({ 

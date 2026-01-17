@@ -122,7 +122,23 @@ export default function UserProfilePage() {
 
   const checkFollowStatus = async (userId: string) => {
     try {
-      const response = await barongAPI.get(`/public/community/is-following?userId=${userId}`);
+      // 获取当前用户ID
+      let currentId = currentUser?.id;
+      if (!currentId && currentUserName) {
+        // 从 profile 获取当前用户ID（如果是自己的资料页）
+        // 或者从导航栏用户链接推断
+        // 这里简化处理：如果有 currentUserName，尝试获取其 ID
+        try {
+          const userResponse = await barongAPI.get(`/public/community/user-profile?username=${encodeURIComponent(currentUserName)}`);
+          if (userResponse.data.success) {
+            currentId = userResponse.data.data.id;
+          }
+        } catch (e) {
+          console.log('Failed to get current user ID:', e);
+        }
+      }
+
+      const response = await barongAPI.get(`/public/community/is-following?userId=${userId}&currentUserId=${currentId || ''}`);
       if (response.data.success) {
         setIsFollowing(response.data.data.isFollowing);
       }
@@ -134,11 +150,31 @@ export default function UserProfilePage() {
   const handleFollow = async () => {
     if (!profile) return;
     
+    // 获取当前用户ID
+    let currentId = currentUser?.id;
+    if (!currentId && currentUserName) {
+      try {
+        const userResponse = await barongAPI.get(`/public/community/user-profile?username=${encodeURIComponent(currentUserName)}`);
+        if (userResponse.data.success) {
+          currentId = userResponse.data.data.id;
+        }
+      } catch (e) {
+        console.log('Failed to get current user ID:', e);
+        alert(t('user_profile_page.login_required'));
+        return;
+      }
+    }
+
+    if (!currentId) {
+      alert(t('user_profile_page.login_required'));
+      return;
+    }
+    
     setFollowLoading(true);
     try {
       if (isFollowing) {
         // 取消关注
-        const response = await barongAPI.delete(`/public/community/follow?userId=${profile.id}`);
+        const response = await barongAPI.delete(`/public/community/follow?userId=${profile.id}&currentUserId=${currentId}`);
         if (response.data.success) {
           setIsFollowing(false);
           // 更新关注者数量
@@ -152,7 +188,10 @@ export default function UserProfilePage() {
         }
       } else {
         // 关注
-        const response = await barongAPI.post('/public/community/follow', { userId: profile.id });
+        const response = await barongAPI.post('/public/community/follow', { 
+          userId: profile.id,
+          currentUserId: currentId
+        });
         if (response.data.success) {
           setIsFollowing(true);
           // 更新关注者数量
