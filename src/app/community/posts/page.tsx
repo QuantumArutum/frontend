@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Calendar, Eye, Heart, MessageSquare, Share2, ArrowLeft } from 'lucide-react';
+import { Calendar, Eye, Heart, MessageSquare, Share2, ArrowLeft, Edit, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
 import ParticlesBackground from '../../../app/components/ParticlesBackground';
@@ -270,6 +270,37 @@ export default function PostDetailPage() {
     }
   };
 
+  // 删除帖子
+  const handleDeletePost = async () => {
+    if (!isAuthenticated || !userInfo || !post) {
+      return;
+    }
+
+    if (post.userId !== userInfo.id) {
+      alert('你只能删除自己的帖子');
+      return;
+    }
+
+    const confirmed = window.confirm('确定要删除这个帖子吗？此操作无法撤销。');
+    if (!confirmed) return;
+
+    try {
+      const response = await barongAPI.delete(
+        `/public/community/delete-post?postId=${postId}&currentUserId=${userInfo.id}`
+      );
+
+      if (response.data.success) {
+        alert('帖子已删除');
+        router.push('/community');
+      } else {
+        alert(response.data.message || '删除失败');
+      }
+    } catch (err: any) {
+      console.error('Failed to delete post:', err);
+      alert(err.response?.data?.message || '删除失败');
+    }
+  };
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -384,28 +415,50 @@ export default function PostDetailPage() {
             </div>
 
             {/* 互动按钮 */}
-            <div className="flex items-center gap-4 pt-6 border-t border-white/10">
-              <button
-                onClick={handleLikePost}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
-                  post.isLiked
-                    ? 'bg-red-500/20 text-red-300 hover:bg-red-500/30'
-                    : 'bg-white/10 text-white/70 hover:bg-white/20'
-                }`}
-              >
-                <Heart className={`w-5 h-5 ${post.isLiked ? 'fill-current' : ''}`} />
-                <span>{post.likeCount}</span>
-              </button>
+            <div className="flex items-center justify-between gap-4 pt-6 border-t border-white/10">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={handleLikePost}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                    post.isLiked
+                      ? 'bg-red-500/20 text-red-300 hover:bg-red-500/30'
+                      : 'bg-white/10 text-white/70 hover:bg-white/20'
+                  }`}
+                >
+                  <Heart className={`w-5 h-5 ${post.isLiked ? 'fill-current' : ''}`} />
+                  <span>{post.likeCount}</span>
+                </button>
 
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg text-white/70">
-                <MessageSquare className="w-5 h-5" />
-                <span>{post.commentCount}</span>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg text-white/70">
+                  <MessageSquare className="w-5 h-5" />
+                  <span>{post.commentCount}</span>
+                </div>
+
+                <button className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg text-white/70 hover:bg-white/20 transition-colors">
+                  <Share2 className="w-5 h-5" />
+                  <span>分享</span>
+                </button>
               </div>
 
-              <button className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg text-white/70 hover:bg-white/20 transition-colors">
-                <Share2 className="w-5 h-5" />
-                <span>分享</span>
-              </button>
+              {/* 编辑和删除按钮（仅作者可见） */}
+              {isAuthenticated && userInfo && post.userId === userInfo.id && (
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/community/posts/edit?id=${postId}`}
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 text-blue-300 rounded-lg hover:bg-blue-500/30 transition-colors"
+                  >
+                    <Edit className="w-4 h-4" />
+                    <span>编辑</span>
+                  </Link>
+                  <button
+                    onClick={handleDeletePost}
+                    className="flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-300 rounded-lg hover:bg-red-500/30 transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    <span>删除</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
