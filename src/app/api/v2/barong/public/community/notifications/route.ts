@@ -42,12 +42,14 @@ export async function GET(request: NextRequest) {
             actor_id VARCHAR(255),
             actor_name VARCHAR(255),
             is_read BOOLEAN DEFAULT FALSE,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            INDEX idx_user_id (user_id),
-            INDEX idx_is_read (is_read),
-            INDEX idx_created_at (created_at)
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
           )
         `;
+        
+        // 创建索引（如果不存在）
+        await sql`CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications(user_id)`;
+        await sql`CREATE INDEX IF NOT EXISTS idx_notifications_is_read ON notifications(is_read)`;
+        await sql`CREATE INDEX IF NOT EXISTS idx_notifications_created_at ON notifications(created_at)`;
       } catch (e) {
         console.error('Error creating notifications table:', e);
       }
