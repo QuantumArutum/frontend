@@ -508,7 +508,7 @@ export default function CleanModernCommunity() {
                   <div className="text-center py-8 text-gray-500">{t('common.loading')}</div>
                 ) : posts.length > 0 ? (
                   posts.map((post) => (
-                    <Link href={`/community/posts/${post.id}`} key={post.id} className="block">
+                    <Link href={`/community/posts?id=${post.id}`} key={post.id} className="block">
                       <motion.div 
                         whileHover={{ y: -2 }}
                         className="p-5 rounded-2xl cursor-pointer transition-all duration-200 group"
@@ -593,7 +593,7 @@ export default function CleanModernCommunity() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    onClick={() => topic.id ? window.location.href = `/community/posts/${topic.id}` : handleTopicClick(topic.title)}
+                    onClick={() => topic.id ? window.location.href = `/community/posts?id=${topic.id}` : handleTopicClick(topic.title)}
                     className="p-4 rounded-xl cursor-pointer group transition-all duration-200"
                     style={{
                       background: 'rgba(255, 255, 255, 0.03)',
