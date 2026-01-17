@@ -22,6 +22,11 @@ interface UserProfile {
   bio: string;
   location: string | null;
   website: string | null;
+  socialLinks?: {
+    twitter?: string;
+    github?: string;
+    linkedin?: string;
+  };
   joinedAt: string;
   isOnline: boolean;
   stats: {
