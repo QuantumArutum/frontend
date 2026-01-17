@@ -28,21 +28,16 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // 获取分类信息
+    // 获取分类信息（简化查询）
     const categoryResult = await sql`
       SELECT 
-        c.id,
-        c.name,
-        c.slug,
-        c.description,
-        c.icon,
-        c.color,
-        COUNT(DISTINCT p.id) as post_count,
-        COUNT(DISTINCT p.id) as topic_count
-      FROM categories c
-      LEFT JOIN posts p ON c.id = p.category_id
-      WHERE c.slug = ${categorySlug}
-      GROUP BY c.id, c.name, c.slug, c.description, c.icon, c.color
+        id,
+        name,
+        slug,
+        description
+      FROM categories
+      WHERE slug = ${categorySlug}
+      LIMIT 1
     `;
 
     if (categoryResult.length === 0) {
@@ -53,6 +48,14 @@ export async function GET(request: NextRequest) {
     }
 
     const category = categoryResult[0];
+
+    // 获取帖子总数
+    const postCountResult = await sql`
+      SELECT COUNT(*) as count
+      FROM posts
+      WHERE category_id = ${category.id}
+    `;
+    const totalPosts = parseInt(postCountResult[0]?.count || '0');
 
     // 获取帖子列表（简化查询）
     let posts;
@@ -175,12 +178,12 @@ export async function GET(request: NextRequest) {
           id: category.id,
           name: category.name,
           slug: category.slug,
-          description: category.description,
-          icon: category.icon || '💬',
-          color: category.color || 'from-blue-500 to-cyan-500',
+          description: category.description || '',
+          icon: '💬',
+          color: 'from-blue-500 to-cyan-500',
           stats: {
-            totalPosts: parseInt(category.post_count || '0'),
-            totalTopics: parseInt(category.topic_count || '0'),
+            totalPosts,
+            totalTopics: totalPosts,
           },
         },
         posts: formattedPosts,
