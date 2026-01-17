@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Send, Image as ImageIcon, Link as LinkIcon, AlertCircle } from 'lucide-react';
+import { Send, Save, AlertCircle, FileText, Eye } from 'lucide-react';
 import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
+import MarkdownEditor from '../../../components/community/MarkdownEditor';
+import { useDraftSave } from '../../../hooks/useDraftSave';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
 
@@ -30,6 +32,16 @@ export default function CreatePostPage() {
     content: '',
     category: 'general'
   });
+  const [showPreview, setShowPreview] = useState(false);
+  const [draftLoaded, setDraftLoaded] = useState(false);
+
+  // 草稿保存
+  const { saveDraft, loadDraft, clearDraft } = useDraftSave(
+    formData.title,
+    formData.content,
+    formData.category,
+    isLoggedIn
+  );
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -44,16 +56,44 @@ export default function CreatePostPage() {
       const user = JSON.parse(userInfoStr);
       setUserInfo(user);
       setIsLoggedIn(true);
+
+      // 加载草稿
+      if (!draftLoaded) {
+        const draft = loadDraft();
+        if (draft) {
+          const shouldLoad = window.confirm(
+            `检测到未发布的草稿（保存于 ${new Date(draft.lastSaved).toLocaleString()}），是否恢复？`
+          );
+          if (shouldLoad) {
+            setFormData({
+              title: draft.title,
+              content: draft.content,
+              category: draft.category,
+            });
+          }
+        }
+        setDraftLoaded(true);
+      }
     } catch {
       router.push('/auth/login?redirect=/community/create-post');
     }
-  }, [router]);
+  }, [router, loadDraft, draftLoaded]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, isDraft: boolean = false) => {
     e.preventDefault();
 
     if (!formData.title.trim() || !formData.content.trim()) {
-      setError(t('community_page.create_post.error_empty'));
+      setError('标题和内容不能为空');
+      return;
+    }
+
+    if (formData.title.length > 200) {
+      setError('标题不能超过 200 字符');
+      return;
+    }
+
+    if (formData.content.length < 10) {
+      setError('内容至少需要 10 字符');
       return;
     }
 
@@ -61,29 +101,43 @@ export default function CreatePostPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/community/posts', {
+      const response = await fetch('/api/v2/barong/public/community/create-post', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
-          userId: userInfo?.id,
-          userName: userInfo?.name,
-          userAvatar: userInfo?.avatar
+          title: formData.title,
+          content: formData.content,
+          categorySlug: formData.category,
+          currentUserId: userInfo?.id,
+          isDraft,
         }),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        router.push('/community');
+        // 清除草稿
+        clearDraft();
+        
+        if (isDraft) {
+          alert('草稿已保存');
+          router.push('/community');
+        } else {
+          router.push('/community');
+        }
       } else {
-        setError(data.message || t('community_page.create_post.error_failed'));
+        setError(data.message || '发布失败，请重试');
       }
     } catch {
-      setError(t('community_page.create_post.error_network'));
+      setError('网络错误，请检查连接');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSaveDraft = () => {
+    saveDraft();
+    alert('草稿已保存到本地');
   };
 
   if (!isLoggedIn) {
@@ -122,31 +176,32 @@ export default function CreatePostPage() {
         <motion.form
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          onSubmit={handleSubmit}
+          onSubmit={(e) => handleSubmit(e, false)}
           className="bg-gray-800/80 backdrop-blur-xl rounded-2xl border border-gray-700/50 p-8 space-y-6"
         >
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">{t('community_page.create_post.category')}</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">分类 *</label>
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
               className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="general">{t('community_page.create_post.categories.general')}</option>
-              <option value="technical">{t('community_page.create_post.categories.technical')}</option>
-              <option value="defi">{t('community_page.create_post.categories.defi')}</option>
-              <option value="governance">{t('community_page.create_post.categories.governance')}</option>
+              <option value="general">综合讨论</option>
+              <option value="announcements">公告</option>
+              <option value="technology">技术交流</option>
+              <option value="trading">DeFi & 交易</option>
+              <option value="governance">治理</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">{t('community_page.create_post.title_label')} *</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">标题 *</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder={t('community_page.create_post.title_placeholder')}
+              placeholder="输入帖子标题..."
               maxLength={200}
               required
             />
@@ -154,54 +209,67 @@ export default function CreatePostPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">{t('community_page.create_post.content_label')} *</label>
-            <textarea
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium text-gray-300">内容 * (支持 Markdown)</label>
+              <button
+                type="button"
+                onClick={() => setShowPreview(!showPreview)}
+                className="flex items-center gap-2 px-3 py-1 text-sm text-gray-400 hover:text-white transition-colors"
+              >
+                {showPreview ? <FileText className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                {showPreview ? '编辑' : '预览'}
+              </button>
+            </div>
+            <MarkdownEditor
               value={formData.content}
-              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-              placeholder={t('community_page.create_post.content_placeholder')}
-              rows={12}
-              maxLength={10000}
-              required
+              onChange={(value) => setFormData({ ...formData, content: value })}
+              placeholder="开始编写你的内容... 支持 Markdown 语法"
+              height={400}
             />
-            <div className="mt-1 text-xs text-gray-400 text-right">{formData.content.length}/10000</div>
+            <div className="mt-1 text-xs text-gray-400 text-right">{formData.content.length}/50000</div>
+            <div className="mt-2 text-xs text-gray-500">
+              提示：支持 Markdown 语法，包括标题、列表、代码块、链接、图片等
+            </div>
           </div>
 
-          <div className="flex items-center gap-3 pt-2 border-t border-gray-700">
-            <button type="button" className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700/50 transition-colors" disabled>
-              <ImageIcon className="w-5 h-5" aria-hidden="true" />
-            </button>
-            <button type="button" className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700/50 transition-colors" disabled>
-              <LinkIcon className="w-5 h-5" />
-            </button>
-          </div>
-
-          <div className="flex items-center justify-end gap-4 pt-4">
+          <div className="flex items-center justify-between gap-4 pt-4 border-t border-gray-700">
             <button
               type="button"
-              onClick={() => router.back()}
-              className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-medium transition-colors"
+              onClick={handleSaveDraft}
+              className="flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white transition-colors"
               disabled={loading}
             >
-              {t('community_page.create_post.cancel')}
+              <Save className="w-4 h-4" />
+              保存草稿
             </button>
-            <button
-              type="submit"
-              disabled={loading || !formData.title.trim() || !formData.content.trim()}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  {t('community_page.create_post.publishing')}
-                </>
-              ) : (
-                <>
-                  <Send className="w-5 h-5" />
-                  {t('community_page.create_post.publish')}
-                </>
-              )}
-            </button>
+
+            <div className="flex items-center gap-4">
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-medium transition-colors"
+                disabled={loading}
+              >
+                取消
+              </button>
+              <button
+                type="submit"
+                disabled={loading || !formData.title.trim() || !formData.content.trim()}
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    发布中...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    发布帖子
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </motion.form>
       </div>
