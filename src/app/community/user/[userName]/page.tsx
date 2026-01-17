@@ -10,6 +10,7 @@ import ParticlesBackground from '../../../../app/components/ParticlesBackground'
 import CommunityNavbar from '../../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../../../components/EnhancedFooter';
 import { barongAPI } from '@/api/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface UserProfile {
   id: string;
@@ -51,6 +52,7 @@ interface UserProfile {
 export default function UserProfilePage() {
   const params = useParams();
   const { t } = useTranslation();
+  const { user: currentUser, isAuthenticated } = useAuth();
   const userName = params?.userName ? decodeURIComponent(params.userName as string) : '';
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -58,9 +60,11 @@ export default function UserProfilePage() {
   const [error, setError] = useState<string | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [showFollowingModal, setShowFollowingModal] = useState(false);
+
+  // 判断是否是自己的资料页
+  const isOwnProfile = isAuthenticated && currentUser && profile && currentUser.username === profile.username;
 
   const loadUserProfile = useCallback(async () => {
     if (!userName) return;
@@ -72,12 +76,8 @@ export default function UserProfilePage() {
       const data = response.data;
       if (data.success) {
         setProfile(data.data);
-        // 检查是否是当前登录用户的资料页
-        const isOwnProfile = userName === data.data.username;
-        if (isOwnProfile) {
-          setCurrentUserId(data.data.id);
-        } else {
-          // 检查关注状态
+        // 如果不是自己的资料页，检查关注状态
+        if (isAuthenticated && currentUser && currentUser.username !== data.data.username) {
           checkFollowStatus(data.data.id);
         }
       } else {
@@ -89,22 +89,7 @@ export default function UserProfilePage() {
     } finally {
       setLoading(false);
     }
-  }, [userName]);
-
-  const getCurrentUser = async () => {
-    try {
-      // 尝试从 session 获取当前用户信息
-      // 由于我们已经在导航栏显示了用户名，说明用户已登录
-      // 我们可以通过比较用户名来判断是否是自己的资料页
-      const navbarUsername = document.querySelector('[href="/community/user/aurum51668"]')?.textContent?.trim();
-      if (navbarUsername && profile && navbarUsername === profile.username) {
-        setCurrentUserId(profile.id);
-      }
-    } catch (err) {
-      // 用户未登录
-      setCurrentUserId(null);
-    }
-  };
+  }, [userName, isAuthenticated, currentUser]);
 
   const checkFollowStatus = async (userId: string) => {
     try {
@@ -281,7 +266,16 @@ export default function UserProfilePage() {
                     <div className="text-white/60 text-sm">{t('user_profile_page.stats.following')}</div>
                   </button>
                 </div>
-                {currentUserId && currentUserId !== profile.id && (
+                {/* 如果是自己的资料页，显示编辑资料按钮 */}
+                {isOwnProfile && (
+                  <div className="space-y-3">
+                    <Link href="/community/settings/profile" className="block w-full py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all font-medium text-center">
+                      {t('user_profile_page.edit_profile')}
+                    </Link>
+                  </div>
+                )}
+                {/* 如果是他人的资料页且已登录，显示关注按钮 */}
+                {!isOwnProfile && isAuthenticated && (
                   <div className="space-y-3">
                     <button 
                       onClick={handleFollow}
@@ -297,13 +291,6 @@ export default function UserProfilePage() {
                     <button className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium">
                       {t('user_profile_page.send_message')}
                     </button>
-                  </div>
-                )}
-                {currentUserId && currentUserId === profile.id && (
-                  <div className="space-y-3">
-                    <Link href="/community/settings/profile" className="block w-full py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all font-medium text-center">
-                      {t('user_profile_page.edit_profile')}
-                    </Link>
                   </div>
                 )}
               </div>
