@@ -10,7 +10,13 @@ import ParticlesBackground from '../../../../app/components/ParticlesBackground'
 import CommunityNavbar from '../../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../../../components/EnhancedFooter';
 import { barongAPI } from '@/api/client';
-import { useAuth } from '@/contexts/AuthContext';
+
+interface UserInfo {
+  id: string;
+  email: string;
+  name: string;
+  avatar?: string;
+}
 
 interface PostDetail {
   id: number;
@@ -49,7 +55,6 @@ export default function PostDetailPage() {
   const params = useParams();
   const router = useRouter();
   const { t } = useTranslation();
-  const { user: currentUser, isAuthenticated } = useAuth();
 
   const postId = params.postId as string;
 
@@ -58,22 +63,43 @@ export default function PostDetailPage() {
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentsLoading, setCommentsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // 评论相关状态
   const [commentContent, setCommentContent] = useState('');
   const [submittingComment, setSubmittingComment] = useState(false);
 
+  // 检查登录状态
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    const userInfoStr = localStorage.getItem('user_info');
+    
+    if (token && userInfoStr) {
+      try {
+        const user = JSON.parse(userInfoStr);
+        setUserInfo(user);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error('Failed to parse user info:', error);
+      }
+    }
+  }, []);
+
   // 加载帖子详情
   useEffect(() => {
-    loadPostDetail();
-    loadComments();
+    if (postId) {
+      loadPostDetail();
+      loadComments();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
   const loadPostDetail = async () => {
     try {
       setLoading(true);
-      const url = `/public/community/post-detail?postId=${postId}${currentUser ? `&currentUserId=${currentUser.id}` : ''}`;
+      setError(null);
+      const url = `/public/community/post-detail?postId=${postId}${userInfo ? `&currentUserId=${userInfo.id}` : ''}`;
       const response = await barongAPI.get(url);
       
       if (response.data.success) {
@@ -92,7 +118,7 @@ export default function PostDetailPage() {
   const loadComments = async () => {
     try {
       setCommentsLoading(true);
-      const url = `/public/community/post-comments?postId=${postId}${currentUser ? `&currentUserId=${currentUser.id}` : ''}`;
+      const url = `/public/community/post-comments?postId=${postId}${userInfo ? `&currentUserId=${userInfo.id}` : ''}`;
       const response = await barongAPI.get(url);
       
       if (response.data.success) {
@@ -107,7 +133,7 @@ export default function PostDetailPage() {
 
   // 点赞帖子
   const handleLikePost = async () => {
-    if (!isAuthenticated || !currentUser) {
+    if (!isAuthenticated || !userInfo) {
       alert('请先登录');
       return;
     }
@@ -127,7 +153,7 @@ export default function PostDetailPage() {
     try {
       const response = await barongAPI.post('/public/community/like-post', {
         postId: post.id,
-        currentUserId: currentUser.id,
+        currentUserId: userInfo.id,
       });
 
       if (response.data.success) {
@@ -153,7 +179,7 @@ export default function PostDetailPage() {
   const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!isAuthenticated || !currentUser) {
+    if (!isAuthenticated || !userInfo) {
       alert('请先登录');
       return;
     }
@@ -172,7 +198,7 @@ export default function PostDetailPage() {
       setSubmittingComment(true);
       const response = await barongAPI.post('/public/community/post-comment', {
         postId: parseInt(postId),
-        currentUserId: currentUser.id,
+        currentUserId: userInfo.id,
         content: commentContent,
       });
 
@@ -201,7 +227,7 @@ export default function PostDetailPage() {
 
   // 点赞评论
   const handleLikeComment = async (commentId: number) => {
-    if (!isAuthenticated || !currentUser) {
+    if (!isAuthenticated || !userInfo) {
       alert('请先登录');
       return;
     }
@@ -221,7 +247,7 @@ export default function PostDetailPage() {
     try {
       const response = await barongAPI.post('/public/community/like-comment', {
         commentId,
-        currentUserId: currentUser.id,
+        currentUserId: userInfo.id,
       });
 
       if (response.data.success) {
