@@ -73,6 +73,9 @@ export async function POST(request: NextRequest) {
       newDepth
     });
 
+    let commentId: number;
+    let createdAt: string;
+
     try {
       const result = await sql`
         INSERT INTO post_comments (
@@ -88,7 +91,8 @@ export async function POST(request: NextRequest) {
         RETURNING id, created_at
       `;
 
-      const commentId = result[0].id;
+      commentId = result[0].id;
+      createdAt = result[0].created_at;
       console.log('Reply comment created:', commentId);
 
       // 更新帖子评论数
@@ -98,7 +102,7 @@ export async function POST(request: NextRequest) {
         WHERE id = ${postId}
       `;
       console.log('Post comment count updated');
-    } catch (insertError) {
+    } catch (insertError: any) {
       console.error('Database insert error:', {
         message: insertError.message,
         code: insertError.code,
@@ -175,12 +179,12 @@ export async function POST(request: NextRequest) {
           depth: newDepth,
           likeCount: 0,
           isLiked: false,
-          createdAt: result[0].created_at
+          createdAt: createdAt
         }
       }
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Reply comment error:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,

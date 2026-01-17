@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
       message: 'Database migration completed successfully'
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Migration error:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
