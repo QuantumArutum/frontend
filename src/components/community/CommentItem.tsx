@@ -49,8 +49,14 @@ export default function CommentItem({
   const depth = comment.depth || 0;
   const maxDepth = 3;
 
-  // 计算缩进
-  const indentClass = depth > 0 ? `ml-${Math.min(depth * 8, 24)}` : '';
+  // 计算缩进 - 使用固定的类名
+  const getIndentClass = () => {
+    if (depth === 0) return '';
+    if (depth === 1) return 'ml-8';
+    if (depth === 2) return 'ml-16';
+    return 'ml-24'; // depth >= 3
+  };
+  const indentClass = getIndentClass();
 
   // 格式化时间
   const formatTime = (dateString: string) => {

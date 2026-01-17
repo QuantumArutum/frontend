@@ -130,7 +130,9 @@ export default function CommentTree({
         {/* 回复表单 */}
         <AnimatePresence>
           {replyingTo && replyingTo.id === comment.id && currentUserId && currentUserName && (
-            <div className={`${comment.depth && comment.depth > 0 ? `ml-${Math.min(comment.depth * 8, 24)}` : ''}`}>
+            <div className={comment.depth && comment.depth > 0 ? (
+              comment.depth === 1 ? 'ml-8' : comment.depth === 2 ? 'ml-16' : 'ml-24'
+            ) : ''}>
               <ReplyForm
                 postId={comment.postId}
                 parentId={comment.id}
