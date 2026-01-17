@@ -56,6 +56,8 @@ export default function UserProfilePage() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followLoading, setFollowLoading] = useState(false);
 
   const loadUserProfile = useCallback(async () => {
     if (!userName) return;
@@ -67,6 +69,8 @@ export default function UserProfilePage() {
       const data = response.data;
       if (data.success) {
         setProfile(data.data);
+        // 检查关注状态
+        checkFollowStatus(data.data.id);
       } else {
         setError(data.message || 'Failed to load user profile');
       }
@@ -77,6 +81,63 @@ export default function UserProfilePage() {
       setLoading(false);
     }
   }, [userName]);
+
+  const checkFollowStatus = async (userId: string) => {
+    try {
+      const response = await barongAPI.get(`/public/community/is-following?userId=${userId}`);
+      if (response.data.success) {
+        setIsFollowing(response.data.data.isFollowing);
+      }
+    } catch (err) {
+      console.error('Failed to check follow status:', err);
+    }
+  };
+
+  const handleFollow = async () => {
+    if (!profile) return;
+    
+    setFollowLoading(true);
+    try {
+      if (isFollowing) {
+        // 取消关注
+        const response = await barongAPI.delete(`/public/community/follow?userId=${profile.id}`);
+        if (response.data.success) {
+          setIsFollowing(false);
+          // 更新关注者数量
+          setProfile({
+            ...profile,
+            stats: {
+              ...profile.stats,
+              followers: profile.stats.followers - 1,
+            },
+          });
+        }
+      } else {
+        // 关注
+        const response = await barongAPI.post('/public/community/follow', { userId: profile.id });
+        if (response.data.success) {
+          setIsFollowing(true);
+          // 更新关注者数量
+          setProfile({
+            ...profile,
+            stats: {
+              ...profile.stats,
+              followers: profile.stats.followers + 1,
+            },
+          });
+        }
+      }
+    } catch (err: any) {
+      console.error('Failed to follow/unfollow:', err);
+      if (err.response?.status === 401) {
+        alert(t('user_profile_page.login_required'));
+      } else {
+        alert(err.response?.data?.message || 'Failed to follow/unfollow');
+      }
+    } finally {
+      setFollowLoading(false);
+    }
+  };
 
   useEffect(() => {
     loadUserProfile();
@@ -188,8 +249,16 @@ export default function UserProfilePage() {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <button className="w-full py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all font-medium">
-                    {t('user_profile_page.follow')}
+                  <button 
+                    onClick={handleFollow}
+                    disabled={followLoading}
+                    className={`w-full py-2 rounded-lg transition-all font-medium ${
+                      isFollowing 
+                        ? 'bg-white/10 hover:bg-white/20 text-white' 
+                        : 'bg-gradient-to-r from-purple-500 to-cyan-500 text-white hover:from-purple-600 hover:to-cyan-600'
+                    } ${followLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    {followLoading ? t('common.loading') : (isFollowing ? t('user_profile_page.unfollow') : t('user_profile_page.follow'))}
                   </button>
                   <button className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium">
                     {t('user_profile_page.send_message')}

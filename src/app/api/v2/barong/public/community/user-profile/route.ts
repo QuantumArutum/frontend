@@ -79,6 +79,25 @@ export async function GET(request: NextRequest) {
     // 计算声望值
     const reputation = postCount * 100 + commentCount * 10 + receivedLikes * 5;
 
+    // 获取关注者和关注中数量
+    let followersCount = 0;
+    let followingCount = 0;
+    try {
+      const followersResult = await sql`
+        SELECT COUNT(*) as count FROM user_follows WHERE following_id = ${user.uid}
+      `;
+      followersCount = parseInt(followersResult[0]?.count || '0');
+
+      const followingResult = await sql`
+        SELECT COUNT(*) as count FROM user_follows WHERE follower_id = ${user.uid}
+      `;
+      followingCount = parseInt(followingResult[0]?.count || '0');
+    } catch (e) {
+      // 如果表不存在，默认为0
+      followersCount = 0;
+      followingCount = 0;
+    }
+
     // 获取最近的帖子（简化查询，直接使用表中的统计字段）
     const recentPosts = await sql`
       SELECT 
@@ -158,8 +177,8 @@ export async function GET(request: NextRequest) {
         likes: 0, // 用户点赞数（暂不统计）
         receivedLikes,
         reputation,
-        followers: 0, // TODO: 实现关注功能
-        following: 0, // TODO: 实现关注功能
+        followers: followersCount,
+        following: followingCount,
       },
       badges,
       recentPosts: recentPosts.map((post: any) => ({
