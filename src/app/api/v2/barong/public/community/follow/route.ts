@@ -5,7 +5,6 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/database';
-import { getServerSession } from 'next-auth';
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,15 +26,16 @@ export async function POST(request: NextRequest) {
       )
     `;
 
-    // 获取当前用户 session
-    const session = await getServerSession();
-    if (!session?.user?.email) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Unauthorized' 
-      }, { status: 401 });
-    }
+    // 获取当前用户（从 cookie 或 header 中）
+    // TODO: 实现真实的认证检查
+    // 暂时返回未认证错误，等待实现认证系统
+    return NextResponse.json({ 
+      success: false, 
+      message: 'Authentication required. Please login first.' 
+    }, { status: 401 });
 
+    /* 
+    // 以下代码等待认证系统实现后启用
     const { userId } = await request.json();
 
     if (!userId) {
@@ -104,6 +104,7 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Successfully followed user',
     });
+    */
   } catch (error) {
     console.error('Error following user:', error);
     return NextResponse.json({ 
@@ -122,15 +123,16 @@ export async function DELETE(request: NextRequest) {
       }, { status: 500 });
     }
 
-    // 获取当前用户 session
-    const session = await getServerSession();
-    if (!session?.user?.email) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Unauthorized' 
-      }, { status: 401 });
-    }
+    // 获取当前用户（从 cookie 或 header 中）
+    // TODO: 实现真实的认证检查
+    // 暂时返回未认证错误，等待实现认证系统
+    return NextResponse.json({ 
+      success: false, 
+      message: 'Authentication required. Please login first.' 
+    }, { status: 401 });
 
+    /*
+    // 以下代码等待认证系统实现后启用
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
 
@@ -172,6 +174,7 @@ export async function DELETE(request: NextRequest) {
       success: true,
       message: 'Successfully unfollowed user',
     });
+    */
   } catch (error) {
     console.error('Error unfollowing user:', error);
     return NextResponse.json({ 
