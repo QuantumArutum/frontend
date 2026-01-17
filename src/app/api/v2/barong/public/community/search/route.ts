@@ -44,24 +44,21 @@ export async function GET(request: NextRequest) {
           p.content,
           p.user_id,
           p.created_at,
+          p.comment_count,
+          p.like_count,
+          p.view_count,
+          p.status,
           u.email as author_email,
           c.name as category_name,
-          c.slug as category_slug,
-          COALESCE(
-            (SELECT COUNT(*) FROM post_comments WHERE post_id = p.id),
-            0
-          ) as comment_count,
-          COALESCE(
-            (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id),
-            0
-          ) as like_count,
-          COALESCE(p.view_count, 0) as view_count
+          c.slug as category_slug
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.uid
         LEFT JOIN categories c ON p.category_id = c.id
         WHERE 
-          LOWER(p.title) LIKE ${searchPattern} OR
-          LOWER(p.content) LIKE ${searchPattern}
+          p.status = 'published' AND (
+            LOWER(p.title) LIKE ${searchPattern} OR
+            LOWER(p.content) LIKE ${searchPattern}
+          )
         ORDER BY 
           CASE 
             WHEN LOWER(p.title) LIKE ${searchPattern} THEN 1
@@ -95,31 +92,24 @@ export async function GET(request: NextRequest) {
           u.uid as id,
           u.email,
           u.created_at,
-          COALESCE(
-            (SELECT COUNT(*) FROM posts WHERE user_id = u.uid),
-            0
-          ) as post_count,
-          COALESCE(
-            (SELECT COUNT(*) FROM post_comments WHERE user_id = u.uid),
-            0
-          ) as comment_count
+          up.display_name
         FROM users u
+        LEFT JOIN user_profiles up ON u.uid = up.user_id
         WHERE 
-          u.status = 'active' AND
-          LOWER(u.email) LIKE ${searchPattern}
-        ORDER BY 
-          (SELECT COUNT(*) FROM posts WHERE user_id = u.uid) DESC
+          u.status = 'active' AND (
+            LOWER(u.email) LIKE ${searchPattern} OR
+            LOWER(up.display_name) LIKE ${searchPattern}
+          )
+        ORDER BY u.created_at DESC
         LIMIT ${type === 'users' ? limit : 5}
         OFFSET ${type === 'users' ? offset : 0}
       `;
 
       results.users = users.map((user: any) => ({
         id: user.id,
-        username: user.email.split('@')[0],
+        username: user.display_name || user.email.split('@')[0],
         email: user.email,
         avatar: user.email[0].toUpperCase(),
-        posts: parseInt(user.post_count || '0'),
-        comments: parseInt(user.comment_count || '0'),
         joinedAt: user.created_at,
       }));
     }
@@ -131,18 +121,30 @@ export async function GET(request: NextRequest) {
     }
 
     // 记录搜索日志（用于优化搜索）
-    try {
-      await sql`
-        INSERT INTO search_logs (query, results_count, created_at)
-        VALUES (
-          ${query},
-          ${results.posts.length + results.users.length + results.tags.length},
-          NOW()
-        )
-      `;
-    } catch (logError) {
-      // 忽略日志错误，不影响搜索结果
-      console.error('Failed to log search:', logError);
+    if (sql) {
+      try {
+        // 确保表存在
+        await sql`
+          CREATE TABLE IF NOT EXISTS search_logs (
+            id SERIAL PRIMARY KEY,
+            query TEXT NOT NULL,
+            results_count INTEGER DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          )
+        `;
+        
+        await sql`
+          INSERT INTO search_logs (query, results_count, created_at)
+          VALUES (
+            ${query},
+            ${results.posts.length + results.users.length + results.tags.length},
+            CURRENT_TIMESTAMP
+          )
+        `;
+      } catch (logError) {
+        // 忽略日志错误，不影响搜索结果
+        console.error('Failed to log search:', logError);
+      }
     }
 
     // 获取总数
@@ -152,17 +154,22 @@ export async function GET(request: NextRequest) {
         SELECT COUNT(*) as total
         FROM posts
         WHERE 
-          LOWER(title) LIKE ${searchPattern} OR
-          LOWER(content) LIKE ${searchPattern}
+          status = 'published' AND (
+            LOWER(title) LIKE ${searchPattern} OR
+            LOWER(content) LIKE ${searchPattern}
+          )
       `;
       total = parseInt(countResult[0]?.total || '0');
     } else if (type === 'users') {
       const countResult = await sql`
         SELECT COUNT(*) as total
-        FROM users
+        FROM users u
+        LEFT JOIN user_profiles up ON u.uid = up.user_id
         WHERE 
-          status = 'active' AND
-          LOWER(email) LIKE ${searchPattern}
+          u.status = 'active' AND (
+            LOWER(u.email) LIKE ${searchPattern} OR
+            LOWER(up.display_name) LIKE ${searchPattern}
+          )
       `;
       total = parseInt(countResult[0]?.total || '0');
     } else {
