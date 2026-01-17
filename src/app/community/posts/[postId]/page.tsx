@@ -67,7 +67,8 @@ export default function PostDetailPage() {
   useEffect(() => {
     loadPostDetail();
     loadComments();
-  }, [postId, currentUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postId]);
 
   const loadPostDetail = async () => {
     try {
