@@ -120,6 +120,42 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // 创建评论通知（异步，不阻塞响应）
+    try {
+      // 获取帖子作者ID和标题
+      const postInfo = await sql`
+        SELECT user_id, title FROM posts WHERE id = ${postId}
+      `;
+      
+      if (postInfo.length > 0) {
+        const postAuthorId = postInfo[0].user_id;
+        const postTitle = postInfo[0].title;
+        
+        // 只有当评论者不是帖子作者时才创建通知
+        if (postAuthorId !== currentUserId) {
+          await sql`
+            INSERT INTO notifications (
+              user_id, type, title, content, link, 
+              actor_id, actor_name, is_read, created_at
+            ) VALUES (
+              ${postAuthorId}, 
+              'comment', 
+              '新评论', 
+              ${`${displayName} 评论了你的帖子 "${postTitle}"`}, 
+              ${`/community/posts?id=${postId}`},
+              ${currentUserId}, 
+              ${displayName}, 
+              false, 
+              NOW()
+            )
+          `;
+        }
+      }
+    } catch (notificationError) {
+      // 通知创建失败不影响主功能
+      console.error('Error creating comment notification:', notificationError);
+    }
+
     // 返回新创建的评论
     const comment = {
       id: newComment.id,

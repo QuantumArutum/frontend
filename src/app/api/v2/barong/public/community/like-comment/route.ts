@@ -105,6 +105,68 @@ export async function POST(request: NextRequest) {
 
       isLiked = true;
       likeCount = likeCount + 1;
+
+      // 创建点赞评论通知（异步，不阻塞响应）
+      try {
+        // 获取评论作者ID和帖子信息
+        const commentInfo = await sql`
+          SELECT pc.user_id, pc.post_id, pc.content, p.title
+          FROM post_comments pc
+          JOIN posts p ON pc.post_id = p.id
+          WHERE pc.id = ${commentId}
+        `;
+        
+        if (commentInfo.length > 0) {
+          const commentAuthorId = commentInfo[0].user_id;
+          const postId = commentInfo[0].post_id;
+          const postTitle = commentInfo[0].title;
+          const commentContent = commentInfo[0].content;
+          const commentPreview = commentContent.length > 30 
+            ? commentContent.substring(0, 30) + '...' 
+            : commentContent;
+          
+          // 只有当点赞者不是评论作者时才创建通知
+          if (commentAuthorId !== currentUserId) {
+            // 获取点赞者的显示名称
+            const userResult = await sql`
+              SELECT email FROM users WHERE uid = ${currentUserId}
+            `;
+            const userEmail = userResult[0]?.email || '';
+            let displayName = userEmail.split('@')[0];
+            
+            try {
+              const profileResult = await sql`
+                SELECT display_name FROM user_profiles WHERE user_id = ${currentUserId}
+              `;
+              if (profileResult.length > 0 && profileResult[0].display_name) {
+                displayName = profileResult[0].display_name;
+              }
+            } catch (e) {
+              // 使用默认值
+            }
+
+            await sql`
+              INSERT INTO notifications (
+                user_id, type, title, content, link, 
+                actor_id, actor_name, is_read, created_at
+              ) VALUES (
+                ${commentAuthorId}, 
+                'like', 
+                '新点赞', 
+                ${`${displayName} 赞了你在 "${postTitle}" 中的评论: "${commentPreview}"`}, 
+                ${`/community/posts?id=${postId}`},
+                ${currentUserId}, 
+                ${displayName}, 
+                false, 
+                NOW()
+              )
+            `;
+          }
+        }
+      } catch (notificationError) {
+        // 通知创建失败不影响主功能
+        console.error('Error creating comment like notification:', notificationError);
+      }
     }
 
     return NextResponse.json({

@@ -104,6 +104,60 @@ export async function POST(request: NextRequest) {
 
       isLiked = true;
       likeCount = likeCount + 1;
+
+      // 创建点赞通知（异步，不阻塞响应）
+      try {
+        // 获取帖子作者ID和标题
+        const postInfo = await sql`
+          SELECT user_id, title FROM posts WHERE id = ${postId}
+        `;
+        
+        if (postInfo.length > 0) {
+          const postAuthorId = postInfo[0].user_id;
+          const postTitle = postInfo[0].title;
+          
+          // 只有当点赞者不是帖子作者时才创建通知
+          if (postAuthorId !== currentUserId) {
+            // 获取点赞者的显示名称
+            const userResult = await sql`
+              SELECT email FROM users WHERE uid = ${currentUserId}
+            `;
+            const userEmail = userResult[0]?.email || '';
+            let displayName = userEmail.split('@')[0];
+            
+            try {
+              const profileResult = await sql`
+                SELECT display_name FROM user_profiles WHERE user_id = ${currentUserId}
+              `;
+              if (profileResult.length > 0 && profileResult[0].display_name) {
+                displayName = profileResult[0].display_name;
+              }
+            } catch (e) {
+              // 使用默认值
+            }
+
+            await sql`
+              INSERT INTO notifications (
+                user_id, type, title, content, link, 
+                actor_id, actor_name, is_read, created_at
+              ) VALUES (
+                ${postAuthorId}, 
+                'like', 
+                '新点赞', 
+                ${`${displayName} 赞了你的帖子 "${postTitle}"`}, 
+                ${`/community/posts?id=${postId}`},
+                ${currentUserId}, 
+                ${displayName}, 
+                false, 
+                NOW()
+              )
+            `;
+          }
+        }
+      } catch (notificationError) {
+        // 通知创建失败不影响主功能
+        console.error('Error creating like notification:', notificationError);
+      }
     }
 
     return NextResponse.json({

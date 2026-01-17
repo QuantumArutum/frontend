@@ -97,6 +97,65 @@ export async function POST(request: NextRequest) {
       VALUES (${currentUserId}, ${userId})
     `;
 
+    // 创建关注通知（异步，不阻塞响应）
+    try {
+      // 获取关注者的显示名称
+      const userResult = await sql`
+        SELECT email FROM users WHERE uid = ${currentUserId}
+      `;
+      const userEmail = userResult[0]?.email || '';
+      let displayName = userEmail.split('@')[0];
+      
+      try {
+        const profileResult = await sql`
+          SELECT display_name FROM user_profiles WHERE user_id = ${currentUserId}
+        `;
+        if (profileResult.length > 0 && profileResult[0].display_name) {
+          displayName = profileResult[0].display_name;
+        }
+      } catch (e) {
+        // 使用默认值
+      }
+
+      // 获取被关注者的用户名（用于链接）
+      const targetUserResult = await sql`
+        SELECT email FROM users WHERE uid = ${userId}
+      `;
+      const targetUserEmail = targetUserResult[0]?.email || '';
+      let targetUserName = targetUserEmail.split('@')[0];
+      
+      try {
+        const targetProfileResult = await sql`
+          SELECT display_name FROM user_profiles WHERE user_id = ${userId}
+        `;
+        if (targetProfileResult.length > 0 && targetProfileResult[0].display_name) {
+          targetUserName = targetProfileResult[0].display_name;
+        }
+      } catch (e) {
+        // 使用默认值
+      }
+
+      await sql`
+        INSERT INTO notifications (
+          user_id, type, title, content, link, 
+          actor_id, actor_name, is_read, created_at
+        ) VALUES (
+          ${userId}, 
+          'follow', 
+          '新关注者', 
+          ${`${displayName} 关注了你`}, 
+          ${`/community/user/${targetUserName}`},
+          ${currentUserId}, 
+          ${displayName}, 
+          false, 
+          NOW()
+        )
+      `;
+    } catch (notificationError) {
+      // 通知创建失败不影响主功能
+      console.error('Error creating follow notification:', notificationError);
+    }
+
     return NextResponse.json({
       success: true,
       message: 'Successfully followed user',
