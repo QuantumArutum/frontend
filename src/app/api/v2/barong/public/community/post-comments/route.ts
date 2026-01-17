@@ -88,20 +88,22 @@ export async function GET(request: NextRequest) {
       commentsResult.map(async (comment: any) => {
         // 获取用户显示名称
         let displayName = comment.user_email?.split('@')[0] || 'Unknown';
-        try {
-          const profileResult = await sql`
-            SELECT display_name FROM user_profiles WHERE user_id = ${comment.user_id}
-          `;
-          if (profileResult.length > 0 && profileResult[0].display_name) {
-            displayName = profileResult[0].display_name;
+        if (sql) {
+          try {
+            const profileResult = await sql`
+              SELECT display_name FROM user_profiles WHERE user_id = ${comment.user_id}
+            `;
+            if (profileResult.length > 0 && profileResult[0].display_name) {
+              displayName = profileResult[0].display_name;
+            }
+          } catch (e) {
+            // 使用默认值
           }
-        } catch (e) {
-          // 使用默认值
         }
 
         // 检查当前用户是否已点赞此评论
         let isLiked = false;
-        if (currentUserId) {
+        if (currentUserId && sql) {
           try {
             const likeResult = await sql`
               SELECT id FROM comment_likes 

@@ -78,20 +78,22 @@ export async function GET(request: NextRequest) {
     let displayName = post.user_email?.split('@')[0] || 'Unknown';
     let userRole = 'member';
     
-    try {
-      const profileResult = await sql`
-        SELECT display_name FROM user_profiles WHERE user_id = ${post.user_id}
-      `;
-      if (profileResult.length > 0 && profileResult[0].display_name) {
-        displayName = profileResult[0].display_name;
+    if (sql) {
+      try {
+        const profileResult = await sql`
+          SELECT display_name FROM user_profiles WHERE user_id = ${post.user_id}
+        `;
+        if (profileResult.length > 0 && profileResult[0].display_name) {
+          displayName = profileResult[0].display_name;
+        }
+      } catch (e) {
+        // 如果表不存在，使用默认值
       }
-    } catch (e) {
-      // 如果表不存在，使用默认值
     }
 
     // 检查当前用户是否已点赞
     let isLiked = false;
-    if (currentUserId) {
+    if (currentUserId && sql) {
       try {
         const likeResult = await sql`
           SELECT id FROM post_likes 
@@ -104,14 +106,16 @@ export async function GET(request: NextRequest) {
     }
 
     // 增加浏览量（简单实现，每次访问都增加）
-    try {
-      await sql`
-        UPDATE posts 
-        SET view_count = view_count + 1 
-        WHERE id = ${postId}
-      `;
-    } catch (e) {
-      console.error('Error updating view count:', e);
+    if (sql) {
+      try {
+        await sql`
+          UPDATE posts 
+          SET view_count = view_count + 1 
+          WHERE id = ${postId}
+        `;
+      } catch (e) {
+        console.error('Error updating view count:', e);
+      }
     }
 
     // 格式化响应

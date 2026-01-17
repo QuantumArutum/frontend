@@ -107,15 +107,17 @@ export async function POST(request: NextRequest) {
     const userEmail = userResult[0]?.email || '';
 
     let displayName = userEmail.split('@')[0];
-    try {
-      const profileResult = await sql`
-        SELECT display_name FROM user_profiles WHERE user_id = ${currentUserId}
-      `;
-      if (profileResult.length > 0 && profileResult[0].display_name) {
-        displayName = profileResult[0].display_name;
+    if (sql) {
+      try {
+        const profileResult = await sql`
+          SELECT display_name FROM user_profiles WHERE user_id = ${currentUserId}
+        `;
+        if (profileResult.length > 0 && profileResult[0].display_name) {
+          displayName = profileResult[0].display_name;
+        }
+      } catch (e) {
+        // 使用默认值
       }
-    } catch (e) {
-      // 使用默认值
     }
 
     // 返回新创建的评论
