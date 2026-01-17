@@ -52,45 +52,39 @@ export async function GET(request: NextRequest) {
       }, { status: 404 });
     }
 
-    // 获取用户统计数据
-    const stats = await sql`
-      SELECT 
-        (SELECT COUNT(*) FROM posts WHERE user_id = ${user.uid}) as post_count,
-        (SELECT COUNT(*) FROM post_comments WHERE user_id = ${user.uid}) as comment_count,
-        (SELECT COUNT(*) FROM post_likes WHERE user_id = ${user.uid}) as like_count,
-        (SELECT COUNT(*) FROM post_likes pl 
-         JOIN posts p ON pl.post_id = p.id 
-         WHERE p.user_id = ${user.uid}) as received_likes
+    // 获取用户统计数据（简化查询）
+    const postCountResult = await sql`
+      SELECT COUNT(*) as count FROM posts WHERE user_id = ${user.uid} AND status = 'published'
     `;
+    const postCount = parseInt(postCountResult[0]?.count || '0');
 
-    const userStats = stats[0];
-    const postCount = parseInt(userStats.post_count || '0');
-    const commentCount = parseInt(userStats.comment_count || '0');
-    const likeCount = parseInt(userStats.like_count || '0');
-    const receivedLikes = parseInt(userStats.received_likes || '0');
+    const commentCountResult = await sql`
+      SELECT COUNT(*) as count FROM post_comments WHERE user_id = ${user.uid}
+    `;
+    const commentCount = parseInt(commentCountResult[0]?.count || '0');
+
+    // 计算获赞数（从posts表的like_count字段汇总）
+    const receivedLikesResult = await sql`
+      SELECT SUM(like_count) as total FROM posts WHERE user_id = ${user.uid} AND status = 'published'
+    `;
+    const receivedLikes = parseInt(receivedLikesResult[0]?.total || '0');
 
     // 计算声望值
     const reputation = postCount * 100 + commentCount * 10 + receivedLikes * 5;
 
-    // 获取最近的帖子
+    // 获取最近的帖子（简化查询，直接使用表中的统计字段）
     const recentPosts = await sql`
       SELECT 
         p.id,
         p.title,
         p.created_at,
+        p.comment_count,
+        p.like_count,
         c.name as category_name,
-        c.slug as category_slug,
-        COALESCE(
-          (SELECT COUNT(*) FROM post_comments WHERE post_id = p.id),
-          0
-        ) as comment_count,
-        COALESCE(
-          (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id),
-          0
-        ) as like_count
+        c.slug as category_slug
       FROM posts p
       LEFT JOIN categories c ON p.category_id = c.id
-      WHERE p.user_id = ${user.uid}
+      WHERE p.user_id = ${user.uid} AND p.status = 'published'
       ORDER BY p.created_at DESC
       LIMIT 10
     `;
@@ -122,16 +116,21 @@ export async function GET(request: NextRequest) {
       badges.push({ name: 'Discussion Expert', color: 'from-indigo-500 to-purple-500', icon: '💬' });
     }
 
-    // 检查是否在线
-    const onlineCheck = await sql`
-      SELECT EXISTS(
-        SELECT 1 FROM user_activity_logs
-        WHERE user_id = ${user.uid}
-        AND created_at > NOW() - INTERVAL '15 minutes'
-      ) as is_online
-    `;
-
-    const isOnline = onlineCheck[0]?.is_online || false;
+    // 检查是否在线（简化查询，如果表不存在则跳过）
+    let isOnline = false;
+    try {
+      const onlineCheck = await sql`
+        SELECT EXISTS(
+          SELECT 1 FROM user_activity_logs
+          WHERE user_id = ${user.uid}
+          AND created_at > NOW() - INTERVAL '15 minutes'
+        ) as is_online
+      `;
+      isOnline = onlineCheck[0]?.is_online || false;
+    } catch (e) {
+      // 如果表不存在，默认为离线
+      isOnline = false;
+    }
 
     // 格式化响应数据
     const profile = {
@@ -149,7 +148,7 @@ export async function GET(request: NextRequest) {
       stats: {
         posts: postCount,
         comments: commentCount,
-        likes: likeCount,
+        likes: 0, // 用户点赞数（暂不统计）
         receivedLikes,
         reputation,
         followers: 0, // TODO: 实现关注功能
