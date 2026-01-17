@@ -50,20 +50,22 @@ export async function GET(request: NextRequest) {
       repliesResult.map(async (reply: any) => {
         // 获取用户显示名称
         let displayName = reply.user_email?.split('@')[0] || 'Unknown';
-        try {
-          const profileResult = await sql`
-            SELECT display_name FROM user_profiles WHERE user_id = ${reply.user_id}
-          `;
-          if (profileResult.length > 0 && profileResult[0].display_name) {
-            displayName = profileResult[0].display_name;
+        if (sql) {
+          try {
+            const profileResult = await sql`
+              SELECT display_name FROM user_profiles WHERE user_id = ${reply.user_id}
+            `;
+            if (profileResult.length > 0 && profileResult[0].display_name) {
+              displayName = profileResult[0].display_name;
+            }
+          } catch (e) {
+            // 使用默认值
           }
-        } catch (e) {
-          // 使用默认值
         }
 
         // 检查当前用户是否已点赞此回复
         let isLiked = false;
-        if (currentUserId) {
+        if (currentUserId && sql) {
           try {
             const likeResult = await sql`
               SELECT id FROM comment_likes 
@@ -77,17 +79,19 @@ export async function GET(request: NextRequest) {
 
         // 获取子评论数量（递归）
         let replyCount = 0;
-        try {
-          const replyCountResult = await sql`
-            SELECT COUNT(*) as count 
-            FROM post_comments 
-            WHERE parent_id = ${reply.id} 
-              AND (is_deleted IS NULL OR is_deleted = FALSE)
-              AND status = 'active'
-          `;
-          replyCount = parseInt(replyCountResult[0]?.count || '0');
-        } catch (e) {
-          console.error('Error counting nested replies:', e);
+        if (sql) {
+          try {
+            const replyCountResult = await sql`
+              SELECT COUNT(*) as count 
+              FROM post_comments 
+              WHERE parent_id = ${reply.id} 
+                AND (is_deleted IS NULL OR is_deleted = FALSE)
+                AND status = 'active'
+            `;
+            replyCount = parseInt(replyCountResult[0]?.count || '0');
+          } catch (e) {
+            console.error('Error counting nested replies:', e);
+          }
         }
 
         return {
