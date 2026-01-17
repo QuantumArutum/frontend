@@ -58,6 +58,9 @@ export default function UserProfilePage() {
   const [error, setError] = useState<string | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [showFollowersModal, setShowFollowersModal] = useState(false);
+  const [showFollowingModal, setShowFollowingModal] = useState(false);
 
   const loadUserProfile = useCallback(async () => {
     if (!userName) return;
@@ -71,6 +74,8 @@ export default function UserProfilePage() {
         setProfile(data.data);
         // 检查关注状态
         checkFollowStatus(data.data.id);
+        // 获取当前用户ID
+        getCurrentUser();
       } else {
         setError(data.message || 'Failed to load user profile');
       }
@@ -81,6 +86,19 @@ export default function UserProfilePage() {
       setLoading(false);
     }
   }, [userName]);
+
+  const getCurrentUser = async () => {
+    try {
+      // 尝试获取当前用户信息
+      const response = await barongAPI.get('/resource/users/me');
+      if (response.data) {
+        setCurrentUserId(response.data.uid);
+      }
+    } catch (err) {
+      // 用户未登录
+      setCurrentUserId(null);
+    }
+  };
 
   const checkFollowStatus = async (userId: string) => {
     try {
@@ -231,39 +249,57 @@ export default function UserProfilePage() {
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="text-center">
+                  <button 
+                    onClick={() => setShowFollowersModal(true)}
+                    className="text-center hover:bg-white/5 rounded-lg p-2 transition-colors cursor-pointer"
+                  >
                     <div className="text-2xl font-bold text-white">{profile.stats.posts}</div>
                     <div className="text-white/60 text-sm">{t('user_profile_page.stats.posts')}</div>
-                  </div>
+                  </button>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-white">{profile.stats.receivedLikes}</div>
                     <div className="text-white/60 text-sm">{t('user_profile_page.stats.likes')}</div>
                   </div>
-                  <div className="text-center">
+                  <button 
+                    onClick={() => setShowFollowersModal(true)}
+                    className="text-center hover:bg-white/5 rounded-lg p-2 transition-colors cursor-pointer"
+                  >
                     <div className="text-2xl font-bold text-white">{profile.stats.followers}</div>
                     <div className="text-white/60 text-sm">{t('user_profile_page.stats.followers')}</div>
-                  </div>
-                  <div className="text-center">
+                  </button>
+                  <button 
+                    onClick={() => setShowFollowingModal(true)}
+                    className="text-center hover:bg-white/5 rounded-lg p-2 transition-colors cursor-pointer"
+                  >
                     <div className="text-2xl font-bold text-white">{profile.stats.following}</div>
                     <div className="text-white/60 text-sm">{t('user_profile_page.stats.following')}</div>
+                  </button>
+                </div>
+                {currentUserId && currentUserId !== profile.id && (
+                  <div className="space-y-3">
+                    <button 
+                      onClick={handleFollow}
+                      disabled={followLoading}
+                      className={`w-full py-2 rounded-lg transition-all font-medium ${
+                        isFollowing 
+                          ? 'bg-white/10 hover:bg-white/20 text-white' 
+                          : 'bg-gradient-to-r from-purple-500 to-cyan-500 text-white hover:from-purple-600 hover:to-cyan-600'
+                      } ${followLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                      {followLoading ? t('common.loading') : (isFollowing ? t('user_profile_page.unfollow') : t('user_profile_page.follow'))}
+                    </button>
+                    <button className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium">
+                      {t('user_profile_page.send_message')}
+                    </button>
                   </div>
-                </div>
-                <div className="space-y-3">
-                  <button 
-                    onClick={handleFollow}
-                    disabled={followLoading}
-                    className={`w-full py-2 rounded-lg transition-all font-medium ${
-                      isFollowing 
-                        ? 'bg-white/10 hover:bg-white/20 text-white' 
-                        : 'bg-gradient-to-r from-purple-500 to-cyan-500 text-white hover:from-purple-600 hover:to-cyan-600'
-                    } ${followLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  >
-                    {followLoading ? t('common.loading') : (isFollowing ? t('user_profile_page.unfollow') : t('user_profile_page.follow'))}
-                  </button>
-                  <button className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium">
-                    {t('user_profile_page.send_message')}
-                  </button>
-                </div>
+                )}
+                {currentUserId && currentUserId === profile.id && (
+                  <div className="space-y-3">
+                    <Link href="/community/settings/profile" className="block w-full py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all font-medium text-center">
+                      {t('user_profile_page.edit_profile')}
+                    </Link>
+                  </div>
+                )}
               </div>
 
               {/* 成就徽章 */}
@@ -340,6 +376,154 @@ export default function UserProfilePage() {
         </main>
       </div>
       <EnhancedFooter />
+      
+      {/* 关注者列表弹窗 */}
+      {showFollowersModal && profile && (
+        <FollowersModal 
+          userId={profile.id} 
+          onClose={() => setShowFollowersModal(false)} 
+        />
+      )}
+      
+      {/* 关注中列表弹窗 */}
+      {showFollowingModal && profile && (
+        <FollowingModal 
+          userId={profile.id} 
+          onClose={() => setShowFollowingModal(false)} 
+        />
+      )}
+    </div>
+  );
+}
+
+// 关注者列表弹窗组件
+function FollowersModal({ userId, onClose }: { userId: string; onClose: () => void }) {
+  const { t } = useTranslation();
+  const [followers, setFollowers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadFollowers();
+  }, [userId]);
+
+  const loadFollowers = async () => {
+    try {
+      const response = await barongAPI.get(`/public/community/followers?userId=${userId}&limit=50`);
+      if (response.data.success) {
+        setFollowers(response.data.data.followers);
+      }
+    } catch (err) {
+      console.error('Failed to load followers:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onClose}>
+      <div className="bg-gray-900 rounded-2xl border border-white/20 max-w-md w-full mx-4 max-h-[80vh] overflow-hidden" onClick={(e) => e.stopPropagation()}>
+        <div className="p-6 border-b border-white/10 flex items-center justify-between">
+          <h3 className="text-xl font-bold text-white">{t('user_profile_page.followers_list')}</h3>
+          <button onClick={onClose} className="text-white/60 hover:text-white transition-colors">
+            ✕
+          </button>
+        </div>
+        <div className="overflow-y-auto max-h-[60vh]">
+          {loading ? (
+            <div className="p-8 text-center">
+              <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            </div>
+          ) : followers.length === 0 ? (
+            <div className="p-8 text-center text-gray-400">
+              {t('user_profile_page.no_followers')}
+            </div>
+          ) : (
+            <div className="divide-y divide-white/10">
+              {followers.map((follower) => (
+                <Link key={follower.id} href={`/community/user/${follower.username}`} onClick={onClose}>
+                  <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center text-white font-bold">
+                        {follower.avatar}
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-white font-medium">{follower.username}</div>
+                        <div className="text-white/60 text-sm">{follower.postCount} {t('user_profile_page.stats.posts')}</div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 关注中列表弹窗组件
+function FollowingModal({ userId, onClose }: { userId: string; onClose: () => void }) {
+  const { t } = useTranslation();
+  const [following, setFollowing] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadFollowing();
+  }, [userId]);
+
+  const loadFollowing = async () => {
+    try {
+      const response = await barongAPI.get(`/public/community/following?userId=${userId}&limit=50`);
+      if (response.data.success) {
+        setFollowing(response.data.data.following);
+      }
+    } catch (err) {
+      console.error('Failed to load following:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onClose}>
+      <div className="bg-gray-900 rounded-2xl border border-white/20 max-w-md w-full mx-4 max-h-[80vh] overflow-hidden" onClick={(e) => e.stopPropagation()}>
+        <div className="p-6 border-b border-white/10 flex items-center justify-between">
+          <h3 className="text-xl font-bold text-white">{t('user_profile_page.following_list')}</h3>
+          <button onClick={onClose} className="text-white/60 hover:text-white transition-colors">
+            ✕
+          </button>
+        </div>
+        <div className="overflow-y-auto max-h-[60vh]">
+          {loading ? (
+            <div className="p-8 text-center">
+              <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            </div>
+          ) : following.length === 0 ? (
+            <div className="p-8 text-center text-gray-400">
+              {t('user_profile_page.no_following')}
+            </div>
+          ) : (
+            <div className="divide-y divide-white/10">
+              {following.map((user) => (
+                <Link key={user.id} href={`/community/user/${user.username}`} onClick={onClose}>
+                  <div className="p-4 hover:bg-white/5 transition-colors cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center text-white font-bold">
+                        {user.avatar}
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-white font-medium">{user.username}</div>
+                        <div className="text-white/60 text-sm">{user.postCount} {t('user_profile_page.stats.posts')}</div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
