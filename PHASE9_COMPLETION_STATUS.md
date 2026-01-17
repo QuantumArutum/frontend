@@ -160,16 +160,20 @@ ALTER TABLE posts ADD COLUMN IF NOT EXISTS delete_reason TEXT;
 ---
 
 ### 7. 帖子详情页增强 (100%) ✅
-**功能描述**: 在帖子详情页添加编辑和删除按钮
+**功能描述**: 在帖子详情页添加编辑和删除按钮，并支持 Markdown 渲染
 
 **功能特性**:
 - ✅ 编辑按钮（仅作者可见）
 - ✅ 删除按钮（仅作者可见）
 - ✅ 权限检查（userId 匹配）
 - ✅ 按钮样式优化
+- ✅ Markdown 内容渲染
+- ✅ 代码块语法高亮
+- ✅ 标题、列表、加粗、斜体等格式支持
 
 **实现文件**:
 - `src/app/community/posts/page.tsx`
+- `src/components/community/MarkdownPreview.tsx`
 
 **测试状态**: ✅ 已测试通过
 
@@ -341,8 +345,8 @@ WHERE id = ${postId}
 
 ## 🚀 部署状态
 
-**最新提交**: 39f63fc  
-**提交信息**: feat(phase9): implement post edit and delete functionality  
+**最新提交**: b10bdaf  
+**提交信息**: feat(phase9): add Markdown rendering to post detail page  
 **分支**: main  
 **Vercel**: ✅ 已部署
 
@@ -353,8 +357,18 @@ WHERE id = ${postId}
 - ✅ 创建帖子
 - ✅ 编辑帖子
 - ✅ 删除帖子
+- ✅ Markdown 渲染（帖子详情页）
 
 **部署验证**: ✅ 已通过测试
+
+**测试结果**:
+- ✅ Markdown 编辑器正常工作（实时预览、工具栏）
+- ✅ 草稿保存功能正常（手动保存、自动保存）
+- ✅ 帖子发布成功
+- ✅ 帖子详情页 Markdown 正确渲染
+- ✅ 代码块语法高亮正常
+- ✅ 列表、加粗、斜体等格式正确显示
+- ✅ 编辑和删除按钮正常显示
 
 ---
 
@@ -363,6 +377,7 @@ WHERE id = ${postId}
 ### 组件
 1. `src/components/community/MarkdownEditor.tsx` - Markdown 编辑器
 2. `src/components/community/CodeBlock.tsx` - 代码块组件
+3. `src/components/community/MarkdownPreview.tsx` - Markdown 预览组件
 
 ### Hooks
 1. `src/hooks/useDraftSave.ts` - 草稿保存 Hook
