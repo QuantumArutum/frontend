@@ -93,12 +93,12 @@ export function hasPermission(
 
 // 检查是否是版主
 export function isModerator(userRole: string): boolean {
-  return [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.MODERATOR].includes(userRole);
+  return [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.MODERATOR].includes(userRole as typeof ROLES.SUPER_ADMIN | typeof ROLES.ADMIN | typeof ROLES.MODERATOR);
 }
 
 // 检查是否是管理员
 export function isAdmin(userRole: string): boolean {
-  return [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole);
+  return [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole as typeof ROLES.SUPER_ADMIN | typeof ROLES.ADMIN);
 }
 
 // 检查是否是超级管理员
