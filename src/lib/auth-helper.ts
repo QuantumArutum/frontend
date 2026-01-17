@@ -17,7 +17,7 @@ export interface CurrentUser {
  */
 export async function getCurrentUser(): Promise<CurrentUser | null> {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     
     // 尝试从 cookie 中获取用户信息
     // 注意：这里假设用户信息存储在 cookie 中
