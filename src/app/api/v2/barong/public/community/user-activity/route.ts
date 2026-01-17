@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
+import { sql } from '@/lib/database';
 
 /**
  * GET /api/v2/barong/public/community/user-activity
@@ -13,6 +13,13 @@ import { sql } from '@vercel/postgres';
  */
 export async function GET(request: NextRequest) {
   try {
+    if (!sql) {
+      return NextResponse.json({
+        success: false,
+        message: 'Database not configured'
+      }, { status: 500 });
+    }
+
     const searchParams = request.nextUrl.searchParams;
     const userId = searchParams.get('userId');
     const type = searchParams.get('type') || 'all';
@@ -53,7 +60,7 @@ export async function GET(request: NextRequest) {
         OFFSET ${type === 'posts' ? offset : 0}
       `;
       
-      activities.push(...postsResult.rows.map((row: any) => ({
+      activities.push(...postsResult.map((row: any) => ({
         ...row,
         content: row.content?.substring(0, 200) // 截取前200字符
       })));
@@ -82,7 +89,7 @@ export async function GET(request: NextRequest) {
           OFFSET ${type === 'comments' ? offset : 0}
         `;
         
-        activities.push(...commentsResult.rows.map((row: any) => ({
+        activities.push(...commentsResult.map((row: any) => ({
           ...row,
           content: row.content?.substring(0, 200)
         })));
@@ -113,7 +120,7 @@ export async function GET(request: NextRequest) {
           OFFSET ${type === 'likes' ? offset : 0}
         `;
         
-        activities.push(...likesResult.rows);
+        activities.push(...likesResult);
       } catch (err) {
         console.log('post_likes table might not exist:', err);
       }
