@@ -197,7 +197,7 @@ export default function ForumCategoryPage() {
                         </span>
                       )}
                     </div>
-                    <Link href={`/community/posts/${post.id}`}>
+                    <Link href={`/community/posts?id=${post.id}`}>
                       <h3 className="text-xl font-bold text-white mb-2 hover:text-purple-400 transition-colors">{post.title}</h3>
                     </Link>
                     <p className="text-gray-300 mb-3 line-clamp-2">{post.content}</p>

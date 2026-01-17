@@ -450,7 +450,7 @@ export default function UserProfilePage() {
                     profile.recentPosts.map((post) => (
                       <div key={post.id} className="p-6 hover:bg-white/5 transition-colors">
                         <div className="flex items-start justify-between mb-3">
-                          <Link href={`/community/posts/${post.id}`}>
+                          <Link href={`/community/posts?id=${post.id}`}>
                             <h4 className="text-white font-medium hover:text-purple-400 transition-colors cursor-pointer">
                               {post.title}
                             </h4>

@@ -203,7 +203,7 @@ export default function SearchPage() {
                     {results.posts.map((post) => (
                       <Link
                         key={post.id}
-                        href={`/community/posts/${post.id}`}
+                        href={`/community/posts?id=${post.id}`}
                         className="block p-4 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors"
                       >
                         <div className="flex items-start gap-3">
