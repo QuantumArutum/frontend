@@ -31,7 +31,6 @@ export default function MarkdownEditor({
         onChange={(val) => onChange(val || '')}
         height={height}
         preview="live"
-        placeholder={placeholder}
         textareaProps={{
           placeholder: placeholder,
         }}

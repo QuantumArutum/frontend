@@ -56,7 +56,7 @@ export default function PostDetailPage() {
   const router = useRouter();
   const { t } = useTranslation();
   
-  const postId = searchParams.get('id');
+  const postId = searchParams?.get('id');
 
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState<PostDetail | null>(null);

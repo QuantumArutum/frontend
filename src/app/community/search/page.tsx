@@ -41,8 +41,8 @@ export default function SearchPage() {
   const router = useRouter();
   const { t } = useTranslation();
 
-  const query = searchParams.get('q') || '';
-  const type = searchParams.get('type') || 'all';
+  const query = searchParams?.get('q') || '';
+  const type = searchParams?.get('type') || 'all';
 
   const [searchQuery, setSearchQuery] = useState(query);
   const [loading, setLoading] = useState(false);

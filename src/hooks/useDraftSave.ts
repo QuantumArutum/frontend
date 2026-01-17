@@ -18,7 +18,7 @@ export function useDraftSave(
   category: string,
   enabled: boolean = true
 ) {
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // 保存草稿到 LocalStorage
   const saveDraft = useCallback(() => {

@@ -9,7 +9,7 @@ export const fetchCache = 'force-no-store';
 
 export default function PostDetailPage() {
   const params = useParams();
-  const postId = params.postId as string;
+  const postId = params?.postId as string;
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

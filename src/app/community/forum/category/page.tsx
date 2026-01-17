@@ -50,7 +50,7 @@ interface CategoryInfo {
 export default function ForumCategoryPage() {
   const searchParams = useSearchParams();
   const { t } = useTranslation();
-  const categorySlug = searchParams.get('slug') || '';
+  const categorySlug = searchParams?.get('slug') || '';
 
   const [category, setCategory] = useState<CategoryInfo | null>(null);
   const [posts, setPosts] = useState<ForumPost[]>([]);

@@ -18,7 +18,7 @@ interface UserInfo {
 export default function EditPostPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const postId = searchParams.get('id');
+  const postId = searchParams?.get('id');
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
