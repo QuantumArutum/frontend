@@ -117,31 +117,33 @@ export async function GET(request: NextRequest) {
 
     // 获取每个帖子的统计数据
     const postIds = posts.map((p: any) => p.id);
-    let commentCounts: any[] = [];
-    let likeCounts: any[] = [];
+    const commentCountMap: Record<string, number> = {};
+    const likeCountMap: Record<string, number> = {};
     
     if (postIds.length > 0) {
-      commentCounts = await sql`
+      // 使用 IN 子句而不是 ANY
+      const commentCounts = await sql`
         SELECT post_id, COUNT(*) as count
         FROM post_comments
-        WHERE post_id = ANY(${postIds})
+        WHERE post_id IN (${sql(postIds)})
         GROUP BY post_id
       `;
       
-      likeCounts = await sql`
+      const likeCounts = await sql`
         SELECT post_id, COUNT(*) as count
         FROM post_likes
-        WHERE post_id = ANY(${postIds})
+        WHERE post_id IN (${sql(postIds)})
         GROUP BY post_id
       `;
-    }
 
-    const commentCountMap = Object.fromEntries(
-      commentCounts.map((c: any) => [c.post_id, parseInt(c.count)])
-    );
-    const likeCountMap = Object.fromEntries(
-      likeCounts.map((l: any) => [l.post_id, parseInt(l.count)])
-    );
+      // 构建映射
+      for (const c of commentCounts) {
+        commentCountMap[c.post_id] = parseInt(c.count as string);
+      }
+      for (const l of likeCounts) {
+        likeCountMap[l.post_id] = parseInt(l.count as string);
+      }
+    }
 
     // 格式化帖子数据
     const formattedPosts = posts.map((post: any) => ({
