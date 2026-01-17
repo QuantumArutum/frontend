@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const postId = searchParams.get('postId');
   const currentUserId = searchParams.get('currentUserId'); // 可选，用于判断是否已点赞
+  const sort = searchParams.get('sort') || 'newest'; // newest, oldest, hot, best
   const page = parseInt(searchParams.get('page') || '1');
   const limit = parseInt(searchParams.get('limit') || '20');
   const offset = (page - 1) * limit;
@@ -62,11 +63,25 @@ export async function GET(request: NextRequest) {
     const countResult = await sql`
       SELECT COUNT(*) as total 
       FROM post_comments 
-      WHERE post_id = ${postId} AND parent_id IS NULL AND status = 'active'
+      WHERE post_id = ${postId} 
+        AND (parent_id IS NULL OR parent_id = 0) 
+        AND (is_deleted IS NULL OR is_deleted = FALSE) 
+        AND status = 'active'
     `;
     const total = parseInt(countResult[0]?.total || '0');
 
-    // 获取评论列表（只获取一级评论，parent_id 为 NULL）
+    // 根据排序方式构建查询
+    let orderBy = 'c.created_at DESC'; // 默认最新
+    if (sort === 'oldest') {
+      orderBy = 'c.created_at ASC';
+    } else if (sort === 'hot') {
+      orderBy = 'c.like_count DESC, c.created_at DESC';
+    } else if (sort === 'best') {
+      // 综合算法：点赞数 + 时间衰减
+      orderBy = '(c.like_count * 10 + EXTRACT(EPOCH FROM (NOW() - c.created_at)) / 3600) DESC';
+    }
+
+    // 获取评论列表（只获取一级评论，parent_id 为 NULL 或 0）
     const commentsResult = await sql`
       SELECT 
         c.id,
@@ -75,15 +90,24 @@ export async function GET(request: NextRequest) {
         c.content,
         c.like_count,
         c.created_at,
+        c.parent_id,
+        c.reply_to_user_id,
+        c.reply_to_user_name,
+        c.depth,
+        c.is_edited,
+        c.edited_at,
         u.email as user_email
       FROM post_comments c
       LEFT JOIN users u ON c.user_id = u.uid
-      WHERE c.post_id = ${postId} AND c.parent_id IS NULL AND c.status = 'active'
-      ORDER BY c.created_at DESC
+      WHERE c.post_id = ${postId} 
+        AND (c.parent_id IS NULL OR c.parent_id = 0)
+        AND (c.is_deleted IS NULL OR c.is_deleted = FALSE)
+        AND c.status = 'active'
+      ORDER BY ${sql.unsafe(orderBy)}
       LIMIT ${limit} OFFSET ${offset}
     `;
 
-    // 获取每个评论的用户资料和点赞状态
+    // 获取每个评论的用户资料、点赞状态和子评论数
     const comments = await Promise.all(
       commentsResult.map(async (comment: any) => {
         // 获取用户显示名称
@@ -115,6 +139,23 @@ export async function GET(request: NextRequest) {
           }
         }
 
+        // 获取子评论数量
+        let replyCount = 0;
+        if (sql) {
+          try {
+            const replyCountResult = await sql`
+              SELECT COUNT(*) as count 
+              FROM post_comments 
+              WHERE parent_id = ${comment.id} 
+                AND (is_deleted IS NULL OR is_deleted = FALSE)
+                AND status = 'active'
+            `;
+            replyCount = parseInt(replyCountResult[0]?.count || '0');
+          } catch (e) {
+            console.error('Error counting replies:', e);
+          }
+        }
+
         return {
           id: comment.id,
           postId: comment.post_id,
@@ -125,6 +166,13 @@ export async function GET(request: NextRequest) {
           content: comment.content,
           likeCount: parseInt(comment.like_count || '0'),
           isLiked,
+          replyCount,
+          parentId: comment.parent_id,
+          replyToUserId: comment.reply_to_user_id,
+          replyToUserName: comment.reply_to_user_name,
+          depth: comment.depth || 0,
+          isEdited: comment.is_edited || false,
+          editedAt: comment.edited_at,
           createdAt: comment.created_at,
         };
       })
