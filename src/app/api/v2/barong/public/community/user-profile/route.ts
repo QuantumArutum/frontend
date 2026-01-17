@@ -58,14 +58,21 @@ export async function GET(request: NextRequest) {
     `;
     const postCount = parseInt(postCountResult[0]?.count || '0');
 
-    const commentCountResult = await sql`
-      SELECT COUNT(*) as count FROM post_comments WHERE user_id = ${user.uid}
-    `;
-    const commentCount = parseInt(commentCountResult[0]?.count || '0');
+    // 尝试获取评论数，如果表不存在则默认为0
+    let commentCount = 0;
+    try {
+      const commentCountResult = await sql`
+        SELECT COUNT(*) as count FROM post_comments WHERE user_id = ${user.uid}
+      `;
+      commentCount = parseInt(commentCountResult[0]?.count || '0');
+    } catch (e) {
+      // 如果表不存在，默认为0
+      commentCount = 0;
+    }
 
     // 计算获赞数（从posts表的like_count字段汇总）
     const receivedLikesResult = await sql`
-      SELECT SUM(like_count) as total FROM posts WHERE user_id = ${user.uid} AND status = 'published'
+      SELECT COALESCE(SUM(like_count), 0) as total FROM posts WHERE user_id = ${user.uid} AND status = 'published'
     `;
     const receivedLikes = parseInt(receivedLikesResult[0]?.total || '0');
 
