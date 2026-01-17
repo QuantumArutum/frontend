@@ -341,7 +341,7 @@ export default function PostDetailPage() {
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 mb-6">
             {/* 分类标签 */}
             <Link
-              href={`/community/forum/${post.categorySlug}`}
+              href={`/community/forum/category?slug=${post.categorySlug}`}
               className="inline-block px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm mb-4 hover:bg-purple-500/30 transition-colors"
             >
               {post.categoryName}

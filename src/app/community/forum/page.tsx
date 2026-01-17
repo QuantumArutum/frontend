@@ -158,7 +158,7 @@ export default function ForumPage() {
             filteredCategories.map((category) => (
             <Link
               key={category.id}
-              href={`/community/forum/${category.id}`}
+              href={`/community/forum/category?slug=${category.slug}`}
               className="block bg-white/5 rounded-xl border border-white/10 hover:border-white/20 transition-all overflow-hidden group"
             >
               <div className="flex items-stretch">

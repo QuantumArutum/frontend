@@ -32,9 +32,9 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
 
   const categories = [
     { name: t('community_page.nav.home', '首页'), href: '/community', key: 'home' },
-    { name: t('community_page.nav.general', '综合讨论'), href: '/community/forum/general', key: 'general' },
-    { name: t('community_page.nav.technical', '技术交流'), href: '/community/forum/technical', key: 'technical' },
-    { name: t('community_page.nav.defi', 'DeFi讨论'), href: '/community/forum/defi', key: 'defi' },
+    { name: t('community_page.nav.general', '综合讨论'), href: '/community/forum/category?slug=general', key: 'general' },
+    { name: t('community_page.nav.technical', '技术交流'), href: '/community/forum/category?slug=technology', key: 'technical' },
+    { name: t('community_page.nav.defi', 'DeFi讨论'), href: '/community/forum/category?slug=trading', key: 'defi' },
     { name: t('community_page.nav.governance', '治理提案'), href: '/community/governance', key: 'governance' },
     { name: t('community_page.nav.events', '活动中心'), href: '/community/events', key: 'events' },
   ];

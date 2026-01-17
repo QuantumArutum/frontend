@@ -260,8 +260,8 @@ export default function CleanModernCommunity() {
     }
   };
 
-  const handleCategoryClick = (name: string) => {
-    window.location.href = `/community/category/${encodeURIComponent(name)}`;
+  const handleCategoryClick = (slug: string) => {
+    window.location.href = `/community/forum/category?slug=${encodeURIComponent(slug)}`;
   };
 
   const handleTopicClick = (title: string) => {
@@ -456,7 +456,7 @@ export default function CleanModernCommunity() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    onClick={() => handleCategoryClick(cat.name)}
+                    onClick={() => handleCategoryClick(cat.slug)}
                     className="p-5 rounded-2xl cursor-pointer group transition-all duration-200"
                     style={{
                       background: 'rgba(255, 255, 255, 0.03)',

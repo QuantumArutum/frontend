@@ -458,7 +458,7 @@ export default function UserProfilePage() {
                           <span className="text-white/50 text-sm whitespace-nowrap ml-4">{formatDate(post.createdAt)}</span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <Link href={`/community/forum/${post.categorySlug}`}>
+                          <Link href={`/community/forum/category?slug=${post.categorySlug}`}>
                             <span className="px-3 py-1 bg-purple-500/20 text-purple-400 text-sm rounded-full hover:bg-purple-500/30 transition-colors cursor-pointer">
                               {post.category}
                             </span>
