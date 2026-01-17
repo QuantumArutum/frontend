@@ -67,7 +67,10 @@ export default function UserProfilePage() {
   // 判断是否是自己的资料页
   // 优先使用 AuthContext，如果不可用则使用 currentUserName
   const isOwnProfile = profile && (
-    (isAuthenticated && currentUser && currentUser.username === profile.username) ||
+    (isAuthenticated && currentUser && (
+      currentUser.username === profile.username ||
+      currentUser.email?.split('@')[0] === profile.username
+    )) ||
     (currentUserName && currentUserName === profile.username)
   );
 
