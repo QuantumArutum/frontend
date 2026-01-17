@@ -26,6 +26,24 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
+    // 确保 user_profiles 表存在
+    try {
+      await sql`
+        CREATE TABLE IF NOT EXISTS user_profiles (
+          user_id VARCHAR(255) PRIMARY KEY,
+          display_name VARCHAR(100),
+          bio TEXT,
+          location VARCHAR(100),
+          website VARCHAR(255),
+          avatar_url VARCHAR(500),
+          social_links JSONB,
+          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `;
+    } catch (e) {
+      console.error('Error creating user_profiles table:', e);
+    }
+
     // 查找用户（包含 user_profiles 数据）
     let user;
     if (userId) {
