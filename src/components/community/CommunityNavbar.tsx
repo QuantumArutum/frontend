@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Users, Search, Bell, MessageSquare, Settings, Plus, LogOut, Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../LanguageSwitcher';
+import { barongAPI } from '@/api/client';
 import '../../i18n';
 
 interface UserInfo {
@@ -27,6 +28,7 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const categories = [
     { name: t('community_page.nav.home', '首页'), href: '/community', key: 'home' },
@@ -54,6 +56,8 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
           }
           setUserInfo(user);
           setIsLoggedIn(true);
+          // 加载通知数量
+          loadUnreadCount(user.id);
           return;
         } catch (error) {
           // 继续检查 cookie
@@ -86,6 +90,8 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
           
           setUserInfo(user);
           setIsLoggedIn(true);
+          // 加载通知数量
+          loadUnreadCount(user.id);
           return;
         } catch (error) {
           console.error('Failed to parse Google user cookie:', error);
@@ -94,6 +100,7 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
       
       setIsLoggedIn(false);
       setUserInfo(null);
+      setUnreadCount(0);
     };
     
     checkAuth();
@@ -102,6 +109,29 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
     window.addEventListener('storage', checkAuth);
     return () => window.removeEventListener('storage', checkAuth);
   }, []);
+
+  // 加载未读通知数量
+  const loadUnreadCount = async (userId: string) => {
+    try {
+      const response = await barongAPI.get(`/public/community/notifications?userId=${userId}&limit=1`);
+      if (response.data.success) {
+        setUnreadCount(response.data.data.unreadCount || 0);
+      }
+    } catch (error) {
+      console.error('Failed to load unread count:', error);
+    }
+  };
+
+  // 定期刷新未读数量（每30秒）
+  useEffect(() => {
+    if (!userInfo?.id) return;
+    
+    const interval = setInterval(() => {
+      loadUnreadCount(userInfo.id);
+    }, 30000);
+    
+    return () => clearInterval(interval);
+  }, [userInfo?.id]);
 
   const handleLogout = () => {
     // 清除 localStorage
@@ -263,9 +293,11 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
                 title={t('community_page.notifications', '通知')}
               >
                 <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center shadow-lg">
-                  3
-                </span>
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center shadow-lg">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                )}
               </a>
               <a
                 href="/community/messages"
