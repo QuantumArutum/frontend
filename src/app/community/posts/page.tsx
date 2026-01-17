@@ -9,6 +9,7 @@ import '../../../i18n';
 import ParticlesBackground from '../../../app/components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../../components/EnhancedFooter';
+import MarkdownPreview from '../../../components/community/MarkdownPreview';
 import { barongAPI } from '@/api/client';
 
 interface UserInfo {
@@ -409,9 +410,7 @@ export default function PostDetailPage() {
 
             {/* 帖子内容 */}
             <div className="prose prose-invert max-w-none mb-6">
-              <div className="text-white/90 whitespace-pre-wrap leading-relaxed">
-                {post.content}
-              </div>
+              <MarkdownPreview content={post.content} />
             </div>
 
             {/* 互动按钮 */}
