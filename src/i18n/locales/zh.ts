@@ -4154,6 +4154,10 @@ export const zh = {
     },
     // 用户资料页面
     user_profile_page: {
+      user_not_found: '用户不存在',
+      user_not_found_desc: '该用户可能已被删除或不存在',
+      back_to_community: '返回社区',
+      no_posts: '暂无帖子',
       title_quantum_expert: '量子技术专家',
       sample_bio: '我是一名专注于量子计算和量子密码学的研究者。热衷于分享知识，帮助社区成员了解量子技术的最新发展。',
       sample_location: '北京, 中国',
@@ -4177,6 +4181,9 @@ export const zh = {
       recent_posts: '最近发布',
       view_more_posts: '查看更多帖子',
       time: {
+        just_now: '刚刚',
+        minutes_ago: '{{count}}分钟前',
+        hours_ago: '{{count}}小时前',
         days_ago: '{{count}}天前',
         week_ago: '{{count}}周前'
       },
@@ -4198,7 +4205,9 @@ export const zh = {
     // 论坛分类页面
     forum_category: {
       category_not_found: '分类不存在',
+      back_to_forum: '返回论坛',
       back_to_community: '返回社区首页',
+      no_posts: '暂无帖子',
       categories: {
         general: { name: '综合讨论', description: '关于Quantaureum的一般性讨论，包括使用心得、经验分享等' },
         technical: { name: '技术交流', description: '技术问题讨论、代码分享、解决方案交流' },
@@ -4220,7 +4229,8 @@ export const zh = {
       },
       sort: {
         latest: '最新发布',
-        popular: '最多回复',
+        popular: '最热门',
+        pinned: '置顶优先',
         views: '最多浏览'
       },
       new_topic: '发布新主题',
@@ -4232,6 +4242,7 @@ export const zh = {
         next: '下一页'
       },
       time: {
+        just_now: '刚刚',
         minutes_ago: '{{count}}分钟前',
         hours_ago: '{{count}}小时前',
         days_ago: '{{count}}天前'

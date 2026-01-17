@@ -1,58 +1,128 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Calendar, MapPin, Link as LinkIcon, MessageSquare, Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import '../../../../i18n';
 import ParticlesBackground from '../../../../app/components/ParticlesBackground';
 import CommunityNavbar from '../../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../../../components/EnhancedFooter';
+import { barongAPI } from '@/api/client';
 
-// 根据字符串生成一致的数字（避免 hydration 错误）
-const generateConsistentNumber = (seed: string, max: number, min: number = 0) => {
-  let hash = 0;
-  for (let i = 0; i < seed.length; i++) {
-    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash) % (max - min) + min;
-};
+interface UserProfile {
+  id: string;
+  username: string;
+  email: string;
+  avatar: string;
+  roleKey: string;
+  title: string;
+  bio: string;
+  location: string | null;
+  website: string | null;
+  joinedAt: string;
+  isOnline: boolean;
+  stats: {
+    posts: number;
+    comments: number;
+    likes: number;
+    receivedLikes: number;
+    reputation: number;
+    followers: number;
+    following: number;
+  };
+  badges: Array<{
+    name: string;
+    color: string;
+    icon: string;
+  }>;
+  recentPosts: Array<{
+    id: string;
+    title: string;
+    category: string;
+    categorySlug: string;
+    replies: number;
+    likes: number;
+    createdAt: string;
+  }>;
+}
 
 export default function UserProfilePage() {
   const params = useParams();
   const { t } = useTranslation();
-  const userName = params?.userName ? decodeURIComponent(params.userName as string) : 'Unknown User';
+  const userName = params?.userName ? decodeURIComponent(params.userName as string) : '';
 
-  const handleBack = () => {
-    window.history.back();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadUserProfile = useCallback(async () => {
+    if (!userName) return;
+    
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await barongAPI.get(`/public/community/user-profile?username=${encodeURIComponent(userName)}`);
+      const data = response.data;
+      if (data.success) {
+        setProfile(data.data);
+      } else {
+        setError(data.message || 'Failed to load user profile');
+      }
+    } catch (err) {
+      console.error('Failed to load user profile:', err);
+      setError('Failed to load user profile');
+    } finally {
+      setLoading(false);
+    }
+  }, [userName]);
+
+  useEffect(() => {
+    loadUserProfile();
+  }, [loadUserProfile]);
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (minutes < 1) return t('user_profile_page.time.just_now');
+    if (minutes < 60) return t('user_profile_page.time.minutes_ago', { count: minutes });
+    if (hours < 24) return t('user_profile_page.time.hours_ago', { count: hours });
+    if (days < 7) return t('user_profile_page.time.days_ago', { count: days });
+    return date.toLocaleDateString();
   };
 
-  const userData = {
-    name: userName,
-    avatar: userName.charAt(0).toUpperCase(),
-    title: t('user_profile_page.title_quantum_expert'),
-    bio: t('user_profile_page.sample_bio'),
-    location: t('user_profile_page.sample_location'),
-    website: 'https://quantum-research.com',
-    joinDate: t('user_profile_page.joined_date', { date: '2023-03' }),
-    stats: {
-      posts: generateConsistentNumber(userName + 'posts', 500, 100),
-      likes: generateConsistentNumber(userName + 'likes', 2000, 500),
-      followers: generateConsistentNumber(userName + 'followers', 1000, 200),
-      following: generateConsistentNumber(userName + 'following', 300, 50)
-    },
-    badges: [
-      { name: t('user_profile_page.badges.quantum_pioneer'), color: 'from-purple-500 to-pink-500', icon: '🚀' },
-      { name: t('user_profile_page.badges.knowledge_sharer'), color: 'from-blue-500 to-cyan-500', icon: '📚' },
-      { name: t('user_profile_page.badges.community_contributor'), color: 'from-green-500 to-emerald-500', icon: '🌟' }
-    ],
-    recentPosts: [
-      { id: 1, title: t('user_profile_page.sample_posts.post1.title'), category: t('user_profile_page.sample_posts.post1.category'), replies: 23, likes: 45, createdAt: t('user_profile_page.time.days_ago', { count: 2 }) },
-      { id: 2, title: t('user_profile_page.sample_posts.post2.title'), category: t('user_profile_page.sample_posts.post2.category'), replies: 18, likes: 32, createdAt: t('user_profile_page.time.days_ago', { count: 5 }) },
-      { id: 3, title: t('user_profile_page.sample_posts.post3.title'), category: t('user_profile_page.sample_posts.post3.category'), replies: 41, likes: 67, createdAt: t('user_profile_page.time.week_ago', { count: 1 }) }
-    ]
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen relative flex items-center justify-center">
+        <ParticlesBackground />
+        <CommunityNavbar />
+        <div className="text-center relative z-10">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-white">{t('common.loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !profile) {
+    return (
+      <div className="min-h-screen relative flex items-center justify-center">
+        <ParticlesBackground />
+        <CommunityNavbar />
+        <div className="text-center relative z-10">
+          <h1 className="text-4xl font-bold text-white mb-4">{t('user_profile_page.user_not_found')}</h1>
+          <p className="text-gray-300 mb-6">{error || t('user_profile_page.user_not_found_desc')}</p>
+          <Link href="/community" className="text-purple-400 hover:text-purple-300">{t('user_profile_page.back_to_community')}</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen relative">
@@ -61,75 +131,140 @@ export default function UserProfilePage() {
       <div className="relative z-10 w-full h-full">
         <main className="max-w-6xl mx-auto px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* 左侧用户信息卡片 */}
             <div className="lg:col-span-1">
               <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-6">
                 <div className="text-center mb-6">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4">
-                    {userData.avatar}
+                  <div className="relative inline-block">
+                    <div className="w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4">
+                      {profile.avatar}
+                    </div>
+                    {profile.isOnline && (
+                      <div className="absolute bottom-4 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                    )}
                   </div>
-                  <h2 className="text-xl font-bold text-white mb-1">{userData.name}</h2>
-                  <p className="text-purple-400 font-medium">{userData.title}</p>
+                  <h2 className="text-xl font-bold text-white mb-1">{profile.username}</h2>
+                  <p className="text-purple-400 font-medium">{profile.title}</p>
                 </div>
                 <div className="mb-6">
-                  <p className="text-white/70 text-sm leading-relaxed">{userData.bio}</p>
+                  <p className="text-white/70 text-sm leading-relaxed">{profile.bio}</p>
                 </div>
                 <div className="space-y-3 mb-6">
+                  {profile.location && (
+                    <div className="flex items-center gap-3 text-white/60 text-sm">
+                      <MapPin className="w-4 h-4" />
+                      <span>{profile.location}</span>
+                    </div>
+                  )}
+                  {profile.website && (
+                    <div className="flex items-center gap-3 text-white/60 text-sm">
+                      <LinkIcon className="w-4 h-4" />
+                      <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 transition-colors">
+                        {t('user_profile_page.personal_website')}
+                      </a>
+                    </div>
+                  )}
                   <div className="flex items-center gap-3 text-white/60 text-sm">
-                    <MapPin className="w-4 h-4" /><span>{userData.location}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-white/60 text-sm">
-                    <LinkIcon className="w-4 h-4" />
-                    <a href={userData.website} className="text-purple-400 hover:text-purple-300 transition-colors">{t('user_profile_page.personal_website')}</a>
-                  </div>
-                  <div className="flex items-center gap-3 text-white/60 text-sm">
-                    <Calendar className="w-4 h-4" /><span>{t('user_profile_page.joined_at')} {userData.joinDate}</span>
+                    <Calendar className="w-4 h-4" />
+                    <span>{t('user_profile_page.joined_at')} {new Date(profile.joinedAt).toLocaleDateString()}</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="text-center"><div className="text-2xl font-bold text-white">{userData.stats.posts}</div><div className="text-white/60 text-sm">{t('user_profile_page.stats.posts')}</div></div>
-                  <div className="text-center"><div className="text-2xl font-bold text-white">{userData.stats.likes}</div><div className="text-white/60 text-sm">{t('user_profile_page.stats.likes')}</div></div>
-                  <div className="text-center"><div className="text-2xl font-bold text-white">{userData.stats.followers}</div><div className="text-white/60 text-sm">{t('user_profile_page.stats.followers')}</div></div>
-                  <div className="text-center"><div className="text-2xl font-bold text-white">{userData.stats.following}</div><div className="text-white/60 text-sm">{t('user_profile_page.stats.following')}</div></div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white">{profile.stats.posts}</div>
+                    <div className="text-white/60 text-sm">{t('user_profile_page.stats.posts')}</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white">{profile.stats.receivedLikes}</div>
+                    <div className="text-white/60 text-sm">{t('user_profile_page.stats.likes')}</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white">{profile.stats.followers}</div>
+                    <div className="text-white/60 text-sm">{t('user_profile_page.stats.followers')}</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white">{profile.stats.following}</div>
+                    <div className="text-white/60 text-sm">{t('user_profile_page.stats.following')}</div>
+                  </div>
                 </div>
                 <div className="space-y-3">
-                  <button className="w-full py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all font-medium">{t('user_profile_page.follow')}</button>
-                  <button className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium">{t('user_profile_page.send_message')}</button>
+                  <button className="w-full py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all font-medium">
+                    {t('user_profile_page.follow')}
+                  </button>
+                  <button className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors font-medium">
+                    {t('user_profile_page.send_message')}
+                  </button>
                 </div>
               </div>
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-6 mt-6">
-                <h3 className="text-lg font-semibold text-white mb-4">{t('user_profile_page.achievement_badges')}</h3>
-                <div className="space-y-3">
-                  {userData.badges.map((badge, index) => (
-                    <div key={index} className={`p-3 bg-gradient-to-r ${badge.color} rounded-lg`}>
-                      <div className="flex items-center gap-3"><span className="text-2xl">{badge.icon}</span><span className="text-white font-medium">{badge.name}</span></div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="lg:col-span-2">
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
-                <div className="p-6 border-b border-white/10"><h3 className="text-lg font-semibold text-white">{t('user_profile_page.recent_posts')}</h3></div>
-                <div className="divide-y divide-white/10">
-                  {userData.recentPosts.map((post) => (
-                    <div key={post.id} className="p-6 hover:bg-white/5 transition-colors cursor-pointer">
-                      <div className="flex items-start justify-between mb-3">
-                        <h4 className="text-white font-medium hover:text-purple-400 transition-colors">{post.title}</h4>
-                        <span className="text-white/50 text-sm">{post.createdAt}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="px-3 py-1 bg-purple-500/20 text-purple-400 text-sm rounded-full">{post.category}</span>
-                        <div className="flex items-center gap-4 text-sm text-white/60">
-                          <div className="flex items-center gap-1"><MessageSquare className="w-4 h-4" /><span>{post.replies}</span></div>
-                          <div className="flex items-center gap-1"><Heart className="w-4 h-4" /><span>{post.likes}</span></div>
+
+              {/* 成就徽章 */}
+              {profile.badges.length > 0 && (
+                <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-6 mt-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">{t('user_profile_page.achievement_badges')}</h3>
+                  <div className="space-y-3">
+                    {profile.badges.map((badge, index) => (
+                      <div key={index} className={`p-3 bg-gradient-to-r ${badge.color} rounded-lg`}>
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">{badge.icon}</span>
+                          <span className="text-white font-medium">{badge.name}</span>
                         </div>
                       </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 右侧最近帖子 */}
+            <div className="lg:col-span-2">
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
+                <div className="p-6 border-b border-white/10">
+                  <h3 className="text-lg font-semibold text-white">{t('user_profile_page.recent_posts')}</h3>
+                </div>
+                <div className="divide-y divide-white/10">
+                  {profile.recentPosts.length === 0 ? (
+                    <div className="p-6 text-center text-gray-400">
+                      {t('user_profile_page.no_posts')}
                     </div>
-                  ))}
+                  ) : (
+                    profile.recentPosts.map((post) => (
+                      <div key={post.id} className="p-6 hover:bg-white/5 transition-colors">
+                        <div className="flex items-start justify-between mb-3">
+                          <Link href={`/community/posts/${post.id}`}>
+                            <h4 className="text-white font-medium hover:text-purple-400 transition-colors cursor-pointer">
+                              {post.title}
+                            </h4>
+                          </Link>
+                          <span className="text-white/50 text-sm whitespace-nowrap ml-4">{formatDate(post.createdAt)}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <Link href={`/community/forum/${post.categorySlug}`}>
+                            <span className="px-3 py-1 bg-purple-500/20 text-purple-400 text-sm rounded-full hover:bg-purple-500/30 transition-colors cursor-pointer">
+                              {post.category}
+                            </span>
+                          </Link>
+                          <div className="flex items-center gap-4 text-sm text-white/60">
+                            <div className="flex items-center gap-1">
+                              <MessageSquare className="w-4 h-4" />
+                              <span>{post.replies}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Heart className="w-4 h-4" />
+                              <span>{post.likes}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
-                <div className="p-6 text-center">
-                  <button className="text-purple-400 hover:text-purple-300 transition-colors font-medium">{t('user_profile_page.view_more_posts')}</button>
-                </div>
+                {profile.recentPosts.length > 0 && (
+                  <div className="p-6 text-center">
+                    <button className="text-purple-400 hover:text-purple-300 transition-colors font-medium">
+                      {t('user_profile_page.view_more_posts')}
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
