@@ -26,20 +26,40 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // 查找用户
+    // 查找用户（包含 user_profiles 数据）
     let user;
     if (userId) {
       const result = await sql`
-        SELECT uid, email, created_at, status
-        FROM users
-        WHERE uid = ${userId} AND status = 'active'
+        SELECT 
+          u.uid, 
+          u.email, 
+          u.created_at, 
+          u.status,
+          p.display_name,
+          p.bio,
+          p.location,
+          p.website,
+          p.social_links
+        FROM users u
+        LEFT JOIN user_profiles p ON u.uid = p.user_id
+        WHERE u.uid = ${userId} AND u.status = 'active'
       `;
       user = result[0];
     } else {
       const result = await sql`
-        SELECT uid, email, created_at, status
-        FROM users
-        WHERE email LIKE ${username + '%'} AND status = 'active'
+        SELECT 
+          u.uid, 
+          u.email, 
+          u.created_at, 
+          u.status,
+          p.display_name,
+          p.bio,
+          p.location,
+          p.website,
+          p.social_links
+        FROM users u
+        LEFT JOIN user_profiles p ON u.uid = p.user_id
+        WHERE u.email LIKE ${username + '%'} AND u.status = 'active'
         LIMIT 1
       `;
       user = result[0];
@@ -173,14 +193,15 @@ export async function GET(request: NextRequest) {
     // 格式化响应数据
     const profile = {
       id: user.uid,
-      username: user.email.split('@')[0],
+      username: user.display_name || user.email.split('@')[0],
       email: user.email,
       avatar: user.email[0].toUpperCase(),
       roleKey,
       title: getRoleTitle(roleKey),
-      bio: `Member since ${new Date(user.created_at).toLocaleDateString()}`,
-      location: null, // TODO: 添加用户资料表
-      website: null, // TODO: 添加用户资料表
+      bio: user.bio || `Member since ${new Date(user.created_at).toLocaleDateString()}`,
+      location: user.location || null,
+      website: user.website || null,
+      socialLinks: user.social_links || null,
       joinedAt: user.created_at,
       isOnline,
       stats: {
