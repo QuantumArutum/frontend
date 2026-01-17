@@ -145,7 +145,7 @@ export default function CreatePostPage() {
       <div className="min-h-screen relative flex items-center justify-center">
         <ParticlesBackground />
         <CommunityNavbar />
-        <div className="text-white relative z-10">{t('community_page.create_post.verifying')}</div>
+        <div className="text-white relative z-10">正在验证登录状态...</div>
       </div>
     );
   }
@@ -155,11 +155,10 @@ export default function CreatePostPage() {
       <ParticlesBackground />
       <CommunityNavbar />
       <div className="relative z-10">
-      
-      <div className="max-w-4xl mx-auto p-4">
+        <div className="max-w-4xl mx-auto p-4 pt-24">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white" data-testid="create-post-title">{t('community_page.create_post.title')}</h1>
-          <p className="text-gray-400">{t('community_page.create_post.subtitle')}</p>
+          <h1 className="text-3xl font-bold text-white" data-testid="create-post-title">创建新帖子</h1>
+          <p className="text-gray-400">分享您的想法与社区</p>
         </div>
 
         {error && (
