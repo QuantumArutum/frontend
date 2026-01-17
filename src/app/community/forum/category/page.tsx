@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MessageCircle, Eye, ThumbsUp, Pin, Lock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { createExcerpt } from '@/lib/markdown-utils';
 import '../../../../i18n';
 import ParticlesBackground from '../../../../app/components/ParticlesBackground';
 import CommunityNavbar from '../../../../components/community/CommunityNavbar';
@@ -203,7 +204,7 @@ export default function ForumCategoryPage() {
                     <Link href={`/community/posts?id=${post.id}`}>
                       <h3 className="text-xl font-bold text-white mb-2 hover:text-purple-400 transition-colors">{post.title}</h3>
                     </Link>
-                    <p className="text-gray-300 mb-3 line-clamp-2">{post.content}</p>
+                    <p className="text-gray-300 mb-3 line-clamp-2">{createExcerpt(post.content, 120)}</p>
                     <div className="flex items-center gap-4 mb-3">
                       <span className="text-2xl">{post.authorAvatar}</span>
                       <span className="text-white font-medium">{post.author}</span>

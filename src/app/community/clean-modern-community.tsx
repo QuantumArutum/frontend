@@ -30,6 +30,7 @@ import ParticlesBackground from '../components/ParticlesBackground';
 import Link from 'next/link';
 import { barongAPI } from '@/api/client';
 import { useTranslation } from 'react-i18next';
+import { createExcerpt } from '@/lib/markdown-utils';
 import '../../i18n';
 
 interface UserInfo {
@@ -531,7 +532,7 @@ export default function CleanModernCommunity() {
                               {post.title}
                             </h3>
                             <p className="text-gray-400 line-clamp-2 mb-3 text-sm">
-                              {post.content}
+                              {createExcerpt(post.content, 120)}
                             </p>
                           </div>
                           {post.isPinned && <Pin className="w-4 h-4 text-green-500" />}

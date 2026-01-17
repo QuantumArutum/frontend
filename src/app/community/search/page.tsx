@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search, User, FileText, Calendar, MessageSquare, Heart, Eye } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { createExcerpt } from '@/lib/markdown-utils';
 import '../../../i18n';
 import ParticlesBackground from '../../../app/components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
@@ -215,7 +216,7 @@ export default function SearchPage() {
                               {highlightText(post.title, query)}
                             </h3>
                             <p className="text-white/70 text-sm mb-2 line-clamp-2">
-                              {highlightText(post.content, query)}
+                              {highlightText(createExcerpt(post.content, 120), query)}
                             </p>
                             <div className="flex items-center gap-4 text-sm text-white/50">
                               <span className="flex items-center gap-1">
