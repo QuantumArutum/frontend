@@ -83,6 +83,18 @@ export default function CleanModernCommunity() {
   const [activeMembers, setActiveMembers] = useState<any[]>([]);
   const [onlineCount, setOnlineCount] = useState(0);
   const [categoryStats, setCategoryStats] = useState<any>({});
+  const [trendingPosts, setTrendingPosts] = useState<any[]>([]);
+  const [statsGrowth, setStatsGrowth] = useState({
+    members: '+0%',
+    posts: '+0%',
+    activeToday: '+0%',
+    topics: '+0%',
+  });
+
+  // 当 activeTab 变化时重新加载热门帖子
+  useEffect(() => {
+    loadTrendingPosts();
+  }, [activeTab]);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -152,6 +164,8 @@ export default function CleanModernCommunity() {
     loadActiveMembers(); 
     loadOnlineCount();
     loadCategoryStats();
+    loadTrendingPosts();
+    loadStatsGrowth();
   }, []);
 
   const loadStats = async () => {
@@ -222,6 +236,30 @@ export default function CleanModernCommunity() {
     }
   };
 
+  const loadTrendingPosts = async () => {
+    try {
+      const response = await barongAPI.get(`/public/community/trending-posts?limit=4&type=${activeTab}`);
+      const data = response.data;
+      if (data.success) {
+        setTrendingPosts(data.data);
+      }
+    } catch (error) {
+      console.error('Failed to load trending posts:', error);
+    }
+  };
+
+  const loadStatsGrowth = async () => {
+    try {
+      const response = await barongAPI.get('/public/community/stats-growth');
+      const data = response.data;
+      if (data.success) {
+        setStatsGrowth(data.data);
+      }
+    } catch (error) {
+      console.error('Failed to load stats growth:', error);
+    }
+  };
+
   const handleCategoryClick = (name: string) => {
     window.location.href = `/community/category/${encodeURIComponent(name)}`;
   };
@@ -273,7 +311,8 @@ export default function CleanModernCommunity() {
     },
   ];
 
-  const hotTopics = [
+  // 使用真实数据或后备数据
+  const displayTrendingPosts = trendingPosts.length > 0 ? trendingPosts : [
     { title: 'Quantum Mainnet Launch Announcement', replies: 234, views: 5420, isPinned: true },
     { title: 'Post-Quantum Cryptography Implementation Guide', replies: 89, views: 2100, isPinned: false },
     { title: 'Governance Proposal #12: Fee Structure Update', replies: 156, views: 3200, isPinned: false },
@@ -315,10 +354,10 @@ export default function CleanModernCommunity() {
         {/* Stats Row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {[
-            { label: t('community_page.stats.members'), value: stats.totalMembers > 1000 ? `${(stats.totalMembers / 1000).toFixed(1)}K` : stats.totalMembers.toString(), icon: Users, color: colors.accent.cyan, change: '+12%' },
-            { label: t('community_page.stats.posts'), value: stats.totalPosts > 1000 ? `${(stats.totalPosts / 1000).toFixed(1)}K` : stats.totalPosts.toString(), icon: MessageSquare, color: colors.secondary, change: '+8%' },
-            { label: t('community_page.stats.active_today'), value: stats.activeToday > 1000 ? `${(stats.activeToday / 1000).toFixed(1)}K` : stats.activeToday.toString(), icon: Activity, color: colors.accent.green, change: '+15%' },
-            { label: t('community_page.stats.topics'), value: stats.totalTopics > 1000 ? `${(stats.totalTopics / 1000).toFixed(1)}K` : stats.totalTopics.toString(), icon: Hash, color: colors.primary, change: '+5%' }
+            { label: t('community_page.stats.members'), value: stats.totalMembers > 1000 ? `${(stats.totalMembers / 1000).toFixed(1)}K` : stats.totalMembers.toString(), icon: Users, color: colors.accent.cyan, change: statsGrowth.members },
+            { label: t('community_page.stats.posts'), value: stats.totalPosts > 1000 ? `${(stats.totalPosts / 1000).toFixed(1)}K` : stats.totalPosts.toString(), icon: MessageSquare, color: colors.secondary, change: statsGrowth.posts },
+            { label: t('community_page.stats.active_today'), value: stats.activeToday > 1000 ? `${(stats.activeToday / 1000).toFixed(1)}K` : stats.activeToday.toString(), icon: Activity, color: colors.accent.green, change: statsGrowth.activeToday },
+            { label: t('community_page.stats.topics'), value: stats.totalTopics > 1000 ? `${(stats.totalTopics / 1000).toFixed(1)}K` : stats.totalTopics.toString(), icon: Hash, color: colors.primary, change: statsGrowth.topics }
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -548,13 +587,13 @@ export default function CleanModernCommunity() {
               </div>
 
               <div className="space-y-3">
-                {hotTopics.map((topic, i) => (
+                {displayTrendingPosts.map((topic, i) => (
                   <motion.div
-                    key={i}
+                    key={topic.id || i}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    onClick={() => handleTopicClick(topic.title)}
+                    onClick={() => topic.id ? window.location.href = `/community/posts/${topic.id}` : handleTopicClick(topic.title)}
                     className="p-4 rounded-xl cursor-pointer group transition-all duration-200"
                     style={{
                       background: 'rgba(255, 255, 255, 0.03)',
