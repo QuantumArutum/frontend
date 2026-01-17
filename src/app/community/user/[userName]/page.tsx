@@ -72,10 +72,14 @@ export default function UserProfilePage() {
       const data = response.data;
       if (data.success) {
         setProfile(data.data);
-        // 检查关注状态
-        checkFollowStatus(data.data.id);
-        // 获取当前用户ID
-        getCurrentUser();
+        // 检查是否是当前登录用户的资料页
+        const isOwnProfile = userName === data.data.username;
+        if (isOwnProfile) {
+          setCurrentUserId(data.data.id);
+        } else {
+          // 检查关注状态
+          checkFollowStatus(data.data.id);
+        }
       } else {
         setError(data.message || 'Failed to load user profile');
       }
@@ -89,10 +93,12 @@ export default function UserProfilePage() {
 
   const getCurrentUser = async () => {
     try {
-      // 尝试获取当前用户信息
-      const response = await barongAPI.get('/resource/users/me');
-      if (response.data) {
-        setCurrentUserId(response.data.uid);
+      // 尝试从 session 获取当前用户信息
+      // 由于我们已经在导航栏显示了用户名，说明用户已登录
+      // 我们可以通过比较用户名来判断是否是自己的资料页
+      const navbarUsername = document.querySelector('[href="/community/user/aurum51668"]')?.textContent?.trim();
+      if (navbarUsername && profile && navbarUsername === profile.username) {
+        setCurrentUserId(profile.id);
       }
     } catch (err) {
       // 用户未登录
