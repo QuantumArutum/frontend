@@ -1,0 +1,477 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { Calendar, Eye, Heart, MessageSquare, Share2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import '../../../../i18n';
+import ParticlesBackground from '../../../../app/components/ParticlesBackground';
+import CommunityNavbar from '../../../../components/community/CommunityNavbar';
+import EnhancedFooter from '../../../../components/EnhancedFooter';
+import { barongAPI } from '@/api/client';
+import { useAuth } from '@/contexts/AuthContext';
+
+interface PostDetail {
+  id: number;
+  title: string;
+  content: string;
+  categoryId: number;
+  categoryName: string;
+  categorySlug: string;
+  userId: string;
+  userName: string;
+  userAvatar: string;
+  userRole: string;
+  viewCount: number;
+  likeCount: number;
+  commentCount: number;
+  isPinned: boolean;
+  isLiked: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Comment {
+  id: number;
+  postId: number;
+  userId: string;
+  userName: string;
+  userAvatar: string;
+  userRole: string;
+  content: string;
+  likeCount: number;
+  isLiked: boolean;
+  createdAt: string;
+}
+
+export default function PostDetailPage() {
+  const params = useParams();
+  const router = useRouter();
+  const { t } = useTranslation();
+  const { user: currentUser, isAuthenticated } = useAuth();
+
+  const postId = params.postId as string;
+
+  const [loading, setLoading] = useState(true);
+  const [post, setPost] = useState<PostDetail | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [commentsLoading, setCommentsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // 评论相关状态
+  const [commentContent, setCommentContent] = useState('');
+  const [submittingComment, setSubmittingComment] = useState(false);
+
+  // 加载帖子详情
+  useEffect(() => {
+    loadPostDetail();
+    loadComments();
+  }, [postId, currentUser]);
+
+  const loadPostDetail = async () => {
+    try {
+      setLoading(true);
+      const url = `/public/community/post-detail?postId=${postId}${currentUser ? `&currentUserId=${currentUser.id}` : ''}`;
+      const response = await barongAPI.get(url);
+      
+      if (response.data.success) {
+        setPost(response.data.data);
+      } else {
+        setError(response.data.message || 'Failed to load post');
+      }
+    } catch (err) {
+      console.error('Failed to load post:', err);
+      setError('Failed to load post');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadComments = async () => {
+    try {
+      setCommentsLoading(true);
+      const url = `/public/community/post-comments?postId=${postId}${currentUser ? `&currentUserId=${currentUser.id}` : ''}`;
+      const response = await barongAPI.get(url);
+      
+      if (response.data.success) {
+        setComments(response.data.data.comments);
+      }
+    } catch (err) {
+      console.error('Failed to load comments:', err);
+    } finally {
+      setCommentsLoading(false);
+    }
+  };
+
+  // 点赞帖子
+  const handleLikePost = async () => {
+    if (!isAuthenticated || !currentUser) {
+      alert('请先登录');
+      return;
+    }
+
+    if (!post) return;
+
+    // 乐观更新
+    const newIsLiked = !post.isLiked;
+    const newLikeCount = newIsLiked ? post.likeCount + 1 : post.likeCount - 1;
+    
+    setPost({
+      ...post,
+      isLiked: newIsLiked,
+      likeCount: newLikeCount,
+    });
+
+    try {
+      const response = await barongAPI.post('/public/community/like-post', {
+        postId: post.id,
+        currentUserId: currentUser.id,
+      });
+
+      if (response.data.success) {
+        // 使用服务器返回的准确数据
+        setPost({
+          ...post,
+          isLiked: response.data.data.isLiked,
+          likeCount: response.data.data.likeCount,
+        });
+      }
+    } catch (err) {
+      console.error('Failed to like post:', err);
+      // 回滚
+      setPost({
+        ...post,
+        isLiked: !newIsLiked,
+        likeCount: post.likeCount,
+      });
+    }
+  };
+
+  // 发表评论
+  const handleSubmitComment = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!isAuthenticated || !currentUser) {
+      alert('请先登录');
+      return;
+    }
+
+    if (!commentContent.trim()) {
+      alert('评论内容不能为空');
+      return;
+    }
+
+    if (commentContent.length > 1000) {
+      alert('评论内容不能超过1000字符');
+      return;
+    }
+
+    try {
+      setSubmittingComment(true);
+      const response = await barongAPI.post('/public/community/post-comment', {
+        postId: parseInt(postId),
+        currentUserId: currentUser.id,
+        content: commentContent,
+      });
+
+      if (response.data.success) {
+        // 添加新评论到列表顶部
+        setComments([response.data.data, ...comments]);
+        setCommentContent('');
+        
+        // 更新帖子的评论数
+        if (post) {
+          setPost({
+            ...post,
+            commentCount: post.commentCount + 1,
+          });
+        }
+      } else {
+        alert(response.data.message || '发表评论失败');
+      }
+    } catch (err: any) {
+      console.error('Failed to submit comment:', err);
+      alert(err.response?.data?.message || '发表评论失败');
+    } finally {
+      setSubmittingComment(false);
+    }
+  };
+
+  // 点赞评论
+  const handleLikeComment = async (commentId: number) => {
+    if (!isAuthenticated || !currentUser) {
+      alert('请先登录');
+      return;
+    }
+
+    // 乐观更新
+    setComments(comments.map(c => {
+      if (c.id === commentId) {
+        return {
+          ...c,
+          isLiked: !c.isLiked,
+          likeCount: c.isLiked ? c.likeCount - 1 : c.likeCount + 1,
+        };
+      }
+      return c;
+    }));
+
+    try {
+      const response = await barongAPI.post('/public/community/like-comment', {
+        commentId,
+        currentUserId: currentUser.id,
+      });
+
+      if (response.data.success) {
+        // 使用服务器返回的准确数据
+        setComments(comments.map(c => {
+          if (c.id === commentId) {
+            return {
+              ...c,
+              isLiked: response.data.data.isLiked,
+              likeCount: response.data.data.likeCount,
+            };
+          }
+          return c;
+        }));
+      }
+    } catch (err) {
+      console.error('Failed to like comment:', err);
+      // 回滚
+      loadComments();
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (minutes < 1) return '刚刚';
+    if (minutes < 60) return `${minutes}分钟前`;
+    if (hours < 24) return `${hours}小时前`;
+    if (days < 7) return `${days}天前`;
+    return date.toLocaleDateString();
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen relative flex items-center justify-center">
+        <ParticlesBackground />
+        <CommunityNavbar />
+        <div className="text-center relative z-10">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-white">{t('common.loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !post) {
+    return (
+      <div className="min-h-screen relative">
+        <ParticlesBackground />
+        <CommunityNavbar />
+        <div className="relative z-10 w-full h-full">
+          <main className="max-w-4xl mx-auto px-4 py-8">
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 text-center">
+              <h1 className="text-2xl font-bold text-white mb-4">帖子不存在</h1>
+              <p className="text-white/70 mb-6">{error}</p>
+              <Link
+                href="/community"
+                className="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all"
+              >
+                返回社区
+              </Link>
+            </div>
+          </main>
+        </div>
+        <EnhancedFooter />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen relative">
+      <ParticlesBackground />
+      <CommunityNavbar />
+      <div className="relative z-10 w-full h-full">
+        <main className="max-w-4xl mx-auto px-4 py-8">
+          {/* 帖子内容 */}
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 mb-6">
+            {/* 分类标签 */}
+            <Link
+              href={`/community/forum/${post.categorySlug}`}
+              className="inline-block px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm mb-4 hover:bg-purple-500/30 transition-colors"
+            >
+              {post.categoryName}
+            </Link>
+
+            {/* 标题 */}
+            <h1 className="text-3xl font-bold text-white mb-6">{post.title}</h1>
+
+            {/* 作者信息 */}
+            <div className="flex items-center gap-4 mb-6 pb-6 border-b border-white/10">
+              <Link href={`/community/user/${post.userName}`}>
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg cursor-pointer hover:scale-110 transition-transform">
+                  {post.userAvatar}
+                </div>
+              </Link>
+              <div className="flex-1">
+                <Link href={`/community/user/${post.userName}`}>
+                  <h3 className="text-white font-medium hover:text-purple-300 transition-colors cursor-pointer">
+                    {post.userName}
+                  </h3>
+                </Link>
+                <div className="flex items-center gap-4 text-sm text-white/60">
+                  <span className="flex items-center gap-1">
+                    <Calendar className="w-4 h-4" />
+                    {formatDate(post.createdAt)}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Eye className="w-4 h-4" />
+                    {post.viewCount} 浏览
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* 帖子内容 */}
+            <div className="prose prose-invert max-w-none mb-6">
+              <div className="text-white/90 whitespace-pre-wrap leading-relaxed">
+                {post.content}
+              </div>
+            </div>
+
+            {/* 互动按钮 */}
+            <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+              <button
+                onClick={handleLikePost}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                  post.isLiked
+                    ? 'bg-red-500/20 text-red-300 hover:bg-red-500/30'
+                    : 'bg-white/10 text-white/70 hover:bg-white/20'
+                }`}
+              >
+                <Heart className={`w-5 h-5 ${post.isLiked ? 'fill-current' : ''}`} />
+                <span>{post.likeCount}</span>
+              </button>
+
+              <div className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg text-white/70">
+                <MessageSquare className="w-5 h-5" />
+                <span>{post.commentCount}</span>
+              </div>
+
+              <button className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg text-white/70 hover:bg-white/20 transition-colors">
+                <Share2 className="w-5 h-5" />
+                <span>分享</span>
+              </button>
+            </div>
+          </div>
+
+          {/* 评论区 */}
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8">
+            <h2 className="text-2xl font-bold text-white mb-6">
+              评论 ({post.commentCount})
+            </h2>
+
+            {/* 发表评论 */}
+            {isAuthenticated ? (
+              <form onSubmit={handleSubmitComment} className="mb-8">
+                <textarea
+                  value={commentContent}
+                  onChange={(e) => setCommentContent(e.target.value)}
+                  placeholder="发表你的看法..."
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-purple-500 resize-none"
+                  rows={4}
+                  maxLength={1000}
+                />
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-sm text-white/60">
+                    {commentContent.length}/1000
+                  </span>
+                  <button
+                    type="submit"
+                    disabled={submittingComment || !commentContent.trim()}
+                    className="px-6 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {submittingComment ? '发表中...' : '发表评论'}
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <div className="mb-8 p-4 bg-white/5 border border-white/10 rounded-lg text-center">
+                <p className="text-white/70 mb-3">登录后即可发表评论</p>
+                <Link
+                  href="/auth/login"
+                  className="inline-block px-6 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all"
+                >
+                  立即登录
+                </Link>
+              </div>
+            )}
+
+            {/* 评论列表 */}
+            {commentsLoading ? (
+              <div className="text-center py-8">
+                <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+              </div>
+            ) : comments.length === 0 ? (
+              <div className="text-center py-8 text-white/60">
+                暂无评论，快来发表第一条评论吧！
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {comments.map((comment) => (
+                  <div
+                    key={comment.id}
+                    className="p-4 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <div className="flex items-start gap-3">
+                      <Link href={`/community/user/${comment.userName}`}>
+                        <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform flex-shrink-0">
+                          {comment.userAvatar}
+                        </div>
+                      </Link>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Link href={`/community/user/${comment.userName}`}>
+                            <span className="text-white font-medium hover:text-purple-300 transition-colors cursor-pointer">
+                              {comment.userName}
+                            </span>
+                          </Link>
+                          <span className="text-sm text-white/50">
+                            {formatDate(comment.createdAt)}
+                          </span>
+                        </div>
+                        <p className="text-white/90 whitespace-pre-wrap mb-3">
+                          {comment.content}
+                        </p>
+                        <button
+                          onClick={() => handleLikeComment(comment.id)}
+                          className={`flex items-center gap-1 text-sm transition-colors ${
+                            comment.isLiked
+                              ? 'text-red-300'
+                              : 'text-white/60 hover:text-white'
+                          }`}
+                        >
+                          <Heart className={`w-4 h-4 ${comment.isLiked ? 'fill-current' : ''}`} />
+                          <span>{comment.likeCount}</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
+      <EnhancedFooter />
+    </div>
+  );
+}
