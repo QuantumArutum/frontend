@@ -6,6 +6,7 @@ export async function POST(request: NextRequest) {
     const databaseUrl = process.env.DATABASE_URL;
     
     if (!databaseUrl) {
+      console.error('Database URL not configured');
       return NextResponse.json({
         success: false,
         message: 'Database not configured'
@@ -13,18 +14,28 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+    console.log('Reply comment request:', { 
+      postId: body.postId, 
+      parentId: body.parentId, 
+      currentUserId: body.currentUserId,
+      contentLength: body.content?.length 
+    });
+
     const { postId, parentId, replyToUserId, replyToUserName, content, currentUserId, currentUserName, mentions } = body;
 
     // 验证必填字段
     if (!postId || !parentId || !content || !currentUserId) {
+      console.error('Missing required fields:', { postId, parentId, content: !!content, currentUserId });
       return NextResponse.json({
         success: false,
-        message: 'Missing required fields'
+        message: 'Missing required fields',
+        details: { postId: !!postId, parentId: !!parentId, content: !!content, currentUserId: !!currentUserId }
       }, { status: 400 });
     }
 
     // 验证内容长度
     if (content.length < 1 || content.length > 1000) {
+      console.error('Invalid content length:', content.length);
       return NextResponse.json({
         success: false,
         message: 'Content must be between 1 and 1000 characters'
@@ -33,12 +44,14 @@ export async function POST(request: NextRequest) {
 
     const sql = neon(databaseUrl);
 
-    // 获取父评论的深度
+    // 获取父评论的深度（使用COALESCE处理NULL值）
+    console.log('Fetching parent comment:', parentId);
     const parentComment = await sql`
-      SELECT depth FROM post_comments WHERE id = ${parentId}
+      SELECT COALESCE(depth, 0) as depth FROM post_comments WHERE id = ${parentId}
     `;
 
     if (parentComment.length === 0) {
+      console.error('Parent comment not found:', parentId);
       return NextResponse.json({
         success: false,
         message: 'Parent comment not found'
@@ -47,30 +60,54 @@ export async function POST(request: NextRequest) {
 
     const parentDepth = parentComment[0].depth || 0;
     const newDepth = Math.min(parentDepth + 1, 3); // 最多3层
+    console.log('Comment depth:', { parentDepth, newDepth });
 
     // 插入回复评论
-    const result = await sql`
-      INSERT INTO post_comments (
-        post_id, user_id, user_name, content, 
-        parent_id, reply_to_user_id, reply_to_user_name, depth,
-        created_at
-      )
-      VALUES (
-        ${postId}, ${currentUserId}, ${currentUserName}, ${content},
-        ${parentId}, ${replyToUserId}, ${replyToUserName}, ${newDepth},
-        NOW()
-      )
-      RETURNING id, created_at
-    `;
+    console.log('Inserting reply comment:', {
+      postId,
+      currentUserId,
+      currentUserName,
+      parentId,
+      replyToUserId,
+      replyToUserName,
+      newDepth
+    });
 
-    const commentId = result[0].id;
+    try {
+      const result = await sql`
+        INSERT INTO post_comments (
+          post_id, user_id, user_name, content, 
+          parent_id, reply_to_user_id, reply_to_user_name, depth,
+          created_at, status
+        )
+        VALUES (
+          ${postId}, ${currentUserId}, ${currentUserName || currentUserId}, ${content},
+          ${parentId}, ${replyToUserId || null}, ${replyToUserName || null}, ${newDepth},
+          NOW(), 'active'
+        )
+        RETURNING id, created_at
+      `;
 
-    // 更新帖子评论数
-    await sql`
-      UPDATE posts 
-      SET comment_count = comment_count + 1 
-      WHERE id = ${postId}
-    `;
+      const commentId = result[0].id;
+      console.log('Reply comment created:', commentId);
+
+      // 更新帖子评论数
+      await sql`
+        UPDATE posts 
+        SET comment_count = comment_count + 1 
+        WHERE id = ${postId}
+      `;
+      console.log('Post comment count updated');
+    } catch (insertError) {
+      console.error('Database insert error:', {
+        message: insertError.message,
+        code: insertError.code,
+        detail: insertError.detail,
+        hint: insertError.hint,
+        position: insertError.position
+      });
+      throw insertError;
+    }
 
     // 保存 @提及
     if (mentions && mentions.length > 0) {
@@ -144,11 +181,20 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Reply comment error:', error);
+    console.error('Reply comment error:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      code: error.code,
+      detail: error.detail
+    });
     return NextResponse.json({
       success: false,
       message: 'Failed to post reply',
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
+      details: process.env.NODE_ENV === 'development' ? {
+        code: error.code,
+        detail: error.detail
+      } : undefined
     }, { status: 500 });
   }
 }
