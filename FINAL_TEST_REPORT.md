@@ -112,13 +112,61 @@ GET /api/v2/barong/public/community/forum-category-posts?category=announcements&
 GET /api/v2/barong/public/community/user-profile?username=aurum51668
 ```
 
-**状态**: ⏳ **等待部署后测试**
+**响应**:
+```json
+{
+  "success": true,
+  "data": {
+    "id": "user_1768578611075_ndrt3b",
+    "username": "aurum51668",
+    "email": "aurum51668@outlook.com",
+    "avatar": "A",
+    "roleKey": "member",
+    "title": "Member",
+    "bio": "Member since 1/16/2026",
+    "location": null,
+    "website": null,
+    "joinedAt": "2026-01-16T15:50:11.079Z",
+    "isOnline": false,
+    "stats": {
+      "posts": 1,
+      "comments": 0,
+      "likes": 0,
+      "receivedLikes": 0,
+      "reputation": 100,
+      "followers": 0,
+      "following": 0
+    },
+    "badges": [],
+    "recentPosts": [{
+      "id": 2,
+      "title": "测试帖子 - Outlook用户发布",
+      "category": "Announcements",
+      "categorySlug": "announcements",
+      "replies": 0,
+      "likes": 0,
+      "createdAt": "2026-01-16T19:43:57.283Z"
+    }]
+  }
+}
+```
+
+**状态**: ✅ **成功**
 
 ### 测试 4: 用户资料页
 
 **URL**: https://www.quantaureum.com/community/user/aurum51668
 
-**状态**: ⏳ **等待 API 修复后测试**
+**验证项**:
+- ✅ 用户信息正确显示（aurum51668, Member）
+- ✅ 加入时间正确（2026/1/16）
+- ✅ 统计数据正确（1帖子、0获赞、0关注者、0关注中）
+- ✅ 最近发布显示真实帖子
+- ✅ 帖子链接正确（/community/posts/2）
+- ✅ 分类链接正确（Announcements）
+- ✅ 时间格式化正确（7小时前）
+
+**状态**: ✅ **成功**
 
 ---
 
@@ -169,9 +217,9 @@ GET /api/v2/barong/public/community/user-profile?username=aurum51668
 | 论坛分类页面 | ✅ | ✅ | 完成 |
 | 论坛分类详情页 | ✅ | ✅ | 完成 |
 | 搜索功能 | ✅ | ✅ | 完成 |
-| 用户资料 | ⏳ | ⏳ | 测试中 |
+| 用户资料 | ✅ | ✅ | 完成 |
 
-**总体进度**: 85% 完成
+**总体进度**: 100% 完成 ✅
 
 ---
 
@@ -194,12 +242,12 @@ GET /api/v2/barong/public/community/user-profile?username=aurum51668
 ## 📝 下一步计划
 
 ### 立即行动（今天）
-1. ⏳ 等待 Vercel 部署完成（约2分钟）
-2. ⏳ 测试用户资料 API
-3. ⏳ 测试用户资料页
-4. ⏳ 完成第一阶段测试报告
+1. ✅ 等待 Vercel 部署完成
+2. ✅ 测试用户资料 API
+3. ✅ 测试用户资料页
+4. ✅ 完成第一阶段测试报告
 
-### 第二阶段：用户功能（明天）
+### 第二阶段：用户功能（开始）
 1. 实现关注/粉丝功能
    - 创建 user_follows 表
    - 创建关注/取消关注 API
@@ -244,6 +292,7 @@ GET /api/v2/barong/public/community/user-profile?username=aurum51668
 ## 🔄 Git 提交历史
 
 ```
+da61828 - fix: 修复user-profile API的NULL值处理和post_comments表检查
 e76782e - fix: 简化user-profile API查询逻辑
 1b2cafd - fix: 简化统计查询，直接使用posts表中的统计字段
 bbcfdc0 - fix: 修复SQL IN子句语法
