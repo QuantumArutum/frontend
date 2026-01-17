@@ -73,6 +73,7 @@ class AuthService {
   constructor() {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('auth_token');
+      this.refreshTokenValue = localStorage.getItem('refresh_token');
       const userInfoStr = localStorage.getItem('user_info');
       if (userInfoStr) {
         try {
@@ -140,6 +141,13 @@ class AuthService {
         this.token = tokens.accessToken;
         this.refreshTokenValue = tokens.refreshToken;
         this.user = user;
+
+        // 保存到 localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('auth_token', tokens.accessToken);
+          localStorage.setItem('refresh_token', tokens.refreshToken);
+          localStorage.setItem('user_info', JSON.stringify(user));
+        }
 
         return {
           success: true,
@@ -218,6 +226,12 @@ class AuthService {
         this.token = tokens.accessToken;
         this.refreshTokenValue = tokens.refreshToken;
 
+        // 更新 localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('auth_token', tokens.accessToken);
+          localStorage.setItem('refresh_token', tokens.refreshToken);
+        }
+
         return this.token;
       } else {
         throw new Error('刷新令牌失败');
@@ -234,6 +248,13 @@ class AuthService {
     this.token = null;
     this.refreshTokenValue = null;
     this.user = null;
+
+    // 清除 localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('user_info');
+    }
   }
 
   // 检查是否已登录
@@ -293,6 +314,11 @@ class AuthService {
 
       if (response.success && response.user) {
         this.user = { ...this.user, ...response.user } as User;
+
+        // 更新 localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('user_info', JSON.stringify(this.user));
+        }
 
         return {
           success: true,
