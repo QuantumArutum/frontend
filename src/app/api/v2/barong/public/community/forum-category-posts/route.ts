@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // 获取分类信息（简化查询）
+    // 获取分类信息
     const categoryResult = await sql`
       SELECT 
         id,
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
         slug,
         description
       FROM categories
-      WHERE slug = ${categorySlug}
+      WHERE slug = ${categorySlug} AND is_active = true
       LIMIT 1
     `;
 
@@ -68,12 +68,11 @@ export async function GET(request: NextRequest) {
           p.user_id,
           p.created_at,
           COALESCE(p.is_pinned, false) as is_pinned,
-          COALESCE(p.is_locked, false) as is_locked,
           u.email as author_email,
           COALESCE(p.view_count, 0) as view_count
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.uid
-        WHERE p.category_id = ${category.id}
+        WHERE p.category_id = ${category.id} AND p.status = 'published'
         ORDER BY p.view_count DESC, p.created_at DESC
         LIMIT ${limit}
         OFFSET ${offset}
@@ -87,12 +86,11 @@ export async function GET(request: NextRequest) {
           p.user_id,
           p.created_at,
           COALESCE(p.is_pinned, false) as is_pinned,
-          COALESCE(p.is_locked, false) as is_locked,
           u.email as author_email,
           COALESCE(p.view_count, 0) as view_count
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.uid
-        WHERE p.category_id = ${category.id}
+        WHERE p.category_id = ${category.id} AND p.status = 'published'
         ORDER BY p.is_pinned DESC NULLS LAST, p.created_at DESC
         LIMIT ${limit}
         OFFSET ${offset}
@@ -106,12 +104,11 @@ export async function GET(request: NextRequest) {
           p.user_id,
           p.created_at,
           COALESCE(p.is_pinned, false) as is_pinned,
-          COALESCE(p.is_locked, false) as is_locked,
           u.email as author_email,
           COALESCE(p.view_count, 0) as view_count
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.uid
-        WHERE p.category_id = ${category.id}
+        WHERE p.category_id = ${category.id} AND p.status = 'published'
         ORDER BY p.created_at DESC
         LIMIT ${limit}
         OFFSET ${offset}
@@ -160,7 +157,7 @@ export async function GET(request: NextRequest) {
       lastReply: null,
       lastReplyBy: null,
       isPinned: post.is_pinned || false,
-      isLocked: post.is_locked || false,
+      isLocked: false, // 表中没有此字段
       tags: [], // TODO: 实现标签功能
     }));
 
@@ -168,7 +165,7 @@ export async function GET(request: NextRequest) {
     const totalResult = await sql`
       SELECT COUNT(*) as total
       FROM posts
-      WHERE category_id = ${category.id}
+      WHERE category_id = ${category.id} AND status = 'published'
     `;
 
     return NextResponse.json({
