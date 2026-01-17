@@ -13,12 +13,14 @@ import MarkdownPreview from '../../../components/community/MarkdownPreview';
 import CommentTree from '../../../components/community/CommentTree';
 import CommentSort from '../../../components/community/CommentSort';
 import { barongAPI } from '@/api/client';
+import ModeratorActions from '../../../components/community/ModeratorActions';
 
 interface UserInfo {
   id: string;
   email: string;
   name: string;
   avatar?: string;
+  role?: string;
 }
 
 interface PostDetail {
@@ -68,6 +70,7 @@ export default function PostDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isModerator, setIsModerator] = useState(false);
 
   // 评论相关状态
   const [commentContent, setCommentContent] = useState('');
@@ -94,6 +97,9 @@ export default function PostDetailPage() {
         setUserInfo(user);
         setIsAuthenticated(true);
         currentUserId = user.id;
+        
+        // 检查是否是版主
+        checkModeratorStatus(user.id);
       } catch (error) {
         console.error('Failed to parse user info:', error);
       }
@@ -104,6 +110,19 @@ export default function PostDetailPage() {
     loadComments(currentUserId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
+
+  // 检查版主状态
+  const checkModeratorStatus = async (userId: string) => {
+    try {
+      const response = await barongAPI.get(`/public/community/mod/moderators?currentUserId=${userId}`);
+      if (response.data.success) {
+        setIsModerator(true);
+      }
+    } catch (err) {
+      // 不是版主或没有权限，忽略错误
+      setIsModerator(false);
+    }
+  };
 
   const loadPostDetail = async (currentUserId: string | null) => {
     try {
@@ -438,6 +457,19 @@ export default function PostDetailPage() {
             <ArrowLeft className="w-4 h-4" />
             返回社区
           </Link>
+
+          {/* 版主操作 */}
+          {isModerator && userInfo && (
+            <div className="mb-6">
+              <ModeratorActions
+                postId={post.id}
+                isPinned={post.isPinned}
+                isLocked={false}
+                currentUserId={userInfo.id}
+                onUpdate={() => loadPostDetail(userInfo.id)}
+              />
+            </div>
+          )}
 
           {/* 帖子内容 */}
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 mb-6">

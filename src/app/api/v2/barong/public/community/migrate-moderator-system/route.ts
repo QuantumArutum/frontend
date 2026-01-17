@@ -96,14 +96,26 @@ export async function POST(request: NextRequest) {
     console.log('Posts table fields added successfully');
 
     // 5. 添加字段到 post_reports 表（如果存在）
-    console.log('Adding fields to post_reports table...');
-    await sql`
-      ALTER TABLE post_reports 
-      ADD COLUMN IF NOT EXISTS handled_by VARCHAR(255),
-      ADD COLUMN IF NOT EXISTS handled_at TIMESTAMP,
-      ADD COLUMN IF NOT EXISTS handler_note TEXT
+    console.log('Checking if post_reports table exists...');
+    const tableExists = await sql`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_name = 'post_reports'
+      )
     `;
-    console.log('Post_reports table fields added successfully');
+    
+    if (tableExists[0]?.exists) {
+      console.log('Adding fields to post_reports table...');
+      await sql`
+        ALTER TABLE post_reports 
+        ADD COLUMN IF NOT EXISTS handled_by VARCHAR(255),
+        ADD COLUMN IF NOT EXISTS handled_at TIMESTAMP,
+        ADD COLUMN IF NOT EXISTS handler_note TEXT
+      `;
+      console.log('Post_reports table fields added successfully');
+    } else {
+      console.log('Post_reports table does not exist, skipping...');
+    }
 
     console.log('All moderator system migrations completed successfully');
     return NextResponse.json({
