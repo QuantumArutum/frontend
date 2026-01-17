@@ -11,6 +11,10 @@ import CommunityNavbar from '../../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../../../components/EnhancedFooter';
 import { barongAPI } from '@/api/client';
 
+// 强制动态渲染，禁用静态生成
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
 interface UserInfo {
   id: string;
   email: string;
