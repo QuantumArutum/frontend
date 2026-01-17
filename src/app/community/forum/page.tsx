@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { MessageSquare, Users, Clock, TrendingUp, Search, Filter, ChevronRight } from 'lucide-react';
 import ParticlesBackground from '../../components/ParticlesBackground';
@@ -8,92 +8,50 @@ import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
+import { barongAPI } from '@/api/client';
 
 interface Category {
   id: string;
   name: string;
+  slug: string;
   description: string;
   icon: string;
   posts: number;
   topics: number;
   lastPost: {
+    id: string;
     title: string;
     author: string;
     time: string;
-  };
+  } | null;
   color: string;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getCategories = (t: any): Category[] => [
-  {
-    id: 'general',
-    name: t('community_page.forum.categories.general.name'),
-    description: t('community_page.forum.categories.general.desc'),
-    icon: '💬',
-    posts: 15420,
-    topics: 2340,
-    lastPost: { title: 'Welcome to Quantaureum!', author: 'Admin', time: t('community_page.forum.time.minutes_ago', { count: 5 }) },
-    color: 'from-blue-500 to-cyan-500'
-  },
-  {
-    id: 'technical',
-    name: t('community_page.forum.categories.technical.name'),
-    description: t('community_page.forum.categories.technical.desc'),
-    icon: '⚙️',
-    posts: 8930,
-    topics: 1560,
-    lastPost: { title: 'How to implement quantum signatures', author: 'QuantumDev', time: t('community_page.forum.time.minutes_ago', { count: 12 }) },
-    color: 'from-purple-500 to-pink-500'
-  },
-  {
-    id: 'defi',
-    name: t('community_page.forum.categories.defi.name'),
-    description: t('community_page.forum.categories.defi.desc'),
-    icon: '📈',
-    posts: 12650,
-    topics: 1890,
-    lastPost: { title: 'QAU/USDT price analysis', author: 'CryptoQueen', time: t('community_page.forum.time.minutes_ago', { count: 23 }) },
-    color: 'from-green-500 to-emerald-500'
-  },
-  {
-    id: 'governance',
-    name: t('community_page.forum.categories.governance.name'),
-    description: t('community_page.forum.categories.governance.desc'),
-    icon: '🏛️',
-    posts: 3420,
-    topics: 456,
-    lastPost: { title: 'Proposal #15: Fee reduction', author: 'GovernanceDAO', time: t('community_page.forum.time.hours_ago', { count: 1 }) },
-    color: 'from-orange-500 to-amber-500'
-  },
-  {
-    id: 'support',
-    name: t('community_page.forum.categories.support.name'),
-    description: t('community_page.forum.categories.support.desc'),
-    icon: '🆘',
-    posts: 5670,
-    topics: 890,
-    lastPost: { title: 'Wallet connection issue', author: 'NewUser123', time: t('community_page.forum.time.minutes_ago', { count: 45 }) },
-    color: 'from-red-500 to-rose-500'
-  },
-  {
-    id: 'showcase',
-    name: t('community_page.forum.categories.showcase.name'),
-    description: t('community_page.forum.categories.showcase.desc'),
-    icon: '🚀',
-    posts: 2340,
-    topics: 345,
-    lastPost: { title: 'My first quantum dApp', author: 'Builder', time: t('community_page.forum.time.hours_ago', { count: 2 }) },
-    color: 'from-indigo-500 to-violet-500'
-  }
-];
 
 export default function ForumPage() {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('activity');
-  
-  const categories = getCategories(t);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    setLoading(true);
+    try {
+      const response = await barongAPI.get('/public/community/forum-categories');
+      const data = response.data;
+      if (data.success) {
+        setCategories(data.data);
+      }
+    } catch (error) {
+      console.error('Failed to load categories:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredCategories = categories.filter(cat =>
     cat.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -187,7 +145,17 @@ export default function ForumPage() {
 
         {/* Categories */}
         <div className="space-y-4">
-          {filteredCategories.map((category) => (
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+              <p className="text-white mt-4">{t('common.loading')}</p>
+            </div>
+          ) : filteredCategories.length === 0 ? (
+            <div className="text-center py-12 text-gray-400">
+              {t('community_page.forum.no_categories')}
+            </div>
+          ) : (
+            filteredCategories.map((category) => (
             <Link
               key={category.id}
               href={`/community/forum/${category.id}`}
@@ -216,14 +184,20 @@ export default function ForumPage() {
                       <span className="text-white font-medium">{category.topics.toLocaleString()}</span> {t('community_page.forum.topics_label')}
                     </div>
                     <div className="text-gray-400 flex-1 text-right">
-                      {t('community_page.forum.latest')}: <span className="text-cyan-400">{category.lastPost.title}</span>
-                      <span className="text-gray-500"> by {category.lastPost.author} · {category.lastPost.time}</span>
+                      {category.lastPost ? (
+                        <>
+                          {t('community_page.forum.latest')}: <span className="text-cyan-400">{category.lastPost.title}</span>
+                          <span className="text-gray-500"> by {category.lastPost.author} · {new Date(category.lastPost.time).toLocaleString()}</span>
+                        </>
+                      ) : (
+                        <span className="text-gray-500">{t('community_page.forum.no_posts')}</span>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </Link>
-          ))}
+          )))}
         </div>
       </div>
       </div>

@@ -44,10 +44,10 @@ function SearchContent() {
 
     setLoading(true);
     try {
-      const response = await fetch(`/api/community/search?q=${encodeURIComponent(searchQuery)}`);
+      const response = await fetch(`/api/v2/barong/public/community/search?q=${encodeURIComponent(searchQuery)}&type=posts`);
       const data = await response.json();
       if (data.success) {
-        setResults(data.data.posts);
+        setResults(data.data.results.posts || []);
       }
     } catch (error) {
       console.error('Search error:', error);
