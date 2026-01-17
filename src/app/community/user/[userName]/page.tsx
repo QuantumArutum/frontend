@@ -62,9 +62,17 @@ export default function UserProfilePage() {
   const [followLoading, setFollowLoading] = useState(false);
   const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [showFollowingModal, setShowFollowingModal] = useState(false);
+  const [currentUserName, setCurrentUserName] = useState<string | null>(null);
 
   // 判断是否是自己的资料页
-  const isOwnProfile = isAuthenticated && currentUser && profile && currentUser.username === profile.username;
+  // 优先使用 AuthContext，如果不可用则使用 currentUserName
+  const isOwnProfile = profile && (
+    (isAuthenticated && currentUser && currentUser.username === profile.username) ||
+    (currentUserName && currentUserName === profile.username)
+  );
+
+  // 判断是否已登录（用于显示关注按钮）
+  const isLoggedIn = isAuthenticated || !!currentUserName;
 
   const loadUserProfile = useCallback(async () => {
     if (!userName) return;
@@ -76,8 +84,29 @@ export default function UserProfilePage() {
       const data = response.data;
       if (data.success) {
         setProfile(data.data);
+        
+        // 尝试从导航栏获取当前用户名（备用方案）
+        if (!isAuthenticated || !currentUser) {
+          try {
+            const navbarUserLink = document.querySelector('a[href^="/community/user/"]');
+            if (navbarUserLink) {
+              const href = navbarUserLink.getAttribute('href');
+              if (href) {
+                const match = href.match(/\/community\/user\/([^/?]+)/);
+                if (match && match[1]) {
+                  setCurrentUserName(decodeURIComponent(match[1]));
+                }
+              }
+            }
+          } catch (err) {
+            console.log('Failed to get current user from navbar:', err);
+          }
+        }
+        
         // 如果不是自己的资料页，检查关注状态
-        if (isAuthenticated && currentUser && currentUser.username !== data.data.username) {
+        const isOwn = (isAuthenticated && currentUser && currentUser.username === data.data.username) ||
+                      (currentUserName && currentUserName === data.data.username);
+        if (!isOwn && (isAuthenticated || currentUserName)) {
           checkFollowStatus(data.data.id);
         }
       } else {
@@ -89,7 +118,7 @@ export default function UserProfilePage() {
     } finally {
       setLoading(false);
     }
-  }, [userName, isAuthenticated, currentUser]);
+  }, [userName, isAuthenticated, currentUser, currentUserName]);
 
   const checkFollowStatus = async (userId: string) => {
     try {
@@ -275,7 +304,7 @@ export default function UserProfilePage() {
                   </div>
                 )}
                 {/* 如果是他人的资料页且已登录，显示关注按钮 */}
-                {!isOwnProfile && isAuthenticated && (
+                {!isOwnProfile && isLoggedIn && (
                   <div className="space-y-3">
                     <button 
                       onClick={handleFollow}
