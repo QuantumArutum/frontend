@@ -83,6 +83,17 @@ export async function GET(request: NextRequest) {
     let followersCount = 0;
     let followingCount = 0;
     try {
+      // 尝试创建表（如果不存在）
+      await sql`
+        CREATE TABLE IF NOT EXISTS user_follows (
+          id SERIAL PRIMARY KEY,
+          follower_id VARCHAR(255) NOT NULL,
+          following_id VARCHAR(255) NOT NULL,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          UNIQUE(follower_id, following_id)
+        )
+      `;
+
       const followersResult = await sql`
         SELECT COUNT(*) as count FROM user_follows WHERE following_id = ${user.uid}
       `;
@@ -93,7 +104,8 @@ export async function GET(request: NextRequest) {
       `;
       followingCount = parseInt(followingResult[0]?.count || '0');
     } catch (e) {
-      // 如果表不存在，默认为0
+      // 如果表不存在或其他错误，默认为0
+      console.error('Error fetching follow counts:', e);
       followersCount = 0;
       followingCount = 0;
     }

@@ -16,6 +16,17 @@ export async function POST(request: NextRequest) {
       }, { status: 500 });
     }
 
+    // 确保表存在
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_follows (
+        id SERIAL PRIMARY KEY,
+        follower_id VARCHAR(255) NOT NULL,
+        following_id VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(follower_id, following_id)
+      )
+    `;
+
     // 获取当前用户 session
     const session = await getServerSession();
     if (!session?.user?.email) {
