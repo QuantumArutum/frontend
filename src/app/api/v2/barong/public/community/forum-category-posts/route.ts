@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
         COUNT(DISTINCT p.id) as topic_count
       FROM categories c
       LEFT JOIN posts p ON c.id = p.category_id
-      WHERE c.slug = ${categorySlug} AND c.is_active = true
+      WHERE c.slug = ${categorySlug}
       GROUP BY c.id, c.name, c.slug, c.description, c.icon, c.color
     `;
 
@@ -54,55 +54,94 @@ export async function GET(request: NextRequest) {
 
     const category = categoryResult[0];
 
-    // 构建排序条件
-    let orderByClause = 'p.created_at DESC';
+    // 获取帖子列表（简化查询）
+    let posts;
     if (sortBy === 'popular') {
-      orderByClause = `(
-        COALESCE((SELECT COUNT(*) FROM post_likes WHERE post_id = p.id), 0) * 2 + 
-        COALESCE((SELECT COUNT(*) FROM post_comments WHERE post_id = p.id), 0)
-      ) DESC, p.created_at DESC`;
+      posts = await sql`
+        SELECT 
+          p.id,
+          p.title,
+          p.content,
+          p.user_id,
+          p.created_at,
+          COALESCE(p.is_pinned, false) as is_pinned,
+          COALESCE(p.is_locked, false) as is_locked,
+          u.email as author_email,
+          COALESCE(p.view_count, 0) as view_count
+        FROM posts p
+        LEFT JOIN users u ON p.user_id = u.uid
+        WHERE p.category_id = ${category.id}
+        ORDER BY p.view_count DESC, p.created_at DESC
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `;
     } else if (sortBy === 'pinned') {
-      orderByClause = 'p.is_pinned DESC, p.created_at DESC';
+      posts = await sql`
+        SELECT 
+          p.id,
+          p.title,
+          p.content,
+          p.user_id,
+          p.created_at,
+          COALESCE(p.is_pinned, false) as is_pinned,
+          COALESCE(p.is_locked, false) as is_locked,
+          u.email as author_email,
+          COALESCE(p.view_count, 0) as view_count
+        FROM posts p
+        LEFT JOIN users u ON p.user_id = u.uid
+        WHERE p.category_id = ${category.id}
+        ORDER BY p.is_pinned DESC NULLS LAST, p.created_at DESC
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `;
+    } else {
+      posts = await sql`
+        SELECT 
+          p.id,
+          p.title,
+          p.content,
+          p.user_id,
+          p.created_at,
+          COALESCE(p.is_pinned, false) as is_pinned,
+          COALESCE(p.is_locked, false) as is_locked,
+          u.email as author_email,
+          COALESCE(p.view_count, 0) as view_count
+        FROM posts p
+        LEFT JOIN users u ON p.user_id = u.uid
+        WHERE p.category_id = ${category.id}
+        ORDER BY p.created_at DESC
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `;
     }
 
-    // 获取帖子列表
-    const posts = await sql`
-      SELECT 
-        p.id,
-        p.title,
-        p.content,
-        p.user_id,
-        p.created_at,
-        p.is_pinned,
-        p.is_locked,
-        u.email as author_email,
-        COALESCE(
-          (SELECT COUNT(*) FROM post_comments WHERE post_id = p.id),
-          0
-        ) as comment_count,
-        COALESCE(
-          (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id),
-          0
-        ) as like_count,
-        COALESCE(p.view_count, 0) as view_count,
-        (
-          SELECT json_build_object(
-            'author', u2.email,
-            'created_at', pc.created_at
-          )
-          FROM post_comments pc
-          LEFT JOIN users u2 ON pc.user_id = u2.uid
-          WHERE pc.post_id = p.id
-          ORDER BY pc.created_at DESC
-          LIMIT 1
-        ) as last_reply
-      FROM posts p
-      LEFT JOIN users u ON p.user_id = u.uid
-      WHERE p.category_id = ${category.id}
-      ORDER BY ${sql.unsafe(orderByClause)}
-      LIMIT ${limit}
-      OFFSET ${offset}
-    `;
+    // 获取每个帖子的统计数据
+    const postIds = posts.map((p: any) => p.id);
+    let commentCounts: any[] = [];
+    let likeCounts: any[] = [];
+    
+    if (postIds.length > 0) {
+      commentCounts = await sql`
+        SELECT post_id, COUNT(*) as count
+        FROM post_comments
+        WHERE post_id = ANY(${postIds})
+        GROUP BY post_id
+      `;
+      
+      likeCounts = await sql`
+        SELECT post_id, COUNT(*) as count
+        FROM post_likes
+        WHERE post_id = ANY(${postIds})
+        GROUP BY post_id
+      `;
+    }
+
+    const commentCountMap = Object.fromEntries(
+      commentCounts.map((c: any) => [c.post_id, parseInt(c.count)])
+    );
+    const likeCountMap = Object.fromEntries(
+      likeCounts.map((l: any) => [l.post_id, parseInt(l.count)])
+    );
 
     // 格式化帖子数据
     const formattedPosts = posts.map((post: any) => ({
@@ -111,12 +150,12 @@ export async function GET(request: NextRequest) {
       author: post.author_email ? post.author_email.split('@')[0] : 'Unknown',
       authorAvatar: post.author_email ? post.author_email[0].toUpperCase() : 'U',
       content: post.content.substring(0, 200) + (post.content.length > 200 ? '...' : ''),
-      replies: parseInt(post.comment_count || '0'),
+      replies: commentCountMap[post.id] || 0,
       views: parseInt(post.view_count || '0'),
-      likes: parseInt(post.like_count || '0'),
+      likes: likeCountMap[post.id] || 0,
       createdAt: post.created_at,
-      lastReply: post.last_reply ? post.last_reply.created_at : null,
-      lastReplyBy: post.last_reply ? post.last_reply.author.split('@')[0] : null,
+      lastReply: null,
+      lastReplyBy: null,
       isPinned: post.is_pinned || false,
       isLocked: post.is_locked || false,
       tags: [], // TODO: 实现标签功能
