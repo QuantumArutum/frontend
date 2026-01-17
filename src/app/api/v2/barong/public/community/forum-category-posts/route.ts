@@ -69,7 +69,9 @@ export async function GET(request: NextRequest) {
           p.created_at,
           COALESCE(p.is_pinned, false) as is_pinned,
           u.email as author_email,
-          COALESCE(p.view_count, 0) as view_count
+          COALESCE(p.view_count, 0) as view_count,
+          COALESCE(p.comment_count, 0) as comment_count,
+          COALESCE(p.like_count, 0) as like_count
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.uid
         WHERE p.category_id = ${category.id} AND p.status = 'published'
@@ -87,7 +89,9 @@ export async function GET(request: NextRequest) {
           p.created_at,
           COALESCE(p.is_pinned, false) as is_pinned,
           u.email as author_email,
-          COALESCE(p.view_count, 0) as view_count
+          COALESCE(p.view_count, 0) as view_count,
+          COALESCE(p.comment_count, 0) as comment_count,
+          COALESCE(p.like_count, 0) as like_count
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.uid
         WHERE p.category_id = ${category.id} AND p.status = 'published'
@@ -105,7 +109,9 @@ export async function GET(request: NextRequest) {
           p.created_at,
           COALESCE(p.is_pinned, false) as is_pinned,
           u.email as author_email,
-          COALESCE(p.view_count, 0) as view_count
+          COALESCE(p.view_count, 0) as view_count,
+          COALESCE(p.comment_count, 0) as comment_count,
+          COALESCE(p.like_count, 0) as like_count
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.uid
         WHERE p.category_id = ${category.id} AND p.status = 'published'
@@ -115,52 +121,22 @@ export async function GET(request: NextRequest) {
       `;
     }
 
-    // 获取每个帖子的统计数据
-    const postIds = posts.map((p: any) => p.id);
-    const commentCountMap: Record<string, number> = {};
-    const likeCountMap: Record<string, number> = {};
-    
-    if (postIds.length > 0) {
-      // 使用 IN 子句而不是 ANY
-      const commentCounts = await sql`
-        SELECT post_id, COUNT(*) as count
-        FROM post_comments
-        WHERE post_id IN (${sql(postIds)})
-        GROUP BY post_id
-      `;
-      
-      const likeCounts = await sql`
-        SELECT post_id, COUNT(*) as count
-        FROM post_likes
-        WHERE post_id IN (${sql(postIds)})
-        GROUP BY post_id
-      `;
-
-      // 构建映射
-      for (const c of commentCounts) {
-        commentCountMap[c.post_id] = parseInt(c.count as string);
-      }
-      for (const l of likeCounts) {
-        likeCountMap[l.post_id] = parseInt(l.count as string);
-      }
-    }
-
-    // 格式化帖子数据
+    // 格式化帖子数据（直接使用表中的统计字段）
     const formattedPosts = posts.map((post: any) => ({
       id: post.id,
       title: post.title,
       author: post.author_email ? post.author_email.split('@')[0] : 'Unknown',
       authorAvatar: post.author_email ? post.author_email[0].toUpperCase() : 'U',
       content: post.content.substring(0, 200) + (post.content.length > 200 ? '...' : ''),
-      replies: commentCountMap[post.id] || 0,
+      replies: parseInt(post.comment_count || '0'),
       views: parseInt(post.view_count || '0'),
-      likes: likeCountMap[post.id] || 0,
+      likes: parseInt(post.like_count || '0'),
       createdAt: post.created_at,
       lastReply: null,
       lastReplyBy: null,
       isPinned: post.is_pinned || false,
-      isLocked: false, // 表中没有此字段
-      tags: [], // TODO: 实现标签功能
+      isLocked: false,
+      tags: [],
     }));
 
     // 获取总数
