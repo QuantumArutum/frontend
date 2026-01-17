@@ -80,6 +80,7 @@ export default function CleanModernCommunity() {
     activeToday: 0,
     totalTopics: 0,
   });
+  const [activeMembers, setActiveMembers] = useState<any[]>([]);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -143,7 +144,7 @@ export default function CleanModernCommunity() {
     return () => window.removeEventListener('focus', checkAuth);
   }, []);
 
-  useEffect(() => { loadPosts(); loadStats(); }, []);
+  useEffect(() => { loadPosts(); loadStats(); loadActiveMembers(); }, []);
 
   const loadStats = async () => {
     try {
@@ -167,6 +168,25 @@ export default function CleanModernCommunity() {
       console.error('Failed to load posts:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadActiveMembers = async () => {
+    try {
+      const response = await barongAPI.get('/public/community/active-members?limit=4');
+      const data = response.data;
+      if (data.success) {
+        setActiveMembers(data.data);
+      }
+    } catch (error) {
+      console.error('Failed to load active members:', error);
+      // 使用默认数据作为后备
+      setActiveMembers([
+        { name: 'QuantumDev', role: t('community_page.levels.core_developer'), reputation: 9850 },
+        { name: 'CryptoQueen', role: t('community_page.levels.community_leader'), reputation: 8920 },
+        { name: 'BlockchainBob', role: t('community_page.levels.senior_member'), reputation: 7650 },
+        { name: 'DeFiAlice', role: t('community_page.levels.defi_expert'), reputation: 6890 },
+      ]);
     }
   };
 
@@ -200,11 +220,11 @@ export default function CleanModernCommunity() {
     { title: 'Weekly Development Update - Week 52', replies: 67, views: 1800, isPinned: false },
   ];
 
-  const activeUsers = [
-    { name: 'QuantumDev', level: t('community_page.levels.core_developer'), reputation: 9850, isOnline: true },
-    { name: 'CryptoQueen', level: t('community_page.levels.community_leader'), reputation: 8920, isOnline: true },
-    { name: 'BlockchainBob', level: t('community_page.levels.senior_member'), reputation: 7650, isOnline: false },
-    { name: 'DeFiAlice', level: t('community_page.levels.defi_expert'), reputation: 6890, isOnline: true },
+  const activeUsers = activeMembers.length > 0 ? activeMembers : [
+    { name: 'QuantumDev', role: t('community_page.levels.core_developer'), reputation: 9850, isOnline: true },
+    { name: 'CryptoQueen', role: t('community_page.levels.community_leader'), reputation: 8920, isOnline: true },
+    { name: 'BlockchainBob', role: t('community_page.levels.senior_member'), reputation: 7650, isOnline: false },
+    { name: 'DeFiAlice', role: t('community_page.levels.defi_expert'), reputation: 6890, isOnline: true },
   ];
 
   return (
@@ -559,7 +579,7 @@ export default function CleanModernCommunity() {
                         {user.name}
                       </div>
                       <div className="text-xs truncate" style={{ color: colors.text.muted }}>
-                        {user.level}
+                        {user.role || user.level}
                       </div>
                     </div>
                     <div className="flex items-center gap-1 text-xs" style={{ color: colors.primary }}>
