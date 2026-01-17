@@ -313,10 +313,10 @@ export default function CleanModernCommunity() {
 
   // 使用真实数据或后备数据
   const displayTrendingPosts = trendingPosts.length > 0 ? trendingPosts : [
-    { title: 'Quantum Mainnet Launch Announcement', replies: 234, views: 5420, isPinned: true },
-    { title: 'Post-Quantum Cryptography Implementation Guide', replies: 89, views: 2100, isPinned: false },
-    { title: 'Governance Proposal #12: Fee Structure Update', replies: 156, views: 3200, isPinned: false },
-    { title: 'Weekly Development Update - Week 52', replies: 67, views: 1800, isPinned: false },
+    { id: null, title: 'Quantum Mainnet Launch Announcement', replies: 234, views: 5420, isPinned: true },
+    { id: null, title: 'Post-Quantum Cryptography Implementation Guide', replies: 89, views: 2100, isPinned: false },
+    { id: null, title: 'Governance Proposal #12: Fee Structure Update', replies: 156, views: 3200, isPinned: false },
+    { id: null, title: 'Weekly Development Update - Week 52', replies: 67, views: 1800, isPinned: false },
   ];
 
   const activeUsers = activeMembers.length > 0 ? activeMembers : [
@@ -593,7 +593,11 @@ export default function CleanModernCommunity() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    onClick={() => topic.id ? window.location.href = `/community/posts?id=${topic.id}` : handleTopicClick(topic.title)}
+                    onClick={() => {
+                      if (topic.id) {
+                        window.location.href = `/community/posts?id=${topic.id}`;
+                      }
+                    }}
                     className="p-4 rounded-xl cursor-pointer group transition-all duration-200"
                     style={{
                       background: 'rgba(255, 255, 255, 0.03)',
