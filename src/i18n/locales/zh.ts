@@ -4171,7 +4171,14 @@ export const zh = {
         following: '关注中'
       },
       follow: '关注',
+      unfollow: '取消关注',
       send_message: '发送消息',
+      edit_profile: '编辑资料',
+      followers_list: '关注者列表',
+      following_list: '关注中列表',
+      no_followers: '暂无关注者',
+      no_following: '暂未关注任何人',
+      login_required: '请先登录',
       achievement_badges: '成就徽章',
       badges: {
         quantum_pioneer: '量子先锋',
