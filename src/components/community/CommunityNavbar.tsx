@@ -15,7 +15,11 @@ interface UserInfo {
   avatar?: string;
 }
 
-export default function CommunityNavbar() {
+interface CommunityNavbarProps {
+  onlineCount?: number;
+}
+
+export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { t } = useTranslation();
@@ -221,7 +225,7 @@ export default function CommunityNavbar() {
                 <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text text-transparent">
                   {t('community_page.title', 'Community')}
                 </h1>
-                <p className="text-sm text-gray-300">125,847 {t('community_page.members_online_suffix', 'members online')}</p>
+                <p className="text-sm text-gray-300">{onlineCount > 0 ? onlineCount.toLocaleString() : '0'} {t('community_page.members_online_suffix', 'members online')}</p>
               </div>
             </a>
 

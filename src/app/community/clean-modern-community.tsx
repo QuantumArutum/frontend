@@ -81,6 +81,8 @@ export default function CleanModernCommunity() {
     totalTopics: 0,
   });
   const [activeMembers, setActiveMembers] = useState<any[]>([]);
+  const [onlineCount, setOnlineCount] = useState(0);
+  const [categoryStats, setCategoryStats] = useState<any>({});
 
   useEffect(() => {
     const checkAuth = () => {
@@ -144,7 +146,13 @@ export default function CleanModernCommunity() {
     return () => window.removeEventListener('focus', checkAuth);
   }, []);
 
-  useEffect(() => { loadPosts(); loadStats(); loadActiveMembers(); }, []);
+  useEffect(() => { 
+    loadPosts(); 
+    loadStats(); 
+    loadActiveMembers(); 
+    loadOnlineCount();
+    loadCategoryStats();
+  }, []);
 
   const loadStats = async () => {
     try {
@@ -190,6 +198,30 @@ export default function CleanModernCommunity() {
     }
   };
 
+  const loadOnlineCount = async () => {
+    try {
+      const response = await barongAPI.get('/public/community/online-count');
+      const data = response.data;
+      if (data.success) {
+        setOnlineCount(data.data.onlineCount);
+      }
+    } catch (error) {
+      console.error('Failed to load online count:', error);
+    }
+  };
+
+  const loadCategoryStats = async () => {
+    try {
+      const response = await barongAPI.get('/public/community/category-stats');
+      const data = response.data;
+      if (data.success) {
+        setCategoryStats(data.data);
+      }
+    } catch (error) {
+      console.error('Failed to load category stats:', error);
+    }
+  };
+
   const handleCategoryClick = (name: string) => {
     window.location.href = `/community/category/${encodeURIComponent(name)}`;
   };
@@ -207,10 +239,38 @@ export default function CleanModernCommunity() {
   };
 
   const categories = [
-    { name: t('community_page.categories.general'), description: t('community_page.categories.general_desc'), icon: MessageSquare, posts: 15420, color: colors.accent.cyan },
-    { name: t('community_page.categories.technical'), description: t('community_page.categories.technical_desc'), icon: Zap, posts: 8930, color: colors.secondary },
-    { name: t('community_page.categories.defi'), description: t('community_page.categories.defi_desc'), icon: TrendingUp, posts: 12650, color: colors.accent.green },
-    { name: t('community_page.categories.governance'), description: t('community_page.categories.governance_desc'), icon: Award, posts: 3420, color: colors.primary },
+    { 
+      name: t('community_page.categories.general'), 
+      description: t('community_page.categories.general_desc'), 
+      icon: MessageSquare, 
+      posts: categoryStats['general']?.postCount || 0, 
+      color: colors.accent.cyan,
+      slug: 'general'
+    },
+    { 
+      name: t('community_page.categories.technical'), 
+      description: t('community_page.categories.technical_desc'), 
+      icon: Zap, 
+      posts: categoryStats['technology']?.postCount || 0, 
+      color: colors.secondary,
+      slug: 'technology'
+    },
+    { 
+      name: t('community_page.categories.defi'), 
+      description: t('community_page.categories.defi_desc'), 
+      icon: TrendingUp, 
+      posts: categoryStats['trading']?.postCount || 0, 
+      color: colors.accent.green,
+      slug: 'trading'
+    },
+    { 
+      name: t('community_page.categories.governance'), 
+      description: t('community_page.categories.governance_desc'), 
+      icon: Award, 
+      posts: categoryStats['governance']?.postCount || 0, 
+      color: colors.primary,
+      slug: 'governance'
+    },
   ];
 
   const hotTopics = [
@@ -230,7 +290,7 @@ export default function CleanModernCommunity() {
   return (
     <div className="min-h-screen relative">
       <ParticlesBackground />
-      <CommunityNavbar />
+      <CommunityNavbar onlineCount={onlineCount} />
 
       <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         {/* Hero Section */}
