@@ -19,10 +19,39 @@ export async function GET(request: NextRequest) {
       }, { status: 500 });
     }
 
+    // 确保必要的表存在
+    try {
+      await sql`
+        CREATE TABLE IF NOT EXISTS post_comments (
+          id SERIAL PRIMARY KEY,
+          post_id INTEGER NOT NULL,
+          user_id VARCHAR(255) NOT NULL,
+          content TEXT NOT NULL,
+          parent_id INTEGER,
+          like_count INTEGER DEFAULT 0,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          status VARCHAR(50) DEFAULT 'active'
+        )
+      `;
+
+      await sql`
+        CREATE TABLE IF NOT EXISTS post_likes (
+          id SERIAL PRIMARY KEY,
+          post_id INTEGER NOT NULL,
+          user_id VARCHAR(255) NOT NULL,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          UNIQUE(post_id, user_id)
+        )
+      `;
+    } catch (e) {
+      console.error('Error creating tables:', e);
+    }
+
     let posts;
 
     if (type === 'trending') {
-      // 按照点赞数和评论数的综合得分排序
+      // 按照点赞数和评论数的综合得分排序（最近7天）
       posts = await sql`
         SELECT 
           p.id,
@@ -30,22 +59,16 @@ export async function GET(request: NextRequest) {
           p.user_id,
           p.created_at,
           p.is_pinned,
-          u.email,
-          COALESCE(
-            (SELECT COUNT(*) FROM post_comments WHERE post_id = p.id),
-            0
-          ) as comment_count,
-          COALESCE(
-            (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id),
-            0
-          ) as like_count,
-          COALESCE(p.view_count, 0) as view_count
+          p.like_count,
+          p.comment_count,
+          p.view_count,
+          u.email
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.uid
-        WHERE p.created_at > NOW() - INTERVAL '7 days'
+        WHERE p.status = 'published' 
+          AND p.created_at > CURRENT_TIMESTAMP - INTERVAL '7 days'
         ORDER BY 
-          (COALESCE((SELECT COUNT(*) FROM post_likes WHERE post_id = p.id), 0) * 2 + 
-           COALESCE((SELECT COUNT(*) FROM post_comments WHERE post_id = p.id), 0)) DESC,
+          (COALESCE(p.like_count, 0) * 2 + COALESCE(p.comment_count, 0)) DESC,
           p.created_at DESC
         LIMIT ${limit}
       `;
@@ -58,18 +81,13 @@ export async function GET(request: NextRequest) {
           p.user_id,
           p.created_at,
           p.is_pinned,
-          u.email,
-          COALESCE(
-            (SELECT COUNT(*) FROM post_comments WHERE post_id = p.id),
-            0
-          ) as comment_count,
-          COALESCE(
-            (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id),
-            0
-          ) as like_count,
-          COALESCE(p.view_count, 0) as view_count
+          p.like_count,
+          p.comment_count,
+          p.view_count,
+          u.email
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.uid
+        WHERE p.status = 'published'
         ORDER BY p.created_at DESC
         LIMIT ${limit}
       `;
@@ -82,22 +100,16 @@ export async function GET(request: NextRequest) {
           p.user_id,
           p.created_at,
           p.is_pinned,
-          u.email,
-          COALESCE(
-            (SELECT COUNT(*) FROM post_comments WHERE post_id = p.id),
-            0
-          ) as comment_count,
-          COALESCE(
-            (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id),
-            0
-          ) as like_count,
-          COALESCE(p.view_count, 0) as view_count
+          p.like_count,
+          p.comment_count,
+          p.view_count,
+          u.email
         FROM posts p
         LEFT JOIN users u ON p.user_id = u.uid
+        WHERE p.status = 'published'
         ORDER BY 
           p.is_pinned DESC,
-          (COALESCE((SELECT COUNT(*) FROM post_likes WHERE post_id = p.id), 0) * 2 + 
-           COALESCE((SELECT COUNT(*) FROM post_comments WHERE post_id = p.id), 0)) DESC,
+          (COALESCE(p.like_count, 0) * 2 + COALESCE(p.comment_count, 0)) DESC,
           p.created_at DESC
         LIMIT ${limit}
       `;
