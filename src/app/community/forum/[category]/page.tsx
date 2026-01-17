@@ -39,6 +39,11 @@ interface CategoryInfo {
   stats: {
     totalPosts: number;
     totalTopics: number;
+    lastPost?: {
+      title: string;
+      author: string;
+      time: string;
+    };
   };
 }
 
@@ -140,11 +145,13 @@ export default function ForumCategoryPage() {
                 <div className="text-2xl font-bold text-white">{category.stats.totalTopics}</div>
                 <div className="text-sm text-gray-400">{t('forum_category.stats.total_topics')}</div>
               </div>
-              <div className="text-center">
-                <div className="text-sm text-gray-400 mb-1">{t('forum_category.stats.latest_post')}</div>
-                <div className="text-sm text-white font-medium truncate">{category.stats.lastPost.title}</div>
-                <div className="text-xs text-gray-400">{t('forum_category.by')} {category.stats.lastPost.author} · {category.stats.lastPost.time}</div>
-              </div>
+              {category.stats.lastPost && (
+                <div className="text-center">
+                  <div className="text-sm text-gray-400 mb-1">{t('forum_category.stats.latest_post')}</div>
+                  <div className="text-sm text-white font-medium truncate">{category.stats.lastPost.title}</div>
+                  <div className="text-xs text-gray-400">{t('forum_category.by')} {category.stats.lastPost.author} · {category.stats.lastPost.time}</div>
+                </div>
+              )}
             </div>
           </div>
         </motion.div>
