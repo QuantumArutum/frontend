@@ -70,36 +70,38 @@ export default function PostDetailPage() {
   const [commentContent, setCommentContent] = useState('');
   const [submittingComment, setSubmittingComment] = useState(false);
 
-  // 检查登录状态
+  // 检查登录状态和加载数据
   useEffect(() => {
+    // 检查登录状态
     const token = localStorage.getItem('auth_token');
     const userInfoStr = localStorage.getItem('user_info');
+    
+    let currentUserId: string | null = null;
     
     if (token && userInfoStr) {
       try {
         const user = JSON.parse(userInfoStr);
         setUserInfo(user);
         setIsAuthenticated(true);
+        currentUserId = user.id;
       } catch (error) {
         console.error('Failed to parse user info:', error);
       }
     }
-  }, []);
-
-  // 加载帖子详情
-  useEffect(() => {
+    
+    // 加载帖子数据
     if (postId) {
-      loadPostDetail();
-      loadComments();
+      loadPostDetail(currentUserId);
+      loadComments(currentUserId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
-  const loadPostDetail = async () => {
+  const loadPostDetail = async (currentUserId: string | null) => {
     try {
       setLoading(true);
       setError(null);
-      const url = `/public/community/post-detail?postId=${postId}${userInfo ? `&currentUserId=${userInfo.id}` : ''}`;
+      const url = `/public/community/post-detail?postId=${postId}${currentUserId ? `&currentUserId=${currentUserId}` : ''}`;
       const response = await barongAPI.get(url);
       
       if (response.data.success) {
@@ -115,10 +117,10 @@ export default function PostDetailPage() {
     }
   };
 
-  const loadComments = async () => {
+  const loadComments = async (currentUserId: string | null) => {
     try {
       setCommentsLoading(true);
-      const url = `/public/community/post-comments?postId=${postId}${userInfo ? `&currentUserId=${userInfo.id}` : ''}`;
+      const url = `/public/community/post-comments?postId=${postId}${currentUserId ? `&currentUserId=${currentUserId}` : ''}`;
       const response = await barongAPI.get(url);
       
       if (response.data.success) {
@@ -232,6 +234,9 @@ export default function PostDetailPage() {
       return;
     }
 
+    // 保存原始状态用于回滚
+    const originalComments = [...comments];
+
     // 乐观更新
     setComments(comments.map(c => {
       if (c.id === commentId) {
@@ -265,8 +270,8 @@ export default function PostDetailPage() {
       }
     } catch (err) {
       console.error('Failed to like comment:', err);
-      // 回滚
-      loadComments();
+      // 回滚到原始状态
+      setComments(originalComments);
     }
   };
 
