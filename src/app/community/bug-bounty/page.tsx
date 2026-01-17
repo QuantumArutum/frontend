@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { ChevronRight, Bug, Shield, Award, AlertTriangle, CheckCircle, DollarSign } from 'lucide-react';
+import { ChevronRight, Bug, Shield, Award, AlertTriangle, CheckCircle, DollarSign, Copy, Check } from 'lucide-react';
 import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
@@ -11,6 +11,13 @@ import '../../../i18n';
 
 export default function BugBountyPage() {
   const { t } = useTranslation();
+  const [copied, setCopied] = useState(false);
+  
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('security@quantaureum.com');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
   
   const severityLevels = [
     { level: t('community_sub.bug_bounty.severity.critical.level'), reward: t('community_sub.bug_bounty.severity.critical.reward'), color: 'from-red-500 to-rose-500', description: t('community_sub.bug_bounty.severity.critical.desc') },
@@ -124,13 +131,32 @@ export default function BugBountyPage() {
         <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-xl p-6 border border-cyan-500/20 text-center">
           <h3 className="text-xl font-semibold text-white mb-2">{t('community_sub.bug_bounty.found_bug')}</h3>
           <p className="text-gray-400 mb-4">{t('community_sub.bug_bounty.submit_desc')}</p>
-          <a
-            href="mailto:security@quantaureum.com"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl hover:opacity-90 transition-opacity"
-          >
-            <Bug className="w-5 h-5" />
-            {t('community_sub.bug_bounty.submit')}
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              href="mailto:security@quantaureum.com"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl hover:opacity-90 transition-opacity"
+            >
+              <Bug className="w-5 h-5" />
+              {t('community_sub.bug_bounty.submit')}
+            </a>
+            <button
+              onClick={handleCopyEmail}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors border border-white/20"
+            >
+              {copied ? (
+                <>
+                  <Check className="w-5 h-5 text-green-400" />
+                  <span>已复制</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-5 h-5" />
+                  <span>复制邮箱</span>
+                </>
+              )}
+            </button>
+          </div>
+          <p className="text-sm text-gray-500 mt-3">security@quantaureum.com</p>
         </div>
       </div>
       </div>
