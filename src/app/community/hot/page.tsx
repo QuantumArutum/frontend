@@ -35,9 +35,11 @@ export default function HotPostsPage() {
   const loadHotPosts = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/v2/barong/public/community/hot-posts?limit=20&offset=${(page - 1) * 20}`);
+      const response = await fetch(
+        `/api/v2/barong/public/community/hot-posts?limit=20&offset=${(page - 1) * 20}`
+      );
       const data = await response.json();
-      
+
       if (data.success) {
         setPost(data.data.posts);
         setHasMore(data.data.pagination.hasMore);
@@ -52,10 +54,6 @@ export default function HotPostsPage() {
   useEffect(() => {
     loadHotPosts();
   }, [loadHotPosts]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -112,9 +110,7 @@ export default function HotPostsPage() {
                         <div className="text-2xl font-bold text-orange-400">
                           #{index + 1 + (page - 1) * 20}
                         </div>
-                        <div className="text-xs text-gray-500 mt-1">
-                          {post.hotScore.toFixed(1)}
-                        </div>
+                        <div className="text-xs text-gray-500 mt-1">{post.hotScore.toFixed(1)}</div>
                       </div>
 
                       {/* 投票 */}
@@ -132,10 +128,7 @@ export default function HotPostsPage() {
 
                       {/* 内容 */}
                       <div className="flex-1 min-w-0">
-                        <Link
-                          href={`/community/posts/${post.id}`}
-                          className="block group"
-                        >
+                        <Link href={`/community/posts/${post.id}`} className="block group">
                           <h3 className="text-xl font-semibold text-white group-hover:text-cyan-400 transition-colors mb-2">
                             {post.title}
                           </h3>
@@ -144,13 +137,8 @@ export default function HotPostsPage() {
                         {/* 标签 */}
                         {post.tags && post.tags.length > 0 && (
                           <div className="flex flex-wrap gap-2 mb-3">
-                            {post.tags.slice(0, 3).map(tag => (
-                              <TagBadge
-                                key={tag.id}
-                                tag={tag}
-                                size="small"
-                                clickable
-                              />
+                            {post.tags.slice(0, 3).map((tag) => (
+                              <TagBadge key={tag.id} tag={tag} size="small" clickable />
                             ))}
                           </div>
                         )}
@@ -218,12 +206,8 @@ export default function HotPostsPage() {
               {posts.length === 0 && !loading && (
                 <div className="text-center py-12 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10">
                   <TrendingUp className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    暂无热门帖子
-                  </h3>
-                  <p className="text-gray-400">
-                    快来发布第一个帖子吧！
-                  </p>
+                  <h3 className="text-xl font-semibold text-white mb-2">暂无热门帖子</h3>
+                  <p className="text-gray-400">快来发布第一个帖子吧！</p>
                 </div>
               )}
             </>

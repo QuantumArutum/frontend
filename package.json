@@ -7,6 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "type-check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -17,7 +21,8 @@
     "test:uat:full": "node scripts/run-uat.js",
     "test:uat:report": "playwright test e2e/user-acceptance-tests/test-execution-report.spec.ts",
     "test:all": "pnpm run test && pnpm run test:e2e",
-    "validate:uat": "pnpm run test:uat:full"
+    "validate:uat": "pnpm run test:uat:full",
+    "prepare": "husky"
   },
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
@@ -108,12 +113,17 @@
     "@vitejs/plugin-react": "^5.1.1",
     "eslint": "^9",
     "eslint-config-next": "15.5.9",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "fast-check": "^3.23.2",
     "glob": "^10.5.0",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jest-axe": "^10.0.0",
     "jest-environment-jsdom": "^29.7.0",
     "js-yaml": "^4.1.1",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.0",
     "puppeteer": "^24.32.0",
     "typescript": "^5",
     "vite": "^7.2.6"
