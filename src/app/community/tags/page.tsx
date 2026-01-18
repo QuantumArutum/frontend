@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, TrendingUp, Tag as TagIcon } from 'lucide-react';
 import { barongAPI } from '@/api/client';
@@ -18,13 +18,7 @@ export default function TagsPage() {
   const [filterOfficial, setFilterOfficial] = useState<'all' | 'official' | 'community'>('all');
   const [viewMode, setViewMode] = useState<'list' | 'grid' | 'cloud'>('grid');
 
-  // 加载标签
-  useEffect(() => {
-    loadTags();
-    loadTrendingTags();
-  }, [sortBy, filterOfficial]);
-
-  const loadTags = async () => {
+  const loadTags = useCallback(async () => {
     try {
       setLoading(true);
       const params: any = {
@@ -32,6 +26,42 @@ export default function TagsPage() {
         limit: 100,
         sortBy,
       };
+
+      if (searchQuery) {
+        params.search = searchQuery;
+      }
+
+      const response = await fetch(`/api/v2/barong/public/community/tags?${new URLSearchParams(params)}`);
+      const data = await response.json();
+
+      if (data.success) {
+        setTags(data.data.tags);
+      }
+    } catch (error) {
+      console.error('Failed to load tags:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [sortBy, searchQuery]);
+
+  const loadTrendingTags = useCallback(async () => {
+    try {
+      const response = await fetch('/api/v2/barong/public/community/tags/trending?limit=10');
+      const data = await response.json();
+
+      if (data.success) {
+        setTrendingTags(data.data.tags);
+      }
+    } catch (error) {
+      console.error('Failed to load trending tags:', error);
+    }
+  }, []);
+
+  // 加载标签
+  useEffect(() => {
+    loadTags();
+    loadTrendingTags();
+  }, [loadTags, loadTrendingTags]);
 
       if (filterOfficial === 'official') {
         params.official = 'true';

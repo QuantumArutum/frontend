@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Eye, MessageSquare, Clock, User } from 'lucide-react';
@@ -49,15 +49,31 @@ export default function PostDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [userVote, setUserVote] = useState<'upvote' | 'downvote' | null>(null);
 
-  useEffect(() => {
-    loadPost();
-  }, [postId]);
-
-  const loadPost = async () => {
+  const loadPost = useCallback(async () => {
+    if (!postId) return;
+    
     try {
       setLoading(true);
       const response = await fetch(`/api/v2/barong/public/community/post-detail?postId=${postId}`);
       const data = await response.json();
+
+      if (data.success) {
+        setPost(data.data);
+        setUserVote(data.data.userVote);
+      } else {
+        setError(data.message || 'Failed to load post');
+      }
+    } catch (err) {
+      console.error('Failed to load post:', err);
+      setError('Failed to load post');
+    } finally {
+      setLoading(false);
+    }
+  }, [postId]);
+
+  useEffect(() => {
+    loadPost();
+  }, [loadPost]);
       
       if (data.success) {
         setPost(data.data);

@@ -82,6 +82,33 @@ export default function UserProfilePage() {
   // 判断是否已登录（用于显示关注按钮）
   const isLoggedIn = isAuthenticated || !!currentUserName;
 
+  const checkFollowStatus = useCallback(async (userId: string) => {
+    try {
+      // 获取当前用户ID
+      let currentId = currentUser?.id;
+      if (!currentId && currentUserName) {
+        // 从 profile 获取当前用户ID（如果是自己的资料页）
+        // 或者从导航栏用户链接推断
+        // 这里简化处理：如果有 currentUserName，尝试获取其 ID
+        try {
+          const userResponse = await barongAPI.get(`/public/community/user-profile?username=${encodeURIComponent(currentUserName)}`);
+          if (userResponse.data.success) {
+            currentId = userResponse.data.data.id;
+          }
+        } catch (e) {
+          console.log('Failed to get current user ID:', e);
+        }
+      }
+
+      const response = await barongAPI.get(`/public/community/is-following?userId=${userId}&currentUserId=${currentId || ''}`);
+      if (response.data.success) {
+        setIsFollowing(response.data.data.isFollowing);
+      }
+    } catch (err) {
+      console.error('Failed to check follow status:', err);
+    }
+  }, [currentUser, currentUserName]);
+
   const loadUserProfile = useCallback(async () => {
     if (!userName) return;
     
@@ -126,34 +153,7 @@ export default function UserProfilePage() {
     } finally {
       setLoading(false);
     }
-  }, [userName, isAuthenticated, currentUser, currentUserName]);
-
-  const checkFollowStatus = async (userId: string) => {
-    try {
-      // 获取当前用户ID
-      let currentId = currentUser?.id;
-      if (!currentId && currentUserName) {
-        // 从 profile 获取当前用户ID（如果是自己的资料页）
-        // 或者从导航栏用户链接推断
-        // 这里简化处理：如果有 currentUserName，尝试获取其 ID
-        try {
-          const userResponse = await barongAPI.get(`/public/community/user-profile?username=${encodeURIComponent(currentUserName)}`);
-          if (userResponse.data.success) {
-            currentId = userResponse.data.data.id;
-          }
-        } catch (e) {
-          console.log('Failed to get current user ID:', e);
-        }
-      }
-
-      const response = await barongAPI.get(`/public/community/is-following?userId=${userId}&currentUserId=${currentId || ''}`);
-      if (response.data.success) {
-        setIsFollowing(response.data.data.isFollowing);
-      }
-    } catch (err) {
-      console.error('Failed to check follow status:', err);
-    }
-  };
+  }, [userName, isAuthenticated, currentUser, currentUserName, checkFollowStatus]);
 
   const handleFollow = async () => {
     if (!profile) return;
@@ -517,11 +517,7 @@ function FollowersModal({ userId, onClose }: { userId: string; onClose: () => vo
   const [followers, setFollowers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadFollowers();
-  }, [userId]);
-
-  const loadFollowers = async () => {
+  const loadFollowers = useCallback(async () => {
     try {
       const response = await barongAPI.get(`/public/community/followers?userId=${userId}&limit=50`);
       if (response.data.success) {
@@ -532,7 +528,11 @@ function FollowersModal({ userId, onClose }: { userId: string; onClose: () => vo
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
+
+  useEffect(() => {
+    loadFollowers();
+  }, [loadFollowers]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onClose}>
@@ -583,11 +583,7 @@ function FollowingModal({ userId, onClose }: { userId: string; onClose: () => vo
   const [following, setFollowing] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadFollowing();
-  }, [userId]);
-
-  const loadFollowing = async () => {
+  const loadFollowing = useCallback(async () => {
     try {
       const response = await barongAPI.get(`/public/community/following?userId=${userId}&limit=50`);
       if (response.data.success) {
@@ -598,7 +594,11 @@ function FollowingModal({ userId, onClose }: { userId: string; onClose: () => vo
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
+
+  useEffect(() => {
+    loadFollowing();
+  }, [loadFollowing]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onClose}>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { ChevronRight, Search, Star, MessageSquare } from 'lucide-react';
 import ParticlesBackground from '../../components/ParticlesBackground';
@@ -37,17 +37,37 @@ export default function MembersPage() {
     validators: 0,
   });
 
-  useEffect(() => {
-    loadMembers();
-    loadStats();
-  }, [sortBy, searchQuery]);
-
-  const loadMembers = async () => {
+  const loadMembers = useCallback(async () => {
     setLoading(true);
     try {
       const response = await barongAPI.get(`/public/community/members?limit=50&sortBy=${sortBy}&search=${searchQuery}`);
       const data = response.data;
       if (data.success) {
+        setMembers(data.data.members);
+      }
+    } catch (error) {
+      console.error('Failed to load members:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [sortBy, searchQuery]);
+
+  const loadStats = useCallback(async () => {
+    try {
+      const response = await barongAPI.get('/public/community/members-stats');
+      const data = response.data;
+      if (data.success) {
+        setStats(data.data);
+      }
+    } catch (error) {
+      console.error('Failed to load stats:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadMembers();
+    loadStats();
+  }, [loadMembers, loadStats]);
         setMembers(data.data.members);
       }
     } catch (error) {

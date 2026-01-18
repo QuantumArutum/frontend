@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, TrendingUp, Clock, ThumbsUp } from 'lucide-react';
 import { barongAPI } from '@/api/client';
@@ -24,25 +24,64 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
     params.then((p) => setSlug(p.slug));
   }, [params]);
 
-  useEffect(() => {
-    if (slug) {
-      loadTagDetail();
-    }
-  }, [slug]);
-
-  useEffect(() => {
-    if (tag) {
-      loadPosts();
-    }
-  }, [tag, sortBy, timeRange]);
-
-  const loadTagDetail = async () => {
+  const loadTagDetail = useCallback(async () => {
+    if (!slug) return;
+    
     try {
       setLoading(true);
       const userInfoStr = localStorage.getItem('user_info');
       const currentUserId = userInfoStr ? JSON.parse(userInfoStr).id || JSON.parse(userInfoStr).uid || JSON.parse(userInfoStr).email : null;
 
       const response = await barongAPI.get(`/public/community/tags/${slug}`, {
+        params: { currentUserId },
+      });
+
+      if (response.data.success) {
+        setTag(response.data.data);
+        setIsSubscribed(response.data.data.isSubscribed || false);
+      }
+    } catch (error) {
+      console.error('Failed to load tag detail:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [slug]);
+
+  const loadPosts = useCallback(async () => {
+    if (!tag) return;
+    
+    try {
+      setLoadingPosts(true);
+      const response = await barongAPI.get(`/public/community/tags/${slug}/posts`, {
+        params: {
+          page: 1,
+          limit: 20,
+          sortBy,
+          timeRange,
+        },
+      });
+
+      if (response.data.success) {
+        setPosts(response.data.data.posts);
+      }
+    } catch (error) {
+      console.error('Failed to load posts:', error);
+    } finally {
+      setLoadingPosts(false);
+    }
+  }, [slug, tag, sortBy, timeRange]);
+
+  useEffect(() => {
+    if (slug) {
+      loadTagDetail();
+    }
+  }, [slug, loadTagDetail]);
+
+  useEffect(() => {
+    if (tag) {
+      loadPosts();
+    }
+  }, [tag, loadPosts]);
         params: { currentUserId },
       });
 

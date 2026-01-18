@@ -118,15 +118,24 @@ if (sortBy === 'name') {
 
 ---
 
-#### 🟡 任务1.5: 修复React Hook依赖问题（部分完成）
-**修改文件**: 2/10个
+#### ✅ 任务1.5: 修复React Hook依赖问题
+**修改文件**: 10个
 1. ✅ `src/app/community/controversial/page.tsx`
 2. ✅ `src/app/community/hot/page.tsx`
+3. ✅ `src/app/community/members/page.tsx`
+4. ✅ `src/app/community/messages/page.tsx`
+5. ✅ `src/app/community/tags/page.tsx`
+6. ✅ `src/app/community/tags/[slug]/page.tsx`
+7. ✅ `src/app/community/posts/[postId]/page.tsx`
+8. ✅ `src/app/community/user/[userName]/page.tsx` (包含2个modal组件)
+9. ✅ `src/app/community/settings/profile/page.tsx`
+10. ✅ `src/app/community/search/page.tsx`
 
 **修复内容**:
-- 使用useCallback包装异步函数
+- 使用useCallback包装所有异步函数
 - 添加正确的依赖数组
 - 导入useCallback
+- 修复modal组件的Hook依赖
 
 **修复前**:
 ```typescript
@@ -145,16 +154,6 @@ useEffect(() => {
   loadPosts();
 }, [loadPosts]); // ✅ 依赖正确
 ```
-
-**待修复**: 8个组件
-- members/page.tsx
-- messages/page.tsx
-- tags/page.tsx
-- tags/[slug]/page.tsx
-- posts/[postId]/page.tsx
-- user/[userName]/page.tsx
-- settings/profile/page.tsx
-- search/page.tsx
 
 ---
 
@@ -220,18 +219,18 @@ const tagResult = await sql`SELECT id FROM tags WHERE name = ${tagName}`;
 
 ### 文件修改统计
 - **API路由**: 5个文件
-- **React组件**: 2个文件
+- **React组件**: 10个文件
 - **文档**: 2个文件（CRITICAL_FIXES_ROADMAP.md, 本文件）
-- **总计**: 9个文件
+- **总计**: 17个文件
 
 ### 代码行数统计
-- **新增代码**: 约150行
-- **修改代码**: 约200行
+- **新增代码**: 约200行
+- **修改代码**: 约300行
 - **删除代码**: 约50行
 
 ### 问题修复统计
 - **严重问题**: 3个已修复，1个待完成
-- **高优先级问题**: 1个部分完成
+- **高优先级问题**: 1个已完成
 - **中优先级问题**: 1个已修复，4个待完成
 - **低优先级问题**: 0个已修复，5个待完成
 
@@ -257,9 +256,9 @@ const tagResult = await sql`SELECT id FROM tags WHERE name = ${tagName}`;
    - ✅ 便于调试和监控
 
 4. **React Hook依赖**
-   - ✅ 2个组件数据更新正确
+   - ✅ 10个组件数据更新正确
    - ✅ 无内存泄漏风险
-   - ✅ ESLint警告减少
+   - ✅ ESLint警告减少（这10个组件）
 
 5. **prefer-const**
    - ✅ 代码更符合最佳实践
@@ -280,7 +279,7 @@ const tagResult = await sql`SELECT id FROM tags WHERE name = ${tagName}`;
    - 修复数据库连接错误处理（5个API）
    - 修复SQL注入风险（tags/route.ts）
    - 添加错误日志和追踪（5个API）
-   - 修复React Hook依赖（2个组件）
+   - 修复React Hook依赖（10个组件）
    - 修复prefer-const警告（1个文件）
 
    修复进度: 5/15 (33%)
@@ -303,9 +302,9 @@ const tagResult = await sql`SELECT id FROM tags WHERE name = ${tagName}`;
 ### 短期计划（本周内）
 
 4. **完成任务1.5剩余部分**
-   - 修复剩余8个组件的Hook依赖
-   - 运行ESLint验证
-   - 测试所有组件
+   - ✅ 已完成所有10个组件的Hook依赖修复
+   - ✅ ESLint验证通过（这10个组件）
+   - ⚪ 测试所有组件（待部署后）
 
 5. **开始阶段2任务**
    - 任务2.1: 添加TypeScript类型定义
@@ -349,7 +348,7 @@ const tagResult = await sql`SELECT id FROM tags WHERE name = ${tagName}`;
   ✅ 1.2 数据库连接错误处理
   ✅ 1.3 SQL注入风险
   ✅ 1.4 错误日志和追踪
-  🟡 1.5 React Hook依赖（部分）
+  ✅ 1.5 React Hook依赖
   ⚪ 1.1 数据库索引验证
 
 阶段2: 重要修复 [██░░░░░░░] 20% (1/5)

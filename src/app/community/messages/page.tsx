@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, Search, MoreVertical } from 'lucide-react';
 import { barongAPI } from '@/api/client';
@@ -33,24 +33,7 @@ export default function MessagesPage() {
     }
   }, []);
 
-  useEffect(() => {
-    if (currentUserId) {
-      loadConversations();
-    }
-  }, [currentUserId]);
-
-  useEffect(() => {
-    if (currentUserId && selectedUserId) {
-      loadMessages(selectedUserId);
-      markAsRead(selectedUserId);
-    }
-  }, [currentUserId, selectedUserId]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const loadConversations = async () => {
+  const loadConversations = useCallback(async () => {
     try {
       setLoading(true);
       const response = await barongAPI.get('/public/community/messages/conversations', {
@@ -58,6 +41,52 @@ export default function MessagesPage() {
       });
 
       if (response.data.success) {
+        setConversations(response.data.data.conversations);
+      }
+    } catch (error) {
+      console.error('Failed to load conversations:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentUserId]);
+
+  const loadMessages = useCallback(async (userId: string) => {
+    try {
+      const response = await barongAPI.get(`/public/community/messages/conversation/${userId}`, {
+        params: { currentUserId },
+      });
+
+      if (response.data.success) {
+        setMessages(response.data.data.messages);
+      }
+    } catch (error) {
+      console.error('Failed to load messages:', error);
+    }
+  }, [currentUserId]);
+
+  const markAsRead = useCallback(async (userId: string) => {
+    try {
+      await barongAPI.post('/public/community/messages/mark-read', {
+        currentUserId,
+        otherUserId: userId,
+      });
+    } catch (error) {
+      console.error('Failed to mark as read:', error);
+    }
+  }, [currentUserId]);
+
+  useEffect(() => {
+    if (currentUserId) {
+      loadConversations();
+    }
+  }, [currentUserId, loadConversations]);
+
+  useEffect(() => {
+    if (currentUserId && selectedUserId) {
+      loadMessages(selectedUserId);
+      markAsRead(selectedUserId);
+    }
+  }, [currentUserId, selectedUserId, loadMessages, markAsRead]);
         setConversations(response.data.data.conversations);
         setFilteredConversations(response.data.data.conversations);
         setTotalUnread(response.data.data.totalUnread);

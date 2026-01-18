@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import '../../../../i18n';
@@ -33,6 +33,32 @@ export default function ProfileSettingsPage() {
     },
   });
 
+  const loadProfile = useCallback(async () => {
+    if (!currentUser) return;
+
+    try {
+      const response = await barongAPI.get(`/public/community/user-profile?userId=${currentUser.id}`);
+
+      if (response.data.success) {
+        const profileData = response.data.data;
+        setProfile({
+          username: profileData.username || '',
+          bio: profileData.bio || '',
+          location: profileData.location || '',
+          website: profileData.website || '',
+          avatar: profileData.avatar || '',
+          social: {
+            twitter: profileData.social?.twitter || '',
+            github: profileData.social?.github || '',
+            linkedin: profileData.social?.linkedin || '',
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Failed to load profile:', error);
+    }
+  }, [currentUser]);
+
   // 加载当前用户资料
   useEffect(() => {
     if (!isAuthenticated || !currentUser) {
@@ -41,13 +67,7 @@ export default function ProfileSettingsPage() {
     }
 
     loadProfile();
-  }, [isAuthenticated, currentUser, router]);
-
-  const loadProfile = async () => {
-    if (!currentUser) return;
-
-    try {
-      const response = await barongAPI.get(`/public/community/user-profile?userId=${currentUser.id}`);
+  }, [isAuthenticated, currentUser, router, loadProfile]);
       if (response.data.success) {
         const profile = response.data.data;
         setFormData({

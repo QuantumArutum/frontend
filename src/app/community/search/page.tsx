@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search, User, FileText, Calendar, MessageSquare, Heart, Eye } from 'lucide-react';
@@ -55,13 +55,7 @@ export default function SearchPage() {
   const [total, setTotal] = useState(0);
   const [activeTab, setActiveTab] = useState<'all' | 'posts' | 'users' | 'tags'>(type as any);
 
-  useEffect(() => {
-    if (query) {
-      performSearch(query, type);
-    }
-  }, [query, type]);
-
-  const performSearch = async (q: string, searchType: string = 'all') => {
+  const performSearch = useCallback(async (q: string, searchType: string = 'all') => {
     if (!q.trim()) return;
 
     try {
@@ -77,7 +71,13 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (query) {
+      performSearch(query, type);
+    }
+  }, [query, type, performSearch]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
