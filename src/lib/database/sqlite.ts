@@ -133,7 +133,7 @@ class SQLiteDatabase {
       JOIN community_categories c ON p.category_id = c.id
       WHERE 1=1
     `;
-    const args: any[] = [];
+    const args: (string | number | boolean)[] = [];
 
     if (params.id) {
       query += ` AND p.id = ?`;

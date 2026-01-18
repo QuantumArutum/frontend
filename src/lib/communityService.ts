@@ -213,6 +213,36 @@ export interface Notification {
   created_at: string;
 }
 
+export interface Activity {
+  id: number;
+  user_id: string;
+  activity_type: string;
+  target_type?: string;
+  target_id?: number;
+  description: string;
+  created_at: string;
+}
+
+export interface ModAction {
+  id: number;
+  moderator_id: string;
+  action: string;
+  target_type: string;
+  target_id: number;
+  reason?: string;
+  status: string;
+  created_at: string;
+}
+
+export interface User {
+  uid: string;
+  email: string;
+  username?: string;
+  reputation_points?: number;
+  level?: number;
+  created_at?: string;
+}
+
 // ==================== COMMUNITY SERVICE ====================
 
 export const communityService = {
@@ -444,7 +474,7 @@ export const communityService = {
       const { post_id, user_id, page = 1, limit = 50 } = params;
       const offset = (page - 1) * limit;
       let comments: Comment[];
-      let countResult: any[];
+      let countResult: { total: number }[];
 
       if (post_id) {
         comments = await sql`SELECT c.*, u.email as author_email FROM comments c LEFT JOIN users u ON c.user_id = u.uid
@@ -665,7 +695,7 @@ export const communityService = {
     try {
       const offset = (page - 1) * limit;
       let reports: Report[];
-      let countResult: any[];
+      let countResult: { total: number }[];
 
       if (status && status !== 'all') {
         reports = await sql`SELECT r.*, u1.email as reporter_email, u2.email as reported_user_email
@@ -715,7 +745,7 @@ export const communityService = {
     try {
       const offset = (page - 1) * limit;
       let bans: UserBan[];
-      let countResult: any[];
+      let countResult: { total: number }[];
 
       if (active !== undefined) {
         bans = await sql`SELECT b.*, u.email as user_email FROM user_bans b LEFT JOIN users u ON b.user_id = u.uid
@@ -776,7 +806,7 @@ export const communityService = {
     try {
       const offset = (page - 1) * limit;
       let announcements: Announcement[];
-      let countResult: any[];
+      let countResult: { total: number }[];
 
       if (active !== undefined) {
         announcements = await sql`SELECT * FROM community_announcements WHERE is_active = ${active}
@@ -838,7 +868,7 @@ export const communityService = {
     try {
       const offset = (page - 1) * limit;
       let events: CommunityEvent[];
-      let countResult: any[];
+      let countResult: { total: number }[];
 
       if (status && status !== 'all') {
         events = await sql`SELECT * FROM community_events WHERE status = ${status} ORDER BY start_time DESC LIMIT ${limit} OFFSET ${offset}` as CommunityEvent[];
@@ -1043,7 +1073,7 @@ export const communityService = {
     }
   },
 
-  async getFollowers(userId: string, page = 1, limit = 20): Promise<{ users: any[]; total: number }> {
+  async getFollowers(userId: string, page = 1, limit = 20): Promise<{ users: User[]; total: number }> {
     if (!sql) return { users: [], total: 0 };
     try {
       const offset = (page - 1) * limit;
@@ -1058,7 +1088,7 @@ export const communityService = {
     }
   },
 
-  async getFollowing(userId: string, page = 1, limit = 20): Promise<{ users: any[]; total: number }> {
+  async getFollowing(userId: string, page = 1, limit = 20): Promise<{ users: User[]; total: number }> {
     if (!sql) return { users: [], total: 0 };
     try {
       const offset = (page - 1) * limit;
@@ -1117,7 +1147,7 @@ export const communityService = {
     try {
       const offset = (page - 1) * limit;
       let messages: PrivateMessage[];
-      let countResult: any[];
+      let countResult: { total: number }[];
 
       if (type === 'inbox') {
         messages = await sql`SELECT pm.*, u.email as sender_email FROM private_messages pm LEFT JOIN users u ON pm.sender_id = u.uid
@@ -1246,7 +1276,7 @@ export const communityService = {
     try {
       const offset = (page - 1) * limit;
       let tasks: CommunityTask[];
-      let countResult: any[];
+      let countResult: { total: number }[];
 
       if (active !== undefined) {
         tasks = await sql`SELECT * FROM community_tasks WHERE is_active = ${active} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}` as CommunityTask[];
@@ -1333,7 +1363,7 @@ export const communityService = {
     }
   },
 
-  async getUserActivities(userId: string, page = 1, limit = 50): Promise<{ activities: any[]; total: number }> {
+  async getUserActivities(userId: string, page = 1, limit = 50): Promise<{ activities: Activity[]; total: number }> {
     if (!sql) return { activities: [], total: 0 };
     try {
       const offset = (page - 1) * limit;
@@ -1346,7 +1376,7 @@ export const communityService = {
     }
   },
 
-  async getRecentActivities(page = 1, limit = 50): Promise<{ activities: any[]; total: number }> {
+  async getRecentActivities(page = 1, limit = 50): Promise<{ activities: Activity[]; total: number }> {
     if (!sql) return { activities: [], total: 0 };
     try {
       const offset = (page - 1) * limit;
@@ -1448,7 +1478,7 @@ export const communityService = {
   },
 
   // ========== COMMUNITY USERS (for admin) ==========
-  async getCommunityUsers(params: { page?: number; limit?: number; search?: string; status?: string }): Promise<{ users: any[]; total: number }> {
+  async getCommunityUsers(params: { page?: number; limit?: number; search?: string; status?: string }): Promise<{ users: User[]; total: number }> {
     if (!sql) return { users: [], total: 0 };
     try {
       const { page = 1, limit = 20, search, status } = params;
@@ -1484,7 +1514,7 @@ export const communityService = {
       const offset = (page - 1) * limit;
 
       let messages: PrivateMessage[];
-      let countResult: any[];
+      let countResult: { total: number }[];
 
       if (search) {
         messages = await sql`SELECT pm.*, u1.email as sender_email, u2.email as receiver_email
@@ -1507,7 +1537,7 @@ export const communityService = {
   },
 
   // ========== MODERATION QUEUE ==========
-  async getModerationQueue(page = 1, limit = 50): Promise<{ queue: any[]; pending: number; approved: number; rejected: number }> {
+  async getModerationQueue(page = 1, limit = 50): Promise<{ queue: ModAction[]; pending: number; approved: number; rejected: number }> {
     if (!sql) return { queue: [], pending: 0, approved: 0, rejected: 0 };
     try {
       const offset = (page - 1) * limit;

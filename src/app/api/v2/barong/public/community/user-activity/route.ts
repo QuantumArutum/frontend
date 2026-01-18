@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
-    let activities: any[] = [];
+    let activities: { type: string; description: string; created_at: string }[] = [];
 
     // 根据类型获取不同的活动
     if (type === 'all' || type === 'posts') {

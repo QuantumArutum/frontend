@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
     // 构建查询条件
     const offset = (page - 1) * limit;
     let whereConditions = [];
-    let params: any[] = [];
+    let params: (string | number)[] = [];
 
     if (moderatorId) {
       whereConditions.push(`moderator_id = $${params.length + 1}`);

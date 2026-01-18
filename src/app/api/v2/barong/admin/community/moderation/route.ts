@@ -4,13 +4,13 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { communityService } from '@/lib/communityService';
+import { communityService, type ModAction } from '@/lib/communityService';
 
 // Type assertion for methods that TypeScript can't infer due to object size
 const service = communityService as typeof communityService & {
-  getModerationQueue: (page?: number, limit?: number) => Promise<{ queue: any[]; pending: number; approved: number; rejected: number }>;
+  getModerationQueue: (page?: number, limit?: number) => Promise<{ queue: ModAction[]; pending: number; approved: number; rejected: number }>;
   updateModerationQueueItem: (id: string, status: string, reviewedBy: string, reviewNote?: string) => Promise<boolean>;
-  getSensitiveWords: () => Promise<any[]>;
+  getSensitiveWords: () => Promise<string[]>;
   addSensitiveWord: (word: string, level: string, category: string) => Promise<boolean>;
   deleteSensitiveWord: (id: number) => Promise<boolean>;
 };

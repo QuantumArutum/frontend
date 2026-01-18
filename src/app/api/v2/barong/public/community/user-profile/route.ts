@@ -167,7 +167,7 @@ export async function GET(request: NextRequest) {
 
     // 确定用户角色和徽章
     let roleKey = 'member';
-    const badges: any[] = [];
+    const badges: { name: string; color: string; icon: string }[] = [];
 
     if (postCount > 100) {
       roleKey = 'core_developer';

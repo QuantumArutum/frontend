@@ -9,6 +9,46 @@
  */
 
 import { sql, dbQuery, initDatabase } from './database';
+import type { User, Post } from './communityService';
+
+// Additional type definitions
+interface AuditLog {
+  id: number;
+  action: string;
+  admin_id?: string;
+  details?: string;
+  created_at: string;
+}
+
+interface FooterLink {
+  id: number;
+  title: string;
+  url: string;
+  order: number;
+}
+
+interface Domain {
+  id: number;
+  domain: string;
+  is_active: boolean;
+}
+
+interface Deposit {
+  id: number;
+  user_id: string;
+  amount: number;
+  currency: string;
+  status: string;
+  created_at: string;
+}
+
+interface BlockchainNetwork {
+  id: number;
+  name: string;
+  chain_id: number;
+  rpc_url: string;
+  is_active: boolean;
+}
 
 // Re-export database utilities
 export { sql, dbQuery, initDatabase };
@@ -32,7 +72,7 @@ export const db = {
   isDemoMode: () => false, // Always production mode now
 
   // Users
-  getUsers: async (params: { page?: number; limit?: number; search?: string; state?: string }): Promise<DBResult<{ users: any[]; total: number }>> => {
+  getUsers: async (params: { page?: number; limit?: number; search?: string; state?: string }): Promise<DBResult<{ users: User[]; total: number }>> => {
     try {
       const result = await dbQuery.getUsers(params);
       return { success: true, data: result };
@@ -42,7 +82,7 @@ export const db = {
     }
   },
 
-  getUserById: async (id: string): Promise<DBResult<any>> => {
+  getUserById: async (id: string): Promise<DBResult<User>> => {
     try {
       const user = await dbQuery.getUserByUid(id);
       if (!user) return { success: false, error: 'User not found' };
@@ -53,7 +93,7 @@ export const db = {
     }
   },
 
-  updateUser: async (id: string, updates: any): Promise<DBResult<any>> => {
+  updateUser: async (id: string, updates: Partial<User>): Promise<DBResult<User>> => {
     try {
       const user = await dbQuery.updateUser(id, updates);
       if (!user) return { success: false, error: 'User not found' };
@@ -65,7 +105,7 @@ export const db = {
   },
 
   // Community Posts
-  getPosts: async (params: { page?: number; limit?: number; category?: string; search?: string }): Promise<DBResult<{ posts: any[]; total: number }>> => {
+  getPosts: async (params: { page?: number; limit?: number; category?: string; search?: string }): Promise<DBResult<{ posts: Post[]; total: number }>> => {
     try {
       const result = await dbQuery.getPosts(params);
       return { success: true, data: result };
@@ -75,7 +115,7 @@ export const db = {
     }
   },
 
-  getPostById: async (id: string): Promise<DBResult<any>> => {
+  getPostById: async (id: string): Promise<DBResult<Post>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
       const result = await sql`SELECT p.*, u.email as author_email FROM posts p LEFT JOIN users u ON p.user_id = u.uid WHERE p.id = ${parseInt(id)} OR p.id::text = ${id}`;
@@ -491,7 +531,7 @@ export const db = {
     }
   },
 
-  getAuditLogs: async (params: { page?: number; limit?: number; action?: string; admin_id?: string }): Promise<DBResult<{ logs: any[]; total: number }>> => {
+  getAuditLogs: async (params: { page?: number; limit?: number; action?: string; admin_id?: string }): Promise<DBResult<{ logs: AuditLog[]; total: number }>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured', data: { logs: [], total: 0 } };
       const { page = 1, limit = 50, action, admin_id } = params;
@@ -752,7 +792,7 @@ export const db = {
     }
   },
 
-  updateBlockchainNetworks: async (networks: any[]): Promise<DBResult<void>> => {
+  updateBlockchainNetworks: async (networks: BlockchainNetwork[]): Promise<DBResult<void>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
       for (const network of networks) {
@@ -950,7 +990,7 @@ export const db = {
     }
   },
 
-  updateDomains: async (domains: any[]): Promise<DBResult<void>> => {
+  updateDomains: async (domains: Domain[]): Promise<DBResult<void>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
       for (const d of domains) {
@@ -1022,7 +1062,7 @@ export const db = {
   },
 
   // Deposits
-  getDeposits: async (params: { page?: number; limit?: number }): Promise<DBResult<{ deposits: any[]; total: number }>> => {
+  getDeposits: async (params: { page?: number; limit?: number }): Promise<DBResult<{ deposits: Deposit[]; total: number }>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured', data: { deposits: [], total: 0 } };
       const { page = 1, limit = 20 } = params;
@@ -1125,7 +1165,7 @@ export const db = {
     }
   },
 
-  updateFooterLinks: async (links: any[]): Promise<DBResult<void>> => {
+  updateFooterLinks: async (links: FooterLink[]): Promise<DBResult<void>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
       for (const link of links) {

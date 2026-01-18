@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     const sql = neon(databaseUrl);
-    const results: any[] = [];
+    const results: { step: string; success: boolean; message: string }[] = [];
 
     // 1. 移除 user_bans 表的外键约束
     try {
