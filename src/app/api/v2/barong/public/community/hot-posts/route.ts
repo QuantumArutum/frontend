@@ -15,11 +15,13 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
+      console.error('[hot-posts] Database connection not available');
       clearTimeout(timeoutId);
       return NextResponse.json({
-        success: true,
-        data: { posts: [], total: 0, page: 1, limit: 20, hasMore: false }
-      });
+        success: false,
+        error: 'Database connection not available',
+        message: '数据库连接不可用，请稍后重试'
+      }, { status: 503 });
     }
 
     const { searchParams } = new URL(request.url);
@@ -106,17 +108,31 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     clearTimeout(timeoutId);
     
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : '';
+    
     if (error instanceof Error && error.name === 'AbortError') {
-      return NextResponse.json({
-        success: true,
-        data: { posts: [], total: 0, page: 1, limit: 20, hasMore: false }
+      console.error('[hot-posts] Request timeout:', {
+        message: errorMessage,
+        timestamp: new Date().toISOString()
       });
+      return NextResponse.json({
+        success: false,
+        error: 'Request timeout',
+        message: '请求超时，请稍后重试'
+      }, { status: 504 });
     }
     
-    console.error('Error fetching hot posts:', error);
+    console.error('[hot-posts] Error fetching hot posts:', {
+      message: errorMessage,
+      stack: errorStack,
+      timestamp: new Date().toISOString()
+    });
+    
     return NextResponse.json({
       success: false,
-      message: 'Internal server error'
+      error: errorMessage,
+      message: '获取热门帖子失败，请稍后重试'
     }, { status: 500 });
   }
 }

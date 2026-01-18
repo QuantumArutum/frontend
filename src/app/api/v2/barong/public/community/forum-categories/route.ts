@@ -12,10 +12,12 @@ export async function GET(request: NextRequest) {
   try {
     // 检查数据库连接
     if (!sql) {
+      console.error('[forum-categories] Database connection not available');
       return NextResponse.json({
-        success: true,
-        data: getDefaultCategories()
-      });
+        success: false,
+        error: 'Database connection not available',
+        message: '数据库连接不可用，请稍后重试'
+      }, { status: 503 });
     }
 
     // 使用超时控制
@@ -76,7 +78,14 @@ export async function GET(request: NextRequest) {
     }
 
   } catch (error) {
-    console.error('Error fetching forum categories:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : '';
+    
+    console.error('[forum-categories] Error fetching categories:', {
+      message: errorMessage,
+      stack: errorStack,
+      timestamp: new Date().toISOString()
+    });
     
     // 返回默认分类而不是错误
     return NextResponse.json({

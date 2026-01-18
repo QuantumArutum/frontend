@@ -14,11 +14,13 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
+      console.error('[search] Database connection not available');
       clearTimeout(timeoutId);
       return NextResponse.json({
-        success: true,
-        data: { posts: [], users: [], tags: [], total: 0 }
-      });
+        success: false,
+        error: 'Database connection not available',
+        message: '数据库连接不可用，请稍后重试'
+      }, { status: 503 });
     }
 
     const { searchParams } = new URL(request.url);
@@ -154,19 +156,32 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     clearTimeout(timeoutId);
     
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : '';
+    
     if (error instanceof Error && error.name === 'AbortError') {
-      return NextResponse.json({
-        success: true,
-        data: { posts: [], users: [], tags: [], total: 0 }
+      console.error('[search] Request timeout:', {
+        message: errorMessage,
+        timestamp: new Date().toISOString()
       });
+      return NextResponse.json({
+        success: false,
+        error: 'Request timeout',
+        message: '搜索超时，请稍后重试'
+      }, { status: 504 });
     }
     
-    console.error('Error searching:', error);
+    console.error('[search] Error searching:', {
+      message: errorMessage,
+      stack: errorStack,
+      timestamp: new Date().toISOString()
+    });
+    
     return NextResponse.json(
       { 
         success: false, 
-        error: 'Failed to search',
-        message: error instanceof Error ? error.message : 'Unknown error'
+        error: errorMessage,
+        message: '搜索失败，请稍后重试'
       },
       { status: 500 }
     );

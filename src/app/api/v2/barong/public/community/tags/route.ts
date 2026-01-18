@@ -11,11 +11,13 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
+      console.error('[tags] Database connection not available');
       clearTimeout(timeoutId);
       return NextResponse.json({
-        success: true,
-        data: { tags: [], total: 0, page: 1, limit: 20, hasMore: false }
-      });
+        success: false,
+        error: 'Database connection not available',
+        message: '数据库连接不可用，请稍后重试'
+      }, { status: 503 });
     }
 
     const { searchParams } = new URL(request.url);
@@ -25,7 +27,7 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get('sortBy') || 'usage';
     const offset = (page - 1) * limit;
 
-    // 简化查询
+    // 简化查询 - 使用安全的条件查询替代sql.unsafe()
     let tags;
     if (search) {
       tags = await sql`
@@ -45,25 +47,57 @@ export async function GET(request: NextRequest) {
         OFFSET ${offset}
       ` as any[];
     } else {
-      const orderBy = sortBy === 'name' ? 't.name ASC' : 
-                      sortBy === 'created' ? 't.created_at DESC' : 
-                      't.use_count DESC';
-      
-      tags = await sql`
-        SELECT 
-          t.id,
-          t.name,
-          t.slug,
-          t.description,
-          t.color,
-          t.use_count as usage_count,
-          t.is_official,
-          t.created_at
-        FROM tags t
-        ORDER BY ${sql.unsafe(orderBy)}
-        LIMIT ${limit}
-        OFFSET ${offset}
-      ` as any[];
+      // 使用条件查询替代动态SQL，避免SQL注入风险
+      if (sortBy === 'name') {
+        tags = await sql`
+          SELECT 
+            t.id,
+            t.name,
+            t.slug,
+            t.description,
+            t.color,
+            t.use_count as usage_count,
+            t.is_official,
+            t.created_at
+          FROM tags t
+          ORDER BY t.name ASC
+          LIMIT ${limit}
+          OFFSET ${offset}
+        ` as any[];
+      } else if (sortBy === 'created') {
+        tags = await sql`
+          SELECT 
+            t.id,
+            t.name,
+            t.slug,
+            t.description,
+            t.color,
+            t.use_count as usage_count,
+            t.is_official,
+            t.created_at
+          FROM tags t
+          ORDER BY t.created_at DESC
+          LIMIT ${limit}
+          OFFSET ${offset}
+        ` as any[];
+      } else {
+        // 默认按使用次数排序
+        tags = await sql`
+          SELECT 
+            t.id,
+            t.name,
+            t.slug,
+            t.description,
+            t.color,
+            t.use_count as usage_count,
+            t.is_official,
+            t.created_at
+          FROM tags t
+          ORDER BY t.use_count DESC
+          LIMIT ${limit}
+          OFFSET ${offset}
+        ` as any[];
+      }
     }
 
     clearTimeout(timeoutId);
@@ -82,19 +116,32 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     clearTimeout(timeoutId);
     
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : '';
+    
     if (error instanceof Error && error.name === 'AbortError') {
-      return NextResponse.json({
-        success: true,
-        data: { tags: [], total: 0, page: 1, limit: 20, hasMore: false }
+      console.error('[tags] Request timeout:', {
+        message: errorMessage,
+        timestamp: new Date().toISOString()
       });
+      return NextResponse.json({
+        success: false,
+        error: 'Request timeout',
+        message: '请求超时，请稍后重试'
+      }, { status: 504 });
     }
     
-    console.error('Error fetching tags:', error);
+    console.error('[tags] Error fetching tags:', {
+      message: errorMessage,
+      stack: errorStack,
+      timestamp: new Date().toISOString()
+    });
+    
     return NextResponse.json(
       {
         success: false,
-        message: '获取标签列表失败',
-        error: error.message
+        error: errorMessage,
+        message: '获取标签列表失败，请稍后重试'
       },
       { status: 500 }
     );
@@ -170,19 +217,35 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     clearTimeout(timeoutId);
     
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : '';
+    
     if (error instanceof Error && error.name === 'AbortError') {
+      console.error('[tags-create] Request timeout:', {
+        message: errorMessage,
+        timestamp: new Date().toISOString()
+      });
       return NextResponse.json(
-        { success: false, message: 'Request timeout' },
+        { 
+          success: false,
+          error: 'Request timeout',
+          message: '请求超时，请稍后重试' 
+        },
         { status: 504 }
       );
     }
     
-    console.error('Error creating tag:', error);
+    console.error('[tags-create] Error creating tag:', {
+      message: errorMessage,
+      stack: errorStack,
+      timestamp: new Date().toISOString()
+    });
+    
     return NextResponse.json(
       {
         success: false,
-        message: '创建标签失败',
-        error: error.message
+        error: errorMessage,
+        message: '创建标签失败，请稍后重试'
       },
       { status: 500 }
     );

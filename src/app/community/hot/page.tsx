@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { TrendingUp, Eye, MessageSquare, Clock, ArrowLeft } from 'lucide-react';
 import ParticlesBackground from '../../components/ParticlesBackground';
@@ -32,11 +32,7 @@ export default function HotPostsPage() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    loadHotPosts();
-  }, [page]);
-
-  const loadHotPosts = async () => {
+  const loadHotPosts = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/v2/barong/public/community/hot-posts?limit=20&offset=${(page - 1) * 20}`);
@@ -48,6 +44,14 @@ export default function HotPostsPage() {
       }
     } catch (err) {
       console.error('Error loading hot posts:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [page]);
+
+  useEffect(() => {
+    loadHotPosts();
+  }, [loadHotPosts]);
     } finally {
       setLoading(false);
     }

@@ -16,11 +16,13 @@ export async function POST(request: NextRequest) {
 
   try {
     if (!sql) {
+      console.error('[create-post] Database connection not available');
       clearTimeout(timeoutId);
       return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+        success: false,
+        error: 'Database connection not available',
+        message: '数据库连接不可用，请稍后重试' 
+      }, { status: 503 });
     }
 
     const body = await request.json();
@@ -104,7 +106,7 @@ export async function POST(request: NextRequest) {
       const sqlInstance = sql; // 保存引用以便在回调中使用
       Promise.all(tags.slice(0, 5).map(async (tagName: string) => {
         try {
-          let tagResult = await sqlInstance`
+          const tagResult = await sqlInstance`
             SELECT id FROM tags WHERE name = ${tagName} LIMIT 1
           `;
           
@@ -147,17 +149,31 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     clearTimeout(timeoutId);
     
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : '';
+    
     if (error instanceof Error && error.name === 'AbortError') {
+      console.error('[create-post] Request timeout:', {
+        message: errorMessage,
+        timestamp: new Date().toISOString()
+      });
       return NextResponse.json({ 
-        success: false, 
-        message: 'Request timeout' 
+        success: false,
+        error: 'Request timeout',
+        message: '请求超时，请稍后重试' 
       }, { status: 504 });
     }
     
-    console.error('Error creating post:', error);
+    console.error('[create-post] Error:', {
+      message: errorMessage,
+      stack: errorStack,
+      timestamp: new Date().toISOString()
+    });
+    
     return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
+      success: false,
+      error: errorMessage,
+      message: '创建帖子失败，请稍后重试' 
     }, { status: 500 });
   }
 }

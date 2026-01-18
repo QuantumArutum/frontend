@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, Eye, MessageSquare, Clock, ArrowLeft } from 'lucide-react';
 import ParticlesBackground from '../../components/ParticlesBackground';
@@ -32,11 +32,7 @@ export default function ControversialPostsPage() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    loadControversialPosts();
-  }, [page]);
-
-  const loadControversialPosts = async () => {
+  const loadControversialPosts = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/v2/barong/public/community/controversial-posts?limit=20&offset=${(page - 1) * 20}`);
@@ -48,6 +44,14 @@ export default function ControversialPostsPage() {
       }
     } catch (err) {
       console.error('Error loading controversial posts:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [page]);
+
+  useEffect(() => {
+    loadControversialPosts();
+  }, [loadControversialPosts]);
     } finally {
       setLoading(false);
     }
