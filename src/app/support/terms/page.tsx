@@ -15,14 +15,17 @@ export default function TermsOfService() {
             <h1 className="text-4xl font-bold text-white mb-8 text-center">
               {t('terms.title', '服务条款')}
             </h1>
-            
+
             <div className="prose prose-invert max-w-none">
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-white mb-4">
                   {t('terms.acceptance.title', '条款接受')}
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  {t('terms.acceptance.content', '通过访问和使用Quantaureum平台，您同意遵守本服务条款。如果您不同意这些条款，请不要使用我们的服务。')}
+                  {t(
+                    'terms.acceptance.content',
+                    '通过访问和使用Quantaureum平台，您同意遵守本服务条款。如果您不同意这些条款，请不要使用我们的服务。'
+                  )}
                 </p>
               </section>
 
@@ -31,7 +34,10 @@ export default function TermsOfService() {
                   {t('terms.services.title', '服务描述')}
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  {t('terms.services.content', 'Quantaureum提供基于后量子密码学的区块链平台服务，包括但不限于量子钱包、智能合约、跨链互操作等功能。')}
+                  {t(
+                    'terms.services.content',
+                    'Quantaureum提供基于后量子密码学的区块链平台服务，包括但不限于量子钱包、智能合约、跨链互操作等功能。'
+                  )}
                 </p>
               </section>
 
@@ -70,7 +76,10 @@ export default function TermsOfService() {
                   {t('terms.risks.title', '风险披露')}
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  {t('terms.risks.content', '区块链和加密货币交易存在固有风险。价格可能大幅波动，您可能损失全部投资。请在使用前充分了解相关风险。')}
+                  {t(
+                    'terms.risks.content',
+                    '区块链和加密货币交易存在固有风险。价格可能大幅波动，您可能损失全部投资。请在使用前充分了解相关风险。'
+                  )}
                 </p>
               </section>
 
@@ -79,7 +88,10 @@ export default function TermsOfService() {
                   {t('terms.liability.title', '责任限制')}
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  {t('terms.liability.content', 'Quantaureum在法律允许的最大范围内限制其责任。我们不对任何间接、偶然或后果性损害承担责任。')}
+                  {t(
+                    'terms.liability.content',
+                    'Quantaureum在法律允许的最大范围内限制其责任。我们不对任何间接、偶然或后果性损害承担责任。'
+                  )}
                 </p>
               </section>
 
@@ -88,7 +100,10 @@ export default function TermsOfService() {
                   {t('terms.termination.title', '服务终止')}
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  {t('terms.termination.content', '我们保留在任何时候暂停或终止您的账户的权利，特别是在违反本条款的情况下。')}
+                  {t(
+                    'terms.termination.content',
+                    '我们保留在任何时候暂停或终止您的账户的权利，特别是在违反本条款的情况下。'
+                  )}
                 </p>
               </section>
 
@@ -97,7 +112,10 @@ export default function TermsOfService() {
                   {t('terms.changes.title', '条款变更')}
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  {t('terms.changes.content', '我们可能会不时更新这些条款。重大变更将通过平台通知您。继续使用服务即表示接受更新后的条款。')}
+                  {t(
+                    'terms.changes.content',
+                    '我们可能会不时更新这些条款。重大变更将通过平台通知您。继续使用服务即表示接受更新后的条款。'
+                  )}
                 </p>
               </section>
 
@@ -126,4 +144,3 @@ export default function TermsOfService() {
     </div>
   );
 }
-

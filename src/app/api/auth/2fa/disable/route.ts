@@ -3,8 +3,19 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createSecureHandler, successResponse, errorResponse, ValidationRule } from '@/lib/security/middleware';
-import { SecurityLogger, SecurityEventType, getClientIP, getUserAgent, CryptoUtils } from '@/lib/security';
+import {
+  createSecureHandler,
+  successResponse,
+  errorResponse,
+  ValidationRule,
+} from '@/lib/security/middleware';
+import {
+  SecurityLogger,
+  SecurityEventType,
+  getClientIP,
+  getUserAgent,
+  CryptoUtils,
+} from '@/lib/security';
 import { TOTPService } from '@/lib/security/totp';
 import { db } from '@/lib/database';
 
@@ -20,7 +31,11 @@ export const POST = createSecureHandler(
     const userAgent = getUserAgent(request);
 
     try {
-      const { userId, token, password } = (validatedData || {}) as { userId: string; token: string; password: string };
+      const { userId, token, password } = (validatedData || {}) as {
+        userId: string;
+        token: string;
+        password: string;
+      };
 
       // 获取用户
       const user = await db.findUserById(userId);
@@ -48,7 +63,7 @@ export const POST = createSecureHandler(
 
       // 验证TOTP码或备份码
       let tokenValid = false;
-      
+
       if (/^\d{6}$/.test(token)) {
         // TOTP码
         tokenValid = TOTPService.verify(token, user.totpSecret!);
@@ -85,7 +100,6 @@ export const POST = createSecureHandler(
         disabled: true,
         message: '2FA已成功禁用',
       });
-
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       SecurityLogger.log(

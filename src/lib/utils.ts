@@ -1,5 +1,5 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 // className 合并工具函数
 export function cn(...inputs: ClassValue[]) {
@@ -9,13 +9,13 @@ export function cn(...inputs: ClassValue[]) {
 // 数字格式化工具函数
 export const formatNumber = (num: number): string => {
   if (typeof num !== 'number' || isNaN(num)) return '0';
-  
+
   if (num >= 1e15) return (num / 1e15).toFixed(1) + 'P';
   if (num >= 1e12) return (num / 1e12).toFixed(1) + 'T';
   if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
   if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
   if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
-  
+
   return num.toLocaleString();
 };
 
@@ -38,7 +38,7 @@ export const formatDate = (date: string | Date | null | undefined): string => {
   return d.toLocaleDateString('zh-CN', {
     year: 'numeric',
     month: '2-digit',
-    day: '2-digit'
+    day: '2-digit',
   });
 };
 
@@ -51,10 +51,9 @@ export const formatDateTime = (date: string | Date | null | undefined): string =
     month: '2-digit',
     day: '2-digit',
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
   });
 };
-
 
 // 计算剩余天数
 export const getDaysLeft = (endDate: string | Date | null | undefined): number => {
@@ -75,29 +74,29 @@ export const getProgress = (current: number, goal: number): number => {
 // 状态文本映射
 export const getStatusText = (status: number): string => {
   const statusMap: Record<number, string> = {
-    0: "草稿",
-    1: "审核中", 
-    2: "进行中",
-    3: "筹资成功",
-    4: "项目完成",
-    5: "已取消",
-    6: "筹资失败"
+    0: '草稿',
+    1: '审核中',
+    2: '进行中',
+    3: '筹资成功',
+    4: '项目完成',
+    5: '已取消',
+    6: '筹资失败',
   };
-  return statusMap[status] || "未知";
+  return statusMap[status] || '未知';
 };
 
 // 状态颜色映射
 export const getStatusColor = (status: number): string => {
   const colorMap: Record<number, string> = {
-    0: "gray",
-    1: "yellow",
-    2: "blue", 
-    3: "green",
-    4: "green",
-    5: "red",
-    6: "red"
+    0: 'gray',
+    1: 'yellow',
+    2: 'blue',
+    3: 'green',
+    4: 'green',
+    5: 'red',
+    6: 'red',
   };
-  return colorMap[status] || "gray";
+  return colorMap[status] || 'gray';
 };
 
 // 生成随机ID
@@ -106,7 +105,10 @@ export const generateId = (): string => {
 };
 
 // 防抖函数
-export const debounce = <T extends (...args: unknown[]) => unknown>(func: T, wait: number): ((...args: Parameters<T>) => void) => {
+export const debounce = <T extends (...args: unknown[]) => unknown>(
+  func: T,
+  wait: number
+): ((...args: Parameters<T>) => void) => {
   let timeout: ReturnType<typeof setTimeout> | undefined;
   return function executedFunction(...args: Parameters<T>) {
     const later = () => {
@@ -119,13 +121,16 @@ export const debounce = <T extends (...args: unknown[]) => unknown>(func: T, wai
 };
 
 // 节流函数
-export const throttle = <T extends (...args: unknown[]) => unknown>(func: T, limit: number): ((...args: Parameters<T>) => void) => {
+export const throttle = <T extends (...args: unknown[]) => unknown>(
+  func: T,
+  limit: number
+): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean;
-  return function(this: unknown, ...args: Parameters<T>) {
+  return function (this: unknown, ...args: Parameters<T>) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(() => (inThrottle = false), limit);
     }
   };
 };
@@ -180,14 +185,16 @@ export const hexToRgba = (hex: string, alpha: number = 1): string => {
 export const deepMerge = <T extends Record<string, unknown>>(target: T, source: Partial<T>): T => {
   const output = Object.assign({}, target);
   if (isObject(target) && isObject(source)) {
-    Object.keys(source).forEach(key => {
+    Object.keys(source).forEach((key) => {
       const sourceValue = source[key as keyof typeof source];
       const targetValue = target[key as keyof typeof target];
       if (isObject(sourceValue)) {
-        if (!(key in target))
-          Object.assign(output, { [key]: sourceValue });
+        if (!(key in target)) Object.assign(output, { [key]: sourceValue });
         else
-          (output as Record<string, unknown>)[key] = deepMerge(targetValue as Record<string, unknown>, sourceValue as Record<string, unknown>);
+          (output as Record<string, unknown>)[key] = deepMerge(
+            targetValue as Record<string, unknown>,
+            sourceValue as Record<string, unknown>
+          );
       } else {
         Object.assign(output, { [key]: sourceValue });
       }
@@ -199,7 +206,6 @@ export const deepMerge = <T extends Record<string, unknown>>(target: T, source: 
 const isObject = (item: unknown): item is Record<string, unknown> => {
   return item !== null && typeof item === 'object' && !Array.isArray(item);
 };
-
 
 // 本地存储工具
 export const storage = {
@@ -213,7 +219,7 @@ export const storage = {
   get: <T>(key: string, defaultValue: T | null = null): T | null => {
     try {
       const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) as T : defaultValue;
+      return item ? (JSON.parse(item) as T) : defaultValue;
     } catch (error) {
       console.error('Error reading from localStorage:', error);
       return defaultValue;
@@ -232,7 +238,7 @@ export const storage = {
     } catch (error) {
       console.error('Error clearing localStorage:', error);
     }
-  }
+  },
 };
 
 // URL 参数工具
@@ -250,7 +256,7 @@ export const urlParams = {
     const url = new URL(window.location.href);
     url.searchParams.delete(param);
     window.history.pushState({}, '', url.toString());
-  }
+  },
 };
 
 // 扩展 Navigator 接口以支持连接类型
@@ -268,20 +274,22 @@ declare global {
 
 // 设备检测
 export const device = {
-  isMobile: (): boolean => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+  isMobile: (): boolean =>
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
   isTablet: (): boolean => /iPad|Android/i.test(navigator.userAgent) && window.innerWidth >= 768,
   isDesktop: (): boolean => !device.isMobile() && !device.isTablet(),
   getViewportSize: (): { width: number; height: number } => ({
     width: window.innerWidth,
-    height: window.innerHeight
-  })
+    height: window.innerHeight,
+  }),
 };
 
 // 网络状态检测
 export const network = {
   isOnline: (): boolean => navigator.onLine,
   getConnectionType: (): string => {
-    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const connection =
+      navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     return connection?.effectiveType || 'unknown';
-  }
+  },
 };

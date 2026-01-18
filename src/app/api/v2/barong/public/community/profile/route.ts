@@ -9,28 +9,27 @@ import { sql } from '@/lib/database';
 export async function PUT(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
-    const { 
-      currentUserId,
-      displayName,
-      bio,
-      location,
-      website,
-      socialLinks 
-    } = body;
+    const { currentUserId, displayName, bio, location, website, socialLinks } = body;
 
     // 验证认证
     if (!currentUserId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Authentication required. Please login first.' 
-      }, { status: 401 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Authentication required. Please login first.',
+        },
+        { status: 401 }
+      );
     }
 
     // 验证用户存在
@@ -39,39 +38,54 @@ export async function PUT(request: NextRequest) {
     `;
 
     if (userCheck.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'User not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 数据验证
     if (displayName && displayName.length > 100) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Display name must be less than 100 characters' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Display name must be less than 100 characters',
+        },
+        { status: 400 }
+      );
     }
 
     if (bio && bio.length > 500) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Bio must be less than 500 characters' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Bio must be less than 500 characters',
+        },
+        { status: 400 }
+      );
     }
 
     if (location && location.length > 100) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Location must be less than 100 characters' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Location must be less than 100 characters',
+        },
+        { status: 400 }
+      );
     }
 
     if (website && website.length > 255) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Website URL must be less than 255 characters' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Website URL must be less than 255 characters',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证网站 URL 格式
@@ -79,10 +93,13 @@ export async function PUT(request: NextRequest) {
       try {
         new URL(website);
       } catch {
-        return NextResponse.json({ 
-          success: false, 
-          message: 'Invalid website URL format' 
-        }, { status: 400 });
+        return NextResponse.json(
+          {
+            success: false,
+            message: 'Invalid website URL format',
+          },
+          { status: 400 }
+        );
       }
     }
 
@@ -177,9 +194,12 @@ export async function PUT(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error updating user profile:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

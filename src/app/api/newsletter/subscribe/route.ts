@@ -7,7 +7,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Ensure newsletter table exists
 async function ensureTableExists() {
   if (!sql) return false;
-  
+
   try {
     await sql`
       CREATE TABLE IF NOT EXISTS newsletter_subscriptions (
@@ -35,25 +35,18 @@ export async function POST(request: NextRequest) {
 
     // Validate email
     if (!email || typeof email !== 'string') {
-      return NextResponse.json(
-        { success: false, error: 'Email is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'Email is required' }, { status: 400 });
     }
 
     const trimmedEmail = email.trim().toLowerCase();
 
     if (!EMAIL_REGEX.test(trimmedEmail)) {
-      return NextResponse.json(
-        { success: false, error: 'Invalid email format' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'Invalid email format' }, { status: 400 });
     }
 
     // Get client info
-    const ip = request.headers.get('x-forwarded-for') || 
-               request.headers.get('x-real-ip') || 
-               'unknown';
+    const ip =
+      request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     const userAgent = request.headers.get('user-agent') || '';
 
     // If no database, return success (demo mode)
@@ -62,7 +55,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: true,
         message: 'Successfully subscribed to newsletter',
-        data: { email: trimmedEmail }
+        data: { email: trimmedEmail },
       });
     }
 
@@ -74,7 +67,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: true,
         message: 'Successfully subscribed to newsletter',
-        data: { email: trimmedEmail }
+        data: { email: trimmedEmail },
       });
     }
 
@@ -86,12 +79,12 @@ export async function POST(request: NextRequest) {
 
       if (existing.length > 0) {
         const subscription = existing[0];
-        
+
         if (subscription.status === 'active') {
           return NextResponse.json({
             success: true,
             message: 'You are already subscribed',
-            data: { email: trimmedEmail, alreadySubscribed: true }
+            data: { email: trimmedEmail, alreadySubscribed: true },
           });
         }
 
@@ -108,7 +101,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
           success: true,
           message: 'Successfully resubscribed to newsletter',
-          data: { email: trimmedEmail, resubscribed: true }
+          data: { email: trimmedEmail, resubscribed: true },
         });
       }
 
@@ -121,7 +114,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: true,
         message: 'Successfully subscribed to newsletter',
-        data: { email: trimmedEmail }
+        data: { email: trimmedEmail },
       });
     } catch (dbError) {
       // If database operation fails, still return success (graceful degradation)
@@ -129,16 +122,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: true,
         message: 'Successfully subscribed to newsletter',
-        data: { email: trimmedEmail }
+        data: { email: trimmedEmail },
       });
     }
-
   } catch (error) {
     console.error('Newsletter subscription error:', error);
-    return NextResponse.json(
-      { success: false, error: 'Failed to subscribe' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: 'Failed to subscribe' }, { status: 500 });
   }
 }
 
@@ -149,16 +138,13 @@ export async function GET(request: NextRequest) {
     const email = searchParams.get('email');
 
     if (!email) {
-      return NextResponse.json(
-        { success: false, error: 'Email is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'Email is required' }, { status: 400 });
     }
 
     if (!sql) {
       return NextResponse.json({
         success: true,
-        data: { subscribed: false }
+        data: { subscribed: false },
       });
     }
 
@@ -169,9 +155,8 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: { subscribed: result.length > 0 }
+      data: { subscribed: result.length > 0 },
     });
-
   } catch (error) {
     console.error('Check subscription error:', error);
     return NextResponse.json(

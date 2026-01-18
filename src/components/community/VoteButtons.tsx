@@ -85,9 +85,8 @@ export default function VoteButtons({
       // 如果点击的是当前投票类型，则取消投票
       const newVoteType = userVote === voteType ? 'remove' : voteType;
 
-      const endpoint = targetType === 'post' 
-        ? '/public/community/vote-post'
-        : '/public/community/vote-comment';
+      const endpoint =
+        targetType === 'post' ? '/public/community/vote-post' : '/public/community/vote-comment';
 
       const response = await barongAPI.post(endpoint, {
         [targetType === 'post' ? 'postId' : 'commentId']: targetId,
@@ -96,7 +95,12 @@ export default function VoteButtons({
       });
 
       if (response.data.success) {
-        const { upvoteCount: newUpvoteCount, downvoteCount: newDownvoteCount, voteScore: newVoteScore, userVote: newUserVote } = response.data.data;
+        const {
+          upvoteCount: newUpvoteCount,
+          downvoteCount: newDownvoteCount,
+          voteScore: newVoteScore,
+          userVote: newUserVote,
+        } = response.data.data;
 
         setUpvoteCount(newUpvoteCount);
         setDownvoteCount(newDownvoteCount);
@@ -149,9 +153,10 @@ export default function VoteButtons({
             ${config.button}
             flex items-center justify-center rounded-lg
             transition-all duration-200
-            ${userVote === 'upvote'
-              ? 'bg-green-500 text-white shadow-lg shadow-green-500/50'
-              : 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
+            ${
+              userVote === 'upvote'
+                ? 'bg-green-500 text-white shadow-lg shadow-green-500/50'
+                : 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
             }
             ${isVoting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
           `}
@@ -162,12 +167,15 @@ export default function VoteButtons({
 
         {/* 分数显示 */}
         {showScore && (
-          <div className={`
+          <div
+            className={`
             ${config.text} font-bold
             ${voteScore > 0 ? 'text-green-400' : voteScore < 0 ? 'text-red-400' : 'text-gray-400'}
             ${isControversial ? 'text-yellow-400' : ''}
-          `}>
-            {voteScore > 0 ? '+' : ''}{voteScore}
+          `}
+          >
+            {voteScore > 0 ? '+' : ''}
+            {voteScore}
           </div>
         )}
 
@@ -181,9 +189,10 @@ export default function VoteButtons({
             ${config.button}
             flex items-center justify-center rounded-lg
             transition-all duration-200
-            ${userVote === 'downvote'
-              ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
-              : 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
+            ${
+              userVote === 'downvote'
+                ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
+                : 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
             }
             ${isVoting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
           `}
@@ -214,9 +223,10 @@ export default function VoteButtons({
         className={`
           flex items-center gap-1 px-3 py-1.5 rounded-lg
           transition-all duration-200
-          ${userVote === 'upvote'
-            ? 'bg-green-500 text-white shadow-lg shadow-green-500/50'
-            : 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
+          ${
+            userVote === 'upvote'
+              ? 'bg-green-500 text-white shadow-lg shadow-green-500/50'
+              : 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
           }
           ${isVoting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
         `}
@@ -227,12 +237,15 @@ export default function VoteButtons({
 
       {/* 分数显示 */}
       {showScore && (
-        <div className={`
+        <div
+          className={`
           ${config.text} font-bold px-2
           ${voteScore > 0 ? 'text-green-400' : voteScore < 0 ? 'text-red-400' : 'text-gray-400'}
           ${isControversial ? 'text-yellow-400' : ''}
-        `}>
-          {voteScore > 0 ? '+' : ''}{voteScore}
+        `}
+        >
+          {voteScore > 0 ? '+' : ''}
+          {voteScore}
         </div>
       )}
 
@@ -245,9 +258,10 @@ export default function VoteButtons({
         className={`
           flex items-center gap-1 px-3 py-1.5 rounded-lg
           transition-all duration-200
-          ${userVote === 'downvote'
-            ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
-            : 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
+          ${
+            userVote === 'downvote'
+              ? 'bg-red-500 text-white shadow-lg shadow-red-500/50'
+              : 'bg-gray-700 hover:bg-gray-600 text-gray-300 hover:text-white'
           }
           ${isVoting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
         `}

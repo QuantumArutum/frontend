@@ -18,7 +18,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -51,7 +51,7 @@ export const POST = createSecureHandler(
         amountA: result.amount_a,
         amountB: result.amount_b,
         message: `Successfully removed liquidity from ${poolId}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       console.error('Remove liquidity error:', error);

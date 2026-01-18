@@ -18,7 +18,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -44,15 +44,14 @@ export const POST = createSecureHandler(
       }
 
       // Convert rewards from wei to QAU
-      const rewardsQAU = result.amount ? 
-        (Number(BigInt(result.amount)) / 1e18).toFixed(4) : '0';
+      const rewardsQAU = result.amount ? (Number(BigInt(result.amount)) / 1e18).toFixed(4) : '0';
 
       return successResponse({
         success: true,
         txHash: result.txHash,
         amount: rewardsQAU,
         message: `Successfully claimed ${rewardsQAU} QAU rewards`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       console.error('Claim error:', error);

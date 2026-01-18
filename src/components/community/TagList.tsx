@@ -33,11 +33,7 @@ export default function TagList({
   onTagClick,
 }: TagListProps) {
   if (tags.length === 0) {
-    return (
-      <div className="text-center py-8 text-gray-400">
-        暂无标签
-      </div>
-    );
+    return <div className="text-center py-8 text-gray-400">暂无标签</div>;
   }
 
   // 水平布局
@@ -76,28 +72,17 @@ export default function TagList({
                 onClick={() => onTagClick?.(tag)}
                 showIcon={true}
               />
-              {showSubscribe && (
-                <TagSubscribeButton
-                  tagSlug={tag.slug}
-                  isSubscribed={false}
-                />
-              )}
+              {showSubscribe && <TagSubscribeButton tagSlug={tag.slug} isSubscribed={false} />}
             </div>
 
             {tag.description && (
-              <p className="text-sm text-gray-400 mb-3 line-clamp-2">
-                {tag.description}
-              </p>
+              <p className="text-sm text-gray-400 mb-3 line-clamp-2">{tag.description}</p>
             )}
 
             {showStats && (
               <div className="flex items-center gap-4 text-xs text-gray-400">
-                {tag.post_count !== undefined && (
-                  <span>{tag.post_count} 帖子</span>
-                )}
-                {tag.subscriber_count !== undefined && (
-                  <span>{tag.subscriber_count} 订阅</span>
-                )}
+                {tag.post_count !== undefined && <span>{tag.post_count} 帖子</span>}
+                {tag.subscriber_count !== undefined && <span>{tag.subscriber_count} 订阅</span>}
               </div>
             )}
           </div>
@@ -125,22 +110,13 @@ export default function TagList({
 
             {showStats && (
               <div className="flex items-center gap-4 text-sm text-gray-400">
-                {tag.post_count !== undefined && (
-                  <span>{tag.post_count} 帖子</span>
-                )}
-                {tag.subscriber_count !== undefined && (
-                  <span>{tag.subscriber_count} 订阅</span>
-                )}
+                {tag.post_count !== undefined && <span>{tag.post_count} 帖子</span>}
+                {tag.subscriber_count !== undefined && <span>{tag.subscriber_count} 订阅</span>}
               </div>
             )}
           </div>
 
-          {showSubscribe && (
-            <TagSubscribeButton
-              tagSlug={tag.slug}
-              isSubscribed={false}
-            />
-          )}
+          {showSubscribe && <TagSubscribeButton tagSlug={tag.slug} isSubscribed={false} />}
         </div>
       ))}
     </div>

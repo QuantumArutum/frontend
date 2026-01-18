@@ -28,12 +28,12 @@ psql $DATABASE_URL -f DATABASE_PERFORMANCE_OPTIMIZATION.sql
 
 ```sql
 -- 在SQL Editor中执行
-SELECT 
-  tablename, 
-  indexname, 
-  indexdef 
-FROM pg_indexes 
-WHERE schemaname = 'public' 
+SELECT
+  tablename,
+  indexname,
+  indexdef
+FROM pg_indexes
+WHERE schemaname = 'public'
   AND indexname LIKE 'idx_%'
 ORDER BY tablename, indexname;
 ```
@@ -146,6 +146,7 @@ curl -w "\nTime: %{time_total}s\n" \
 **症状**: SQL执行报错
 
 **解决方案**:
+
 ```sql
 -- 检查是否有权限问题
 SELECT current_user, current_database();
@@ -159,6 +160,7 @@ SELECT current_user, current_database();
 **症状**: 部署状态显示 "Error"
 
 **解决方案**:
+
 1. 查看部署日志找出错误原因
 2. 常见问题：
    - 构建错误：检查TypeScript类型错误
@@ -170,11 +172,13 @@ SELECT current_user, current_database();
 **症状**: API响应时间 > 5秒
 
 **可能原因**:
+
 1. 数据库索引未正确创建
 2. 数据库连接问题
 3. Vercel函数配置未生效
 
 **解决方案**:
+
 ```bash
 # 1. 验证索引
 psql $DATABASE_URL -c "SELECT count(*) FROM pg_indexes WHERE indexname LIKE 'idx_%';"
@@ -192,9 +196,11 @@ git push origin master
 **症状**: 部分API快速响应，部分仍超时
 
 **解决方案**:
+
 1. 检查哪些API仍有问题
 2. 查看该API的数据库查询
 3. 手动执行查询检查性能：
+
 ```sql
 EXPLAIN ANALYZE
 SELECT ... -- 复制API的查询
@@ -206,13 +212,13 @@ SELECT ... -- 复制API的查询
 
 修复后的预期性能：
 
-| API端点 | 目标响应时间 | 可接受范围 |
-|---------|-------------|-----------|
-| forum-categories | 200ms | < 500ms |
-| create-post | 500ms | < 1000ms |
-| search | 300ms | < 800ms |
-| hot-posts | 250ms | < 600ms |
-| tags | 150ms | < 400ms |
+| API端点          | 目标响应时间 | 可接受范围 |
+| ---------------- | ------------ | ---------- |
+| forum-categories | 200ms        | < 500ms    |
+| create-post      | 500ms        | < 1000ms   |
+| search           | 300ms        | < 800ms    |
+| hot-posts        | 250ms        | < 600ms    |
+| tags             | 150ms        | < 400ms    |
 
 ---
 

@@ -5,6 +5,7 @@
 ### ✅ 已完成优化的功能
 
 #### 1. 核心数据 API（已实现）
+
 - ✅ `/api/v2/barong/public/community/stats` - 社区统计数据
 - ✅ `/api/v2/barong/public/community/stats-growth` - 统计增长百分比
 - ✅ `/api/v2/barong/public/community/posts` - 帖子列表
@@ -17,6 +18,7 @@
 - ✅ `/api/v2/barong/public/community/members-stats` - 成员统计
 
 #### 2. 已优化的页面
+
 - ✅ 社区首页 (`clean-modern-community.tsx`)
   - 统计数据真实化
   - 活跃成员真实化
@@ -49,7 +51,9 @@
 ### 高优先级 🔥
 
 #### 1. 论坛分类页面 (`forum/page.tsx`)
+
 **问题：** 使用硬编码的假数据
+
 ```typescript
 posts: 15420,  // 假数据
 topics: 2340,  // 假数据
@@ -57,6 +61,7 @@ lastPost: { title: 'Welcome...', author: 'Admin', time: '5 minutes ago' }  // �
 ```
 
 **需要创建的 API：**
+
 - `/api/v2/barong/public/community/forum-categories` - 获取论坛分类及统计
   - 每个分类的帖子数
   - 每个分类的话题数
@@ -67,13 +72,16 @@ lastPost: { title: 'Welcome...', author: 'Admin', time: '5 minutes ago' }  // �
 ---
 
 #### 2. 论坛分类详情页 (`forum/[category]/page.tsx`)
+
 **问题：** 使用硬编码的假数据
+
 ```typescript
 stats: { totalPosts: 45230, totalTopics: 1250, ... }  // 假数据
 posts: [...]  // 假数据数组
 ```
 
 **需要创建的 API：**
+
 - `/api/v2/barong/public/community/forum-category-posts` - 获取特定分类的帖子列表
   - 支持分页
   - 支持排序（最新、热门、精华）
@@ -84,7 +92,9 @@ posts: [...]  // 假数据数组
 ---
 
 #### 3. 用户资料页 (`user/[userName]/page.tsx`)
+
 **问题：** 使用假数据和随机生成的数据
+
 ```typescript
 stats: {
   posts: generateConsistentNumber(...),  // 假数据
@@ -96,6 +106,7 @@ badges: [...]  // 假数据
 ```
 
 **需要创建的 API：**
+
 - `/api/v2/barong/public/community/user-profile` - 获取用户资料
   - 用户基本信息
   - 统计数据（帖子数、点赞数、粉丝数）
@@ -108,12 +119,15 @@ badges: [...]  // 假数据
 ---
 
 #### 4. 搜索功能 (`search/page.tsx`)
+
 **问题：** API 路径不正确
+
 ```typescript
-const response = await fetch(`/api/community/search?q=...`);  // 路径错误
+const response = await fetch(`/api/community/search?q=...`); // 路径错误
 ```
 
 **需要创建的 API：**
+
 - `/api/v2/barong/public/community/search` - 搜索功能
   - 搜索帖子标题和内容
   - 搜索用户
@@ -128,12 +142,15 @@ const response = await fetch(`/api/community/search?q=...`);  // 路径错误
 ### 中优先级 ⚠️
 
 #### 5. 治理页面 (`governance/page.tsx`)
+
 **问题：** 使用 `governanceService`，但数据可能不完整
+
 ```typescript
 const [proposalsData, delegatesData, statsData] = await Promise.all([...]);
 ```
 
 **需要检查和优化：**
+
 - 验证 `governanceService` 的 API 是否返回真实数据
 - 确保提案、代表、统计数据都是真实的
 - 添加投票历史记录
@@ -144,12 +161,15 @@ const [proposalsData, delegatesData, statsData] = await Promise.all([...]);
 ---
 
 #### 6. 活动页面 (`events/page.tsx`)
+
 **问题：** 使用 `eventsService`，但数据可能不完整
+
 ```typescript
 const data = await eventsService.getEvents({ status: activeTab });
 ```
 
 **需要检查和优化：**
+
 - 验证 `eventsService` 的 API 是否返回真实数据
 - 添加活动报名功能
 - 添加活动日历视图
@@ -160,12 +180,15 @@ const data = await eventsService.getEvents({ status: activeTab });
 ---
 
 #### 7. 分类页面 (`category/[categoryName]/page.tsx`)
+
 **问题：** API 路径可能不正确
+
 ```typescript
 const response = await fetch(`/api/community/posts?category=${category}&limit=20`);
 ```
 
 **需要优化：**
+
 - 统一 API 路径为 `/api/v2/barong/public/community/...`
 - 添加分类描述和统计信息
 - 添加分类订阅功能
@@ -177,7 +200,9 @@ const response = await fetch(`/api/community/posts?category=${category}&limit=20
 ### 低优先级 📝
 
 #### 8. 静态内容页面
+
 以下页面主要是静态内容，优先级较低：
+
 - ✅ FAQ 页面 (`faq/page.tsx`)
 - ✅ 指南页面 (`guidelines/page.tsx`)
 - ✅ Bug 赏金页面 (`bug-bounty/page.tsx`)
@@ -190,21 +215,25 @@ const response = await fetch(`/api/community/posts?category=${category}&limit=20
 ## 🎯 推荐优化顺序
 
 ### 第一阶段：核心浏览功能（1-2天）
+
 1. **论坛分类页面** - 创建 `forum-categories` API
 2. **论坛分类详情页** - 创建 `forum-category-posts` API
 3. **搜索功能** - 创建 `search` API
 
 ### 第二阶段：用户功能（1-2天）
+
 4. **用户资料页** - 创建 `user-profile` API
 5. **用户关注/粉丝功能** - 创建相关 API
 6. **用户活动历史** - 创建 `user-activity` API
 
 ### 第三阶段：高级功能（2-3天）
+
 7. **治理功能完善** - 优化提案、投票、代表功能
 8. **活动功能完善** - 优化活动列表、报名、提醒功能
 9. **通知系统完善** - 添加实时通知、邮件通知
 
 ### 第四阶段：性能和体验优化（1-2天）
+
 10. **缓存优化** - 添加 Redis 缓存
 11. **分页优化** - 实现无限滚动
 12. **图片上传** - 添加头像、帖子图片上传
@@ -215,6 +244,7 @@ const response = await fetch(`/api/community/posts?category=${category}&limit=20
 ## 📈 数据库优化建议
 
 ### 需要添加的表
+
 1. **user_follows** - 用户关注关系
    - follower_id
    - following_id
@@ -239,6 +269,7 @@ const response = await fetch(`/api/community/posts?category=${category}&limit=20
    - created_at
 
 ### 需要添加的索引
+
 ```sql
 -- 提升查询性能
 CREATE INDEX idx_posts_category_created ON posts(category_id, created_at DESC);
@@ -253,21 +284,25 @@ CREATE INDEX idx_user_activity_logs_user_time ON user_activity_logs(user_id, cre
 ## 🔧 技术债务
 
 ### 1. API 路径不统一
+
 - 部分使用 `/api/community/...`
 - 部分使用 `/api/v2/barong/public/community/...`
 - **建议：** 统一为 `/api/v2/barong/public/community/...`
 
 ### 2. 错误处理不完善
+
 - 很多 API 调用缺少错误处理
 - 没有统一的错误提示组件
 - **建议：** 添加全局错误处理和 Toast 提示
 
 ### 3. 类型定义不完整
+
 - 很多接口使用 `any` 类型
 - 缺少统一的类型定义文件
 - **建议：** 创建 `types/community.ts` 统一管理类型
 
 ### 4. 代码重复
+
 - 很多页面有重复的数据加载逻辑
 - 缺少统一的数据获取 hooks
 - **建议：** 创建自定义 hooks（如 `usePosts`, `useUser`, `useStats`）
@@ -277,6 +312,7 @@ CREATE INDEX idx_user_activity_logs_user_time ON user_activity_logs(user_id, cre
 ## 🚀 性能优化建议
 
 ### 1. 实现数据缓存
+
 ```typescript
 // 使用 SWR 或 React Query
 import useSWR from 'swr';
@@ -288,14 +324,17 @@ const { data, error } = useSWR('/api/v2/barong/public/community/posts', fetcher,
 ```
 
 ### 2. 实现虚拟滚动
+
 - 对于长列表（如成员列表、帖子列表）使用虚拟滚动
 - 推荐使用 `react-window` 或 `react-virtual`
 
 ### 3. 图片懒加载
+
 - 使用 Next.js Image 组件
 - 添加占位符和模糊效果
 
 ### 4. 代码分割
+
 - 使用动态导入减少初始加载时间
 - 按路由分割代码
 
@@ -304,14 +343,17 @@ const { data, error } = useSWR('/api/v2/barong/public/community/posts', fetcher,
 ## 📱 移动端优化建议
 
 ### 1. 响应式设计
+
 - 确保所有页面在移动端正常显示
 - 优化触摸交互
 
 ### 2. 性能优化
+
 - 减少移动端的数据加载量
 - 使用渐进式图片加载
 
 ### 3. 离线支持
+
 - 使用 Service Worker 缓存静态资源
 - 添加离线提示
 
@@ -320,14 +362,17 @@ const { data, error } = useSWR('/api/v2/barong/public/community/posts', fetcher,
 ## 🔐 安全性建议
 
 ### 1. 输入验证
+
 - 所有用户输入都需要验证和清理
 - 防止 XSS 攻击
 
 ### 2. 权限控制
+
 - 实现基于角色的访问控制（RBAC）
 - 确保敏感操作需要认证
 
 ### 3. 速率限制
+
 - 对 API 请求实现速率限制
 - 防止恶意刷帖、刷赞
 
@@ -336,16 +381,19 @@ const { data, error } = useSWR('/api/v2/barong/public/community/posts', fetcher,
 ## 📊 监控和分析建议
 
 ### 1. 用户行为分析
+
 - 跟踪用户浏览路径
 - 分析热门内容
 - 监控用户留存率
 
 ### 2. 性能监控
+
 - 监控 API 响应时间
 - 跟踪页面加载时间
 - 监控错误率
 
 ### 3. 内容质量监控
+
 - 监控垃圾内容
 - 跟踪用户举报
 - 分析内容质量指标
@@ -357,11 +405,13 @@ const { data, error } = useSWR('/api/v2/barong/public/community/posts', fetcher,
 当前社区论坛已经完成了约 **40%** 的真实数据优化工作。核心的统计数据、帖子列表、成员列表已经使用真实数据。
 
 **最紧迫的优化任务：**
+
 1. 论坛分类页面（用户访问频率最高）
 2. 用户资料页面（社交功能核心）
 3. 搜索功能（用户体验关键）
 
 **预计完成时间：**
+
 - 高优先级功能：3-4天
 - 中优先级功能：3-4天
 - 低优先级功能：2-3天

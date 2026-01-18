@@ -25,7 +25,11 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
     const result = await db.updateLaunchConfig(body);
-    return NextResponse.json({ success: true, message: 'Launch configuration updated', data: result.data });
+    return NextResponse.json({
+      success: true,
+      message: 'Launch configuration updated',
+      data: result.data,
+    });
   } catch (error) {
     return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }

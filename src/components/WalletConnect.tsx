@@ -6,15 +6,15 @@ import { Button } from './ui/Button';
 import { Badge } from './ui/Badge';
 import { Alert, AlertDescription } from './ui/Alert';
 import { Separator } from './ui/Separator';
-import { 
-  Wallet, 
-  CheckCircle, 
-  AlertTriangle, 
+import {
+  Wallet,
+  CheckCircle,
+  AlertTriangle,
   ExternalLink,
   Copy,
   RefreshCw,
   Shield,
-  Globe
+  Globe,
 } from 'lucide-react';
 
 // 网络配置类型
@@ -53,9 +53,9 @@ const getEthereum = (): EthereumProvider | undefined => {
   return undefined;
 };
 
-const WalletConnect: React.FC<WalletConnectProps> = ({ 
-  onWalletConnected, 
-  onWalletDisconnected 
+const WalletConnect: React.FC<WalletConnectProps> = ({
+  onWalletConnected,
+  onWalletDisconnected,
 }) => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [account, setAccount] = useState<string>('');
@@ -73,33 +73,37 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
     137: { name: 'Polygon Mainnet', currency: 'MATIC', color: 'purple' },
     80001: { name: 'Polygon Mumbai', currency: 'MATIC', color: 'pink' },
     56: { name: 'BSC Mainnet', currency: 'BNB', color: 'yellow' },
-    97: { name: 'BSC Testnet', currency: 'BNB', color: 'green' }
+    97: { name: 'BSC Testnet', currency: 'BNB', color: 'green' },
   };
 
+  const updateWalletInfo = useCallback(
+    async (address: string): Promise<void> => {
+      const ethereum = getEthereum();
+      if (!ethereum) return;
 
-  const updateWalletInfo = useCallback(async (address: string): Promise<void> => {
-    const ethereum = getEthereum();
-    if (!ethereum) return;
-    
-    try {
-      // 获取网络信息
-      const chainId = await ethereum.request({ method: 'eth_chainId' }) as string;
-      const netId = parseInt(chainId, 16);
-      setNetworkId(netId);
-      setNetworkName(supportedNetworks[netId]?.name || 'Unknown Network');
+      try {
+        // 获取网络信息
+        const chainId = (await ethereum.request({ method: 'eth_chainId' })) as string;
+        const netId = parseInt(chainId, 16);
+        setNetworkId(netId);
+        setNetworkName(supportedNetworks[netId]?.name || 'Unknown Network');
 
-      // 获取余额
-      const balanceWei = await ethereum.request({
-        method: 'eth_getBalance',
-        params: [address, 'latest']
-      }) as string;
-      
-      const balanceEth = parseFloat((parseInt(balanceWei, 16) / Math.pow(10, 18)).toString()).toFixed(4);
-      setBalance(balanceEth);
-    } catch (err) {
-      console.error('更新钱包信息失败:', err);
-    }
-  }, [supportedNetworks]);
+        // 获取余额
+        const balanceWei = (await ethereum.request({
+          method: 'eth_getBalance',
+          params: [address, 'latest'],
+        })) as string;
+
+        const balanceEth = parseFloat(
+          (parseInt(balanceWei, 16) / Math.pow(10, 18)).toString()
+        ).toFixed(4);
+        setBalance(balanceEth);
+      } catch (err) {
+        console.error('更新钱包信息失败:', err);
+      }
+    },
+    [supportedNetworks]
+  );
 
   const handleDisconnect = useCallback((): void => {
     setIsConnected(false);
@@ -108,31 +112,37 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
     setNetworkId(null);
     setNetworkName('');
     setError('');
-    
+
     if (onWalletDisconnected) {
       onWalletDisconnected();
     }
   }, [onWalletDisconnected]);
 
-  const handleAccountsChanged = useCallback(async (accounts: unknown): Promise<void> => {
-    const accountsArray = accounts as string[];
-    if (accountsArray.length === 0) {
-      handleDisconnect();
-    } else {
-      setAccount(accountsArray[0]);
-      await updateWalletInfo(accountsArray[0]);
-    }
-  }, [handleDisconnect, updateWalletInfo]);
+  const handleAccountsChanged = useCallback(
+    async (accounts: unknown): Promise<void> => {
+      const accountsArray = accounts as string[];
+      if (accountsArray.length === 0) {
+        handleDisconnect();
+      } else {
+        setAccount(accountsArray[0]);
+        await updateWalletInfo(accountsArray[0]);
+      }
+    },
+    [handleDisconnect, updateWalletInfo]
+  );
 
-  const handleChainChanged = useCallback(async (chainId: unknown): Promise<void> => {
-    const netId = parseInt(chainId as string, 16);
-    setNetworkId(netId);
-    setNetworkName(supportedNetworks[netId]?.name || 'Unknown Network');
-    
-    if (account) {
-      await updateWalletInfo(account);
-    }
-  }, [account, supportedNetworks, updateWalletInfo]);
+  const handleChainChanged = useCallback(
+    async (chainId: unknown): Promise<void> => {
+      const netId = parseInt(chainId as string, 16);
+      setNetworkId(netId);
+      setNetworkName(supportedNetworks[netId]?.name || 'Unknown Network');
+
+      if (account) {
+        await updateWalletInfo(account);
+      }
+    },
+    [account, supportedNetworks, updateWalletInfo]
+  );
 
   const checkMetaMaskInstallation = useCallback((): void => {
     const ethereum = getEthereum();
@@ -145,7 +155,7 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
     if (!ethereum) return;
 
     try {
-      const accounts = await ethereum.request({ method: 'eth_accounts' }) as string[];
+      const accounts = (await ethereum.request({ method: 'eth_accounts' })) as string[];
       if (accounts.length > 0) {
         setAccount(accounts[0]);
         setIsConnected(true);
@@ -178,7 +188,13 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
 
     setupEventListeners();
     return () => removeEventListeners();
-  }, [checkMetaMaskInstallation, checkConnection, handleAccountsChanged, handleChainChanged, handleDisconnect]);
+  }, [
+    checkMetaMaskInstallation,
+    checkConnection,
+    handleAccountsChanged,
+    handleChainChanged,
+    handleDisconnect,
+  ]);
 
   const connectWallet = async (): Promise<void> => {
     if (!isMetaMaskInstalled) {
@@ -191,20 +207,20 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
 
     try {
       const ethereum = getEthereum();
-      const accounts = await ethereum!.request({
-        method: 'eth_requestAccounts'
-      }) as string[];
+      const accounts = (await ethereum!.request({
+        method: 'eth_requestAccounts',
+      })) as string[];
 
       if (accounts.length > 0) {
         setAccount(accounts[0]);
         setIsConnected(true);
         await updateWalletInfo(accounts[0]);
-        
+
         if (onWalletConnected) {
           onWalletConnected({
             account: accounts[0],
             networkId,
-            networkName
+            networkName,
           });
         }
       }
@@ -246,15 +262,15 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
         chainName: 'Polygon Mainnet',
         nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
         rpcUrls: ['https://polygon-rpc.com/'],
-        blockExplorerUrls: ['https://polygonscan.com/']
+        blockExplorerUrls: ['https://polygonscan.com/'],
       },
       80001: {
         chainId: '0x13881',
         chainName: 'Polygon Mumbai',
         nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
         rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
-        blockExplorerUrls: ['https://mumbai.polygonscan.com/']
-      }
+        blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+      },
     };
 
     const config = networkConfigs[netId];
@@ -285,7 +301,6 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
     return netId !== null && Object.prototype.hasOwnProperty.call(supportedNetworks, netId);
   };
 
-
   if (!isMetaMaskInstalled) {
     return (
       <Card className="w-full">
@@ -298,12 +313,10 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
         <CardContent>
           <Alert>
             <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>
-              请先安装MetaMask钱包扩展程序
-            </AlertDescription>
+            <AlertDescription>请先安装MetaMask钱包扩展程序</AlertDescription>
           </Alert>
-          <Button 
-            className="w-full mt-4" 
+          <Button
+            className="w-full mt-4"
             onClick={() => window.open('https://metamask.io/', '_blank')}
           >
             <ExternalLink className="h-4 w-4 mr-2" />
@@ -337,12 +350,7 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
         )}
 
         {!isConnected ? (
-          <Button 
-            onClick={connectWallet} 
-            disabled={isLoading}
-            className="w-full"
-            size="lg"
-          >
+          <Button onClick={connectWallet} disabled={isLoading} className="w-full" size="lg">
             {isLoading ? (
               <>
                 <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
@@ -361,18 +369,11 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
             <div className="p-4 bg-green-50 rounded-lg border border-green-200">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-green-900">钱包地址</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={copyAddress}
-                  className="h-6 px-2"
-                >
+                <Button variant="ghost" size="sm" onClick={copyAddress} className="h-6 px-2">
                   <Copy className="h-3 w-3" />
                 </Button>
               </div>
-              <div className="font-mono text-sm text-green-800">
-                {formatAddress(account)}
-              </div>
+              <div className="font-mono text-sm text-green-800">{formatAddress(account)}</div>
             </div>
 
             {/* 余额信息 */}
@@ -385,7 +386,7 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
               </div>
               <div className="p-3 bg-purple-50 rounded-lg">
                 <div className="text-sm text-purple-600 mb-1">网络</div>
-                <Badge variant={isNetworkSupported(networkId) ? "default" : "destructive"}>
+                <Badge variant={isNetworkSupported(networkId) ? 'default' : 'destructive'}>
                   <Globe className="h-3 w-3 mr-1" />
                   {networkName}
                 </Badge>
@@ -396,9 +397,7 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
             {!isNetworkSupported(networkId) && (
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />
-                <AlertDescription>
-                  当前网络不受支持，请切换到支持的网络
-                </AlertDescription>
+                <AlertDescription>当前网络不受支持，请切换到支持的网络</AlertDescription>
               </Alert>
             )}
 
@@ -411,7 +410,7 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
                 {Object.entries(supportedNetworks).map(([id, network]) => (
                   <Button
                     key={id}
-                    variant={parseInt(id) === networkId ? "default" : "outline"}
+                    variant={parseInt(id) === networkId ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => switchNetwork(parseInt(id))}
                     className="justify-start"
@@ -426,11 +425,7 @@ const WalletConnect: React.FC<WalletConnectProps> = ({
             <Separator />
 
             {/* 断开连接 */}
-            <Button 
-              variant="outline" 
-              onClick={handleDisconnect}
-              className="w-full"
-            >
+            <Button variant="outline" onClick={handleDisconnect} className="w-full">
               断开连接
             </Button>
           </div>

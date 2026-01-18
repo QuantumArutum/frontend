@@ -49,11 +49,7 @@ export default function TagCloud({
   }, [tags, maxTags, minSize, maxSize]);
 
   if (tags.length === 0) {
-    return (
-      <div className="text-center py-8 text-gray-400">
-        暂无标签
-      </div>
-    );
+    return <div className="text-center py-8 text-gray-400">暂无标签</div>;
   }
 
   return (

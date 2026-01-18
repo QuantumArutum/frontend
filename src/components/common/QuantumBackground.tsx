@@ -8,10 +8,10 @@ interface QuantumBackgroundProps {
   interactive?: boolean;
 }
 
-const QuantumBackground: React.FC<QuantumBackgroundProps> = ({ 
+const QuantumBackground: React.FC<QuantumBackgroundProps> = ({
   id = 'particles-js',
   intensity = 'medium',
-  interactive = true 
+  interactive = true,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -41,9 +41,13 @@ const QuantumBackground: React.FC<QuantumBackgroundProps> = ({
     const particleCount = { light: 40, medium: 80, heavy: 120 }[intensity];
 
     interface ParticleData {
-      x: number; y: number; size: number;
-      speedX: number; speedY: number;
-      color: string; opacity: number;
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      color: string;
+      opacity: number;
     }
 
     const createParticle = (): ParticleData => ({
@@ -102,7 +106,10 @@ const QuantumBackground: React.FC<QuantumBackgroundProps> = ({
     let animationId: number;
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => { updateParticle(p); drawParticle(p); });
+      particles.forEach((p) => {
+        updateParticle(p);
+        drawParticle(p);
+      });
       drawLines();
       animationId = requestAnimationFrame(animate);
     };

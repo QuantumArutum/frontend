@@ -1,22 +1,30 @@
 /**
  * 代币销售白名单API
- * 
+ *
  * 管理私募/公募白名单
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createSecureHandler, successResponse, errorResponse, ValidationRule } from '@/lib/security/middleware';
+import {
+  createSecureHandler,
+  successResponse,
+  errorResponse,
+  ValidationRule,
+} from '@/lib/security/middleware';
 import { SecurityLogger, SecurityEventType, getClientIP, getUserAgent } from '@/lib/security';
 
 // 白名单存储（生产环境应使用数据库）
-const whitelist: Map<string, {
-  address: string;
-  tier: 'seed' | 'private' | 'public';
-  maxAllocation: number;
-  usedAllocation: number;
-  addedAt: string;
-  kycVerified: boolean;
-}> = new Map();
+const whitelist: Map<
+  string,
+  {
+    address: string;
+    tier: 'seed' | 'private' | 'public';
+    maxAllocation: number;
+    usedAllocation: number;
+    addedAt: string;
+    kycVerified: boolean;
+  }
+> = new Map();
 
 // 初始化一些测试白名单
 const initWhitelist = () => {
@@ -68,7 +76,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       kycVerified: entry.kycVerified,
       addedAt: entry.addedAt,
     });
-
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : '未知错误';
     return errorResponse('查询白名单失败: ' + message, 500);
@@ -146,14 +153,11 @@ export const POST = createSecureHandler(
 
       return successResponse({
         success: true,
-        message: requiresKYC 
-          ? '申请已提交，请完成KYC验证后等待审核' 
-          : '已成功加入白名单',
+        message: requiresKYC ? '申请已提交，请完成KYC验证后等待审核' : '已成功加入白名单',
         requiresKYC,
         maxAllocation: entry.maxAllocation,
         tier,
       });
-
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : '未知错误';
       return errorResponse('申请白名单失败: ' + message, 500);

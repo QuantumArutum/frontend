@@ -32,10 +32,26 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
 
   const categories = [
     { name: t('community_page.nav.home', '首页'), href: '/community', key: 'home' },
-    { name: t('community_page.nav.general', '综合讨论'), href: '/community/forum/category?slug=general', key: 'general' },
-    { name: t('community_page.nav.technical', '技术交流'), href: '/community/forum/category?slug=technology', key: 'technical' },
-    { name: t('community_page.nav.defi', 'DeFi讨论'), href: '/community/forum/category?slug=trading', key: 'defi' },
-    { name: t('community_page.nav.governance', '治理提案'), href: '/community/governance', key: 'governance' },
+    {
+      name: t('community_page.nav.general', '综合讨论'),
+      href: '/community/forum/category?slug=general',
+      key: 'general',
+    },
+    {
+      name: t('community_page.nav.technical', '技术交流'),
+      href: '/community/forum/category?slug=technology',
+      key: 'technical',
+    },
+    {
+      name: t('community_page.nav.defi', 'DeFi讨论'),
+      href: '/community/forum/category?slug=trading',
+      key: 'defi',
+    },
+    {
+      name: t('community_page.nav.governance', '治理提案'),
+      href: '/community/governance',
+      key: 'governance',
+    },
     { name: t('community_page.nav.events', '活动中心'), href: '/community/events', key: 'events' },
   ];
 
@@ -44,7 +60,7 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
       // 首先检查 localStorage
       const token = localStorage.getItem('auth_token');
       const userInfoStr = localStorage.getItem('user_info');
-      
+
       if (token && userInfoStr) {
         try {
           const user = JSON.parse(userInfoStr);
@@ -63,7 +79,7 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
           // 继续检查 cookie
         }
       }
-      
+
       // 检查 Google OAuth cookie (qau_user)
       const getCookie = (name: string) => {
         const value = `; ${document.cookie}`;
@@ -71,7 +87,7 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
         if (parts.length === 2) return parts.pop()?.split(';').shift();
         return null;
       };
-      
+
       const qauUserCookie = getCookie('qau_user');
       if (qauUserCookie) {
         try {
@@ -83,11 +99,11 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
             name: googleUser.name,
             avatar: googleUser.picture,
           };
-          
+
           // 同步到 localStorage 以便其他组件使用
           localStorage.setItem('user_info', JSON.stringify(user));
           localStorage.setItem('auth_token', 'google_oauth_session'); // 标记为 Google 登录
-          
+
           setUserInfo(user);
           setIsLoggedIn(true);
           // 加载通知数量
@@ -97,14 +113,14 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
           console.error('Failed to parse Google user cookie:', error);
         }
       }
-      
+
       setIsLoggedIn(false);
       setUserInfo(null);
       setUnreadCount(0);
     };
-    
+
     checkAuth();
-    
+
     // 监听 storage 变化（其他标签页登录/登出）
     window.addEventListener('storage', checkAuth);
     return () => window.removeEventListener('storage', checkAuth);
@@ -113,7 +129,9 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
   // 加载未读通知数量
   const loadUnreadCount = async (userId: string) => {
     try {
-      const response = await barongAPI.get(`/public/community/notifications?userId=${userId}&limit=1`);
+      const response = await barongAPI.get(
+        `/public/community/notifications?userId=${userId}&limit=1`
+      );
       if (response.data.success) {
         setUnreadCount(response.data.data.unreadCount || 0);
       }
@@ -125,11 +143,11 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
   // 定期刷新未读数量（每30秒）
   useEffect(() => {
     if (!userInfo?.id) return;
-    
+
     const interval = setInterval(() => {
       loadUnreadCount(userInfo.id);
     }, 30000);
-    
+
     return () => clearInterval(interval);
   }, [userInfo?.id]);
 
@@ -137,11 +155,11 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
     // 清除 localStorage
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_info');
-    
+
     // 清除 Google OAuth cookies
     document.cookie = 'qau_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
     document.cookie = 'qau_user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    
+
     setIsLoggedIn(false);
     setUserInfo(null);
     window.location.reload();
@@ -195,12 +213,13 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
             <div className="flex items-center justify-between py-3">
               <span className="text-white font-medium flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-                {categories.find(c => isActive(c.href, c.key))?.name || t('community_page.nav.menu', '导航菜单')}
+                {categories.find((c) => isActive(c.href, c.key))?.name ||
+                  t('community_page.nav.menu', '导航菜单')}
               </span>
               <div className="flex items-center gap-2">
                 <LanguageSwitcher />
-                <button 
-                  onClick={() => setIsMenuOpen(!isMenuOpen)} 
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
                   className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                 >
                   {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -223,7 +242,9 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
                     }`}
                   >
                     <span className="font-medium">{item.name}</span>
-                    {isActive(item.href, item.key) && <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]" />}
+                    {isActive(item.href, item.key) && (
+                      <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]" />
+                    )}
                   </a>
                 ))}
               </div>
@@ -244,18 +265,27 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
         <div className="max-w-7xl mx-auto px-4 py-5">
           <div className="flex items-center justify-between">
             {/* Left - Title */}
-            <a href="/community" className="flex items-center gap-4 hover:opacity-80 transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105" style={{
-                background: 'linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%)',
-                boxShadow: '0 8px 25px rgba(139, 92, 246, 0.4)'
-              }}>
+            <a
+              href="/community"
+              className="flex items-center gap-4 hover:opacity-80 transition-all duration-300 group"
+            >
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%)',
+                  boxShadow: '0 8px 25px rgba(139, 92, 246, 0.4)',
+                }}
+              >
                 <Users className="w-7 h-7 text-white" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-purple-300 to-cyan-300 bg-clip-text text-transparent">
                   {t('community_page.title', 'Community')}
                 </h1>
-                <p className="text-sm text-gray-300">{onlineCount > 0 ? onlineCount.toLocaleString() : '0'} {t('community_page.members_online_suffix', 'members online')}</p>
+                <p className="text-sm text-gray-300">
+                  {onlineCount > 0 ? onlineCount.toLocaleString() : '0'}{' '}
+                  {t('community_page.members_online_suffix', 'members online')}
+                </p>
               </div>
             </a>
 
@@ -279,7 +309,7 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
                   className="w-full pl-12 pr-4 py-3 rounded-xl text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:border-purple-500 focus:shadow-lg focus:shadow-purple-500/25 transition-all duration-300"
                   style={{
                     background: 'rgba(255, 255, 255, 0.08)',
-                    backdropFilter: 'blur(10px)'
+                    backdropFilter: 'blur(10px)',
                   }}
                 />
               </form>
@@ -321,15 +351,27 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
                     className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/15 transition-all duration-300 hover:shadow-md hover:shadow-white/10"
                   >
                     {userInfo.avatar ? (
-                      <Image src={userInfo.avatar} alt={userInfo.name || userInfo.email} width={36} height={36} className="w-9 h-9 rounded-full border-2 border-purple-500 shadow-lg" />
+                      <Image
+                        src={userInfo.avatar}
+                        alt={userInfo.name || userInfo.email}
+                        width={36}
+                        height={36}
+                        className="w-9 h-9 rounded-full border-2 border-purple-500 shadow-lg"
+                      />
                     ) : (
                       <div className="w-9 h-9 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center text-white text-sm font-bold shadow-lg">
                         {(userInfo.name || userInfo.email)?.[0]?.toUpperCase() || 'U'}
                       </div>
                     )}
-                    <span className="text-sm text-white font-medium hidden md:inline">{userInfo.name || userInfo.email?.split('@')[0] || 'User'}</span>
+                    <span className="text-sm text-white font-medium hidden md:inline">
+                      {userInfo.name || userInfo.email?.split('@')[0] || 'User'}
+                    </span>
                   </a>
-                  <button onClick={handleLogout} className="p-2.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/15 transition-all duration-300 hover:shadow-md hover:shadow-red-500/25" title={t('community_page.logout', '登出')}>
+                  <button
+                    onClick={handleLogout}
+                    className="p-2.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/15 transition-all duration-300 hover:shadow-md hover:shadow-red-500/25"
+                    title={t('community_page.logout', '登出')}
+                  >
                     <LogOut className="w-5 h-5" />
                   </button>
                 </div>
@@ -343,11 +385,15 @@ export default function CommunityNavbar({ onlineCount = 0 }: CommunityNavbarProp
               )}
 
               <a
-                href={isLoggedIn ? '/community/create-post' : `/auth/login?redirect=/community/create-post`}
+                href={
+                  isLoggedIn
+                    ? '/community/create-post'
+                    : `/auth/login?redirect=/community/create-post`
+                }
                 className="px-6 py-2.5 rounded-lg text-white font-medium transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-purple-500/40"
                 style={{
                   background: 'linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%)',
-                  boxShadow: '0 8px 25px rgba(139, 92, 246, 0.4)'
+                  boxShadow: '0 8px 25px rgba(139, 92, 246, 0.4)',
                 }}
               >
                 <Plus className="w-4 h-4 inline mr-2" />

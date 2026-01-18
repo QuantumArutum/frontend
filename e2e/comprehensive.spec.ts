@@ -1,14 +1,13 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Comprehensive Website Test', () => {
-  
   test('Home page loads and has key elements', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/Quantaureum|Quantum/i);
     // Check for navigation bar
     const nav = page.locator('nav');
     await expect(nav).toBeVisible();
-    
+
     // Check for main heading
     await expect(page.locator('h1')).toBeVisible();
   });
@@ -56,5 +55,4 @@ test.describe('Comprehensive Website Test', () => {
       await expect(connectButton).toBeEnabled();
     }
   });
-
 });

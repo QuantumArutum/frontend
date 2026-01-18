@@ -15,16 +15,14 @@ export const getApplicationsConfig = () => {
 // 获取可见的应用
 export const getVisibleApplications = () => {
   const allApps = getApplicationsConfig();
-  return allApps.filter(app => app.visible);
+  return allApps.filter((app) => app.visible);
 };
 
 // 更新应用配置
 export const updateApplicationConfig = (appId, updates) => {
   try {
     const allApps = getApplicationsConfig();
-    const updatedApps = allApps.map(app =>
-      app.id === appId ? { ...app, ...updates } : app
-    );
+    const updatedApps = allApps.map((app) => (app.id === appId ? { ...app, ...updates } : app));
     localStorage.setItem('quantaureum_applications', JSON.stringify(updatedApps));
     return true;
   } catch (error) {
@@ -32,4 +30,3 @@ export const updateApplicationConfig = (appId, updates) => {
     return false;
   }
 };
-

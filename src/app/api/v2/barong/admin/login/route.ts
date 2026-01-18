@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     // Try database first if configured
     if (sql) {
       const admin = await dbQuery.getAdminByEmail(email);
-      
+
       if (admin && bcrypt.compareSync(password, admin.password_hash)) {
         const token = generateToken({
           uid: admin.uid,
@@ -81,15 +81,9 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    return NextResponse.json(
-      { success: false, message: 'Invalid credentials' },
-      { status: 401 }
-    );
+    return NextResponse.json({ success: false, message: 'Invalid credentials' }, { status: 401 });
   } catch (error) {
     console.error('Login error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

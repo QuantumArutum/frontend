@@ -26,11 +26,7 @@ export default function CodeBlock({ language, value }: CodeBlockProps) {
         className="absolute right-2 top-2 p-2 rounded-lg bg-gray-700/80 hover:bg-gray-600/80 text-gray-300 hover:text-white transition-colors opacity-0 group-hover:opacity-100 z-10"
         title="复制代码"
       >
-        {copied ? (
-          <Check className="w-4 h-4 text-green-400" />
-        ) : (
-          <Copy className="w-4 h-4" />
-        )}
+        {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
       </button>
       <SyntaxHighlighter
         language={language}

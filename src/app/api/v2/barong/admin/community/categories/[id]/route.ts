@@ -8,10 +8,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth';
 import { db } from '@/lib/db';
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const authResult = requireAdmin(request);
   if ('error' in authResult) return authResult.error;
 
@@ -22,10 +19,7 @@ export async function PUT(
     const result = await db.updateCategory(id, body);
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -34,10 +28,7 @@ export async function PUT(
     });
   } catch (error) {
     console.error('Update category error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -54,10 +45,7 @@ export async function DELETE(
     const result = await db.deleteCategory(id);
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 400 });
     }
 
     return NextResponse.json({
@@ -66,9 +54,6 @@ export async function DELETE(
     });
   } catch (error) {
     console.error('Delete category error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

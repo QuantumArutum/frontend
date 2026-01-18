@@ -2,13 +2,13 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Vote, 
-  TrendingUp, 
-  Clock, 
-  Users, 
-  CheckCircle, 
-  XCircle, 
+import {
+  Vote,
+  TrendingUp,
+  Clock,
+  Users,
+  CheckCircle,
+  XCircle,
   AlertCircle,
   Plus,
   Zap,
@@ -16,7 +16,7 @@ import {
   ExternalLink,
   ThumbsUp,
   ThumbsDown,
-  Minus
+  Minus,
 } from 'lucide-react';
 import '../../../styles/design-system.css';
 
@@ -45,7 +45,8 @@ const ModernGovernance = () => {
     {
       id: '1',
       title: 'Network Upgrade: Quantum Consensus v2.0',
-      description: 'Proposal to upgrade the network to the new quantum consensus algorithm for improved security and performance.',
+      description:
+        'Proposal to upgrade the network to the new quantum consensus algorithm for improved security and performance.',
       proposer: 'QuantumFoundation',
       status: 'active',
       category: 'Technical',
@@ -56,12 +57,13 @@ const ModernGovernance = () => {
       quorumRequired: 20000000,
       timeRemaining: '5 days 12 hours',
       createdAt: '2024-01-15',
-      endDate: '2024-01-30'
+      endDate: '2024-01-30',
     },
     {
       id: '2',
       title: 'Treasury Allocation: Community Development Fund',
-      description: 'Allocate 5% of treasury funds to community development initiatives and grants program.',
+      description:
+        'Allocate 5% of treasury funds to community development initiatives and grants program.',
       proposer: 'CommunityDAO',
       status: 'active',
       category: 'Treasury',
@@ -72,12 +74,13 @@ const ModernGovernance = () => {
       quorumRequired: 20000000,
       timeRemaining: '2 days 8 hours',
       createdAt: '2024-01-10',
-      endDate: '2024-01-25'
+      endDate: '2024-01-25',
     },
     {
       id: '3',
       title: 'Fee Structure Update: Reduce Transaction Costs',
-      description: 'Proposal to reduce base transaction fees by 30% to improve network accessibility.',
+      description:
+        'Proposal to reduce base transaction fees by 30% to improve network accessibility.',
       proposer: 'EconomicsCommittee',
       status: 'passed',
       category: 'Economic',
@@ -88,27 +91,37 @@ const ModernGovernance = () => {
       quorumRequired: 20000000,
       timeRemaining: 'Completed',
       createdAt: '2024-01-01',
-      endDate: '2024-01-15'
-    }
+      endDate: '2024-01-15',
+    },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'from-blue-500 to-cyan-500';
-      case 'passed': return 'from-green-500 to-emerald-500';
-      case 'rejected': return 'from-red-500 to-pink-500';
-      case 'pending': return 'from-amber-500 to-orange-500';
-      default: return 'from-gray-500 to-gray-600';
+      case 'active':
+        return 'from-blue-500 to-cyan-500';
+      case 'passed':
+        return 'from-green-500 to-emerald-500';
+      case 'rejected':
+        return 'from-red-500 to-pink-500';
+      case 'pending':
+        return 'from-amber-500 to-orange-500';
+      default:
+        return 'from-gray-500 to-gray-600';
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return Clock;
-      case 'passed': return CheckCircle;
-      case 'rejected': return XCircle;
-      case 'pending': return AlertCircle;
-      default: return Clock;
+      case 'active':
+        return Clock;
+      case 'passed':
+        return CheckCircle;
+      case 'rejected':
+        return XCircle;
+      case 'pending':
+        return AlertCircle;
+      default:
+        return Clock;
     }
   };
 
@@ -149,10 +162,30 @@ const ModernGovernance = () => {
         {/* Stats Overview */}
         <div className="quantum-grid quantum-grid-4 gap-6 mb-8">
           {[
-            { label: 'Active Proposals', value: '12', icon: Vote, color: 'from-blue-500 to-cyan-500' },
-            { label: 'Total Voters', value: '45.2K', icon: Users, color: 'from-purple-500 to-pink-500' },
-            { label: 'Voting Power', value: '2.8M QAU', icon: Zap, color: 'from-emerald-500 to-teal-500' },
-            { label: 'Participation', value: '78.5%', icon: TrendingUp, color: 'from-amber-500 to-orange-500' }
+            {
+              label: 'Active Proposals',
+              value: '12',
+              icon: Vote,
+              color: 'from-blue-500 to-cyan-500',
+            },
+            {
+              label: 'Total Voters',
+              value: '45.2K',
+              icon: Users,
+              color: 'from-purple-500 to-pink-500',
+            },
+            {
+              label: 'Voting Power',
+              value: '2.8M QAU',
+              icon: Zap,
+              color: 'from-emerald-500 to-teal-500',
+            },
+            {
+              label: 'Participation',
+              value: '78.5%',
+              icon: TrendingUp,
+              color: 'from-amber-500 to-orange-500',
+            },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -162,7 +195,9 @@ const ModernGovernance = () => {
               className="quantum-card"
             >
               <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${stat.color} flex items-center justify-center`}>
+                <div
+                  className={`w-12 h-12 rounded-xl bg-gradient-to-r ${stat.color} flex items-center justify-center`}
+                >
                   <stat.icon className="w-6 h-6 text-white" />
                 </div>
               </div>
@@ -174,11 +209,11 @@ const ModernGovernance = () => {
 
         {/* Tabs */}
         <div className="flex items-center gap-4 mb-8">
-          {([
+          {[
             { id: 'active' as const, label: 'Active Proposals', count: 2 },
             { id: 'completed' as const, label: 'Completed', count: 15 },
-            { id: 'all' as const, label: 'All Proposals', count: 17 }
-          ]).map((tab) => (
+            { id: 'all' as const, label: 'All Proposals', count: 17 },
+          ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
@@ -187,9 +222,7 @@ const ModernGovernance = () => {
               }`}
             >
               {tab.label}
-              <span className="ml-2 px-2 py-0.5 text-xs bg-white/20 rounded-full">
-                {tab.count}
-              </span>
+              <span className="ml-2 px-2 py-0.5 text-xs bg-white/20 rounded-full">{tab.count}</span>
             </button>
           ))}
         </div>
@@ -197,16 +230,23 @@ const ModernGovernance = () => {
         {/* Proposals List */}
         <div className="space-y-6">
           {proposals
-            .filter(proposal => 
-              activeTab === 'all' || 
-              (activeTab === 'active' && proposal.status === 'active') ||
-              (activeTab === 'completed' && ['passed', 'rejected'].includes(proposal.status))
+            .filter(
+              (proposal) =>
+                activeTab === 'all' ||
+                (activeTab === 'active' && proposal.status === 'active') ||
+                (activeTab === 'completed' && ['passed', 'rejected'].includes(proposal.status))
             )
             .map((proposal, index) => {
               const StatusIcon = getStatusIcon(proposal.status);
               const forPercentage = calculateVotePercentage(proposal.votesFor, proposal.totalVotes);
-              const againstPercentage = calculateVotePercentage(proposal.votesAgainst, proposal.totalVotes);
-              const abstainPercentage = calculateVotePercentage(proposal.votesAbstain, proposal.totalVotes);
+              const againstPercentage = calculateVotePercentage(
+                proposal.votesAgainst,
+                proposal.totalVotes
+              );
+              const abstainPercentage = calculateVotePercentage(
+                proposal.votesAbstain,
+                proposal.totalVotes
+              );
               const quorumProgress = (proposal.totalVotes / proposal.quorumRequired) * 100;
 
               return (
@@ -220,13 +260,17 @@ const ModernGovernance = () => {
                   {/* Proposal Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-start gap-4 flex-1">
-                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${getStatusColor(proposal.status)} flex items-center justify-center`}>
+                      <div
+                        className={`w-12 h-12 rounded-xl bg-gradient-to-r ${getStatusColor(proposal.status)} flex items-center justify-center`}
+                      >
                         <StatusIcon className="w-6 h-6 text-white" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
                           <h3 className="text-lg font-semibold text-white">{proposal.title}</h3>
-                          <span className={`px-2 py-1 text-xs rounded-full bg-gradient-to-r ${getStatusColor(proposal.status)} text-white`}>
+                          <span
+                            className={`px-2 py-1 text-xs rounded-full bg-gradient-to-r ${getStatusColor(proposal.status)} text-white`}
+                          >
                             {proposal.status.toUpperCase()}
                           </span>
                           <span className="px-2 py-1 text-xs bg-white/10 text-gray-400 rounded-md">
@@ -250,11 +294,12 @@ const ModernGovernance = () => {
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm font-medium text-white">Voting Progress</span>
                       <span className="text-sm text-gray-400">
-                        {proposal.totalVotes.toLocaleString()} / {proposal.quorumRequired.toLocaleString()} QAU
+                        {proposal.totalVotes.toLocaleString()} /{' '}
+                        {proposal.quorumRequired.toLocaleString()} QAU
                       </span>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2 mb-4">
-                      <div 
+                      <div
                         className="h-2 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full transition-all duration-500"
                         style={{ width: `${Math.min(quorumProgress, 100)}%` }}
                       />
@@ -346,4 +391,3 @@ const ModernGovernance = () => {
 };
 
 export default ModernGovernance;
-

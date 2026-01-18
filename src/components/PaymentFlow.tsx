@@ -7,15 +7,15 @@ import { Badge } from './ui/Badge';
 import { Alert, AlertDescription } from './ui/Alert';
 import { Progress } from './ui/progress';
 import { Separator } from './ui/Separator';
-import { 
-  CreditCard, 
-  Shield, 
-  CheckCircle, 
-  AlertTriangle, 
+import {
+  CreditCard,
+  Shield,
+  CheckCircle,
+  AlertTriangle,
   Clock,
   DollarSign,
   Loader2,
-  ExternalLink
+  ExternalLink,
 } from 'lucide-react';
 
 // 支付类型
@@ -63,14 +63,13 @@ interface PaymentTypeConfig {
 // 使用类型断言访问 ethereum，避免重复声明 Window 接口
 // ethereum 属性已在其他文件中声明
 
-
-const PaymentFlow: React.FC<PaymentFlowProps> = ({ 
-  auctionId, 
+const PaymentFlow: React.FC<PaymentFlowProps> = ({
+  auctionId,
   paymentType,
-  amount, 
+  amount,
   walletAddress,
   onPaymentComplete,
-  onPaymentCancel 
+  onPaymentCancel,
 }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -82,25 +81,25 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
     { id: 1, title: '确认支付', description: '确认支付金额和详情' },
     { id: 2, title: '钱包授权', description: '在钱包中确认交易' },
     { id: 3, title: '交易确认', description: '等待区块链确认' },
-    { id: 4, title: '支付完成', description: '支付成功完成' }
+    { id: 4, title: '支付完成', description: '支付成功完成' },
   ];
 
   const paymentTypes: Record<PaymentType, PaymentTypeConfig> = {
-    deposit: { 
-      title: '保证金支付', 
+    deposit: {
+      title: '保证金支付',
       description: '支付拍卖保证金以参与竞拍',
-      color: 'blue'
+      color: 'blue',
     },
-    final_payment: { 
-      title: '最终付款', 
+    final_payment: {
+      title: '最终付款',
       description: '支付拍卖成功后的剩余金额',
-      color: 'green'
+      color: 'green',
     },
-    buy_now: { 
-      title: '一口价购买', 
+    buy_now: {
+      title: '一口价购买',
       description: '立即以一口价购买此节点',
-      color: 'purple'
-    }
+      color: 'purple',
+    },
   };
 
   const calculatePaymentDetails = useCallback((): void => {
@@ -112,7 +111,7 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
       baseAmount: amount,
       platformFee: platformFee,
       totalAmount: totalAmount,
-      currency: 'ETH'
+      currency: 'ETH',
     });
   }, [amount]);
 
@@ -126,10 +125,10 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
     return new Promise((resolve, reject) => {
       const checkTransaction = async (): Promise<void> => {
         try {
-          const receipt = await window.ethereum?.request({
+          const receipt = (await window.ethereum?.request({
             method: 'eth_getTransactionReceipt',
             params: [hash],
-          }) as { status?: string } | null;
+          })) as { status?: string } | null;
 
           if (receipt) {
             if (receipt.status === '0x1') {
@@ -151,20 +150,20 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
 
   const notifyPaymentComplete = async (hash: string): Promise<void> => {
     if (!paymentData) return;
-    
+
     try {
       const response = await fetch(`/api/v1/payments/${auctionId}`, {
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           txHash: hash,
           amount: paymentData.totalAmount,
           type: paymentType,
-          walletAddress
-        })
+          walletAddress,
+        }),
       });
 
       if (!response.ok) {
@@ -191,13 +190,13 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
         to: process.env.REACT_APP_CONTRACT_ADDRESS,
         value: `0x${(paymentData.totalAmount * Math.pow(10, 18)).toString(16)}`,
         gas: '0x5208',
-        gasPrice: '0x4a817c800'
+        gasPrice: '0x4a817c800',
       };
 
-      const hash = await window.ethereum.request({
+      const hash = (await window.ethereum.request({
         method: 'eth_sendTransaction',
         params: [transactionParams],
-      }) as string;
+      })) as string;
 
       setTxHash(hash);
       setCurrentStep(3);
@@ -206,19 +205,18 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
       await notifyPaymentComplete(hash);
 
       setCurrentStep(4);
-      
+
       if (onPaymentComplete) {
         onPaymentComplete({
           txHash: hash,
           amount: paymentData.totalAmount,
-          type: paymentType
+          type: paymentType,
         });
       }
-
     } catch (err) {
       console.error('支付失败:', err);
       const error = err as { code?: number; message?: string };
-      
+
       if (error.code === 4001) {
         setError('用户取消了交易');
       } else if (error.code === -32603) {
@@ -226,7 +224,7 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
       } else {
         setError('支付失败: ' + (error.message || '未知错误'));
       }
-      
+
       setCurrentStep(1);
     } finally {
       setIsProcessing(false);
@@ -237,16 +235,23 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
     if (stepId < currentStep) {
       return <CheckCircle className="h-5 w-5 text-green-500" />;
     } else if (stepId === currentStep) {
-      return isProcessing ? 
-        <Loader2 className="h-5 w-5 text-blue-500 animate-spin" /> :
-        <div className="h-5 w-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">{stepId}</div>;
+      return isProcessing ? (
+        <Loader2 className="h-5 w-5 text-blue-500 animate-spin" />
+      ) : (
+        <div className="h-5 w-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">
+          {stepId}
+        </div>
+      );
     } else {
-      return <div className="h-5 w-5 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center text-xs font-bold">{stepId}</div>;
+      return (
+        <div className="h-5 w-5 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center text-xs font-bold">
+          {stepId}
+        </div>
+      );
     }
   };
 
   const currentPaymentType = paymentTypes[paymentType];
-
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
@@ -258,9 +263,7 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
             {paymentType}
           </Badge>
         </CardTitle>
-        <p className="text-sm text-gray-600">
-          {currentPaymentType?.description}
-        </p>
+        <p className="text-sm text-gray-600">{currentPaymentType?.description}</p>
       </CardHeader>
 
       <CardContent className="space-y-6">
@@ -277,16 +280,22 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span>基础金额:</span>
-                <span className="font-medium">{paymentData.baseAmount.toFixed(4)} {paymentData.currency}</span>
+                <span className="font-medium">
+                  {paymentData.baseAmount.toFixed(4)} {paymentData.currency}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>平台手续费(2.5%):</span>
-                <span className="font-medium">{paymentData.platformFee.toFixed(4)} {paymentData.currency}</span>
+                <span className="font-medium">
+                  {paymentData.platformFee.toFixed(4)} {paymentData.currency}
+                </span>
               </div>
               <Separator />
               <div className="flex justify-between text-base font-semibold">
                 <span>总计:</span>
-                <span>{paymentData.totalAmount.toFixed(4)} {paymentData.currency}</span>
+                <span>
+                  {paymentData.totalAmount.toFixed(4)} {paymentData.currency}
+                </span>
               </div>
             </div>
           </div>
@@ -297,22 +306,22 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
             <span className="text-sm font-medium">支付进度</span>
             <span className="text-sm text-gray-500">{currentStep}/4</span>
           </div>
-          
+
           <Progress value={(currentStep / 4) * 100} className="h-2" />
-          
+
           <div className="space-y-3">
             {steps.map((step) => (
               <div key={step.id} className="flex items-center gap-3">
                 {getStepIcon(step.id)}
                 <div className="flex-1">
-                  <div className={`text-sm font-medium ${
-                    step.id <= currentStep ? 'text-gray-900' : 'text-gray-500'
-                  }`}>
+                  <div
+                    className={`text-sm font-medium ${
+                      step.id <= currentStep ? 'text-gray-900' : 'text-gray-500'
+                    }`}
+                  >
                     {step.title}
                   </div>
-                  <div className="text-xs text-gray-500">
-                    {step.description}
-                  </div>
+                  <div className="text-xs text-gray-500">{step.description}</div>
                 </div>
                 {step.id === currentStep && isProcessing && (
                   <div className="text-xs text-blue-600">处理中...</div>
@@ -328,9 +337,7 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
               <Shield className="h-4 w-4 text-blue-600" />
               <span className="text-sm font-medium text-blue-900">交易哈希</span>
             </div>
-            <div className="font-mono text-xs text-blue-800 break-all">
-              {txHash}
-            </div>
+            <div className="font-mono text-xs text-blue-800 break-all">{txHash}</div>
             <Button
               variant="ghost"
               size="sm"
@@ -346,7 +353,7 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
         <div className="flex gap-3">
           {currentStep === 1 && (
             <>
-              <Button 
+              <Button
                 onClick={handlePayment}
                 disabled={isProcessing || !paymentData}
                 className="flex-1"
@@ -363,26 +370,25 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({
                   </>
                 )}
               </Button>
-              <Button 
-                variant="outline" 
-                onClick={onPaymentCancel}
-                disabled={isProcessing}
-              >
+              <Button variant="outline" onClick={onPaymentCancel} disabled={isProcessing}>
                 取消
               </Button>
             </>
           )}
-          
+
           {currentStep === 4 && paymentData && (
-            <Button 
-              onClick={() => onPaymentComplete && onPaymentComplete({ txHash, amount: paymentData.totalAmount, type: paymentType })}
+            <Button
+              onClick={() =>
+                onPaymentComplete &&
+                onPaymentComplete({ txHash, amount: paymentData.totalAmount, type: paymentType })
+              }
               className="flex-1"
             >
               <CheckCircle className="h-4 w-4 mr-2" />
               完成
             </Button>
           )}
-          
+
           {currentStep > 1 && currentStep < 4 && (
             <div className="flex-1 flex items-center justify-center text-sm text-gray-500">
               <Clock className="h-4 w-4 mr-2" />

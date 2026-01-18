@@ -9,10 +9,13 @@ import { sql } from '@/lib/database';
 export async function PUT(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
@@ -20,26 +23,35 @@ export async function PUT(request: NextRequest) {
 
     // 验证参数
     if (!postId || !title || !content || !currentUserId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Post ID, title, content, and user ID are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post ID, title, content, and user ID are required',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证标题长度
     if (title.length < 1 || title.length > 200) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Title must be between 1 and 200 characters' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Title must be between 1 and 200 characters',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证内容长度
     if (content.length < 10 || content.length > 50000) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Content must be between 10 and 50000 characters' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Content must be between 10 and 50000 characters',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证帖子存在且属于当前用户
@@ -49,17 +61,23 @@ export async function PUT(request: NextRequest) {
     `;
 
     if (postCheck.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Post not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post not found',
+        },
+        { status: 404 }
+      );
     }
 
     if (postCheck[0].user_id !== currentUserId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'You can only edit your own posts' 
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'You can only edit your own posts',
+        },
+        { status: 403 }
+      );
     }
 
     // 获取分类ID
@@ -108,9 +126,12 @@ export async function PUT(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error editing post:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

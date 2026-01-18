@@ -1,12 +1,23 @@
 /**
  * 代币销售推荐奖励API
- * 
+ *
  * 推荐返佣机制
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createSecureHandler, successResponse, errorResponse, ValidationRule } from '@/lib/security/middleware';
-import { SecurityLogger, SecurityEventType, getClientIP, getUserAgent, CryptoUtils } from '@/lib/security';
+import {
+  createSecureHandler,
+  successResponse,
+  errorResponse,
+  ValidationRule,
+} from '@/lib/security/middleware';
+import {
+  SecurityLogger,
+  SecurityEventType,
+  getClientIP,
+  getUserAgent,
+  CryptoUtils,
+} from '@/lib/security';
 import { db } from '@/lib/database';
 
 // 推荐码存储（生产环境应使用数据库）
@@ -39,8 +50,8 @@ const referralRecords: ReferralRecord[] = [];
 
 // 佣金比例配置
 const COMMISSION_RATES = {
-  standard: 5,  // 5%
-  vip: 7,       // 7%
+  standard: 5, // 5%
+  vip: 7, // 7%
   ambassador: 10, // 10%
 };
 
@@ -88,15 +99,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // 获取推荐记录
     const userRecords = referralRecords.filter(
-      r => r.referrerAddress.toLowerCase() === address.toLowerCase()
+      (r) => r.referrerAddress.toLowerCase() === address.toLowerCase()
     );
 
     const pendingEarnings = userRecords
-      .filter(r => r.status === 'pending')
+      .filter((r) => r.status === 'pending')
       .reduce((sum, r) => sum + r.commission, 0);
 
     const paidEarnings = userRecords
-      .filter(r => r.status === 'paid')
+      .filter((r) => r.status === 'paid')
       .reduce((sum, r) => sum + r.commission, 0);
 
     return successResponse({
@@ -110,7 +121,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         pendingEarnings,
         paidEarnings,
       },
-      recentReferrals: userRecords.slice(0, 10).map(r => ({
+      recentReferrals: userRecords.slice(0, 10).map((r) => ({
         id: r.id,
         refereeAddress: maskAddress(r.refereeAddress),
         purchaseAmount: r.purchaseAmount,
@@ -119,7 +130,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         createdAt: r.createdAt,
       })),
     });
-
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : '未知错误';
     return errorResponse('获取推荐信息失败: ' + message, 500);
@@ -199,7 +209,6 @@ export const POST = createSecureHandler(
         message: '推荐码创建成功',
         shareLink: `https://quantaureum.io/token-sale?ref=${newCode}`,
       });
-
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : '未知错误';
       return errorResponse('创建推荐码失败: ' + message, 500);

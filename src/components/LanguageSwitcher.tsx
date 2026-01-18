@@ -22,24 +22,24 @@ const LanguageSwitcher = () => {
     { code: 'pt', name: 'Português', flag: '🇧🇷' },
     { code: 'it', name: 'Italiano', flag: '🇮🇹' },
     { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
-    { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' }
+    { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
   ];
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLanguage = languages.find((lang) => lang.code === i18n.language) || languages[0];
 
   const changeLanguage = (langCode: string) => {
     i18n.changeLanguage(langCode);
     setIsOpen(false);
-    
+
     // Save language preference to localStorage
     localStorage.setItem('quantaureum-global-language', langCode);
-    
+
     // Update document direction for RTL languages
     const rtlLanguages = ['ar'];
     const isRTL = rtlLanguages.includes(langCode);
     document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
     document.documentElement.lang = langCode;
-    
+
     if (isRTL) {
       document.documentElement.classList.add('rtl-language');
     } else {

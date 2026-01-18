@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 export interface SelectProps {
   children?: React.ReactNode;
@@ -23,14 +23,14 @@ export interface SelectValueProps {
 
 export interface SelectTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  size?: "default" | "sm";
+  size?: 'default' | 'sm';
   children?: React.ReactNode;
 }
 
 export interface SelectContentProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   children?: React.ReactNode;
-  position?: "popper" | "item-aligned";
+  position?: 'popper' | 'item-aligned';
 }
 
 export interface SelectLabelProps extends React.HTMLAttributes<HTMLDivElement> {

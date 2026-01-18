@@ -4,12 +4,15 @@ import { neon } from '@neondatabase/serverless';
 export async function POST(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -20,14 +23,24 @@ export async function POST(request: NextRequest) {
       await sql`ALTER TABLE user_bans DROP CONSTRAINT IF EXISTS user_bans_user_id_fkey`;
       results.push({ step: 1, action: '移除 user_bans.user_id 外键约束', status: 'success' });
     } catch (error: any) {
-      results.push({ step: 1, action: '移除 user_bans.user_id 外键约束', status: 'error', error: error.message });
+      results.push({
+        step: 1,
+        action: '移除 user_bans.user_id 外键约束',
+        status: 'error',
+        error: error.message,
+      });
     }
 
     try {
       await sql`ALTER TABLE user_bans DROP CONSTRAINT IF EXISTS user_bans_banned_by_fkey`;
       results.push({ step: 2, action: '移除 user_bans.banned_by 外键约束', status: 'success' });
     } catch (error: any) {
-      results.push({ step: 2, action: '移除 user_bans.banned_by 外键约束', status: 'error', error: error.message });
+      results.push({
+        step: 2,
+        action: '移除 user_bans.banned_by 外键约束',
+        status: 'error',
+        error: error.message,
+      });
     }
 
     // 2. 创建 forum_categories 表
@@ -49,7 +62,12 @@ export async function POST(request: NextRequest) {
       `;
       results.push({ step: 3, action: '创建 forum_categories 表', status: 'success' });
     } catch (error: any) {
-      results.push({ step: 3, action: '创建 forum_categories 表', status: 'error', error: error.message });
+      results.push({
+        step: 3,
+        action: '创建 forum_categories 表',
+        status: 'error',
+        error: error.message,
+      });
     }
 
     // 3. 插入默认论坛分类
@@ -63,7 +81,12 @@ export async function POST(request: NextRequest) {
         ON CONFLICT (slug) DO NOTHING
         RETURNING id
       `;
-      results.push({ step: 4, action: '插入默认论坛分类', status: 'success', count: categories.length });
+      results.push({
+        step: 4,
+        action: '插入默认论坛分类',
+        status: 'success',
+        count: categories.length,
+      });
     } catch (error: any) {
       results.push({ step: 4, action: '插入默认论坛分类', status: 'error', error: error.message });
     }
@@ -83,7 +106,12 @@ export async function POST(request: NextRequest) {
       `;
       results.push({ step: 5, action: '为 posts 表添加 category_id 字段', status: 'success' });
     } catch (error: any) {
-      results.push({ step: 5, action: '为 posts 表添加 category_id 字段', status: 'error', error: error.message });
+      results.push({
+        step: 5,
+        action: '为 posts 表添加 category_id 字段',
+        status: 'error',
+        error: error.message,
+      });
     }
 
     // 5. 更新现有帖子的分类
@@ -93,9 +121,19 @@ export async function POST(request: NextRequest) {
         SET category_id = (SELECT id FROM forum_categories WHERE slug = 'general' LIMIT 1)
         WHERE category_id IS NULL
       `;
-      results.push({ step: 6, action: '更新现有帖子的分类', status: 'success', count: updated.length });
+      results.push({
+        step: 6,
+        action: '更新现有帖子的分类',
+        status: 'success',
+        count: updated.length,
+      });
     } catch (error: any) {
-      results.push({ step: 6, action: '更新现有帖子的分类', status: 'error', error: error.message });
+      results.push({
+        step: 6,
+        action: '更新现有帖子的分类',
+        status: 'error',
+        error: error.message,
+      });
     }
 
     // 6. 创建索引
@@ -103,21 +141,36 @@ export async function POST(request: NextRequest) {
       await sql`CREATE INDEX IF NOT EXISTS idx_posts_category_id ON posts(category_id)`;
       results.push({ step: 7, action: '创建 posts.category_id 索引', status: 'success' });
     } catch (error: any) {
-      results.push({ step: 7, action: '创建 posts.category_id 索引', status: 'error', error: error.message });
+      results.push({
+        step: 7,
+        action: '创建 posts.category_id 索引',
+        status: 'error',
+        error: error.message,
+      });
     }
 
     try {
       await sql`CREATE INDEX IF NOT EXISTS idx_forum_categories_slug ON forum_categories(slug)`;
       results.push({ step: 8, action: '创建 forum_categories.slug 索引', status: 'success' });
     } catch (error: any) {
-      results.push({ step: 8, action: '创建 forum_categories.slug 索引', status: 'error', error: error.message });
+      results.push({
+        step: 8,
+        action: '创建 forum_categories.slug 索引',
+        status: 'error',
+        error: error.message,
+      });
     }
 
     try {
       await sql`CREATE INDEX IF NOT EXISTS idx_forum_categories_active ON forum_categories(is_active)`;
       results.push({ step: 9, action: '创建 forum_categories.is_active 索引', status: 'success' });
     } catch (error: any) {
-      results.push({ step: 9, action: '创建 forum_categories.is_active 索引', status: 'error', error: error.message });
+      results.push({
+        step: 9,
+        action: '创建 forum_categories.is_active 索引',
+        status: 'error',
+        error: error.message,
+      });
     }
 
     // 7. 更新管理员权限
@@ -156,16 +209,18 @@ export async function POST(request: NextRequest) {
       verification: {
         categoryCount: categoryCount[0]?.count || 0,
         moderatorCount: moderatorCount[0]?.count || 0,
-        adminPermissionCount: adminPermissions[0]?.count || 0
-      }
+        adminPermissionCount: adminPermissions[0]?.count || 0,
+      },
     });
-
   } catch (error: any) {
     console.error('Database fix error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to fix database',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to fix database',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }

@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { 
-  Shield, 
-  DollarSign, 
-  Users, 
-  FileText, 
+import {
+  Shield,
+  DollarSign,
+  Users,
+  FileText,
   Award,
   Search,
   Filter,
@@ -20,7 +20,7 @@ import {
   Cpu,
   Target,
   CheckCircle,
-  Download
+  Download,
 } from 'lucide-react';
 
 interface STOProject {
@@ -83,28 +83,28 @@ const STOPlatformPage = () => {
             issuer: {
               name: 'QuantumTech Capital',
               jurisdiction: 'Singapore',
-              verified: true
+              verified: true,
             },
             token_details: {
-              price_per_token: 100.00,
+              price_per_token: 100.0,
               currency: 'QAU',
-              minimum_investment: 1000.00,
-              dividend_frequency: 'quarterly'
+              minimum_investment: 1000.0,
+              dividend_frequency: 'quarterly',
             },
             funding: {
-              target_amount: 1000000000.00,
-              raised_amount: 650000000.00,
+              target_amount: 1000000000.0,
+              raised_amount: 650000000.0,
               progress: 65.0,
-              investors_count: 1247
+              investors_count: 1247,
             },
             status: 'active',
             compliance: {
               kyc_required: true,
               accredited_only: true,
-              regulatory_approval: true
+              regulatory_approval: true,
             },
             images: ['/images/sto/real-estate-1.jpg'],
-            quantum_security: true
+            quantum_security: true,
           },
           {
             project_id: 'STO_002',
@@ -115,29 +115,29 @@ const STOPlatformPage = () => {
             issuer: {
               name: 'EcoPower Grid',
               jurisdiction: 'Switzerland',
-              verified: true
+              verified: true,
             },
             token_details: {
-              price_per_token: 50.00,
+              price_per_token: 50.0,
               currency: 'QAU',
-              minimum_investment: 500.00,
-              dividend_frequency: 'monthly'
+              minimum_investment: 500.0,
+              dividend_frequency: 'monthly',
             },
             funding: {
-              target_amount: 500000000.00,
-              raised_amount: 125000000.00,
+              target_amount: 500000000.0,
+              raised_amount: 125000000.0,
               progress: 25.0,
-              investors_count: 856
+              investors_count: 856,
             },
             status: 'active',
             compliance: {
               kyc_required: true,
               accredited_only: false,
-              regulatory_approval: true
+              regulatory_approval: true,
             },
             images: ['/images/sto/energy-1.jpg'],
-            quantum_security: true
-          }
+            quantum_security: true,
+          },
         ]);
         setLoading(false);
       }, 1000);
@@ -151,7 +151,7 @@ const STOPlatformPage = () => {
     { id: 'energy', name: t('sto.categories.energy'), icon: Zap },
     { id: 'healthcare', name: t('sto.categories.healthcare'), icon: Heart },
     { id: 'technology', name: t('sto.categories.technology'), icon: Cpu },
-    { id: 'finance', name: t('sto.categories.finance'), icon: DollarSign }
+    { id: 'finance', name: t('sto.categories.finance'), icon: DollarSign },
   ];
 
   return (
@@ -166,9 +166,7 @@ const STOPlatformPage = () => {
           <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 mb-4">
             {t('sto.title')}
           </h1>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            {t('sto.description')}
-          </p>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">{t('sto.description')}</p>
         </motion.div>
 
         {/* Search and Filter */}
@@ -220,15 +218,20 @@ const STOPlatformPage = () => {
                 <div className="h-48 bg-slate-700 relative">
                   {/* Placeholder for project image */}
                   <div className="absolute inset-0 flex items-center justify-center text-slate-500">
-                    {project.category === 'real_estate' ? <Building size={48} /> : 
-                     project.category === 'energy' ? <Zap size={48} /> : <Target size={48} />}
+                    {project.category === 'real_estate' ? (
+                      <Building size={48} />
+                    ) : project.category === 'energy' ? (
+                      <Zap size={48} />
+                    ) : (
+                      <Target size={48} />
+                    )}
                   </div>
                   <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-white flex items-center gap-1">
                     {project.quantum_security && <Shield size={14} className="text-emerald-400" />}
                     {t(`sto.project.status.${project.status}`, project.status.toUpperCase())}
                   </div>
                 </div>
-                
+
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-2">
                     <div>
@@ -238,21 +241,21 @@ const STOPlatformPage = () => {
                       <span className="text-sm text-slate-400 font-mono">{project.symbol}</span>
                     </div>
                   </div>
-                  
-                  <p className="text-slate-400 text-sm mb-4 line-clamp-2">
-                    {project.description}
-                  </p>
+
+                  <p className="text-slate-400 text-sm mb-4 line-clamp-2">{project.description}</p>
 
                   <div className="space-y-4">
                     <div>
                       <div className="flex justify-between text-sm mb-1">
                         <span className="text-slate-400">{t('sto.project.raised')}</span>
                         <span className="text-white font-medium">
-                          {project.funding.raised_amount.toLocaleString()} / {project.funding.target_amount.toLocaleString()} {project.token_details.currency}
+                          {project.funding.raised_amount.toLocaleString()} /{' '}
+                          {project.funding.target_amount.toLocaleString()}{' '}
+                          {project.token_details.currency}
                         </span>
                       </div>
                       <div className="w-full bg-slate-700 rounded-full h-2">
-                        <div 
+                        <div
                           className="bg-gradient-to-r from-blue-500 to-emerald-500 h-2 rounded-full"
                           style={{ width: `${project.funding.progress}%` }}
                         ></div>
@@ -261,13 +264,18 @@ const STOPlatformPage = () => {
 
                     <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-700">
                       <div>
-                        <span className="text-xs text-slate-500 block">{t('sto.project.min_investment')}</span>
+                        <span className="text-xs text-slate-500 block">
+                          {t('sto.project.min_investment')}
+                        </span>
                         <span className="text-white font-medium">
-                          {project.token_details.minimum_investment} {project.token_details.currency}
+                          {project.token_details.minimum_investment}{' '}
+                          {project.token_details.currency}
                         </span>
                       </div>
                       <div>
-                        <span className="text-xs text-slate-500 block">{t('sto.project.investors')}</span>
+                        <span className="text-xs text-slate-500 block">
+                          {t('sto.project.investors')}
+                        </span>
                         <span className="text-white font-medium">
                           {project.funding.investors_count}
                         </span>
@@ -285,4 +293,3 @@ const STOPlatformPage = () => {
 };
 
 export default STOPlatformPage;
-

@@ -18,7 +18,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -60,7 +60,7 @@ export const POST = createSecureHandler(
         amountIn: result.amount_in,
         amountOut: result.amount_out,
         message: `Successfully swapped ${tokenIn}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       console.error('Swap error:', error);
@@ -95,7 +95,7 @@ export const GET = createSecureHandler(
         amountIn: result.amount_in,
         amountOut: result.amount_out,
         priceImpact: result.price_impact,
-        fee: result.fee
+        fee: result.fee,
       });
     } catch (error) {
       console.error('Swap quote error:', error);

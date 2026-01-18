@@ -30,7 +30,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   type,
   auctionId,
   onPaymentSuccess,
-  onPaymentError
+  onPaymentError,
 }) => {
   interface PaymentDetails {
     address?: string;
@@ -40,7 +40,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   }
 
   const [selectedMethod, setSelectedMethod] = useState<string>('');
-  const [step, setStep] = useState<'select' | 'details' | 'processing' | 'success' | 'error'>('select');
+  const [step, setStep] = useState<'select' | 'details' | 'processing' | 'success' | 'error'>(
+    'select'
+  );
   const [loading, setLoading] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState<PaymentDetails>({});
   const [transactionId, setTransactionId] = useState<string>('');
@@ -55,7 +57,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       description: '使用USDT支付，快速到账',
       fee: 0,
       processingTime: '1-5分钟',
-      available: true
+      available: true,
     },
     {
       id: 'eth',
@@ -65,7 +67,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       description: '使用以太坊支付',
       fee: 0.002,
       processingTime: '5-15分钟',
-      available: true
+      available: true,
     },
     {
       id: 'btc',
@@ -75,7 +77,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       description: '使用比特币支付',
       fee: 0.0001,
       processingTime: '10-30分钟',
-      available: true
+      available: true,
     },
     {
       id: 'bank_transfer',
@@ -85,7 +87,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       description: '通过银行转账支付',
       fee: 0,
       processingTime: '1-3个工作日',
-      available: false // 暂时不可用
+      available: false, // 暂时不可用
     },
     {
       id: 'credit_card',
@@ -95,15 +97,15 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       description: '使用信用卡支付',
       fee: 0.03, // 3%手续费
       processingTime: '即时',
-      available: false // 暂时不可用
-    }
+      available: false, // 暂时不可用
+    },
   ];
 
   // 倒计时效果
   useEffect(() => {
     if (step === 'details' && countdown > 0) {
       const timer = setInterval(() => {
-        setCountdown(prev => {
+        setCountdown((prev) => {
           if (prev <= 1) {
             setStep('error');
             onPaymentError('支付超时，请重新发起支付');
@@ -158,27 +160,27 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({
           amount,
           paymentMethod: selectedMethod,
           type,
-          auctionId
-        })
+          auctionId,
+        }),
       });
 
       const result = await response.json();
-      
+
       if (result.success) {
         setPaymentDetails(result.data);
         setTransactionId(result.data.transactionId);
-        
+
         // 如果是加密货币支付，生成二维码
         if (result.data.qrCode) {
           setQrCode(result.data.qrCode);
         }
-        
+
         setStep('details');
         setCountdown(600); // 重置倒计时
       } else {
@@ -194,20 +196,20 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
 
   const handleConfirmPayment = async () => {
     setStep('processing');
-    
+
     try {
       // 模拟支付确认
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
       // 检查支付状态
       const response = await fetch(`/api/v1/payments/${transactionId}/status`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       });
 
       const result = await response.json();
-      
+
       if (result.success && result.data.status === 'completed') {
         setStep('success');
         onPaymentSuccess(transactionId, result.data.transactionHash);
@@ -220,7 +222,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     }
   };
 
-  const selectedMethodData = paymentMethods.find(m => m.id === selectedMethod);
+  const selectedMethodData = paymentMethods.find((m) => m.id === selectedMethod);
 
   if (!isOpen) return null;
 
@@ -236,26 +238,27 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
           {/* 头部 */}
           <div className="p-6 border-b border-gray-200">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-900">
-                {getPaymentTitle()}
-              </h2>
+              <h2 className="text-xl font-bold text-gray-900">{getPaymentTitle()}</h2>
               <button
                 onClick={onClose}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
-            
+
             {/* 金额显示 */}
             <div className="mt-4 p-4 bg-gray-50 rounded-lg">
               <div className="text-center">
                 <div className="text-sm text-gray-600">支付金额</div>
-                <div className="text-2xl font-bold text-gray-900">
-                  ¥{amount.toLocaleString()}
-                </div>
+                <div className="text-2xl font-bold text-gray-900">¥{amount.toLocaleString()}</div>
               </div>
             </div>
           </div>
@@ -271,7 +274,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                   exit={{ opacity: 0, y: -20 }}
                 >
                   <h3 className="text-lg font-semibold mb-4">选择支付方式</h3>
-                  
+
                   <div className="space-y-3">
                     {paymentMethods.map((method) => (
                       <div
@@ -280,8 +283,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                           !method.available
                             ? 'opacity-50 cursor-not-allowed bg-gray-50'
                             : selectedMethod === method.id
-                            ? 'border-blue-500 bg-blue-50'
-                            : 'border-gray-200 hover:border-gray-300'
+                              ? 'border-blue-500 bg-blue-50'
+                              : 'border-gray-200 hover:border-gray-300'
                         }`}
                         onClick={() => method.available && handleMethodSelect(method.id)}
                       >
@@ -297,25 +300,28 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                               </div>
                               <div className="text-sm text-gray-600">{method.description}</div>
                               <div className="text-xs text-gray-500">
-                                手续费: {method.fee === 0 ? '免费' : `${(method.fee * 100).toFixed(1)}%`} | 
+                                手续费:{' '}
+                                {method.fee === 0 ? '免费' : `${(method.fee * 100).toFixed(1)}%`} |
                                 到账时间: {method.processingTime}
                               </div>
                             </div>
                           </div>
-                          
+
                           {method.available && (
-                            <div className={`w-4 h-4 rounded-full border-2 ${
-                              selectedMethod === method.id
-                                ? 'border-blue-500 bg-blue-500'
-                                : 'border-gray-300'
-                            }`}>
+                            <div
+                              className={`w-4 h-4 rounded-full border-2 ${
+                                selectedMethod === method.id
+                                  ? 'border-blue-500 bg-blue-500'
+                                  : 'border-gray-300'
+                              }`}
+                            >
                               {selectedMethod === method.id && (
                                 <div className="w-full h-full rounded-full bg-white scale-50"></div>
                               )}
                             </div>
                           )}
                         </div>
-                        
+
                         {selectedMethod === method.id && method.fee > 0 && (
                           <div className="mt-3 pt-3 border-t border-gray-200">
                             <div className="flex justify-between text-sm">
@@ -366,11 +372,15 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                       {qrCode && (
                         <div className="text-center">
                           <div className="inline-block p-4 bg-white border rounded-lg">
-                            <Image src={qrCode} alt="Payment QR Code" width={192} height={192} className="w-48 h-48" />
+                            <Image
+                              src={qrCode}
+                              alt="Payment QR Code"
+                              width={192}
+                              height={192}
+                              className="w-48 h-48"
+                            />
                           </div>
-                          <div className="text-sm text-gray-600 mt-2">
-                            扫描二维码完成支付
-                          </div>
+                          <div className="text-sm text-gray-600 mt-2">扫描二维码完成支付</div>
                         </div>
                       )}
 
@@ -381,7 +391,10 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                           {paymentDetails.address}
                         </div>
                         <button
-                          onClick={() => paymentDetails.address && navigator.clipboard.writeText(paymentDetails.address)}
+                          onClick={() =>
+                            paymentDetails.address &&
+                            navigator.clipboard.writeText(paymentDetails.address)
+                          }
                           className="mt-2 text-blue-600 hover:text-blue-800 text-sm"
                         >
                           复制地址
@@ -443,8 +456,18 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                   className="text-center py-8"
                 >
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-8 h-8 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-green-600">支付成功!</h3>
@@ -467,8 +490,18 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                   className="text-center py-8"
                 >
                   <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-8 h-8 text-red-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-red-600">支付失败</h3>

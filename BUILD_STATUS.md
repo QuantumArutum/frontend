@@ -68,9 +68,11 @@ The `@/lib/db` module import issue has been resolved:
 ## Recommendations
 
 1. **Update Browserslist Data** (optional)
+
    ```bash
    npx update-browserslist-db@latest
    ```
+
    Note: This is just a warning, not an error.
 
 2. **Deploy to Production**

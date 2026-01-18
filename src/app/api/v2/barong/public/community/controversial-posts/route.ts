@@ -9,10 +9,13 @@ import { sql } from '@/lib/database';
 export async function GET(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured',
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -25,13 +28,14 @@ export async function GET(request: NextRequest) {
     // 计算时间范围
     let timeFilter = '';
     if (timeRange !== 'all') {
-      const hours = {
-        '1h': 1,
-        '6h': 6,
-        '24h': 24,
-        '7d': 168,
-        '30d': 720,
-      }[timeRange] || 0;
+      const hours =
+        {
+          '1h': 1,
+          '6h': 6,
+          '24h': 24,
+          '7d': 168,
+          '30d': 720,
+        }[timeRange] || 0;
 
       if (hours > 0) {
         timeFilter = `AND p.created_at >= NOW() - INTERVAL '${hours} hours'`;
@@ -53,7 +57,7 @@ export async function GET(request: NextRequest) {
         ${timeFilter}
       ORDER BY p.controversy_score DESC, p.created_at DESC
       LIMIT ${limit} OFFSET ${offset}
-    `) as unknown) as any[];
+    `)) as unknown as any[];
 
     // 获取总数
     const countResult = (await sql.unsafe(`
@@ -62,7 +66,7 @@ export async function GET(request: NextRequest) {
       WHERE p.status = 'published'
         AND p.is_controversial = TRUE
         ${timeFilter}
-    `) as unknown) as any[];
+    `)) as unknown as any[];
 
     const total = parseInt(countResult[0]?.total || '0');
 
@@ -79,10 +83,12 @@ export async function GET(request: NextRequest) {
         }
 
         // 计算赞踩比例
-        const totalVotes = parseInt(post.upvote_count || '0') + parseInt(post.downvote_count || '0');
-        const upvoteRatio = totalVotes > 0 
-          ? (parseInt(post.upvote_count || '0') / totalVotes * 100).toFixed(1)
-          : '0';
+        const totalVotes =
+          parseInt(post.upvote_count || '0') + parseInt(post.downvote_count || '0');
+        const upvoteRatio =
+          totalVotes > 0
+            ? ((parseInt(post.upvote_count || '0') / totalVotes) * 100).toFixed(1)
+            : '0';
 
         return {
           id: post.id,
@@ -122,9 +128,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching controversial posts:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Internal server error',
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

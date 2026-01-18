@@ -31,14 +31,14 @@ export default function Home() {
       document.documentElement.classList.remove('rtl-language');
     }
   }, [i18n.language]);
-  
+
   return (
     <div className="relative min-h-screen overflow-hidden text-white font-sans leading-relaxed">
       <ParticlesBackground />
-      
+
       <div className="relative z-10">
         <EnhancedNavbar />
-        
+
         <ResponsiveHeroSection />
 
         <GoldReserveSection />
@@ -56,7 +56,7 @@ export default function Home() {
               {t('concept.description')}
             </p>
           </motion.div>
-          
+
           <div className="concept-diagram max-w-4xl mx-auto relative h-[500px]">
             <motion.div
               initial={{ scale: 0 }}
@@ -66,14 +66,38 @@ export default function Home() {
             >
               ⚛️
             </motion.div>
-            
+
             {[
-              { icon: '🔐', label: t('concept.items.crypto'), position: { top: '0%', left: '50%', transform: 'translateX(-50%)' } },
-              { icon: '💳', label: t('concept.items.hardware'), position: { top: '25%', right: '0%' } },
-              { icon: '📱', label: t('concept.items.mobile'), position: { bottom: '25%', right: '0%' } },
-              { icon: '🌐', label: t('concept.items.crosschain'), position: { bottom: '0%', left: '50%', transform: 'translateX(-50%)' } },
-              { icon: '⚡', label: t('concept.items.performance'), position: { bottom: '25%', left: '0%' } },
-              { icon: '📜', label: t('concept.items.contracts'), position: { top: '25%', left: '0%' } }
+              {
+                icon: '🔐',
+                label: t('concept.items.crypto'),
+                position: { top: '0%', left: '50%', transform: 'translateX(-50%)' },
+              },
+              {
+                icon: '💳',
+                label: t('concept.items.hardware'),
+                position: { top: '25%', right: '0%' },
+              },
+              {
+                icon: '📱',
+                label: t('concept.items.mobile'),
+                position: { bottom: '25%', right: '0%' },
+              },
+              {
+                icon: '🌐',
+                label: t('concept.items.crosschain'),
+                position: { bottom: '0%', left: '50%', transform: 'translateX(-50%)' },
+              },
+              {
+                icon: '⚡',
+                label: t('concept.items.performance'),
+                position: { bottom: '25%', left: '0%' },
+              },
+              {
+                icon: '📜',
+                label: t('concept.items.contracts'),
+                position: { top: '25%', left: '0%' },
+              },
             ].map((item, index) => (
               <motion.div
                 key={index}
@@ -104,15 +128,39 @@ export default function Home() {
               {t('benefits.description')}
             </p>
           </motion.div>
-          
+
           <div className="benefits-grid max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: '🛡️', title: t('benefits.items.security.title'), desc: t('benefits.items.security.desc') },
-              { icon: '🚀', title: t('benefits.items.performance.title'), desc: t('benefits.items.performance.desc') },
-              { icon: '💡', title: t('benefits.items.evolution.title'), desc: t('benefits.items.evolution.desc') },
-              { icon: '🌍', title: t('benefits.items.global.title'), desc: t('benefits.items.global.desc') },
-              { icon: '💰', title: t('benefits.items.economic.title'), desc: t('benefits.items.economic.desc') },
-              { icon: '🤝', title: t('benefits.items.developer.title'), desc: t('benefits.items.developer.desc') }
+              {
+                icon: '🛡️',
+                title: t('benefits.items.security.title'),
+                desc: t('benefits.items.security.desc'),
+              },
+              {
+                icon: '🚀',
+                title: t('benefits.items.performance.title'),
+                desc: t('benefits.items.performance.desc'),
+              },
+              {
+                icon: '💡',
+                title: t('benefits.items.evolution.title'),
+                desc: t('benefits.items.evolution.desc'),
+              },
+              {
+                icon: '🌍',
+                title: t('benefits.items.global.title'),
+                desc: t('benefits.items.global.desc'),
+              },
+              {
+                icon: '💰',
+                title: t('benefits.items.economic.title'),
+                desc: t('benefits.items.economic.desc'),
+              },
+              {
+                icon: '🤝',
+                title: t('benefits.items.developer.title'),
+                desc: t('benefits.items.developer.desc'),
+              },
             ].map((benefit, index) => (
               <motion.div
                 key={index}
@@ -149,15 +197,31 @@ export default function Home() {
               {t('roadmap.description')}
             </p>
           </motion.div>
-          
+
           <div className="roadmap-timeline max-w-6xl mx-auto relative">
             <div className="timeline-line absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-[#6E3CBC] via-[#00D4FF] to-[#FF2A6D] transform -translate-y-1/2"></div>
             <div className="timeline-items flex justify-between relative">
               {[
-                { date: '2023 Q4', title: t('roadmap.milestones.q4_2023.title'), desc: t('roadmap.milestones.q4_2023.desc') },
-                { date: '2024 Q2', title: t('roadmap.milestones.q2_2024.title'), desc: t('roadmap.milestones.q2_2024.desc') },
-                { date: '2024 Q4', title: t('roadmap.milestones.q4_2024.title'), desc: t('roadmap.milestones.q4_2024.desc') },
-                { date: '2025 Q2', title: t('roadmap.milestones.q2_2025.title'), desc: t('roadmap.milestones.q2_2025.desc') }
+                {
+                  date: '2023 Q4',
+                  title: t('roadmap.milestones.q4_2023.title'),
+                  desc: t('roadmap.milestones.q4_2023.desc'),
+                },
+                {
+                  date: '2024 Q2',
+                  title: t('roadmap.milestones.q2_2024.title'),
+                  desc: t('roadmap.milestones.q2_2024.desc'),
+                },
+                {
+                  date: '2024 Q4',
+                  title: t('roadmap.milestones.q4_2024.title'),
+                  desc: t('roadmap.milestones.q4_2024.desc'),
+                },
+                {
+                  date: '2025 Q2',
+                  title: t('roadmap.milestones.q2_2025.title'),
+                  desc: t('roadmap.milestones.q2_2025.desc'),
+                },
               ].map((milestone, index) => (
                 <motion.div
                   key={index}
@@ -168,7 +232,9 @@ export default function Home() {
                 >
                   <div className="timeline-dot w-5 h-5 bg-[#00D4FF] rounded-full mx-auto mb-5 relative z-10 shadow-lg shadow-cyan-500/50"></div>
                   <div className="timeline-content bg-white/10 backdrop-blur-md rounded-lg border border-white/20 p-5 mt-5 hover:bg-white/15 transition-all duration-300">
-                    <div className="timeline-date text-sm text-[#00D4FF] font-semibold mb-2">{milestone.date}</div>
+                    <div className="timeline-date text-sm text-[#00D4FF] font-semibold mb-2">
+                      {milestone.date}
+                    </div>
                     <h3 className="timeline-title text-lg font-semibold mb-2">{milestone.title}</h3>
                     <p className="timeline-desc text-gray-300 text-sm">{milestone.desc}</p>
                   </div>
@@ -203,12 +269,16 @@ export default function Home() {
               {t('team.description')}
             </p>
           </motion.div>
-          
+
           <div className="team-grid max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { name: t('team.members.ceo.name'), role: t('team.members.ceo.role'), avatar: '👨‍💼' },
               { name: t('team.members.cto.name'), role: t('team.members.cto.role'), avatar: '👩‍💻' },
-              { name: t('team.members.scientist.name'), role: t('team.members.scientist.role'), avatar: '👨‍🔬' }
+              {
+                name: t('team.members.scientist.name'),
+                role: t('team.members.scientist.role'),
+                avatar: '👨‍🔬',
+              },
             ].map((member, index) => (
               <motion.div
                 key={index}

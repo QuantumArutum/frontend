@@ -20,9 +20,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Get community stats error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

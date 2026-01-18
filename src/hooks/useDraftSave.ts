@@ -48,7 +48,7 @@ export function useDraftSave(
       if (!draftStr) return null;
 
       const draft: DraftData = JSON.parse(draftStr);
-      
+
       // 检查草稿是否过期（7天）
       const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
       if (draft.lastSaved < sevenDaysAgo) {

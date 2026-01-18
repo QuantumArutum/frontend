@@ -17,7 +17,8 @@ export async function DELETE(
 
   try {
     const result = await db.deleteStakingPool(id);
-    if (!result.success) return NextResponse.json({ success: false, message: result.error }, { status: 404 });
+    if (!result.success)
+      return NextResponse.json({ success: false, message: result.error }, { status: 404 });
     return NextResponse.json({ success: true, message: 'Staking pool deleted' });
   } catch (error) {
     return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });

@@ -1,11 +1,16 @@
 /**
  * 2FA验证API
- * 
+ *
  * 验证TOTP码并启用2FA
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createSecureHandler, successResponse, errorResponse, ValidationRule } from '@/lib/security/middleware';
+import {
+  createSecureHandler,
+  successResponse,
+  errorResponse,
+  ValidationRule,
+} from '@/lib/security/middleware';
 import { SecurityLogger, SecurityEventType, getClientIP, getUserAgent } from '@/lib/security';
 import { TOTPService } from '@/lib/security/totp';
 import { db } from '@/lib/database';
@@ -55,7 +60,7 @@ export const POST = createSecureHandler(
       // 如果是首次验证，启用2FA并生成备份码
       if (!user.totpEnabled) {
         const backupCodes = TOTPService.generateBackupCodes(10);
-        
+
         await db.enableTOTP(userId, user.totpSecret);
         await db.saveBackupCodes(userId, backupCodes);
 
@@ -89,7 +94,6 @@ export const POST = createSecureHandler(
         verified: true,
         message: '验证成功',
       });
-
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       SecurityLogger.log(

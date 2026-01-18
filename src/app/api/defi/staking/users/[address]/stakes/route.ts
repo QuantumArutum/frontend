@@ -17,7 +17,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -31,12 +31,12 @@ export async function GET(
 ): Promise<NextResponse> {
   try {
     const { address } = await params;
-    
+
     if (!address) {
       return NextResponse.json({
         success: true,
         data: [],
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     }
 
@@ -50,43 +50,46 @@ export async function GET(
     const now = Date.now();
 
     // Transform stakes to frontend format
-    const stakes = result.stakes?.map((stake: Record<string, unknown>) => {
-      const startBlock = stake.start_time as number;
-      const unlockBlock = stake.unlock_time as number;
-      
-      // Calculate actual timestamps based on block numbers
-      // start_time: how many blocks ago * block_time
-      const blocksAgoStart = currentBlock - startBlock;
-      const startTimestamp = now - (blocksAgoStart * blockTime * 1000);
-      
-      // unlock_time: how many blocks until unlock * block_time
-      const blocksUntilUnlock = unlockBlock - currentBlock;
-      const unlockTimestamp = now + (blocksUntilUnlock * blockTime * 1000);
-      
-      // Check if stake is locked
-      const isLocked = currentBlock < unlockBlock;
-      
-      return {
-        id: `stake-${address}-${stake.pool_id}`,
-        pool_id: stake.pool_id,
-        amount: stake.amount ? (Number(BigInt(stake.amount as string)) / 1e18).toFixed(4) : '0',
-        rewards: stake.rewards ? (Number(BigInt(stake.rewards as string)) / 1e18).toFixed(4) : '0',
-        start_time: new Date(startTimestamp).toISOString(),
-        unlock_time: new Date(unlockTimestamp).toISOString(),
-        start_block: startBlock,
-        unlock_block: unlockBlock,
-        current_block: currentBlock,
-        is_locked: isLocked,
-        blocks_until_unlock: isLocked ? blocksUntilUnlock : 0,
-        status: stake.status || 'active',
-        apy: stake.apy || 18.5,
-      };
-    }) || [];
+    const stakes =
+      result.stakes?.map((stake: Record<string, unknown>) => {
+        const startBlock = stake.start_time as number;
+        const unlockBlock = stake.unlock_time as number;
+
+        // Calculate actual timestamps based on block numbers
+        // start_time: how many blocks ago * block_time
+        const blocksAgoStart = currentBlock - startBlock;
+        const startTimestamp = now - blocksAgoStart * blockTime * 1000;
+
+        // unlock_time: how many blocks until unlock * block_time
+        const blocksUntilUnlock = unlockBlock - currentBlock;
+        const unlockTimestamp = now + blocksUntilUnlock * blockTime * 1000;
+
+        // Check if stake is locked
+        const isLocked = currentBlock < unlockBlock;
+
+        return {
+          id: `stake-${address}-${stake.pool_id}`,
+          pool_id: stake.pool_id,
+          amount: stake.amount ? (Number(BigInt(stake.amount as string)) / 1e18).toFixed(4) : '0',
+          rewards: stake.rewards
+            ? (Number(BigInt(stake.rewards as string)) / 1e18).toFixed(4)
+            : '0',
+          start_time: new Date(startTimestamp).toISOString(),
+          unlock_time: new Date(unlockTimestamp).toISOString(),
+          start_block: startBlock,
+          unlock_block: unlockBlock,
+          current_block: currentBlock,
+          is_locked: isLocked,
+          blocks_until_unlock: isLocked ? blocksUntilUnlock : 0,
+          status: stake.status || 'active',
+          apy: stake.apy || 18.5,
+        };
+      }) || [];
 
     return NextResponse.json({
       success: true,
       data: stakes,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
     console.error('Failed to fetch user stakes:', error);
@@ -94,7 +97,7 @@ export async function GET(
     return NextResponse.json({
       success: true,
       data: [],
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   }
 }

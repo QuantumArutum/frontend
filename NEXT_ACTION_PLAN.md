@@ -3,6 +3,7 @@
 ## 当前状态（2026-01-17）
 
 ### ✅ 刚刚完成
+
 1. **通知系统** - 完整实现
    - 通知 API（GET/PUT/DELETE）
    - 通知页面（真实数据）
@@ -15,10 +16,12 @@
    - 导航栏集成
 
 ### ⏳ 待部署测试
+
 - 通知系统（提交 331557d）
 - 导航栏未读数量显示
 
 ### ❌ 已知问题
+
 - 帖子详情页加载超时
 
 ---
@@ -26,35 +29,42 @@
 ## 🎯 推荐行动方案
 
 ### 方案 A：等待部署完成，然后测试通知系统
+
 **优先级**: 🟡 中
 **预计时间**: 5-10 分钟
 
 **步骤**:
+
 1. 等待 Vercel 部署完成
 2. 登录测试账号
 3. 测试通知功能
 4. 检查导航栏未读数量
 
 **优点**:
+
 - 验证新功能是否正常工作
 - 发现潜在问题
 
 **缺点**:
+
 - 需要等待部署
 - 可能发现新问题需要修复
 
 ---
 
 ### 方案 B：立即修复帖子详情页（强烈推荐）
+
 **优先级**: 🔴 高
 **预计时间**: 1-2 小时
 
 **原因**:
+
 1. **核心功能阻塞** - 用户无法查看帖子详情
 2. **影响其他功能** - 评论、点赞功能无法测试
 3. **用户体验差** - 目前论坛基本不可用
 
 **步骤**:
+
 1. 查看 Vercel 部署日志，诊断超时原因
 2. 测试 post-detail API 是否正常
 3. 检查页面组件的服务器端渲染
@@ -65,7 +75,9 @@
 **可能的问题和解决方案**:
 
 #### 问题 1：服务器端渲染超时
+
 **解决方案**:
+
 ```typescript
 // 在 page.tsx 中添加
 export const dynamic = 'force-dynamic';
@@ -74,7 +86,9 @@ export const runtime = 'edge';
 ```
 
 #### 问题 2：useAuth hook 在服务器端不可用
+
 **解决方案**:
+
 ```typescript
 // 改为纯客户端渲染
 'use client';
@@ -82,13 +96,17 @@ export const runtime = 'edge';
 ```
 
 #### 问题 3：API 查询超时
+
 **解决方案**:
+
 - 优化 SQL 查询
 - 添加查询超时限制
 - 使用更简单的查询
 
 #### 问题 4：数据库连接问题
+
 **解决方案**:
+
 - 检查 Neon 数据库连接
 - 验证环境变量
 - 添加连接重试逻辑
@@ -96,12 +114,14 @@ export const runtime = 'edge';
 ---
 
 ### 方案 C：实现通知触发逻辑
+
 **优先级**: 🟢 低
 **预计时间**: 1-2 小时
 
 **依赖**: 需要先修复帖子详情页
 
 **内容**:
+
 - 评论时创建通知
 - 点赞时创建通知
 - 关注时创建通知
@@ -113,12 +133,14 @@ export const runtime = 'edge';
 **选择方案 B：立即修复帖子详情页**
 
 **理由**:
+
 1. **最高优先级** - 这是核心功能，必须能工作
 2. **阻塞其他功能** - 评论、点赞、通知触发都依赖它
 3. **用户体验** - 目前用户无法查看帖子，论坛基本不可用
 4. **已有基础** - API 和组件都已创建，只需要调试
 
 **修复策略**:
+
 1. 先查看 Vercel 日志，了解具体错误
 2. 如果是服务器端渲染问题，改为客户端渲染
 3. 如果是 API 问题，优化查询或添加超时处理
@@ -130,6 +152,7 @@ export const runtime = 'edge';
 ## 📋 修复帖子详情页的详细步骤
 
 ### 步骤 1：诊断问题
+
 ```bash
 # 查看 Vercel 部署日志
 # 访问 https://vercel.com/quantumarutum/frontend/deployments
@@ -137,15 +160,17 @@ export const runtime = 'edge';
 ```
 
 ### 步骤 2：测试 API
+
 ```bash
 # 直接访问 API 端点
 curl https://www.quantaureum.com/api/v2/barong/public/community/post-detail?postId=1
 ```
 
 ### 步骤 3：修改页面配置
+
 ```typescript
 // src/app/community/posts/[postId]/page.tsx
-'use client';  // 确保是客户端渲染
+'use client'; // 确保是客户端渲染
 
 export default function PostDetailPage({ params }: { params: { postId: string } }) {
   // 在 useEffect 中获取数据，而不是在服务器端
@@ -153,6 +178,7 @@ export default function PostDetailPage({ params }: { params: { postId: string } 
 ```
 
 ### 步骤 4：添加错误处理
+
 ```typescript
 const [error, setError] = useState<string | null>(null);
 const [loading, setLoading] = useState(true);
@@ -170,12 +196,13 @@ useEffect(() => {
       setLoading(false);
     }
   };
-  
+
   loadPost();
 }, [postId]);
 ```
 
 ### 步骤 5：测试修复
+
 1. 提交代码
 2. 等待部署
 3. 访问帖子详情页
@@ -186,18 +213,21 @@ useEffect(() => {
 ## 🚀 执行计划
 
 ### 立即执行（现在）
+
 1. 查看 Vercel 部署日志
 2. 诊断帖子详情页超时原因
 3. 实施修复方案
 4. 提交并部署
 
 ### 修复后执行（1-2 小时后）
+
 1. 测试帖子详情页
 2. 测试评论功能
 3. 测试点赞功能
 4. 测试通知系统
 
 ### 后续执行（今天晚些时候）
+
 1. 实现通知触发逻辑
 2. 完善发帖功能
 3. 添加图片上传
@@ -207,6 +237,7 @@ useEffect(() => {
 ## 📊 预期结果
 
 ### 修复成功后
+
 - ✅ 用户可以查看帖子详情
 - ✅ 用户可以发表评论
 - ✅ 用户可以点赞帖子和评论
@@ -214,6 +245,7 @@ useEffect(() => {
 - ✅ 可以实现通知触发逻辑
 
 ### 如果修复失败
+
 - 考虑重构帖子详情页
 - 简化功能，先实现基本查看
 - 评论和点赞功能可以延后

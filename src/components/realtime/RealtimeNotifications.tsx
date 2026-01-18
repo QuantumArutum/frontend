@@ -21,7 +21,7 @@ const NotificationItem: React.FC<NotificationProps> = ({
   timestamp,
   actionUrl,
   onClose,
-  onAction
+  onAction,
 }) => {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -44,28 +44,28 @@ const NotificationItem: React.FC<NotificationProps> = ({
           bg: 'bg-green-500',
           border: 'border-green-400',
           icon: '✓',
-          textColor: 'text-green-800'
+          textColor: 'text-green-800',
         };
       case 'warning':
         return {
           bg: 'bg-yellow-500',
           border: 'border-yellow-400',
           icon: '⚠️',
-          textColor: 'text-yellow-800'
+          textColor: 'text-yellow-800',
         };
       case 'error':
         return {
           bg: 'bg-red-500',
           border: 'border-red-400',
           icon: '❌',
-          textColor: 'text-red-800'
+          textColor: 'text-red-800',
         };
       default:
         return {
           bg: 'bg-blue-500',
           border: 'border-blue-400',
           icon: 'ℹ️',
-          textColor: 'text-blue-800'
+          textColor: 'text-blue-800',
         };
     }
   };
@@ -100,7 +100,12 @@ const NotificationItem: React.FC<NotificationProps> = ({
             className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
 
@@ -109,20 +114,16 @@ const NotificationItem: React.FC<NotificationProps> = ({
             <div className="flex-shrink-0">
               <span className="text-lg">{styles.icon}</span>
             </div>
-            
+
             <div className="flex-1 min-w-0">
-              <div className="font-semibold text-gray-900 text-sm mb-1">
-                {title}
-              </div>
-              <div className="text-gray-700 text-sm leading-relaxed">
-                {message}
-              </div>
-              
+              <div className="font-semibold text-gray-900 text-sm mb-1">{title}</div>
+              <div className="text-gray-700 text-sm leading-relaxed">{message}</div>
+
               {/* 时间戳 */}
               <div className="text-gray-500 text-xs mt-2">
                 {new Date(timestamp).toLocaleTimeString()}
               </div>
-              
+
               {/* 操作按钮 */}
               {actionUrl && (
                 <button
@@ -168,27 +169,27 @@ interface DisplayedNotification {
 const RealtimeNotifications: React.FC<RealtimeNotificationsProps> = ({
   position = 'top-right',
   maxNotifications = 5,
-  onNotificationAction
+  onNotificationAction,
 }) => {
   const { notifications, markAsRead, connected } = useAuctionNotifications();
   const [displayedNotifications, setDisplayedNotifications] = useState<DisplayedNotification[]>([]);
 
   useEffect(() => {
     // 限制显示的通知数量
-    const limited = notifications.slice(0, maxNotifications).map(notification => ({
+    const limited = notifications.slice(0, maxNotifications).map((notification) => ({
       id: `${notification.timestamp || Date.now()}-${Math.random()}`,
       title: notification.data.title as string,
       message: notification.data.message as string,
       severity: notification.data.severity as 'info' | 'warning' | 'error' | 'success',
       timestamp: notification.timestamp || Date.now(),
-      actionUrl: notification.data.actionUrl as string | undefined
+      actionUrl: notification.data.actionUrl as string | undefined,
     }));
-    
+
     setDisplayedNotifications(limited);
   }, [notifications, maxNotifications]);
 
   const handleCloseNotification = (id: string) => {
-    setDisplayedNotifications(prev => prev.filter(n => n.id !== id));
+    setDisplayedNotifications((prev) => prev.filter((n) => n.id !== id));
     markAsRead();
   };
 
@@ -211,8 +212,8 @@ const RealtimeNotifications: React.FC<RealtimeNotificationsProps> = ({
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       className={`fixed top-4 left-4 px-3 py-2 rounded-full text-xs font-medium ${
-        connected 
-          ? 'bg-green-100 text-green-800 border border-green-200' 
+        connected
+          ? 'bg-green-100 text-green-800 border border-green-200'
           : 'bg-red-100 text-red-800 border border-red-200'
       }`}
     >

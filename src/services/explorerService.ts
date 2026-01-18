@@ -101,14 +101,13 @@ export interface SearchResult {
   data: Block | Transaction | Address | null;
 }
 
-
 // ==================== API请求辅助函数 ====================
 
 async function apiRequest<T>(endpoint: string): Promise<T | null> {
   // 直接使用本地API路由
   try {
-    const response = await fetch(`${EXPLORER_API}${endpoint}`, { 
-      signal: AbortSignal.timeout(15000) // 15秒超时
+    const response = await fetch(`${EXPLORER_API}${endpoint}`, {
+      signal: AbortSignal.timeout(15000), // 15秒超时
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
@@ -192,7 +191,11 @@ export const addressService = {
   },
 
   // 获取地址交易历史
-  getAddressTransactions: async (address: string, page: number = 1, limit: number = 20): Promise<{ transactions: Transaction[]; total: number }> => {
+  getAddressTransactions: async (
+    address: string,
+    page: number = 1,
+    limit: number = 20
+  ): Promise<{ transactions: Transaction[]; total: number }> => {
     const data = await apiRequest<{ transactions: Transaction[]; total: number }>(
       `/address/${address}/transactions?page=${page}&limit=${limit}`
     );
@@ -234,7 +237,7 @@ export const searchService = {
   // 智能搜索 - 自动识别搜索类型
   search: async (query: string): Promise<SearchResult> => {
     const trimmed = query.trim();
-    
+
     // 交易哈希 (66字符，0x开头)
     if (trimmed.startsWith('0x') && trimmed.length === 66) {
       const tx = await transactionService.getTransaction(trimmed);
@@ -243,23 +246,22 @@ export const searchService = {
       const block = await blockService.getBlockByHash(trimmed);
       if (block) return { type: 'block', data: block };
     }
-    
+
     // 地址 (42字符，0x开头)
     if (trimmed.startsWith('0x') && trimmed.length === 42) {
       const address = await addressService.getAddress(trimmed);
       return { type: 'address', data: address };
     }
-    
+
     // 区块号 (纯数字)
     if (/^\d+$/.test(trimmed)) {
       const block = await blockService.getBlockByNumber(parseInt(trimmed));
       if (block) return { type: 'block', data: block };
     }
-    
+
     return { type: 'unknown', data: null };
   },
 };
-
 
 // ==================== 工具函数 ====================
 
@@ -293,7 +295,7 @@ export const explorerUtils = {
     if (!hex || hex === '0x0' || hex === '0x' || hex === '') return 'N/A';
     let timestamp = parseInt(hex, 16);
     if (isNaN(timestamp) || timestamp <= 0) return 'N/A';
-    
+
     // 如果时间戳大于 1e15，说明是纳秒级，需要转换为毫秒
     // 如果时间戳大于 1e12，说明是毫秒级
     // 否则是秒级
@@ -306,7 +308,7 @@ export const explorerUtils = {
       // 秒级 -> 毫秒级
       timestamp = timestamp * 1000;
     }
-    
+
     return new Date(timestamp).toLocaleString('zh-CN');
   },
 
@@ -315,7 +317,7 @@ export const explorerUtils = {
     if (!hex || hex === '0x0' || hex === '0x' || hex === '') return 'N/A';
     let timestamp = parseInt(hex, 16);
     if (isNaN(timestamp) || timestamp <= 0) return 'N/A';
-    
+
     // 如果时间戳大于 1e15，说明是纳秒级，需要转换为毫秒
     // 如果时间戳大于 1e12，说明是毫秒级
     // 否则是秒级
@@ -328,10 +330,10 @@ export const explorerUtils = {
       // 秒级 -> 毫秒级
       timestamp = timestamp * 1000;
     }
-    
+
     const now = Date.now();
     const diff = now - timestamp;
-    
+
     if (diff < 0) return '刚刚';
     if (diff < 60000) return `${Math.floor(diff / 1000)}秒前`;
     if (diff < 3600000) return `${Math.floor(diff / 60000)}分钟前`;

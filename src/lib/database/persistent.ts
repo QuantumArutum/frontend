@@ -1,6 +1,6 @@
 /**
  * Quantaureum 持久化数据库服务
- * 
+ *
  * 使用JSON文件存储实现数据持久化
  * 生产环境建议替换为PostgreSQL/MySQL
  */
@@ -168,7 +168,7 @@ class PersistentDatabase {
   // ========== 用户操作 ==========
 
   async createUser(email: string, password: string): Promise<User> {
-    const existing = this.data.users.find(u => u.email === email);
+    const existing = this.data.users.find((u) => u.email === email);
     if (existing) throw new Error('邮箱已被注册');
 
     const user: User = {
@@ -190,11 +190,11 @@ class PersistentDatabase {
   }
 
   async findUserByEmail(email: string): Promise<User | null> {
-    return this.data.users.find(u => u.email === email) || null;
+    return this.data.users.find((u) => u.email === email) || null;
   }
 
   async findUserById(id: string): Promise<User | null> {
-    return this.data.users.find(u => u.id === id) || null;
+    return this.data.users.find((u) => u.id === id) || null;
   }
 
   async verifyUserPassword(email: string, password: string): Promise<User | null> {
@@ -210,7 +210,7 @@ class PersistentDatabase {
   }
 
   async updateUser(id: string, updates: Partial<User>): Promise<User | null> {
-    const index = this.data.users.findIndex(u => u.id === id);
+    const index = this.data.users.findIndex((u) => u.id === id);
     if (index === -1) return null;
 
     this.data.users[index] = {
@@ -230,7 +230,7 @@ class PersistentDatabase {
 
   async disableTOTP(userId: string): Promise<void> {
     await this.updateUser(userId, { totpSecret: undefined, totpEnabled: false });
-    this.data.backupCodes = this.data.backupCodes.filter(c => c.userId !== userId);
+    this.data.backupCodes = this.data.backupCodes.filter((c) => c.userId !== userId);
     this.save();
   }
 
@@ -249,7 +249,7 @@ class PersistentDatabase {
   }
 
   async verifyBackupCode(userId: string, code: string): Promise<boolean> {
-    const codes = this.data.backupCodes.filter(c => c.userId === userId && !c.used);
+    const codes = this.data.backupCodes.filter((c) => c.userId === userId && !c.used);
     for (const backupCode of codes) {
       const valid = await CryptoUtils.verifyPassword(code, backupCode.codeHash);
       if (valid) {
@@ -264,7 +264,9 @@ class PersistentDatabase {
 
   // ========== 代币购买操作 ==========
 
-  async createPurchase(data: Omit<TokenPurchase, 'id' | 'createdAt' | 'status'>): Promise<TokenPurchase> {
+  async createPurchase(
+    data: Omit<TokenPurchase, 'id' | 'createdAt' | 'status'>
+  ): Promise<TokenPurchase> {
     const purchase: TokenPurchase = {
       ...data,
       id: CryptoUtils.generateSecureToken(16),
@@ -278,17 +280,17 @@ class PersistentDatabase {
   }
 
   async findPurchaseById(id: string): Promise<TokenPurchase | null> {
-    return this.data.purchases.find(p => p.id === id) || null;
+    return this.data.purchases.find((p) => p.id === id) || null;
   }
 
   async findPurchasesByAddress(address: string): Promise<TokenPurchase[]> {
-    return this.data.purchases.filter(p => 
-      p.buyerAddress.toLowerCase() === address.toLowerCase()
+    return this.data.purchases.filter(
+      (p) => p.buyerAddress.toLowerCase() === address.toLowerCase()
     );
   }
 
   async updatePurchase(id: string, updates: Partial<TokenPurchase>): Promise<TokenPurchase | null> {
-    const index = this.data.purchases.findIndex(p => p.id === id);
+    const index = this.data.purchases.findIndex((p) => p.id === id);
     if (index === -1) return null;
 
     this.data.purchases[index] = { ...this.data.purchases[index], ...updates };
@@ -305,7 +307,7 @@ class PersistentDatabase {
   }
 
   async getPurchaseStats() {
-    const completed = this.data.purchases.filter(p => p.status === 'completed');
+    const completed = this.data.purchases.filter((p) => p.status === 'completed');
     return {
       totalPurchases: this.data.purchases.length,
       totalRaised: completed.reduce((sum, p) => sum + p.amountUSD, 0),
@@ -316,14 +318,16 @@ class PersistentDatabase {
 
   async getRecentPurchases(limit: number = 10): Promise<TokenPurchase[]> {
     return this.data.purchases
-      .filter(p => p.status === 'completed')
+      .filter((p) => p.status === 'completed')
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       .slice(0, limit);
   }
 
   // ========== 支付验证操作 ==========
 
-  async createPaymentVerification(data: Omit<PaymentVerification, 'id' | 'createdAt' | 'status'>): Promise<PaymentVerification> {
+  async createPaymentVerification(
+    data: Omit<PaymentVerification, 'id' | 'createdAt' | 'status'>
+  ): Promise<PaymentVerification> {
     const verification: PaymentVerification = {
       ...data,
       id: CryptoUtils.generateSecureToken(16),
@@ -337,17 +341,24 @@ class PersistentDatabase {
   }
 
   async findPaymentVerificationById(id: string): Promise<PaymentVerification | null> {
-    return this.data.paymentVerifications.find(p => p.id === id) || null;
+    return this.data.paymentVerifications.find((p) => p.id === id) || null;
   }
 
   async findPaymentVerificationByPurchase(purchaseId: string): Promise<PaymentVerification | null> {
-    return this.data.paymentVerifications
-      .filter(p => p.purchaseId === purchaseId)
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0] || null;
+    return (
+      this.data.paymentVerifications
+        .filter((p) => p.purchaseId === purchaseId)
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0] ||
+      null
+    );
   }
 
-  async verifyPayment(id: string, txHash: string, amount: number): Promise<PaymentVerification | null> {
-    const index = this.data.paymentVerifications.findIndex(p => p.id === id);
+  async verifyPayment(
+    id: string,
+    txHash: string,
+    amount: number
+  ): Promise<PaymentVerification | null> {
+    const index = this.data.paymentVerifications.findIndex((p) => p.id === id);
     if (index === -1) return null;
 
     this.data.paymentVerifications[index] = {
@@ -363,7 +374,9 @@ class PersistentDatabase {
 
   // ========== KYC操作 ==========
 
-  async createKYCDocument(data: Omit<KYCDocument, 'id' | 'createdAt' | 'updatedAt' | 'status'>): Promise<KYCDocument> {
+  async createKYCDocument(
+    data: Omit<KYCDocument, 'id' | 'createdAt' | 'updatedAt' | 'status'>
+  ): Promise<KYCDocument> {
     const now = new Date().toISOString();
     const doc: KYCDocument = {
       ...data,
@@ -379,17 +392,17 @@ class PersistentDatabase {
   }
 
   async findKYCDocumentById(id: string): Promise<KYCDocument | null> {
-    return this.data.kycDocuments.find(d => d.id === id) || null;
+    return this.data.kycDocuments.find((d) => d.id === id) || null;
   }
 
   async findKYCDocumentsByUser(userId: string): Promise<KYCDocument[]> {
     return this.data.kycDocuments
-      .filter(d => d.userId === userId)
+      .filter((d) => d.userId === userId)
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   async updateKYCStatus(id: string, status: string, reason?: string): Promise<KYCDocument | null> {
-    const index = this.data.kycDocuments.findIndex(d => d.id === id);
+    const index = this.data.kycDocuments.findIndex((d) => d.id === id);
     if (index === -1) return null;
 
     const now = new Date().toISOString();
@@ -429,7 +442,7 @@ class PersistentDatabase {
   }
 
   async findSessionByToken(token: string): Promise<Session | null> {
-    const session = this.data.sessions.find(s => s.token === token && s.isValid);
+    const session = this.data.sessions.find((s) => s.token === token && s.isValid);
     if (!session) return null;
 
     if (new Date(session.expiresAt) < new Date()) {
@@ -441,7 +454,7 @@ class PersistentDatabase {
   }
 
   async invalidateSession(id: string): Promise<void> {
-    const session = this.data.sessions.find(s => s.id === id);
+    const session = this.data.sessions.find((s) => s.id === id);
     if (session) {
       session.isValid = false;
       this.save();
@@ -449,9 +462,7 @@ class PersistentDatabase {
   }
 
   async invalidateAllUserSessions(userId: string): Promise<void> {
-    this.data.sessions
-      .filter(s => s.userId === userId)
-      .forEach(s => s.isValid = false);
+    this.data.sessions.filter((s) => s.userId === userId).forEach((s) => (s.isValid = false));
     this.save();
   }
 }

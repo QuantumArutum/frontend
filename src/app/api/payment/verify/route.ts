@@ -1,11 +1,16 @@
 /**
  * 支付验证API
- * 
+ *
  * 验证加密货币支付
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createSecureHandler, successResponse, errorResponse, ValidationRule } from '@/lib/security/middleware';
+import {
+  createSecureHandler,
+  successResponse,
+  errorResponse,
+  ValidationRule,
+} from '@/lib/security/middleware';
 import { SecurityLogger, SecurityEventType, getClientIP, getUserAgent } from '@/lib/security';
 import { PaymentVerificationService } from '@/lib/payment/verification';
 import { db } from '@/lib/database';
@@ -76,7 +81,6 @@ export const POST = createSecureHandler(
         confirmations: result.confirmations,
         message: '支付验证成功！代币将在确认后发放',
       });
-
     } catch (error: unknown) {
       SecurityLogger.log(
         SecurityEventType.PAYMENT_FAILED,
@@ -86,7 +90,10 @@ export const POST = createSecureHandler(
         ip,
         userAgent
       );
-      return errorResponse('支付验证失败: ' + (error instanceof Error ? error.message : 'Unknown error'), 500);
+      return errorResponse(
+        '支付验证失败: ' + (error instanceof Error ? error.message : 'Unknown error'),
+        500
+      );
     }
   },
   { rateLimit: true, validateBody: validationRules, logRequest: true }

@@ -7,7 +7,13 @@ import '../../i18n';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { Badge } from '@/components/ui/Badge';
 import { formatNumber, formatCurrency, formatPercentage } from '@/lib/utils';
@@ -31,7 +37,7 @@ import {
   TrendingDown,
   Plus,
   Minus,
-  RefreshCw
+  RefreshCw,
 } from 'lucide-react';
 
 const WalletApp = () => {
@@ -49,10 +55,30 @@ const WalletApp = () => {
 
   // 网络配置
   const networks = [
-    { id: 'mainnet', name: t('wallet.networks.quantum_mainnet'), rpc: 'https://mainnet.quantum.network', chainId: 1 },
-    { id: 'testnet', name: t('wallet.networks.quantum_testnet'), rpc: 'https://testnet.quantum.network', chainId: 2 },
-    { id: 'ethereum', name: t('wallet.networks.ethereum_mainnet'), rpc: 'https://mainnet.infura.io', chainId: 1 },
-    { id: 'polygon', name: t('wallet.networks.polygon_mainnet'), rpc: 'https://polygon-rpc.com', chainId: 137 },
+    {
+      id: 'mainnet',
+      name: t('wallet.networks.quantum_mainnet'),
+      rpc: 'https://mainnet.quantum.network',
+      chainId: 1,
+    },
+    {
+      id: 'testnet',
+      name: t('wallet.networks.quantum_testnet'),
+      rpc: 'https://testnet.quantum.network',
+      chainId: 2,
+    },
+    {
+      id: 'ethereum',
+      name: t('wallet.networks.ethereum_mainnet'),
+      rpc: 'https://mainnet.infura.io',
+      chainId: 1,
+    },
+    {
+      id: 'polygon',
+      name: t('wallet.networks.polygon_mainnet'),
+      rpc: 'https://polygon-rpc.com',
+      chainId: 137,
+    },
     { id: 'bsc', name: 'BSC 主网', rpc: 'https://bsc-dataseed.binance.org', chainId: 56 },
   ];
 
@@ -63,9 +89,9 @@ const WalletApp = () => {
       name: 'Quantum Gold',
       balance: 1250.75,
       usdValue: 156844.375,
-      price: 125.50,
+      price: 125.5,
       change24h: 2.45,
-      icon: '🔮'
+      icon: '🔮',
     },
     {
       symbol: 'ETH',
@@ -74,26 +100,26 @@ const WalletApp = () => {
       usdValue: 6626.875,
       price: 2650.75,
       change24h: 3.67,
-      icon: '⟠'
+      icon: '⟠',
     },
     {
       symbol: 'USDT',
       name: 'Tether USD',
-      balance: 5000.00,
-      usdValue: 5000.00,
-      price: 1.00,
+      balance: 5000.0,
+      usdValue: 5000.0,
+      price: 1.0,
       change24h: 0.01,
-      icon: '💵'
+      icon: '💵',
     },
     {
       symbol: 'BTC',
       name: 'Bitcoin',
       balance: 0.5,
-      usdValue: 21625.00,
-      price: 43250.00,
+      usdValue: 21625.0,
+      price: 43250.0,
       change24h: -1.23,
-      icon: '₿'
-    }
+      icon: '₿',
+    },
   ];
 
   // 交易历史
@@ -107,7 +133,7 @@ const WalletApp = () => {
       hash: '0x1234...5678',
       status: 'confirmed',
       timestamp: '2024-01-15 14:30:00',
-      fee: 0.001
+      fee: 0.001,
     },
     {
       id: '2',
@@ -118,7 +144,7 @@ const WalletApp = () => {
       hash: '0x9876...1234',
       status: 'confirmed',
       timestamp: '2024-01-15 12:15:00',
-      fee: 0
+      fee: 0,
     },
     {
       id: '3',
@@ -129,8 +155,8 @@ const WalletApp = () => {
       hash: '0x4567...8901',
       status: 'pending',
       timestamp: '2024-01-15 10:45:00',
-      fee: 0.5
-    }
+      fee: 0.5,
+    },
   ];
 
   // NFT 数据
@@ -141,7 +167,7 @@ const WalletApp = () => {
       collection: 'Quantum Collection',
       image: '/api/placeholder/150/150',
       value: 2.5,
-      currency: 'ETH'
+      currency: 'ETH',
     },
     {
       id: '2',
@@ -149,8 +175,8 @@ const WalletApp = () => {
       collection: 'Quantum Collection',
       image: '/api/placeholder/150/150',
       value: 1.8,
-      currency: 'ETH'
-    }
+      currency: 'ETH',
+    },
   ];
 
   // 计算总资产价值
@@ -159,12 +185,12 @@ const WalletApp = () => {
   // 处理发送交易
   const handleSend = async () => {
     if (!sendAddress || !sendAmount) return;
-    
+
     setIsLoading(true);
     try {
       // 模拟交易发送
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       alert('交易发送成功！');
       setSendAddress('');
       setSendAmount('');
@@ -182,7 +208,7 @@ const WalletApp = () => {
   };
 
   // 获取当前网络信息
-  const currentNetwork = networks.find(n => n.id === selectedNetwork);
+  const currentNetwork = networks.find((n) => n.id === selectedNetwork);
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -199,9 +225,9 @@ const WalletApp = () => {
           {/* 页面标题 */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-2">
-              <Image 
-                src="/logos/quantum-aurum-icon-ui.svg" 
-                alt="Quantaureum" 
+              <Image
+                src="/logos/quantum-aurum-icon-ui.svg"
+                alt="Quantaureum"
                 width={40}
                 height={40}
                 className="h-10 w-10"
@@ -210,9 +236,7 @@ const WalletApp = () => {
                 {t('wallet.title')}
               </h1>
             </div>
-            <p className="text-gray-300 mt-2 text-responsive-base">
-              {t('wallet.description')}
-            </p>
+            <p className="text-gray-300 mt-2 text-responsive-base">{t('wallet.description')}</p>
           </div>
 
           {/* 网络选择器 */}
@@ -232,10 +256,15 @@ const WalletApp = () => {
                       {networks.map((network) => (
                         <SelectItem key={network.id} value={network.id}>
                           <div className="flex items-center gap-2">
-                            <div className={`w-2 h-2 rounded-full ${
-                              network.id === 'mainnet' ? 'bg-green-400' : 
-                              network.id === 'testnet' ? 'bg-yellow-400' : 'bg-blue-400'
-                            }`}></div>
+                            <div
+                              className={`w-2 h-2 rounded-full ${
+                                network.id === 'mainnet'
+                                  ? 'bg-green-400'
+                                  : network.id === 'testnet'
+                                    ? 'bg-yellow-400'
+                                    : 'bg-blue-400'
+                              }`}
+                            ></div>
                             {network.name}
                           </div>
                         </SelectItem>
@@ -301,10 +330,18 @@ const WalletApp = () => {
                   <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     <div className="p-6 pb-0">
                       <TabsList className="grid w-full grid-cols-4 quantum-tabs">
-                        <TabsTrigger value="assets" className="quantum-tab">资产</TabsTrigger>
-                        <TabsTrigger value="activity" className="quantum-tab">活动</TabsTrigger>
-                        <TabsTrigger value="nfts" className="quantum-tab">NFTs</TabsTrigger>
-                        <TabsTrigger value="security" className="quantum-tab">安全</TabsTrigger>
+                        <TabsTrigger value="assets" className="quantum-tab">
+                          资产
+                        </TabsTrigger>
+                        <TabsTrigger value="activity" className="quantum-tab">
+                          活动
+                        </TabsTrigger>
+                        <TabsTrigger value="nfts" className="quantum-tab">
+                          NFTs
+                        </TabsTrigger>
+                        <TabsTrigger value="security" className="quantum-tab">
+                          安全
+                        </TabsTrigger>
                       </TabsList>
                     </div>
 
@@ -319,7 +356,9 @@ const WalletApp = () => {
                             <div className="flex items-center gap-4">
                               <div className="text-2xl">{asset.icon}</div>
                               <div>
-                                <div className="font-medium text-responsive-base">{asset.symbol}</div>
+                                <div className="font-medium text-responsive-base">
+                                  {asset.symbol}
+                                </div>
                                 <div className="text-sm text-gray-400">{asset.name}</div>
                               </div>
                             </div>
@@ -330,8 +369,11 @@ const WalletApp = () => {
                               <div className="text-sm text-gray-400 truncate-number">
                                 {showBalance ? formatCurrency(asset.usdValue, 'USD') : '****'}
                               </div>
-                              <div className={`text-xs ${asset.change24h >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                {asset.change24h >= 0 ? '+' : ''}{formatPercentage(asset.change24h)}
+                              <div
+                                className={`text-xs ${asset.change24h >= 0 ? 'text-green-400' : 'text-red-400'}`}
+                              >
+                                {asset.change24h >= 0 ? '+' : ''}
+                                {formatPercentage(asset.change24h)}
                               </div>
                             </div>
                           </div>
@@ -342,40 +384,67 @@ const WalletApp = () => {
                     <TabsContent value="activity" className="p-6 pt-4">
                       <div className="space-y-4">
                         {transactions.map((tx) => (
-                          <div key={tx.id} className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                          <div
+                            key={tx.id}
+                            className="flex items-center justify-between p-4 bg-white/5 rounded-lg"
+                          >
                             <div className="flex items-center gap-4">
-                              <div className={`p-2 rounded-full ${
-                                tx.type === 'send' ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'
-                              }`}>
-                                {tx.type === 'send' ? <Send className="w-4 h-4" /> : <Download className="w-4 h-4" />}
+                              <div
+                                className={`p-2 rounded-full ${
+                                  tx.type === 'send'
+                                    ? 'bg-red-500/20 text-red-400'
+                                    : 'bg-green-500/20 text-green-400'
+                                }`}
+                              >
+                                {tx.type === 'send' ? (
+                                  <Send className="w-4 h-4" />
+                                ) : (
+                                  <Download className="w-4 h-4" />
+                                )}
                               </div>
                               <div>
                                 <div className="font-medium text-responsive-sm">
                                   {tx.type === 'send' ? '发送' : '接收'} {tx.asset}
                                 </div>
                                 <div className="text-xs text-gray-400">
-                                  {tx.type === 'send' ? `到: ${tx.to?.slice(0, 10)}...` : `从: ${tx.from?.slice(0, 10)}...`}
+                                  {tx.type === 'send'
+                                    ? `到: ${tx.to?.slice(0, 10)}...`
+                                    : `从: ${tx.from?.slice(0, 10)}...`}
                                 </div>
                                 <div className="text-xs text-gray-400">{tx.timestamp}</div>
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className={`font-medium text-responsive-sm truncate-number ${
-                                tx.type === 'send' ? 'text-red-400' : 'text-green-400'
-                              }`}>
-                                {tx.type === 'send' ? '-' : '+'}{formatNumber(tx.amount)} {tx.asset}
+                              <div
+                                className={`font-medium text-responsive-sm truncate-number ${
+                                  tx.type === 'send' ? 'text-red-400' : 'text-green-400'
+                                }`}
+                              >
+                                {tx.type === 'send' ? '-' : '+'}
+                                {formatNumber(tx.amount)} {tx.asset}
                               </div>
                               <div className="flex items-center gap-2">
-                                <Badge className={
-                                  tx.status === 'confirmed' ? 'quantum-badge-success' :
-                                  tx.status === 'pending' ? 'quantum-badge-warning' : 'quantum-badge-error'
-                                }>
+                                <Badge
+                                  className={
+                                    tx.status === 'confirmed'
+                                      ? 'quantum-badge-success'
+                                      : tx.status === 'pending'
+                                        ? 'quantum-badge-warning'
+                                        : 'quantum-badge-error'
+                                  }
+                                >
                                   {tx.status === 'confirmed' ? (
-                                    <><CheckCircle className="w-3 h-3" /> 已确认</>
+                                    <>
+                                      <CheckCircle className="w-3 h-3" /> 已确认
+                                    </>
                                   ) : tx.status === 'pending' ? (
-                                    <><Clock className="w-3 h-3" /> 待确认</>
+                                    <>
+                                      <Clock className="w-3 h-3" /> 待确认
+                                    </>
                                   ) : (
-                                    <><AlertTriangle className="w-3 h-3" /> 失败</>
+                                    <>
+                                      <AlertTriangle className="w-3 h-3" /> 失败
+                                    </>
                                   )}
                                 </Badge>
                               </div>
@@ -388,7 +457,10 @@ const WalletApp = () => {
                     <TabsContent value="nfts" className="p-6 pt-4">
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {nfts.map((nft) => (
-                          <div key={nft.id} className="bg-white/5 rounded-lg p-4 hover:bg-white/10 transition-colors cursor-pointer">
+                          <div
+                            key={nft.id}
+                            className="bg-white/5 rounded-lg p-4 hover:bg-white/10 transition-colors cursor-pointer"
+                          >
                             <div className="aspect-square bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-lg mb-3 flex items-center justify-center">
                               <div className="text-4xl">🎨</div>
                             </div>
@@ -430,7 +502,7 @@ const WalletApp = () => {
                         {/* 安全设置 */}
                         <div className="space-y-4">
                           <h3 className="font-medium text-responsive-lg">安全设置</h3>
-                          
+
                           <div className="space-y-3">
                             <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                               <div className="flex items-center gap-3">
@@ -439,23 +511,31 @@ const WalletApp = () => {
                               </div>
                               <Badge className="quantum-badge-success">已备份</Badge>
                             </div>
-                            
+
                             <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                               <div className="flex items-center gap-3">
                                 <Zap className="w-4 h-4 text-yellow-400" />
                                 <span className="text-responsive-sm">私钥导出</span>
                               </div>
-                              <Button variant="outline" size="sm" className="quantum-button-secondary">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="quantum-button-secondary"
+                              >
                                 导出
                               </Button>
                             </div>
-                            
+
                             <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                               <div className="flex items-center gap-3">
                                 <Settings className="w-4 h-4 text-gray-400" />
                                 <span className="text-responsive-sm">网络设置</span>
                               </div>
-                              <Button variant="outline" size="sm" className="quantum-button-secondary">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="quantum-button-secondary"
+                              >
                                 配置
                               </Button>
                             </div>
@@ -476,14 +556,14 @@ const WalletApp = () => {
                   <CardTitle className="text-responsive-lg">快速操作</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Button 
+                  <Button
                     className="w-full quantum-button-primary"
                     onClick={() => setActiveTab('send')}
                   >
                     <Send className="w-4 h-4 mr-2" />
                     发送
                   </Button>
-                  <Button 
+                  <Button
                     className="w-full quantum-button-secondary"
                     onClick={() => setShowReceiveModal(true)}
                   >
@@ -555,9 +635,9 @@ const WalletApp = () => {
                             variant="outline"
                             size="sm"
                             onClick={() => {
-                              const asset = assets.find(a => a.symbol === selectedAsset);
+                              const asset = assets.find((a) => a.symbol === selectedAsset);
                               if (asset) {
-                                setSendAmount((asset.balance * percent / 100).toFixed(6));
+                                setSendAmount(((asset.balance * percent) / 100).toFixed(6));
                               }
                             }}
                             className="quantum-button-secondary text-xs"
@@ -575,7 +655,9 @@ const WalletApp = () => {
                       </div>
                       <div className="flex justify-between">
                         <span>预计到账:</span>
-                        <span className="truncate-number">{formatNumber(parseFloat(sendAmount || 0) - 0.001)} {selectedAsset}</span>
+                        <span className="truncate-number">
+                          {formatNumber(parseFloat(sendAmount || 0) - 0.001)} {selectedAsset}
+                        </span>
                       </div>
                     </div>
 
@@ -675,4 +757,3 @@ const WalletApp = () => {
 };
 
 export default WalletApp;
-

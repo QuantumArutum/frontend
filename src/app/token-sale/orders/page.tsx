@@ -1,9 +1,16 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { 
-  ShoppingCart, Clock, CheckCircle, XCircle, AlertCircle, 
-  Search, RefreshCw, Copy, ArrowLeft 
+import {
+  ShoppingCart,
+  Clock,
+  CheckCircle,
+  XCircle,
+  AlertCircle,
+  Search,
+  RefreshCw,
+  Copy,
+  ArrowLeft,
 } from 'lucide-react';
 import Link from 'next/link';
 import { PageLayout } from '@/components/ui/PageLayout';
@@ -46,7 +53,7 @@ export default function OrdersPage() {
 
   const fetchOrders = useCallback(async () => {
     if (!searchAddress) return;
-    
+
     if (!/^0x[a-fA-F0-9]{40}$/.test(searchAddress)) {
       setError(t('token_sale.orders.errors.invalid_address'));
       return;
@@ -66,7 +73,11 @@ export default function OrdersPage() {
         setError(data.error || t('token_sale.orders.errors.query_failed'));
       }
     } catch (err: unknown) {
-      setError(t('token_sale.orders.errors.network_error') + ': ' + (err instanceof Error ? err.message : t('token_sale.orders.errors.unknown')));
+      setError(
+        t('token_sale.orders.errors.network_error') +
+          ': ' +
+          (err instanceof Error ? err.message : t('token_sale.orders.errors.unknown'))
+      );
     } finally {
       setLoading(false);
     }
@@ -85,11 +96,23 @@ export default function OrdersPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'completed':
-        return <Badge variant="success"><CheckCircle className="w-3 h-3 mr-1" /> {t('token_sale.orders.status.completed')}</Badge>;
+        return (
+          <Badge variant="success">
+            <CheckCircle className="w-3 h-3 mr-1" /> {t('token_sale.orders.status.completed')}
+          </Badge>
+        );
       case 'pending':
-        return <Badge variant="warning"><Clock className="w-3 h-3 mr-1" /> {t('token_sale.orders.status.pending')}</Badge>;
+        return (
+          <Badge variant="warning">
+            <Clock className="w-3 h-3 mr-1" /> {t('token_sale.orders.status.pending')}
+          </Badge>
+        );
       case 'failed':
-        return <Badge variant="danger"><XCircle className="w-3 h-3 mr-1" /> {t('token_sale.orders.status.failed')}</Badge>;
+        return (
+          <Badge variant="danger">
+            <XCircle className="w-3 h-3 mr-1" /> {t('token_sale.orders.status.failed')}
+          </Badge>
+        );
       default:
         return <Badge variant="default">{status}</Badge>;
     }
@@ -124,9 +147,7 @@ export default function OrdersPage() {
     {
       key: 'paymentMethod',
       header: t('token_sale.orders.columns.payment_method'),
-      render: (_: unknown, order: Order) => (
-        <Badge variant="default">{order.paymentMethod}</Badge>
-      ),
+      render: (_: unknown, order: Order) => <Badge variant="default">{order.paymentMethod}</Badge>,
     },
     {
       key: 'status',
@@ -136,18 +157,20 @@ export default function OrdersPage() {
     {
       key: 'txHash',
       header: t('token_sale.orders.columns.tx_hash'),
-      render: (_: unknown, order: Order) => order.txHash ? (
-        <div className="flex items-center gap-1">
-          <span className="font-mono text-xs text-blue-400">
-            {order.txHash.slice(0, 10)}...
-          </span>
-          <button onClick={() => copyToClipboard(order.txHash)} className="text-gray-400 hover:text-white">
-            <Copy className="w-3 h-3" />
-          </button>
-        </div>
-      ) : (
-        <span className="text-gray-500">-</span>
-      ),
+      render: (_: unknown, order: Order) =>
+        order.txHash ? (
+          <div className="flex items-center gap-1">
+            <span className="font-mono text-xs text-blue-400">{order.txHash.slice(0, 10)}...</span>
+            <button
+              onClick={() => copyToClipboard(order.txHash)}
+              className="text-gray-400 hover:text-white"
+            >
+              <Copy className="w-3 h-3" />
+            </button>
+          </div>
+        ) : (
+          <span className="text-gray-500">-</span>
+        ),
     },
     {
       key: 'createdAt',
@@ -185,7 +208,11 @@ export default function OrdersPage() {
               icon={<Search className="w-4 h-4" />}
             />
             <Button variant="primary" onClick={handleSearch} disabled={loading}>
-              {loading ? <RefreshCw className="w-4 h-4 animate-spin" /> : t('token_sale.orders.search')}
+              {loading ? (
+                <RefreshCw className="w-4 h-4 animate-spin" />
+              ) : (
+                t('token_sale.orders.search')
+              )}
             </Button>
           </div>
           {error && (
@@ -198,11 +225,36 @@ export default function OrdersPage() {
 
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-          <StatCard title={t('token_sale.orders.stats.total_orders')} value={stats.totalOrders.toString()} icon={ShoppingCart} color="blue" />
-          <StatCard title={t('token_sale.orders.stats.completed')} value={stats.completedOrders.toString()} icon={CheckCircle} color="green" />
-          <StatCard title={t('token_sale.orders.stats.pending')} value={stats.pendingOrders.toString()} icon={Clock} color="orange" />
-          <StatCard title={t('token_sale.orders.stats.total_spent')} value={`${stats.totalSpent.toLocaleString()}`} icon={ShoppingCart} color="purple" />
-          <StatCard title={t('token_sale.orders.stats.total_tokens')} value={`${stats.totalTokens.toLocaleString()}`} icon={ShoppingCart} color="purple" />
+          <StatCard
+            title={t('token_sale.orders.stats.total_orders')}
+            value={stats.totalOrders.toString()}
+            icon={ShoppingCart}
+            color="blue"
+          />
+          <StatCard
+            title={t('token_sale.orders.stats.completed')}
+            value={stats.completedOrders.toString()}
+            icon={CheckCircle}
+            color="green"
+          />
+          <StatCard
+            title={t('token_sale.orders.stats.pending')}
+            value={stats.pendingOrders.toString()}
+            icon={Clock}
+            color="orange"
+          />
+          <StatCard
+            title={t('token_sale.orders.stats.total_spent')}
+            value={`${stats.totalSpent.toLocaleString()}`}
+            icon={ShoppingCart}
+            color="purple"
+          />
+          <StatCard
+            title={t('token_sale.orders.stats.total_tokens')}
+            value={`${stats.totalTokens.toLocaleString()}`}
+            icon={ShoppingCart}
+            color="purple"
+          />
         </div>
       )}
 
@@ -219,7 +271,9 @@ export default function OrdersPage() {
         <Card className="text-center py-12">
           <CardContent>
             <div className="text-6xl mb-4">📭</div>
-            <h3 className="text-xl font-semibold text-white mb-2">{t('token_sale.orders.no_orders')}</h3>
+            <h3 className="text-xl font-semibold text-white mb-2">
+              {t('token_sale.orders.no_orders')}
+            </h3>
             <p className="text-gray-400 mb-6">{t('token_sale.orders.no_orders_desc')}</p>
             <Link href="/token-sale">
               <Button variant="primary">{t('token_sale.orders.buy_now')}</Button>
@@ -230,7 +284,9 @@ export default function OrdersPage() {
         <Card className="text-center py-12">
           <CardContent>
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-white mb-2">{t('token_sale.orders.enter_address')}</h3>
+            <h3 className="text-xl font-semibold text-white mb-2">
+              {t('token_sale.orders.enter_address')}
+            </h3>
             <p className="text-gray-400">{t('token_sale.orders.enter_address_desc')}</p>
           </CardContent>
         </Card>

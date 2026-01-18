@@ -330,13 +330,27 @@ export const translations: Record<string, Translation> = {
   },
   // Additional languages would be added here...
   // For brevity, I'm including placeholders for other languages
-  ko: { /* Korean translations */ },
-  es: { /* Spanish translations */ },
-  fr: { /* French translations */ },
-  de: { /* German translations */ },
-  ru: { /* Russian translations */ },
-  ar: { /* Arabic translations */ },
-  pt: { /* Portuguese translations */ },
+  ko: {
+    /* Korean translations */
+  },
+  es: {
+    /* Spanish translations */
+  },
+  fr: {
+    /* French translations */
+  },
+  de: {
+    /* German translations */
+  },
+  ru: {
+    /* Russian translations */
+  },
+  ar: {
+    /* Arabic translations */
+  },
+  pt: {
+    /* Portuguese translations */
+  },
 };
 
 // Translation hook
@@ -344,7 +358,7 @@ export function useTranslation(language: string = 'en') {
   const t = (key: string, fallback?: string): string => {
     const keys = key.split('.');
     let value: Translation | string | undefined = translations[language] || translations.en;
-    
+
     for (const k of keys) {
       if (typeof value === 'object' && value !== null) {
         value = value[k];
@@ -353,11 +367,11 @@ export function useTranslation(language: string = 'en') {
         break;
       }
     }
-    
+
     if (typeof value === 'string') {
       return value;
     }
-    
+
     // Fallback to English if translation not found
     if (language !== 'en') {
       let englishValue: Translation | string | undefined = translations.en;
@@ -373,7 +387,7 @@ export function useTranslation(language: string = 'en') {
         return englishValue;
       }
     }
-    
+
     return fallback || key;
   };
 
@@ -383,19 +397,19 @@ export function useTranslation(language: string = 'en') {
 // Language detection utility
 export function detectLanguage(): string {
   if (typeof window === 'undefined') return 'en';
-  
+
   // Check localStorage first
   const saved = localStorage.getItem('quantaureum-language');
   if (saved && translations[saved]) {
     return saved;
   }
-  
+
   // Check browser language
   const browserLang = navigator.language.split('-')[0];
   if (translations[browserLang]) {
     return browserLang;
   }
-  
+
   return 'en';
 }
 

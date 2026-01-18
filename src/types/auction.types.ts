@@ -11,7 +11,7 @@ export interface AuctionItem {
   images: string[];
   category: string;
   tier: NodeTier;
-  
+
   // 技术规格
   specifications: {
     location: string;
@@ -21,7 +21,7 @@ export interface AuctionItem {
     uptime: string;
     features: string[];
   };
-  
+
   // 拍卖信息
   auction: {
     id: string;
@@ -33,13 +33,13 @@ export interface AuctionItem {
     increment: number;
     reservePrice?: number;
     buyNowPrice?: number;
-    
+
     // 统计信息
     totalBids: number;
     uniqueBidders: number;
     viewCount: number;
     watchCount: number;
-    
+
     // 当前领先者
     leadingBidder?: {
       id: string;
@@ -47,13 +47,13 @@ export interface AuctionItem {
       bidTime: Date;
       amount: number;
     };
-    
+
     // 拍卖设置
     autoExtend: boolean;
     extensionTime: number; // 分钟
     minBidIncrement: number;
   };
-  
+
   // 卖家信息
   seller: {
     id: string;
@@ -124,7 +124,7 @@ export interface AuctionFilters {
 }
 
 // 排序选项
-export type SortOption = 
+export type SortOption =
   | 'ending_soon'
   | 'newly_listed'
   | 'price_low_high'
@@ -184,7 +184,11 @@ export interface AuctionEndEventData {
   finalPrice: number;
 }
 
-export type AuctionEventData = BidEventData | PriceUpdateEventData | TimeExtensionEventData | AuctionEndEventData;
+export type AuctionEventData =
+  | BidEventData
+  | PriceUpdateEventData
+  | TimeExtensionEventData
+  | AuctionEndEventData;
 
 // 实时更新事件
 export interface AuctionEvent {

@@ -11,10 +11,7 @@ export async function GET() {
     const result = await db.getIcoStats();
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -23,9 +20,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error('Get ICO stats error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

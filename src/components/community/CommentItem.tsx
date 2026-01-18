@@ -212,11 +212,7 @@ export default function CommentItem({
         </div>
 
         {/* 子评论 */}
-        {showReplies && children && (
-          <div className="mt-2">
-            {children}
-          </div>
-        )}
+        {showReplies && children && <div className="mt-2">{children}</div>}
       </motion.div>
     </div>
   );

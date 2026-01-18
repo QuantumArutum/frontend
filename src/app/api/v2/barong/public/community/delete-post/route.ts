@@ -9,10 +9,13 @@ import { sql } from '@/lib/database';
 export async function DELETE(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -22,10 +25,13 @@ export async function DELETE(request: NextRequest) {
 
     // 验证参数
     if (!postId || !currentUserId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Post ID and user ID are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post ID and user ID are required',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证帖子存在且属于当前用户
@@ -35,17 +41,23 @@ export async function DELETE(request: NextRequest) {
     `;
 
     if (postCheck.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Post not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post not found',
+        },
+        { status: 404 }
+      );
     }
 
     if (postCheck[0].user_id !== currentUserId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'You can only delete your own posts' 
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'You can only delete your own posts',
+        },
+        { status: 403 }
+      );
     }
 
     // 确保必要字段存在
@@ -76,9 +88,12 @@ export async function DELETE(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error deleting post:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

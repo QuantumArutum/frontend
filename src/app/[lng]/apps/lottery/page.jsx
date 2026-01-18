@@ -13,4 +13,3 @@ const LotteryPage = () => {
 };
 
 export default LotteryPage;
-

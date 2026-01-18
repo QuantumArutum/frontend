@@ -17,7 +17,7 @@ const mockHotels = [
     reviews_count: 2560,
     amenities: ['免费WiFi', '游泳池', '健身房', '餐厅', 'SPA'],
     image: '/placeholder-hotel.svg',
-    rooms_available: 15
+    rooms_available: 15,
   },
   {
     id: 'HT002',
@@ -30,7 +30,7 @@ const mockHotels = [
     reviews_count: 1890,
     amenities: ['免费WiFi', '健身房', '餐厅', '会议室'],
     image: '/placeholder-hotel.svg',
-    rooms_available: 28
+    rooms_available: 28,
   },
   {
     id: 'HT003',
@@ -43,8 +43,8 @@ const mockHotels = [
     reviews_count: 1250,
     amenities: ['免费WiFi', '餐厅', '停车场'],
     image: '/placeholder-hotel.svg',
-    rooms_available: 42
-  }
+    rooms_available: 42,
+  },
 ];
 
 export const GET = createSecureHandler(
@@ -52,7 +52,7 @@ export const GET = createSecureHandler(
     return successResponse({
       data: mockHotels,
       total: mockHotels.length,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   },
   { rateLimit: true, allowedMethods: ['GET'] }

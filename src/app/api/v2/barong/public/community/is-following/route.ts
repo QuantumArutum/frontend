@@ -9,10 +9,13 @@ import { sql } from '@/lib/database';
 export async function GET(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -20,17 +23,20 @@ export async function GET(request: NextRequest) {
     const currentUserId = searchParams.get('currentUserId');
 
     if (!userId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'userId is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'userId is required',
+        },
+        { status: 400 }
+      );
     }
 
     // 如果没有登录，返回 false
     if (!currentUserId) {
       return NextResponse.json({
         success: true,
-        data: { isFollowing: false }
+        data: { isFollowing: false },
       });
     }
 
@@ -43,14 +49,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: {
-        isFollowing: followResult.length > 0
-      }
+        isFollowing: followResult.length > 0,
+      },
     });
   } catch (error) {
     console.error('Error checking follow status:', error);
-    return NextResponse.json({ 
-      success: true, 
-      data: { isFollowing: false }
+    return NextResponse.json({
+      success: true,
+      data: { isFollowing: false },
     });
   }
 }

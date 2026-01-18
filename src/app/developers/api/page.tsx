@@ -32,19 +32,34 @@ export default function APIReference() {
                   {t('api.categories.title', 'API Categories')}
                 </h3>
                 <nav className="space-y-2">
-                  <a href="#wallet" className="block text-cyan-400 hover:text-cyan-300 transition-colors">
+                  <a
+                    href="#wallet"
+                    className="block text-cyan-400 hover:text-cyan-300 transition-colors"
+                  >
                     {t('api.categories.wallet', 'Wallet API')}
                   </a>
-                  <a href="#blockchain" className="block text-cyan-400 hover:text-cyan-300 transition-colors">
+                  <a
+                    href="#blockchain"
+                    className="block text-cyan-400 hover:text-cyan-300 transition-colors"
+                  >
                     {t('api.categories.blockchain', 'Blockchain API')}
                   </a>
-                  <a href="#contracts" className="block text-cyan-400 hover:text-cyan-300 transition-colors">
+                  <a
+                    href="#contracts"
+                    className="block text-cyan-400 hover:text-cyan-300 transition-colors"
+                  >
                     {t('api.categories.contracts', 'Smart Contract API')}
                   </a>
-                  <a href="#crosschain" className="block text-cyan-400 hover:text-cyan-300 transition-colors">
+                  <a
+                    href="#crosschain"
+                    className="block text-cyan-400 hover:text-cyan-300 transition-colors"
+                  >
                     {t('api.categories.crosschain', 'Cross-chain API')}
                   </a>
-                  <a href="#quantum" className="block text-cyan-400 hover:text-cyan-300 transition-colors">
+                  <a
+                    href="#quantum"
+                    className="block text-cyan-400 hover:text-cyan-300 transition-colors"
+                  >
                     {t('api.categories.quantum', 'Quantum Security API')}
                   </a>
                 </nav>
@@ -52,11 +67,14 @@ export default function APIReference() {
             </div>
 
             <div className="lg:col-span-2 space-y-8">
-              <section id="wallet" className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
+              <section
+                id="wallet"
+                className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20"
+              >
                 <h2 className="text-2xl font-semibold text-white mb-6">
                   {t('api.wallet.title', 'Wallet API')}
                 </h2>
-                
+
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-medium text-white mb-3">
@@ -80,17 +98,23 @@ export default function APIReference() {
                       <div className="text-gray-300">/api/v1/wallet/{'{address}'}/balance</div>
                     </div>
                     <p className="text-gray-300 mt-2">
-                      {t('api.wallet.balance.description', 'Get balance information for a specific address')}
+                      {t(
+                        'api.wallet.balance.description',
+                        'Get balance information for a specific address'
+                      )}
                     </p>
                   </div>
                 </div>
               </section>
 
-              <section id="blockchain" className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
+              <section
+                id="blockchain"
+                className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20"
+              >
                 <h2 className="text-2xl font-semibold text-white mb-6">
                   {t('api.blockchain.title', 'Blockchain API')}
                 </h2>
-                
+
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-medium text-white mb-3">
@@ -101,7 +125,10 @@ export default function APIReference() {
                       <div className="text-gray-300">/api/v1/block/{'{blockNumber}'}</div>
                     </div>
                     <p className="text-gray-300 mt-2">
-                      {t('api.blockchain.block.description', 'Get detailed information for a specific block')}
+                      {t(
+                        'api.blockchain.block.description',
+                        'Get detailed information for a specific block'
+                      )}
                     </p>
                   </div>
 
@@ -114,17 +141,23 @@ export default function APIReference() {
                       <div className="text-gray-300">/api/v1/transaction/send</div>
                     </div>
                     <p className="text-gray-300 mt-2">
-                      {t('api.blockchain.transaction.description', 'Broadcast a quantum-signed transaction to the network')}
+                      {t(
+                        'api.blockchain.transaction.description',
+                        'Broadcast a quantum-signed transaction to the network'
+                      )}
                     </p>
                   </div>
                 </div>
               </section>
 
-              <section id="contracts" className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
+              <section
+                id="contracts"
+                className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20"
+              >
                 <h2 className="text-2xl font-semibold text-white mb-6">
                   {t('api.contracts.title', 'Smart Contract API')}
                 </h2>
-                
+
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-medium text-white mb-3">
@@ -135,7 +168,10 @@ export default function APIReference() {
                       <div className="text-gray-300">/api/v1/contract/deploy</div>
                     </div>
                     <p className="text-gray-300 mt-2">
-                      {t('api.contracts.deploy.description', 'Deploy a quantum-safe smart contract')}
+                      {t(
+                        'api.contracts.deploy.description',
+                        'Deploy a quantum-safe smart contract'
+                      )}
                     </p>
                   </div>
 
@@ -159,18 +195,23 @@ export default function APIReference() {
                   {t('api.gettingStarted.title', 'Getting Started')}
                 </h2>
                 <p className="text-gray-300 mb-4">
-                  {t('api.gettingStarted.description', 'Start using Quantaureum API in a few simple steps:')}
+                  {t(
+                    'api.gettingStarted.description',
+                    'Start using Quantaureum API in a few simple steps:'
+                  )}
                 </p>
                 <ol className="list-decimal list-inside text-gray-300 space-y-2">
-                  <li>{t('api.gettingStarted.step1', 'Register a developer account to get API key')}</li>
+                  <li>
+                    {t('api.gettingStarted.step1', 'Register a developer account to get API key')}
+                  </li>
                   <li>{t('api.gettingStarted.step2', 'Install Quantaureum SDK')}</li>
                   <li>{t('api.gettingStarted.step3', 'Check sample code and documentation')}</li>
                   <li>{t('api.gettingStarted.step4', 'Start building your application')}</li>
                 </ol>
-                
+
                 <div className="mt-6">
-                  <a 
-                    href="/developers/sdk" 
+                  <a
+                    href="/developers/sdk"
                     className="inline-block bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-6 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-cyan-700 transition-all duration-200"
                   >
                     {t('api.gettingStarted.downloadSDK', 'Download SDK')}

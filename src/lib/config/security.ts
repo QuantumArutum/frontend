@@ -1,6 +1,6 @@
 /**
  * 安全配置模块
- * 
+ *
  * 集中管理所有安全相关的配置
  */
 
@@ -12,13 +12,13 @@ export const isDevelopment = process.env.NODE_ENV === 'development';
 export const API_CONFIG = {
   // 区块链 RPC
   BLOCKCHAIN_RPC_URL: process.env.BLOCKCHAIN_RPC_URL || 'http://localhost:8545',
-  
+
   // 代币销售服务
   TOKEN_SALE_SERVER: process.env.TOKEN_SALE_SERVER || 'http://localhost:8560',
-  
+
   // 后端 API
   BACKEND_API_URL: process.env.BACKEND_API_URL || '',
-  
+
   // 请求超时（毫秒）
   REQUEST_TIMEOUT: parseInt(process.env.REQUEST_TIMEOUT || '5000'),
 };
@@ -27,25 +27,25 @@ export const API_CONFIG = {
 export const RATE_LIMIT_CONFIG = {
   // 通用 API 限制
   DEFAULT: {
-    windowMs: 60 * 1000,      // 1分钟窗口
-    maxRequests: 100,          // 每窗口最大请求数
+    windowMs: 60 * 1000, // 1分钟窗口
+    maxRequests: 100, // 每窗口最大请求数
     blockDuration: 15 * 60 * 1000, // 封禁15分钟
   },
-  
+
   // 认证相关限制（更严格）
   AUTH: {
     windowMs: 60 * 1000,
-    maxRequests: 10,           // 每分钟最多10次登录尝试
+    maxRequests: 10, // 每分钟最多10次登录尝试
     blockDuration: 30 * 60 * 1000, // 封禁30分钟
   },
-  
+
   // 交易相关限制
   TRANSACTION: {
     windowMs: 60 * 1000,
-    maxRequests: 20,           // 每分钟最多20次交易
+    maxRequests: 20, // 每分钟最多20次交易
     blockDuration: 10 * 60 * 1000,
   },
-  
+
   // 搜索限制
   SEARCH: {
     windowMs: 60 * 1000,
@@ -90,11 +90,11 @@ export const INPUT_LIMITS = {
   MAX_DESCRIPTION_LENGTH: 5000,
   MAX_COMMENT_LENGTH: 2000,
   MAX_SEARCH_QUERY_LENGTH: 100,
-  
+
   // 数值限制
   MAX_PAGE_SIZE: 100,
   DEFAULT_PAGE_SIZE: 20,
-  
+
   // 文件上传限制
   MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
   ALLOWED_FILE_TYPES: ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'],

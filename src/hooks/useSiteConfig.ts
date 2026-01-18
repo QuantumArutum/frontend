@@ -3,12 +3,14 @@
 import { useState, useEffect, useCallback } from 'react';
 
 // API Base URL - 在生产环境使用相对路径或禁用外部 API
-const API_BASE_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
-  ? '' // 生产环境使用相对路径（Next.js API routes）
-  : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001');
+const API_BASE_URL =
+  typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+    ? '' // 生产环境使用相对路径（Next.js API routes）
+    : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 // 是否启用外部 API（生产环境禁用，因为没有后端）
-const ENABLE_EXTERNAL_API = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+const ENABLE_EXTERNAL_API =
+  typeof window !== 'undefined' && window.location.hostname === 'localhost';
 
 // Types
 export interface SiteSettings {
@@ -104,7 +106,7 @@ export function useSiteConfig() {
       setLoading(false);
       return;
     }
-    
+
     try {
       setLoading(true);
       setError(null);
@@ -142,7 +144,7 @@ export function useNavigation() {
       setLoading(false);
       return;
     }
-    
+
     try {
       setLoading(true);
       setError(null);
@@ -182,7 +184,7 @@ export function useFooter() {
       setLoading(false);
       return;
     }
-    
+
     try {
       setLoading(true);
       setError(null);
@@ -191,7 +193,7 @@ export function useFooter() {
       if (data.success) {
         const links = data.data || [];
         setFooterLinks(links);
-        
+
         // Group links by section
         const sectionMap = new Map<string, FooterLink[]>();
         links.forEach((link: FooterLink) => {
@@ -201,7 +203,7 @@ export function useFooter() {
           }
           sectionMap.get(section)!.push(link);
         });
-        
+
         // Convert to array of sections
         const sectionsArray: FooterSection[] = [];
         sectionMap.forEach((links, title) => {
@@ -243,7 +245,7 @@ export function useLaunchStatus() {
       setLoading(false);
       return;
     }
-    
+
     try {
       setLoading(true);
       setError(null);
@@ -284,7 +286,7 @@ export function useDemoModules() {
       setLoading(false);
       return;
     }
-    
+
     try {
       setLoading(true);
       setError(null);
@@ -307,37 +309,46 @@ export function useDemoModules() {
   }, [fetchModules]);
 
   // Helper to check if a specific module is active
-  const isModuleActive = useCallback((slug: string) => {
-    return modules.some(m => m.slug === slug && m.is_active);
-  }, [modules]);
+  const isModuleActive = useCallback(
+    (slug: string) => {
+      return modules.some((m) => m.slug === slug && m.is_active);
+    },
+    [modules]
+  );
 
   // Helper to get module config
-  const getModuleConfig = useCallback((slug: string) => {
-    const module = modules.find(m => m.slug === slug);
-    if (module?.config) {
-      try {
-        return JSON.parse(module.config);
-      } catch {
-        return null;
+  const getModuleConfig = useCallback(
+    (slug: string) => {
+      const module = modules.find((m) => m.slug === slug);
+      if (module?.config) {
+        try {
+          return JSON.parse(module.config);
+        } catch {
+          return null;
+        }
       }
-    }
-    return null;
-  }, [modules]);
+      return null;
+    },
+    [modules]
+  );
 
   // Helper to check if demo badge should be shown
-  const shouldShowDemoBadge = useCallback((slug: string) => {
-    const module = modules.find(m => m.slug === slug);
-    return module?.show_demo_badge ?? false;
-  }, [modules]);
+  const shouldShowDemoBadge = useCallback(
+    (slug: string) => {
+      const module = modules.find((m) => m.slug === slug);
+      return module?.show_demo_badge ?? false;
+    },
+    [modules]
+  );
 
-  return { 
-    modules, 
-    loading, 
-    error, 
+  return {
+    modules,
+    loading,
+    error,
     refetch: fetchModules,
     isModuleActive,
     getModuleConfig,
-    shouldShowDemoBadge
+    shouldShowDemoBadge,
   };
 }
 
@@ -352,14 +363,14 @@ export function usePageContent(slug: string) {
       setLoading(false);
       return;
     }
-    
+
     // 生产环境返回 null（页面内容由前端静态定义）
     if (!ENABLE_EXTERNAL_API) {
       setPage(null);
       setLoading(false);
       return;
     }
-    
+
     try {
       setLoading(true);
       setError(null);
@@ -392,11 +403,15 @@ export function useAllSiteConfig() {
   const launchStatus = useLaunchStatus();
   const demoModules = useDemoModules();
 
-  const loading = siteConfig.loading || navigation.loading || footer.loading || 
-                  launchStatus.loading || demoModules.loading;
-  
-  const error = siteConfig.error || navigation.error || footer.error || 
-                launchStatus.error || demoModules.error;
+  const loading =
+    siteConfig.loading ||
+    navigation.loading ||
+    footer.loading ||
+    launchStatus.loading ||
+    demoModules.loading;
+
+  const error =
+    siteConfig.error || navigation.error || footer.error || launchStatus.error || demoModules.error;
 
   const refetchAll = useCallback(() => {
     siteConfig.refetch();
@@ -414,6 +429,6 @@ export function useAllSiteConfig() {
     demoModules: demoModules.modules,
     loading,
     error,
-    refetchAll
+    refetchAll,
   };
 }

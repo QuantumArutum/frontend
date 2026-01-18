@@ -15,8 +15,8 @@ export async function GET() {
         performance: {
           keyGeneration: '0.5ms',
           signing: '1.2ms',
-          verification: '0.8ms'
-        }
+          verification: '0.8ms',
+        },
       },
       {
         name: 'SPHINCS+',
@@ -29,8 +29,8 @@ export async function GET() {
         performance: {
           keyGeneration: '2.1ms',
           signing: '45.3ms',
-          verification: '1.5ms'
-        }
+          verification: '1.5ms',
+        },
       },
       {
         name: 'FALCON',
@@ -43,9 +43,9 @@ export async function GET() {
         performance: {
           keyGeneration: '1.8ms',
           signing: '2.5ms',
-          verification: '1.1ms'
-        }
-      }
+          verification: '1.1ms',
+        },
+      },
     ],
     postQuantumEncryption: [
       {
@@ -59,8 +59,8 @@ export async function GET() {
         performance: {
           keyGeneration: '0.3ms',
           encapsulation: '0.4ms',
-          decapsulation: '0.6ms'
-        }
+          decapsulation: '0.6ms',
+        },
       },
       {
         name: 'SABER',
@@ -73,9 +73,9 @@ export async function GET() {
         performance: {
           keyGeneration: '0.4ms',
           encapsulation: '0.5ms',
-          decapsulation: '0.7ms'
-        }
-      }
+          decapsulation: '0.7ms',
+        },
+      },
     ],
     hashFunctions: [
       {
@@ -85,8 +85,8 @@ export async function GET() {
         status: 'active',
         description: 'Keccak-based cryptographic hash function',
         performance: {
-          throughput: '150 MB/s'
-        }
+          throughput: '150 MB/s',
+        },
       },
       {
         name: 'BLAKE3',
@@ -95,9 +95,9 @@ export async function GET() {
         status: 'active',
         description: 'High-performance cryptographic hash function',
         performance: {
-          throughput: '300 MB/s'
-        }
-      }
+          throughput: '300 MB/s',
+        },
+      },
     ],
     quantumRandom: [
       {
@@ -108,17 +108,17 @@ export async function GET() {
         description: 'True quantum random number generator',
         performance: {
           rate: '1 Mbps',
-          entropy: '1.0 bits/bit'
-        }
-      }
+          entropy: '1.0 bits/bit',
+        },
+      },
     ],
     metadata: {
       totalAlgorithms: 7,
       activeAlgorithms: 5,
       experimentalAlgorithms: 2,
       lastUpdated: new Date().toISOString(),
-      complianceStandards: ['NIST Post-Quantum', 'FIPS 140-2', 'Common Criteria']
-    }
+      complianceStandards: ['NIST Post-Quantum', 'FIPS 140-2', 'Common Criteria'],
+    },
   };
 
   return NextResponse.json(mockAlgorithms);

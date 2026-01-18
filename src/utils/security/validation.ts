@@ -22,7 +22,8 @@ export const SECURITY_PATTERNS = {
     /<object/gi,
     /<embed/gi,
   ],
-  SQL_INJECTION: /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|UNION|ALTER|CREATE|TRUNCATE)\b)|(--)|(;)|(')/gi,
+  SQL_INJECTION:
+    /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|UNION|ALTER|CREATE|TRUNCATE)\b)|(--)|(;)|(')/gi,
 };
 
 // Security error codes (not used but kept for compatibility)
@@ -72,7 +73,7 @@ export function sanitizeString(input: string | null | undefined): string {
     ALLOWED_TAGS: [], // No HTML tags allowed
     ALLOWED_ATTR: [], // No attributes allowed
     KEEP_CONTENT: true, // Keep text content
-    FORBID_CONTENTS: ['script', 'style', 'iframe', 'object', 'embed']
+    FORBID_CONTENTS: ['script', 'style', 'iframe', 'object', 'embed'],
   });
 
   // Additional cleaning for common attack vectors
@@ -95,30 +96,30 @@ export function validateName(name: string): ValidationResult {
   if (!name || typeof name !== 'string') {
     return {
       isValid: false,
-      error: '姓名不能为空'
+      error: '姓名不能为空',
     };
   }
 
   const sanitized = sanitizeString(name);
-  
+
   if (sanitized.length < 2) {
     return {
       isValid: false,
-      error: '姓名至少需要2个字符'
+      error: '姓名至少需要2个字符',
     };
   }
 
   if (sanitized.length > 50) {
     return {
       isValid: false,
-      error: '姓名不能超过50个字符'
+      error: '姓名不能超过50个字符',
     };
   }
 
   if (!SECURITY_PATTERNS.NAME.test(sanitized)) {
     return {
       isValid: false,
-      error: '姓名只能包含中英文字符、空格和点号'
+      error: '姓名只能包含中英文字符、空格和点号',
     };
   }
 
@@ -126,13 +127,13 @@ export function validateName(name: string): ValidationResult {
   if (hasXSSPatterns(name)) {
     return {
       isValid: false,
-      error: '姓名包含不安全的字符'
+      error: '姓名包含不安全的字符',
     };
   }
 
   return {
     isValid: true,
-    sanitizedValue: sanitized
+    sanitizedValue: sanitized,
   };
 }
 
@@ -144,7 +145,7 @@ export function validateEmail(email: string): ValidationResult {
   if (!email || typeof email !== 'string') {
     return {
       isValid: false,
-      error: '邮箱地址不能为空'
+      error: '邮箱地址不能为空',
     };
   }
 
@@ -153,14 +154,14 @@ export function validateEmail(email: string): ValidationResult {
   if (sanitized.length > 100) {
     return {
       isValid: false,
-      error: '邮箱地址不能超过100个字符'
+      error: '邮箱地址不能超过100个字符',
     };
   }
 
   if (!SECURITY_PATTERNS.EMAIL.test(sanitized)) {
     return {
       isValid: false,
-      error: '邮箱地址格式不正确'
+      error: '邮箱地址格式不正确',
     };
   }
 
@@ -168,24 +169,24 @@ export function validateEmail(email: string): ValidationResult {
   if (hasXSSPatterns(email)) {
     return {
       isValid: false,
-      error: '邮箱地址包含不安全的字符'
+      error: '邮箱地址包含不安全的字符',
     };
   }
 
   // Additional email security checks
   const warnings: string[] = [];
-  
+
   // Check for suspicious domains
   const suspiciousDomains = ['tempmail', 'guerrillamail', '10minutemail', 'mailinator'];
   const domain = sanitized.split('@')[1]?.toLowerCase();
-  if (domain && suspiciousDomains.some(suspicious => domain.includes(suspicious))) {
+  if (domain && suspiciousDomains.some((suspicious) => domain.includes(suspicious))) {
     warnings.push('检测到临时邮箱域名，建议使用常用邮箱');
   }
 
   return {
     isValid: true,
     sanitizedValue: sanitized,
-    warnings: warnings.length > 0 ? warnings : undefined
+    warnings: warnings.length > 0 ? warnings : undefined,
   };
 }
 
@@ -197,7 +198,7 @@ export function validatePhone(phone: string): ValidationResult {
   if (!phone || typeof phone !== 'string') {
     return {
       isValid: false,
-      error: '手机号码不能为空'
+      error: '手机号码不能为空',
     };
   }
 
@@ -210,7 +211,7 @@ export function validatePhone(phone: string): ValidationResult {
   if (SECURITY_PATTERNS.PHONE_CN.test(cleanPhone)) {
     return {
       isValid: true,
-      sanitizedValue: cleanPhone
+      sanitizedValue: cleanPhone,
     };
   }
 
@@ -219,13 +220,13 @@ export function validatePhone(phone: string): ValidationResult {
     return {
       isValid: true,
       sanitizedValue: cleanPhone,
-      warnings: ['国际号码格式，请确认号码正确']
+      warnings: ['国际号码格式，请确认号码正确'],
     };
   }
 
   return {
     isValid: false,
-    error: '手机号码格式不正确'
+    error: '手机号码格式不正确',
   };
 }
 
@@ -233,14 +234,14 @@ export function validatePhone(phone: string): ValidationResult {
  * Validate wallet address with detailed type detection
  * 验证钱包地址并详细检测类型
  */
-export function validateWalletAddress(address: string): ValidationResult & { 
+export function validateWalletAddress(address: string): ValidationResult & {
   addressType?: string;
   network?: string;
 } {
   if (!address || typeof address !== 'string') {
     return {
       isValid: false,
-      error: '钱包地址不能为空'
+      error: '钱包地址不能为空',
     };
   }
 
@@ -249,7 +250,7 @@ export function validateWalletAddress(address: string): ValidationResult & {
   if (sanitized.length > 100) {
     return {
       isValid: false,
-      error: '钱包地址不能超过100个字符'
+      error: '钱包地址不能超过100个字符',
     };
   }
 
@@ -257,7 +258,7 @@ export function validateWalletAddress(address: string): ValidationResult & {
   if (hasXSSPatterns(address)) {
     return {
       isValid: false,
-      error: '钱包地址包含不安全的字符'
+      error: '钱包地址包含不安全的字符',
     };
   }
 
@@ -270,7 +271,7 @@ export function validateWalletAddress(address: string): ValidationResult & {
       sanitizedValue: sanitized,
       addressType: 'Ethereum',
       network: 'Ethereum',
-      warnings: !isValidChecksum ? ['地址校验和可能不正确，请仔细核对'] : undefined
+      warnings: !isValidChecksum ? ['地址校验和可能不正确，请仔细核对'] : undefined,
     };
   }
 
@@ -280,7 +281,7 @@ export function validateWalletAddress(address: string): ValidationResult & {
       isValid: true,
       sanitizedValue: sanitized,
       addressType: 'Bitcoin Legacy',
-      network: 'Bitcoin'
+      network: 'Bitcoin',
     };
   }
 
@@ -290,7 +291,7 @@ export function validateWalletAddress(address: string): ValidationResult & {
       isValid: true,
       sanitizedValue: sanitized,
       addressType: 'Bitcoin Bech32',
-      network: 'Bitcoin'
+      network: 'Bitcoin',
     };
   }
 
@@ -300,13 +301,13 @@ export function validateWalletAddress(address: string): ValidationResult & {
       isValid: true,
       sanitizedValue: sanitized,
       addressType: 'TRON',
-      network: 'TRON'
+      network: 'TRON',
     };
   }
 
   return {
     isValid: false,
-    error: '钱包地址格式不正确，请输入有效的以太坊、比特币或TRON地址'
+    error: '钱包地址格式不正确，请输入有效的以太坊、比特币或TRON地址',
   };
 }
 
@@ -318,7 +319,7 @@ export function validateTransactionHash(hash: string): ValidationResult {
   if (!hash || typeof hash !== 'string') {
     return {
       isValid: false,
-      error: '交易哈希不能为空'
+      error: '交易哈希不能为空',
     };
   }
 
@@ -327,7 +328,7 @@ export function validateTransactionHash(hash: string): ValidationResult {
   if (!SECURITY_PATTERNS.TRANSACTION_HASH.test(sanitized)) {
     return {
       isValid: false,
-      error: '交易哈希格式不正确，应为64位十六进制字符串'
+      error: '交易哈希格式不正确，应为64位十六进制字符串',
     };
   }
 
@@ -335,13 +336,13 @@ export function validateTransactionHash(hash: string): ValidationResult {
   if (hasXSSPatterns(hash)) {
     return {
       isValid: false,
-      error: '交易哈希包含不安全的字符'
+      error: '交易哈希包含不安全的字符',
     };
   }
 
   return {
     isValid: true,
-    sanitizedValue: sanitized
+    sanitizedValue: sanitized,
   };
 }
 
@@ -358,7 +359,7 @@ export function validateNumericInput(
   if (value === null || value === undefined || value === '') {
     return {
       isValid: false,
-      error: `${fieldName}不能为空`
+      error: `${fieldName}不能为空`,
     };
   }
 
@@ -367,27 +368,27 @@ export function validateNumericInput(
   if (isNaN(numValue)) {
     return {
       isValid: false,
-      error: `${fieldName}必须是有效数字`
+      error: `${fieldName}必须是有效数字`,
     };
   }
 
   if (min !== undefined && numValue < min) {
     return {
       isValid: false,
-      error: `${fieldName}不能小于${min}`
+      error: `${fieldName}不能小于${min}`,
     };
   }
 
   if (max !== undefined && numValue > max) {
     return {
       isValid: false,
-      error: `${fieldName}不能大于${max}`
+      error: `${fieldName}不能大于${max}`,
     };
   }
 
   return {
     isValid: true,
-    sanitizedValue: numValue.toString()
+    sanitizedValue: numValue.toString(),
   };
 }
 /**
@@ -406,17 +407,17 @@ export function validateFormData(
     const validator = validationRules[field];
     if (validator) {
       const result = validator(value);
-      
+
       if (!result.isValid) {
         errors.push({
           field,
           message: result.error || '验证失败',
-          code: 'VALIDATION_ERROR'
+          code: 'VALIDATION_ERROR',
         });
         riskScore += 10; // Each validation error adds to risk score
       } else {
         sanitizedData[field] = result.sanitizedValue || value;
-        
+
         // Add risk score based on warnings
         if (result.warnings && result.warnings.length > 0) {
           riskScore += result.warnings.length * 5;
@@ -430,7 +431,7 @@ export function validateFormData(
 
   // Additional risk assessment
   const allTextValues = Object.values(data)
-    .filter(v => typeof v === 'string')
+    .filter((v) => typeof v === 'string')
     .join(' ');
 
   if (hasXSSPatterns(allTextValues)) {
@@ -445,7 +446,7 @@ export function validateFormData(
     isValid: errors.length === 0,
     errors,
     sanitizedData,
-    riskScore: Math.min(100, riskScore) // Cap at 100
+    riskScore: Math.min(100, riskScore), // Cap at 100
   };
 }
 
@@ -456,7 +457,7 @@ export function validateFormData(
 export function hasXSSPatterns(input: string): boolean {
   if (typeof input !== 'string') return false;
 
-  return SECURITY_PATTERNS.XSS_PATTERNS.some(pattern => pattern.test(input));
+  return SECURITY_PATTERNS.XSS_PATTERNS.some((pattern) => pattern.test(input));
 }
 
 /**
@@ -482,8 +483,10 @@ function validateEthereumChecksum(address: string): boolean {
 
   // Check if address is all lowercase or all uppercase (no checksum)
   const addressWithoutPrefix = address.slice(2);
-  if (addressWithoutPrefix === addressWithoutPrefix.toLowerCase() ||
-      addressWithoutPrefix === addressWithoutPrefix.toUpperCase()) {
+  if (
+    addressWithoutPrefix === addressWithoutPrefix.toLowerCase() ||
+    addressWithoutPrefix === addressWithoutPrefix.toUpperCase()
+  ) {
     return true; // No checksum to validate
   }
 
@@ -491,7 +494,7 @@ function validateEthereumChecksum(address: string): boolean {
   // For now, we'll just check that it contains mixed case
   const hasLowerCase = /[a-f]/.test(addressWithoutPrefix);
   const hasUpperCase = /[A-F]/.test(addressWithoutPrefix);
-  
+
   return hasLowerCase && hasUpperCase;
 }
 
@@ -530,7 +533,7 @@ export class ClientRateLimiter {
       return {
         allowed: false,
         remainingAttempts: 0,
-        resetTime: new Date(record.lastAttempt + windowMs)
+        resetTime: new Date(record.lastAttempt + windowMs),
       };
     }
 
@@ -540,7 +543,7 @@ export class ClientRateLimiter {
 
     return {
       allowed: true,
-      remainingAttempts: maxAttempts - record.count
+      remainingAttempts: maxAttempts - record.count,
     };
   }
 
@@ -607,7 +610,7 @@ export const VALIDATION_PRESETS = {
       return { isValid: false, error: '投资金额必须是数字' };
     }
     return validateNumericInput(value, 1, 10000000, '投资金额');
-  }
+  },
 };
 
 /**
@@ -622,13 +625,14 @@ export function createInvestorFormValidator() {
       phone: string;
       walletAddress: string;
       nodeCount: number;
-    }) => validateFormData(formData, {
-      name: VALIDATION_PRESETS.investorName,
-      email: VALIDATION_PRESETS.investorEmail,
-      phone: VALIDATION_PRESETS.investorPhone,
-      walletAddress: VALIDATION_PRESETS.walletAddress,
-      nodeCount: VALIDATION_PRESETS.nodeCount
-    })
+    }) =>
+      validateFormData(formData, {
+        name: VALIDATION_PRESETS.investorName,
+        email: VALIDATION_PRESETS.investorEmail,
+        phone: VALIDATION_PRESETS.investorPhone,
+        walletAddress: VALIDATION_PRESETS.walletAddress,
+        nodeCount: VALIDATION_PRESETS.nodeCount,
+      }),
   };
 }
 

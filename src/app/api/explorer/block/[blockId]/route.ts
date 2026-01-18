@@ -34,9 +34,13 @@ function generateMockBlock(blockNumber: number) {
   return {
     number: '0x' + blockNumber.toString(16),
     hash: '0x' + blockNumber.toString(16).padStart(64, 'a'),
-    parentHash: '0x' + Math.max(0, blockNumber - 1).toString(16).padStart(64, 'b'),
+    parentHash:
+      '0x' +
+      Math.max(0, blockNumber - 1)
+        .toString(16)
+        .padStart(64, 'b'),
     timestamp: '0x' + (now - offset * 12).toString(16),
-    miner: '0x' + (blockNumber % 100 + 1).toString(16).padStart(40, '0'),
+    miner: '0x' + ((blockNumber % 100) + 1).toString(16).padStart(40, '0'),
     gasUsed: '0x' + (5000000 + (blockNumber % 10) * 100000).toString(16),
     gasLimit: '0x' + (15000000).toString(16),
     difficulty: '0x' + (1000000).toString(16),
@@ -55,7 +59,7 @@ export async function GET(
 ) {
   const { blockId } = await params;
   const blockNumber = parseInt(blockId);
-  
+
   if (isNaN(blockNumber)) {
     return NextResponse.json({ error: 'Invalid block number' }, { status: 400 });
   }
@@ -63,7 +67,7 @@ export async function GET(
   try {
     const blockHex = toEvenHex(blockNumber);
     const blockData = await makeRPCCall('qau_getBlockByNumber', [blockHex, true]);
-    
+
     if (blockData) {
       return NextResponse.json({
         number: blockData.number,

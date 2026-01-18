@@ -17,17 +17,23 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     if (!postId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Post ID is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post ID is required',
+        },
+        { status: 400 }
+      );
     }
 
     // 确保评论表存在
@@ -190,9 +196,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching comments:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

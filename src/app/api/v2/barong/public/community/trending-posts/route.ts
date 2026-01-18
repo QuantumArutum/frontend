@@ -13,10 +13,13 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     // 确保必要的表存在
@@ -134,9 +137,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching trending posts:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

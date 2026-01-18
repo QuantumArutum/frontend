@@ -20,13 +20,13 @@ const categoryData: Record<string, { name: string; icon: string; color: string }
   defi: { name: 'DeFi', icon: 'D', color: 'from-green-500 to-emerald-500' },
   trading: { name: 'Trading', icon: 'TR', color: 'from-orange-500 to-red-500' },
   governance: { name: 'Governance', icon: 'GV', color: 'from-indigo-500 to-purple-500' },
-  events: { name: 'Events', icon: 'E', color: 'from-yellow-500 to-orange-500' }
+  events: { name: 'Events', icon: 'E', color: 'from-yellow-500 to-orange-500' },
 };
 
 export default function NewForumPostPage() {
   const router = useRouter();
   const params = useParams();
-  const categoryId = params?.category as string || 'general';
+  const categoryId = (params?.category as string) || 'general';
   const category = categoryData[categoryId] || categoryData.general;
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -74,7 +74,10 @@ export default function NewForumPostPage() {
           userId: userInfo?.id,
           userName: userInfo?.name,
           userAvatar: userInfo?.avatar,
-          tags: formData.tags.split(',').map(t => t.trim()).filter(Boolean)
+          tags: formData.tags
+            .split(',')
+            .map((t) => t.trim())
+            .filter(Boolean),
         }),
       });
 
@@ -101,12 +104,15 @@ export default function NewForumPostPage() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <div className="absolute inset-0 w-full h-full" style={{
-        background: `radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+      <div
+        className="absolute inset-0 w-full h-full"
+        style={{
+          background: `radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
           radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
           linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #1e3a8a 50%, #1e40af 75%, #1d4ed8 100%)`,
-        zIndex: -2
-      }} />
+          zIndex: -2,
+        }}
+      />
       <QuantumBackground id="new-post-particles" intensity="light" interactive={true} />
 
       {/* 社区导航条 */}
@@ -122,16 +128,27 @@ export default function NewForumPostPage() {
         </div>
 
         {error && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-6 p-4 bg-red-500/20 border border-red-500 rounded-lg flex items-center gap-3">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 p-4 bg-red-500/20 border border-red-500 rounded-lg flex items-center gap-3"
+          >
             <AlertCircle className="w-5 h-5 text-red-400" />
             <span className="text-red-300">{error}</span>
           </motion.div>
         )}
 
-        <motion.form initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} onSubmit={handleSubmit} className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-8 space-y-6">
+        <motion.form
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          onSubmit={handleSubmit}
+          className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-8 space-y-6"
+        >
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">Category</label>
-            <div className={`inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${category.color} rounded-lg text-white`}>
+            <div
+              className={`inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${category.color} rounded-lg text-white`}
+            >
               <span className="font-bold">{category.icon}</span>
               <span>{category.name}</span>
             </div>
@@ -162,7 +179,9 @@ export default function NewForumPostPage() {
               maxLength={10000}
               required
             />
-            <div className="mt-1 text-xs text-gray-400 text-right">{formData.content.length}/10000</div>
+            <div className="mt-1 text-xs text-gray-400 text-right">
+              {formData.content.length}/10000
+            </div>
           </div>
 
           <div>
@@ -177,16 +196,31 @@ export default function NewForumPostPage() {
           </div>
 
           <div className="flex items-center gap-3 pt-2 border-t border-white/20">
-            <button type="button" className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors" title="Add image (coming soon)" disabled>
+            <button
+              type="button"
+              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+              title="Add image (coming soon)"
+              disabled
+            >
               <ImageIcon className="w-5 h-5" aria-hidden="true" />
             </button>
-            <button type="button" className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors" title="Add link (coming soon)" disabled>
+            <button
+              type="button"
+              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+              title="Add link (coming soon)"
+              disabled
+            >
               <LinkIcon className="w-5 h-5" />
             </button>
           </div>
 
           <div className="flex items-center justify-end gap-4 pt-4">
-            <button type="button" onClick={() => router.back()} className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg font-medium transition-colors" disabled={loading}>
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg font-medium transition-colors"
+              disabled={loading}
+            >
               Cancel
             </button>
             <motion.button

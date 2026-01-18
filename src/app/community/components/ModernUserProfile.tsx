@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  MessageSquare, 
-  Heart, 
-  Eye, 
-  Calendar, 
-  MapPin, 
-  Twitter, 
-  Github, 
+import {
+  MessageSquare,
+  Heart,
+  Eye,
+  Calendar,
+  MapPin,
+  Twitter,
+  Github,
   Globe,
   Share2,
   Crown,
@@ -17,7 +17,7 @@ import {
   Star,
   Activity,
   Users,
-  Mail
+  Mail,
 } from 'lucide-react';
 import '../../../styles/design-system.css';
 
@@ -61,10 +61,14 @@ const ModernUserProfile: React.FC<UserProfileProps> = ({ user }) => {
 
   const getBadgeColor = (rarity: string) => {
     switch (rarity) {
-      case 'legendary': return 'from-yellow-400 to-orange-500';
-      case 'epic': return 'from-purple-500 to-pink-500';
-      case 'rare': return 'from-blue-500 to-cyan-500';
-      default: return 'from-gray-500 to-gray-600';
+      case 'legendary':
+        return 'from-yellow-400 to-orange-500';
+      case 'epic':
+        return 'from-purple-500 to-pink-500';
+      case 'rare':
+        return 'from-blue-500 to-cyan-500';
+      default:
+        return 'from-gray-500 to-gray-600';
     }
   };
 
@@ -73,8 +77,8 @@ const ModernUserProfile: React.FC<UserProfileProps> = ({ user }) => {
       'Core Developer': 'from-purple-500 to-pink-500',
       'Community Leader': 'from-amber-500 to-orange-500',
       'Senior Member': 'from-blue-500 to-cyan-500',
-      'Member': 'from-emerald-500 to-teal-500',
-      'New Member': 'from-gray-500 to-gray-600'
+      Member: 'from-emerald-500 to-teal-500',
+      'New Member': 'from-gray-500 to-gray-600',
     };
     return colors[level as keyof typeof colors] || 'from-gray-500 to-gray-600';
   };
@@ -91,23 +95,27 @@ const ModernUserProfile: React.FC<UserProfileProps> = ({ user }) => {
                 <div className="w-32 h-32 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-4xl font-bold text-white">
                   {user.avatar}
                 </div>
-                <div className={`absolute -bottom-2 -right-2 w-8 h-8 rounded-full border-4 border-gray-900 ${
-                  user.isOnline ? 'bg-green-400' : 'bg-gray-400'
-                }`}></div>
+                <div
+                  className={`absolute -bottom-2 -right-2 w-8 h-8 rounded-full border-4 border-gray-900 ${
+                    user.isOnline ? 'bg-green-400' : 'bg-gray-400'
+                  }`}
+                ></div>
                 {user.isVerified && (
                   <div className="absolute -top-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                     <Shield className="w-4 h-4 text-white" />
                   </div>
                 )}
               </div>
-              
+
               <div className="flex items-center gap-2 mb-2">
                 <h1 className="text-2xl font-bold text-white">{user.displayName}</h1>
-                <span className={`px-3 py-1 text-sm rounded-full bg-gradient-to-r ${getLevelColor(user.level)} text-white`}>
+                <span
+                  className={`px-3 py-1 text-sm rounded-full bg-gradient-to-r ${getLevelColor(user.level)} text-white`}
+                >
                   {user.level}
                 </span>
               </div>
-              
+
               <p className="text-gray-400 mb-1">@{user.username}</p>
               <div className="flex items-center gap-1 text-purple-400 font-semibold">
                 <Star className="w-4 h-4" />
@@ -130,7 +138,7 @@ const ModernUserProfile: React.FC<UserProfileProps> = ({ user }) => {
                     </div>
                   )}
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setIsFollowing(!isFollowing)}
@@ -155,19 +163,28 @@ const ModernUserProfile: React.FC<UserProfileProps> = ({ user }) => {
               {/* Social Links */}
               <div className="flex items-center gap-4 mb-6">
                 {user.website && (
-                  <a href={user.website} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                  <a
+                    href={user.website}
+                    className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+                  >
                     <Globe className="w-4 h-4" />
                     <span>Website</span>
                   </a>
                 )}
                 {user.twitter && (
-                  <a href={user.twitter} className="flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors">
+                  <a
+                    href={user.twitter}
+                    className="flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors"
+                  >
                     <Twitter className="w-4 h-4" />
                     <span>Twitter</span>
                   </a>
                 )}
                 {user.github && (
-                  <a href={user.github} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                  <a
+                    href={user.github}
+                    className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+                  >
                     <Github className="w-4 h-4" />
                     <span>GitHub</span>
                   </a>
@@ -182,7 +199,7 @@ const ModernUserProfile: React.FC<UserProfileProps> = ({ user }) => {
                   { label: 'Likes', value: user.stats.likes, icon: Heart },
                   { label: 'Views', value: user.stats.views, icon: Eye },
                   { label: 'Followers', value: user.stats.followers, icon: Users },
-                  { label: 'Following', value: user.stats.following, icon: Users }
+                  { label: 'Following', value: user.stats.following, icon: Users },
                 ].map((stat, index) => (
                   <motion.div
                     key={stat.label}
@@ -213,12 +230,12 @@ const ModernUserProfile: React.FC<UserProfileProps> = ({ user }) => {
           <div className="lg:col-span-3">
             {/* Tabs */}
             <div className="flex items-center gap-4 mb-8">
-              {([
+              {[
                 { id: 'posts' as const, label: 'Posts', count: user.stats.posts },
                 { id: 'replies' as const, label: 'Replies', count: user.stats.replies },
                 { id: 'badges' as const, label: 'Badges', count: user.badges.length },
-                { id: 'activity' as const, label: 'Activity', count: null }
-              ]).map((tab) => (
+                { id: 'activity' as const, label: 'Activity', count: null },
+              ].map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
@@ -254,12 +271,16 @@ const ModernUserProfile: React.FC<UserProfileProps> = ({ user }) => {
                       transition={{ delay: index * 0.1 }}
                       className={`quantum-card text-center relative overflow-hidden`}
                     >
-                      <div className={`absolute inset-0 bg-gradient-to-br ${getBadgeColor(badge.rarity)} opacity-10`}></div>
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${getBadgeColor(badge.rarity)} opacity-10`}
+                      ></div>
                       <div className="relative z-10">
                         <div className="text-4xl mb-3">{badge.icon}</div>
                         <h3 className="font-semibold text-white mb-2">{badge.name}</h3>
                         <p className="text-sm text-gray-400 mb-3">{badge.description}</p>
-                        <span className={`px-2 py-1 text-xs rounded-full bg-gradient-to-r ${getBadgeColor(badge.rarity)} text-white`}>
+                        <span
+                          className={`px-2 py-1 text-xs rounded-full bg-gradient-to-r ${getBadgeColor(badge.rarity)} text-white`}
+                        >
                           {badge.rarity.toUpperCase()}
                         </span>
                       </div>
@@ -315,7 +336,10 @@ const ModernUserProfile: React.FC<UserProfileProps> = ({ user }) => {
               </h3>
               <div className="space-y-3">
                 {user.badges.slice(0, 3).map((badge) => (
-                  <div key={badge.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors">
+                  <div
+                    key={badge.id}
+                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors"
+                  >
                     <div className="text-2xl">{badge.icon}</div>
                     <div className="flex-1">
                       <div className="text-sm font-medium text-white">{badge.name}</div>
@@ -333,4 +357,3 @@ const ModernUserProfile: React.FC<UserProfileProps> = ({ user }) => {
 };
 
 export default ModernUserProfile;
-

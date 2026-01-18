@@ -65,7 +65,7 @@ CREATE INDEX IF NOT EXISTS idx_user_bans_expires_at ON user_bans(expires_at);
 ### 4. 添加字段到 posts 表
 
 ```sql
-ALTER TABLE posts 
+ALTER TABLE posts
 ADD COLUMN IF NOT EXISTS is_pinned BOOLEAN DEFAULT FALSE,
 ADD COLUMN IF NOT EXISTS pin_type VARCHAR(50),
 ADD COLUMN IF NOT EXISTS pinned_at TIMESTAMP,
@@ -84,7 +84,7 @@ CREATE INDEX IF NOT EXISTS idx_posts_is_locked ON posts(is_locked);
 ```sql
 INSERT INTO moderators (user_id, role, appointed_by, appointed_at)
 VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW())
-ON CONFLICT (user_id) DO UPDATE 
+ON CONFLICT (user_id) DO UPDATE
 SET role = 'admin', removed_at = NULL;
 ```
 
@@ -101,15 +101,15 @@ SET role = 'admin', removed_at = NULL;
 
 ```sql
 -- 检查表是否创建成功
-SELECT table_name FROM information_schema.tables 
-WHERE table_schema = 'public' 
+SELECT table_name FROM information_schema.tables
+WHERE table_schema = 'public'
 AND table_name IN ('moderators', 'mod_actions', 'user_bans');
 
 -- 检查管理员是否添加成功
 SELECT * FROM moderators WHERE user_id = 'aurum51668@outlook.com';
 
 -- 检查 posts 表新字段
-SELECT column_name FROM information_schema.columns 
-WHERE table_name = 'posts' 
+SELECT column_name FROM information_schema.columns
+WHERE table_name = 'posts'
 AND column_name IN ('is_pinned', 'is_locked', 'mod_note');
 ```

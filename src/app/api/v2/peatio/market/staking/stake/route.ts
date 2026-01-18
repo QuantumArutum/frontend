@@ -14,7 +14,10 @@ export async function POST(request: NextRequest) {
     const { pool_id, amount } = await request.json();
 
     if (!pool_id || !amount || amount <= 0) {
-      return NextResponse.json({ success: false, message: 'Pool ID and valid amount are required' }, { status: 400 });
+      return NextResponse.json(
+        { success: false, message: 'Pool ID and valid amount are required' },
+        { status: 400 }
+      );
     }
 
     const result = await db.createStake({

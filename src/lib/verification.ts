@@ -12,18 +12,20 @@ export function generateCode(): string {
 }
 
 // 检查速率限制（使用数据库）
-export async function checkRateLimitAsync(email: string): Promise<{ allowed: boolean; retryAfter?: number }> {
+export async function checkRateLimitAsync(
+  email: string
+): Promise<{ allowed: boolean; retryAfter?: number }> {
   if (!sql) {
     return { allowed: true }; // 无数据库时跳过限制
   }
-  
+
   try {
     const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
     const result = await sql`
       SELECT COUNT(*) as count FROM verification_codes 
       WHERE email = ${email} AND created_at > ${oneHourAgo}
     `;
-    
+
     const count = parseInt(result[0]?.count || '0');
     if (count >= MAX_REQUESTS_PER_HOUR) {
       return { allowed: false, retryAfter: 60 };
@@ -45,13 +47,13 @@ export async function storeCodeAsync(email: string, code: string, type: string):
     console.log(`[DEV] Store code for ${email}: ${code}`);
     return;
   }
-  
+
   try {
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString(); // 10分钟
-    
+
     // 删除旧验证码
     await sql`DELETE FROM verification_codes WHERE email = ${email} AND type = ${type}`;
-    
+
     // 插入新验证码
     await sql`
       INSERT INTO verification_codes (email, code, type, expires_at, created_at)
@@ -68,33 +70,37 @@ export function storeCode(email: string, code: string, type: string): void {
 }
 
 // 验证验证码（数据库版本）
-export async function verifyCodeAsync(email: string, code: string, type: string): Promise<{ valid: boolean; message?: string }> {
+export async function verifyCodeAsync(
+  email: string,
+  code: string,
+  type: string
+): Promise<{ valid: boolean; message?: string }> {
   if (!sql) {
     return { valid: false, message: '数据库未配置' };
   }
-  
+
   try {
     const result = await sql`
       SELECT code, expires_at FROM verification_codes 
       WHERE email = ${email} AND type = ${type}
       ORDER BY created_at DESC LIMIT 1
     `;
-    
+
     if (!result || result.length === 0) {
       return { valid: false, message: '请先获取验证码' };
     }
-    
+
     const stored = result[0];
-    
+
     if (new Date() > new Date(stored.expires_at)) {
       await sql`DELETE FROM verification_codes WHERE email = ${email} AND type = ${type}`;
       return { valid: false, message: '验证码已过期，请重新获取' };
     }
-    
+
     if (stored.code !== code) {
       return { valid: false, message: '验证码错误' };
     }
-    
+
     return { valid: true };
   } catch (error) {
     console.error('Verify code error:', error);
@@ -103,14 +109,18 @@ export async function verifyCodeAsync(email: string, code: string, type: string)
 }
 
 // 兼容旧接口（同步版本，不推荐使用）
-export function verifyCode(email: string, code: string, type: string): { valid: boolean; message?: string } {
+export function verifyCode(
+  email: string,
+  code: string,
+  type: string
+): { valid: boolean; message?: string } {
   return { valid: false, message: '请使用 verifyCodeAsync' };
 }
 
 // 删除验证码
 export async function deleteCodeAsync(email: string, type?: string): Promise<void> {
   if (!sql) return;
-  
+
   try {
     if (type) {
       await sql`DELETE FROM verification_codes WHERE email = ${email} AND type = ${type}`;

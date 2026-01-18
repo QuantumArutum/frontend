@@ -15,17 +15,23 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     if (!categorySlug) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Category slug is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Category slug is required',
+        },
+        { status: 400 }
+      );
     }
 
     // 获取分类信息
@@ -41,10 +47,13 @@ export async function GET(request: NextRequest) {
     `;
 
     if (categoryResult.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Category not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Category not found',
+        },
+        { status: 404 }
+      );
     }
 
     const category = categoryResult[0];
@@ -172,9 +181,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching forum category posts:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

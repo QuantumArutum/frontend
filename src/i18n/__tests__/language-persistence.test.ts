@@ -1,13 +1,13 @@
 /**
  * Language Persistence Tests
- * 
+ *
  * Property 5: Language Persistence Round-Trip
- * For any language code selected by the user, saving to localStorage and then 
- * reading back must return the same language code, and the application must 
+ * For any language code selected by the user, saving to localStorage and then
+ * reading back must return the same language code, and the application must
  * restore this language on subsequent visits.
- * 
+ *
  * **Validates: Requirements 7.3, 7.4**
- * 
+ *
  * Feature: full-site-internationalization
  */
 
@@ -15,10 +15,21 @@ import * as fc from 'fast-check';
 
 // Supported language codes
 const SUPPORTED_LANGUAGES = [
-  'en', 'zh', 'ja', 'ko', 'es', 'fr', 'de', 'ru', 'ar', 'pt', 'it', 'nl'
+  'en',
+  'zh',
+  'ja',
+  'ko',
+  'es',
+  'fr',
+  'de',
+  'ru',
+  'ar',
+  'pt',
+  'it',
+  'nl',
 ] as const;
 
-type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number];
+type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 // localStorage key used by the application
 const LANGUAGE_STORAGE_KEY = 'quantaureum-global-language';
@@ -80,22 +91,19 @@ function isValidLanguageCode(code: string): code is SupportedLanguage {
  * Simulates the language detection logic from i18n/index.ts
  * Returns the detected language based on localStorage or defaults
  */
-function detectLanguage(
-  storage: MockLocalStorage, 
-  browserLanguage: string = 'en'
-): string {
+function detectLanguage(storage: MockLocalStorage, browserLanguage: string = 'en'): string {
   // Check localStorage first
   const savedLanguage = storage.getItem(LANGUAGE_STORAGE_KEY);
   if (savedLanguage && isValidLanguageCode(savedLanguage)) {
     return savedLanguage;
   }
-  
+
   // Check browser language
   const browserLang = browserLanguage.split('-')[0];
   if (isValidLanguageCode(browserLang)) {
     return browserLang;
   }
-  
+
   // Default to Chinese (as per i18n/index.ts)
   return 'zh';
 }
@@ -113,7 +121,6 @@ describe('Language Persistence', () => {
    * **Validates: Requirements 7.3, 7.4**
    */
   describe('Task 19.1: localStorage Persistence Tests', () => {
-    
     describe('Saving language preference', () => {
       test('should save language code to localStorage', () => {
         saveLanguagePreference(mockStorage, 'en');
@@ -187,22 +194,22 @@ describe('Language Persistence', () => {
       test('should restore language after simulated page reload', () => {
         // First session: save preference
         saveLanguagePreference(mockStorage, 'ko');
-        
+
         // Simulate page reload by creating new detection context
         // (storage persists, but detection runs fresh)
         const restoredLanguage = detectLanguage(mockStorage);
-        
+
         expect(restoredLanguage).toBe('ko');
       });
 
       test('should maintain preference through multiple saves', () => {
         const languageSequence: SupportedLanguage[] = ['en', 'zh', 'ja', 'ko', 'es'];
-        
+
         for (const lang of languageSequence) {
           saveLanguagePreference(mockStorage, lang);
           expect(detectLanguage(mockStorage)).toBe(lang);
         }
-        
+
         // Final state should be the last saved language
         expect(detectLanguage(mockStorage)).toBe('es');
       });
@@ -216,35 +223,34 @@ describe('Language Persistence', () => {
    * **Validates: Requirements 7.3, 7.4**
    */
   describe('Task 19.2: Property Test - Language Persistence Round-Trip', () => {
-    
     /**
      * Property-based test: For any supported language code, saving to localStorage
      * and then reading back must return the same language code.
-     * 
+     *
      * **Feature: full-site-internationalization, Property 5: Language Persistence Round-Trip**
      * **Validates: Requirements 7.3, 7.4**
      */
     test('Property Test: For all supported languages, save then load returns same language', () => {
       const languageArb = fc.constantFrom(...SUPPORTED_LANGUAGES);
-      
+
       fc.assert(
         fc.property(languageArb, (languageCode) => {
           // Create fresh storage for each test
           const storage = new MockLocalStorage();
-          
+
           // Save the language preference
           saveLanguagePreference(storage, languageCode);
-          
+
           // Load it back
           const loadedLanguage = loadLanguagePreference(storage);
-          
+
           // Must return the exact same language code
           if (loadedLanguage !== languageCode) {
             throw new Error(
               `Round-trip failed: saved "${languageCode}" but loaded "${loadedLanguage}"`
             );
           }
-          
+
           return true;
         }),
         { numRuns: 100 } // Run at least 100 iterations as per design spec
@@ -254,30 +260,30 @@ describe('Language Persistence', () => {
     /**
      * Property-based test: For any supported language code, the detection function
      * should return the saved language when it exists in localStorage.
-     * 
+     *
      * **Feature: full-site-internationalization, Property 5: Language Persistence Round-Trip**
      * **Validates: Requirements 7.3, 7.4**
      */
     test('Property Test: For all supported languages, detectLanguage returns saved preference', () => {
       const languageArb = fc.constantFrom(...SUPPORTED_LANGUAGES);
       const browserLangArb = fc.constantFrom(...SUPPORTED_LANGUAGES, 'unknown', 'xyz');
-      
+
       fc.assert(
         fc.property(languageArb, browserLangArb, (savedLang, browserLang) => {
           const storage = new MockLocalStorage();
-          
+
           // Save a language preference
           saveLanguagePreference(storage, savedLang);
-          
+
           // Detection should return saved preference regardless of browser language
           const detectedLang = detectLanguage(storage, browserLang);
-          
+
           if (detectedLang !== savedLang) {
             throw new Error(
               `Detection failed: saved "${savedLang}", browser "${browserLang}", but detected "${detectedLang}"`
             );
           }
-          
+
           return true;
         }),
         { numRuns: 100 }
@@ -287,35 +293,35 @@ describe('Language Persistence', () => {
     /**
      * Property-based test: For any sequence of language changes, the final
      * detected language should match the last saved language.
-     * 
+     *
      * **Feature: full-site-internationalization, Property 5: Language Persistence Round-Trip**
      * **Validates: Requirements 7.3, 7.4**
      */
     test('Property Test: For any sequence of language changes, final state matches last save', () => {
-      const languageSequenceArb = fc.array(
-        fc.constantFrom(...SUPPORTED_LANGUAGES),
-        { minLength: 1, maxLength: 10 }
-      );
-      
+      const languageSequenceArb = fc.array(fc.constantFrom(...SUPPORTED_LANGUAGES), {
+        minLength: 1,
+        maxLength: 10,
+      });
+
       fc.assert(
         fc.property(languageSequenceArb, (languageSequence) => {
           const storage = new MockLocalStorage();
-          
+
           // Apply all language changes in sequence
           for (const lang of languageSequence) {
             saveLanguagePreference(storage, lang);
           }
-          
+
           // Final detected language should be the last one in the sequence
           const expectedLang = languageSequence[languageSequence.length - 1];
           const detectedLang = detectLanguage(storage);
-          
+
           if (detectedLang !== expectedLang) {
             throw new Error(
               `Sequence test failed: expected "${expectedLang}" after sequence [${languageSequence.join(', ')}], but got "${detectedLang}"`
             );
           }
-          
+
           return true;
         }),
         { numRuns: 100 }
@@ -325,32 +331,32 @@ describe('Language Persistence', () => {
     /**
      * Property-based test: Idempotence - saving the same language multiple times
      * should have the same effect as saving it once.
-     * 
+     *
      * **Feature: full-site-internationalization, Property 5: Language Persistence Round-Trip**
      * **Validates: Requirements 7.3, 7.4**
      */
     test('Property Test: Saving same language multiple times is idempotent', () => {
       const languageArb = fc.constantFrom(...SUPPORTED_LANGUAGES);
       const repeatCountArb = fc.integer({ min: 1, max: 10 });
-      
+
       fc.assert(
         fc.property(languageArb, repeatCountArb, (languageCode, repeatCount) => {
           const storage = new MockLocalStorage();
-          
+
           // Save the same language multiple times
           for (let i = 0; i < repeatCount; i++) {
             saveLanguagePreference(storage, languageCode);
           }
-          
+
           // Result should be the same as saving once
           const loadedLanguage = loadLanguagePreference(storage);
-          
+
           if (loadedLanguage !== languageCode) {
             throw new Error(
               `Idempotence failed: saved "${languageCode}" ${repeatCount} times, but loaded "${loadedLanguage}"`
             );
           }
-          
+
           return true;
         }),
         { numRuns: 100 }

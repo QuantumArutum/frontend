@@ -9,12 +9,12 @@
 
 ## 📊 总体测试结果
 
-| 阶段 | 功能数 | 测试通过 | 测试失败 | 完成度 |
-|------|--------|---------|---------|--------|
-| **Phase 9** | 10 | 9 | 1 | **90%** ✅ |
-| **Phase 10** | 9 | 8 | 1 | **89%** ✅ |
-| **Phase 11** | 10 | 5 | 5 | **50%** ⚠️ |
-| **总计** | 29 | 22 | 7 | **76%** |
+| 阶段         | 功能数 | 测试通过 | 测试失败 | 完成度     |
+| ------------ | ------ | -------- | -------- | ---------- |
+| **Phase 9**  | 10     | 9        | 1        | **90%** ✅ |
+| **Phase 10** | 9      | 8        | 1        | **89%** ✅ |
+| **Phase 11** | 10     | 5        | 5        | **50%** ⚠️ |
+| **总计**     | 29     | 22       | 7        | **76%**    |
 
 ---
 
@@ -104,6 +104,7 @@
 ### 测试通过 ✅
 
 1. **置顶帖子** ✅
+
    ```json
    {
      "status": 200,
@@ -118,6 +119,7 @@
    ```
 
 2. **锁定帖子** ✅
+
    ```json
    {
      "status": 200,
@@ -131,6 +133,7 @@
    ```
 
 3. **删除评论** ✅
+
    ```json
    {
      "status": 200,
@@ -138,9 +141,11 @@
      "message": "Comment deleted successfully"
    }
    ```
+
    - 注意：使用 DELETE 方法，不是 POST
 
 4. **版主日志** ✅
+
    ```json
    {
      "status": 200,
@@ -174,41 +179,49 @@
 ### 测试失败 ❌
 
 1. **封禁用户** ❌
+
    ```json
    {
      "status": 500,
      "error": "insert or update on table \"user_bans\" violates foreign key constraint \"user_bans_user_id_fkey\""
    }
    ```
+
    - **原因:** user_bans 表引用了 users 表，但用户数据在 Barong 系统中
    - **解决方案:** 需要修改数据库架构，移除外键约束或使用不同的用户标识
 
 2. **禁言用户** ❌
+
    ```json
    {
      "status": 500,
      "error": "insert or update on table \"user_bans\" violates foreign key constraint \"user_bans_user_id_fkey\""
    }
    ```
+
    - **原因:** 同上
 
 3. **移动帖子** ❌
+
    ```json
    {
      "status": 500,
      "error": "relation \"forum_categories\" does not exist"
    }
    ```
+
    - **原因:** forum_categories 表不存在
    - **解决方案:** 需要创建 forum_categories 表
 
 4. **版主列表** ❌
+
    ```json
    {
      "status": 403,
      "message": "Unauthorized: No permission to view moderators"
    }
    ```
+
    - **原因:** 需要 MANAGE_MODERATORS 权限
    - **解决方案:** 需要给管理员添加此权限
 
@@ -226,6 +239,7 @@
 **问题:** user_bans 表的外键约束导致封禁/禁言功能失败
 
 **当前架构:**
+
 ```sql
 CREATE TABLE user_bans (
   user_id VARCHAR(255) REFERENCES users(id)  -- 这里有问题
@@ -233,6 +247,7 @@ CREATE TABLE user_bans (
 ```
 
 **解决方案:**
+
 ```sql
 -- 方案 1: 移除外键约束
 ALTER TABLE user_bans DROP CONSTRAINT user_bans_user_id_fkey;
@@ -246,6 +261,7 @@ ALTER TABLE user_bans ALTER COLUMN user_id TYPE VARCHAR(255);
 **问题:** forum_categories 表不存在
 
 **解决方案:**
+
 ```sql
 CREATE TABLE forum_categories (
   id SERIAL PRIMARY KEY,
@@ -261,19 +277,23 @@ CREATE TABLE forum_categories (
 **问题:** 帖子详情页没有版主操作按钮
 
 **当前状态:**
+
 - 只显示编辑和删除按钮（作为帖子作者）
 - 没有置顶、锁定、删除评论等版主按钮
 
 **解决方案:**
 需要在 `src/app/community/posts/[postId]/page.tsx` 中添加：
+
 ```tsx
-{isModerator && (
-  <div className="moderator-actions">
-    <button onClick={handlePin}>📌 置顶</button>
-    <button onClick={handleLock}>🔒 锁定</button>
-    <button onClick={handleDelete}>🗑️ 删除</button>
-  </div>
-)}
+{
+  isModerator && (
+    <div className="moderator-actions">
+      <button onClick={handlePin}>📌 置顶</button>
+      <button onClick={handleLock}>🔒 锁定</button>
+      <button onClick={handleDelete}>🗑️ 删除</button>
+    </div>
+  );
+}
 ```
 
 ---
@@ -281,9 +301,11 @@ CREATE TABLE forum_categories (
 ## 📈 功能完成度统计
 
 ### Phase 9: 发帖功能
+
 ```
 ████████████████████░ 90% (9/10)
 ```
+
 - ✅ Markdown 编辑器
 - ✅ 帖子创建
 - ✅ 帖子详情
@@ -296,9 +318,11 @@ CREATE TABLE forum_categories (
 - ❌ 图片上传
 
 ### Phase 10: 评论系统
+
 ```
 █████████████████░░░ 89% (8/9)
 ```
+
 - ✅ 评论发表
 - ✅ 评论显示
 - ✅ 嵌套回复
@@ -310,9 +334,11 @@ CREATE TABLE forum_categories (
 - ❌ 评论排序功能
 
 ### Phase 11: 版主系统
+
 ```
 ██████████░░░░░░░░░░ 50% (5/10)
 ```
+
 - ✅ 置顶帖子
 - ✅ 锁定帖子
 - ✅ 删除评论
@@ -331,11 +357,13 @@ CREATE TABLE forum_categories (
 ### 优先级 1: 修复数据库问题（30分钟）
 
 1. **移除外键约束**
+
    ```sql
    ALTER TABLE user_bans DROP CONSTRAINT IF EXISTS user_bans_user_id_fkey;
    ```
 
 2. **创建 forum_categories 表**
+
    ```sql
    CREATE TABLE forum_categories (
      id SERIAL PRIMARY KEY,
@@ -345,7 +373,7 @@ CREATE TABLE forum_categories (
      post_count INTEGER DEFAULT 0,
      created_at TIMESTAMP DEFAULT NOW()
    );
-   
+
    -- 插入默认分类
    INSERT INTO forum_categories (name, slug, description) VALUES
    ('综合讨论', 'general', '社区讨论和公告'),
@@ -357,6 +385,7 @@ CREATE TABLE forum_categories (
 ### 优先级 2: 添加前端版主 UI（1小时）
 
 修改 `src/app/community/posts/[postId]/page.tsx`：
+
 - 添加版主权限检查
 - 显示版主操作按钮
 - 实现版主操作功能
@@ -364,6 +393,7 @@ CREATE TABLE forum_categories (
 ### 优先级 3: 完善权限系统（30分钟）
 
 修改 `src/lib/permissions.ts`：
+
 - 给 admin 角色添加 MANAGE_MODERATORS 权限
 - 验证所有权限配置
 
@@ -405,13 +435,13 @@ CREATE TABLE forum_categories (
 
 ## 📊 最终评分
 
-| 项目 | 得分 | 满分 |
-|------|------|------|
-| Phase 9 功能 | 9 | 10 |
-| Phase 10 功能 | 8 | 9 |
-| Phase 11 功能 | 5 | 10 |
-| **总分** | **22** | **29** |
-| **完成度** | **76%** | **100%** |
+| 项目          | 得分    | 满分     |
+| ------------- | ------- | -------- |
+| Phase 9 功能  | 9       | 10       |
+| Phase 10 功能 | 8       | 9        |
+| Phase 11 功能 | 5       | 10       |
+| **总分**      | **22**  | **29**   |
+| **完成度**    | **76%** | **100%** |
 
 ---
 

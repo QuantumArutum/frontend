@@ -16,10 +16,13 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     // 构建排序条件
@@ -80,11 +83,11 @@ export async function GET(request: NextRequest) {
     const formattedMembers = members.map((member: any) => {
       const postCount = parseInt(member.post_count || '0');
       const reputation = parseInt(member.reputation || '0');
-      
+
       // 根据帖子数量和声望确定角色
       let roleKey = 'member';
       let badges: string[] = [];
-      
+
       if (postCount > 100) {
         roleKey = 'core_developer';
         badges = ['🏆', '⭐', '🔧'];
@@ -129,9 +132,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching members:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

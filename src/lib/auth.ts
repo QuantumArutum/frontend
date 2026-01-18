@@ -82,10 +82,13 @@ export function requireAdmin(request: NextRequest): { user: JWTPayload } | { err
 
   if (!isAdmin(authResult.user)) {
     return {
-      error: new Response(JSON.stringify({ success: false, message: 'Forbidden: Admin access required' }), {
-        status: 403,
-        headers: { 'Content-Type': 'application/json' },
-      }),
+      error: new Response(
+        JSON.stringify({ success: false, message: 'Forbidden: Admin access required' }),
+        {
+          status: 403,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      ),
     };
   }
   return authResult;

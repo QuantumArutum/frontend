@@ -9,10 +9,13 @@ import { sql } from '@/lib/database';
 export async function POST(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
@@ -20,10 +23,13 @@ export async function POST(request: NextRequest) {
 
     // 验证参数
     if (!commentId || !currentUserId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Comment ID and user ID are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Comment ID and user ID are required',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证用户存在
@@ -32,10 +38,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (userCheck.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'User not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 验证评论存在
@@ -45,10 +54,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (commentCheck.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Comment not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Comment not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 确保 comment_likes 表存在
@@ -115,16 +127,15 @@ export async function POST(request: NextRequest) {
           JOIN posts p ON pc.post_id = p.id
           WHERE pc.id = ${commentId}
         `;
-        
+
         if (commentInfo.length > 0) {
           const commentAuthorId = commentInfo[0].user_id;
           const postId = commentInfo[0].post_id;
           const postTitle = commentInfo[0].title;
           const commentContent = commentInfo[0].content;
-          const commentPreview = commentContent.length > 30 
-            ? commentContent.substring(0, 30) + '...' 
-            : commentContent;
-          
+          const commentPreview =
+            commentContent.length > 30 ? commentContent.substring(0, 30) + '...' : commentContent;
+
           // 只有当点赞者不是评论作者时才创建通知
           if (commentAuthorId !== currentUserId) {
             // 获取点赞者的显示名称
@@ -133,7 +144,7 @@ export async function POST(request: NextRequest) {
             `;
             const userEmail = userResult[0]?.email || '';
             let displayName = userEmail.split('@')[0];
-            
+
             try {
               const profileResult = await sql`
                 SELECT display_name FROM user_profiles WHERE user_id = ${currentUserId}
@@ -179,9 +190,12 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error toggling comment like:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

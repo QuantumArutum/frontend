@@ -8,15 +8,18 @@ import { sql } from '@/lib/database';
 export async function GET(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     // 测试基本查询
     const result = await sql`SELECT 1 as test`;
-    
+
     // 尝试查询 categories 表
     let categoriesTest = null;
     try {
@@ -43,9 +46,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Error testing database:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: error.message || 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

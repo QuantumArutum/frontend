@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
-import { 
-  Wallet, 
+import {
+  Wallet,
   Shield,
   ExternalLink,
   Lock,
@@ -18,7 +18,7 @@ import {
   Sparkles,
   Key,
   Cpu,
-  Network
+  Network,
 } from 'lucide-react';
 import ParticlesBackground from '../components/ParticlesBackground';
 
@@ -34,7 +34,7 @@ const QuantumWalletPage = () => {
       description: t('wallet.features.list.security.desc'),
       details: t('wallet.features.list.security.details'),
       gradient: 'from-emerald-500/20 to-cyan-500/20',
-      iconColor: 'text-emerald-400'
+      iconColor: 'text-emerald-400',
     },
     {
       icon: Lock,
@@ -42,7 +42,7 @@ const QuantumWalletPage = () => {
       description: t('wallet.features.list.web3.desc'),
       details: t('wallet.features.list.web3.details'),
       gradient: 'from-purple-500/20 to-pink-500/20',
-      iconColor: 'text-purple-400'
+      iconColor: 'text-purple-400',
     },
     {
       icon: Zap,
@@ -50,7 +50,7 @@ const QuantumWalletPage = () => {
       description: t('wallet.features.list.performance.desc'),
       details: t('wallet.features.list.performance.details'),
       gradient: 'from-amber-500/20 to-orange-500/20',
-      iconColor: 'text-amber-400'
+      iconColor: 'text-amber-400',
     },
     {
       icon: Users,
@@ -58,22 +58,42 @@ const QuantumWalletPage = () => {
       description: t('wallet.features.list.multi_chain.desc'),
       details: t('wallet.features.list.multi_chain.details'),
       gradient: 'from-cyan-500/20 to-blue-500/20',
-      iconColor: 'text-cyan-400'
-    }
+      iconColor: 'text-cyan-400',
+    },
   ];
 
   const stats = [
-    { label: t('wallet.stats.labels.security_level'), value: 'NIST L3', icon: Shield, color: 'text-emerald-400' },
-    { label: t('wallet.stats.labels.supported_chains'), value: '10+', icon: Network, color: 'text-cyan-400' },
-    { label: t('wallet.stats.labels.compatible_dapps'), value: '1000+', icon: Cpu, color: 'text-purple-400' },
-    { label: t('wallet.stats.labels.active_users'), value: '50K+', icon: Users, color: 'text-blue-400' }
+    {
+      label: t('wallet.stats.labels.security_level'),
+      value: 'NIST L3',
+      icon: Shield,
+      color: 'text-emerald-400',
+    },
+    {
+      label: t('wallet.stats.labels.supported_chains'),
+      value: '10+',
+      icon: Network,
+      color: 'text-cyan-400',
+    },
+    {
+      label: t('wallet.stats.labels.compatible_dapps'),
+      value: '1000+',
+      icon: Cpu,
+      color: 'text-purple-400',
+    },
+    {
+      label: t('wallet.stats.labels.active_users'),
+      value: '50K+',
+      icon: Users,
+      color: 'text-blue-400',
+    },
   ];
 
   const securityFeatures = [
     { icon: Key, text: t('wallet.security_guarantee.list.local_storage') },
     { icon: Shield, text: t('wallet.security_guarantee.list.multi_sig') },
     { icon: Lock, text: t('wallet.security_guarantee.list.biometric') },
-    { icon: Sparkles, text: t('wallet.security_guarantee.list.quantum_rng') }
+    { icon: Sparkles, text: t('wallet.security_guarantee.list.quantum_rng') },
   ];
 
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
@@ -114,14 +134,14 @@ const QuantumWalletPage = () => {
       <ParticlesBackground />
       <div className="relative z-10 container mx-auto px-4 py-16">
         {/* Header Hero */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
           {/* Logo */}
-          <motion.div 
+          <motion.div
             className="flex justify-center items-center mb-8"
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
@@ -154,9 +174,27 @@ const QuantumWalletPage = () => {
           {/* Tags */}
           <div className="flex flex-wrap justify-center gap-4 mb-10">
             {[
-              { icon: CheckCircle, text: t('wallet.tags.quantum_secure'), color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-              { icon: Globe, text: t('wallet.tags.web3_compatible'), color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
-              { icon: Sparkles, text: t('wallet.tags.nist_standard'), color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' }
+              {
+                icon: CheckCircle,
+                text: t('wallet.tags.quantum_secure'),
+                color: 'text-emerald-400',
+                bg: 'bg-emerald-500/10',
+                border: 'border-emerald-500/20',
+              },
+              {
+                icon: Globe,
+                text: t('wallet.tags.web3_compatible'),
+                color: 'text-cyan-400',
+                bg: 'bg-cyan-500/10',
+                border: 'border-cyan-500/20',
+              },
+              {
+                icon: Sparkles,
+                text: t('wallet.tags.nist_standard'),
+                color: 'text-purple-400',
+                bg: 'bg-purple-500/10',
+                border: 'border-purple-500/20',
+              },
             ].map((tag, i) => (
               <motion.div
                 key={i}
@@ -173,7 +211,7 @@ const QuantumWalletPage = () => {
         </motion.div>
 
         {/* Launch Wallet Card */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
@@ -195,15 +233,11 @@ const QuantumWalletPage = () => {
                 <h3 className="text-2xl font-bold mb-4 text-emerald-400">
                   {t('wallet.launch_card.connected.title')}
                 </h3>
-                <p className="mb-4 text-gray-300">
-                  {t('wallet.launch_card.connected.desc')}
-                </p>
+                <p className="mb-4 text-gray-300">{t('wallet.launch_card.connected.desc')}</p>
                 {walletAddress && (
                   <div className="mb-6 p-4 bg-white/5 rounded-xl border border-white/10">
                     <p className="text-gray-400 text-sm mb-1">Connected Address:</p>
-                    <p className="text-cyan-400 font-mono text-sm break-all">
-                      {walletAddress}
-                    </p>
+                    <p className="text-cyan-400 font-mono text-sm break-all">{walletAddress}</p>
                   </div>
                 )}
                 <a
@@ -217,8 +251,12 @@ const QuantumWalletPage = () => {
             ) : (
               <div className="relative text-center">
                 <motion.div
-                  animate={{ 
-                    boxShadow: ['0 0 20px rgba(168, 85, 247, 0.4)', '0 0 40px rgba(6, 182, 212, 0.4)', '0 0 20px rgba(168, 85, 247, 0.4)']
+                  animate={{
+                    boxShadow: [
+                      '0 0 20px rgba(168, 85, 247, 0.4)',
+                      '0 0 40px rgba(6, 182, 212, 0.4)',
+                      '0 0 20px rgba(168, 85, 247, 0.4)',
+                    ],
                   }}
                   transition={{ duration: 3, repeat: Infinity }}
                   className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center bg-purple-500/20"
@@ -257,7 +295,7 @@ const QuantumWalletPage = () => {
         </motion.div>
 
         {/* Core Features */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
@@ -278,26 +316,22 @@ const QuantumWalletPage = () => {
                   onMouseEnter={() => setIsHovering(index)}
                   onMouseLeave={() => setIsHovering(null)}
                   className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 bg-white/5 backdrop-blur-md border ${isHovering === index ? 'border-white/20' : 'border-white/10'}`}
-                  style={{ 
-                    transform: isHovering === index ? 'translateY(-4px)' : 'none'
+                  style={{
+                    transform: isHovering === index ? 'translateY(-4px)' : 'none',
                   }}
                 >
                   {/* Background Gradient */}
-                  <div 
+                  <div
                     className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
                   />
-                  
+
                   <div className="relative flex items-start gap-4">
                     <div className={`p-3 rounded-xl shrink-0 bg-white/5`}>
                       <IconComponent className={`w-7 h-7 ${feature.iconColor}`} />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold mb-2 text-white">
-                        {feature.title}
-                      </h3>
-                      <p className="mb-2 text-gray-400">
-                        {feature.description}
-                      </p>
+                      <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
+                      <p className="mb-2 text-gray-400">{feature.description}</p>
                       <p className={`text-sm font-medium ${feature.iconColor}`}>
                         {feature.details}
                       </p>
@@ -310,7 +344,7 @@ const QuantumWalletPage = () => {
         </motion.div>
 
         {/* Stats */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
@@ -329,15 +363,15 @@ const QuantumWalletPage = () => {
                   transition={{ delay: 0.8 + index * 0.1 }}
                   className="text-center"
                 >
-                  <div className={`w-12 h-12 mx-auto mb-3 rounded-xl flex items-center justify-center bg-white/5`}>
+                  <div
+                    className={`w-12 h-12 mx-auto mb-3 rounded-xl flex items-center justify-center bg-white/5`}
+                  >
                     <stat.icon className={`w-6 h-6 ${stat.color}`} />
                   </div>
                   <div className={`text-2xl md:text-3xl font-bold mb-1 ${stat.color}`}>
                     {stat.value}
                   </div>
-                  <div className="text-gray-400 text-sm">
-                    {stat.label}
-                  </div>
+                  <div className="text-gray-400 text-sm">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -345,7 +379,7 @@ const QuantumWalletPage = () => {
         </motion.div>
 
         {/* Security Features */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9 }}
@@ -359,9 +393,7 @@ const QuantumWalletPage = () => {
               {securityFeatures.map((item, i) => (
                 <div key={i} className="flex flex-col items-center text-center gap-2">
                   <item.icon className="w-6 h-6 text-cyan-400" />
-                  <span className="text-gray-300 text-sm">
-                    {item.text}
-                  </span>
+                  <span className="text-gray-300 text-sm">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -369,15 +401,13 @@ const QuantumWalletPage = () => {
         </motion.div>
 
         {/* Footer Note */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.0 }}
           className="text-center"
         >
-          <p className="text-gray-500 text-sm">
-            {t('wallet.footer_note')}
-          </p>
+          <p className="text-gray-500 text-sm">{t('wallet.footer_note')}</p>
         </motion.div>
       </div>
     </div>

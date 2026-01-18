@@ -18,7 +18,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -50,7 +50,7 @@ export const POST = createSecureHandler(
         success: true,
         txHash: result.txHash,
         message: `Successfully staked ${amount} QAU to pool ${poolId}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       console.error('Stake error:', error);

@@ -107,12 +107,12 @@ export default function ParticlesBackground() {
     let animationId: number;
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
-      
-      particles.forEach(p => {
+
+      particles.forEach((p) => {
         updateParticle(p);
         drawParticle(p);
       });
-      
+
       drawLines();
       animationId = requestAnimationFrame(animate);
     };
@@ -134,7 +134,7 @@ export default function ParticlesBackground() {
         width: '100%',
         height: '100%',
         zIndex: 0,
-        pointerEvents: 'none'
+        pointerEvents: 'none',
       }}
     />
   );

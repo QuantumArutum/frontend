@@ -5,12 +5,15 @@ import { PERMISSIONS, hasPermission } from '@/lib/permissions';
 export async function POST(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
@@ -18,10 +21,13 @@ export async function POST(request: NextRequest) {
 
     // 验证必填字段
     if (!postId || !categoryId || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required fields'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing required fields',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -32,20 +38,26 @@ export async function POST(request: NextRequest) {
     `;
 
     if (moderator.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: Not a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Not a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     const userRole = moderator[0].role;
     const customPermissions = moderator[0].permissions;
 
     if (!hasPermission(userRole, PERMISSIONS.MOVE_POST, customPermissions)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: No permission to move posts'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: No permission to move posts',
+        },
+        { status: 403 }
+      );
     }
 
     // 检查帖子是否存在
@@ -54,10 +66,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (post.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Post not found'
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post not found',
+        },
+        { status: 404 }
+      );
     }
 
     const oldCategoryId = post[0].category_id;
@@ -68,10 +83,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (category.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Target category not found'
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Target category not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 移动帖子
@@ -92,11 +110,11 @@ export async function POST(request: NextRequest) {
         'post',
         ${postId.toString()},
         ${reason || null},
-        ${JSON.stringify({ 
+        ${JSON.stringify({
           postTitle: post[0].title,
           oldCategoryId,
           newCategoryId: categoryId,
-          newCategoryName: category[0].name
+          newCategoryName: category[0].name,
         })}
       )
     `;
@@ -108,16 +126,18 @@ export async function POST(request: NextRequest) {
         postId,
         oldCategoryId,
         newCategoryId: categoryId,
-        newCategoryName: category[0].name
-      }
+        newCategoryName: category[0].name,
+      },
     });
-
   } catch (error: any) {
     console.error('Move post error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to move post',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to move post',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }

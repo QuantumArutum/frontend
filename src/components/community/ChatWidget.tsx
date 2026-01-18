@@ -2,18 +2,18 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  MessageSquare, 
-  X, 
-  Send, 
-  User, 
-  Circle, 
+import {
+  MessageSquare,
+  X,
+  Send,
+  User,
+  Circle,
   MoreVertical,
   Smile,
   Paperclip,
   Search,
   Bell,
-  Settings
+  Settings,
 } from 'lucide-react';
 
 interface ChatMessage {
@@ -49,7 +49,7 @@ const mockMessages: ChatMessage[] = [
     timestamp: new Date(Date.now() - 5 * 60 * 1000),
     isOwn: false,
     isOnline: true,
-    reactions: [{ emoji: '👍', count: 3, users: ['user2', 'user3', 'user4'] }]
+    reactions: [{ emoji: '👍', count: 3, users: ['user2', 'user3', 'user4'] }],
   },
   {
     id: '2',
@@ -60,7 +60,7 @@ const mockMessages: ChatMessage[] = [
     timestamp: new Date(Date.now() - 3 * 60 * 1000),
     isOwn: false,
     isOnline: true,
-    reactions: []
+    reactions: [],
   },
   {
     id: '3',
@@ -71,8 +71,8 @@ const mockMessages: ChatMessage[] = [
     timestamp: new Date(Date.now() - 1 * 60 * 1000),
     isOwn: true,
     isOnline: true,
-    reactions: [{ emoji: '❤️', count: 2, users: ['user1', 'user2'] }]
-  }
+    reactions: [{ emoji: '❤️', count: 2, users: ['user1', 'user2'] }],
+  },
 ];
 
 const mockRooms: ChatRoom[] = [
@@ -84,7 +84,7 @@ const mockRooms: ChatRoom[] = [
     lastActivity: new Date(Date.now() - 2 * 60 * 1000),
     unreadCount: 3,
     participants: 1250,
-    avatar: '💬'
+    avatar: '💬',
   },
   {
     id: '2',
@@ -94,7 +94,7 @@ const mockRooms: ChatRoom[] = [
     lastActivity: new Date(Date.now() - 15 * 60 * 1000),
     unreadCount: 0,
     participants: 890,
-    avatar: '📊'
+    avatar: '📊',
   },
   {
     id: '3',
@@ -104,8 +104,8 @@ const mockRooms: ChatRoom[] = [
     lastActivity: new Date(Date.now() - 1 * 60 * 60 * 1000),
     unreadCount: 1,
     participants: 5000,
-    avatar: '📢'
-  }
+    avatar: '📢',
+  },
 ];
 
 export default function ChatWidget() {
@@ -136,7 +136,7 @@ export default function ChatWidget() {
         timestamp: new Date(),
         isOwn: true,
         isOnline: true,
-        reactions: []
+        reactions: [],
       };
       setMessages([...messages, message]);
       setNewMessage('');
@@ -144,9 +144,9 @@ export default function ChatWidget() {
   };
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('zh-CN', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
+    return date.toLocaleTimeString('zh-CN', {
+      hour: '2-digit',
+      minute: '2-digit',
     });
   };
 
@@ -179,14 +179,14 @@ export default function ChatWidget() {
             <div className="flex items-center justify-between p-4 border-b border-white/10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold">
-                  {rooms.find(r => r.id === activeRoom)?.avatar || '💬'}
+                  {rooms.find((r) => r.id === activeRoom)?.avatar || '💬'}
                 </div>
                 <div>
                   <h3 className="text-white font-semibold">
-                    {rooms.find(r => r.id === activeRoom)?.name || '聊天室'}
+                    {rooms.find((r) => r.id === activeRoom)?.name || '聊天室'}
                   </h3>
                   <p className="text-xs text-gray-400">
-                    {rooms.find(r => r.id === activeRoom)?.participants || 0} 人在线
+                    {rooms.find((r) => r.id === activeRoom)?.participants || 0} 人在线
                   </p>
                 </div>
               </div>
@@ -200,7 +200,7 @@ export default function ChatWidget() {
                 <button className="text-gray-400 hover:text-white transition-colors">
                   <Settings className="h-4 w-4" />
                 </button>
-                <button 
+                <button
                   onClick={() => setIsOpen(false)}
                   className="text-gray-400 hover:text-white transition-colors"
                 >
@@ -222,38 +222,38 @@ export default function ChatWidget() {
                     className="w-full px-3 py-2 bg-white/10 rounded-lg text-white text-sm placeholder-gray-400 focus:outline-none focus:bg-white/20"
                   />
                 </div>
-                {rooms.filter(room => 
-                  room.name.toLowerCase().includes(searchQuery.toLowerCase())
-                ).map((room) => (
-                  <motion.div
-                    key={room.id}
-                    whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-                    onClick={() => setActiveRoom(room.id)}
-                    className={`p-3 cursor-pointer border-b border-white/5 ${
-                      activeRoom === room.id ? 'bg-white/10' : ''
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                        {room.avatar}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-white text-sm font-medium truncate">{room.name}</h4>
-                          {room.unreadCount > 0 && (
-                            <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1">
-                              {room.unreadCount}
-                            </span>
-                          )}
+                {rooms
+                  .filter((room) => room.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                  .map((room) => (
+                    <motion.div
+                      key={room.id}
+                      whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                      onClick={() => setActiveRoom(room.id)}
+                      className={`p-3 cursor-pointer border-b border-white/5 ${
+                        activeRoom === room.id ? 'bg-white/10' : ''
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                          {room.avatar}
                         </div>
-                        <p className="text-gray-400 text-xs truncate">{room.lastMessage}</p>
-                        <p className="text-gray-500 text-xs">
-                          {room.participants} 人 · {formatTime(room.lastActivity)}
-                        </p>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <h4 className="text-white text-sm font-medium truncate">{room.name}</h4>
+                            {room.unreadCount > 0 && (
+                              <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1">
+                                {room.unreadCount}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-gray-400 text-xs truncate">{room.lastMessage}</p>
+                          <p className="text-gray-500 text-xs">
+                            {room.participants} 人 · {formatTime(room.lastActivity)}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  ))}
               </div>
 
               {/* 右侧消息区域 */}
@@ -275,27 +275,38 @@ export default function ChatWidget() {
                       <div className={`max-w-[70%] ${message.isOwn ? 'order-first' : ''}`}>
                         {!message.isOwn && (
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-white text-sm font-medium">{message.username}</span>
-                            {message.isOnline && <Circle className="h-2 w-2 text-green-400 fill-current" />}
+                            <span className="text-white text-sm font-medium">
+                              {message.username}
+                            </span>
+                            {message.isOnline && (
+                              <Circle className="h-2 w-2 text-green-400 fill-current" />
+                            )}
                           </div>
                         )}
-                        <div className={`px-4 py-2 rounded-2xl ${
-                          message.isOwn 
-                            ? 'bg-gradient-to-r from-purple-500 to-cyan-500 text-white' 
-                            : 'bg-white/10 text-white'
-                        }`}>
+                        <div
+                          className={`px-4 py-2 rounded-2xl ${
+                            message.isOwn
+                              ? 'bg-gradient-to-r from-purple-500 to-cyan-500 text-white'
+                              : 'bg-white/10 text-white'
+                          }`}
+                        >
                           <p className="text-sm">{message.content}</p>
                           {message.reactions.length > 0 && (
                             <div className="flex gap-1 mt-2">
                               {message.reactions.map((reaction, idx) => (
-                                <span key={idx} className="text-xs bg-white/20 px-2 py-1 rounded-full">
+                                <span
+                                  key={idx}
+                                  className="text-xs bg-white/20 px-2 py-1 rounded-full"
+                                >
                                   {reaction.emoji} {reaction.count}
                                 </span>
                               ))}
                             </div>
                           )}
                         </div>
-                        <p className="text-xs text-gray-400 mt-1">{formatTime(message.timestamp)}</p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          {formatTime(message.timestamp)}
+                        </p>
                       </div>
                     </motion.div>
                   ))}

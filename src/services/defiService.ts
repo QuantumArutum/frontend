@@ -1,6 +1,6 @@
-import { request } from "../utils/request";
+import { request } from '../utils/request';
 
-const BASE_URL = "http://localhost:8082/api/defi"; // DeFi服务端口
+const BASE_URL = 'http://localhost:8082/api/defi'; // DeFi服务端口
 
 // 类型定义
 interface FarmingPool {
@@ -73,16 +73,16 @@ export const defiService = {
       // 暂时返回模拟数据
       return [
         {
-          ID: "farm_qau_usdt",
-          Name: "QAU-USDT LP",
-          StakedToken: "QAU-USDT LP",
-          RewardToken: "QAU",
+          ID: 'farm_qau_usdt',
+          Name: 'QAU-USDT LP',
+          StakedToken: 'QAU-USDT LP',
+          RewardToken: 'QAU',
           TotalStaked: 5000000000000000,
           APR: 0.234,
           RewardPerBlock: 1000000000,
           UserStaked: 0,
-          PendingRewards: 0
-        }
+          PendingRewards: 0,
+        },
       ];
     },
 
@@ -90,7 +90,7 @@ export const defiService = {
     stake: async (poolID: string, amount: number): Promise<TransactionResponse> => {
       return request(`${BASE_URL}/farming/stake`, {
         method: 'POST',
-        body: JSON.stringify({ poolID, amount })
+        body: JSON.stringify({ poolID, amount }),
       });
     },
 
@@ -98,7 +98,7 @@ export const defiService = {
     unstake: async (poolID: string, amount: number): Promise<TransactionResponse> => {
       return request(`${BASE_URL}/farming/unstake`, {
         method: 'POST',
-        body: JSON.stringify({ poolID, amount })
+        body: JSON.stringify({ poolID, amount }),
       });
     },
 
@@ -106,9 +106,9 @@ export const defiService = {
     claimRewards: async (poolID: string): Promise<TransactionResponse> => {
       return request(`${BASE_URL}/farming/claim`, {
         method: 'POST',
-        body: JSON.stringify({ poolID })
+        body: JSON.stringify({ poolID }),
       });
-    }
+    },
   },
 
   // 借贷协议相关
@@ -118,16 +118,16 @@ export const defiService = {
       // 暂时返回模拟数据
       return [
         {
-          ID: "lending_qau",
-          AssetID: "QAU",
-          AssetName: "Quantum Aurum",
+          ID: 'lending_qau',
+          AssetID: 'QAU',
+          AssetName: 'Quantum Aurum',
           TotalSupply: 10000000000000000,
           TotalBorrows: 6500000000000000,
           SupplyAPY: 0.045,
           BorrowAPY: 0.078,
           UtilizationRate: 0.65,
-          LiquidationThreshold: 0.75
-        }
+          LiquidationThreshold: 0.75,
+        },
       ];
     },
 
@@ -135,7 +135,7 @@ export const defiService = {
     supply: async (assetID: string, amount: number): Promise<TransactionResponse> => {
       return request(`${BASE_URL}/lending/supply`, {
         method: 'POST',
-        body: JSON.stringify({ assetID, amount })
+        body: JSON.stringify({ assetID, amount }),
       });
     },
 
@@ -143,7 +143,7 @@ export const defiService = {
     withdraw: async (assetID: string, amount: number): Promise<TransactionResponse> => {
       return request(`${BASE_URL}/lending/withdraw`, {
         method: 'POST',
-        body: JSON.stringify({ assetID, amount })
+        body: JSON.stringify({ assetID, amount }),
       });
     },
 
@@ -151,7 +151,7 @@ export const defiService = {
     borrow: async (assetID: string, amount: number): Promise<TransactionResponse> => {
       return request(`${BASE_URL}/lending/borrow`, {
         method: 'POST',
-        body: JSON.stringify({ assetID, amount })
+        body: JSON.stringify({ assetID, amount }),
       });
     },
 
@@ -159,11 +159,10 @@ export const defiService = {
     repay: async (assetID: string, amount: number): Promise<TransactionResponse> => {
       return request(`${BASE_URL}/lending/repay`, {
         method: 'POST',
-        body: JSON.stringify({ assetID, amount })
+        body: JSON.stringify({ assetID, amount }),
       });
-    }
+    },
   },
-
 
   // 流动性池相关
   liquidity: {
@@ -172,25 +171,29 @@ export const defiService = {
       // 暂时返回模拟数据
       return [
         {
-          ID: "pool_qau_usdt",
-          Name: "QAU/USDT",
-          AssetA: "QAU",
-          AssetB: "USDT",
+          ID: 'pool_qau_usdt',
+          Name: 'QAU/USDT',
+          AssetA: 'QAU',
+          AssetB: 'USDT',
           ReserveA: 1000000000000000,
           ReserveB: 50000000000000000,
           TotalLiquidity: 7071067811865476,
           APY: 0.125,
           Volume24h: 5000000000000000,
-          Fees24h: 15000000000000
-        }
+          Fees24h: 15000000000000,
+        },
       ];
     },
 
     // 添加流动性
-    addLiquidity: async (poolID: string, amountA: number, amountB: number): Promise<TransactionResponse> => {
+    addLiquidity: async (
+      poolID: string,
+      amountA: number,
+      amountB: number
+    ): Promise<TransactionResponse> => {
       return request(`${BASE_URL}/liquidity/add`, {
         method: 'POST',
-        body: JSON.stringify({ poolID, amountA, amountB })
+        body: JSON.stringify({ poolID, amountA, amountB }),
       });
     },
 
@@ -198,17 +201,23 @@ export const defiService = {
     removeLiquidity: async (poolID: string, liquidity: number): Promise<TransactionResponse> => {
       return request(`${BASE_URL}/liquidity/remove`, {
         method: 'POST',
-        body: JSON.stringify({ poolID, liquidity })
+        body: JSON.stringify({ poolID, liquidity }),
       });
     },
 
     // 交换代币
-    swap: async (poolID: string, tokenIn: string, amountIn: number, tokenOut: string, minAmountOut: number): Promise<TransactionResponse> => {
+    swap: async (
+      poolID: string,
+      tokenIn: string,
+      amountIn: number,
+      tokenOut: string,
+      minAmountOut: number
+    ): Promise<TransactionResponse> => {
       return request(`${BASE_URL}/liquidity/swap`, {
         method: 'POST',
-        body: JSON.stringify({ poolID, tokenIn, amountIn, tokenOut, minAmountOut })
+        body: JSON.stringify({ poolID, tokenIn, amountIn, tokenOut, minAmountOut }),
       });
-    }
+    },
   },
 
   // 用户仓位相关
@@ -231,7 +240,7 @@ export const defiService = {
     // 获取用户挖矿仓位
     getUserFarmingPositions: async (userID: string): Promise<UserPosition[]> => {
       return request(`${BASE_URL}/positions/farming/${userID}`);
-    }
+    },
   },
 
   // 统计数据
@@ -243,13 +252,13 @@ export const defiService = {
         totalValueLocked: 12500000000000000,
         volume24h: 2800000000000000,
         averageAPY: 0.156,
-        activeUsers: 8924
+        activeUsers: 8924,
       };
     },
 
     // 获取用户统计
     getUserStats: async (userID: string): Promise<UserStats> => {
       return request(`${BASE_URL}/stats/user/${userID}`);
-    }
-  }
+    },
+  },
 };

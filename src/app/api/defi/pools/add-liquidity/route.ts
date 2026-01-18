@@ -18,7 +18,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -40,7 +40,12 @@ export const POST = createSecureHandler(
       const amountAWei = BigInt(Math.floor(parseFloat(amountA) * 1e18)).toString();
       const amountBWei = BigInt(Math.floor(parseFloat(amountB) * 1e18)).toString();
 
-      const result = await callRPC('qau_addLiquidity', [poolId, userAddress, amountAWei, amountBWei]);
+      const result = await callRPC('qau_addLiquidity', [
+        poolId,
+        userAddress,
+        amountAWei,
+        amountBWei,
+      ]);
 
       if (!result.success) {
         return errorResponse(result.error || 'Add liquidity failed', 500);
@@ -51,7 +56,7 @@ export const POST = createSecureHandler(
         txHash: result.txHash,
         lpTokens: result.lp_tokens,
         message: `Successfully added liquidity to ${poolId}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       console.error('Add liquidity error:', error);

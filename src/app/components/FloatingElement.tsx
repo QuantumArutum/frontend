@@ -17,8 +17,8 @@ const FloatingElement: React.FC<FloatingElementProps> = ({ icon, idx }) => {
       transition={{
         duration: 3 + idx * 0.5,
         repeat: Infinity,
-        ease: "easeInOut",
-        delay: idx * 0.5
+        ease: 'easeInOut',
+        delay: idx * 0.5,
       }}
       className="absolute w-12 h-12 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 flex items-center justify-center text-2xl"
       style={{
@@ -32,6 +32,3 @@ const FloatingElement: React.FC<FloatingElementProps> = ({ icon, idx }) => {
 };
 
 export default FloatingElement;
-
-
-

@@ -58,37 +58,43 @@ export const GET = createSecureHandler(
   async (request: NextRequest): Promise<NextResponse> => {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(Math.max(parseInt(searchParams.get('limit') || '10'), 1), 100);
-    
+
     // 检查缓存
     if (txCache && Date.now() - txCache.timestamp < CACHE_TTL) {
       return addSecurityHeaders(NextResponse.json(txCache.data.slice(0, limit)));
     }
-    
+
     try {
       const latestBlockNumber = await makeRPCCall('qau_blockNumber');
       if (!latestBlockNumber) throw new Error('无法获取区块号');
-      
+
       const latestBlock = parseInt(latestBlockNumber, 16);
       const transactions: unknown[] = [];
-      
+
       // 分批扫描区块，直到找到足够的交易或扫描完所有区块
-      const BATCH_SIZE = 50;  // 每批查询50个区块
+      const BATCH_SIZE = 50; // 每批查询50个区块
       const MAX_BLOCKS = Math.min(latestBlock + 1, 500); // 最多扫描500个区块
-      
-      for (let offset = 0; offset < MAX_BLOCKS && transactions.length < limit; offset += BATCH_SIZE) {
+
+      for (
+        let offset = 0;
+        offset < MAX_BLOCKS && transactions.length < limit;
+        offset += BATCH_SIZE
+      ) {
         const blockPromises = [];
         const batchEnd = Math.min(offset + BATCH_SIZE, MAX_BLOCKS);
-        
+
         for (let i = offset; i < batchEnd && latestBlock - i >= 0; i++) {
-          blockPromises.push(makeRPCCall('qau_getBlockByNumber', [toEvenHex(latestBlock - i), true]));
+          blockPromises.push(
+            makeRPCCall('qau_getBlockByNumber', [toEvenHex(latestBlock - i), true])
+          );
         }
-        
+
         const blocks = await Promise.all(blockPromises);
-        
+
         for (const block of blocks) {
           const typedBlock = block as Block | null;
           if (!typedBlock?.transactions || typedBlock.transactions.length === 0) continue;
-          
+
           for (const tx of typedBlock.transactions) {
             transactions.push({
               hash: tx.hash,
@@ -107,15 +113,15 @@ export const GET = createSecureHandler(
               status: 'success',
             });
           }
-          
+
           // 如果已经找到足够的交易，停止
           if (transactions.length >= limit) break;
         }
       }
-      
+
       // 更新缓存
       txCache = { data: transactions, timestamp: Date.now() };
-      
+
       return addSecurityHeaders(NextResponse.json(transactions.slice(0, limit)));
     } catch {
       console.error('获取交易失败');

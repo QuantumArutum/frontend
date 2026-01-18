@@ -1,6 +1,7 @@
 # Vercel 数据库配置指南
 
 ## 🎯 目标
+
 为你的 Vercel 项目配置 Postgres 数据库，完成 Phase 9-11 的 100% 测试。
 
 ---
@@ -14,10 +15,12 @@
 3. 查看是否已经有 Postgres 数据库
 
 **如果看到数据库**：
+
 - ✅ 太好了！数据库已存在
 - 跳到步骤 2：连接数据库
 
 **如果没有数据库**：
+
 - 继续下面的创建步骤
 
 ---
@@ -37,6 +40,7 @@
 ### 选项 B：使用现有的 Neon 数据库
 
 如果你已经有 Neon 账号：
+
 1. 登录 https://neon.tech
 2. 创建新项目或使用现有项目
 3. 复制连接字符串
@@ -55,6 +59,7 @@
 5. 点击 **"Connect"**
 
 **Vercel 会自动添加以下环境变量**：
+
 - `POSTGRES_URL`
 - `POSTGRES_URL_NON_POOLING`
 - `POSTGRES_USER`
@@ -135,12 +140,14 @@ cd Quantaureum/frontend
 ## 📋 步骤 7：完成 100% 测试
 
 脚本会自动：
+
 - ✅ 运行数据库迁移
 - ✅ 添加版主权限
 - ✅ 测试所有功能
 - ✅ 生成测试报告
 
 **预期结果**：
+
 ```
 总测试数: 11
 通过: 11
@@ -168,6 +175,7 @@ cd Quantaureum/frontend
 ## 💡 提示
 
 ### Vercel Postgres 的优势
+
 - ✅ 完全托管，无需维护
 - ✅ 自动备份
 - ✅ 高可用性
@@ -175,6 +183,7 @@ cd Quantaureum/frontend
 - ✅ 免费套餐可用
 
 ### 免费套餐限制
+
 - 存储：256 MB
 - 计算时间：100 小时/月
 - 数据传输：1 GB/月
@@ -186,16 +195,21 @@ cd Quantaureum/frontend
 ## ⚠️ 常见问题
 
 ### Q1: 找不到 "Create Database" 按钮？
+
 **A**: 确保你在项目的 Storage 标签页，不是账号级别的 Storage 页面。
 
 ### Q2: 数据库创建失败？
+
 **A**: 检查你的 Vercel 账号是否已验证邮箱，某些功能需要验证。
 
 ### Q3: 环境变量没有自动添加？
+
 **A**: 手动添加 `DATABASE_URL`，值从 Storage 页面的数据库详情中复制。
 
 ### Q4: 部署后还是报错？
-**A**: 
+
+**A**:
+
 1. 检查 Vercel 日志：https://vercel.com/quantumarutums-projects/frontend/logs
 2. 确认环境变量在 Production 环境中
 3. 确保已重新部署
@@ -205,6 +219,7 @@ cd Quantaureum/frontend
 ## 📞 需要帮助？
 
 如果遇到问题：
+
 1. 截图 Storage 标签页
 2. 截图环境变量页面
 3. 复制 Vercel 日志中的错误信息
@@ -215,6 +230,7 @@ cd Quantaureum/frontend
 ## 🎉 完成后
 
 一旦数据库配置完成，你将拥有：
+
 - ✅ 完整的社区功能
 - ✅ 评论点赞系统
 - ✅ 版主管理系统
@@ -223,4 +239,3 @@ cd Quantaureum/frontend
 **预计总时间**：5-10 分钟
 
 让我们开始吧！🚀
-

@@ -11,10 +11,7 @@ export async function GET() {
     const result = await db.getStakingPools();
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 500 });
     }
 
     // Filter only active pools for public API
@@ -26,9 +23,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error('Get public staking pools error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

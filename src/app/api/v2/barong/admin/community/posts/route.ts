@@ -22,10 +22,7 @@ export async function GET(request: NextRequest) {
     const result = await db.getPosts({ page, limit, category, search });
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -39,10 +36,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Get posts error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -68,10 +62,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -81,9 +72,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Create post error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

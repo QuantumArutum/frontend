@@ -1,6 +1,6 @@
-import { request } from "../utils/request";
+import { request } from '../utils/request';
 
-const BASE_URL = "http://localhost:8080/api/market"; // 后端服务运行在8080端口
+const BASE_URL = 'http://localhost:8080/api/market'; // 后端服务运行在8080端口
 
 export const marketService = {
   // 列出所有市场
@@ -23,7 +23,7 @@ export const marketService = {
         { Price: 4950000000, Amount: 400000000, OrderCount: 10 },
         { Price: 4945000000, Amount: 160000000, OrderCount: 3 },
         { Price: 4940000000, Amount: 220000000, OrderCount: 7 },
-        { Price: 4935000000, Amount: 180000000, OrderCount: 4 }
+        { Price: 4935000000, Amount: 180000000, OrderCount: 4 },
       ],
       Asks: [
         { Price: 5000000000, Amount: 120000000, OrderCount: 2 },
@@ -35,9 +35,9 @@ export const marketService = {
         { Price: 5030000000, Amount: 200000000, OrderCount: 5 },
         { Price: 5035000000, Amount: 170000000, OrderCount: 3 },
         { Price: 5040000000, Amount: 280000000, OrderCount: 7 },
-        { Price: 5045000000, Amount: 190000000, OrderCount: 4 }
+        { Price: 5045000000, Amount: 190000000, OrderCount: 4 },
       ],
-      LastUpdated: new Date().toISOString()
+      LastUpdated: new Date().toISOString(),
     };
   },
 
@@ -46,26 +46,26 @@ export const marketService = {
     // 暂时返回模拟数据，等待后端实现
     return [
       {
-        ID: "trade1",
+        ID: 'trade1',
         Price: 50000000000,
         Amount: 100000000,
         Side: 0,
-        CreatedAt: new Date().toISOString()
+        CreatedAt: new Date().toISOString(),
       },
       {
-        ID: "trade2",
+        ID: 'trade2',
         Price: 49800000000,
         Amount: 50000000,
         Side: 1,
-        CreatedAt: new Date(Date.now() - 60000).toISOString()
+        CreatedAt: new Date(Date.now() - 60000).toISOString(),
       },
       {
-        ID: "trade3",
+        ID: 'trade3',
         Price: 50200000000,
         Amount: 75000000,
         Side: 0,
-        CreatedAt: new Date(Date.now() - 120000).toISOString()
-      }
+        CreatedAt: new Date(Date.now() - 120000).toISOString(),
+      },
     ];
   },
 
@@ -74,7 +74,7 @@ export const marketService = {
     // 暂时返回模拟数据
     return {
       Available: 1000000000000,
-      Locked: 0
+      Locked: 0,
     };
   },
 
@@ -90,9 +90,9 @@ export const marketService = {
   }) => {
     // 暂时返回模拟数据
     return {
-      ID: "order_" + Date.now(),
-      Status: "pending",
-      ...orderData
+      ID: 'order_' + Date.now(),
+      Status: 'pending',
+      ...orderData,
     };
   },
 
@@ -103,7 +103,7 @@ export const marketService = {
       volume24h: 1500000000000,
       priceChange24h: 0.025,
       high24h: 52000000000,
-      low24h: 48000000000
+      low24h: 48000000000,
     };
   },
 
@@ -112,9 +112,9 @@ export const marketService = {
     // 暂时返回模拟数据
     return {
       ID: assetID,
-      Symbol: assetID === "asset1" ? "QAU" : "USDT",
-      Name: assetID === "asset1" ? "Quantum Aurum" : "Tether USD",
-      Decimals: assetID === "asset1" ? 8 : 6
+      Symbol: assetID === 'asset1' ? 'QAU' : 'USDT',
+      Name: assetID === 'asset1' ? 'Quantum Aurum' : 'Tether USD',
+      Decimals: assetID === 'asset1' ? 8 : 6,
     };
   },
 
@@ -122,11 +122,10 @@ export const marketService = {
   getAssetBySymbol: async (symbol: string) => {
     // 暂时返回模拟数据
     return {
-      ID: symbol === "QAU" ? "asset1" : "asset2",
+      ID: symbol === 'QAU' ? 'asset1' : 'asset2',
       Symbol: symbol,
-      Name: symbol === "QAU" ? "Quantum Aurum" : "Tether USD",
-      Decimals: symbol === "QAU" ? 8 : 6
+      Name: symbol === 'QAU' ? 'Quantum Aurum' : 'Tether USD',
+      Decimals: symbol === 'QAU' ? 8 : 6,
     };
-  }
+  },
 };
-

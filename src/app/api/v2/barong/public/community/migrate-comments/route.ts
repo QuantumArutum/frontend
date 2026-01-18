@@ -4,12 +4,15 @@ import { neon } from '@neondatabase/serverless';
 export async function POST(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -75,24 +78,29 @@ export async function POST(request: NextRequest) {
     console.log('All migrations completed successfully');
     return NextResponse.json({
       success: true,
-      message: 'Database migration completed successfully'
+      message: 'Database migration completed successfully',
     });
-
   } catch (error: any) {
     console.error('Migration error:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
       code: error.code,
-      detail: error.detail
+      detail: error.detail,
     });
-    return NextResponse.json({
-      success: false,
-      message: 'Migration failed',
-      error: error instanceof Error ? error.message : 'Unknown error',
-      details: process.env.NODE_ENV === 'development' ? {
-        code: error.code,
-        detail: error.detail
-      } : undefined
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Migration failed',
+        error: error instanceof Error ? error.message : 'Unknown error',
+        details:
+          process.env.NODE_ENV === 'development'
+            ? {
+                code: error.code,
+                detail: error.detail,
+              }
+            : undefined,
+      },
+      { status: 500 }
+    );
   }
 }

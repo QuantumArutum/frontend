@@ -9,10 +9,13 @@ import { sql } from '@/lib/database';
 export async function POST(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured',
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
@@ -20,17 +23,23 @@ export async function POST(request: NextRequest) {
 
     // 验证参数
     if (!postId || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Post ID and user ID are required',
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post ID and user ID are required',
+        },
+        { status: 400 }
+      );
     }
 
     if (voteType && !['upvote', 'downvote', 'remove'].includes(voteType)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Invalid vote type. Must be upvote, downvote, or remove',
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Invalid vote type. Must be upvote, downvote, or remove',
+        },
+        { status: 400 }
+      );
     }
 
     // 检查帖子是否存在
@@ -39,20 +48,26 @@ export async function POST(request: NextRequest) {
     `;
 
     if (!postResult || postResult.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Post not found',
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post not found',
+        },
+        { status: 404 }
+      );
     }
 
     const post = postResult[0];
 
     // 不能给自己的帖子投票
     if (post.user_id === currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'You cannot vote on your own post',
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'You cannot vote on your own post',
+        },
+        { status: 403 }
+      );
     }
 
     // 检查用户当前的投票状态
@@ -223,9 +238,12 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error voting on post:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Internal server error',
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

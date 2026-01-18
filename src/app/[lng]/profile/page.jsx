@@ -13,4 +13,3 @@ const ProfilePageWrapper = () => {
 };
 
 export default ProfilePageWrapper;
-

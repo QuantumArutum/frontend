@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
     const result = await db.getPosts({ page, limit, category });
     const rawPosts = result.data?.posts || [];
     const posts = rawPosts.map(transformPost).filter(Boolean);
-    
+
     return NextResponse.json({
       success: true,
       data: {

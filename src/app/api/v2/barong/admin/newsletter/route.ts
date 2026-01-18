@@ -14,11 +14,33 @@ export async function GET(request: NextRequest) {
     if (!sql) {
       // Demo mode - return mock data
       const mockSubscriptions = [
-        { id: 1, email: 'demo1@example.com', status: 'active', source: 'footer', subscribed_at: new Date().toISOString(), ip_address: '127.0.0.1' },
-        { id: 2, email: 'demo2@example.com', status: 'active', source: 'blog', subscribed_at: new Date().toISOString(), ip_address: '127.0.0.1' },
-        { id: 3, email: 'demo3@example.com', status: 'unsubscribed', source: 'footer', subscribed_at: new Date().toISOString(), unsubscribed_at: new Date().toISOString(), ip_address: '127.0.0.1' },
+        {
+          id: 1,
+          email: 'demo1@example.com',
+          status: 'active',
+          source: 'footer',
+          subscribed_at: new Date().toISOString(),
+          ip_address: '127.0.0.1',
+        },
+        {
+          id: 2,
+          email: 'demo2@example.com',
+          status: 'active',
+          source: 'blog',
+          subscribed_at: new Date().toISOString(),
+          ip_address: '127.0.0.1',
+        },
+        {
+          id: 3,
+          email: 'demo3@example.com',
+          status: 'unsubscribed',
+          source: 'footer',
+          subscribed_at: new Date().toISOString(),
+          unsubscribed_at: new Date().toISOString(),
+          ip_address: '127.0.0.1',
+        },
       ];
-      
+
       return NextResponse.json({
         success: true,
         data: {
@@ -26,8 +48,8 @@ export async function GET(request: NextRequest) {
           total: 3,
           page,
           limit,
-          totalPages: 1
-        }
+          totalPages: 1,
+        },
       });
     }
 
@@ -87,10 +109,9 @@ export async function GET(request: NextRequest) {
         total,
         page,
         limit,
-        totalPages: Math.ceil(total / limit)
-      }
+        totalPages: Math.ceil(total / limit),
+      },
     });
-
   } catch (error) {
     console.error('Get newsletter subscriptions error:', error);
     return NextResponse.json(
@@ -116,7 +137,7 @@ export async function DELETE(request: NextRequest) {
     if (!sql) {
       return NextResponse.json({
         success: true,
-        message: 'Subscription deleted'
+        message: 'Subscription deleted',
       });
     }
 
@@ -124,9 +145,8 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Subscription deleted'
+      message: 'Subscription deleted',
     });
-
   } catch (error) {
     console.error('Delete subscription error:', error);
     return NextResponse.json(
@@ -150,16 +170,13 @@ export async function PATCH(request: NextRequest) {
     }
 
     if (!['active', 'unsubscribed'].includes(status)) {
-      return NextResponse.json(
-        { success: false, error: 'Invalid status' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'Invalid status' }, { status: 400 });
     }
 
     if (!sql) {
       return NextResponse.json({
         success: true,
-        message: 'Subscription updated'
+        message: 'Subscription updated',
       });
     }
 
@@ -179,9 +196,8 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Subscription updated'
+      message: 'Subscription updated',
     });
-
   } catch (error) {
     console.error('Update subscription error:', error);
     return NextResponse.json(

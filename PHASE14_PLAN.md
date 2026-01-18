@@ -17,6 +17,7 @@
 ### 1. 私信发送
 
 #### 1.1 发送私信
+
 - [ ] 发送文本消息
 - [ ] 发送图片
 - [ ] 发送链接
@@ -24,6 +25,7 @@
 - [ ] 防止垃圾消息
 
 #### 1.2 消息编辑
+
 - [ ] 编辑已发送消息
 - [ ] 删除消息
 - [ ] 撤回消息（限时）
@@ -32,6 +34,7 @@
 ### 2. 私信列表
 
 #### 2.1 会话列表
+
 - [ ] 显示所有会话
 - [ ] 最新消息预览
 - [ ] 未读消息数量
@@ -39,6 +42,7 @@
 - [ ] 会话排序
 
 #### 2.2 会话管理
+
 - [ ] 删除会话
 - [ ] 归档会话
 - [ ] 置顶会话
@@ -48,6 +52,7 @@
 ### 3. 消息详情
 
 #### 3.1 消息显示
+
 - [ ] 消息列表
 - [ ] 消息时间
 - [ ] 已读状态
@@ -55,6 +60,7 @@
 - [ ] 滚动加载
 
 #### 3.2 消息交互
+
 - [ ] 发送消息
 - [ ] 实时更新
 - [ ] 输入状态提示
@@ -63,12 +69,14 @@
 ### 4. 已读状态
 
 #### 4.1 已读标记
+
 - [ ] 自动标记已读
 - [ ] 显示已读状态
 - [ ] 已读时间
 - [ ] 已读回执
 
 #### 4.2 未读管理
+
 - [ ] 未读消息数量
 - [ ] 未读消息提醒
 - [ ] 标记全部已读
@@ -77,12 +85,14 @@
 ### 5. 消息通知
 
 #### 5.1 实时通知
+
 - [ ] 新消息通知
 - [ ] 桌面通知
 - [ ] 声音提醒
 - [ ] 通知设置
 
 #### 5.2 通知管理
+
 - [ ] 通知开关
 - [ ] 免打扰模式
 - [ ] 通知过滤
@@ -91,12 +101,14 @@
 ### 6. 隐私设置
 
 #### 6.1 消息权限
+
 - [ ] 谁可以发消息
 - [ ] 黑名单管理
 - [ ] 消息过滤
 - [ ] 举报功能
 
 #### 6.2 隐私保护
+
 - [ ] 消息加密
 - [ ] 阅后即焚
 - [ ] 消息保存期限
@@ -192,6 +204,7 @@ CREATE INDEX idx_blacklist_blocked ON message_blacklist(blocked_user_id);
 ### 1. 发送消息 API
 
 #### POST /api/v2/barong/public/community/messages/send
+
 ```typescript
 {
   receiverId: string;
@@ -212,6 +225,7 @@ CREATE INDEX idx_blacklist_blocked ON message_blacklist(blocked_user_id);
 ### 2. 获取会话列表 API
 
 #### GET /api/v2/barong/public/community/messages/conversations
+
 ```typescript
 {
   page?: number;
@@ -233,6 +247,7 @@ CREATE INDEX idx_blacklist_blocked ON message_blacklist(blocked_user_id);
 ### 3. 获取会话消息 API
 
 #### GET /api/v2/barong/public/community/messages/conversation/:userId
+
 ```typescript
 {
   page?: number;
@@ -253,6 +268,7 @@ CREATE INDEX idx_blacklist_blocked ON message_blacklist(blocked_user_id);
 ### 4. 标记已读 API
 
 #### POST /api/v2/barong/public/community/messages/mark-read
+
 ```typescript
 {
   conversationUserId: string;
@@ -271,6 +287,7 @@ CREATE INDEX idx_blacklist_blocked ON message_blacklist(blocked_user_id);
 ### 5. 删除消息 API
 
 #### DELETE /api/v2/barong/public/community/messages/:messageId
+
 ```typescript
 // 响应
 {
@@ -282,6 +299,7 @@ CREATE INDEX idx_blacklist_blocked ON message_blacklist(blocked_user_id);
 ### 6. 删除会话 API
 
 #### DELETE /api/v2/barong/public/community/messages/conversation/:userId
+
 ```typescript
 // 响应
 {
@@ -293,6 +311,7 @@ CREATE INDEX idx_blacklist_blocked ON message_blacklist(blocked_user_id);
 ### 7. 黑名单管理 API
 
 #### POST /api/v2/barong/public/community/messages/block
+
 ```typescript
 {
   blockedUserId: string;
@@ -301,11 +320,13 @@ CREATE INDEX idx_blacklist_blocked ON message_blacklist(blocked_user_id);
 ```
 
 #### DELETE /api/v2/barong/public/community/messages/block/:userId
+
 ```typescript
 // 取消拉黑
 ```
 
 #### GET /api/v2/barong/public/community/messages/blocked
+
 ```typescript
 // 获取黑名单列表
 ```
@@ -498,26 +519,26 @@ interface ConversationItemProps {
 
 ## 🎯 成功指标
 
-| 指标 | 目标 | 测量方式 |
-|------|------|---------|
-| 功能完成度 | 100% | 功能清单 |
-| API 响应时间 | < 500ms | 性能监控 |
-| 消息发送成功率 | > 99% | 数据分析 |
-| 代码质量 | 9/10 | 代码审查 |
-| 用户满意度 | > 85% | 用户反馈 |
+| 指标           | 目标    | 测量方式 |
+| -------------- | ------- | -------- |
+| 功能完成度     | 100%    | 功能清单 |
+| API 响应时间   | < 500ms | 性能监控 |
+| 消息发送成功率 | > 99%   | 数据分析 |
+| 代码质量       | 9/10    | 代码审查 |
+| 用户满意度     | > 85%   | 用户反馈 |
 
 ---
 
 ## 📅 时间表
 
-| 阶段 | 时间 | 负责人 |
-|------|------|--------|
-| 数据库设计 | 30分钟 | Kiro AI |
-| 后端 API | 90分钟 | Kiro AI |
-| 前端组件 | 60分钟 | Kiro AI |
-| 页面集成 | 30分钟 | Kiro AI |
-| 测试优化 | 30分钟 | Kiro AI |
-| **总计** | **4小时** | |
+| 阶段       | 时间      | 负责人  |
+| ---------- | --------- | ------- |
+| 数据库设计 | 30分钟    | Kiro AI |
+| 后端 API   | 90分钟    | Kiro AI |
+| 前端组件   | 60分钟    | Kiro AI |
+| 页面集成   | 30分钟    | Kiro AI |
+| 测试优化   | 30分钟    | Kiro AI |
+| **总计**   | **4小时** |         |
 
 ---
 
@@ -526,6 +547,7 @@ interface ConversationItemProps {
 准备好开始 Phase 14 的实施了吗？
 
 **下一步:**
+
 1. 创建数据库迁移脚本
 2. 实现后端 API
 3. 开发前端组件

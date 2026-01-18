@@ -7,10 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth';
 import { db } from '@/lib/db';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ uid: string }> }
-) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ uid: string }> }) {
   const authResult = requireAdmin(request);
   if ('error' in authResult) return authResult.error;
 

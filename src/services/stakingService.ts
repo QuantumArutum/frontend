@@ -11,12 +11,12 @@ async function request(url: string, options?: RequestInit) {
     headers: { 'Content-Type': 'application/json' },
     ...options,
   });
-  
+
   if (!response.ok) {
     const error = await response.json().catch(() => ({ error: 'Request failed' }));
     throw new Error(error.error || `HTTP error! status: ${response.status}`);
   }
-  
+
   return response.json();
 }
 
@@ -75,36 +75,38 @@ export const stakingService = {
     try {
       const response = await request(`${STAKING_API}/pools`);
       const pools = response.data || [];
-      
-      return pools.map((pool: {
-        pool_id: string;
-        token: string;
-        reward_token: string;
-        total_staked: number;
-        duration_days: number;
-        min_stake_amount: number;
-        apy: number;
-        validators?: number;
-      }) => ({
-        id: pool.pool_id,
-        name: `${pool.token} ${pool.duration_days}-Day Staking`,
-        tokenSymbol: pool.token,
-        tokenAddress: '0xQAU0000000000000000000000000000000000001',
-        contractAddress: `0xStaking${pool.pool_id.replace(/-/g, '')}`,
-        apy: pool.apy,
-        totalStaked: (pool.total_staked * 1e18).toString(),
-        totalStakedUSD: pool.total_staked,
-        minStake: (pool.min_stake_amount * 1e18).toString(),
-        maxStake: '100000000000000000000000000', // 100M QAU
-        lockPeriodDays: pool.duration_days,
-        earlyWithdrawPenalty: pool.duration_days > 30 ? 5 : 0,
-        rewardTokenSymbol: pool.reward_token,
-        rewardTokenAddress: '0xQAU0000000000000000000000000000000000001',
-        status: 'active' as const,
-        participants: pool.validators || Math.floor(pool.total_staked / 10000),
-        createdAt: '2024-01-01T00:00:00Z',
-        updatedAt: new Date().toISOString(),
-      }));
+
+      return pools.map(
+        (pool: {
+          pool_id: string;
+          token: string;
+          reward_token: string;
+          total_staked: number;
+          duration_days: number;
+          min_stake_amount: number;
+          apy: number;
+          validators?: number;
+        }) => ({
+          id: pool.pool_id,
+          name: `${pool.token} ${pool.duration_days}-Day Staking`,
+          tokenSymbol: pool.token,
+          tokenAddress: '0xQAU0000000000000000000000000000000000001',
+          contractAddress: `0xStaking${pool.pool_id.replace(/-/g, '')}`,
+          apy: pool.apy,
+          totalStaked: (pool.total_staked * 1e18).toString(),
+          totalStakedUSD: pool.total_staked,
+          minStake: (pool.min_stake_amount * 1e18).toString(),
+          maxStake: '100000000000000000000000000', // 100M QAU
+          lockPeriodDays: pool.duration_days,
+          earlyWithdrawPenalty: pool.duration_days > 30 ? 5 : 0,
+          rewardTokenSymbol: pool.reward_token,
+          rewardTokenAddress: '0xQAU0000000000000000000000000000000000001',
+          status: 'active' as const,
+          participants: pool.validators || Math.floor(pool.total_staked / 10000),
+          createdAt: '2024-01-01T00:00:00Z',
+          updatedAt: new Date().toISOString(),
+        })
+      );
     } catch (error) {
       console.error('Failed to fetch staking pools:', error);
       throw error; // Don't fallback to mock data
@@ -116,31 +118,33 @@ export const stakingService = {
     try {
       const response = await request(`${STAKING_API}/users/${userAddress}/stakes`);
       const stakes = response.data || [];
-      
-      return stakes.map((stake: {
-        id: string;
-        pool_id: string;
-        amount: string;
-        rewards: string;
-        start_time: string;
-        unlock_time: string;
-        is_locked: boolean;
-        status: string;
-        apy: number;
-      }) => ({
-        id: stake.id,
-        poolId: stake.pool_id,
-        userAddress: userAddress,
-        stakedAmount: (parseFloat(stake.amount) * 1e18).toString(),
-        stakedAmountUSD: parseFloat(stake.amount),
-        pendingRewards: (parseFloat(stake.rewards) * 1e18).toString(),
-        pendingRewardsUSD: parseFloat(stake.rewards),
-        claimedRewards: '0',
-        stakeTimestamp: new Date(stake.start_time).getTime() / 1000,
-        unlockTimestamp: new Date(stake.unlock_time).getTime() / 1000,
-        isLocked: stake.is_locked,
-        lastClaimTimestamp: 0,
-      }));
+
+      return stakes.map(
+        (stake: {
+          id: string;
+          pool_id: string;
+          amount: string;
+          rewards: string;
+          start_time: string;
+          unlock_time: string;
+          is_locked: boolean;
+          status: string;
+          apy: number;
+        }) => ({
+          id: stake.id,
+          poolId: stake.pool_id,
+          userAddress: userAddress,
+          stakedAmount: (parseFloat(stake.amount) * 1e18).toString(),
+          stakedAmountUSD: parseFloat(stake.amount),
+          pendingRewards: (parseFloat(stake.rewards) * 1e18).toString(),
+          pendingRewardsUSD: parseFloat(stake.rewards),
+          claimedRewards: '0',
+          stakeTimestamp: new Date(stake.start_time).getTime() / 1000,
+          unlockTimestamp: new Date(stake.unlock_time).getTime() / 1000,
+          isLocked: stake.is_locked,
+          lastClaimTimestamp: 0,
+        })
+      );
     } catch (error) {
       console.error('Failed to fetch user stakes:', error);
       return [];
@@ -148,7 +152,11 @@ export const stakingService = {
   },
 
   // Stake tokens - calls real blockchain
-  stake: async (poolId: string, amount: string, userAddress: string): Promise<{ success: boolean; txHash?: string; error?: string }> => {
+  stake: async (
+    poolId: string,
+    amount: string,
+    userAddress: string
+  ): Promise<{ success: boolean; txHash?: string; error?: string }> => {
     try {
       // Convert from wei to QAU for API
       const amountQAU = parseFloat(amount) / 1e18;
@@ -164,7 +172,11 @@ export const stakingService = {
   },
 
   // Unstake tokens - calls real blockchain
-  unstake: async (stakeId: string, amount: string, userAddress: string): Promise<{ success: boolean; txHash?: string; error?: string }> => {
+  unstake: async (
+    stakeId: string,
+    amount: string,
+    userAddress: string
+  ): Promise<{ success: boolean; txHash?: string; error?: string }> => {
     try {
       const amountQAU = parseFloat(amount) / 1e18;
       const response = await request(`${STAKING_API}/unstake`, {
@@ -179,7 +191,10 @@ export const stakingService = {
   },
 
   // Claim rewards - calls real blockchain
-  claimRewards: async (stakeId: string, userAddress: string): Promise<{ success: boolean; txHash?: string; amount?: string; error?: string }> => {
+  claimRewards: async (
+    stakeId: string,
+    userAddress: string
+  ): Promise<{ success: boolean; txHash?: string; amount?: string; error?: string }> => {
     try {
       const response = await request(`${STAKING_API}/claim`, {
         method: 'POST',
@@ -193,7 +208,10 @@ export const stakingService = {
   },
 
   // Compound rewards - calls real blockchain
-  compoundRewards: async (stakeId: string, userAddress: string): Promise<{ success: boolean; txHash?: string; error?: string }> => {
+  compoundRewards: async (
+    stakeId: string,
+    userAddress: string
+  ): Promise<{ success: boolean; txHash?: string; error?: string }> => {
     try {
       const response = await request(`${STAKING_API}/compound`, {
         method: 'POST',

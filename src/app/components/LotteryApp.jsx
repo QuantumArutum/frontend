@@ -2,10 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { Badge } from '@/components/ui/Badge';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Alert, AlertDescription } from '@/components/ui/Alert';
 import QuantumSecurityPanel from '@/app/components/QuantumSecurityPanel';
 import { formatNumber, formatCurrency, formatPercentage } from '@/lib/utils';
@@ -40,25 +53,25 @@ import {
   Calculator,
   BarChart3,
   PieChart,
-  Activity
+  Activity,
 } from 'lucide-react';
 
 const QuantumLottery = () => {
   // 大乐透对标的核心状态
   const [selectedFrontNumbers, setSelectedFrontNumbers] = useState([]); // 前区号码 (1-35选5)
-  const [selectedBackNumbers, setSelectedBackNumbers] = useState([]);   // 后区号码 (1-12选2)
+  const [selectedBackNumbers, setSelectedBackNumbers] = useState([]); // 后区号码 (1-12选2)
   const [betAmount, setBetAmount] = useState(2); // 投注金额，大乐透基础投注2元
   const [betMultiple, setBetMultiple] = useState(1); // 投注倍数
   const [activeTab, setActiveTab] = useState('buy'); // 当前标签页
   const [showRules, setShowRules] = useState(false); // 显示规则
   const [isLoading, setIsLoading] = useState(false);
-  
+
   // 大乐透期号和开奖信息
   const [currentPeriod, setCurrentPeriod] = useState('24001');
   const [nextDrawTime, setNextDrawTime] = useState('2024-01-15 21:30:00');
   const [jackpotPool, setJackpotPool] = useState(850000000); // 奖池金额
   const [totalSales, setTotalSales] = useState(125000000); // 销售总额
-  
+
   // 用户彩票记录
   const [userTickets, setUserTickets] = useState([
     {
@@ -69,7 +82,7 @@ const QuantumLottery = () => {
       multiple: 1,
       amount: 2,
       status: 'waiting',
-      purchaseTime: '2024-01-15 14:30:00'
+      purchaseTime: '2024-01-15 14:30:00',
     },
     {
       id: '2',
@@ -80,8 +93,8 @@ const QuantumLottery = () => {
       amount: 4,
       status: 'drawn',
       prize: 0,
-      purchaseTime: '2024-01-13 16:45:00'
-    }
+      purchaseTime: '2024-01-13 16:45:00',
+    },
   ]);
 
   // 历史开奖记录
@@ -94,7 +107,7 @@ const QuantumLottery = () => {
       jackpotWinners: 2,
       jackpotPrize: 12500000,
       totalPrize: 45600000,
-      sales: 98500000
+      sales: 98500000,
     },
     {
       period: '23364',
@@ -104,21 +117,31 @@ const QuantumLottery = () => {
       jackpotWinners: 0,
       jackpotPrize: 0,
       totalPrize: 28900000,
-      sales: 87200000
-    }
+      sales: 87200000,
+    },
   ]);
 
   // 奖项设置（对标大乐透）
   const prizeStructure = [
-    { level: '一等奖', condition: '5+2', baseAmount: 10000000, description: '前区5个号码+后区2个号码' },
-    { level: '二等奖', condition: '5+1', baseAmount: 500000, description: '前区5个号码+后区1个号码' },
+    {
+      level: '一等奖',
+      condition: '5+2',
+      baseAmount: 10000000,
+      description: '前区5个号码+后区2个号码',
+    },
+    {
+      level: '二等奖',
+      condition: '5+1',
+      baseAmount: 500000,
+      description: '前区5个号码+后区1个号码',
+    },
     { level: '三等奖', condition: '5+0', baseAmount: 10000, description: '前区5个号码' },
     { level: '四等奖', condition: '4+2', baseAmount: 3000, description: '前区4个号码+后区2个号码' },
     { level: '五等奖', condition: '4+1', baseAmount: 300, description: '前区4个号码+后区1个号码' },
     { level: '六等奖', condition: '3+2', baseAmount: 200, description: '前区3个号码+后区2个号码' },
     { level: '七等奖', condition: '4+0', baseAmount: 100, description: '前区4个号码' },
     { level: '八等奖', condition: '3+1', baseAmount: 15, description: '前区3个号码+后区1个号码' },
-    { level: '九等奖', condition: '2+2', baseAmount: 5, description: '前区2个号码+后区2个号码' }
+    { level: '九等奖', condition: '2+2', baseAmount: 5, description: '前区2个号码+后区2个号码' },
   ];
 
   // 生成号码数组
@@ -128,7 +151,7 @@ const QuantumLottery = () => {
   // 处理前区号码选择
   const handleFrontNumberSelect = (number) => {
     if (selectedFrontNumbers.includes(number)) {
-      setSelectedFrontNumbers(selectedFrontNumbers.filter(n => n !== number));
+      setSelectedFrontNumbers(selectedFrontNumbers.filter((n) => n !== number));
     } else if (selectedFrontNumbers.length < 5) {
       setSelectedFrontNumbers([...selectedFrontNumbers, number].sort((a, b) => a - b));
     }
@@ -137,7 +160,7 @@ const QuantumLottery = () => {
   // 处理后区号码选择
   const handleBackNumberSelect = (number) => {
     if (selectedBackNumbers.includes(number)) {
-      setSelectedBackNumbers(selectedBackNumbers.filter(n => n !== number));
+      setSelectedBackNumbers(selectedBackNumbers.filter((n) => n !== number));
     } else if (selectedBackNumbers.length < 2) {
       setSelectedBackNumbers([...selectedBackNumbers, number].sort((a, b) => a - b));
     }
@@ -153,7 +176,7 @@ const QuantumLottery = () => {
         randomFront.push(num);
       }
     }
-    
+
     // 后区随机选2个
     const randomBack = [];
     while (randomBack.length < 2) {
@@ -162,7 +185,7 @@ const QuantumLottery = () => {
         randomBack.push(num);
       }
     }
-    
+
     setSelectedFrontNumbers(randomFront.sort((a, b) => a - b));
     setSelectedBackNumbers(randomBack.sort((a, b) => a - b));
   };
@@ -191,8 +214,8 @@ const QuantumLottery = () => {
     setIsLoading(true);
     try {
       // 模拟投注提交
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       const newTicket = {
         id: Date.now().toString(),
         period: currentPeriod,
@@ -201,13 +224,13 @@ const QuantumLottery = () => {
         multiple: betMultiple,
         amount: calculateTotalAmount(),
         status: 'waiting',
-        purchaseTime: new Date().toLocaleString()
+        purchaseTime: new Date().toLocaleString(),
       };
-      
+
       setUserTickets([newTicket, ...userTickets]);
       handleClearSelection();
       setBetMultiple(1);
-      
+
       alert('投注成功！祝您好运！');
     } catch (error) {
       alert('投注失败，请重试');
@@ -221,18 +244,20 @@ const QuantumLottery = () => {
 
   // 计算倒计时
   const [timeLeft, setTimeLeft] = useState('');
-  
+
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date();
       const drawTime = new Date(nextDrawTime);
       const diff = drawTime - now;
-      
+
       if (diff > 0) {
         const hours = Math.floor(diff / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        setTimeLeft(`${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+        setTimeLeft(
+          `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        );
       } else {
         setTimeLeft('开奖中...');
       }
@@ -276,7 +301,9 @@ const QuantumLottery = () => {
                   <Calendar className="w-5 h-5 text-cyan-400" />
                   <div>
                     <div className="text-sm text-gray-400">当前期号</div>
-                    <div className="font-bold text-responsive-lg truncate-number">{currentPeriod}</div>
+                    <div className="font-bold text-responsive-lg truncate-number">
+                      {currentPeriod}
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -288,7 +315,9 @@ const QuantumLottery = () => {
                   <Clock className="w-5 h-5 text-yellow-400" />
                   <div>
                     <div className="text-sm text-gray-400">开奖倒计时</div>
-                    <div className="font-bold text-responsive-lg text-yellow-400 truncate-number">{timeLeft}</div>
+                    <div className="font-bold text-responsive-lg text-yellow-400 truncate-number">
+                      {timeLeft}
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -333,11 +362,17 @@ const QuantumLottery = () => {
                     <div className="p-6 pb-0">
                       <div className="flex justify-between items-center mb-4">
                         <TabsList className="grid w-full max-w-md grid-cols-3 quantum-tabs">
-                          <TabsTrigger value="buy" className="quantum-tab">购买彩票</TabsTrigger>
-                          <TabsTrigger value="my-tickets" className="quantum-tab">我的彩票</TabsTrigger>
-                          <TabsTrigger value="history" className="quantum-tab">开奖历史</TabsTrigger>
+                          <TabsTrigger value="buy" className="quantum-tab">
+                            购买彩票
+                          </TabsTrigger>
+                          <TabsTrigger value="my-tickets" className="quantum-tab">
+                            我的彩票
+                          </TabsTrigger>
+                          <TabsTrigger value="history" className="quantum-tab">
+                            开奖历史
+                          </TabsTrigger>
                         </TabsList>
-                        
+
                         <Dialog open={showRules} onOpenChange={setShowRules}>
                           <DialogTrigger asChild>
                             <Button variant="outline" className="quantum-button-secondary">
@@ -363,12 +398,15 @@ const QuantumLottery = () => {
                                   每注基本投注金额为2 QAU。
                                 </p>
                               </div>
-                              
+
                               <div>
                                 <h3 className="font-medium mb-2">奖项设置</h3>
                                 <div className="space-y-2">
                                   {prizeStructure.map((prize, index) => (
-                                    <div key={index} className="flex justify-between items-center text-sm p-2 bg-white/5 rounded">
+                                    <div
+                                      key={index}
+                                      className="flex justify-between items-center text-sm p-2 bg-white/5 rounded"
+                                    >
                                       <span className="font-medium">{prize.level}</span>
                                       <span className="text-gray-400">{prize.condition}</span>
                                       <span className="text-cyan-400 truncate-number">
@@ -406,7 +444,9 @@ const QuantumLottery = () => {
                             {frontNumbers.map((number) => (
                               <Button
                                 key={number}
-                                variant={selectedFrontNumbers.includes(number) ? "default" : "outline"}
+                                variant={
+                                  selectedFrontNumbers.includes(number) ? 'default' : 'outline'
+                                }
                                 className={`aspect-square p-0 text-sm font-bold ${
                                   selectedFrontNumbers.includes(number)
                                     ? 'bg-red-600 hover:bg-red-700 text-white'
@@ -433,7 +473,9 @@ const QuantumLottery = () => {
                             {backNumbers.map((number) => (
                               <Button
                                 key={number}
-                                variant={selectedBackNumbers.includes(number) ? "default" : "outline"}
+                                variant={
+                                  selectedBackNumbers.includes(number) ? 'default' : 'outline'
+                                }
                                 className={`aspect-square p-0 text-sm font-bold ${
                                   selectedBackNumbers.includes(number)
                                     ? 'bg-blue-600 hover:bg-blue-700 text-white'
@@ -449,10 +491,7 @@ const QuantumLottery = () => {
 
                         {/* 选号工具 */}
                         <div className="flex gap-4">
-                          <Button
-                            onClick={handleRandomSelect}
-                            className="quantum-button-primary"
-                          >
+                          <Button onClick={handleRandomSelect} className="quantum-button-primary">
                             <Zap className="w-4 h-4 mr-2" />
                             机选
                           </Button>
@@ -482,7 +521,9 @@ const QuantumLottery = () => {
                               <Input
                                 type="number"
                                 value={betMultiple}
-                                onChange={(e) => setBetMultiple(Math.max(1, parseInt(e.target.value) || 1))}
+                                onChange={(e) =>
+                                  setBetMultiple(Math.max(1, parseInt(e.target.value) || 1))
+                                }
                                 className="quantum-input text-center"
                                 min="1"
                                 max="99"
@@ -512,7 +553,11 @@ const QuantumLottery = () => {
                         {/* 投注按钮 */}
                         <Button
                           onClick={handleSubmitBet}
-                          disabled={isLoading || selectedFrontNumbers.length !== 5 || selectedBackNumbers.length !== 2}
+                          disabled={
+                            isLoading ||
+                            selectedFrontNumbers.length !== 5 ||
+                            selectedBackNumbers.length !== 2
+                          }
                           className="w-full quantum-button-primary bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800"
                         >
                           {isLoading ? (
@@ -535,15 +580,27 @@ const QuantumLottery = () => {
                               <CardContent className="p-4">
                                 <div className="flex justify-between items-start mb-3">
                                   <div>
-                                    <div className="font-medium text-responsive-base">期号: {ticket.period}</div>
-                                    <div className="text-sm text-gray-400">{ticket.purchaseTime}</div>
+                                    <div className="font-medium text-responsive-base">
+                                      期号: {ticket.period}
+                                    </div>
+                                    <div className="text-sm text-gray-400">
+                                      {ticket.purchaseTime}
+                                    </div>
                                   </div>
-                                  <Badge className={
-                                    ticket.status === 'waiting' ? 'quantum-badge-warning' :
-                                    ticket.status === 'drawn' ? 'quantum-badge-primary' : 'quantum-badge-success'
-                                  }>
-                                    {ticket.status === 'waiting' ? '待开奖' :
-                                     ticket.status === 'drawn' ? '已开奖' : '已中奖'}
+                                  <Badge
+                                    className={
+                                      ticket.status === 'waiting'
+                                        ? 'quantum-badge-warning'
+                                        : ticket.status === 'drawn'
+                                          ? 'quantum-badge-primary'
+                                          : 'quantum-badge-success'
+                                    }
+                                  >
+                                    {ticket.status === 'waiting'
+                                      ? '待开奖'
+                                      : ticket.status === 'drawn'
+                                        ? '已开奖'
+                                        : '已中奖'}
                                   </Badge>
                                 </div>
 
@@ -552,18 +609,24 @@ const QuantumLottery = () => {
                                     <span className="text-sm text-gray-400">前区:</span>
                                     <div className="flex gap-1">
                                       {ticket.frontNumbers.map((num, index) => (
-                                        <div key={index} className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-xs font-bold">
+                                        <div
+                                          key={index}
+                                          className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-xs font-bold"
+                                        >
                                           {formatNumber(num)}
                                         </div>
                                       ))}
                                     </div>
                                   </div>
-                                  
+
                                   <div className="flex items-center gap-2">
                                     <span className="text-sm text-gray-400">后区:</span>
                                     <div className="flex gap-1">
                                       {ticket.backNumbers.map((num, index) => (
-                                        <div key={index} className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold">
+                                        <div
+                                          key={index}
+                                          className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold"
+                                        >
                                           {formatNumber(num)}
                                         </div>
                                       ))}
@@ -572,14 +635,20 @@ const QuantumLottery = () => {
 
                                   <div className="flex justify-between items-center text-sm">
                                     <span className="text-gray-400">投注金额:</span>
-                                    <span className="font-medium truncate-number">{formatCurrency(ticket.amount, 'QAU')}</span>
+                                    <span className="font-medium truncate-number">
+                                      {formatCurrency(ticket.amount, 'QAU')}
+                                    </span>
                                   </div>
 
                                   {ticket.prize !== undefined && (
                                     <div className="flex justify-between items-center text-sm">
                                       <span className="text-gray-400">中奖金额:</span>
-                                      <span className={`font-medium truncate-number ${ticket.prize > 0 ? 'text-green-400' : 'text-gray-400'}`}>
-                                        {ticket.prize > 0 ? formatCurrency(ticket.prize, 'QAU') : '未中奖'}
+                                      <span
+                                        className={`font-medium truncate-number ${ticket.prize > 0 ? 'text-green-400' : 'text-gray-400'}`}
+                                      >
+                                        {ticket.prize > 0
+                                          ? formatCurrency(ticket.prize, 'QAU')
+                                          : '未中奖'}
                                       </span>
                                     </div>
                                   )}
@@ -604,7 +673,9 @@ const QuantumLottery = () => {
                             <CardContent className="p-4">
                               <div className="flex justify-between items-start mb-3">
                                 <div>
-                                  <div className="font-medium text-responsive-base">第 {draw.period} 期</div>
+                                  <div className="font-medium text-responsive-base">
+                                    第 {draw.period} 期
+                                  </div>
                                   <div className="text-sm text-gray-400">{draw.drawDate} 开奖</div>
                                 </div>
                                 <Badge className="quantum-badge-primary">
@@ -618,13 +689,19 @@ const QuantumLottery = () => {
                                   <span className="text-sm text-gray-400">开奖号码:</span>
                                   <div className="flex gap-1">
                                     {draw.frontNumbers.map((num, index) => (
-                                      <div key={index} className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-xs font-bold">
+                                      <div
+                                        key={index}
+                                        className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-xs font-bold"
+                                      >
                                         {formatNumber(num)}
                                       </div>
                                     ))}
                                     <div className="mx-2 text-gray-400">+</div>
                                     {draw.backNumbers.map((num, index) => (
-                                      <div key={index} className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold">
+                                      <div
+                                        key={index}
+                                        className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold"
+                                      >
                                         {formatNumber(num)}
                                       </div>
                                     ))}
@@ -638,7 +715,9 @@ const QuantumLottery = () => {
                                       {draw.jackpotWinners} 注
                                     </div>
                                     <div className="text-cyan-400 truncate-number">
-                                      {draw.jackpotPrize > 0 ? formatCurrency(draw.jackpotPrize, 'QAU') : '滚存'}
+                                      {draw.jackpotPrize > 0
+                                        ? formatCurrency(draw.jackpotPrize, 'QAU')
+                                        : '滚存'}
                                     </div>
                                   </div>
                                   <div>
@@ -678,11 +757,16 @@ const QuantumLottery = () => {
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <div className="text-sm text-gray-400 mb-2">前区号码 ({selectedFrontNumbers.length}/5)</div>
+                      <div className="text-sm text-gray-400 mb-2">
+                        前区号码 ({selectedFrontNumbers.length}/5)
+                      </div>
                       <div className="flex gap-1 flex-wrap">
                         {selectedFrontNumbers.length > 0 ? (
                           selectedFrontNumbers.map((num, index) => (
-                            <div key={index} className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-xs font-bold">
+                            <div
+                              key={index}
+                              className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-xs font-bold"
+                            >
                               {formatNumber(num)}
                             </div>
                           ))
@@ -693,11 +777,16 @@ const QuantumLottery = () => {
                     </div>
 
                     <div>
-                      <div className="text-sm text-gray-400 mb-2">后区号码 ({selectedBackNumbers.length}/2)</div>
+                      <div className="text-sm text-gray-400 mb-2">
+                        后区号码 ({selectedBackNumbers.length}/2)
+                      </div>
                       <div className="flex gap-1 flex-wrap">
                         {selectedBackNumbers.length > 0 ? (
                           selectedBackNumbers.map((num, index) => (
-                            <div key={index} className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold">
+                            <div
+                              key={index}
+                              className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold"
+                            >
                               {formatNumber(num)}
                             </div>
                           ))
@@ -768,11 +857,15 @@ const QuantumLottery = () => {
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-400">本期销量:</span>
-                      <span className="font-medium truncate-number">{formatCurrency(totalSales, 'QAU')}</span>
+                      <span className="font-medium truncate-number">
+                        {formatCurrency(totalSales, 'QAU')}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-400">奖池滚存:</span>
-                      <span className="font-medium text-purple-400 truncate-number">{formatCurrency(jackpotPool, 'QAU')}</span>
+                      <span className="font-medium text-purple-400 truncate-number">
+                        {formatCurrency(jackpotPool, 'QAU')}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-400">参与人数:</span>
@@ -794,4 +887,3 @@ const QuantumLottery = () => {
 };
 
 export default QuantumLottery;
-

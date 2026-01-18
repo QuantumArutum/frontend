@@ -10,7 +10,12 @@ import { communityService } from '@/lib/communityService';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const active = searchParams.get('active') === 'true' ? true : searchParams.get('active') === 'false' ? false : undefined;
+    const active =
+      searchParams.get('active') === 'true'
+        ? true
+        : searchParams.get('active') === 'false'
+          ? false
+          : undefined;
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '20');
 
@@ -23,12 +28,12 @@ export async function GET(request: NextRequest) {
         total: result.total,
         stats: {
           total: result.total,
-          active: result.tasks.filter(t => t.is_active).length,
-          daily: result.tasks.filter(t => t.task_type === 'daily').length,
-          weekly: result.tasks.filter(t => t.task_type === 'weekly').length,
-          once: result.tasks.filter(t => t.task_type === 'once').length,
-        }
-      }
+          active: result.tasks.filter((t) => t.is_active).length,
+          daily: result.tasks.filter((t) => t.task_type === 'daily').length,
+          weekly: result.tasks.filter((t) => t.task_type === 'weekly').length,
+          once: result.tasks.filter((t) => t.task_type === 'once').length,
+        },
+      },
     });
   } catch (error: any) {
     console.error('Tasks GET error:', error);
@@ -43,7 +48,18 @@ export async function POST(request: NextRequest) {
     const { action } = body;
 
     if (action === 'create') {
-      const { title, description, task_type, reward_points, reward_tokens, requirements, max_completions, is_active, start_date, end_date } = body;
+      const {
+        title,
+        description,
+        task_type,
+        reward_points,
+        reward_tokens,
+        requirements,
+        max_completions,
+        is_active,
+        start_date,
+        end_date,
+      } = body;
       const task = await communityService.createTask({
         title,
         description,
@@ -54,7 +70,7 @@ export async function POST(request: NextRequest) {
         max_completions,
         is_active,
         start_date,
-        end_date
+        end_date,
       });
       return NextResponse.json({ success: true, data: task });
     }

@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  MessageCircle, 
-  Share2, 
-  Bookmark, 
+import {
+  MessageCircle,
+  Share2,
+  Bookmark,
   MoreHorizontal,
   ThumbsUp,
   ThumbsDown,
@@ -20,7 +20,7 @@ import {
   Trash2,
   Reply,
   Quote,
-  Link as LinkIcon
+  Link as LinkIcon,
 } from 'lucide-react';
 import '../../../styles/design-system.css';
 
@@ -53,10 +53,10 @@ interface ForumPostProps {
   showActions?: boolean;
 }
 
-const ModernForumPost: React.FC<ForumPostProps> = ({ 
-  post, 
-  isPreview = false, 
-  showActions = true 
+const ModernForumPost: React.FC<ForumPostProps> = ({
+  post,
+  isPreview = false,
+  showActions = true,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
@@ -80,7 +80,7 @@ const ModernForumPost: React.FC<ForumPostProps> = ({
       'Community Leader': 'from-amber-500 to-orange-500',
       'Early Adopter': 'from-blue-500 to-cyan-500',
       'Top Contributor': 'from-emerald-500 to-teal-500',
-      'Moderator': 'from-red-500 to-pink-500'
+      Moderator: 'from-red-500 to-pink-500',
     };
     return colors[badge as keyof typeof colors] || 'from-gray-500 to-gray-600';
   };
@@ -99,9 +99,11 @@ const ModernForumPost: React.FC<ForumPostProps> = ({
             <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-lg font-semibold text-white">
               {post.author.avatar}
             </div>
-            <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-gray-900 ${
-              post.author.isOnline ? 'bg-green-400' : 'bg-gray-400'
-            }`}></div>
+            <div
+              className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-gray-900 ${
+                post.author.isOnline ? 'bg-green-400' : 'bg-gray-400'
+              }`}
+            ></div>
           </div>
 
           {/* Author Info & Post Meta */}
@@ -211,16 +213,16 @@ const ModernForumPost: React.FC<ForumPostProps> = ({
       </div>
 
       {/* Post Title */}
-      <h2 className={`font-bold text-white mb-3 group-hover:text-purple-300 transition-colors ${
-        isPreview ? 'text-lg' : 'text-xl'
-      }`}>
+      <h2
+        className={`font-bold text-white mb-3 group-hover:text-purple-300 transition-colors ${
+          isPreview ? 'text-lg' : 'text-xl'
+        }`}
+      >
         {post.title}
       </h2>
 
       {/* Post Content */}
-      <div className={`text-gray-300 leading-relaxed mb-4 ${
-        isPreview ? 'line-clamp-3' : ''
-      }`}>
+      <div className={`text-gray-300 leading-relaxed mb-4 ${isPreview ? 'line-clamp-3' : ''}`}>
         {post.content}
       </div>
 
@@ -329,9 +331,7 @@ const ModernForumPost: React.FC<ForumPostProps> = ({
                   >
                     Cancel
                   </button>
-                  <button className="quantum-btn quantum-btn-primary">
-                    Post Reply
-                  </button>
+                  <button className="quantum-btn quantum-btn-primary">Post Reply</button>
                 </div>
               </div>
             </div>
@@ -343,4 +343,3 @@ const ModernForumPost: React.FC<ForumPostProps> = ({
 };
 
 export default ModernForumPost;
-

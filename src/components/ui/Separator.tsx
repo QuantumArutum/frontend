@@ -14,7 +14,7 @@ export const Separator: React.FC<SeparatorProps> = ({
   decorative = true,
 }) => {
   const isHorizontal = orientation === 'horizontal';
-  
+
   return (
     <div
       role={decorative ? 'none' : 'separator'}

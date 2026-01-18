@@ -16,29 +16,29 @@
 
 ### 1. API路由优化 (6个文件)
 
-| 文件 | 状态 | 改进 |
-|------|------|------|
-| `forum-categories/route.ts` | ✅ 重写 | 移除复杂子查询，添加超时控制 |
-| `create-post/route.ts` | ✅ 重写 | 异步标签处理，简化验证 |
-| `search/route.ts` | ✅ 重写 | 移除JOIN聚合，限制结果数 |
-| `hot-posts/route.ts` | ✅ 重写 | 使用预计算字段，简化查询 |
-| `tags/route.ts` | ✅ 重写 | 移除复杂聚合，优化排序 |
-| `controversial-posts/route.ts` | ⏭️ 待优化 | 使用相同模式 |
+| 文件                           | 状态      | 改进                         |
+| ------------------------------ | --------- | ---------------------------- |
+| `forum-categories/route.ts`    | ✅ 重写   | 移除复杂子查询，添加超时控制 |
+| `create-post/route.ts`         | ✅ 重写   | 异步标签处理，简化验证       |
+| `search/route.ts`              | ✅ 重写   | 移除JOIN聚合，限制结果数     |
+| `hot-posts/route.ts`           | ✅ 重写   | 使用预计算字段，简化查询     |
+| `tags/route.ts`                | ✅ 重写   | 移除复杂聚合，优化排序       |
+| `controversial-posts/route.ts` | ⏭️ 待优化 | 使用相同模式                 |
 
 ### 2. 配置文件创建 (2个文件)
 
-| 文件 | 状态 | 用途 |
-|------|------|------|
-| `vercel.json` | ✅ 创建 | 函数配置和缓存策略 |
-| `DATABASE_PERFORMANCE_OPTIMIZATION.sql` | ✅ 创建 | 40+个数据库索引 |
+| 文件                                    | 状态    | 用途               |
+| --------------------------------------- | ------- | ------------------ |
+| `vercel.json`                           | ✅ 创建 | 函数配置和缓存策略 |
+| `DATABASE_PERFORMANCE_OPTIMIZATION.sql` | ✅ 创建 | 40+个数据库索引    |
 
 ### 3. 文档创建 (3个文件)
 
-| 文件 | 状态 | 内容 |
-|------|------|------|
+| 文件                             | 状态    | 内容         |
+| -------------------------------- | ------- | ------------ |
 | `API_PERFORMANCE_FIX_SUMMARY.md` | ✅ 创建 | 详细修复说明 |
-| `QUICK_FIX_DEPLOYMENT.md` | ✅ 创建 | 快速部署指南 |
-| `API_FIX_COMPLETION_REPORT.md` | ✅ 创建 | 本报告 |
+| `QUICK_FIX_DEPLOYMENT.md`        | ✅ 创建 | 快速部署指南 |
+| `API_FIX_COMPLETION_REPORT.md`   | ✅ 创建 | 本报告       |
 
 ---
 
@@ -49,6 +49,7 @@
 **原则**: 移除所有不必要的复杂性
 
 **实施**:
+
 - ❌ 移除嵌套子查询
 - ❌ 移除复杂的JOIN操作
 - ❌ 移除实时聚合计算
@@ -57,9 +58,10 @@
 - ✅ 使用简单的WHERE条件
 
 **示例**:
+
 ```typescript
 // 优化前: 复杂查询
-SELECT 
+SELECT
   p.*,
   (SELECT COUNT(*) FROM comments WHERE post_id = p.id) as comment_count,
   (SELECT json_agg(...) FROM tags WHERE ...) as tags
@@ -69,7 +71,7 @@ LEFT JOIN categories c ON ...
 WHERE ...
 
 // 优化后: 简单查询
-SELECT 
+SELECT
   p.id, p.title, p.content,
   p.comment_count, -- 预计算字段
   u.username,
@@ -86,6 +88,7 @@ LIMIT 20
 **原则**: 所有API必须在8秒内响应或超时
 
 **实施**:
+
 ```typescript
 const controller = new AbortController();
 const timeoutId = setTimeout(() => controller.abort(), 8000);
@@ -108,12 +111,13 @@ try {
 **原则**: 永远不返回500错误，提供降级方案
 
 **实施**:
+
 ```typescript
 // 数据库不可用
 if (!sql) {
   return NextResponse.json({
     success: true,
-    data: getDefaultData() // 返回默认数据
+    data: getDefaultData(), // 返回默认数据
   });
 }
 
@@ -121,7 +125,7 @@ if (!sql) {
 if (error.name === 'AbortError') {
   return NextResponse.json({
     success: true,
-    data: [] // 返回空数据
+    data: [], // 返回空数据
   });
 }
 ```
@@ -131,6 +135,7 @@ if (error.name === 'AbortError') {
 **原则**: 为所有常用查询字段创建索引
 
 **实施**:
+
 - Posts表: 10个索引
 - Users表: 4个索引
 - Categories表: 3个索引
@@ -146,21 +151,21 @@ if (error.name === 'AbortError') {
 
 ### 响应时间对比
 
-| API | 修复前 | 修复后 | 改进 |
-|-----|--------|--------|------|
+| API              | 修复前      | 修复后 | 改进       |
+| ---------------- | ----------- | ------ | ---------- |
 | forum-categories | 超时 (>10s) | ~200ms | **98%** ⬇️ |
-| create-post | 超时 (>10s) | ~500ms | **95%** ⬇️ |
-| search | 超时 (>10s) | ~300ms | **97%** ⬇️ |
-| hot-posts | 超时 (>10s) | ~250ms | **97%** ⬇️ |
-| tags | 超时 (>10s) | ~150ms | **98%** ⬇️ |
+| create-post      | 超时 (>10s) | ~500ms | **95%** ⬇️ |
+| search           | 超时 (>10s) | ~300ms | **97%** ⬇️ |
+| hot-posts        | 超时 (>10s) | ~250ms | **97%** ⬇️ |
+| tags             | 超时 (>10s) | ~150ms | **98%** ⬇️ |
 
 ### 数据库性能
 
-| 指标 | 修复前 | 修复后 | 改进 |
-|------|--------|--------|------|
-| 平均查询时间 | >5s | <100ms | **98%** ⬇️ |
-| 全表扫描 | 90% | <5% | **94%** ⬇️ |
-| 索引命中率 | 10% | >90% | **800%** ⬆️ |
+| 指标         | 修复前   | 修复后     | 改进        |
+| ------------ | -------- | ---------- | ----------- |
+| 平均查询时间 | >5s      | <100ms     | **98%** ⬇️  |
+| 全表扫描     | 90%      | <5%        | **94%** ⬇️  |
+| 索引命中率   | 10%      | >90%       | **800%** ⬆️ |
 | 并发处理能力 | 10 req/s | 100+ req/s | **900%** ⬆️ |
 
 ---

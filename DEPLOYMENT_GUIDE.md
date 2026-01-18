@@ -38,6 +38,7 @@
 4. 获取连接字符串
 
 **连接字符串格式:**
+
 ```
 postgresql://user:password@host/database?sslmode=require
 ```
@@ -71,19 +72,19 @@ psql $DATABASE_URL -f DATABASE_MESSAGE_SYSTEM.sql
 
 ```sql
 -- 检查表是否创建成功
-SELECT table_name 
-FROM information_schema.tables 
+SELECT table_name
+FROM information_schema.tables
 WHERE table_schema = 'public'
 ORDER BY table_name;
 
 -- 检查触发器
-SELECT trigger_name, event_object_table 
+SELECT trigger_name, event_object_table
 FROM information_schema.triggers
 WHERE trigger_schema = 'public';
 
 -- 检查函数
-SELECT routine_name 
-FROM information_schema.routines 
+SELECT routine_name
+FROM information_schema.routines
 WHERE routine_schema = 'public'
 AND routine_type = 'FUNCTION';
 ```
@@ -145,11 +146,11 @@ NODE_ENV=production
 2. 选择 Environment Variables
 3. 添加以下变量:
 
-| 变量名 | 值 | 环境 |
-|--------|-----|------|
-| DATABASE_URL | postgresql://... | Production |
-| JWT_SECRET | your-secret | Production |
-| NEXT_PUBLIC_API_URL | https://... | Production |
+| 变量名              | 值               | 环境       |
+| ------------------- | ---------------- | ---------- |
+| DATABASE_URL        | postgresql://... | Production |
+| JWT_SECRET          | your-secret      | Production |
+| NEXT_PUBLIC_API_URL | https://...      | Production |
 
 ---
 
@@ -250,6 +251,7 @@ curl https://your-domain.com/api/health
 ### 2. 功能测试
 
 **基础功能:**
+
 - [ ] 首页加载正常
 - [ ] 用户注册/登录
 - [ ] 浏览帖子列表
@@ -257,6 +259,7 @@ curl https://your-domain.com/api/health
 - [ ] 发表评论
 
 **高级功能:**
+
 - [ ] 创建帖子
 - [ ] 编辑帖子
 - [ ] 投票功能
@@ -381,13 +384,7 @@ redis.connect();
 ```javascript
 import Image from 'next/image';
 
-<Image
-  src="/image.jpg"
-  width={800}
-  height={600}
-  alt="Description"
-  loading="lazy"
-/>
+<Image src="/image.jpg" width={800} height={600} alt="Description" loading="lazy" />;
 ```
 
 ---
@@ -537,6 +534,7 @@ npm run build
 您的Quantaureum社区论坛系统已成功部署！
 
 **下一步:**
+
 1. 测试所有功能
 2. 配置监控告警
 3. 设置定期备份

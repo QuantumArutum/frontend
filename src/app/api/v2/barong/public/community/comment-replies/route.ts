@@ -8,17 +8,23 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     if (!commentId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Comment ID is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Comment ID is required',
+        },
+        { status: 400 }
+      );
     }
 
     // 获取子评论列表
@@ -124,9 +130,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching replies:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

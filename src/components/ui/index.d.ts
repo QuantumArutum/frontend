@@ -1,5 +1,5 @@
 // Type definitions for UI components
-import * as React from "react";
+import * as React from 'react';
 
 // Generic component props that make className and other common props optional
 type OptionalClassName<T> = Omit<T, 'className'> & { className?: string };
@@ -7,8 +7,8 @@ type OptionalClassName<T> = Omit<T, 'className'> & { className?: string };
 // Button - all props are optional
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | string;
-  size?: "default" | "sm" | "lg" | "icon" | string;
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | string;
+  size?: 'default' | 'sm' | 'lg' | 'icon' | string;
   asChild?: boolean;
   children?: React.ReactNode;
 }

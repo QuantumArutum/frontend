@@ -38,12 +38,14 @@ export const GET = createSecureHandler(
 
     try {
       const qposStatus = await makeRPCCall('qpos_status');
-      
+
       if (!qposStatus) {
-        return addSecurityHeaders(NextResponse.json({
-          forkChoice: null,
-          error: 'QPOS status not available',
-        }));
+        return addSecurityHeaders(
+          NextResponse.json({
+            forkChoice: null,
+            error: 'QPOS status not available',
+          })
+        );
       }
 
       const advanced = qposStatus.advanced || {};
@@ -63,28 +65,30 @@ export const GET = createSecureHandler(
           blockCount: forkChoice.blockCount || 0,
           voteCount: forkChoice.voteCount || 0,
         },
-        
+
         // Proposer Boost
-        proposerBoost: proposerBoost ? {
-          blockRoot: proposerBoost.blockRoot,
-          slot: proposerBoost.slot,
-          boostPercent: 40, // ProposerScoreBoostPercent
-        } : null,
-        
+        proposerBoost: proposerBoost
+          ? {
+              blockRoot: proposerBoost.blockRoot,
+              slot: proposerBoost.slot,
+              boostPercent: 40, // ProposerScoreBoostPercent
+            }
+          : null,
+
         // 配置
         config: {
           proposerScoreBoostPercent: 40,
           reorgMaxEpochsBack: 2,
         },
-        
+
         // 当前状态
         currentSlot: qposStatus.currentSlot || 0,
         currentEpoch: qposStatus.currentEpoch || 0,
-        
+
         // Finality
         justifiedEpoch: qposStatus.justifiedEpoch || 0,
         finalizedEpoch: qposStatus.finalizedEpoch || 0,
-        
+
         timestamp: Date.now(),
       };
 
@@ -94,10 +98,15 @@ export const GET = createSecureHandler(
       return addSecurityHeaders(NextResponse.json(response));
     } catch (error) {
       console.error('获取 Fork Choice 失败:', error);
-      return addSecurityHeaders(NextResponse.json({
-        forkChoice: null,
-        error: 'Failed to fetch fork choice',
-      }, { status: 500 }));
+      return addSecurityHeaders(
+        NextResponse.json(
+          {
+            forkChoice: null,
+            error: 'Failed to fetch fork choice',
+          },
+          { status: 500 }
+        )
+      );
     }
   },
   { rateLimit: true, allowedMethods: ['GET'] }

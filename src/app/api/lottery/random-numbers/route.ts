@@ -12,7 +12,7 @@ function secureRandomInt(min: number, max: number): number {
   const range = max - min + 1;
   const bytesNeeded = Math.ceil(Math.log2(range) / 8);
   const maxValid = Math.floor(256 ** bytesNeeded / range) * range - 1;
-  
+
   let randomValue: number;
   do {
     const randomBytes = crypto.randomBytes(bytesNeeded);
@@ -21,7 +21,7 @@ function secureRandomInt(min: number, max: number): number {
       randomValue = (randomValue << 8) + randomBytes[i];
     }
   } while (randomValue > maxValid);
-  
+
   return min + (randomValue % range);
 }
 
@@ -44,13 +44,15 @@ export const POST = createSecureHandler(
     backZone.sort((a, b) => a - b);
 
     return successResponse({
-      data: { 
-        bets: [{
-          front_zone: frontZone.map(n => n.toString().padStart(2, '0')),
-          back_zone: backZone.map(n => n.toString().padStart(2, '0'))
-        }]
+      data: {
+        bets: [
+          {
+            front_zone: frontZone.map((n) => n.toString().padStart(2, '0')),
+            back_zone: backZone.map((n) => n.toString().padStart(2, '0')),
+          },
+        ],
       },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   },
   { rateLimit: true, allowedMethods: ['POST'] }

@@ -15,10 +15,7 @@ export async function GET(request: NextRequest) {
     const result = await db.getCategories();
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -27,9 +24,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Get categories error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

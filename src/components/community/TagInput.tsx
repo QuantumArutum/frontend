@@ -53,9 +53,7 @@ export default function TagInput({
   useEffect(() => {
     if (inputValue.trim().length > 0) {
       const filtered = suggestions.filter(
-        (tag) =>
-          tag.toLowerCase().includes(inputValue.toLowerCase()) &&
-          !value.includes(tag)
+        (tag) => tag.toLowerCase().includes(inputValue.toLowerCase()) && !value.includes(tag)
       );
       setFilteredSuggestions(filtered);
       setShowSuggestions(true);
@@ -174,12 +172,8 @@ export default function TagInput({
                 >
                   <TagIcon className="w-4 h-4" style={{ color: tag.color }} />
                   <span className="text-white">{tag.name}</span>
-                  {tag.is_official && (
-                    <span className="text-xs text-blue-400">官方</span>
-                  )}
-                  <span className="ml-auto text-xs text-gray-400">
-                    {tag.usage_count} 次使用
-                  </span>
+                  {tag.is_official && <span className="text-xs text-blue-400">官方</span>}
+                  <span className="ml-auto text-xs text-gray-400">{tag.usage_count} 次使用</span>
                 </button>
               ))}
             </div>

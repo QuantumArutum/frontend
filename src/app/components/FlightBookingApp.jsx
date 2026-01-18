@@ -322,7 +322,7 @@ import {
   Sol as SolIcon,
   Sucre as SucreIcon,
   Austral as AustralIcon,
-  Cruzeiro as CruzeiroIcon
+  Cruzeiro as CruzeiroIcon,
 } from 'lucide-react';
 
 const FlightBookingApp = () => {
@@ -338,7 +338,7 @@ const FlightBookingApp = () => {
     departDate: '2024-07-20',
     returnDate: '2024-07-27',
     passengers: 1,
-    class: 'economy'
+    class: 'economy',
   });
   const [tripType, setTripType] = useState('roundtrip');
   const [currentStep, setCurrentStep] = useState(0); // 0: search, 1: select, 2: booking, 3: orders
@@ -350,261 +350,303 @@ const FlightBookingApp = () => {
   useEffect(() => {
     const mockFlights = [
       {
-        ID: "flight_001",
-        FlightNumber: "QA8888",
-        Airline: "量子航空",
-        AirlineCode: "QA",
-        AirlineLogo: "/api/placeholder/40/40",
-        From: "PEK",
-        FromCity: "北京",
-        FromAirport: "北京首都国际机场",
-        FromTerminal: "T3",
-        To: "LAX",
-        ToCity: "洛杉矶",
-        ToAirport: "洛杉矶国际机场",
-        ToTerminal: "TBIT",
-        DepartureTime: "2024-07-20T14:30:00",
-        ArrivalTime: "2024-07-20T10:45:00", // 跨时区
-        Duration: "13h 15m",
-        Aircraft: "Boeing 787-9",
+        ID: 'flight_001',
+        FlightNumber: 'QA8888',
+        Airline: '量子航空',
+        AirlineCode: 'QA',
+        AirlineLogo: '/api/placeholder/40/40',
+        From: 'PEK',
+        FromCity: '北京',
+        FromAirport: '北京首都国际机场',
+        FromTerminal: 'T3',
+        To: 'LAX',
+        ToCity: '洛杉矶',
+        ToAirport: '洛杉矶国际机场',
+        ToTerminal: 'TBIT',
+        DepartureTime: '2024-07-20T14:30:00',
+        ArrivalTime: '2024-07-20T10:45:00', // 跨时区
+        Duration: '13h 15m',
+        Aircraft: 'Boeing 787-9',
         Price: {
           Economy: 450000000000, // 4,500 QAU
           Business: 1200000000000, // 12,000 QAU
-          First: 2500000000000 // 25,000 QAU
+          First: 2500000000000, // 25,000 QAU
         },
         OriginalPrice: {
           Economy: 520000000000, // 原价5,200 QAU
           Business: 1400000000000,
-          First: 2800000000000
+          First: 2800000000000,
         },
         AvailableSeats: {
           Economy: 156,
           Business: 28,
-          First: 8
+          First: 8,
         },
-        Amenities: ["WiFi", "娱乐系统", "餐食", "毛毯", "充电口", "个人屏幕"],
+        Amenities: ['WiFi', '娱乐系统', '餐食', '毛毯', '充电口', '个人屏幕'],
         Rating: 4.8,
         ReviewCount: 2847,
         Stops: 0,
         StopCities: [],
         BaggageAllowance: {
-          Carry: "7kg",
-          Checked: "2x23kg"
+          Carry: '7kg',
+          Checked: '2x23kg',
         },
-        CancellationPolicy: "免费取消24小时内",
-        ChangePolicy: "免费改签1次",
-        MealType: "正餐+小食",
-        SeatPitch: "32英寸",
+        CancellationPolicy: '免费取消24小时内',
+        ChangePolicy: '免费改签1次',
+        MealType: '正餐+小食',
+        SeatPitch: '32英寸',
         OnTimeRate: 92,
-        Tags: ["热门", "准点率高", "服务优质"],
-        Promotions: ["早鸟优惠", "会员专享"],
-        FlightType: "国际航班"
+        Tags: ['热门', '准点率高', '服务优质'],
+        Promotions: ['早鸟优惠', '会员专享'],
+        FlightType: '国际航班',
       },
       {
-        ID: "flight_002",
-        FlightNumber: "QA6666",
-        Airline: "量子航空",
-        AirlineCode: "QA",
-        AirlineLogo: "/api/placeholder/40/40",
-        From: "PEK",
-        FromCity: "北京",
-        FromAirport: "北京首都国际机场",
-        FromTerminal: "T3",
-        To: "LAX",
-        ToCity: "洛杉矶",
-        ToAirport: "洛杉矶国际机场",
-        ToTerminal: "TBIT",
-        DepartureTime: "2024-07-20T22:15:00",
-        ArrivalTime: "2024-07-20T18:30:00",
-        Duration: "12h 15m",
-        Aircraft: "Airbus A350",
+        ID: 'flight_002',
+        FlightNumber: 'QA6666',
+        Airline: '量子航空',
+        AirlineCode: 'QA',
+        AirlineLogo: '/api/placeholder/40/40',
+        From: 'PEK',
+        FromCity: '北京',
+        FromAirport: '北京首都国际机场',
+        FromTerminal: 'T3',
+        To: 'LAX',
+        ToCity: '洛杉矶',
+        ToAirport: '洛杉矶国际机场',
+        ToTerminal: 'TBIT',
+        DepartureTime: '2024-07-20T22:15:00',
+        ArrivalTime: '2024-07-20T18:30:00',
+        Duration: '12h 15m',
+        Aircraft: 'Airbus A350',
         Price: {
           Economy: 420000000000, // 4,200 QAU
           Business: 1100000000000, // 11,000 QAU
-          First: 2200000000000 // 22,000 QAU
+          First: 2200000000000, // 22,000 QAU
         },
         OriginalPrice: {
           Economy: 480000000000,
           Business: 1250000000000,
-          First: 2500000000000
+          First: 2500000000000,
         },
         AvailableSeats: {
           Economy: 234,
           Business: 42,
-          First: 12
+          First: 12,
         },
-        Amenities: ["WiFi", "娱乐系统", "餐食", "充电口", "个人屏幕", "降噪耳机"],
+        Amenities: ['WiFi', '娱乐系统', '餐食', '充电口', '个人屏幕', '降噪耳机'],
         Rating: 4.9,
         ReviewCount: 3156,
         Stops: 0,
         StopCities: [],
         BaggageAllowance: {
-          Carry: "7kg",
-          Checked: "2x23kg"
+          Carry: '7kg',
+          Checked: '2x23kg',
         },
-        CancellationPolicy: "免费取消48小时内",
-        ChangePolicy: "免费改签2次",
-        MealType: "正餐+小食+夜宵",
-        SeatPitch: "34英寸",
+        CancellationPolicy: '免费取消48小时内',
+        ChangePolicy: '免费改签2次',
+        MealType: '正餐+小食+夜宵',
+        SeatPitch: '34英寸',
         OnTimeRate: 95,
-        Tags: ["推荐", "夜间航班", "宽体机"],
-        Promotions: ["限时特价", "积分双倍"],
-        FlightType: "国际航班"
+        Tags: ['推荐', '夜间航班', '宽体机'],
+        Promotions: ['限时特价', '积分双倍'],
+        FlightType: '国际航班',
       },
       {
-        ID: "flight_003",
-        FlightNumber: "QA1234",
-        Airline: "量子航空",
-        AirlineCode: "QA",
-        AirlineLogo: "/api/placeholder/40/40",
-        From: "PEK",
-        FromCity: "北京",
-        FromAirport: "北京首都国际机场",
-        FromTerminal: "T3",
-        To: "LAX",
-        ToCity: "洛杉矶",
-        ToAirport: "洛杉矶国际机场",
-        ToTerminal: "TBIT",
-        DepartureTime: "2024-07-20T08:45:00",
-        ArrivalTime: "2024-07-20T04:20:00",
-        Duration: "13h 35m",
-        Aircraft: "Boeing 777-300ER",
+        ID: 'flight_003',
+        FlightNumber: 'QA1234',
+        Airline: '量子航空',
+        AirlineCode: 'QA',
+        AirlineLogo: '/api/placeholder/40/40',
+        From: 'PEK',
+        FromCity: '北京',
+        FromAirport: '北京首都国际机场',
+        FromTerminal: 'T3',
+        To: 'LAX',
+        ToCity: '洛杉矶',
+        ToAirport: '洛杉矶国际机场',
+        ToTerminal: 'TBIT',
+        DepartureTime: '2024-07-20T08:45:00',
+        ArrivalTime: '2024-07-20T04:20:00',
+        Duration: '13h 35m',
+        Aircraft: 'Boeing 777-300ER',
         Price: {
           Economy: 380000000000, // 3,800 QAU
           Business: 980000000000, // 9,800 QAU
-          First: 1980000000000 // 19,800 QAU
+          First: 1980000000000, // 19,800 QAU
         },
         OriginalPrice: {
           Economy: 450000000000,
           Business: 1150000000000,
-          First: 2300000000000
+          First: 2300000000000,
         },
         AvailableSeats: {
           Economy: 189,
           Business: 35,
-          First: 10
+          First: 10,
         },
-        Amenities: ["WiFi", "娱乐系统", "餐食", "睡眠套装", "个人屏幕"],
+        Amenities: ['WiFi', '娱乐系统', '餐食', '睡眠套装', '个人屏幕'],
         Rating: 4.7,
         ReviewCount: 1923,
         Stops: 0,
         StopCities: [],
         BaggageAllowance: {
-          Carry: "7kg",
-          Checked: "2x23kg"
+          Carry: '7kg',
+          Checked: '2x23kg',
         },
-        CancellationPolicy: "免费取消72小时内",
-        ChangePolicy: "免费改签1次",
-        MealType: "早餐+正餐",
-        SeatPitch: "31英寸",
+        CancellationPolicy: '免费取消72小时内',
+        ChangePolicy: '免费改签1次',
+        MealType: '早餐+正餐',
+        SeatPitch: '31英寸',
         OnTimeRate: 88,
-        Tags: ["早班机", "性价比高"],
-        Promotions: ["特价促销"],
-        FlightType: "国际航班"
+        Tags: ['早班机', '性价比高'],
+        Promotions: ['特价促销'],
+        FlightType: '国际航班',
       },
       {
-        ID: "flight_004",
-        FlightNumber: "QA5555",
-        Airline: "量子航空",
-        AirlineCode: "QA",
-        AirlineLogo: "/api/placeholder/40/40",
-        From: "PEK",
-        FromCity: "北京",
-        FromAirport: "北京首都国际机场",
-        FromTerminal: "T3",
-        To: "LAX",
-        ToCity: "洛杉矶",
-        ToAirport: "洛杉矶国际机场",
-        ToTerminal: "TBIT",
-        DepartureTime: "2024-07-20T16:20:00",
-        ArrivalTime: "2024-07-20T12:55:00",
-        Duration: "14h 35m",
-        Aircraft: "Boeing 787-8",
+        ID: 'flight_004',
+        FlightNumber: 'QA5555',
+        Airline: '量子航空',
+        AirlineCode: 'QA',
+        AirlineLogo: '/api/placeholder/40/40',
+        From: 'PEK',
+        FromCity: '北京',
+        FromAirport: '北京首都国际机场',
+        FromTerminal: 'T3',
+        To: 'LAX',
+        ToCity: '洛杉矶',
+        ToAirport: '洛杉矶国际机场',
+        ToTerminal: 'TBIT',
+        DepartureTime: '2024-07-20T16:20:00',
+        ArrivalTime: '2024-07-20T12:55:00',
+        Duration: '14h 35m',
+        Aircraft: 'Boeing 787-8',
         Price: {
           Economy: 360000000000, // 3,600 QAU
           Business: 920000000000, // 9,200 QAU
-          First: 1850000000000 // 18,500 QAU
+          First: 1850000000000, // 18,500 QAU
         },
         OriginalPrice: {
           Economy: 420000000000,
           Business: 1080000000000,
-          First: 2100000000000
+          First: 2100000000000,
         },
         AvailableSeats: {
           Economy: 98,
           Business: 18,
-          First: 6
+          First: 6,
         },
-        Amenities: ["WiFi", "娱乐系统", "餐食", "个人屏幕"],
+        Amenities: ['WiFi', '娱乐系统', '餐食', '个人屏幕'],
         Rating: 4.6,
         ReviewCount: 1456,
         Stops: 1,
-        StopCities: ["东京"],
-        StopDuration: "2h 15m",
+        StopCities: ['东京'],
+        StopDuration: '2h 15m',
         BaggageAllowance: {
-          Carry: "7kg",
-          Checked: "2x23kg"
+          Carry: '7kg',
+          Checked: '2x23kg',
         },
-        CancellationPolicy: "免费取消48小时内",
-        ChangePolicy: "免费改签1次",
-        MealType: "正餐+小食",
-        SeatPitch: "30英寸",
+        CancellationPolicy: '免费取消48小时内',
+        ChangePolicy: '免费改签1次',
+        MealType: '正餐+小食',
+        SeatPitch: '30英寸',
         OnTimeRate: 85,
-        Tags: ["中转航班", "最低价"],
-        Promotions: ["超值特惠"],
-        FlightType: "国际航班"
-      }
+        Tags: ['中转航班', '最低价'],
+        Promotions: ['超值特惠'],
+        FlightType: '国际航班',
+      },
     ];
 
     const mockAirports = [
-      { Code: "PEK", City: "北京", Name: "北京首都国际机场", Country: "中国", IATA: "PEK", ICAO: "ZBAA" },
-      { Code: "PVG", City: "上海", Name: "上海浦东国际机场", Country: "中国", IATA: "PVG", ICAO: "ZSPD" },
-      { Code: "CAN", City: "广州", Name: "广州白云国际机场", Country: "中国", IATA: "CAN", ICAO: "ZGGG" },
-      { Code: "LAX", City: "洛杉矶", Name: "洛杉矶国际机场", Country: "美国", IATA: "LAX", ICAO: "KLAX" },
-      { Code: "NRT", City: "东京", Name: "成田国际机场", Country: "日本", IATA: "NRT", ICAO: "RJAA" },
-      { Code: "LHR", City: "伦敦", Name: "希思罗机场", Country: "英国", IATA: "LHR", ICAO: "EGLL" },
-      { Code: "CDG", City: "巴黎", Name: "戴高乐机场", Country: "法国", IATA: "CDG", ICAO: "LFPG" },
-      { Code: "FRA", City: "法兰克福", Name: "法兰克福机场", Country: "德国", IATA: "FRA", ICAO: "EDDF" }
+      {
+        Code: 'PEK',
+        City: '北京',
+        Name: '北京首都国际机场',
+        Country: '中国',
+        IATA: 'PEK',
+        ICAO: 'ZBAA',
+      },
+      {
+        Code: 'PVG',
+        City: '上海',
+        Name: '上海浦东国际机场',
+        Country: '中国',
+        IATA: 'PVG',
+        ICAO: 'ZSPD',
+      },
+      {
+        Code: 'CAN',
+        City: '广州',
+        Name: '广州白云国际机场',
+        Country: '中国',
+        IATA: 'CAN',
+        ICAO: 'ZGGG',
+      },
+      {
+        Code: 'LAX',
+        City: '洛杉矶',
+        Name: '洛杉矶国际机场',
+        Country: '美国',
+        IATA: 'LAX',
+        ICAO: 'KLAX',
+      },
+      {
+        Code: 'NRT',
+        City: '东京',
+        Name: '成田国际机场',
+        Country: '日本',
+        IATA: 'NRT',
+        ICAO: 'RJAA',
+      },
+      { Code: 'LHR', City: '伦敦', Name: '希思罗机场', Country: '英国', IATA: 'LHR', ICAO: 'EGLL' },
+      { Code: 'CDG', City: '巴黎', Name: '戴高乐机场', Country: '法国', IATA: 'CDG', ICAO: 'LFPG' },
+      {
+        Code: 'FRA',
+        City: '法兰克福',
+        Name: '法兰克福机场',
+        Country: '德国',
+        IATA: 'FRA',
+        ICAO: 'EDDF',
+      },
     ];
 
     // 模拟用户订单
     const mockBookings = [
       {
-        ID: "booking_001",
-        OrderNumber: "QA20240720001",
-        FlightNumber: "QA8888",
-        Airline: "量子航空",
-        Route: "北京 → 洛杉矶",
-        DepartureTime: "2024-07-20 14:30",
-        ArrivalTime: "2024-07-20 10:45",
-        Class: "经济舱",
+        ID: 'booking_001',
+        OrderNumber: 'QA20240720001',
+        FlightNumber: 'QA8888',
+        Airline: '量子航空',
+        Route: '北京 → 洛杉矶',
+        DepartureTime: '2024-07-20 14:30',
+        ArrivalTime: '2024-07-20 10:45',
+        Class: '经济舱',
         Passengers: 1,
-        PassengerNames: ["张三"],
+        PassengerNames: ['张三'],
         TotalPrice: 450000000000, // 4,500 QAU
-        Status: "已出票",
-        BookingTime: "2024-06-18 14:30",
-        TicketNumbers: ["7841234567890"],
-        PNR: "ABC123",
-        ETicket: true
+        Status: '已出票',
+        BookingTime: '2024-06-18 14:30',
+        TicketNumbers: ['7841234567890'],
+        PNR: 'ABC123',
+        ETicket: true,
       },
       {
-        ID: "booking_002",
-        OrderNumber: "QA20240821002",
-        FlightNumber: "QA6666",
-        Airline: "量子航空",
-        Route: "上海 → 东京",
-        DepartureTime: "2024-08-21 09:15",
-        ArrivalTime: "2024-08-21 13:30",
-        Class: "商务舱",
+        ID: 'booking_002',
+        OrderNumber: 'QA20240821002',
+        FlightNumber: 'QA6666',
+        Airline: '量子航空',
+        Route: '上海 → 东京',
+        DepartureTime: '2024-08-21 09:15',
+        ArrivalTime: '2024-08-21 13:30',
+        Class: '商务舱',
         Passengers: 2,
-        PassengerNames: ["李四", "王五"],
+        PassengerNames: ['李四', '王五'],
         TotalPrice: 1040000000000, // 10,400 QAU
-        Status: "待出行",
-        BookingTime: "2024-07-23 16:45",
-        TicketNumbers: ["7841234567891", "7841234567892"],
-        PNR: "DEF456",
-        ETicket: true
-      }
+        Status: '待出行',
+        BookingTime: '2024-07-23 16:45',
+        TicketNumbers: ['7841234567891', '7841234567892'],
+        PNR: 'DEF456',
+        ETicket: true,
+      },
     ];
 
     setFlights(mockFlights);
@@ -620,10 +662,10 @@ const FlightBookingApp = () => {
 
   const formatTime = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString('zh-CN', { 
-      hour: '2-digit', 
+    return date.toLocaleTimeString('zh-CN', {
+      hour: '2-digit',
       minute: '2-digit',
-      hour12: false 
+      hour12: false,
     });
   };
 
@@ -632,7 +674,7 @@ const FlightBookingApp = () => {
     return date.toLocaleDateString('zh-CN', {
       month: 'short',
       day: 'numeric',
-      weekday: 'short'
+      weekday: 'short',
     });
   };
 
@@ -641,21 +683,21 @@ const FlightBookingApp = () => {
     return date.toLocaleDateString('zh-CN', {
       year: 'numeric',
       month: '2-digit',
-      day: '2-digit'
+      day: '2-digit',
     });
   };
 
   const getClassDisplayName = (classType) => {
     const classMap = {
-      'economy': '经济舱',
-      'business': '商务舱',
-      'first': '头等舱'
+      economy: '经济舱',
+      business: '商务舱',
+      first: '头等舱',
     };
     return classMap[classType] || '经济舱';
   };
 
   const getAirportInfo = (code) => {
-    return airports.find(airport => airport.Code === code);
+    return airports.find((airport) => airport.Code === code);
   };
 
   const calculateDiscount = (original, current) => {
@@ -664,7 +706,7 @@ const FlightBookingApp = () => {
 
   // 携程风格的航班筛选和排序
   const filteredAndSortedFlights = flights
-    .filter(flight => {
+    .filter((flight) => {
       if (filterBy === 'all') return true;
       if (filterBy === 'direct') return flight.Stops === 0;
       if (filterBy === 'morning') {
@@ -714,29 +756,38 @@ const FlightBookingApp = () => {
       const classKey = searchParams.class.charAt(0).toUpperCase() + searchParams.class.slice(1);
       const price = selectedFlight.Price[classKey];
       const totalPrice = price * searchParams.passengers;
-      
+
       const newBooking = {
         ID: `booking_${Date.now()}`,
         OrderNumber: `QA${Date.now()}`,
         FlightNumber: selectedFlight.FlightNumber,
         Airline: selectedFlight.Airline,
         Route: `${selectedFlight.FromCity} → ${selectedFlight.ToCity}`,
-        DepartureTime: formatFullDate(selectedFlight.DepartureTime) + ' ' + formatTime(selectedFlight.DepartureTime),
-        ArrivalTime: formatFullDate(selectedFlight.ArrivalTime) + ' ' + formatTime(selectedFlight.ArrivalTime),
+        DepartureTime:
+          formatFullDate(selectedFlight.DepartureTime) +
+          ' ' +
+          formatTime(selectedFlight.DepartureTime),
+        ArrivalTime:
+          formatFullDate(selectedFlight.ArrivalTime) + ' ' + formatTime(selectedFlight.ArrivalTime),
         Class: getClassDisplayName(searchParams.class),
         Passengers: searchParams.passengers,
         PassengerNames: Array.from({ length: searchParams.passengers }, (_, i) => `乘客${i + 1}`),
         TotalPrice: totalPrice,
-        Status: "已出票",
+        Status: '已出票',
         BookingTime: new Date().toLocaleString(),
-        TicketNumbers: Array.from({ length: searchParams.passengers }, (_, i) => `784${Date.now()}${i}`),
+        TicketNumbers: Array.from(
+          { length: searchParams.passengers },
+          (_, i) => `784${Date.now()}${i}`
+        ),
         PNR: `PNR${Date.now().toString().slice(-6)}`,
-        ETicket: true
+        ETicket: true,
       };
 
-      setBookings(prev => [newBooking, ...prev]);
-      alert(`预订成功！\n航班: ${selectedFlight.FlightNumber}\n路线: ${selectedFlight.FromCity} → ${selectedFlight.ToCity}\n舱位: ${getClassDisplayName(searchParams.class)}\n乘客: ${searchParams.passengers}人\n总价: ${formatAmount(totalPrice)}`);
-      
+      setBookings((prev) => [newBooking, ...prev]);
+      alert(
+        `预订成功！\n航班: ${selectedFlight.FlightNumber}\n路线: ${selectedFlight.FromCity} → ${selectedFlight.ToCity}\n舱位: ${getClassDisplayName(searchParams.class)}\n乘客: ${searchParams.passengers}人\n总价: ${formatAmount(totalPrice)}`
+      );
+
       setCurrentStep(3); // 跳转到订单页面
     } catch (error) {
       console.error('预订失败:', error);
@@ -803,10 +854,10 @@ const FlightBookingApp = () => {
                 <PlaneTakeoff className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <select
                   value={searchParams.from}
-                  onChange={(e) => setSearchParams(prev => ({ ...prev, from: e.target.value }))}
+                  onChange={(e) => setSearchParams((prev) => ({ ...prev, from: e.target.value }))}
                   className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 text-white rounded-lg"
                 >
-                  {airports.map(airport => (
+                  {airports.map((airport) => (
                     <option key={airport.Code} value={airport.Code}>
                       {airport.City} ({airport.Code})
                     </option>
@@ -822,10 +873,10 @@ const FlightBookingApp = () => {
                 <PlaneLanding className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <select
                   value={searchParams.to}
-                  onChange={(e) => setSearchParams(prev => ({ ...prev, to: e.target.value }))}
+                  onChange={(e) => setSearchParams((prev) => ({ ...prev, to: e.target.value }))}
                   className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 text-white rounded-lg"
                 >
-                  {airports.map(airport => (
+                  {airports.map((airport) => (
                     <option key={airport.Code} value={airport.Code}>
                       {airport.City} ({airport.Code})
                     </option>
@@ -842,7 +893,9 @@ const FlightBookingApp = () => {
                 <Input
                   type="date"
                   value={searchParams.departDate}
-                  onChange={(e) => setSearchParams(prev => ({ ...prev, departDate: e.target.value }))}
+                  onChange={(e) =>
+                    setSearchParams((prev) => ({ ...prev, departDate: e.target.value }))
+                  }
                   className="pl-10 bg-white/10 border-white/20 text-white"
                 />
               </div>
@@ -857,7 +910,9 @@ const FlightBookingApp = () => {
                   <Input
                     type="date"
                     value={searchParams.returnDate}
-                    onChange={(e) => setSearchParams(prev => ({ ...prev, returnDate: e.target.value }))}
+                    onChange={(e) =>
+                      setSearchParams((prev) => ({ ...prev, returnDate: e.target.value }))
+                    }
                     className="pl-10 bg-white/10 border-white/20 text-white"
                   />
                 </div>
@@ -871,13 +926,17 @@ const FlightBookingApp = () => {
               <label className="text-sm text-gray-300 mb-2 block">乘客数量</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <select 
+                <select
                   value={searchParams.passengers}
-                  onChange={(e) => setSearchParams(prev => ({ ...prev, passengers: parseInt(e.target.value) }))}
+                  onChange={(e) =>
+                    setSearchParams((prev) => ({ ...prev, passengers: parseInt(e.target.value) }))
+                  }
                   className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 text-white rounded-lg"
                 >
-                  {[1,2,3,4,5,6,7,8,9].map(num => (
-                    <option key={num} value={num}>{num} 人</option>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                    <option key={num} value={num}>
+                      {num} 人
+                    </option>
                   ))}
                 </select>
               </div>
@@ -886,9 +945,9 @@ const FlightBookingApp = () => {
             {/* 舱位等级 */}
             <div>
               <label className="text-sm text-gray-300 mb-2 block">舱位等级</label>
-              <select 
+              <select
                 value={searchParams.class}
-                onChange={(e) => setSearchParams(prev => ({ ...prev, class: e.target.value }))}
+                onChange={(e) => setSearchParams((prev) => ({ ...prev, class: e.target.value }))}
                 className="w-full p-3 bg-white/10 border border-white/20 text-white rounded-lg"
               >
                 <option value="economy">经济舱</option>
@@ -899,7 +958,7 @@ const FlightBookingApp = () => {
 
             {/* 搜索按钮 */}
             <div className="flex items-end">
-              <Button 
+              <Button
                 onClick={handleSearch}
                 className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 py-3"
               >
@@ -919,14 +978,19 @@ const FlightBookingApp = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { from: "北京", to: "洛杉矶", price: "¥3,600起", tag: "热门" },
-              { from: "上海", to: "东京", price: "¥1,800起", tag: "特价" },
-              { from: "广州", to: "伦敦", price: "¥4,200起", tag: "推荐" }
+              { from: '北京', to: '洛杉矶', price: '¥3,600起', tag: '热门' },
+              { from: '上海', to: '东京', price: '¥1,800起', tag: '特价' },
+              { from: '广州', to: '伦敦', price: '¥4,200起', tag: '推荐' },
             ].map((route, index) => (
-              <Card key={index} className="bg-white/5 border-white/10 hover:bg-white/10 transition-all cursor-pointer">
+              <Card
+                key={index}
+                className="bg-white/5 border-white/10 hover:bg-white/10 transition-all cursor-pointer"
+              >
                 <CardContent className="p-4">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-white font-semibold">{route.from} → {route.to}</span>
+                    <span className="text-white font-semibold">
+                      {route.from} → {route.to}
+                    </span>
                     <Badge className="bg-red-500/20 text-red-400">{route.tag}</Badge>
                   </div>
                   <p className="text-cyan-400 font-bold">{route.price}</p>
@@ -951,8 +1015,8 @@ const FlightBookingApp = () => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-4">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => setCurrentStep(0)}
                   className="flex items-center"
                 >
@@ -964,12 +1028,15 @@ const FlightBookingApp = () => {
                     {fromAirport?.City} → {toAirport?.City}
                   </h2>
                   <p className="text-gray-300">
-                    {formatFullDate(searchParams.departDate)} • {searchParams.passengers}位乘客 • {getClassDisplayName(searchParams.class)}
+                    {formatFullDate(searchParams.departDate)} • {searchParams.passengers}位乘客 •{' '}
+                    {getClassDisplayName(searchParams.class)}
                   </p>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-cyan-400">{filteredAndSortedFlights.length}</p>
+                <p className="text-2xl font-bold text-cyan-400">
+                  {filteredAndSortedFlights.length}
+                </p>
                 <p className="text-gray-300">个航班</p>
               </div>
             </div>
@@ -978,7 +1045,7 @@ const FlightBookingApp = () => {
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center space-x-2">
                 <span className="text-gray-300">排序:</span>
-                <select 
+                <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
                   className="px-3 py-1 bg-white/10 border border-white/20 text-white rounded text-sm"
@@ -991,7 +1058,7 @@ const FlightBookingApp = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <span className="text-gray-300">筛选:</span>
-                <select 
+                <select
                   value={filterBy}
                   onChange={(e) => setFilterBy(e.target.value)}
                   className="px-3 py-1 bg-white/10 border border-white/20 text-white rounded text-sm"
@@ -1010,14 +1077,15 @@ const FlightBookingApp = () => {
         {/* 航班列表 */}
         <div className="space-y-4">
           {filteredAndSortedFlights.map((flight) => {
-            const classKey = searchParams.class.charAt(0).toUpperCase() + searchParams.class.slice(1);
+            const classKey =
+              searchParams.class.charAt(0).toUpperCase() + searchParams.class.slice(1);
             const currentPrice = flight.Price[classKey];
             const originalPrice = flight.OriginalPrice[classKey];
             const discount = calculateDiscount(originalPrice, currentPrice);
 
             return (
-              <Card 
-                key={flight.ID} 
+              <Card
+                key={flight.ID}
                 className={`bg-white/10 backdrop-blur-md border-white/20 hover:bg-white/15 transition-all duration-200 cursor-pointer ${
                   selectedFlight?.ID === flight.ID ? 'ring-2 ring-cyan-400' : ''
                 }`}
@@ -1033,24 +1101,32 @@ const FlightBookingApp = () => {
                         </div>
                         <div>
                           <h3 className="text-white font-bold text-lg">{flight.Airline}</h3>
-                          <p className="text-gray-300">{flight.FlightNumber} • {flight.Aircraft}</p>
+                          <p className="text-gray-300">
+                            {flight.FlightNumber} • {flight.Aircraft}
+                          </p>
                         </div>
                         <div className="flex space-x-2">
                           <Badge className="bg-yellow-500/20 text-yellow-400 truncate-number">
                             ⭐ {flight.Rating}
                           </Badge>
-                          {flight.Tags.includes("热门") && <Badge className="bg-red-500/20 text-red-400">热门</Badge>}
-                          {flight.Tags.includes("推荐") && <Badge className="bg-green-500/20 text-green-400">推荐</Badge>}
+                          {flight.Tags.includes('热门') && (
+                            <Badge className="bg-red-500/20 text-red-400">热门</Badge>
+                          )}
+                          {flight.Tags.includes('推荐') && (
+                            <Badge className="bg-green-500/20 text-green-400">推荐</Badge>
+                          )}
                         </div>
                       </div>
 
                       <div className="flex items-center space-x-6">
                         <div className="text-center">
-                          <p className="text-2xl font-bold text-white">{formatTime(flight.DepartureTime)}</p>
+                          <p className="text-2xl font-bold text-white">
+                            {formatTime(flight.DepartureTime)}
+                          </p>
                           <p className="text-sm text-gray-400">{flight.From}</p>
                           <p className="text-xs text-gray-500">{flight.FromTerminal}</p>
                         </div>
-                        
+
                         <div className="flex-1 text-center">
                           <div className="flex items-center justify-center space-x-2 mb-1">
                             <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
@@ -1073,7 +1149,9 @@ const FlightBookingApp = () => {
                         </div>
 
                         <div className="text-center">
-                          <p className="text-2xl font-bold text-white">{formatTime(flight.ArrivalTime)}</p>
+                          <p className="text-2xl font-bold text-white">
+                            {formatTime(flight.ArrivalTime)}
+                          </p>
                           <p className="text-sm text-gray-400">{flight.To}</p>
                           <p className="text-xs text-gray-500">{flight.ToTerminal}</p>
                         </div>
@@ -1095,16 +1173,20 @@ const FlightBookingApp = () => {
                             </Badge>
                           )}
                         </div>
-                        <p className="text-2xl font-bold text-green-400 truncate-number">{formatAmount(currentPrice)}</p>
+                        <p className="text-2xl font-bold text-green-400 truncate-number">
+                          {formatAmount(currentPrice)}
+                        </p>
                         <p className="text-xs text-gray-400">含税费</p>
                       </div>
-                      
+
                       <div className="space-y-2">
-                        <p className="text-sm text-gray-300">余票: {flight.AvailableSeats[classKey]}张</p>
+                        <p className="text-sm text-gray-300">
+                          余票: {flight.AvailableSeats[classKey]}张
+                        </p>
                         <p className="text-sm text-gray-300">准点率: {flight.OnTimeRate}%</p>
                       </div>
 
-                      <Button 
+                      <Button
                         className="w-full bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -1138,7 +1220,7 @@ const FlightBookingApp = () => {
                           <span className="text-white">{flight.CancellationPolicy}</span>
                         </div>
                       </div>
-                      
+
                       <div className="flex flex-wrap gap-1">
                         {flight.Amenities.slice(0, 4).map((amenity, index) => (
                           <Badge key={index} variant="outline" className="text-xs">
@@ -1189,13 +1271,21 @@ const FlightBookingApp = () => {
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">出发</p>
-                  <p className="text-white">{selectedFlight.FromCity} {formatTime(selectedFlight.DepartureTime)}</p>
-                  <p className="text-gray-300 text-sm">{formatFullDate(selectedFlight.DepartureTime)}</p>
+                  <p className="text-white">
+                    {selectedFlight.FromCity} {formatTime(selectedFlight.DepartureTime)}
+                  </p>
+                  <p className="text-gray-300 text-sm">
+                    {formatFullDate(selectedFlight.DepartureTime)}
+                  </p>
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">到达</p>
-                  <p className="text-white">{selectedFlight.ToCity} {formatTime(selectedFlight.ArrivalTime)}</p>
-                  <p className="text-gray-300 text-sm">{formatFullDate(selectedFlight.ArrivalTime)}</p>
+                  <p className="text-white">
+                    {selectedFlight.ToCity} {formatTime(selectedFlight.ArrivalTime)}
+                  </p>
+                  <p className="text-gray-300 text-sm">
+                    {formatFullDate(selectedFlight.ArrivalTime)}
+                  </p>
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">舱位</p>
@@ -1270,7 +1360,9 @@ const FlightBookingApp = () => {
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span className="text-gray-300">机票价格 × {searchParams.passengers}</span>
-                  <span className="text-white truncate-number">{formatAmount(unitPrice * searchParams.passengers)}</span>
+                  <span className="text-white truncate-number">
+                    {formatAmount(unitPrice * searchParams.passengers)}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-300">税费</span>
@@ -1279,7 +1371,9 @@ const FlightBookingApp = () => {
                 <div className="border-t border-white/10 pt-2 mt-2">
                   <div className="flex justify-between text-lg font-bold">
                     <span className="text-white">总价</span>
-                    <span className="text-green-400 truncate-number">{formatAmount(totalPrice)}</span>
+                    <span className="text-green-400 truncate-number">
+                      {formatAmount(totalPrice)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -1287,14 +1381,10 @@ const FlightBookingApp = () => {
 
             {/* 支付按钮 */}
             <div className="flex space-x-4">
-              <Button 
-                variant="outline" 
-                onClick={() => setCurrentStep(1)}
-                className="flex-1"
-              >
+              <Button variant="outline" onClick={() => setCurrentStep(1)} className="flex-1">
                 返回选择
               </Button>
-              <Button 
+              <Button
                 onClick={handleBooking}
                 className="flex-1 bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600"
               >
@@ -1314,9 +1404,7 @@ const FlightBookingApp = () => {
       <Card className="bg-white/10 backdrop-blur-md border-white/20">
         <CardHeader>
           <CardTitle className="text-white">我的订单</CardTitle>
-          <CardDescription className="text-gray-300">
-            查看您的机票订单和电子票
-          </CardDescription>
+          <CardDescription className="text-gray-300">查看您的机票订单和电子票</CardDescription>
         </CardHeader>
         <CardContent>
           {bookings.length > 0 ? (
@@ -1331,15 +1419,19 @@ const FlightBookingApp = () => {
                         </h3>
                         <p className="text-gray-400">{booking.Route}</p>
                       </div>
-                      <Badge className={`${
-                        booking.Status === '已出票' ? 'bg-green-500/20 text-green-400' :
-                        booking.Status === '待出行' ? 'bg-blue-500/20 text-blue-400' :
-                        'bg-gray-500/20 text-gray-400'
-                      }`}>
+                      <Badge
+                        className={`${
+                          booking.Status === '已出票'
+                            ? 'bg-green-500/20 text-green-400'
+                            : booking.Status === '待出行'
+                              ? 'bg-blue-500/20 text-blue-400'
+                              : 'bg-gray-500/20 text-gray-400'
+                        }`}
+                      >
                         {booking.Status}
                       </Badge>
                     </div>
-                    
+
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
                       <div>
                         <p className="text-gray-400">出发时间</p>
@@ -1370,7 +1462,9 @@ const FlightBookingApp = () => {
                       </div>
                       <div>
                         <p className="text-gray-400">总价</p>
-                        <p className="text-green-400 font-bold truncate-number">{formatAmount(booking.TotalPrice)}</p>
+                        <p className="text-green-400 font-bold truncate-number">
+                          {formatAmount(booking.TotalPrice)}
+                        </p>
                       </div>
                       <div>
                         <p className="text-gray-400">下单时间</p>
@@ -1409,7 +1503,7 @@ const FlightBookingApp = () => {
               <Plane className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-white mb-2">还没有订单记录</h3>
               <p className="text-gray-300 mb-6">快去搜索心仪的航班吧</p>
-              <Button 
+              <Button
                 onClick={() => setCurrentStep(0)}
                 className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600"
               >
@@ -1459,23 +1553,41 @@ const FlightBookingApp = () => {
           </div>
         </div>
 
-        <Tabs 
-          value={currentStep === 0 ? "search" : currentStep === 1 ? "select" : currentStep === 2 ? "booking" : "orders"} 
+        <Tabs
+          value={
+            currentStep === 0
+              ? 'search'
+              : currentStep === 1
+                ? 'select'
+                : currentStep === 2
+                  ? 'booking'
+                  : 'orders'
+          }
           className="space-y-6"
           onValueChange={(value) => {
-            if (value === "search") setCurrentStep(0);
-            else if (value === "orders") setCurrentStep(3);
+            if (value === 'search') setCurrentStep(0);
+            else if (value === 'orders') setCurrentStep(3);
           }}
         >
           <TabsList className="grid w-full grid-cols-4 bg-white/10 rounded-lg">
-            <TabsTrigger value="search" onClick={() => setCurrentStep(0)}>搜索航班</TabsTrigger>
-            <TabsTrigger value="select" disabled={currentStep < 1}>选择航班</TabsTrigger>
-            <TabsTrigger value="booking" disabled={currentStep < 2}>确认订单</TabsTrigger>
-            <TabsTrigger value="orders" onClick={() => setCurrentStep(3)}>我的订单</TabsTrigger>
+            <TabsTrigger value="search" onClick={() => setCurrentStep(0)}>
+              搜索航班
+            </TabsTrigger>
+            <TabsTrigger value="select" disabled={currentStep < 1}>
+              选择航班
+            </TabsTrigger>
+            <TabsTrigger value="booking" disabled={currentStep < 2}>
+              确认订单
+            </TabsTrigger>
+            <TabsTrigger value="orders" onClick={() => setCurrentStep(3)}>
+              我的订单
+            </TabsTrigger>
           </TabsList>
 
           {currentStep === 0 && <TabsContent value="search">{renderSearchPage()}</TabsContent>}
-          {currentStep === 1 && <TabsContent value="select">{renderFlightSelectPage()}</TabsContent>}
+          {currentStep === 1 && (
+            <TabsContent value="select">{renderFlightSelectPage()}</TabsContent>
+          )}
           {currentStep === 2 && <TabsContent value="booking">{renderBookingPage()}</TabsContent>}
           {currentStep === 3 && <TabsContent value="orders">{renderOrdersPage()}</TabsContent>}
         </Tabs>
@@ -1490,4 +1602,3 @@ const FlightBookingApp = () => {
 };
 
 export default FlightBookingApp;
-

@@ -22,10 +22,7 @@ interface MessageBubbleProps {
   showAvatar?: boolean;
 }
 
-export default function MessageBubble({
-  message,
-  showAvatar = true,
-}: MessageBubbleProps) {
+export default function MessageBubble({ message, showAvatar = true }: MessageBubbleProps) {
   const { content, isRead, createdAt, isSender } = message;
 
   const timeAgo = formatDistanceToNow(new Date(createdAt), {
@@ -47,9 +44,10 @@ export default function MessageBubble({
         <div
           className={`
             px-4 py-2 rounded-2xl
-            ${isSender
-              ? 'bg-blue-600 text-white rounded-br-sm'
-              : 'bg-gray-700 text-white rounded-bl-sm'
+            ${
+              isSender
+                ? 'bg-blue-600 text-white rounded-br-sm'
+                : 'bg-gray-700 text-white rounded-bl-sm'
             }
           `}
         >
@@ -57,7 +55,9 @@ export default function MessageBubble({
         </div>
 
         {/* 时间和已读状态 */}
-        <div className={`flex items-center gap-1 mt-1 text-xs text-gray-400 ${isSender ? 'flex-row-reverse' : 'flex-row'}`}>
+        <div
+          className={`flex items-center gap-1 mt-1 text-xs text-gray-400 ${isSender ? 'flex-row-reverse' : 'flex-row'}`}
+        >
           <span>{timeAgo}</span>
           {isSender && (
             <span>

@@ -30,7 +30,12 @@ export async function GET(request: NextRequest) {
 
   if (error) {
     console.error('Google auth error:', error, errorDescription);
-    return NextResponse.redirect(new URL(`/auth/login?error=google_auth_failed&details=${encodeURIComponent(errorDescription || error)}`, request.url));
+    return NextResponse.redirect(
+      new URL(
+        `/auth/login?error=google_auth_failed&details=${encodeURIComponent(errorDescription || error)}`,
+        request.url
+      )
+    );
   }
 
   if (!code) {
@@ -40,7 +45,8 @@ export async function GET(request: NextRequest) {
 
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  const redirectUri = process.env.GOOGLE_REDIRECT_URI || 'http://localhost:3000/api/auth/google/callback';
+  const redirectUri =
+    process.env.GOOGLE_REDIRECT_URI || 'http://localhost:3000/api/auth/google/callback';
 
   console.log('OAuth config - clientId present:', !!clientId);
   console.log('OAuth config - clientSecret present:', !!clientSecret);
@@ -71,7 +77,12 @@ export async function GET(request: NextRequest) {
 
     if (!tokenResponse.ok) {
       console.error('Token exchange failed:', tokenData);
-      return NextResponse.redirect(new URL(`/auth/login?error=token_exchange_failed&status=${tokenResponse.status}`, request.url));
+      return NextResponse.redirect(
+        new URL(
+          `/auth/login?error=token_exchange_failed&status=${tokenResponse.status}`,
+          request.url
+        )
+      );
     }
 
     const tokens: GoogleTokenResponse = JSON.parse(tokenData);
@@ -107,7 +118,7 @@ export async function GET(request: NextRequest) {
     // 使用绝对 URL 重定向到社区页面
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.quantaureum.com';
     const response = NextResponse.redirect(new URL('/community', baseUrl));
-    
+
     // Set session cookie
     response.cookies.set('qau_session', sessionToken, {
       httpOnly: true,
@@ -118,23 +129,32 @@ export async function GET(request: NextRequest) {
     });
 
     // Set user info cookie (for client-side access)
-    response.cookies.set('qau_user', JSON.stringify({
-      name: userInfo.name,
-      email: userInfo.email,
-      picture: userInfo.picture,
-    }), {
-      httpOnly: false,
-      secure: true,
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7,
-      path: '/',
-    });
+    response.cookies.set(
+      'qau_user',
+      JSON.stringify({
+        name: userInfo.name,
+        email: userInfo.email,
+        picture: userInfo.picture,
+      }),
+      {
+        httpOnly: false,
+        secure: true,
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7,
+        path: '/',
+      }
+    );
 
     console.log('Login successful, redirecting to /community');
     return response;
   } catch (err) {
     console.error('Google OAuth error:', err);
     const errorMessage = err instanceof Error ? err.message : 'unknown';
-    return NextResponse.redirect(new URL(`/auth/login?error=oauth_error&details=${encodeURIComponent(errorMessage)}`, request.url));
+    return NextResponse.redirect(
+      new URL(
+        `/auth/login?error=oauth_error&details=${encodeURIComponent(errorMessage)}`,
+        request.url
+      )
+    );
   }
 }

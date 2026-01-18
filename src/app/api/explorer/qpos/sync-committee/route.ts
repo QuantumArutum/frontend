@@ -38,12 +38,14 @@ export const GET = createSecureHandler(
 
     try {
       const qposStatus = await makeRPCCall('qpos_status');
-      
+
       if (!qposStatus) {
-        return addSecurityHeaders(NextResponse.json({
-          syncCommittee: null,
-          error: 'QPOS status not available',
-        }));
+        return addSecurityHeaders(
+          NextResponse.json({
+            syncCommittee: null,
+            error: 'QPOS status not available',
+          })
+        );
       }
 
       const currentEpoch = qposStatus.currentEpoch || 0;
@@ -57,25 +59,27 @@ export const GET = createSecureHandler(
 
       const response = {
         // 同步委员会信息
-        syncCommittee: syncCommittee ? {
-          period: syncCommittee.period,
-          size: syncCommittee.size,
-          // 委员会成员索引（如果可用）
-          memberCount: syncCommittee.size || 512,
-        } : null,
-        
+        syncCommittee: syncCommittee
+          ? {
+              period: syncCommittee.period,
+              size: syncCommittee.size,
+              // 委员会成员索引（如果可用）
+              memberCount: syncCommittee.size || 512,
+            }
+          : null,
+
         // 周期信息
         currentPeriod,
         syncCommitteePeriod,
         epochsUntilRotation,
         nextRotationEpoch: nextPeriodEpoch,
-        
+
         // 当前状态
         currentEpoch,
-        
+
         // 高级功能状态
         advanced: qposStatus.advanced || null,
-        
+
         timestamp: Date.now(),
       };
 
@@ -85,10 +89,15 @@ export const GET = createSecureHandler(
       return addSecurityHeaders(NextResponse.json(response));
     } catch (error) {
       console.error('获取 Sync Committee 失败:', error);
-      return addSecurityHeaders(NextResponse.json({
-        syncCommittee: null,
-        error: 'Failed to fetch sync committee',
-      }, { status: 500 }));
+      return addSecurityHeaders(
+        NextResponse.json(
+          {
+            syncCommittee: null,
+            error: 'Failed to fetch sync committee',
+          },
+          { status: 500 }
+        )
+      );
     }
   },
   { rateLimit: true, allowedMethods: ['GET'] }

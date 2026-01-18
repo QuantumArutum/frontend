@@ -55,7 +55,7 @@ export function extractPlainText(markdown: string): string {
  */
 export function createExcerpt(markdown: string, maxLength: number = 150): string {
   const plainText = extractPlainText(markdown);
-  
+
   if (plainText.length <= maxLength) {
     return plainText;
   }
@@ -63,10 +63,10 @@ export function createExcerpt(markdown: string, maxLength: number = 150): string
   // Find the last space before maxLength to avoid cutting words
   const excerpt = plainText.substring(0, maxLength);
   const lastSpace = excerpt.lastIndexOf(' ');
-  
+
   if (lastSpace > maxLength * 0.8) {
     return excerpt.substring(0, lastSpace) + '...';
   }
-  
+
   return excerpt + '...';
 }

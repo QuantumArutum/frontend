@@ -19,7 +19,7 @@ const RealtimePriceDisplay: React.FC<RealtimePriceDisplayProps> = ({
   showTrend = true,
   showBidCount = true,
   size = 'medium',
-  onPriceChange
+  onPriceChange,
 }) => {
   const { currentPrice, totalBids, latestBid, connected } = useAuctionDetails(auctionId);
   const [displayPrice, setDisplayPrice] = useState(initialPrice);
@@ -32,7 +32,7 @@ const RealtimePriceDisplay: React.FC<RealtimePriceDisplayProps> = ({
     if (currentPrice && currentPrice !== displayPrice) {
       const oldPrice = displayPrice;
       const newPrice = currentPrice;
-      
+
       // 确定价格方向
       if (newPrice > oldPrice) {
         setPriceDirection('up');
@@ -48,7 +48,7 @@ const RealtimePriceDisplay: React.FC<RealtimePriceDisplayProps> = ({
 
       // 更新价格和历史
       setDisplayPrice(newPrice);
-      setPriceHistory(prev => [...prev.slice(-9), newPrice]); // 保留最新10个价格
+      setPriceHistory((prev) => [...prev.slice(-9), newPrice]); // 保留最新10个价格
 
       // 回调
       onPriceChange?.(newPrice, oldPrice);
@@ -78,19 +78,19 @@ const RealtimePriceDisplay: React.FC<RealtimePriceDisplayProps> = ({
         return {
           priceText: 'text-lg',
           container: 'p-2',
-          badge: 'text-xs px-2 py-1'
+          badge: 'text-xs px-2 py-1',
         };
       case 'large':
         return {
           priceText: 'text-4xl',
           container: 'p-6',
-          badge: 'text-sm px-3 py-1'
+          badge: 'text-sm px-3 py-1',
         };
       default:
         return {
           priceText: 'text-2xl',
           container: 'p-4',
-          badge: 'text-xs px-2 py-1'
+          badge: 'text-xs px-2 py-1',
         };
     }
   };
@@ -111,12 +111,15 @@ const RealtimePriceDisplay: React.FC<RealtimePriceDisplayProps> = ({
           <motion.div
             key={displayPrice}
             initial={{ scale: 1 }}
-            animate={{ 
+            animate={{
               scale: isAnimating ? [1, 1.1, 1] : 1,
-              color: isAnimating ? (
-                priceDirection === 'up' ? '#10b981' : 
-                priceDirection === 'down' ? '#ef4444' : '#6b7280'
-              ) : '#1f2937'
+              color: isAnimating
+                ? priceDirection === 'up'
+                  ? '#10b981'
+                  : priceDirection === 'down'
+                    ? '#ef4444'
+                    : '#6b7280'
+                : '#1f2937',
             }}
             transition={{ duration: 0.5 }}
             className={`font-bold ${styles.priceText}`}
@@ -131,18 +134,19 @@ const RealtimePriceDisplay: React.FC<RealtimePriceDisplayProps> = ({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className={`flex items-center space-x-1 ${styles.badge} rounded-full ${
-                  priceChangePercentage > 0 
-                    ? 'bg-green-100 text-green-800' 
-                    : priceChangePercentage < 0 
-                    ? 'bg-red-100 text-red-800'
-                    : 'bg-gray-100 text-gray-800'
+                  priceChangePercentage > 0
+                    ? 'bg-green-100 text-green-800'
+                    : priceChangePercentage < 0
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-gray-100 text-gray-800'
                 }`}
               >
                 <span>
                   {priceChangePercentage > 0 ? '↗️' : priceChangePercentage < 0 ? '↘️' : '➡️'}
                 </span>
                 <span>
-                  {priceChangePercentage > 0 ? '+' : ''}{priceChangePercentage.toFixed(1)}%
+                  {priceChangePercentage > 0 ? '+' : ''}
+                  {priceChangePercentage.toFixed(1)}%
                 </span>
               </motion.div>
 
@@ -172,7 +176,7 @@ const RealtimePriceDisplay: React.FC<RealtimePriceDisplayProps> = ({
             >
               {totalBids} 次出价
             </motion.div>
-            
+
             {/* 最新出价者 */}
             {latestBid && (
               <motion.div
@@ -194,9 +198,9 @@ const RealtimePriceDisplay: React.FC<RealtimePriceDisplayProps> = ({
             {priceHistory.slice(-10).map((price, index) => {
               const maxPrice = Math.max(...priceHistory);
               const minPrice = Math.min(...priceHistory);
-              const height = maxPrice === minPrice ? 50 : 
-                ((price - minPrice) / (maxPrice - minPrice)) * 100;
-              
+              const height =
+                maxPrice === minPrice ? 50 : ((price - minPrice) / (maxPrice - minPrice)) * 100;
+
               return (
                 <motion.div
                   key={index}
@@ -204,9 +208,7 @@ const RealtimePriceDisplay: React.FC<RealtimePriceDisplayProps> = ({
                   animate={{ height: `${Math.max(height, 10)}%` }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                   className={`flex-1 rounded-t ${
-                    index === priceHistory.length - 1 
-                      ? 'bg-blue-500' 
-                      : 'bg-gray-300'
+                    index === priceHistory.length - 1 ? 'bg-blue-500' : 'bg-gray-300'
                   }`}
                   style={{ minHeight: '4px' }}
                 />
@@ -225,11 +227,11 @@ const RealtimePriceDisplay: React.FC<RealtimePriceDisplayProps> = ({
             exit={{ opacity: 0, scale: 0.8, y: -60 }}
             transition={{ duration: 1 }}
             className={`absolute top-0 left-1/2 transform -translate-x-1/2 ${
-              priceDirection === 'up' 
-                ? 'text-green-500' 
-                : priceDirection === 'down' 
-                ? 'text-red-500' 
-                : 'text-gray-500'
+              priceDirection === 'up'
+                ? 'text-green-500'
+                : priceDirection === 'down'
+                  ? 'text-red-500'
+                  : 'text-gray-500'
             } font-bold text-lg pointer-events-none`}
           >
             {priceDirection === 'up' ? '+' : priceDirection === 'down' ? '-' : ''}

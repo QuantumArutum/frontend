@@ -1,11 +1,11 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { 
-  auctionWebSocket, 
-  WebSocketMessage, 
-  BidUpdateMessage, 
+import {
+  auctionWebSocket,
+  WebSocketMessage,
+  BidUpdateMessage,
   AuctionUpdateMessage,
   PriceChangeMessage,
-  NotificationMessage
+  NotificationMessage,
 } from '../services/websocket/AuctionWebSocket';
 import { BidRecord } from '../types/auction.types';
 
@@ -25,12 +25,12 @@ export interface AuctionWebSocketState {
 
 export function useAuctionWebSocket(options: UseAuctionWebSocketOptions = {}) {
   const { userId, autoConnect = true, onConnectionChange, onError } = options;
-  
+
   const [state, setState] = useState<AuctionWebSocketState>({
     connected: false,
     connecting: false,
     error: null,
-    lastMessage: null
+    lastMessage: null,
   });
 
   const unsubscribeRefs = useRef<Set<() => void>>(new Set());
@@ -39,15 +39,15 @@ export function useAuctionWebSocket(options: UseAuctionWebSocketOptions = {}) {
   const connect = useCallback(async () => {
     if (state.connected || state.connecting) return;
 
-    setState(prev => ({ ...prev, connecting: true, error: null }));
+    setState((prev) => ({ ...prev, connecting: true, error: null }));
 
     try {
       await auctionWebSocket.connect(userId);
-      setState(prev => ({ ...prev, connected: true, connecting: false }));
+      setState((prev) => ({ ...prev, connected: true, connecting: false }));
       onConnectionChange?.(true);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : '连接失败';
-      setState(prev => ({ ...prev, connected: false, connecting: false, error: errorMessage }));
+      setState((prev) => ({ ...prev, connected: false, connecting: false, error: errorMessage }));
       onConnectionChange?.(false);
       onError?.(error instanceof Error ? error : new Error(errorMessage));
     }
@@ -56,11 +56,11 @@ export function useAuctionWebSocket(options: UseAuctionWebSocketOptions = {}) {
   // 断开连接
   const disconnect = useCallback(() => {
     // 清理所有订阅
-    unsubscribeRefs.current.forEach(unsubscribe => unsubscribe());
+    unsubscribeRefs.current.forEach((unsubscribe) => unsubscribe());
     unsubscribeRefs.current.clear();
 
     auctionWebSocket.disconnect();
-    setState(prev => ({ ...prev, connected: false, connecting: false }));
+    setState((prev) => ({ ...prev, connected: false, connecting: false }));
     onConnectionChange?.(false);
   }, [onConnectionChange]);
 
@@ -75,26 +75,32 @@ export function useAuctionWebSocket(options: UseAuctionWebSocketOptions = {}) {
   }, []);
 
   // 订阅消息
-  const subscribe = useCallback((messageType: string, handler: (message: WebSocketMessage) => void) => {
-    const unsubscribe = auctionWebSocket.subscribe(messageType, (message) => {
-      setState(prev => ({ ...prev, lastMessage: message }));
-      handler(message);
-    });
-    
-    unsubscribeRefs.current.add(unsubscribe);
-    return unsubscribe;
-  }, []);
+  const subscribe = useCallback(
+    (messageType: string, handler: (message: WebSocketMessage) => void) => {
+      const unsubscribe = auctionWebSocket.subscribe(messageType, (message) => {
+        setState((prev) => ({ ...prev, lastMessage: message }));
+        handler(message);
+      });
+
+      unsubscribeRefs.current.add(unsubscribe);
+      return unsubscribe;
+    },
+    []
+  );
 
   // 订阅拍卖更新
-  const subscribeToAuction = useCallback((auctionId: string, handler: (message: WebSocketMessage) => void) => {
-    const unsubscribe = auctionWebSocket.subscribeToAuction(auctionId, (message) => {
-      setState(prev => ({ ...prev, lastMessage: message }));
-      handler(message);
-    });
-    
-    unsubscribeRefs.current.add(unsubscribe);
-    return unsubscribe;
-  }, []);
+  const subscribeToAuction = useCallback(
+    (auctionId: string, handler: (message: WebSocketMessage) => void) => {
+      const unsubscribe = auctionWebSocket.subscribeToAuction(auctionId, (message) => {
+        setState((prev) => ({ ...prev, lastMessage: message }));
+        handler(message);
+      });
+
+      unsubscribeRefs.current.add(unsubscribe);
+      return unsubscribe;
+    },
+    []
+  );
 
   // 取消订阅拍卖
   const unsubscribeFromAuction = useCallback((auctionId: string) => {
@@ -122,7 +128,7 @@ export function useAuctionWebSocket(options: UseAuctionWebSocketOptions = {}) {
     sendBid,
     subscribe,
     subscribeToAuction,
-    unsubscribeFromAuction
+    unsubscribeFromAuction,
   };
 }
 
@@ -163,7 +169,7 @@ export function useAuctionDetails(auctionId: string) {
 
         case 'user_notification':
           const notification = message as unknown as NotificationMessage;
-          setNotifications(prev => [notification, ...prev.slice(0, 9)]); // 保留最新10条
+          setNotifications((prev) => [notification, ...prev.slice(0, 9)]); // 保留最新10条
           break;
       }
     });
@@ -185,7 +191,7 @@ export function useAuctionDetails(auctionId: string) {
     auctionStatus,
     notifications,
     clearNotifications,
-    connected
+    connected,
   };
 }
 
@@ -202,17 +208,21 @@ export function useAuctionList() {
 
     const unsubscribeBidUpdate = subscribe('bid_update', (message) => {
       const bidUpdate = message as unknown as BidUpdateMessage;
-      setPriceUpdates(prev => new Map(prev.set(bidUpdate.data.auctionId, bidUpdate.data.currentPrice)));
+      setPriceUpdates(
+        (prev) => new Map(prev.set(bidUpdate.data.auctionId, bidUpdate.data.currentPrice))
+      );
     });
 
     const unsubscribeAuctionUpdate = subscribe('auction_update', (message) => {
       const auctionUpdate = message as unknown as AuctionUpdateMessage;
-      setStatusUpdates(prev => new Map(prev.set(auctionUpdate.data.auctionId, auctionUpdate.data.status)));
+      setStatusUpdates(
+        (prev) => new Map(prev.set(auctionUpdate.data.auctionId, auctionUpdate.data.status))
+      );
     });
 
     const unsubscribeSystemAlert = subscribe('system_alert', (message) => {
       if (message.data.type === 'new_auction' && message.data.auctionId) {
-        setNewAuctions(prev => [message.data.auctionId as string, ...prev.slice(0, 4)]); // 保留最新5条
+        setNewAuctions((prev) => [message.data.auctionId as string, ...prev.slice(0, 4)]); // 保留最新5条
       }
     });
 
@@ -224,7 +234,7 @@ export function useAuctionList() {
   }, [connected, subscribe]);
 
   const clearPriceUpdate = useCallback((auctionId: string) => {
-    setPriceUpdates(prev => {
+    setPriceUpdates((prev) => {
       const newMap = new Map(prev);
       newMap.delete(auctionId);
       return newMap;
@@ -232,7 +242,7 @@ export function useAuctionList() {
   }, []);
 
   const clearStatusUpdate = useCallback((auctionId: string) => {
-    setStatusUpdates(prev => {
+    setStatusUpdates((prev) => {
       const newMap = new Map(prev);
       newMap.delete(auctionId);
       return newMap;
@@ -240,7 +250,7 @@ export function useAuctionList() {
   }, []);
 
   const clearNewAuction = useCallback((auctionId: string) => {
-    setNewAuctions(prev => prev.filter(id => id !== auctionId));
+    setNewAuctions((prev) => prev.filter((id) => id !== auctionId));
   }, []);
 
   return {
@@ -250,7 +260,7 @@ export function useAuctionList() {
     clearPriceUpdate,
     clearStatusUpdate,
     clearNewAuction,
-    connected
+    connected,
   };
 }
 
@@ -266,8 +276,8 @@ export function useAuctionNotifications() {
 
     const unsubscribe = subscribe('user_notification', (message) => {
       const notification = message as NotificationMessage;
-      setNotifications(prev => [notification, ...prev]);
-      setUnreadCount(prev => prev + 1);
+      setNotifications((prev) => [notification, ...prev]);
+      setUnreadCount((prev) => prev + 1);
     });
 
     return unsubscribe;
@@ -276,8 +286,8 @@ export function useAuctionNotifications() {
   const markAsRead = useCallback((notificationId?: string) => {
     if (notificationId) {
       // 标记特定通知为已读
-      setNotifications(prev => 
-        prev.map(n => n.data.userId === notificationId ? { ...n, read: true } : n)
+      setNotifications((prev) =>
+        prev.map((n) => (n.data.userId === notificationId ? { ...n, read: true } : n))
       );
     } else {
       // 标记所有通知为已读
@@ -295,6 +305,6 @@ export function useAuctionNotifications() {
     unreadCount,
     markAsRead,
     clearNotifications,
-    connected
+    connected,
   };
 }

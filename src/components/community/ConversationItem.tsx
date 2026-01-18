@@ -27,13 +27,7 @@ export default function ConversationItem({
   isActive = false,
   onClick,
 }: ConversationItemProps) {
-  const {
-    otherUserName,
-    lastMessageContent,
-    lastMessageAt,
-    unreadCount,
-    isPinned,
-  } = conversation;
+  const { otherUserName, lastMessageContent, lastMessageAt, unreadCount, isPinned } = conversation;
 
   const timeAgo = lastMessageAt
     ? formatDistanceToNow(new Date(lastMessageAt), {
@@ -47,9 +41,10 @@ export default function ConversationItem({
       onClick={onClick}
       className={`
         flex items-center gap-3 p-4 cursor-pointer transition-colors
-        ${isActive
-          ? 'bg-gray-700 border-l-4 border-blue-500'
-          : 'hover:bg-gray-800 border-l-4 border-transparent'
+        ${
+          isActive
+            ? 'bg-gray-700 border-l-4 border-blue-500'
+            : 'hover:bg-gray-800 border-l-4 border-transparent'
         }
       `}
     >
@@ -65,17 +60,15 @@ export default function ConversationItem({
             <h3 className={`font-semibold ${unreadCount > 0 ? 'text-white' : 'text-gray-300'}`}>
               {otherUserName}
             </h3>
-            {isPinned && (
-              <Pin className="w-3 h-3 text-blue-400" />
-            )}
+            {isPinned && <Pin className="w-3 h-3 text-blue-400" />}
           </div>
-          {timeAgo && (
-            <span className="text-xs text-gray-400">{timeAgo}</span>
-          )}
+          {timeAgo && <span className="text-xs text-gray-400">{timeAgo}</span>}
         </div>
 
         <div className="flex items-center justify-between">
-          <p className={`text-sm truncate ${unreadCount > 0 ? 'text-white font-medium' : 'text-gray-400'}`}>
+          <p
+            className={`text-sm truncate ${unreadCount > 0 ? 'text-white font-medium' : 'text-gray-400'}`}
+          >
             {lastMessageContent || '暂无消息'}
           </p>
           {unreadCount > 0 && (

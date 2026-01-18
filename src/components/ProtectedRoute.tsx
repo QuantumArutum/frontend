@@ -18,14 +18,14 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       // 这里应该检查实际的钱包连接状态
       // 暂时使用localStorage来模拟
       const walletConnected = localStorage.getItem('walletConnected');
-      
+
       if (walletConnected === 'true') {
         setIsAuthenticated(true);
       } else {
         // 如果没有连接钱包，重定向到钱包连接页面
         router.push('/wallet/connect');
       }
-      
+
       setIsLoading(false);
     };
 
@@ -48,4 +48,3 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 };
 
 export default ProtectedRoute;
-

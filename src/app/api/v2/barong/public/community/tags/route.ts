@@ -13,11 +13,14 @@ export async function GET(request: NextRequest) {
     if (!sql) {
       console.error('[tags] Database connection not available');
       clearTimeout(timeoutId);
-      return NextResponse.json({
-        success: false,
-        error: 'Database connection not available',
-        message: '数据库连接不可用，请稍后重试'
-      }, { status: 503 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Database connection not available',
+          message: '数据库连接不可用，请稍后重试',
+        },
+        { status: 503 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -30,7 +33,7 @@ export async function GET(request: NextRequest) {
     // 简化查询 - 使用安全的条件查询替代sql.unsafe()
     let tags;
     if (search) {
-      tags = await sql`
+      tags = (await sql`
         SELECT 
           t.id,
           t.name,
@@ -45,11 +48,11 @@ export async function GET(request: NextRequest) {
         ORDER BY t.use_count DESC
         LIMIT ${limit}
         OFFSET ${offset}
-      ` as any[];
+      `) as any[];
     } else {
       // 使用条件查询替代动态SQL，避免SQL注入风险
       if (sortBy === 'name') {
-        tags = await sql`
+        tags = (await sql`
           SELECT 
             t.id,
             t.name,
@@ -63,9 +66,9 @@ export async function GET(request: NextRequest) {
           ORDER BY t.name ASC
           LIMIT ${limit}
           OFFSET ${offset}
-        ` as any[];
+        `) as any[];
       } else if (sortBy === 'created') {
-        tags = await sql`
+        tags = (await sql`
           SELECT 
             t.id,
             t.name,
@@ -79,10 +82,10 @@ export async function GET(request: NextRequest) {
           ORDER BY t.created_at DESC
           LIMIT ${limit}
           OFFSET ${offset}
-        ` as any[];
+        `) as any[];
       } else {
         // 默认按使用次数排序
-        tags = await sql`
+        tags = (await sql`
           SELECT 
             t.id,
             t.name,
@@ -96,7 +99,7 @@ export async function GET(request: NextRequest) {
           ORDER BY t.use_count DESC
           LIMIT ${limit}
           OFFSET ${offset}
-        ` as any[];
+        `) as any[];
       }
     }
 
@@ -109,39 +112,41 @@ export async function GET(request: NextRequest) {
         total: tags.length,
         page,
         limit,
-        hasMore: tags.length === limit
-      }
+        hasMore: tags.length === limit,
+      },
     });
-
   } catch (error: any) {
     clearTimeout(timeoutId);
-    
+
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const errorStack = error instanceof Error ? error.stack : '';
-    
+
     if (error instanceof Error && error.name === 'AbortError') {
       console.error('[tags] Request timeout:', {
         message: errorMessage,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
-      return NextResponse.json({
-        success: false,
-        error: 'Request timeout',
-        message: '请求超时，请稍后重试'
-      }, { status: 504 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Request timeout',
+          message: '请求超时，请稍后重试',
+        },
+        { status: 504 }
+      );
     }
-    
+
     console.error('[tags] Error fetching tags:', {
       message: errorMessage,
       stack: errorStack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-    
+
     return NextResponse.json(
       {
         success: false,
         error: errorMessage,
-        message: '获取标签列表失败，请稍后重试'
+        message: '获取标签列表失败，请稍后重试',
       },
       { status: 500 }
     );
@@ -167,10 +172,7 @@ export async function POST(request: NextRequest) {
 
     if (!name || name.trim().length === 0) {
       clearTimeout(timeoutId);
-      return NextResponse.json(
-        { success: false, message: '标签名称不能为空' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, message: '标签名称不能为空' }, { status: 400 });
     }
 
     if (name.length > 50) {
@@ -193,10 +195,7 @@ export async function POST(request: NextRequest) {
 
     if (existing.length > 0) {
       clearTimeout(timeoutId);
-      return NextResponse.json(
-        { success: false, message: '标签已存在' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, message: '标签已存在' }, { status: 400 });
     }
 
     // 创建标签
@@ -211,41 +210,40 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: result[0],
-      message: '标签创建成功'
+      message: '标签创建成功',
     });
-
   } catch (error: any) {
     clearTimeout(timeoutId);
-    
+
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const errorStack = error instanceof Error ? error.stack : '';
-    
+
     if (error instanceof Error && error.name === 'AbortError') {
       console.error('[tags-create] Request timeout:', {
         message: errorMessage,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
       return NextResponse.json(
-        { 
+        {
           success: false,
           error: 'Request timeout',
-          message: '请求超时，请稍后重试' 
+          message: '请求超时，请稍后重试',
         },
         { status: 504 }
       );
     }
-    
+
     console.error('[tags-create] Error creating tag:', {
       message: errorMessage,
       stack: errorStack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-    
+
     return NextResponse.json(
       {
         success: false,
         error: errorMessage,
-        message: '创建标签失败，请稍后重试'
+        message: '创建标签失败，请稍后重试',
       },
       { status: 500 }
     );

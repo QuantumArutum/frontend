@@ -1,6 +1,6 @@
 /**
  * Quantaureum 支付验证服务
- * 
+ *
  * 生产级支付验证系统
  * 支持多种加密货币支付验证
  */
@@ -41,16 +41,16 @@ const PAYMENT_CONFIG = {
     USDT: process.env.PAYMENT_USDT_ADDRESS || '0x742d35Cc6634C0532925a3b844Bc9e7595f5bE21',
     USDC: process.env.PAYMENT_USDC_ADDRESS || '0x742d35Cc6634C0532925a3b844Bc9e7595f5bE21',
   },
-  
+
   // 汇率API
   rateApi: process.env.RATE_API_URL || 'https://api.coingecko.com/api/v3/simple/price',
-  
+
   // 区块链API
   etherscanApi: process.env.ETHERSCAN_API_KEY || '',
-  
+
   // 支付超时（分钟）
   paymentTimeout: 30,
-  
+
   // 最小确认数
   minConfirmations: {
     ETH: 12,
@@ -58,7 +58,7 @@ const PAYMENT_CONFIG = {
     USDT: 12,
     USDC: 12,
   },
-  
+
   // 允许的价格偏差（百分比）
   priceSlippage: 2,
 };
@@ -80,17 +80,19 @@ export class PaymentVerificationService {
     paymentId: string;
   }> {
     const { amount, currency } = request;
-    
+
     // 获取汇率并计算需要支付的加密货币数量
     const rate = await this.getExchangeRate(currency);
     const cryptoAmount = amount / rate;
-    
+
     // 生成唯一支付ID
     const paymentId = CryptoUtils.generateSecureToken(16);
-    
+
     // 计算过期时间
-    const expiresAt = new Date(Date.now() + PAYMENT_CONFIG.paymentTimeout * 60 * 1000).toISOString();
-    
+    const expiresAt = new Date(
+      Date.now() + PAYMENT_CONFIG.paymentTimeout * 60 * 1000
+    ).toISOString();
+
     return {
       paymentAddress: PAYMENT_CONFIG.addresses[currency],
       expectedAmount: parseFloat(cryptoAmount.toFixed(8)),
@@ -143,16 +145,16 @@ export class PaymentVerificationService {
     try {
       // 调用Etherscan API验证交易
       const apiUrl = `https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=${txHash}&apikey=${PAYMENT_CONFIG.etherscanApi}`;
-      
+
       const response = await fetch(apiUrl);
       const data = await response.json();
-      
+
       if (!data.result) {
         return { verified: false, error: '交易未找到' };
       }
 
       const tx = data.result;
-      
+
       // 验证接收地址
       if (tx.to?.toLowerCase() !== toAddress.toLowerCase()) {
         return { verified: false, error: '接收地址不匹配' };
@@ -162,16 +164,19 @@ export class PaymentVerificationService {
       if (currency === 'ETH') {
         const value = parseInt(tx.value, 16) / 1e18;
         const minAmount = expectedAmount * (1 - PAYMENT_CONFIG.priceSlippage / 100);
-        
+
         if (value < minAmount) {
-          return { verified: false, error: `支付金额不足: 期望 ${expectedAmount} ETH, 收到 ${value} ETH` };
+          return {
+            verified: false,
+            error: `支付金额不足: 期望 ${expectedAmount} ETH, 收到 ${value} ETH`,
+          };
         }
 
         // 获取确认数
         const receiptUrl = `https://api.etherscan.io/api?module=proxy&action=eth_getTransactionReceipt&txhash=${txHash}&apikey=${PAYMENT_CONFIG.etherscanApi}`;
         const receiptResponse = await fetch(receiptUrl);
         const receiptData = await receiptResponse.json();
-        
+
         if (!receiptData.result || receiptData.result.status !== '0x1') {
           return { verified: false, error: '交易失败或未确认' };
         }
@@ -181,14 +186,14 @@ export class PaymentVerificationService {
         const latestBlockResponse = await fetch(latestBlockUrl);
         const latestBlockData = await latestBlockResponse.json();
         const latestBlock = parseInt(latestBlockData.result, 16);
-        
+
         const confirmations = latestBlock - blockNumber;
-        
+
         if (confirmations < PAYMENT_CONFIG.minConfirmations.ETH) {
-          return { 
-            verified: false, 
+          return {
+            verified: false,
             error: `确认数不足: ${confirmations}/${PAYMENT_CONFIG.minConfirmations.ETH}`,
-            confirmations 
+            confirmations,
           };
         }
 
@@ -206,9 +211,9 @@ export class PaymentVerificationService {
         verified: true,
         txHash,
         amount: expectedAmount,
-        confirmations: PAYMENT_CONFIG.minConfirmations[currency as keyof typeof PAYMENT_CONFIG.minConfirmations],
+        confirmations:
+          PAYMENT_CONFIG.minConfirmations[currency as keyof typeof PAYMENT_CONFIG.minConfirmations],
       };
-
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : '未知错误';
       return { verified: false, error: `验证失败: ${message}` };
@@ -232,13 +237,13 @@ export class PaymentVerificationService {
       // 使用 Blockchain.info API
       const apiUrl = `https://blockchain.info/rawtx/${txHash}`;
       const response = await fetch(apiUrl);
-      
+
       if (!response.ok) {
         return { verified: false, error: '交易未找到' };
       }
 
       const tx = await response.json();
-      
+
       // 查找输出到目标地址的金额
       let receivedAmount = 0;
       for (const output of tx.out) {
@@ -248,19 +253,24 @@ export class PaymentVerificationService {
       }
 
       const minAmount = expectedAmount * (1 - PAYMENT_CONFIG.priceSlippage / 100);
-      
+
       if (receivedAmount < minAmount) {
-        return { verified: false, error: `支付金额不足: 期望 ${expectedAmount} BTC, 收到 ${receivedAmount} BTC` };
+        return {
+          verified: false,
+          error: `支付金额不足: 期望 ${expectedAmount} BTC, 收到 ${receivedAmount} BTC`,
+        };
       }
 
       // 检查确认数
-      const confirmations = tx.block_height ? (await this.getBitcoinBlockHeight()) - tx.block_height + 1 : 0;
-      
+      const confirmations = tx.block_height
+        ? (await this.getBitcoinBlockHeight()) - tx.block_height + 1
+        : 0;
+
       if (confirmations < PAYMENT_CONFIG.minConfirmations.BTC) {
-        return { 
-          verified: false, 
+        return {
+          verified: false,
           error: `确认数不足: ${confirmations}/${PAYMENT_CONFIG.minConfirmations.BTC}`,
-          confirmations 
+          confirmations,
         };
       }
 
@@ -270,7 +280,6 @@ export class PaymentVerificationService {
         amount: receivedAmount,
         confirmations,
       };
-
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : '未知错误';
       return { verified: false, error: `验证失败: ${message}` };
@@ -296,16 +305,15 @@ export class PaymentVerificationService {
     }
 
     try {
-      const coinId = {
-        ETH: 'ethereum',
-        BTC: 'bitcoin',
-        USDT: 'tether',
-        USDC: 'usd-coin',
-      }[currency] || 'ethereum';
+      const coinId =
+        {
+          ETH: 'ethereum',
+          BTC: 'bitcoin',
+          USDT: 'tether',
+          USDC: 'usd-coin',
+        }[currency] || 'ethereum';
 
-      const response = await fetch(
-        `${PAYMENT_CONFIG.rateApi}?ids=${coinId}&vs_currencies=usd`
-      );
+      const response = await fetch(`${PAYMENT_CONFIG.rateApi}?ids=${coinId}&vs_currencies=usd`);
       const data = await response.json();
       const rate = data[coinId]?.usd || 1;
 
@@ -328,19 +336,20 @@ export class PaymentVerificationService {
    */
   static generatePaymentSignature(data: Record<string, unknown>, secret: string): string {
     const sortedKeys = Object.keys(data).sort();
-    const payload = sortedKeys.map(k => `${k}=${data[k]}`).join('&');
+    const payload = sortedKeys.map((k) => `${k}=${data[k]}`).join('&');
     return crypto.createHmac('sha256', secret).update(payload).digest('hex');
   }
 
   /**
    * 验证支付签名
    */
-  static verifyPaymentSignature(data: Record<string, unknown>, signature: string, secret: string): boolean {
+  static verifyPaymentSignature(
+    data: Record<string, unknown>,
+    signature: string,
+    secret: string
+  ): boolean {
     const expectedSignature = this.generatePaymentSignature(data, secret);
-    return crypto.timingSafeEqual(
-      Buffer.from(signature),
-      Buffer.from(expectedSignature)
-    );
+    return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSignature));
   }
 }
 

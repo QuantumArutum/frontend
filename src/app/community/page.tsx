@@ -6,4 +6,3 @@ import CleanModernCommunity from './clean-modern-community';
 export default function CommunityPage() {
   return <CleanModernCommunity />;
 }
-

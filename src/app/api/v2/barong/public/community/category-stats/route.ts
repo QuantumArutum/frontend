@@ -9,10 +9,13 @@ import { sql } from '@/lib/database';
 export async function GET(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     // 获取每个分类的帖子数量
@@ -45,9 +48,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching category stats:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

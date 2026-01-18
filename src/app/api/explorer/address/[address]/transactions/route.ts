@@ -42,16 +42,16 @@ export async function GET(
 
     // 从最新区块向前搜索交易
     const blocksToSearch = Math.min(100, latestHeight); // 搜索最近100个区块
-    
+
     for (let i = 0; i < blocksToSearch && transactions.length < limit * page; i++) {
       const blockNum = latestHeight - i;
       const block = await makeRPCCall('qau_getBlockByNumber', [`0x${blockNum.toString(16)}`, true]);
-      
+
       if (block?.transactions) {
         for (const tx of block.transactions) {
           const txFrom = (tx.from || '').toLowerCase();
           const txTo = (tx.to || '').toLowerCase();
-          
+
           if (txFrom === normalizedAddress || txTo === normalizedAddress) {
             transactions.push({
               hash: tx.hash,

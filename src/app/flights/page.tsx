@@ -2,8 +2,22 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Search, Calendar, MapPin, Plane, Users, CreditCard, Star, Wifi, Tv, Utensils } from 'lucide-react';
-import DemoModuleWrapper, { DemoBadge, DemoModuleDisabledCard } from '../../components/DemoModuleWrapper';
+import {
+  Search,
+  Calendar,
+  MapPin,
+  Plane,
+  Users,
+  CreditCard,
+  Star,
+  Wifi,
+  Tv,
+  Utensils,
+} from 'lucide-react';
+import DemoModuleWrapper, {
+  DemoBadge,
+  DemoModuleDisabledCard,
+} from '../../components/DemoModuleWrapper';
 import { useTranslation } from 'react-i18next';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,9 +32,9 @@ const FlightBookingPage = () => {
     return_date: '',
     passengers: 1,
     class_type: 'ECONOMY',
-    trip_type: 'one_way'
+    trip_type: 'one_way',
   });
-  
+
   const [searchResults, setSearchResults] = useState<{
     search_params: {
       departure_city: string;
@@ -41,11 +55,11 @@ const FlightBookingPage = () => {
     try {
       const params = new URLSearchParams({
         ...searchParams,
-        passengers: String(searchParams.passengers)
+        passengers: String(searchParams.passengers),
       });
       const response = await fetch(`/api/flights/search?${params}`);
       const data = await response.json();
-      
+
       if (data.success) {
         setSearchResults(data.data);
         setCurrentStep('results');
@@ -61,7 +75,7 @@ const FlightBookingPage = () => {
     try {
       const response = await fetch(`/api/flights/${flightId}/fares`);
       const data = await response.json();
-      
+
       if (data.success) {
         return data.data;
       }
@@ -88,7 +102,7 @@ const FlightBookingPage = () => {
   const selectFare = (flightId: string, fareClass: Flight) => {
     setSelectedFares({
       ...selectedFares,
-      [flightId]: fareClass
+      [flightId]: fareClass,
     });
   };
 
@@ -109,14 +123,18 @@ const FlightBookingPage = () => {
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.trip_type')}</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('flights_page.trip_type')}
+          </label>
           <div className="flex space-x-4">
             <label className="flex items-center">
               <input
                 type="radio"
                 value="one_way"
                 checked={searchParams.trip_type === 'one_way'}
-                onChange={(e) => setSearchParams({...searchParams, trip_type: e.target.value, return_date: ''})}
+                onChange={(e) =>
+                  setSearchParams({ ...searchParams, trip_type: e.target.value, return_date: '' })
+                }
                 className="mr-2"
               />
               {t('flights_page.one_way')}
@@ -126,7 +144,7 @@ const FlightBookingPage = () => {
                 type="radio"
                 value="round_trip"
                 checked={searchParams.trip_type === 'round_trip'}
-                onChange={(e) => setSearchParams({...searchParams, trip_type: e.target.value})}
+                onChange={(e) => setSearchParams({ ...searchParams, trip_type: e.target.value })}
                 className="mr-2"
               />
               {t('flights_page.round_trip')}
@@ -137,12 +155,14 @@ const FlightBookingPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.departure_city')}</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('flights_page.departure_city')}
+          </label>
           <div className="relative">
             <Plane className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <select
               value={searchParams.departure_city}
-              onChange={(e) => setSearchParams({...searchParams, departure_city: e.target.value})}
+              onChange={(e) => setSearchParams({ ...searchParams, departure_city: e.target.value })}
               className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="New York">New York (JFK)</option>
@@ -158,12 +178,14 @@ const FlightBookingPage = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.arrival_city')}</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('flights_page.arrival_city')}
+          </label>
           <div className="relative">
             <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <select
               value={searchParams.arrival_city}
-              onChange={(e) => setSearchParams({...searchParams, arrival_city: e.target.value})}
+              onChange={(e) => setSearchParams({ ...searchParams, arrival_city: e.target.value })}
               className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="Los Angeles">Los Angeles (LAX)</option>
@@ -179,13 +201,15 @@ const FlightBookingPage = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.departure_date')}</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('flights_page.departure_date')}
+          </label>
           <div className="relative">
             <Calendar className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <input
               type="date"
               value={searchParams.departure_date}
-              onChange={(e) => setSearchParams({...searchParams, departure_date: e.target.value})}
+              onChange={(e) => setSearchParams({ ...searchParams, departure_date: e.target.value })}
               className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -193,13 +217,15 @@ const FlightBookingPage = () => {
 
         {searchParams.trip_type === 'round_trip' && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.return_date')}</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              {t('flights_page.return_date')}
+            </label>
             <div className="relative">
               <Calendar className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <input
                 type="date"
                 value={searchParams.return_date}
-                onChange={(e) => setSearchParams({...searchParams, return_date: e.target.value})}
+                onChange={(e) => setSearchParams({ ...searchParams, return_date: e.target.value })}
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -209,26 +235,34 @@ const FlightBookingPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.passengers')}</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('flights_page.passengers')}
+          </label>
           <div className="relative">
             <Users className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <select
               value={searchParams.passengers}
-              onChange={(e) => setSearchParams({...searchParams, passengers: parseInt(e.target.value)})}
+              onChange={(e) =>
+                setSearchParams({ ...searchParams, passengers: parseInt(e.target.value) })
+              }
               className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              {[1,2,3,4,5,6,7,8,9].map(num => (
-                <option key={num} value={num}>{num}</option>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                <option key={num} value={num}>
+                  {num}
+                </option>
               ))}
             </select>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">{t('flights_page.class_type')}</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('flights_page.class_type')}
+          </label>
           <select
             value={searchParams.class_type}
-            onChange={(e) => setSearchParams({...searchParams, class_type: e.target.value})}
+            onChange={(e) => setSearchParams({ ...searchParams, class_type: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="ECONOMY">{t('flights_page.economy')}</option>
@@ -260,7 +294,10 @@ const FlightBookingPage = () => {
 
   // Render flight card
   const renderFlightCard = (flight: Flight, type: string = 'outbound') => (
-    <div key={flight.flight_id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+    <div
+      key={flight.flight_id}
+      className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+    >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center">
           <Image
@@ -276,7 +313,9 @@ const FlightBookingPage = () => {
           </div>
         </div>
         <div className="text-right">
-          <p className="text-sm text-gray-600">{flight.aircraft.manufacturer} {flight.aircraft.model}</p>
+          <p className="text-sm text-gray-600">
+            {flight.aircraft.manufacturer} {flight.aircraft.model}
+          </p>
           <div className="flex items-center text-sm text-gray-500">
             {flight.aircraft.wifi_available && <Wifi className="h-4 w-4 mr-1" />}
             {flight.aircraft.entertainment_system && <Tv className="h-4 w-4 mr-1" />}
@@ -307,7 +346,9 @@ const FlightBookingPage = () => {
             {flight.stops === 0 ? (
               <span className="text-xs text-green-600">{t('flights_page.direct')}</span>
             ) : (
-              <span className="text-xs text-orange-600">{flight.stops} {t('flights_page.stop')}</span>
+              <span className="text-xs text-orange-600">
+                {flight.stops} {t('flights_page.stop')}
+              </span>
             )}
           </div>
         </div>
@@ -326,13 +367,16 @@ const FlightBookingPage = () => {
           </span>
           <span className="text-sm text-gray-500 ml-1">{t('flights_page.from')}</span>
         </div>
-        
+
         <div className="flex items-center space-x-2">
-          {(flight as Flight & { delay_minutes?: number }).delay_minutes && (flight as Flight & { delay_minutes?: number }).delay_minutes! > 0 && (
-            <span className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded">
-              {t('flights_page.delayed')} {(flight as Flight & { delay_minutes?: number }).delay_minutes} {t('flights_page.minutes')}
-            </span>
-          )}
+          {(flight as Flight & { delay_minutes?: number }).delay_minutes &&
+            (flight as Flight & { delay_minutes?: number }).delay_minutes! > 0 && (
+              <span className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded">
+                {t('flights_page.delayed')}{' '}
+                {(flight as Flight & { delay_minutes?: number }).delay_minutes}{' '}
+                {t('flights_page.minutes')}
+              </span>
+            )}
           <button
             onClick={() => selectFlight(flight, type)}
             className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
@@ -360,10 +404,11 @@ const FlightBookingPage = () => {
       {/* Outbound flights */}
       <div>
         <h3 className="text-lg font-semibold mb-4">
-          {t('flights_page.outbound_flights')}: {searchResults?.search_params.departure_city} → {searchResults?.search_params.arrival_city}
+          {t('flights_page.outbound_flights')}: {searchResults?.search_params.departure_city} →{' '}
+          {searchResults?.search_params.arrival_city}
         </h3>
         <div className="space-y-4">
-          {searchResults?.outbound_flights.map(flight => renderFlightCard(flight, 'outbound'))}
+          {searchResults?.outbound_flights.map((flight) => renderFlightCard(flight, 'outbound'))}
         </div>
       </div>
 
@@ -371,10 +416,11 @@ const FlightBookingPage = () => {
       {searchResults?.return_flights && searchResults.return_flights.length > 0 && (
         <div>
           <h3 className="text-lg font-semibold mb-4">
-            {t('flights_page.return_flights')}: {searchResults?.search_params.arrival_city} → {searchResults?.search_params.departure_city}
+            {t('flights_page.return_flights')}: {searchResults?.search_params.arrival_city} →{' '}
+            {searchResults?.search_params.departure_city}
           </h3>
           <div className="space-y-4">
-            {searchResults?.return_flights.map(flight => renderFlightCard(flight, 'return'))}
+            {searchResults?.return_flights.map((flight) => renderFlightCard(flight, 'return'))}
           </div>
         </div>
       )}
@@ -402,12 +448,16 @@ const FlightBookingPage = () => {
               <div>
                 <h4 className="font-medium">{selectedOutbound.flight_number}</h4>
                 <p className="text-sm text-gray-600">
-                  {selectedOutbound.departure_airport.city} → {selectedOutbound.arrival_airport.city}
+                  {selectedOutbound.departure_airport.city} →{' '}
+                  {selectedOutbound.arrival_airport.city}
                 </p>
               </div>
               <div className="text-right">
                 <p className="text-sm">{selectedOutbound.departure_date}</p>
-                <p className="text-sm">{formatTime(selectedOutbound.departure_time)} - {formatTime(selectedOutbound.arrival_time)}</p>
+                <p className="text-sm">
+                  {formatTime(selectedOutbound.departure_time)} -{' '}
+                  {formatTime(selectedOutbound.arrival_time)}
+                </p>
               </div>
             </div>
           </div>
@@ -417,7 +467,8 @@ const FlightBookingPage = () => {
               <div
                 key={fareClass.fare_class_id}
                 className={`border rounded-lg p-4 cursor-pointer transition-all ${
-                  selectedFares[selectedOutbound.flight_id]?.fare_class_id === fareClass.fare_class_id
+                  selectedFares[selectedOutbound.flight_id]?.fare_class_id ===
+                  fareClass.fare_class_id
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-300 hover:border-blue-300'
                 }`}
@@ -445,20 +496,30 @@ const FlightBookingPage = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>{t('flights_page.meal')}:</span>
-                    <span>{fareClass.inclusions.meal_included ? t('flights_page.included') : t('flights_page.not_included')}</span>
+                    <span>
+                      {fareClass.inclusions.meal_included
+                        ? t('flights_page.included')
+                        : t('flights_page.not_included')}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span>{t('flights_page.refundable')}:</span>
-                    <span>{fareClass.policies.refundable ? t('flights_page.yes') : t('flights_page.no')}</span>
+                    <span>
+                      {fareClass.policies.refundable ? t('flights_page.yes') : t('flights_page.no')}
+                    </span>
                   </div>
                 </div>
 
                 <div className="mt-3 text-center">
-                  <span className={`px-2 py-1 rounded text-xs ${
-                    fareClass.availability.availability_percentage > 50 ? 'bg-green-100 text-green-800' :
-                    fareClass.availability.availability_percentage > 20 ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-red-100 text-red-800'
-                  }`}>
+                  <span
+                    className={`px-2 py-1 rounded text-xs ${
+                      fareClass.availability.availability_percentage > 50
+                        ? 'bg-green-100 text-green-800'
+                        : fareClass.availability.availability_percentage > 20
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : 'bg-red-100 text-red-800'
+                    }`}
+                  >
                     {t('flights_page.seats_left')} {fareClass.availability.available_seats}
                   </span>
                 </div>
@@ -488,12 +549,12 @@ const FlightBookingPage = () => {
   );
 
   return (
-    <DemoModuleWrapper 
+    <DemoModuleWrapper
       moduleSlug="flights"
       fallback={
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-          <DemoModuleDisabledCard 
-            title="Flight Booking" 
+          <DemoModuleDisabledCard
+            title="Flight Booking"
             description="Flight booking feature is currently unavailable. Please check back later."
           />
         </div>
@@ -510,53 +571,63 @@ const FlightBookingPage = () => {
             <p className="text-gray-600">{t('flights_page.subtitle')}</p>
           </div>
 
-        {/* Step indicator */}
-        <div className="flex justify-center mb-8">
-          <div className="flex items-center space-x-4">
-            {[
-              { key: 'search', label: t('flights_page.steps.search'), icon: Search },
-              { key: 'results', label: t('flights_page.steps.select'), icon: Plane },
-              { key: 'details', label: t('flights_page.steps.fare'), icon: Star },
-              { key: 'booking', label: t('flights_page.steps.info'), icon: Users },
-              { key: 'payment', label: t('flights_page.steps.payment'), icon: CreditCard }
-            ].map((step, index) => {
-              const Icon = step.icon;
-              const isActive = currentStep === step.key;
-              const isCompleted = ['search', 'results', 'details', 'booking', 'payment'].indexOf(currentStep) > index;
-              
-              return (
-                <div key={step.key} className="flex items-center">
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
-                    isActive ? 'bg-blue-600 text-white' : 
-                    isCompleted ? 'bg-green-600 text-white' : 
-                    'bg-gray-300 text-gray-600'
-                  }`}>
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <span className={`ml-2 text-sm font-medium ${
-                    isActive ? 'text-blue-600' : 
-                    isCompleted ? 'text-green-600' : 
-                    'text-gray-500'
-                  }`}>
-                    {step.label}
-                  </span>
-                  {index < 4 && (
-                    <div className={`w-8 h-0.5 mx-4 ${
-                      isCompleted ? 'bg-green-600' : 'bg-gray-300'
-                    }`} />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+          {/* Step indicator */}
+          <div className="flex justify-center mb-8">
+            <div className="flex items-center space-x-4">
+              {[
+                { key: 'search', label: t('flights_page.steps.search'), icon: Search },
+                { key: 'results', label: t('flights_page.steps.select'), icon: Plane },
+                { key: 'details', label: t('flights_page.steps.fare'), icon: Star },
+                { key: 'booking', label: t('flights_page.steps.info'), icon: Users },
+                { key: 'payment', label: t('flights_page.steps.payment'), icon: CreditCard },
+              ].map((step, index) => {
+                const Icon = step.icon;
+                const isActive = currentStep === step.key;
+                const isCompleted =
+                  ['search', 'results', 'details', 'booking', 'payment'].indexOf(currentStep) >
+                  index;
 
-        {/* Main content */}
-        {currentStep === 'search' && renderSearchForm()}
-        {currentStep === 'results' && searchResults && renderSearchResults()}
-        {currentStep === 'details' && renderFlightDetails()}
+                return (
+                  <div key={step.key} className="flex items-center">
+                    <div
+                      className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                        isActive
+                          ? 'bg-blue-600 text-white'
+                          : isCompleted
+                            ? 'bg-green-600 text-white'
+                            : 'bg-gray-300 text-gray-600'
+                      }`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span
+                      className={`ml-2 text-sm font-medium ${
+                        isActive
+                          ? 'text-blue-600'
+                          : isCompleted
+                            ? 'text-green-600'
+                            : 'text-gray-500'
+                      }`}
+                    >
+                      {step.label}
+                    </span>
+                    {index < 4 && (
+                      <div
+                        className={`w-8 h-0.5 mx-4 ${isCompleted ? 'bg-green-600' : 'bg-gray-300'}`}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Main content */}
+          {currentStep === 'search' && renderSearchForm()}
+          {currentStep === 'results' && searchResults && renderSearchResults()}
+          {currentStep === 'details' && renderFlightDetails()}
+        </div>
       </div>
-    </div>
     </DemoModuleWrapper>
   );
 };

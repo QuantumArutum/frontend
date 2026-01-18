@@ -14,14 +14,56 @@ const AuctionFilters: React.FC<AuctionFiltersProps> = ({ filters, onFiltersChang
   const [localFilters, setLocalFilters] = useState<FilterType>(filters);
 
   const locations = [
-    '新加坡', '香港', '东京', '首尔', '台北', '悉尼', '墨尔本', '奥克兰',
-    '曼谷', '吉隆坡', '雅加达', '马尼拉', '胡志明市', '孟买', '班加罗尔',
-    '纽约', '洛杉矶', '旧金山', '西雅图', '芝加哥', '达拉斯', '迈阿密', '波士顿',
-    '多伦多', '温哥华', '蒙特利尔', '墨西哥城',
-    '伦敦', '法兰克福', '阿姆斯特丹', '苏黎世', '斯德哥尔摩', '赫尔辛基', '哥本哈根',
-    '巴黎', '米兰', '马德里', '都柏林', '维也纳', '布拉格', '华沙', '塔林',
-    '迪拜', '特拉维夫', '开普敦', '拉各斯',
-    '圣保罗', '布宜诺斯艾利斯', '圣地亚哥', '利马'
+    '新加坡',
+    '香港',
+    '东京',
+    '首尔',
+    '台北',
+    '悉尼',
+    '墨尔本',
+    '奥克兰',
+    '曼谷',
+    '吉隆坡',
+    '雅加达',
+    '马尼拉',
+    '胡志明市',
+    '孟买',
+    '班加罗尔',
+    '纽约',
+    '洛杉矶',
+    '旧金山',
+    '西雅图',
+    '芝加哥',
+    '达拉斯',
+    '迈阿密',
+    '波士顿',
+    '多伦多',
+    '温哥华',
+    '蒙特利尔',
+    '墨西哥城',
+    '伦敦',
+    '法兰克福',
+    '阿姆斯特丹',
+    '苏黎世',
+    '斯德哥尔摩',
+    '赫尔辛基',
+    '哥本哈根',
+    '巴黎',
+    '米兰',
+    '马德里',
+    '都柏林',
+    '维也纳',
+    '布拉格',
+    '华沙',
+    '塔林',
+    '迪拜',
+    '特拉维夫',
+    '开普敦',
+    '拉各斯',
+    '圣保罗',
+    '布宜诺斯艾利斯',
+    '圣地亚哥',
+    '利马',
   ];
 
   const handleFilterChange = (key: keyof FilterType, value: FilterType[keyof FilterType]) => {
@@ -35,7 +77,7 @@ const AuctionFilters: React.FC<AuctionFiltersProps> = ({ filters, onFiltersChang
     const newPriceRange = {
       min: currentRange.min,
       max: currentRange.max,
-      [type]: value
+      [type]: value,
     };
     handleFilterChange('priceRange', newPriceRange);
   };
@@ -69,7 +111,12 @@ const AuctionFilters: React.FC<AuctionFiltersProps> = ({ filters, onFiltersChang
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-bold text-white flex items-center">
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z"
+            />
           </svg>
           筛选条件
         </h3>
@@ -91,14 +138,16 @@ const AuctionFilters: React.FC<AuctionFiltersProps> = ({ filters, onFiltersChang
             { value: '', label: '全部等级' },
             { value: 'genesis', label: '创世节点' },
             { value: 'premium', label: '高级节点' },
-            { value: 'standard', label: '标准节点' }
+            { value: 'standard', label: '标准节点' },
           ].map((option) => (
             <label key={option.value} className="flex items-center cursor-pointer">
               <input
                 type="radio"
                 name="tier"
                 value={option.value}
-                checked={localFilters.tier === option.value || (!localFilters.tier && option.value === '')}
+                checked={
+                  localFilters.tier === option.value || (!localFilters.tier && option.value === '')
+                }
                 onChange={(e) => handleFilterChange('tier', e.target.value || undefined)}
                 className="mr-2 text-cyan-500 focus:ring-cyan-500"
               />
@@ -118,14 +167,17 @@ const AuctionFilters: React.FC<AuctionFiltersProps> = ({ filters, onFiltersChang
             { value: '', label: '全部状态' },
             { value: 'active', label: '进行中' },
             { value: 'upcoming', label: '即将开始' },
-            { value: 'ended', label: '已结束' }
+            { value: 'ended', label: '已结束' },
           ].map((option) => (
             <label key={option.value} className="flex items-center cursor-pointer">
               <input
                 type="radio"
                 name="status"
                 value={option.value}
-                checked={localFilters.status === option.value || (!localFilters.status && option.value === '')}
+                checked={
+                  localFilters.status === option.value ||
+                  (!localFilters.status && option.value === '')
+                }
                 onChange={(e) => handleFilterChange('status', e.target.value || undefined)}
                 className="mr-2 text-cyan-500 focus:ring-cyan-500"
               />
@@ -202,9 +254,7 @@ const AuctionFilters: React.FC<AuctionFiltersProps> = ({ filters, onFiltersChang
             onChange={(e) => handleFilterChange('hasReserve', e.target.checked || undefined)}
             className="mr-2 text-cyan-500 focus:ring-cyan-500"
           />
-          <span className="text-gray-300 hover:text-white transition-colors">
-            有保留价
-          </span>
+          <span className="text-gray-300 hover:text-white transition-colors">有保留价</span>
         </label>
 
         <label className="flex items-center cursor-pointer">
@@ -214,9 +264,7 @@ const AuctionFilters: React.FC<AuctionFiltersProps> = ({ filters, onFiltersChang
             onChange={(e) => handleFilterChange('hasBuyNow', e.target.checked || undefined)}
             className="mr-2 text-cyan-500 focus:ring-cyan-500"
           />
-          <span className="text-gray-300 hover:text-white transition-colors">
-            支持一口价
-          </span>
+          <span className="text-gray-300 hover:text-white transition-colors">支持一口价</span>
         </label>
       </div>
 

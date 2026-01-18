@@ -43,27 +43,29 @@ export async function GET(
     // 判断是区块号还是区块哈希
     const isHash = blockId.startsWith('0x') && blockId.length === 66;
     const blockHex = isHash ? blockId : toEvenHex(parseInt(blockId));
-    
+
     const method = isHash ? 'qau_getBlockByHash' : 'qau_getBlockByNumber';
     const blockData = await makeRPCCall(method, [blockHex, true]);
 
     if (blockData && blockData.transactions && blockData.transactions.length > 0) {
-      const transactions = blockData.transactions.map((tx: Record<string, string>, index: number) => ({
-        hash: tx.hash || '0x' + index.toString(16).padStart(64, '0'),
-        blockNumber: blockData.number,
-        blockHash: blockData.hash,
-        from: tx.from || '0x' + '0'.repeat(40),
-        to: tx.to || '0x' + '0'.repeat(40),
-        value: tx.value || '0x0',
-        gas: tx.gas || '0x5208',
-        gasPrice: tx.gasPrice || '0x4a817c800',
-        gasUsed: tx.gasUsed || tx.gas || '0x5208',
-        nonce: tx.nonce || '0x0',
-        input: tx.input || '0x',
-        transactionIndex: tx.transactionIndex || '0x' + index.toString(16),
-        timestamp: blockData.timestamp,
-        status: 'success' as const,
-      }));
+      const transactions = blockData.transactions.map(
+        (tx: Record<string, string>, index: number) => ({
+          hash: tx.hash || '0x' + index.toString(16).padStart(64, '0'),
+          blockNumber: blockData.number,
+          blockHash: blockData.hash,
+          from: tx.from || '0x' + '0'.repeat(40),
+          to: tx.to || '0x' + '0'.repeat(40),
+          value: tx.value || '0x0',
+          gas: tx.gas || '0x5208',
+          gasPrice: tx.gasPrice || '0x4a817c800',
+          gasUsed: tx.gasUsed || tx.gas || '0x5208',
+          nonce: tx.nonce || '0x0',
+          input: tx.input || '0x',
+          transactionIndex: tx.transactionIndex || '0x' + index.toString(16),
+          timestamp: blockData.timestamp,
+          status: 'success' as const,
+        })
+      );
       return NextResponse.json(transactions);
     }
   } catch (error) {
@@ -74,7 +76,7 @@ export async function GET(
   const blockNum = parseInt(blockId) || 1234567;
   const txCount = (blockNum % 10) + 3;
   const transactions = [];
-  
+
   for (let i = 0; i < txCount; i++) {
     const gasLimit = 21000 + i * 1000;
     const gasUsed = Math.floor(gasLimit * 0.9);

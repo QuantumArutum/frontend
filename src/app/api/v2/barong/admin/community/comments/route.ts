@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       post_id: postId ? parseInt(postId) : undefined,
       user_id: userId || undefined,
       page,
-      limit
+      limit,
     });
 
     return NextResponse.json({
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
         total: result.total,
         page,
         per_page: limit,
-      }
+      },
     });
   } catch (error: any) {
     console.error('Comments GET error:', error);
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       post_id,
       user_id,
       content,
-      parent_id
+      parent_id,
     });
 
     return NextResponse.json({ success: true, data: comment });

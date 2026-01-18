@@ -1,15 +1,15 @@
-import { request } from "../utils/request";
+import { request } from '../utils/request';
 
-const BASE_URL = "http://localhost:8081/api/lottery"; // 彩票服务端口
+const BASE_URL = 'http://localhost:8081/api/lottery'; // 彩票服务端口
 
 export const lotteryService = {
   // 获取当前彩票
   getCurrentLottery: async () => {
     // 暂时返回模拟数据
     return {
-      ID: "lottery_001",
-      Name: "量子大乐透",
-      Description: "基于量子随机数的公平彩票系统",
+      ID: 'lottery_001',
+      Name: '量子大乐透',
+      Description: '基于量子随机数的公平彩票系统',
       StartTime: new Date(Date.now() - 24 * 60 * 60 * 1000),
       EndTime: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000),
       DrawTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
@@ -19,7 +19,7 @@ export const lotteryService = {
       NumberRange: 35,
       NumberCount: 5,
       BonusRange: 12,
-      BonusCount: 2
+      BonusCount: 2,
     };
   },
 
@@ -34,7 +34,12 @@ export const lotteryService = {
   },
 
   // 购买彩票
-  buyTicket: async (ticketData: { lotteryID: string; owner: string; numbers: number[]; price: number }) => {
+  buyTicket: async (ticketData: {
+    lotteryID: string;
+    owner: string;
+    numbers: number[];
+    price: number;
+  }) => {
     // 暂时返回模拟数据
     return {
       ID: `ticket_${Date.now()}`,
@@ -43,7 +48,7 @@ export const lotteryService = {
       Numbers: ticketData.numbers,
       PurchaseTime: new Date(),
       Price: ticketData.price,
-      Status: 0
+      Status: 0,
     };
   },
 
@@ -58,23 +63,23 @@ export const lotteryService = {
     // 暂时返回模拟数据
     return [
       {
-        ID: "lottery_history_001",
-        Name: "量子大乐透 第2024001期",
+        ID: 'lottery_history_001',
+        Name: '量子大乐透 第2024001期',
         DrawTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
         WinningNumbers: [7, 14, 21, 28, 35],
         BonusNumbers: [3, 9],
         PrizePool: 45000000000000,
-        Winners: 3
+        Winners: 3,
       },
       {
-        ID: "lottery_history_002", 
-        Name: "量子大乐透 第2024002期",
+        ID: 'lottery_history_002',
+        Name: '量子大乐透 第2024002期',
         DrawTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
         WinningNumbers: [2, 11, 19, 26, 33],
         BonusNumbers: [5, 11],
         PrizePool: 38000000000000,
-        Winners: 1
-      }
+        Winners: 1,
+      },
     ];
   },
 
@@ -84,7 +89,7 @@ export const lotteryService = {
     return {
       isWinner: false,
       matchCount: 0,
-      prize: 0
+      prize: 0,
     };
   },
 
@@ -95,8 +100,7 @@ export const lotteryService = {
       totalPrizePool: 50000000000000,
       totalTicketsSold: 25000,
       totalWinners: 156,
-      averagePrize: 320512820512
+      averagePrize: 320512820512,
     };
-  }
+  },
 };
-

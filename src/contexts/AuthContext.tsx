@@ -57,7 +57,6 @@ export interface AuthResult {
   message?: string;
 }
 
-
 // 认证动作类型
 type AuthActionType =
   | 'LOGIN_START'
@@ -85,7 +84,7 @@ export interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: AuthError | null;
-  
+
   // 方法
   login: (credentials: LoginCredentials) => Promise<AuthResult>;
   register: (userData: RegisterData) => Promise<AuthResult>;
@@ -106,7 +105,7 @@ const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
   isLoading: true,
-  error: null
+  error: null,
 };
 
 // 认证状态reducer
@@ -116,54 +115,54 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
       return {
         ...state,
         isLoading: true,
-        error: null
+        error: null,
       };
-    
+
     case 'LOGIN_SUCCESS':
       return {
         ...state,
         user: action.payload.user,
         isAuthenticated: true,
         isLoading: false,
-        error: null
+        error: null,
       };
-    
+
     case 'LOGIN_FAILURE':
       return {
         ...state,
         user: null,
         isAuthenticated: false,
         isLoading: false,
-        error: action.payload.error
+        error: action.payload.error,
       };
-    
+
     case 'LOGOUT':
       return {
         ...state,
         user: null,
         isAuthenticated: false,
         isLoading: false,
-        error: null
+        error: null,
       };
-    
+
     case 'UPDATE_USER':
       return {
         ...state,
-        user: action.payload.user
+        user: action.payload.user,
       };
-    
+
     case 'SET_LOADING':
       return {
         ...state,
-        isLoading: action.payload.isLoading
+        isLoading: action.payload.isLoading,
       };
-    
+
     case 'CLEAR_ERROR':
       return {
         ...state,
-        error: null
+        error: null,
       };
-    
+
     default:
       return state;
   }
@@ -171,7 +170,6 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 
 // 创建认证上下文
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
 
 // AuthProvider Props
 interface AuthProviderProps {
@@ -187,17 +185,17 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
     const initializeAuth = async (): Promise<void> => {
       try {
         dispatch({ type: 'SET_LOADING', payload: { isLoading: true } });
-        
+
         // 检查本地存储的认证信息
         const user = authService.getCurrentUser();
         const isAuthenticated = authService.isAuthenticated();
-        
+
         if (isAuthenticated && user) {
           // 验证token是否仍然有效
           if (!authService.isTokenExpired()) {
             dispatch({
               type: 'LOGIN_SUCCESS',
-              payload: { user: user as User }
+              payload: { user: user as User },
             });
           } else {
             // token过期，尝试刷新
@@ -205,7 +203,7 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
               await authService.refreshAccessToken();
               dispatch({
                 type: 'LOGIN_SUCCESS',
-                payload: { user: user as User }
+                payload: { user: user as User },
               });
             } catch {
               // 刷新失败，清除认证信息
@@ -231,30 +229,30 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
   const login = async (credentials: LoginCredentials): Promise<AuthResult> => {
     try {
       dispatch({ type: 'LOGIN_START' });
-      
+
       const result = await authService.login(credentials);
-      
+
       if (result.success && result.user) {
         dispatch({
           type: 'LOGIN_SUCCESS',
-          payload: { user: result.user as User }
+          payload: { user: result.user as User },
         });
         return { success: true };
       } else {
         dispatch({
           type: 'LOGIN_FAILURE',
-          payload: { error: result.error as AuthError }
+          payload: { error: result.error as AuthError },
         });
         return { success: false, error: result.error as AuthError };
       }
     } catch {
       const errorObj: AuthError = {
         code: 'LOGIN_ERROR',
-        message: '登录过程中发生错误'
+        message: '登录过程中发生错误',
       };
       dispatch({
         type: 'LOGIN_FAILURE',
-        payload: { error: errorObj }
+        payload: { error: errorObj },
       });
       return { success: false, error: errorObj };
     }
@@ -264,9 +262,9 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
   const register = async (userData: RegisterData): Promise<AuthResult> => {
     try {
       dispatch({ type: 'SET_LOADING', payload: { isLoading: true } });
-      
+
       const result = await authService.register(userData);
-      
+
       if (result.success) {
         // 注册成功后不自动登录，需要用户手动登录
         dispatch({ type: 'SET_LOADING', payload: { isLoading: false } });
@@ -281,8 +279,8 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
         success: false,
         error: {
           code: 'REGISTER_ERROR',
-          message: '注册过程中发生错误'
-        }
+          message: '注册过程中发生错误',
+        },
       };
     }
   };
@@ -293,16 +291,15 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
     dispatch({ type: 'LOGOUT' });
   };
 
-
   // 更新用户信息
   const updateUser = async (profileData: Partial<User>): Promise<AuthResult> => {
     try {
       const result = await authService.updateProfile(profileData);
-      
+
       if (result.success && result.user) {
         dispatch({
           type: 'UPDATE_USER',
-          payload: { user: result.user as User }
+          payload: { user: result.user as User },
         });
         return { success: true };
       } else {
@@ -313,8 +310,8 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
         success: false,
         error: {
           code: 'UPDATE_USER_ERROR',
-          message: '更新用户信息时发生错误'
-        }
+          message: '更新用户信息时发生错误',
+        },
       };
     }
   };
@@ -329,8 +326,8 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
         success: false,
         error: {
           code: 'CHANGE_PASSWORD_ERROR',
-          message: '修改密码时发生错误'
-        }
+          message: '修改密码时发生错误',
+        },
       };
     }
   };
@@ -339,7 +336,7 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
   const verifyEmail = async (token: string): Promise<AuthResult> => {
     try {
       const result = await authService.verifyEmail(token);
-      
+
       if (result.success && state.user) {
         // 更新用户验证状态
         dispatch({
@@ -347,20 +344,20 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
           payload: {
             user: {
               ...state.user,
-              isVerified: true
-            }
-          }
+              isVerified: true,
+            },
+          },
         });
       }
-      
+
       return result as AuthResult;
     } catch {
       return {
         success: false,
         error: {
           code: 'EMAIL_VERIFICATION_ERROR',
-          message: '邮箱验证时发生错误'
-        }
+          message: '邮箱验证时发生错误',
+        },
       };
     }
   };
@@ -368,14 +365,14 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
   // 重发验证邮件
   const resendVerificationEmail = async (): Promise<AuthResult> => {
     try {
-      return await authService.resendVerificationEmail() as AuthResult;
+      return (await authService.resendVerificationEmail()) as AuthResult;
     } catch {
       return {
         success: false,
         error: {
           code: 'RESEND_EMAIL_ERROR',
-          message: '重发验证邮件时发生错误'
-        }
+          message: '重发验证邮件时发生错误',
+        },
       };
     }
   };
@@ -383,14 +380,14 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
   // 忘记密码
   const forgotPassword = async (email: string): Promise<AuthResult> => {
     try {
-      return await authService.forgotPassword(email) as AuthResult;
+      return (await authService.forgotPassword(email)) as AuthResult;
     } catch {
       return {
         success: false,
         error: {
           code: 'FORGOT_PASSWORD_ERROR',
-          message: '发送重置密码邮件时发生错误'
-        }
+          message: '发送重置密码邮件时发生错误',
+        },
       };
     }
   };
@@ -398,14 +395,14 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
   // 重置密码
   const resetPassword = async (token: string, newPassword: string): Promise<AuthResult> => {
     try {
-      return await authService.resetPassword(token, newPassword) as AuthResult;
+      return (await authService.resetPassword(token, newPassword)) as AuthResult;
     } catch {
       return {
         success: false,
         error: {
           code: 'RESET_PASSWORD_ERROR',
-          message: '重置密码时发生错误'
-        }
+          message: '重置密码时发生错误',
+        },
       };
     }
   };
@@ -425,7 +422,6 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
     return authService.hasRole(role);
   };
 
-
   // 上下文值
   const contextValue: AuthContextType = {
     // 状态
@@ -433,7 +429,7 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
     isAuthenticated: state.isAuthenticated,
     isLoading: state.isLoading,
     error: state.error,
-    
+
     // 方法
     login,
     register,
@@ -446,24 +442,20 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
     resetPassword,
     clearError,
     hasPermission,
-    hasRole
+    hasRole,
   };
 
-  return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 }
 
 // 使用认证上下文的Hook
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
-  
+
   if (!context) {
     throw new Error('useAuth必须在AuthProvider内部使用');
   }
-  
+
   return context;
 }
 
@@ -475,10 +467,10 @@ interface ProtectedRouteProps {
 }
 
 // 认证路由保护组件
-export function ProtectedRoute({ 
-  children, 
-  requiredRole = null, 
-  requiredPermission = null 
+export function ProtectedRoute({
+  children,
+  requiredRole = null,
+  requiredPermission = null,
 }: ProtectedRouteProps): React.ReactElement | null {
   const { isAuthenticated, isLoading, hasRole, hasPermission } = useAuth();
 

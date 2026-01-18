@@ -4,10 +4,7 @@ import { neon } from '@neondatabase/serverless';
 const sql = neon(process.env.DATABASE_URL!);
 
 // GET /api/v2/barong/public/community/tags/[slug]/posts - 获取标签下的帖子
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
     const { slug } = await params;
     const { searchParams } = new URL(request.url);
@@ -80,10 +77,14 @@ export async function GET(
         p.is_controversial,
         p.created_at,
         p.updated_at,
-        ${currentUserId ? sql`
+        ${
+          currentUserId
+            ? sql`
           (SELECT vote_type FROM post_likes 
            WHERE post_id = p.id AND user_id = ${currentUserId}) as user_vote
-        ` : sql`NULL as user_vote`}
+        `
+            : sql`NULL as user_vote`
+        }
       FROM posts p
       JOIN post_tags pt ON p.id = pt.post_id
       WHERE pt.tag_id = ${tagId}

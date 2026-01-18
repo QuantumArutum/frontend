@@ -42,10 +42,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Get user settings error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -72,9 +69,6 @@ export async function PUT(request: NextRequest) {
     });
   } catch (error) {
     console.error('Update user settings error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

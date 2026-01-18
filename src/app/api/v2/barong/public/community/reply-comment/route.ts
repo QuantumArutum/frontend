@@ -4,42 +4,70 @@ import { neon } from '@neondatabase/serverless';
 export async function POST(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
       console.error('Database URL not configured');
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
-    console.log('Reply comment request:', { 
-      postId: body.postId, 
-      parentId: body.parentId, 
+    console.log('Reply comment request:', {
+      postId: body.postId,
+      parentId: body.parentId,
       currentUserId: body.currentUserId,
-      contentLength: body.content?.length 
+      contentLength: body.content?.length,
     });
 
-    const { postId, parentId, replyToUserId, replyToUserName, content, currentUserId, currentUserName, mentions } = body;
+    const {
+      postId,
+      parentId,
+      replyToUserId,
+      replyToUserName,
+      content,
+      currentUserId,
+      currentUserName,
+      mentions,
+    } = body;
 
     // 验证必填字段
     if (!postId || !parentId || !content || !currentUserId) {
-      console.error('Missing required fields:', { postId, parentId, content: !!content, currentUserId });
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required fields',
-        details: { postId: !!postId, parentId: !!parentId, content: !!content, currentUserId: !!currentUserId }
-      }, { status: 400 });
+      console.error('Missing required fields:', {
+        postId,
+        parentId,
+        content: !!content,
+        currentUserId,
+      });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing required fields',
+          details: {
+            postId: !!postId,
+            parentId: !!parentId,
+            content: !!content,
+            currentUserId: !!currentUserId,
+          },
+        },
+        { status: 400 }
+      );
     }
 
     // 验证内容长度
     if (content.length < 1 || content.length > 1000) {
       console.error('Invalid content length:', content.length);
-      return NextResponse.json({
-        success: false,
-        message: 'Content must be between 1 and 1000 characters'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Content must be between 1 and 1000 characters',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -52,10 +80,13 @@ export async function POST(request: NextRequest) {
 
     if (parentComment.length === 0) {
       console.error('Parent comment not found:', parentId);
-      return NextResponse.json({
-        success: false,
-        message: 'Parent comment not found'
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Parent comment not found',
+        },
+        { status: 404 }
+      );
     }
 
     const parentDepth = parentComment[0].depth || 0;
@@ -70,7 +101,7 @@ export async function POST(request: NextRequest) {
       parentId,
       replyToUserId,
       replyToUserName,
-      newDepth
+      newDepth,
     });
 
     let commentId: number;
@@ -108,7 +139,7 @@ export async function POST(request: NextRequest) {
         code: insertError.code,
         detail: insertError.detail,
         hint: insertError.hint,
-        position: insertError.position
+        position: insertError.position,
       });
       throw insertError;
     }
@@ -179,26 +210,31 @@ export async function POST(request: NextRequest) {
           depth: newDepth,
           likeCount: 0,
           isLiked: false,
-          createdAt: createdAt
-        }
-      }
+          createdAt: createdAt,
+        },
+      },
     });
-
   } catch (error: any) {
     console.error('Reply comment error:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
       code: error.code,
-      detail: error.detail
+      detail: error.detail,
     });
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to post reply',
-      error: error instanceof Error ? error.message : 'Unknown error',
-      details: process.env.NODE_ENV === 'development' ? {
-        code: error.code,
-        detail: error.detail
-      } : undefined
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to post reply',
+        error: error instanceof Error ? error.message : 'Unknown error',
+        details:
+          process.env.NODE_ENV === 'development'
+            ? {
+                code: error.code,
+                detail: error.detail,
+              }
+            : undefined,
+      },
+      { status: 500 }
+    );
   }
 }

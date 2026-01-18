@@ -18,7 +18,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -51,11 +51,12 @@ export const POST = createSecureHandler(
         txHash: result.txHash,
         unlockHeight: result.unlockHeight,
         message: `Successfully initiated unstake of ${amount} QAU`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       console.error('Unstake error:', error);
-      const message = error instanceof Error ? error.message : 'Failed to process unstaking request';
+      const message =
+        error instanceof Error ? error.message : 'Failed to process unstaking request';
       return errorResponse(message, 500);
     }
   },

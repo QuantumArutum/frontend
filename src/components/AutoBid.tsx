@@ -9,15 +9,15 @@ import { Switch } from './ui/switch';
 import { Alert, AlertDescription } from './ui/Alert';
 import { Badge } from './ui/Badge';
 import { Separator } from './ui/Separator';
-import { 
-  Settings, 
-  TrendingUp, 
-  AlertTriangle, 
-  CheckCircle, 
+import {
+  Settings,
+  TrendingUp,
+  AlertTriangle,
+  CheckCircle,
   XCircle,
   DollarSign,
   Timer,
-  Target
+  Target,
 } from 'lucide-react';
 
 // 自动出价状态类型
@@ -36,11 +36,11 @@ interface AutoBidProps {
   onAutoBidSet?: (autoBid: AutoBidStatus) => void;
 }
 
-const AutoBid: React.FC<AutoBidProps> = ({ 
-  auctionId, 
-  currentPrice, 
-  minIncrement, 
-  onAutoBidSet 
+const AutoBid: React.FC<AutoBidProps> = ({
+  auctionId,
+  currentPrice,
+  minIncrement,
+  onAutoBidSet,
 }) => {
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [maxAmount, setMaxAmount] = useState<string>('');
@@ -50,13 +50,12 @@ const AutoBid: React.FC<AutoBidProps> = ({
   const [success, setSuccess] = useState<string>('');
   const [autoBidStatus, setAutoBidStatus] = useState<AutoBidStatus | null>(null);
 
-
   // 获取当前自动出价设置
   const fetchAutoBidStatus = useCallback(async (): Promise<void> => {
     try {
       const response = await fetch(`/api/v1/auto-bids/${auctionId}`, {
         method: 'GET',
-        credentials: 'include'
+        credentials: 'include',
       });
 
       if (response.ok) {
@@ -105,13 +104,13 @@ const AutoBid: React.FC<AutoBidProps> = ({
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           maxAmount: maxAmountNum,
           increment: bidIncrementNum,
-          isActive: isEnabled
-        })
+          isActive: isEnabled,
+        }),
       });
 
       const data = await response.json();
@@ -141,8 +140,8 @@ const AutoBid: React.FC<AutoBidProps> = ({
         method: 'DELETE',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
 
       const data = await response.json();
@@ -175,7 +174,6 @@ const AutoBid: React.FC<AutoBidProps> = ({
     return Math.max(0, remaining);
   };
 
-
   return (
     <Card className="w-full">
       <CardHeader>
@@ -190,8 +188,8 @@ const AutoBid: React.FC<AutoBidProps> = ({
           <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
             <div className="flex items-center justify-between mb-3">
               <h4 className="font-medium text-blue-900">当前自动出价状态</h4>
-              <Badge variant={autoBidStatus.isActive ? "default" : "secondary"}>
-                {autoBidStatus.isActive ? "已启用" : "已禁用"}
+              <Badge variant={autoBidStatus.isActive ? 'default' : 'secondary'}>
+                {autoBidStatus.isActive ? '已启用' : '已禁用'}
               </Badge>
             </div>
             <div className="grid grid-cols-2 gap-4 text-sm">
@@ -237,11 +235,7 @@ const AutoBid: React.FC<AutoBidProps> = ({
             <Label htmlFor="auto-bid-enabled" className="text-base font-medium">
               启用自动出价
             </Label>
-            <Switch
-              id="auto-bid-enabled"
-              checked={isEnabled}
-              onCheckedChange={setIsEnabled}
-            />
+            <Switch id="auto-bid-enabled" checked={isEnabled} onCheckedChange={setIsEnabled} />
           </div>
 
           <Separator />
@@ -260,9 +254,7 @@ const AutoBid: React.FC<AutoBidProps> = ({
               disabled={!isEnabled}
               required
             />
-            <p className="text-sm text-gray-500">
-              当前价格: ¥{currentPrice.toLocaleString()}
-            </p>
+            <p className="text-sm text-gray-500">当前价格: ¥{currentPrice.toLocaleString()}</p>
           </div>
 
           {/* 出价增量 */}
@@ -278,9 +270,7 @@ const AutoBid: React.FC<AutoBidProps> = ({
               disabled={!isEnabled}
               required
             />
-            <p className="text-sm text-gray-500">
-              最小增量: ¥{minIncrement.toLocaleString()}
-            </p>
+            <p className="text-sm text-gray-500">最小增量: ¥{minIncrement.toLocaleString()}</p>
           </div>
 
           {/* 预览信息 */}
@@ -291,10 +281,9 @@ const AutoBid: React.FC<AutoBidProps> = ({
                 <div className="flex justify-between">
                   <span>下次出价:</span>
                   <span className="font-medium">
-                    {calculateNextBid() ? 
-                      `¥${calculateNextBid()?.toLocaleString()}` : 
-                      '已达到最高出价'
-                    }
+                    {calculateNextBid()
+                      ? `¥${calculateNextBid()?.toLocaleString()}`
+                      : '已达到最高出价'}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -311,16 +300,12 @@ const AutoBid: React.FC<AutoBidProps> = ({
 
           {/* 操作按钮 */}
           <div className="flex gap-3">
-            <Button 
-              type="submit" 
-              disabled={isLoading || !isEnabled}
-              className="flex-1"
-            >
+            <Button type="submit" disabled={isLoading || !isEnabled} className="flex-1">
               {isLoading ? '设置中...' : '保存设置'}
             </Button>
-            
+
             {autoBidStatus && (
-              <Button 
+              <Button
                 type="button"
                 variant="outline"
                 onClick={handleCancel}

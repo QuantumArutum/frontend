@@ -8,7 +8,10 @@ import { sql } from '@/lib/database';
 
 export async function GET() {
   if (!sql) {
-    return NextResponse.json({ success: false, message: 'Database not configured' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: 'Database not configured' },
+      { status: 500 }
+    );
   }
 
   const logs: string[] = [];
@@ -16,7 +19,7 @@ export async function GET() {
   try {
     // Step 1: Drop existing tables (in correct order due to foreign keys)
     logs.push('Dropping existing tables...');
-    
+
     try {
       await sql`DROP TABLE IF EXISTS private_messages CASCADE`;
       logs.push('Dropped private_messages table');
@@ -82,14 +85,17 @@ export async function GET() {
       success: true,
       message: 'Messages tables created successfully',
       tables: ['conversations', 'private_messages'],
-      logs
+      logs,
     });
   } catch (error: any) {
     console.error('Migration error:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: error.message,
-      logs 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message,
+        logs,
+      },
+      { status: 500 }
+    );
   }
 }

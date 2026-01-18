@@ -8,10 +8,9 @@ import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 
 // 动态导入 MDEditor 以避免 SSR 问题
-const MDEditor = dynamic(
-  () => import('@uiw/react-md-editor').then((mod) => mod.default),
-  { ssr: false }
-);
+const MDEditor = dynamic(() => import('@uiw/react-md-editor').then((mod) => mod.default), {
+  ssr: false,
+});
 
 interface MarkdownEditorProps {
   value: string;
@@ -61,11 +60,11 @@ export default function MarkdownEditor({
       if (response.data.success) {
         const imageUrl = response.data.data.url;
         const imageMarkdown = `![${file.name}](${imageUrl})`;
-        
+
         // Insert image markdown at cursor position or end of content
         const newValue = value + '\n' + imageMarkdown + '\n';
         onChange(newValue);
-        
+
         message.success('图片上传成功');
       } else {
         message.error(response.data.message || '图片上传失败');
@@ -96,13 +95,16 @@ export default function MarkdownEditor({
           className="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white text-sm rounded-lg transition-colors flex items-center gap-2"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
           </svg>
           {uploading ? '上传中...' : '上传图片'}
         </button>
-        <span className="text-xs text-gray-400">
-          支持 JPEG、PNG、GIF、WebP，最大 5MB
-        </span>
+        <span className="text-xs text-gray-400">支持 JPEG、PNG、GIF、WebP，最大 5MB</span>
       </div>
       <input
         ref={fileInputRef}

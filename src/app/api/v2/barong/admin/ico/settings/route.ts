@@ -16,10 +16,7 @@ export async function GET(request: NextRequest) {
     const result = await db.getIcoSettings();
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -28,10 +25,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Get ICO settings error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -45,10 +39,7 @@ export async function POST(request: NextRequest) {
     const result = await db.updateIcoSettings(settings);
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -57,9 +48,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Update ICO settings error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

@@ -16,11 +16,14 @@ export async function GET(request: NextRequest) {
     if (!sql) {
       console.error('[search] Database connection not available');
       clearTimeout(timeoutId);
-      return NextResponse.json({
-        success: false,
-        error: 'Database connection not available',
-        message: '数据库连接不可用，请稍后重试'
-      }, { status: 503 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Database connection not available',
+          message: '数据库连接不可用，请稍后重试',
+        },
+        { status: 503 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -33,7 +36,7 @@ export async function GET(request: NextRequest) {
       clearTimeout(timeoutId);
       return NextResponse.json({
         success: true,
-        data: { posts: [], users: [], tags: [], total: 0 }
+        data: { posts: [], users: [], tags: [], total: 0 },
       });
     }
 
@@ -42,13 +45,13 @@ export async function GET(request: NextRequest) {
       posts: [],
       users: [],
       tags: [],
-      total: 0
+      total: 0,
     };
 
     // 搜索帖子（简化查询）
     if (type === 'all' || type === 'posts') {
       try {
-        const posts = await sql`
+        const posts = (await sql`
           SELECT 
             p.id,
             p.title,
@@ -69,9 +72,9 @@ export async function GET(request: NextRequest) {
           ORDER BY p.created_at DESC
           LIMIT ${limit}
           OFFSET ${offset}
-        ` as any[];
+        `) as any[];
 
-        results.posts = posts.map(post => ({
+        results.posts = posts.map((post) => ({
           id: post.id,
           title: post.title,
           content: post.content + (post.content.length >= 200 ? '...' : ''),
@@ -81,7 +84,7 @@ export async function GET(request: NextRequest) {
           views: parseInt(post.view_count) || 0,
           replies: parseInt(post.comment_count) || 0,
           likes: parseInt(post.like_count) || 0,
-          createdAt: post.created_at
+          createdAt: post.created_at,
         }));
       } catch (e) {
         console.error('Posts search error:', e);
@@ -91,7 +94,7 @@ export async function GET(request: NextRequest) {
     // 搜索用户（简化查询）
     if (type === 'all' || type === 'users') {
       try {
-        const users = await sql`
+        const users = (await sql`
           SELECT 
             u.id,
             u.username,
@@ -102,13 +105,13 @@ export async function GET(request: NextRequest) {
           ORDER BY u.created_at DESC
           LIMIT ${Math.min(limit, 10)}
           OFFSET ${offset}
-        ` as any[];
+        `) as any[];
 
-        results.users = users.map(user => ({
+        results.users = users.map((user) => ({
           id: user.id,
           username: user.username,
           email: user.email,
-          joinedAt: user.created_at
+          joinedAt: user.created_at,
         }));
       } catch (e) {
         console.error('Users search error:', e);
@@ -118,7 +121,7 @@ export async function GET(request: NextRequest) {
     // 搜索标签（简化查询）
     if (type === 'all' || type === 'tags') {
       try {
-        const tags = await sql`
+        const tags = (await sql`
           SELECT 
             t.id,
             t.name,
@@ -129,13 +132,13 @@ export async function GET(request: NextRequest) {
           ORDER BY t.use_count DESC
           LIMIT ${Math.min(limit, 10)}
           OFFSET ${offset}
-        ` as any[];
+        `) as any[];
 
-        results.tags = tags.map(tag => ({
+        results.tags = tags.map((tag) => ({
           id: tag.id,
           name: tag.name,
           slug: tag.slug,
-          useCount: parseInt(tag.use_count) || 0
+          useCount: parseInt(tag.use_count) || 0,
         }));
       } catch (e) {
         console.error('Tags search error:', e);
@@ -150,38 +153,40 @@ export async function GET(request: NextRequest) {
       success: true,
       data: results,
       query: query,
-      type: type
+      type: type,
     });
-
   } catch (error) {
     clearTimeout(timeoutId);
-    
+
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const errorStack = error instanceof Error ? error.stack : '';
-    
+
     if (error instanceof Error && error.name === 'AbortError') {
       console.error('[search] Request timeout:', {
         message: errorMessage,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
-      return NextResponse.json({
-        success: false,
-        error: 'Request timeout',
-        message: '搜索超时，请稍后重试'
-      }, { status: 504 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Request timeout',
+          message: '搜索超时，请稍后重试',
+        },
+        { status: 504 }
+      );
     }
-    
+
     console.error('[search] Error searching:', {
       message: errorMessage,
       stack: errorStack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: errorMessage,
-        message: '搜索失败，请稍后重试'
+        message: '搜索失败，请稍后重试',
       },
       { status: 500 }
     );

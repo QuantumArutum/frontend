@@ -18,19 +18,19 @@ export interface CurrentUser {
 export async function getCurrentUser(): Promise<CurrentUser | null> {
   try {
     const cookieStore = await cookies();
-    
+
     // 尝试从 cookie 中获取用户信息
     // 注意：这里假设用户信息存储在 cookie 中
     // 如果使用 JWT，需要解析 token
     const userInfoCookie = cookieStore.get('user_info');
-    
+
     if (userInfoCookie && userInfoCookie.value) {
       try {
         const userInfo = JSON.parse(userInfoCookie.value);
         return {
           uid: userInfo.id || userInfo.uid,
           email: userInfo.email,
-          username: userInfo.username
+          username: userInfo.username,
         };
       } catch (e) {
         console.error('Failed to parse user_info cookie:', e);

@@ -25,18 +25,18 @@ export async function GET(
   { params }: { params: Promise<{ txHash: string }> }
 ) {
   const { txHash } = await params;
-  
+
   try {
     // 首先尝试获取交易
     const tx = await makeRPCCall('eth_getTransactionByHash', [txHash]);
-    
+
     if (!tx) {
       return NextResponse.json({ error: 'Transaction not found' }, { status: 404 });
     }
-    
+
     // 获取交易收据以获取状态
     const receipt = await makeRPCCall('eth_getTransactionReceipt', [txHash]);
-    
+
     // 从区块获取时间戳
     let timestamp = '0x0';
     if (tx.blockNumber) {
@@ -45,7 +45,7 @@ export async function GET(
         timestamp = block.timestamp;
       }
     }
-    
+
     const transaction = {
       hash: tx.hash,
       blockNumber: tx.blockNumber,
@@ -60,7 +60,8 @@ export async function GET(
       input: tx.input,
       transactionIndex: tx.transactionIndex,
       timestamp,
-      status: receipt?.status === '0x1' ? 'success' : (receipt?.status === '0x0' ? 'failed' : 'pending'),
+      status:
+        receipt?.status === '0x1' ? 'success' : receipt?.status === '0x0' ? 'failed' : 'pending',
     };
 
     return NextResponse.json(transaction);

@@ -5,7 +5,13 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { Badge } from '@/components/ui/Badge';
 import QuantumSecurityPanel from '@/app/components/QuantumSecurityPanel';
@@ -21,7 +27,7 @@ import {
   Clock,
   Activity,
   Shield,
-  Zap
+  Zap,
 } from 'lucide-react';
 
 // Type definitions
@@ -88,13 +94,13 @@ const TradingMarket = () => {
   const [orderType, setOrderType] = useState<string>('limit');
   const [tradeType, setTradeType] = useState<string>('spot');
   const [activeTab, setActiveTab] = useState<string>('buy');
-  
+
   // Order state
   const [buyAmount, setBuyAmount] = useState<string>('');
   const [buyPrice, setBuyPrice] = useState<string>('');
   const [sellAmount, setSellAmount] = useState<string>('');
   const [sellPrice, setSellPrice] = useState<string>('');
-  
+
   // Data state
   const [marketData, setMarketData] = useState<MarketData>({});
   const [orderBook, setOrderBook] = useState<OrderBook>({ bids: [], asks: [] });
@@ -107,31 +113,45 @@ const TradingMarket = () => {
 
   // Mock data
   const mockTradingPairs: TradingPair[] = [
-    { symbol: 'QAU/USDT', price: 125.50, change: 2.45, volume: 1234567, high: 128.90, low: 122.10 },
-    { symbol: 'BTC/USDT', price: 43250.00, change: -1.23, volume: 987654, high: 44100.00, low: 42800.00 },
-    { symbol: 'ETH/USDT', price: 2650.75, change: 3.67, volume: 2345678, high: 2680.00, low: 2580.50 },
-    { symbol: 'BNB/USDT', price: 315.20, change: 1.89, volume: 567890, high: 320.50, low: 310.00 },
+    { symbol: 'QAU/USDT', price: 125.5, change: 2.45, volume: 1234567, high: 128.9, low: 122.1 },
+    {
+      symbol: 'BTC/USDT',
+      price: 43250.0,
+      change: -1.23,
+      volume: 987654,
+      high: 44100.0,
+      low: 42800.0,
+    },
+    {
+      symbol: 'ETH/USDT',
+      price: 2650.75,
+      change: 3.67,
+      volume: 2345678,
+      high: 2680.0,
+      low: 2580.5,
+    },
+    { symbol: 'BNB/USDT', price: 315.2, change: 1.89, volume: 567890, high: 320.5, low: 310.0 },
   ];
 
   const mockOrderBook: OrderBook = {
     asks: [
       { price: 125.55, amount: 1250.5, total: 156943.775 },
-      { price: 125.60, amount: 890.2, total: 111845.12 },
+      { price: 125.6, amount: 890.2, total: 111845.12 },
       { price: 125.65, amount: 2100.8, total: 263975.52 },
-      { price: 125.70, amount: 750.3, total: 94312.71 },
+      { price: 125.7, amount: 750.3, total: 94312.71 },
       { price: 125.75, amount: 1680.9, total: 211473.175 },
     ],
     bids: [
-      { price: 125.50, amount: 1890.7, total: 237282.85 },
+      { price: 125.5, amount: 1890.7, total: 237282.85 },
       { price: 125.45, amount: 2250.3, total: 282412.135 },
-      { price: 125.40, amount: 980.6, total: 122951.24 },
+      { price: 125.4, amount: 980.6, total: 122951.24 },
       { price: 125.35, amount: 1560.8, total: 195646.28 },
-      { price: 125.30, amount: 2100.5, total: 263152.65 },
-    ]
+      { price: 125.3, amount: 2100.5, total: 263152.65 },
+    ],
   };
 
   const mockRecentTrades: Trade[] = [
-    { price: 125.50, amount: 45.8, time: '14:32:15', type: 'buy' },
+    { price: 125.5, amount: 45.8, time: '14:32:15', type: 'buy' },
     { price: 125.48, amount: 120.5, time: '14:32:10', type: 'sell' },
     { price: 125.52, amount: 89.2, time: '14:32:05', type: 'buy' },
     { price: 125.49, amount: 200.1, time: '14:32:00', type: 'sell' },
@@ -139,13 +159,31 @@ const TradingMarket = () => {
   ];
 
   const mockUserOrders: UserOrder[] = [
-    { id: '1', pair: 'QAU/USDT', type: 'buy', amount: 100, price: 125.00, filled: 0, status: 'open', time: '2024-01-15 14:30:00' },
-    { id: '2', pair: 'BTC/USDT', type: 'sell', amount: 0.5, price: 43500.00, filled: 0.2, status: 'partial', time: '2024-01-15 14:25:00' },
+    {
+      id: '1',
+      pair: 'QAU/USDT',
+      type: 'buy',
+      amount: 100,
+      price: 125.0,
+      filled: 0,
+      status: 'open',
+      time: '2024-01-15 14:30:00',
+    },
+    {
+      id: '2',
+      pair: 'BTC/USDT',
+      type: 'sell',
+      amount: 0.5,
+      price: 43500.0,
+      filled: 0.2,
+      status: 'partial',
+      time: '2024-01-15 14:25:00',
+    },
   ];
 
   const mockBalance: Balance = {
-    QAU: { available: 1250.75, locked: 100.00 },
-    USDT: { available: 5000.00, locked: 1250.00 },
+    QAU: { available: 1250.75, locked: 100.0 },
+    USDT: { available: 5000.0, locked: 1250.0 },
     BTC: { available: 0.5, locked: 0.0 },
     ETH: { available: 2.5, locked: 0.0 },
   };
@@ -164,8 +202,8 @@ const TradingMarket = () => {
   const handleSubmitOrder = async (side: 'buy' | 'sell'): Promise<void> => {
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       if (side === 'buy') {
         setBuyAmount('');
         setBuyPrice('');
@@ -173,7 +211,7 @@ const TradingMarket = () => {
         setSellAmount('');
         setSellPrice('');
       }
-      
+
       alert(t('market_page.order_success'));
     } catch {
       alert(t('market_page.order_failed'));
@@ -193,28 +231,27 @@ const TradingMarket = () => {
 
   // Quick set amount percentage
   const handleQuickAmount = (percentage: number, side: 'buy' | 'sell'): void => {
-    const availableBalance = side === 'buy' 
-      ? balance.USDT?.available || 0 
-      : balance.QAU?.available || 0;
-    
-    const currentPrice = side === 'buy' 
-      ? parseFloat(buyPrice) || marketData.price || 0
-      : parseFloat(sellPrice) || marketData.price || 0;
-    
+    const availableBalance =
+      side === 'buy' ? balance.USDT?.available || 0 : balance.QAU?.available || 0;
+
+    const currentPrice =
+      side === 'buy'
+        ? parseFloat(buyPrice) || marketData.price || 0
+        : parseFloat(sellPrice) || marketData.price || 0;
+
     if (side === 'buy' && currentPrice) {
-      const amount = (availableBalance * percentage / 100) / currentPrice;
+      const amount = (availableBalance * percentage) / 100 / currentPrice;
       setBuyAmount(amount.toFixed(6));
     } else if (side === 'sell') {
-      const amount = availableBalance * percentage / 100;
+      const amount = (availableBalance * percentage) / 100;
       setSellAmount(amount.toFixed(6));
     }
   };
 
   // Filter trading pairs
-  const filteredPairs = tradingPairs.filter(pair =>
+  const filteredPairs = tradingPairs.filter((pair) =>
     pair.symbol.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -236,9 +273,9 @@ const TradingMarket = () => {
           {/* Page title */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-2">
-              <Image 
-                src="/quantaureum-icon.svg" 
-                alt="Quantaureum" 
+              <Image
+                src="/quantaureum-icon.svg"
+                alt="Quantaureum"
                 width={40}
                 height={40}
                 className="h-10 w-10"
@@ -247,9 +284,7 @@ const TradingMarket = () => {
                 {t('market_page.title')}
               </h1>
             </div>
-            <p className="text-gray-300 mt-2 text-responsive-base">
-              {t('market_page.subtitle')}
-            </p>
+            <p className="text-gray-300 mt-2 text-responsive-base">{t('market_page.subtitle')}</p>
           </div>
 
           {/* Main trading interface */}
@@ -267,7 +302,9 @@ const TradingMarket = () => {
                     <Input
                       placeholder={t('market_page.search_pairs')}
                       value={searchTerm}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setSearchTerm(e.target.value)
+                      }
                       className="quantum-input pl-10"
                     />
                   </div>
@@ -306,8 +343,11 @@ const TradingMarket = () => {
                             <div className="font-medium text-responsive-sm truncate-number">
                               {formatNumber(pair.price)}
                             </div>
-                            <div className={`text-xs ${pair.change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                              {pair.change >= 0 ? '+' : ''}{formatPercentage(pair.change)}
+                            <div
+                              className={`text-xs ${pair.change >= 0 ? 'text-green-400' : 'text-red-400'}`}
+                            >
+                              {pair.change >= 0 ? '+' : ''}
+                              {formatPercentage(pair.change)}
                             </div>
                           </div>
                         </div>
@@ -349,8 +389,11 @@ const TradingMarket = () => {
                     </div>
                     <div>
                       <div className="text-gray-400 text-sm">{t('market_page.change_24h')}</div>
-                      <div className={`text-responsive-lg font-bold ${(marketData.change || 0) >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                        {(marketData.change || 0) >= 0 ? '+' : ''}{formatPercentage(marketData.change || 0)}
+                      <div
+                        className={`text-responsive-lg font-bold ${(marketData.change || 0) >= 0 ? 'text-green-400' : 'text-red-400'}`}
+                      >
+                        {(marketData.change || 0) >= 0 ? '+' : ''}
+                        {formatPercentage(marketData.change || 0)}
                       </div>
                     </div>
                     <div>
@@ -383,23 +426,30 @@ const TradingMarket = () => {
                     <div>
                       <div className="text-sm text-gray-400 mb-2">{t('market_page.asks')}</div>
                       <div className="space-y-1">
-                        {orderBook.asks.slice().reverse().map((ask, index) => (
-                          <div
-                            key={index}
-                            onClick={() => handleQuickPrice(ask.price, 'buy')}
-                            onKeyDown={(e: React.KeyboardEvent) => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                handleQuickPrice(ask.price, 'buy');
-                              }
-                            }}
-                            role="button"
-                            tabIndex={0}
-                            className="flex justify-between text-xs cursor-pointer hover:bg-red-500/10 p-1 rounded"
-                          >
-                            <span className="text-red-400 truncate-number">{formatNumber(ask.price)}</span>
-                            <span className="text-gray-300 truncate-number">{formatNumber(ask.amount)}</span>
-                          </div>
-                        ))}
+                        {orderBook.asks
+                          .slice()
+                          .reverse()
+                          .map((ask, index) => (
+                            <div
+                              key={index}
+                              onClick={() => handleQuickPrice(ask.price, 'buy')}
+                              onKeyDown={(e: React.KeyboardEvent) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                  handleQuickPrice(ask.price, 'buy');
+                                }
+                              }}
+                              role="button"
+                              tabIndex={0}
+                              className="flex justify-between text-xs cursor-pointer hover:bg-red-500/10 p-1 rounded"
+                            >
+                              <span className="text-red-400 truncate-number">
+                                {formatNumber(ask.price)}
+                              </span>
+                              <span className="text-gray-300 truncate-number">
+                                {formatNumber(ask.amount)}
+                              </span>
+                            </div>
+                          ))}
                       </div>
                     </div>
 
@@ -420,8 +470,12 @@ const TradingMarket = () => {
                             tabIndex={0}
                             className="flex justify-between text-xs cursor-pointer hover:bg-green-500/10 p-1 rounded"
                           >
-                            <span className="text-green-400 truncate-number">{formatNumber(bid.price)}</span>
-                            <span className="text-gray-300 truncate-number">{formatNumber(bid.amount)}</span>
+                            <span className="text-green-400 truncate-number">
+                              {formatNumber(bid.price)}
+                            </span>
+                            <span className="text-gray-300 truncate-number">
+                              {formatNumber(bid.amount)}
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -445,7 +499,9 @@ const TradingMarket = () => {
                         <span className={trade.type === 'buy' ? 'text-green-400' : 'text-red-400'}>
                           {formatNumber(trade.price)}
                         </span>
-                        <span className="text-gray-300 truncate-number">{formatNumber(trade.amount)}</span>
+                        <span className="text-gray-300 truncate-number">
+                          {formatNumber(trade.amount)}
+                        </span>
                         <span className="text-gray-400">{trade.time}</span>
                       </div>
                     ))}
@@ -453,7 +509,6 @@ const TradingMarket = () => {
                 </CardContent>
               </Card>
             </div>
-
 
             {/* Right: Trading panel */}
             <div className="lg:col-span-1">
@@ -479,13 +534,19 @@ const TradingMarket = () => {
                 <CardContent>
                   <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsList className="grid w-full grid-cols-2 quantum-tabs">
-                      <TabsTrigger value="buy" className="quantum-tab">{t('market_page.buy')}</TabsTrigger>
-                      <TabsTrigger value="sell" className="quantum-tab">{t('market_page.sell')}</TabsTrigger>
+                      <TabsTrigger value="buy" className="quantum-tab">
+                        {t('market_page.buy')}
+                      </TabsTrigger>
+                      <TabsTrigger value="sell" className="quantum-tab">
+                        {t('market_page.sell')}
+                      </TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="buy" className="space-y-4">
                       <div>
-                        <label className="text-sm text-gray-400">{t('market_page.order_type')}</label>
+                        <label className="text-sm text-gray-400">
+                          {t('market_page.order_type')}
+                        </label>
                         <Select value={orderType} onValueChange={setOrderType}>
                           <SelectTrigger className="quantum-input">
                             <SelectValue />
@@ -493,31 +554,41 @@ const TradingMarket = () => {
                           <SelectContent>
                             <SelectItem value="market">{t('market_page.market_order')}</SelectItem>
                             <SelectItem value="limit">{t('market_page.limit_order')}</SelectItem>
-                            <SelectItem value="stop-limit">{t('market_page.stop_limit')}</SelectItem>
+                            <SelectItem value="stop-limit">
+                              {t('market_page.stop_limit')}
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
 
                       {orderType !== 'market' && (
                         <div>
-                          <label className="text-sm text-gray-400">{t('market_page.buy_price')}</label>
+                          <label className="text-sm text-gray-400">
+                            {t('market_page.buy_price')}
+                          </label>
                           <Input
                             type="number"
                             placeholder="0.00"
                             value={buyPrice}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBuyPrice(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                              setBuyPrice(e.target.value)
+                            }
                             className="quantum-input"
                           />
                         </div>
                       )}
 
                       <div>
-                        <label className="text-sm text-gray-400">{t('market_page.buy_amount')}</label>
+                        <label className="text-sm text-gray-400">
+                          {t('market_page.buy_amount')}
+                        </label>
                         <Input
                           type="number"
                           placeholder="0.00"
                           value={buyAmount}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBuyAmount(e.target.value)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setBuyAmount(e.target.value)
+                          }
                           className="quantum-input"
                         />
                         <div className="flex gap-2 mt-2">
@@ -538,12 +609,17 @@ const TradingMarket = () => {
                       <div className="text-sm text-gray-400">
                         <div className="flex justify-between">
                           <span>{t('market_page.available_balance')}:</span>
-                          <span className="truncate-number">{formatCurrency(balance.USDT?.available || 0, 'USDT')}</span>
+                          <span className="truncate-number">
+                            {formatCurrency(balance.USDT?.available || 0, 'USDT')}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span>{t('market_page.estimated_fee')}:</span>
                           <span className="truncate-number">
-                            {formatCurrency((parseFloat(buyAmount) * parseFloat(buyPrice) * 0.001) || 0, 'USDT')}
+                            {formatCurrency(
+                              parseFloat(buyAmount) * parseFloat(buyPrice) * 0.001 || 0,
+                              'USDT'
+                            )}
                           </span>
                         </div>
                       </div>
@@ -566,7 +642,9 @@ const TradingMarket = () => {
 
                     <TabsContent value="sell" className="space-y-4">
                       <div>
-                        <label className="text-sm text-gray-400">{t('market_page.order_type')}</label>
+                        <label className="text-sm text-gray-400">
+                          {t('market_page.order_type')}
+                        </label>
                         <Select value={orderType} onValueChange={setOrderType}>
                           <SelectTrigger className="quantum-input">
                             <SelectValue />
@@ -574,31 +652,41 @@ const TradingMarket = () => {
                           <SelectContent>
                             <SelectItem value="market">{t('market_page.market_order')}</SelectItem>
                             <SelectItem value="limit">{t('market_page.limit_order')}</SelectItem>
-                            <SelectItem value="stop-limit">{t('market_page.stop_limit')}</SelectItem>
+                            <SelectItem value="stop-limit">
+                              {t('market_page.stop_limit')}
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
 
                       {orderType !== 'market' && (
                         <div>
-                          <label className="text-sm text-gray-400">{t('market_page.sell_price')}</label>
+                          <label className="text-sm text-gray-400">
+                            {t('market_page.sell_price')}
+                          </label>
                           <Input
                             type="number"
                             placeholder="0.00"
                             value={sellPrice}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSellPrice(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                              setSellPrice(e.target.value)
+                            }
                             className="quantum-input"
                           />
                         </div>
                       )}
 
                       <div>
-                        <label className="text-sm text-gray-400">{t('market_page.sell_amount')}</label>
+                        <label className="text-sm text-gray-400">
+                          {t('market_page.sell_amount')}
+                        </label>
                         <Input
                           type="number"
                           placeholder="0.00"
                           value={sellAmount}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSellAmount(e.target.value)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setSellAmount(e.target.value)
+                          }
                           className="quantum-input"
                         />
                         <div className="flex gap-2 mt-2">
@@ -619,19 +707,26 @@ const TradingMarket = () => {
                       <div className="text-sm text-gray-400">
                         <div className="flex justify-between">
                           <span>{t('market_page.available_balance')}:</span>
-                          <span className="truncate-number">{formatCurrency(balance.QAU?.available || 0, 'QAU')}</span>
+                          <span className="truncate-number">
+                            {formatCurrency(balance.QAU?.available || 0, 'QAU')}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span>{t('market_page.estimated_income')}:</span>
                           <span className="truncate-number">
-                            {formatCurrency((parseFloat(sellAmount) * parseFloat(sellPrice) * 0.999) || 0, 'USDT')}
+                            {formatCurrency(
+                              parseFloat(sellAmount) * parseFloat(sellPrice) * 0.999 || 0,
+                              'USDT'
+                            )}
                           </span>
                         </div>
                       </div>
 
                       <Button
                         onClick={() => handleSubmitOrder('sell')}
-                        disabled={isLoading || !sellAmount || (!sellPrice && orderType !== 'market')}
+                        disabled={
+                          isLoading || !sellAmount || (!sellPrice && orderType !== 'market')
+                        }
                         className="w-full quantum-button-primary bg-red-600 hover:bg-red-700"
                       >
                         {isLoading ? (
@@ -650,7 +745,6 @@ const TradingMarket = () => {
             </div>
           </div>
 
-
           {/* Bottom: User orders and positions */}
           <div className="mt-8">
             <Card>
@@ -663,31 +757,60 @@ const TradingMarket = () => {
               <CardContent>
                 <Tabs defaultValue="orders" className="w-full">
                   <TabsList className="quantum-tabs">
-                    <TabsTrigger value="orders" className="quantum-tab">{t('market_page.current_orders')}</TabsTrigger>
-                    <TabsTrigger value="history" className="quantum-tab">{t('market_page.order_history')}</TabsTrigger>
-                    <TabsTrigger value="positions" className="quantum-tab">{t('market_page.positions')}</TabsTrigger>
-                    <TabsTrigger value="balance" className="quantum-tab">{t('market_page.assets')}</TabsTrigger>
+                    <TabsTrigger value="orders" className="quantum-tab">
+                      {t('market_page.current_orders')}
+                    </TabsTrigger>
+                    <TabsTrigger value="history" className="quantum-tab">
+                      {t('market_page.order_history')}
+                    </TabsTrigger>
+                    <TabsTrigger value="positions" className="quantum-tab">
+                      {t('market_page.positions')}
+                    </TabsTrigger>
+                    <TabsTrigger value="balance" className="quantum-tab">
+                      {t('market_page.assets')}
+                    </TabsTrigger>
                   </TabsList>
 
                   <TabsContent value="orders" className="mt-4">
                     <div className="space-y-2">
                       {userOrders.length > 0 ? (
                         userOrders.map((order) => (
-                          <div key={order.id} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+                          <div
+                            key={order.id}
+                            className="flex justify-between items-center p-3 bg-white/5 rounded-lg"
+                          >
                             <div className="flex items-center gap-4">
-                              <Badge className={order.type === 'buy' ? 'quantum-badge-success' : 'quantum-badge-error'}>
-                                {order.type === 'buy' ? t('market_page.buy') : t('market_page.sell')}
+                              <Badge
+                                className={
+                                  order.type === 'buy'
+                                    ? 'quantum-badge-success'
+                                    : 'quantum-badge-error'
+                                }
+                              >
+                                {order.type === 'buy'
+                                  ? t('market_page.buy')
+                                  : t('market_page.sell')}
                               </Badge>
                               <span className="font-medium truncate-number">{order.pair}</span>
-                              <span className="text-gray-400 truncate-number">{formatNumber(order.amount)}</span>
-                              <span className="text-gray-400 truncate-number">@{formatNumber(order.price)}</span>
+                              <span className="text-gray-400 truncate-number">
+                                {formatNumber(order.amount)}
+                              </span>
+                              <span className="text-gray-400 truncate-number">
+                                @{formatNumber(order.price)}
+                              </span>
                             </div>
                             <div className="flex items-center gap-4">
                               <span className="text-sm text-gray-400">{order.time}</span>
                               <Badge className="quantum-badge-warning">
-                                {order.status === 'open' ? t('market_page.unfilled') : t('market_page.partial')}
+                                {order.status === 'open'
+                                  ? t('market_page.unfilled')
+                                  : t('market_page.partial')}
                               </Badge>
-                              <Button variant="outline" size="sm" className="quantum-button-secondary">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="quantum-button-secondary"
+                              >
                                 {t('market_page.cancel')}
                               </Button>
                             </div>
@@ -727,7 +850,9 @@ const TradingMarket = () => {
                           <div className="space-y-1">
                             <div className="flex justify-between text-sm">
                               <span className="text-gray-400">{t('common.available')}:</span>
-                              <span className="truncate-number">{formatNumber(data.available)}</span>
+                              <span className="truncate-number">
+                                {formatNumber(data.available)}
+                              </span>
                             </div>
                             <div className="flex justify-between text-sm">
                               <span className="text-gray-400">{t('common.locked')}:</span>
@@ -735,7 +860,9 @@ const TradingMarket = () => {
                             </div>
                             <div className="flex justify-between text-sm font-medium">
                               <span>{t('common.total')}:</span>
-                              <span className="truncate-number">{formatNumber(data.available + data.locked)}</span>
+                              <span className="truncate-number">
+                                {formatNumber(data.available + data.locked)}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -753,4 +880,3 @@ const TradingMarket = () => {
 };
 
 export default TradingMarket;
-

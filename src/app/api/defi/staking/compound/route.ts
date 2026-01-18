@@ -18,7 +18,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -44,10 +44,10 @@ export const POST = createSecureHandler(
       }
 
       // Convert amounts from wei to QAU
-      const compoundedQAU = result.amount ? 
-        (Number(BigInt(result.amount)) / 1e18).toFixed(4) : '0';
-      const newTotalQAU = result.newTotal ?
-        (Number(BigInt(result.newTotal)) / 1e18).toFixed(4) : '0';
+      const compoundedQAU = result.amount ? (Number(BigInt(result.amount)) / 1e18).toFixed(4) : '0';
+      const newTotalQAU = result.newTotal
+        ? (Number(BigInt(result.newTotal)) / 1e18).toFixed(4)
+        : '0';
 
       return successResponse({
         success: true,
@@ -55,7 +55,7 @@ export const POST = createSecureHandler(
         amount: compoundedQAU,
         newTotal: newTotalQAU,
         message: `Successfully compounded ${compoundedQAU} QAU rewards`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       console.error('Compound error:', error);

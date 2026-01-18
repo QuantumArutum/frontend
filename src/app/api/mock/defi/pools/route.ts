@@ -4,10 +4,7 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   // 检查是否应该使用模拟API
   if (process.env.NODE_ENV === 'production' && process.env.USE_MOCK_API !== 'true') {
-    return NextResponse.json(
-      { error: 'Mock API not available in production' },
-      { status: 404 }
-    );
+    return NextResponse.json({ error: 'Mock API not available in production' }, { status: 404 });
   }
 
   // 模拟流动性池数据
@@ -21,7 +18,7 @@ export async function GET() {
       total_liquidity: 3750000,
       fee_rate: 0.003,
       price: 2.0,
-      apy: 15.6
+      apy: 15.6,
     },
     {
       pool_id: 'QAU-ETH',
@@ -32,7 +29,7 @@ export async function GET() {
       total_liquidity: 1600000,
       fee_rate: 0.003,
       price: 0.0005,
-      apy: 22.3
+      apy: 22.3,
     },
     {
       pool_id: 'QAU-BTC',
@@ -43,7 +40,7 @@ export async function GET() {
       total_liquidity: 1000000,
       fee_rate: 0.005,
       price: 0.000025,
-      apy: 18.9
+      apy: 18.9,
     },
     {
       pool_id: 'USDT-ETH',
@@ -54,7 +51,7 @@ export async function GET() {
       total_liquidity: 4000000,
       fee_rate: 0.003,
       price: 0.0004,
-      apy: 12.4
+      apy: 12.4,
     },
     {
       pool_id: 'QAU-USDC',
@@ -65,8 +62,8 @@ export async function GET() {
       total_liquidity: 2250000,
       fee_rate: 0.003,
       price: 2.0,
-      apy: 14.2
-    }
+      apy: 14.2,
+    },
   ];
 
   return NextResponse.json({
@@ -75,6 +72,7 @@ export async function GET() {
     timestamp: new Date().toISOString(),
     total_pools: mockLiquidityPools.length,
     total_tvl: mockLiquidityPools.reduce((sum, pool) => sum + pool.total_liquidity, 0),
-    _note: 'This is mock data for development. In production, this will be replaced with real blockchain data.'
+    _note:
+      'This is mock data for development. In production, this will be replaced with real blockchain data.',
   });
 }

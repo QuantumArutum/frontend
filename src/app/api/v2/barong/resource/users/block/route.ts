@@ -17,7 +17,10 @@ export async function POST(request: NextRequest) {
   const { target_uid, action } = await request.json();
 
   if (!target_uid) {
-    return NextResponse.json({ success: false, message: 'Target user ID required' }, { status: 400 });
+    return NextResponse.json(
+      { success: false, message: 'Target user ID required' },
+      { status: 400 }
+    );
   }
 
   if (!blockedUsers.has(user.uid)) {

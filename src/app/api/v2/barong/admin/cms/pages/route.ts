@@ -25,7 +25,10 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     if (!body.slug || !body.title) {
-      return NextResponse.json({ success: false, message: 'Slug and title are required' }, { status: 400 });
+      return NextResponse.json(
+        { success: false, message: 'Slug and title are required' },
+        { status: 400 }
+      );
     }
     const result = await db.createPage(body);
     if (!result.success) {

@@ -1,5 +1,16 @@
 // 前端性能优化工具
-import React, { memo, useMemo, useCallback, lazy, Suspense, useState, useEffect, useRef, ReactNode, ComponentType } from 'react';
+import React, {
+  memo,
+  useMemo,
+  useCallback,
+  lazy,
+  Suspense,
+  useState,
+  useEffect,
+  useRef,
+  ReactNode,
+  ComponentType,
+} from 'react';
 
 // 性能指标类型
 interface PerformanceMetric {
@@ -35,14 +46,14 @@ export class PerformanceMonitor {
     this.metrics = new Map();
     this.isEnabled = process.env.NODE_ENV === 'development';
   }
-  
+
   startMeasure(name: string): void {
     if (!this.isEnabled) return;
     const startTime = performance.now();
     this.metrics.set(name, { startTime, endTime: null, duration: null });
     console.log(`🚀 开始测量: ${name}`);
   }
-  
+
   endMeasure(name: string): number | undefined {
     if (!this.isEnabled) return;
     const metric = this.metrics.get(name);
@@ -56,27 +67,30 @@ export class PerformanceMonitor {
     console.log(`📊 测量完成: ${name} - ${metric.duration.toFixed(2)}ms`);
     return metric.duration;
   }
-  
+
   getMetrics(): Array<{ name: string } & PerformanceMetric> {
     return Array.from(this.metrics.entries()).map(([name, metric]) => ({
       name,
-      ...metric
+      ...metric,
     }));
   }
-  
+
   monitorPageLoad(): void {
     if (!this.isEnabled || typeof window === 'undefined') return;
-    
+
     window.addEventListener('load', () => {
-      const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+      const navigation = performance.getEntriesByType(
+        'navigation'
+      )[0] as PerformanceNavigationTiming;
       const metrics: NavigationMetrics = {
-        domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
+        domContentLoaded:
+          navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
         loadComplete: navigation.loadEventEnd - navigation.loadEventStart,
         totalLoadTime: navigation.loadEventEnd - navigation.fetchStart,
         dnsLookup: navigation.domainLookupEnd - navigation.domainLookupStart,
         tcpConnection: navigation.connectEnd - navigation.connectStart,
         serverResponse: navigation.responseEnd - navigation.requestStart,
-        domProcessing: navigation.domComplete - navigation.responseEnd
+        domProcessing: navigation.domComplete - navigation.responseEnd,
       };
       console.log('📊 页面加载性能指标:', metrics);
     });
@@ -85,22 +99,21 @@ export class PerformanceMonitor {
 
 export const performanceMonitor = new PerformanceMonitor();
 
-
 // React组件性能优化HOC
 export function withPerformanceMonitoring<P extends object>(
-  WrappedComponent: ComponentType<P>, 
+  WrappedComponent: ComponentType<P>,
   componentName: string
 ): ComponentType<P> {
   const MonitoredComponent = memo(function MonitoredComponent(props: P) {
     performanceMonitor.startMeasure(`${componentName}_render`);
-    
+
     useEffect(() => {
       performanceMonitor.endMeasure(`${componentName}_render`);
     });
-    
+
     return <WrappedComponent {...props} />;
   });
-  
+
   MonitoredComponent.displayName = `withPerformanceMonitoring(${componentName})`;
   return MonitoredComponent as ComponentType<P>;
 }
@@ -108,14 +121,14 @@ export function withPerformanceMonitoring<P extends object>(
 // 防抖Hook
 export function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
-  
+
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
     return () => clearTimeout(handler);
   }, [value, delay]);
-  
+
   return debouncedValue;
 }
 
@@ -123,17 +136,20 @@ export function useDebounce<T>(value: T, delay: number): T {
 export function useThrottle<T>(value: T, limit: number): T {
   const [throttledValue, setThrottledValue] = useState<T>(value);
   const lastRan = useRef<number>(Date.now());
-  
+
   useEffect(() => {
-    const handler = setTimeout(() => {
-      if (Date.now() - lastRan.current >= limit) {
-        setThrottledValue(value);
-        lastRan.current = Date.now();
-      }
-    }, limit - (Date.now() - lastRan.current));
+    const handler = setTimeout(
+      () => {
+        if (Date.now() - lastRan.current >= limit) {
+          setThrottledValue(value);
+          lastRan.current = Date.now();
+        }
+      },
+      limit - (Date.now() - lastRan.current)
+    );
     return () => clearTimeout(handler);
   }, [value, limit]);
-  
+
   return throttledValue;
 }
 
@@ -151,12 +167,12 @@ interface VirtualScrollResult<T> {
 
 // 虚拟滚动Hook
 export function useVirtualScroll<T>(
-  items: T[], 
-  itemHeight: number, 
+  items: T[],
+  itemHeight: number,
   containerHeight: number
 ): VirtualScrollResult<T> {
   const [scrollTop, setScrollTop] = useState<number>(0);
-  
+
   const visibleItems = useMemo(() => {
     const startIndex = Math.floor(scrollTop / itemHeight);
     const endIndex = Math.min(
@@ -168,14 +184,14 @@ export function useVirtualScroll<T>(
       endIndex,
       items: items.slice(startIndex, endIndex),
       totalHeight: items.length * itemHeight,
-      offsetY: startIndex * itemHeight
+      offsetY: startIndex * itemHeight,
     };
   }, [items, itemHeight, containerHeight, scrollTop]);
-  
+
   const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
     setScrollTop(e.currentTarget.scrollTop);
   }, []);
-  
+
   return { visibleItems, handleScroll };
 }
 
@@ -193,7 +209,7 @@ export function useLazyImage(src: string, placeholder: string = ''): LazyImageRe
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -215,16 +231,15 @@ export function useLazyImage(src: string, placeholder: string = ''): LazyImageRe
       },
       { threshold: 0.1 }
     );
-    
+
     if (imgRef.current) {
       observer.observe(imgRef.current);
     }
     return () => observer.disconnect();
   }, [src]);
-  
+
   return { imageSrc, isLoaded, isError, imgRef };
 }
-
 
 // 缓存数据类型
 interface CacheData<T> {
@@ -242,15 +257,15 @@ interface CacheResult<T> {
 
 // 缓存Hook
 export function useCache<T>(
-  key: string, 
-  fetchFunction: () => Promise<T>, 
+  key: string,
+  fetchFunction: () => Promise<T>,
   dependencies: unknown[] = []
 ): CacheResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
   const cache = useRef<Map<string, CacheData<T>>>(new Map());
-  
+
   const fetchData = useCallback(async (): Promise<void> => {
     if (cache.current.has(key)) {
       const cachedData = cache.current.get(key)!;
@@ -260,10 +275,10 @@ export function useCache<T>(
         return;
       }
     }
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
       const result = await fetchFunction();
       cache.current.set(key, { data: result, timestamp: Date.now() });
@@ -274,22 +289,22 @@ export function useCache<T>(
       setLoading(false);
     }
   }, [key, fetchFunction]);
-  
+
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchData, ...dependencies]);
-  
+
   return { data, loading, error, refetch: fetchData };
 }
 
 // 组件懒加载工具
 export function createLazyComponent<P extends object>(
-  importFunction: () => Promise<{ default: ComponentType<P> }>, 
+  importFunction: () => Promise<{ default: ComponentType<P> }>,
   fallback: ReactNode = <div>Loading...</div>
 ): React.FC<P> {
   const LazyComponent = lazy(importFunction);
-  
+
   const WrappedComponent: React.FC<P> = (props: P) => (
     <Suspense fallback={fallback}>
       <LazyComponent {...props} />
@@ -306,18 +321,18 @@ export function useBatchedState<T extends object>(
   const [state, setState] = useState<T>(initialState);
   const pendingUpdates = useRef<Array<Partial<T> | ((prev: T) => T)>>([]);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  
+
   const batchedSetState = useCallback((update: Partial<T> | ((prev: T) => T)) => {
     pendingUpdates.current.push(update);
-    
+
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    
+
     timeoutRef.current = setTimeout(() => {
-      setState(prevState => {
+      setState((prevState) => {
         let newState = prevState;
-        pendingUpdates.current.forEach(upd => {
+        pendingUpdates.current.forEach((upd) => {
           if (typeof upd === 'function') {
             newState = upd(newState);
           } else {
@@ -329,7 +344,7 @@ export function useBatchedState<T extends object>(
       });
     }, 0);
   }, []);
-  
+
   return [state, batchedSetState];
 }
 
@@ -343,20 +358,17 @@ interface OptimizedListProps<T> {
 }
 
 // 性能优化的列表组件
-function OptimizedListComponent<T>({ 
-  items, 
-  renderItem, 
-  keyExtractor, 
+function OptimizedListComponent<T>({
+  items,
+  renderItem,
+  keyExtractor,
   itemHeight = 50,
-  containerHeight = 400 
+  containerHeight = 400,
 }: OptimizedListProps<T>): React.ReactElement {
   const { visibleItems, handleScroll } = useVirtualScroll(items, itemHeight, containerHeight);
-  
+
   return (
-    <div 
-      style={{ height: containerHeight, overflow: 'auto' }}
-      onScroll={handleScroll}
-    >
+    <div style={{ height: containerHeight, overflow: 'auto' }} onScroll={handleScroll}>
       <div style={{ height: visibleItems.totalHeight, position: 'relative' }}>
         <div style={{ transform: `translateY(${visibleItems.offsetY}px)` }}>
           {visibleItems.items.map((item, index) => (

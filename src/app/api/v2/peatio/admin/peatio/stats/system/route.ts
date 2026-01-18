@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const usersResult = await db.getUsers({ page: 1, limit: 1 });
-    
+
     return NextResponse.json({
       success: true,
       data: {

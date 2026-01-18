@@ -2,7 +2,13 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { AuctionItem, AuctionFilters as AuctionFiltersType, SortOption, NodeTier, AuctionStatus } from '../../types/auction.types';
+import {
+  AuctionItem,
+  AuctionFilters as AuctionFiltersType,
+  SortOption,
+  NodeTier,
+  AuctionStatus,
+} from '../../types/auction.types';
 import AuctionCard from './AuctionCard';
 import AuctionFilters from './AuctionFilters';
 
@@ -22,23 +28,35 @@ const AuctionList: React.FC<AuctionListProps> = ({ onItemSelect }) => {
 
   const generateAuctionData = useCallback((): AuctionItem[] => {
     const locations = [
-      '新加坡', '香港', '东京', '首尔', '悉尼', '伦敦', '法兰克福', '纽约',
-      '洛杉矶', '多伦多', '阿姆斯特丹', '苏黎世', '斯德哥尔摩', '迪拜'
+      '新加坡',
+      '香港',
+      '东京',
+      '首尔',
+      '悉尼',
+      '伦敦',
+      '法兰克福',
+      '纽约',
+      '洛杉矶',
+      '多伦多',
+      '阿姆斯特丹',
+      '苏黎世',
+      '斯德哥尔摩',
+      '迪拜',
     ];
-    
+
     const tiers: NodeTier[] = ['genesis', 'premium', 'standard'];
     const statuses: AuctionStatus[] = ['active', 'upcoming'];
-    
+
     return Array.from({ length: 50 }, (_, index) => {
       const nodeId = String(index + 1).padStart(3, '0');
       const tier = tiers[index % tiers.length];
       const location = locations[index % locations.length];
       const status = statuses[index % statuses.length];
-      
+
       const basePrice = tier === 'genesis' ? 80000 : tier === 'premium' ? 50000 : 30000;
       const currentPrice = basePrice + Math.floor(Math.random() * basePrice * 0.5);
       const endTime = new Date(Date.now() + Math.random() * 7 * 24 * 60 * 60 * 1000);
-      
+
       return {
         id: `node-${nodeId}`,
         title: `${tier === 'genesis' ? '创世' : tier === 'premium' ? '高级' : '标准'}验证节点 #${nodeId}`,
@@ -46,23 +64,21 @@ const AuctionList: React.FC<AuctionListProps> = ({ onItemSelect }) => {
         images: [`/node-images/node-${nodeId}.jpg`],
         category: 'validator-node',
         tier,
-        
+
         specifications: {
           location,
           datacenter: `${location} T3+ 数据中心`,
-          hardware: tier === 'genesis' ? 'AMD EPYC 7763 (64核)' : 
-                   tier === 'premium' ? 'Intel Xeon Gold 6248R (24核)' : 
-                   'Intel Xeon Silver 4314 (16核)',
+          hardware:
+            tier === 'genesis'
+              ? 'AMD EPYC 7763 (64核)'
+              : tier === 'premium'
+                ? 'Intel Xeon Gold 6248R (24核)'
+                : 'Intel Xeon Silver 4314 (16核)',
           bandwidth: tier === 'genesis' ? '100Gbps' : tier === 'premium' ? '25Gbps' : '10Gbps',
           uptime: tier === 'genesis' ? '99.999%' : tier === 'premium' ? '99.99%' : '99.9%',
-          features: [
-            '量子安全加密',
-            '自动故障转移',
-            '实时监控',
-            '7x24技术支持'
-          ]
+          features: ['量子安全加密', '自动故障转移', '实时监控', '7x24技术支持'],
         },
-        
+
         auction: {
           id: `auction-${nodeId}`,
           startTime: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
@@ -73,55 +89,62 @@ const AuctionList: React.FC<AuctionListProps> = ({ onItemSelect }) => {
           increment: Math.floor(basePrice * 0.02),
           reservePrice: basePrice * 1.2,
           buyNowPrice: currentPrice * 1.5,
-          
+
           totalBids: Math.floor(Math.random() * 50) + 1,
           uniqueBidders: Math.floor(Math.random() * 20) + 1,
           viewCount: Math.floor(Math.random() * 500) + 50,
           watchCount: Math.floor(Math.random() * 30) + 5,
-          
+
           leadingBidder: {
             id: `user-${Math.floor(Math.random() * 1000)}`,
             username: `用户${Math.floor(Math.random() * 1000)}`,
             bidTime: new Date(Date.now() - Math.random() * 60 * 60 * 1000),
-            amount: currentPrice
+            amount: currentPrice,
           },
-          
+
           autoExtend: true,
           extensionTime: 10,
-          minBidIncrement: Math.floor(basePrice * 0.01)
+          minBidIncrement: Math.floor(basePrice * 0.01),
         },
-        
+
         seller: {
           id: 'quantaureum-official',
           username: 'Quantaureum官方',
           rating: 5.0,
           totalSales: 1000,
-          memberSince: new Date('2024-01-01')
-        }
+          memberSince: new Date('2024-01-01'),
+        },
       };
     });
   }, []);
 
-  const applyFilters = useCallback((data: AuctionItem[], currentFilters: AuctionFiltersType): AuctionItem[] => {
-    return data.filter(item => {
-      if (currentFilters.tier && item.tier !== currentFilters.tier) return false;
-      if (currentFilters.location && item.specifications.location !== currentFilters.location) return false;
-      if (currentFilters.status && item.auction.status !== currentFilters.status) return false;
-      if (currentFilters.priceRange) {
-        if (item.auction.currentPrice < currentFilters.priceRange.min || 
-            item.auction.currentPrice > currentFilters.priceRange.max) return false;
-      }
-      if (currentFilters.endingSoon) {
-        const hoursLeft = (item.auction.endTime.getTime() - Date.now()) / (1000 * 60 * 60);
-        if (hoursLeft > 24) return false;
-      }
-      return true;
-    });
-  }, []);
+  const applyFilters = useCallback(
+    (data: AuctionItem[], currentFilters: AuctionFiltersType): AuctionItem[] => {
+      return data.filter((item) => {
+        if (currentFilters.tier && item.tier !== currentFilters.tier) return false;
+        if (currentFilters.location && item.specifications.location !== currentFilters.location)
+          return false;
+        if (currentFilters.status && item.auction.status !== currentFilters.status) return false;
+        if (currentFilters.priceRange) {
+          if (
+            item.auction.currentPrice < currentFilters.priceRange.min ||
+            item.auction.currentPrice > currentFilters.priceRange.max
+          )
+            return false;
+        }
+        if (currentFilters.endingSoon) {
+          const hoursLeft = (item.auction.endTime.getTime() - Date.now()) / (1000 * 60 * 60);
+          if (hoursLeft > 24) return false;
+        }
+        return true;
+      });
+    },
+    []
+  );
 
   const applySorting = useCallback((data: AuctionItem[], sort: SortOption): AuctionItem[] => {
     const sorted = [...data];
-    
+
     switch (sort) {
       case 'ending_soon':
         return sorted.sort((a, b) => a.auction.endTime.getTime() - b.auction.endTime.getTime());
@@ -146,11 +169,11 @@ const AuctionList: React.FC<AuctionListProps> = ({ onItemSelect }) => {
     const allData = generateAuctionData();
     const filtered = applyFilters(allData, filters);
     const sorted = applySorting(filtered, sortBy);
-    
+
     // Paginate
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedData = sorted.slice(startIndex, startIndex + itemsPerPage);
-    
+
     setAuctions(paginatedData);
     setTotalPages(Math.ceil(sorted.length / itemsPerPage));
     setLoading(false);
@@ -181,83 +204,93 @@ const AuctionList: React.FC<AuctionListProps> = ({ onItemSelect }) => {
   };
 
   // 快速出价处理
-  const handleQuickBid = async (auctionId: string, amount: number): Promise<{ success: boolean; message: string }> => {
+  const handleQuickBid = async (
+    auctionId: string,
+    amount: number
+  ): Promise<{ success: boolean; message: string }> => {
     try {
       // 模拟API调用
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // 更新本地状态
-      setAuctions(prev => prev.map(auction =>
-        auction.id === auctionId
-          ? {
-              ...auction,
-              auction: {
-                ...auction.auction,
-                currentPrice: amount,
-                totalBids: auction.auction.totalBids + 1,
-                leadingBidder: {
-                  id: 'current-user',
-                  username: '当前用户',
-                  bidTime: new Date(),
-                  amount
-                }
+      setAuctions((prev) =>
+        prev.map((auction) =>
+          auction.id === auctionId
+            ? {
+                ...auction,
+                auction: {
+                  ...auction.auction,
+                  currentPrice: amount,
+                  totalBids: auction.auction.totalBids + 1,
+                  leadingBidder: {
+                    id: 'current-user',
+                    username: '当前用户',
+                    bidTime: new Date(),
+                    amount,
+                  },
+                },
               }
-            }
-          : auction
-      ));
+            : auction
+        )
+      );
 
-      if (Math.random() > 0.1) { // 90% 成功率
+      if (Math.random() > 0.1) {
+        // 90% 成功率
         return {
           success: true,
-          message: `成功出价 ¥${amount.toLocaleString()}！`
+          message: `成功出价 ¥${amount.toLocaleString()}！`,
         };
       } else {
         return {
           success: false,
-          message: '出价失败，可能被其他用户超越，请重试'
+          message: '出价失败，可能被其他用户超越，请重试',
         };
       }
     } catch {
       return {
         success: false,
-        message: '网络错误，请重试'
+        message: '网络错误，请重试',
       };
     }
   };
 
   // 一口价购买处理
-  const handleBuyNow = async (auctionId: string): Promise<{ success: boolean; message: string }> => {
+  const handleBuyNow = async (
+    auctionId: string
+  ): Promise<{ success: boolean; message: string }> => {
     try {
       // 模拟API调用
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // 更新拍卖状态为已结束
-      setAuctions(prev => prev.map(auction =>
-        auction.id === auctionId
-          ? {
-              ...auction,
-              auction: {
-                ...auction.auction,
-                status: 'ended' as const,
-                leadingBidder: {
-                  id: 'current-user',
-                  username: '当前用户',
-                  bidTime: new Date(),
-                  amount: auction.auction.buyNowPrice || auction.auction.currentPrice
-                }
+      setAuctions((prev) =>
+        prev.map((auction) =>
+          auction.id === auctionId
+            ? {
+                ...auction,
+                auction: {
+                  ...auction.auction,
+                  status: 'ended' as const,
+                  leadingBidder: {
+                    id: 'current-user',
+                    username: '当前用户',
+                    bidTime: new Date(),
+                    amount: auction.auction.buyNowPrice || auction.auction.currentPrice,
+                  },
+                },
               }
-            }
-          : auction
-      ));
+            : auction
+        )
+      );
 
       return {
         success: true,
-        message: '购买成功！'
+        message: '购买成功！',
       };
     } catch {
       return {
         success: false,
-        message: '购买失败，请重试'
+        message: '购买失败，请重试',
       };
     }
   };
@@ -271,9 +304,7 @@ const AuctionList: React.FC<AuctionListProps> = ({ onItemSelect }) => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-4">
-            🏆 节点拍卖大厅
-          </h1>
+          <h1 className="text-4xl font-bold text-white mb-4">🏆 节点拍卖大厅</h1>
           <p className="text-gray-300 max-w-2xl mx-auto">
             参与全球验证节点竞拍，获得稳定收益和网络治理权
           </p>
@@ -282,10 +313,7 @@ const AuctionList: React.FC<AuctionListProps> = ({ onItemSelect }) => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* 左侧筛选器 */}
           <div className="lg:w-1/4">
-            <AuctionFilters
-              filters={filters}
-              onFiltersChange={handleFilterChange}
-            />
+            <AuctionFilters filters={filters} onFiltersChange={handleFilterChange} />
           </div>
 
           {/* 右侧商品列表 */}
@@ -293,9 +321,10 @@ const AuctionList: React.FC<AuctionListProps> = ({ onItemSelect }) => {
             {/* 排序和统计 */}
             <div className="flex justify-between items-center mb-6">
               <div className="text-gray-300">
-                共找到 <span className="text-cyan-400 font-semibold">{auctions.length}</span> 个拍卖商品
+                共找到 <span className="text-cyan-400 font-semibold">{auctions.length}</span>{' '}
+                个拍卖商品
               </div>
-              
+
               <select
                 value={sortBy}
                 onChange={(e) => handleSortChange(e.target.value as SortOption)}

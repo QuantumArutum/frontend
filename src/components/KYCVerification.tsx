@@ -9,16 +9,16 @@ import { Badge } from './ui/Badge';
 import { Alert, AlertDescription } from './ui/Alert';
 import { Progress } from './ui/progress';
 import { Separator } from './ui/Separator';
-import { 
-  Shield, 
-  Upload, 
-  CheckCircle, 
-  AlertTriangle, 
+import {
+  Shield,
+  Upload,
+  CheckCircle,
+  AlertTriangle,
   Clock,
   User,
   Camera,
   Eye,
-  Lock
+  Lock,
 } from 'lucide-react';
 
 // 个人信息类型
@@ -77,7 +77,6 @@ interface SelectOption {
   label: string;
 }
 
-
 const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [kycData, setKycData] = useState<KYCData>({
@@ -90,21 +89,21 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
       address: '',
       city: '',
       postalCode: '',
-      country: ''
+      country: '',
     },
     documents: {
       idType: '',
       idNumber: '',
       idFrontImage: null,
       idBackImage: null,
-      selfieImage: null
+      selfieImage: null,
     },
     verification: {
       status: 'not_started',
       submittedAt: null,
       reviewedAt: null,
-      rejectionReason: ''
-    }
+      rejectionReason: '',
+    },
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -113,13 +112,13 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
     { id: 1, title: '个人信息', description: '填写基本个人信息' },
     { id: 2, title: '身份证件', description: '上传身份证明文件' },
     { id: 3, title: '人脸验证', description: '上传自拍照片进行人脸验证' },
-    { id: 4, title: '提交审核', description: '提交KYC申请等待审核' }
+    { id: 4, title: '提交审核', description: '提交KYC申请等待审核' },
   ];
 
   const idTypes: SelectOption[] = [
     { value: 'id_card', label: '身份证' },
     { value: 'passport', label: '护照' },
-    { value: 'driver_license', label: '驾驶证' }
+    { value: 'driver_license', label: '驾驶证' },
   ];
 
   const countries: SelectOption[] = [
@@ -127,20 +126,20 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
     { value: 'US', label: '美国' },
     { value: 'UK', label: '英国' },
     { value: 'JP', label: '日本' },
-    { value: 'KR', label: '韩国' }
+    { value: 'KR', label: '韩国' },
   ];
 
   const fetchKYCStatus = useCallback(async (): Promise<void> => {
     try {
       const response = await fetch(`/api/v1/kyc/status/${userId}`, {
-        credentials: 'include'
+        credentials: 'include',
       });
 
       if (response.ok) {
         const data = await response.json();
         if (data.success && data.data.kyc) {
           setKycData(data.data.kyc);
-          
+
           if (data.data.kyc.verification.status === 'pending') {
             setCurrentStep(4);
           } else if (data.data.kyc.verification.status === 'approved') {
@@ -158,22 +157,22 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
   }, [fetchKYCStatus]);
 
   const handlePersonalInfoChange = (field: keyof PersonalInfo, value: string): void => {
-    setKycData(prev => ({
+    setKycData((prev) => ({
       ...prev,
       personalInfo: {
         ...prev.personalInfo,
-        [field]: value
-      }
+        [field]: value,
+      },
     }));
   };
 
   const handleDocumentChange = (field: keyof Documents, value: string | null): void => {
-    setKycData(prev => ({
+    setKycData((prev) => ({
       ...prev,
       documents: {
         ...prev.documents,
-        [field]: value
-      }
+        [field]: value,
+      },
     }));
   };
 
@@ -204,7 +203,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
       const response = await fetch('/api/v1/kyc/upload', {
         method: 'POST',
         credentials: 'include',
-        body: formData
+        body: formData,
       });
 
       if (response.ok) {
@@ -233,15 +232,24 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
       phoneNumber: '手机号码',
       address: '地址',
       city: '城市',
-      country: '国家'
+      country: '国家',
     };
     return labels[field] || field;
   };
 
   const validatePersonalInfo = (): boolean => {
     const { personalInfo } = kycData;
-    const required: (keyof PersonalInfo)[] = ['firstName', 'lastName', 'dateOfBirth', 'nationality', 'phoneNumber', 'address', 'city', 'country'];
-    
+    const required: (keyof PersonalInfo)[] = [
+      'firstName',
+      'lastName',
+      'dateOfBirth',
+      'nationality',
+      'phoneNumber',
+      'address',
+      'city',
+      'country',
+    ];
+
     for (const field of required) {
       if (!personalInfo[field]) {
         setError(`请填写${getFieldLabel(field)}`);
@@ -260,7 +268,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
 
   const validateDocuments = (): boolean => {
     const { documents } = kycData;
-    
+
     if (!documents.idType) {
       setError('请选择证件类型');
       return false;
@@ -324,21 +332,21 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(kycData)
+        body: JSON.stringify(kycData),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        setKycData(prev => ({
+        setKycData((prev) => ({
           ...prev,
           verification: {
             ...prev.verification,
             status: 'pending',
-            submittedAt: new Date().toISOString()
-          }
+            submittedAt: new Date().toISOString(),
+          },
         }));
 
         if (onKYCComplete) {
@@ -358,12 +366,19 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
     if (stepId < currentStep) {
       return <CheckCircle className="h-5 w-5 text-green-500" />;
     } else if (stepId === currentStep) {
-      return <div className="h-5 w-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">{stepId}</div>;
+      return (
+        <div className="h-5 w-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">
+          {stepId}
+        </div>
+      );
     } else {
-      return <div className="h-5 w-5 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center text-xs font-bold">{stepId}</div>;
+      return (
+        <div className="h-5 w-5 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center text-xs font-bold">
+          {stepId}
+        </div>
+      );
     }
   };
-
 
   const renderPersonalInfoStep = (): React.ReactNode => (
     <div className="space-y-4">
@@ -373,7 +388,9 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
           <Input
             id="firstName"
             value={kycData.personalInfo.firstName}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handlePersonalInfoChange('firstName', e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handlePersonalInfoChange('firstName', e.target.value)
+            }
             placeholder="请输入姓名"
           />
         </div>
@@ -382,7 +399,9 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
           <Input
             id="lastName"
             value={kycData.personalInfo.lastName}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handlePersonalInfoChange('lastName', e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handlePersonalInfoChange('lastName', e.target.value)
+            }
             placeholder="请输入姓氏"
           />
         </div>
@@ -395,7 +414,9 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
             id="dateOfBirth"
             type="date"
             value={kycData.personalInfo.dateOfBirth}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handlePersonalInfoChange('dateOfBirth', e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handlePersonalInfoChange('dateOfBirth', e.target.value)
+            }
           />
         </div>
         <div>
@@ -407,7 +428,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
             className="w-full p-2 border rounded-md"
           >
             <option value="">请选择国籍</option>
-            {countries.map(country => (
+            {countries.map((country) => (
               <option key={country.value} value={country.value}>
                 {country.label}
               </option>
@@ -421,7 +442,9 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
         <Input
           id="phoneNumber"
           value={kycData.personalInfo.phoneNumber}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => handlePersonalInfoChange('phoneNumber', e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handlePersonalInfoChange('phoneNumber', e.target.value)
+          }
           placeholder="请输入手机号码"
         />
       </div>
@@ -431,7 +454,9 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
         <Input
           id="address"
           value={kycData.personalInfo.address}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => handlePersonalInfoChange('address', e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handlePersonalInfoChange('address', e.target.value)
+          }
           placeholder="请输入详细地址"
         />
       </div>
@@ -442,7 +467,9 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
           <Input
             id="city"
             value={kycData.personalInfo.city}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handlePersonalInfoChange('city', e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handlePersonalInfoChange('city', e.target.value)
+            }
             placeholder="城市"
           />
         </div>
@@ -451,7 +478,9 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
           <Input
             id="postalCode"
             value={kycData.personalInfo.postalCode}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handlePersonalInfoChange('postalCode', e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handlePersonalInfoChange('postalCode', e.target.value)
+            }
             placeholder="邮政编码"
           />
         </div>
@@ -464,7 +493,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
             className="w-full p-2 border rounded-md"
           >
             <option value="">请选择国家</option>
-            {countries.map(country => (
+            {countries.map((country) => (
               <option key={country.value} value={country.value}>
                 {country.label}
               </option>
@@ -486,7 +515,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
           className="w-full p-2 border rounded-md"
         >
           <option value="">请选择证件类型</option>
-          {idTypes.map(type => (
+          {idTypes.map((type) => (
             <option key={type.value} value={type.value}>
               {type.label}
             </option>
@@ -499,7 +528,9 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
         <Input
           id="idNumber"
           value={kycData.documents.idNumber}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => handleDocumentChange('idNumber', e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleDocumentChange('idNumber', e.target.value)
+          }
           placeholder="请输入证件号码"
         />
       </div>
@@ -520,7 +551,9 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0], 'idFrontImage')}
+                  onChange={(e) =>
+                    e.target.files?.[0] && handleFileUpload(e.target.files[0], 'idFrontImage')
+                  }
                   className="hidden"
                   id="idFrontUpload"
                 />
@@ -553,7 +586,9 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0], 'idBackImage')}
+                    onChange={(e) =>
+                      e.target.files?.[0] && handleFileUpload(e.target.files[0], 'idBackImage')
+                    }
                     className="hidden"
                     id="idBackUpload"
                   />
@@ -579,9 +614,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
       <div className="text-center">
         <Camera className="h-12 w-12 text-blue-500 mx-auto mb-4" />
         <h3 className="text-lg font-medium mb-2">人脸验证</h3>
-        <p className="text-sm text-gray-600 mb-6">
-          请上传一张清晰的自拍照片，用于验证您的身份
-        </p>
+        <p className="text-sm text-gray-600 mb-6">请上传一张清晰的自拍照片，用于验证您的身份</p>
       </div>
 
       <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
@@ -597,15 +630,18 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
             <div>
               <p className="text-gray-600 mb-2">请上传自拍照片</p>
               <p className="text-xs text-gray-500 mb-4">
-                • 请确保光线充足，面部清晰可见<br/>
-                • 请勿佩戴帽子、墨镜等遮挡物<br/>
-                • 照片中只能有您一个人
+                • 请确保光线充足，面部清晰可见
+                <br />
+                • 请勿佩戴帽子、墨镜等遮挡物
+                <br />• 照片中只能有您一个人
               </p>
             </div>
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0], 'selfieImage')}
+              onChange={(e) =>
+                e.target.files?.[0] && handleFileUpload(e.target.files[0], 'selfieImage')
+              }
               className="hidden"
               id="selfieUpload"
             />
@@ -623,7 +659,6 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
       </div>
     </div>
   );
-
 
   const renderSubmitStep = (): React.ReactNode => (
     <div className="space-y-6">
@@ -647,7 +682,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
           <div>
             <span className="text-gray-600">证件类型:</span>
             <span className="ml-2 font-medium">
-              {idTypes.find(t => t.value === kycData.documents.idType)?.label}
+              {idTypes.find((t) => t.value === kycData.documents.idType)?.label}
             </span>
           </div>
           <div>
@@ -683,7 +718,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
 
   const renderStatusStep = (): React.ReactNode => {
     const { verification } = kycData;
-    
+
     return (
       <div className="space-y-6 text-center">
         {verification.status === 'pending' && (
@@ -691,9 +726,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
             <Clock className="h-16 w-16 text-yellow-500 mx-auto" />
             <div>
               <h3 className="text-xl font-medium mb-2">审核中</h3>
-              <p className="text-gray-600 mb-4">
-                您的KYC申请已提交，我们将在1-3个工作日内完成审核
-              </p>
+              <p className="text-gray-600 mb-4">您的KYC申请已提交，我们将在1-3个工作日内完成审核</p>
               {verification.submittedAt && (
                 <Badge variant="secondary">
                   提交时间: {new Date(verification.submittedAt).toLocaleString()}
@@ -733,11 +766,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
                   <strong>拒绝原因:</strong> {verification.rejectionReason}
                 </AlertDescription>
               </Alert>
-              <Button
-                onClick={() => setCurrentStep(1)}
-                className="mt-4"
-                variant="outline"
-              >
+              <Button onClick={() => setCurrentStep(1)} className="mt-4" variant="outline">
                 重新提交
               </Button>
             </div>
@@ -775,22 +804,22 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
               <span className="text-sm font-medium">验证进度</span>
               <span className="text-sm text-gray-500">{currentStep}/4</span>
             </div>
-            
+
             <Progress value={(currentStep / 4) * 100} className="h-2" />
-            
+
             <div className="grid grid-cols-4 gap-4">
               {steps.map((step) => (
                 <div key={step.id} className="flex flex-col items-center text-center">
                   {getStepIcon(step.id)}
                   <div className="mt-2">
-                    <div className={`text-xs font-medium ${
-                      step.id <= currentStep ? 'text-gray-900' : 'text-gray-500'
-                    }`}>
+                    <div
+                      className={`text-xs font-medium ${
+                        step.id <= currentStep ? 'text-gray-900' : 'text-gray-500'
+                      }`}
+                    >
                       {step.title}
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      {step.description}
-                    </div>
+                    <div className="text-xs text-gray-500 mt-1">{step.description}</div>
                   </div>
                 </div>
               ))}
@@ -817,10 +846,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({ userId, onKYCComplete
             >
               上一步
             </Button>
-            <Button
-              onClick={handleNextStep}
-              disabled={isLoading}
-            >
+            <Button onClick={handleNextStep} disabled={isLoading}>
               {isLoading ? '处理中...' : '下一步'}
             </Button>
           </div>

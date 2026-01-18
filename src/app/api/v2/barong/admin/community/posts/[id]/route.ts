@@ -20,10 +20,7 @@ export async function DELETE(
     const result = await db.deletePost(id);
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -32,9 +29,6 @@ export async function DELETE(
     });
   } catch (error) {
     console.error('Delete post error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

@@ -22,11 +22,13 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
   onBid,
   onBuyNow,
   onWatchToggle,
-  isWatched = false
+  isWatched = false,
 }) => {
   const [timeLeft, setTimeLeft] = useState('');
   const [isEnding, setIsEnding] = useState(false);
-  const [bidAmount, setBidAmount] = useState(auction.auction.currentPrice + auction.auction.minBidIncrement);
+  const [bidAmount, setBidAmount] = useState(
+    auction.auction.currentPrice + auction.auction.minBidIncrement
+  );
   const [bidHistory, setBidHistory] = useState<BidRecord[]>([]);
   const [isSubmittingBid, setIsSubmittingBid] = useState(false);
   const [showBidForm, setShowBidForm] = useState(false);
@@ -34,20 +36,27 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
   const [isWatchedState, setIsWatchedState] = useState(isWatched);
   const [showAutoBidForm, setShowAutoBidForm] = useState(false);
   const [autoBidSetting, setAutoBidSetting] = useState<AutoBidSetting | null>(null);
-  const [notification, setNotification] = useState<{ type: 'success' | 'error' | 'info' | 'warning'; message: string } | null>(null);
+  const [notification, setNotification] = useState<{
+    type: 'success' | 'error' | 'info' | 'warning';
+    message: string;
+  } | null>(null);
 
   // 通知系统 - 必须在 useEffect 之前定义
-  const showNotification = useCallback((type: 'success' | 'error' | 'info' | 'warning', message: string) => {
-    setNotification({ type, message });
-    setTimeout(() => setNotification(null), 3000);
-  }, []);
+  const showNotification = useCallback(
+    (type: 'success' | 'error' | 'info' | 'warning', message: string) => {
+      setNotification({ type, message });
+      setTimeout(() => setNotification(null), 3000);
+    },
+    []
+  );
 
   // 实时价格更新模拟
   useEffect(() => {
     if (auction.auction.status === 'active') {
       const priceUpdateInterval = setInterval(() => {
         // 模拟价格更新（实际应该通过WebSocket接收）
-        if (Math.random() < 0.15) { // 15% 概率价格更新
+        if (Math.random() < 0.15) {
+          // 15% 概率价格更新
           const increment = auction.auction.increment;
           const newPrice = currentPrice + increment;
           setCurrentPrice(newPrice);
@@ -60,7 +69,13 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
 
       return () => clearInterval(priceUpdateInterval);
     }
-  }, [currentPrice, auction.auction.increment, auction.auction.status, auction.auction.minBidIncrement, showNotification]);
+  }, [
+    currentPrice,
+    auction.auction.increment,
+    auction.auction.status,
+    auction.auction.minBidIncrement,
+    showNotification,
+  ]);
 
   // 倒计时更新
   useEffect(() => {
@@ -126,18 +141,21 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
   }, [showNotification]);
 
   // 显示确认对话框
-  const showConfirmDialog = useCallback((options: {
-    title: string;
-    content: string;
-    okText: string;
-    cancelText: string;
-  }): Promise<boolean> => {
-    return new Promise((resolve) => {
-      // 这里可以使用 Ant Design 的 Modal.confirm 或自定义确认对话框
-      const confirmed = window.confirm(`${options.title}\n\n${options.content}`);
-      resolve(confirmed);
-    });
-  }, []);
+  const showConfirmDialog = useCallback(
+    (options: {
+      title: string;
+      content: string;
+      okText: string;
+      cancelText: string;
+    }): Promise<boolean> => {
+      return new Promise((resolve) => {
+        // 这里可以使用 Ant Design 的 Modal.confirm 或自定义确认对话框
+        const confirmed = window.confirm(`${options.title}\n\n${options.content}`);
+        resolve(confirmed);
+      });
+    },
+    []
+  );
 
   // 关注功能
   const handleWatchToggle = useCallback(() => {
@@ -167,7 +185,7 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
           amount: Math.round(bidAmount),
           timestamp: bidTime,
           status: 'success',
-          isWinning: i === 0
+          isWinning: i === 0,
         });
       }
 
@@ -226,7 +244,10 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
     }
 
     if (bidAmount < currentPrice + auction.auction.minBidIncrement) {
-      showNotification('error', `出价必须至少为 ${formatPrice(currentPrice + auction.auction.minBidIncrement)}`);
+      showNotification(
+        'error',
+        `出价必须至少为 ${formatPrice(currentPrice + auction.auction.minBidIncrement)}`
+      );
       return;
     }
 
@@ -248,9 +269,9 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
           amount: bidAmount,
           timestamp: new Date(),
           status: 'success',
-          isWinning: true
+          isWinning: true,
         };
-        setBidHistory(prev => [newBid, ...prev.map(bid => ({ ...bid, isWinning: false }))]);
+        setBidHistory((prev) => [newBid, ...prev.map((bid) => ({ ...bid, isWinning: false }))]);
       } else {
         showNotification('error', result.message);
       }
@@ -278,7 +299,7 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
       title: '确认一口价购买',
       content: `确定要以 ${formatPrice(auction.auction.buyNowPrice)} 的价格立即购买此节点吗？`,
       okText: '确认购买',
-      cancelText: '取消'
+      cancelText: '取消',
     });
 
     if (!confirmed) return;
@@ -300,20 +321,23 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
   };
 
   // 自动出价设置
-  const handleSetAutoBid = useCallback((maxAmount: number, increment: number) => {
-    const newAutoBidSetting: AutoBidSetting = {
-      id: `auto-bid-${Date.now()}`,
-      auctionId: auction.auction.id,
-      userId: 'current-user',
-      maxAmount,
-      increment,
-      isActive: true,
-      createdAt: new Date()
-    };
-    setAutoBidSetting(newAutoBidSetting);
-    setShowAutoBidForm(false);
-    showNotification('success', `已设置自动出价，最高 ${formatPrice(maxAmount)}`);
-  }, [auction.auction.id, showNotification]);
+  const handleSetAutoBid = useCallback(
+    (maxAmount: number, increment: number) => {
+      const newAutoBidSetting: AutoBidSetting = {
+        id: `auto-bid-${Date.now()}`,
+        auctionId: auction.auction.id,
+        userId: 'current-user',
+        maxAmount,
+        increment,
+        isActive: true,
+        createdAt: new Date(),
+      };
+      setAutoBidSetting(newAutoBidSetting);
+      setShowAutoBidForm(false);
+      showNotification('success', `已设置自动出价，最高 ${formatPrice(maxAmount)}`);
+    },
+    [auction.auction.id, showNotification]
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 py-8">
@@ -326,7 +350,12 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
           className="flex items-center text-cyan-400 hover:text-cyan-300 mb-6 transition-colors"
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
           返回拍卖列表
         </motion.button>
@@ -344,7 +373,9 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
                 {/* 商品图片 */}
                 <div className="md:w-1/2">
                   <div className="relative h-64 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden">
-                    <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-semibold text-white bg-gradient-to-r ${getTierColor(auction.tier)}`}>
+                    <div
+                      className={`absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-semibold text-white bg-gradient-to-r ${getTierColor(auction.tier)}`}
+                    >
                       {getTierLabel(auction.tier)}
                     </div>
                     <div className="w-full h-full flex items-center justify-center">
@@ -357,7 +388,7 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
                 <div className="md:w-1/2">
                   <h1 className="text-2xl font-bold text-white mb-4">{auction.title}</h1>
                   <p className="text-gray-300 mb-4">{auction.description}</p>
-                  
+
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-400">位置:</span>
@@ -395,8 +426,18 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {auction.specifications.features.map((feature, index) => (
                   <div key={index} className="flex items-center">
-                    <svg className="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="w-5 h-5 text-green-400 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     <span className="text-gray-300">{feature}</span>
                   </div>
@@ -414,9 +455,14 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
               <h3 className="text-xl font-bold text-white mb-4">出价历史</h3>
               <div className="space-y-3 max-h-64 overflow-y-auto">
                 {bidHistory.map((bid, index) => (
-                  <div key={bid.id} className="flex items-center justify-between py-2 border-b border-white/10 last:border-b-0">
+                  <div
+                    key={bid.id}
+                    className="flex items-center justify-between py-2 border-b border-white/10 last:border-b-0"
+                  >
                     <div className="flex items-center">
-                      <div className={`w-2 h-2 rounded-full mr-3 ${bid.isWinning ? 'bg-green-400' : 'bg-gray-400'}`}></div>
+                      <div
+                        className={`w-2 h-2 rounded-full mr-3 ${bid.isWinning ? 'bg-green-400' : 'bg-gray-400'}`}
+                      ></div>
                       <div>
                         <div className="text-white font-semibold">{bid.bidderUsername}</div>
                         <div className="text-gray-400 text-sm">
@@ -426,9 +472,7 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
                     </div>
                     <div className="text-right">
                       <div className="text-cyan-400 font-bold">{formatPrice(bid.amount)}</div>
-                      {bid.isWinning && (
-                        <div className="text-green-400 text-sm">当前最高</div>
-                      )}
+                      {bid.isWinning && <div className="text-green-400 text-sm">当前最高</div>}
                     </div>
                   </div>
                 ))}
@@ -452,10 +496,22 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
                 </div>
 
                 <div className="flex items-center justify-center mb-4">
-                  <svg className="w-5 h-5 text-yellow-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    className="w-5 h-5 text-yellow-400 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
-                  <span className={`font-semibold ${isEnding ? 'text-red-400' : 'text-yellow-400'}`}>
+                  <span
+                    className={`font-semibold ${isEnding ? 'text-red-400' : 'text-yellow-400'}`}
+                  >
                     {timeLeft}
                   </span>
                 </div>
@@ -479,7 +535,7 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
                   {[
                     auction.auction.currentPrice + auction.auction.minBidIncrement,
                     auction.auction.currentPrice + auction.auction.minBidIncrement * 2,
-                    auction.auction.currentPrice + auction.auction.minBidIncrement * 5
+                    auction.auction.currentPrice + auction.auction.minBidIncrement * 5,
                   ].map((amount, index) => (
                     <button
                       key={index}
@@ -505,8 +561,18 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
                   }`}
                 >
                   <div className="flex items-center justify-center">
-                    <svg className="w-4 h-4 mr-2" fill={isWatchedState ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    <svg
+                      className="w-4 h-4 mr-2"
+                      fill={isWatchedState ? 'currentColor' : 'none'}
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                      />
                     </svg>
                     {isWatchedState ? '已关注' : '关注'}
                   </div>
@@ -524,8 +590,18 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
                     }`}
                   >
                     <div className="flex items-center justify-center">
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      <svg
+                        className="w-4 h-4 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 10V3L4 14h7v7l9-11h-7z"
+                        />
                       </svg>
                       {autoBidSetting?.isActive ? '自动出价中' : '自动出价'}
                     </div>
@@ -551,7 +627,11 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
                     >
                       <div>
                         <label className="block text-sm text-gray-400 mb-1">
-                          出价金额 (最低: {formatPrice(auction.auction.currentPrice + auction.auction.minBidIncrement)})
+                          出价金额 (最低:{' '}
+                          {formatPrice(
+                            auction.auction.currentPrice + auction.auction.minBidIncrement
+                          )}
+                          )
                         </label>
                         <input
                           type="number"
@@ -588,15 +668,11 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
 
               {/* 状态提示 */}
               {auction.auction.status === 'upcoming' && (
-                <div className="text-center py-4 text-yellow-400">
-                  拍卖尚未开始
-                </div>
+                <div className="text-center py-4 text-yellow-400">拍卖尚未开始</div>
               )}
 
               {auction.auction.status === 'ended' && (
-                <div className="text-center py-4 text-gray-400">
-                  拍卖已结束
-                </div>
+                <div className="text-center py-4 text-gray-400">拍卖已结束</div>
               )}
             </motion.div>
 
@@ -646,24 +722,54 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
                 notification.type === 'success'
                   ? 'bg-green-500 text-white'
                   : notification.type === 'error'
-                  ? 'bg-red-500 text-white'
-                  : 'bg-blue-500 text-white'
+                    ? 'bg-red-500 text-white'
+                    : 'bg-blue-500 text-white'
               }`}
             >
               <div className="flex items-center">
                 {notification.type === 'success' && (
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-5 h-5 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 )}
                 {notification.type === 'error' && (
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-5 h-5 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 )}
                 {notification.type === 'info' && (
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    className="w-5 h-5 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                 )}
                 {notification.message}
@@ -725,7 +831,10 @@ const AuctionDetail: React.FC<AuctionDetailProps> = ({
                     <button
                       onClick={() => {
                         // 这里应该获取表单值并调用 handleSetAutoBid
-                        handleSetAutoBid(currentPrice + auction.auction.minBidIncrement * 10, auction.auction.minBidIncrement);
+                        handleSetAutoBid(
+                          currentPrice + auction.auction.minBidIncrement * 10,
+                          auction.auction.minBidIncrement
+                        );
                       }}
                       className="flex-1 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all"
                     >

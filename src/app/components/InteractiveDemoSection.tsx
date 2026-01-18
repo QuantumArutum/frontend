@@ -24,52 +24,103 @@ const InteractiveDemoSection = () => {
   const [demoStep, setDemoStep] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
-  const demos: Record<DemoKey, Demo> = useMemo(() => ({
-    'smart-contract': {
-      title: t('demo.demos.smart-contract.title'),
-      icon: t('demo.demos.smart-contract.icon'),
-      description: t('demo.demos.smart-contract.description'),
-      steps: [
-        { title: t('demo.steps.write_contract'), code: 'contract QuantumToken {\n  mapping(address => uint256) balances;\n  \n  function transfer(address to, uint256 amount) {\n    require(balances[msg.sender] >= amount);\n    balances[msg.sender] -= amount;\n    balances[to] += amount;\n  }\n}', status: 'ready' },
-        { title: t('demo.steps.quantum_compile'), code: t('demo.code.compiling'), status: 'compiling' },
-        { title: t('demo.steps.deploy_chain'), code: t('demo.code.deploying'), status: 'deploying' },
-        { title: t('demo.steps.execute_call'), code: t('demo.code.executing'), status: 'executing' }
-      ]
-    },
-    'hardware-wallet': {
-      title: t('demo.demos.hardware-wallet.title'),
-      icon: t('demo.demos.hardware-wallet.icon'),
-      description: t('demo.demos.hardware-wallet.description'),
-      steps: [
-        { title: t('demo.steps.device_detect'), code: t('demo.code.scanning'), status: 'scanning' },
-        { title: t('demo.steps.key_generation'), code: t('demo.code.generating'), status: 'generating' },
-        { title: t('demo.steps.biometric_auth'), code: t('demo.code.authenticating'), status: 'authenticating' },
-        { title: t('demo.steps.quantum_sign'), code: t('demo.code.signing'), status: 'signing' }
-      ]
-    },
-    'cross-chain': {
-      title: t('demo.demos.cross-chain.title'),
-      icon: t('demo.demos.cross-chain.icon'),
-      description: t('demo.demos.cross-chain.description'),
-      steps: [
-        { title: t('demo.steps.select_source'), code: t('demo.code.selecting'), status: 'selecting' },
-        { title: t('demo.steps.create_proof'), code: t('demo.code.proving'), status: 'proving' },
-        { title: t('demo.steps.lock_assets'), code: t('demo.code.locking'), status: 'locking' },
-        { title: t('demo.steps.release_target'), code: t('demo.code.releasing'), status: 'releasing' }
-      ]
-    },
-    'mobile-app': {
-      title: t('demo.demos.mobile-app.title'),
-      icon: '📱',
-      description: t('demo.demos.mobile-app.description'),
-      steps: [
-        { title: t('demo.steps.app_launch'), code: t('demo.code.launching'), status: 'launching' },
-        { title: t('demo.steps.biometric_login'), code: t('demo.code.biometric'), status: 'biometric' },
-        { title: t('demo.steps.view_assets'), code: t('demo.code.loading'), status: 'loading' },
-        { title: t('demo.steps.send_transaction'), code: t('demo.code.sending'), status: 'sending' }
-      ]
-    }
-  }), [t]);
+  const demos: Record<DemoKey, Demo> = useMemo(
+    () => ({
+      'smart-contract': {
+        title: t('demo.demos.smart-contract.title'),
+        icon: t('demo.demos.smart-contract.icon'),
+        description: t('demo.demos.smart-contract.description'),
+        steps: [
+          {
+            title: t('demo.steps.write_contract'),
+            code: 'contract QuantumToken {\n  mapping(address => uint256) balances;\n  \n  function transfer(address to, uint256 amount) {\n    require(balances[msg.sender] >= amount);\n    balances[msg.sender] -= amount;\n    balances[to] += amount;\n  }\n}',
+            status: 'ready',
+          },
+          {
+            title: t('demo.steps.quantum_compile'),
+            code: t('demo.code.compiling'),
+            status: 'compiling',
+          },
+          {
+            title: t('demo.steps.deploy_chain'),
+            code: t('demo.code.deploying'),
+            status: 'deploying',
+          },
+          {
+            title: t('demo.steps.execute_call'),
+            code: t('demo.code.executing'),
+            status: 'executing',
+          },
+        ],
+      },
+      'hardware-wallet': {
+        title: t('demo.demos.hardware-wallet.title'),
+        icon: t('demo.demos.hardware-wallet.icon'),
+        description: t('demo.demos.hardware-wallet.description'),
+        steps: [
+          {
+            title: t('demo.steps.device_detect'),
+            code: t('demo.code.scanning'),
+            status: 'scanning',
+          },
+          {
+            title: t('demo.steps.key_generation'),
+            code: t('demo.code.generating'),
+            status: 'generating',
+          },
+          {
+            title: t('demo.steps.biometric_auth'),
+            code: t('demo.code.authenticating'),
+            status: 'authenticating',
+          },
+          { title: t('demo.steps.quantum_sign'), code: t('demo.code.signing'), status: 'signing' },
+        ],
+      },
+      'cross-chain': {
+        title: t('demo.demos.cross-chain.title'),
+        icon: t('demo.demos.cross-chain.icon'),
+        description: t('demo.demos.cross-chain.description'),
+        steps: [
+          {
+            title: t('demo.steps.select_source'),
+            code: t('demo.code.selecting'),
+            status: 'selecting',
+          },
+          { title: t('demo.steps.create_proof'), code: t('demo.code.proving'), status: 'proving' },
+          { title: t('demo.steps.lock_assets'), code: t('demo.code.locking'), status: 'locking' },
+          {
+            title: t('demo.steps.release_target'),
+            code: t('demo.code.releasing'),
+            status: 'releasing',
+          },
+        ],
+      },
+      'mobile-app': {
+        title: t('demo.demos.mobile-app.title'),
+        icon: '📱',
+        description: t('demo.demos.mobile-app.description'),
+        steps: [
+          {
+            title: t('demo.steps.app_launch'),
+            code: t('demo.code.launching'),
+            status: 'launching',
+          },
+          {
+            title: t('demo.steps.biometric_login'),
+            code: t('demo.code.biometric'),
+            status: 'biometric',
+          },
+          { title: t('demo.steps.view_assets'), code: t('demo.code.loading'), status: 'loading' },
+          {
+            title: t('demo.steps.send_transaction'),
+            code: t('demo.code.sending'),
+            status: 'sending',
+          },
+        ],
+      },
+    }),
+    [t]
+  );
 
   const currentDemoStepsLength = demos[activeDemo].steps.length;
 
@@ -114,9 +165,7 @@ const InteractiveDemoSection = () => {
           <h2 className="text-4xl font-bold mb-5 bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] bg-clip-text text-transparent">
             {t('demo.title')}
           </h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-            {t('demo.description')}
-          </p>
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto">{t('demo.description')}</p>
         </motion.div>
 
         {/* Demo Selection */}
@@ -179,31 +228,35 @@ const InteractiveDemoSection = () => {
                   <motion.div
                     key={index}
                     initial={{ opacity: 0.5 }}
-                    animate={{ 
+                    animate={{
                       opacity: index <= demoStep ? 1 : 0.5,
-                      scale: index === demoStep ? 1.02 : 1
+                      scale: index === demoStep ? 1.02 : 1,
                     }}
                     className={`p-4 rounded-lg border transition-all duration-300 ${
                       index === demoStep
                         ? 'border-cyan-500 bg-cyan-500/10'
                         : index < demoStep
-                        ? 'border-green-500 bg-green-500/10'
-                        : 'border-white/20 bg-white/5'
+                          ? 'border-green-500 bg-green-500/10'
+                          : 'border-white/20 bg-white/5'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${
-                        index < demoStep
-                          ? 'bg-green-500 text-white'
-                          : index === demoStep
-                          ? 'bg-cyan-500 text-white'
-                          : 'bg-white/20 text-gray-400'
-                      }`}>
+                      <div
+                        className={`w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${
+                          index < demoStep
+                            ? 'bg-green-500 text-white'
+                            : index === demoStep
+                              ? 'bg-cyan-500 text-white'
+                              : 'bg-white/20 text-gray-400'
+                        }`}
+                      >
                         {index < demoStep ? '\u2713' : index + 1}
                       </div>
-                      <span className={`font-semibold ${
-                        index <= demoStep ? 'text-white' : 'text-gray-400'
-                      }`}>
+                      <span
+                        className={`font-semibold ${
+                          index <= demoStep ? 'text-white' : 'text-gray-400'
+                        }`}
+                      >
                         {step.title}
                       </span>
                       {index === demoStep && isRunning && (
@@ -248,15 +301,21 @@ const InteractiveDemoSection = () => {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-gray-400">{t('demo.performance.execution_speed')}</span>
-                <span className="text-cyan-400 font-semibold">{t('demo.performance.execution_speed_value')}</span>
+                <span className="text-cyan-400 font-semibold">
+                  {t('demo.performance.execution_speed_value')}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">{t('demo.performance.memory_usage')}</span>
-                <span className="text-cyan-400 font-semibold">{t('demo.performance.memory_usage_value')}</span>
+                <span className="text-cyan-400 font-semibold">
+                  {t('demo.performance.memory_usage_value')}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">{t('demo.performance.success_rate')}</span>
-                <span className="text-cyan-400 font-semibold">{t('demo.performance.success_rate_value')}</span>
+                <span className="text-cyan-400 font-semibold">
+                  {t('demo.performance.success_rate_value')}
+                </span>
               </div>
             </div>
           </div>
@@ -266,33 +325,47 @@ const InteractiveDemoSection = () => {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-gray-400">{t('demo.security.quantum_level')}</span>
-                <span className="text-green-400 font-semibold">{t('demo.security.quantum_level_value')}</span>
+                <span className="text-green-400 font-semibold">
+                  {t('demo.security.quantum_level_value')}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">{t('demo.security.encryption_strength')}</span>
-                <span className="text-green-400 font-semibold">{t('demo.security.encryption_strength_value')}</span>
+                <span className="text-green-400 font-semibold">
+                  {t('demo.security.encryption_strength_value')}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">{t('demo.security.verification_status')}</span>
-                <span className="text-green-400 font-semibold">{t('demo.security.verification_status_value')}</span>
+                <span className="text-green-400 font-semibold">
+                  {t('demo.security.verification_status_value')}
+                </span>
               </div>
             </div>
           </div>
 
           <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
-            <h4 className="text-lg font-semibold text-white mb-3">{t('demo.compatibility.title')}</h4>
+            <h4 className="text-lg font-semibold text-white mb-3">
+              {t('demo.compatibility.title')}
+            </h4>
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-gray-400">{t('demo.compatibility.supported_devices')}</span>
-                <span className="text-purple-400 font-semibold">{t('demo.compatibility.supported_devices_value')}</span>
+                <span className="text-purple-400 font-semibold">
+                  {t('demo.compatibility.supported_devices_value')}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">{t('demo.compatibility.platform_support')}</span>
-                <span className="text-purple-400 font-semibold">{t('demo.compatibility.platform_support_value')}</span>
+                <span className="text-purple-400 font-semibold">
+                  {t('demo.compatibility.platform_support_value')}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">{t('demo.compatibility.api_version')}</span>
-                <span className="text-purple-400 font-semibold">{t('demo.compatibility.api_version_value')}</span>
+                <span className="text-purple-400 font-semibold">
+                  {t('demo.compatibility.api_version_value')}
+                </span>
               </div>
             </div>
           </div>

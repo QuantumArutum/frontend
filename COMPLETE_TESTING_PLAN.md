@@ -9,6 +9,7 @@
 ### 1.1 运行数据库迁移
 
 访问以下 URL 创建版主系统表：
+
 ```
 https://frontend-git-main-quantumarutums-projects.vercel.app/api/v2/barong/public/community/migrate-moderator-system
 ```
@@ -16,6 +17,7 @@ https://frontend-git-main-quantumarutums-projects.vercel.app/api/v2/barong/publi
 方法：POST
 
 预期结果：
+
 ```json
 {
   "success": true,
@@ -31,6 +33,7 @@ https://frontend-git-main-quantumarutums-projects.vercel.app/api/v2/barong/publi
 ### 1.2 添加版主权限
 
 方法 1：通过 API 添加（需要已有管理员）
+
 ```bash
 POST /api/v2/barong/public/community/mod/moderators
 {
@@ -41,6 +44,7 @@ POST /api/v2/barong/public/community/mod/moderators
 ```
 
 方法 2：直接在数据库中添加（推荐）
+
 ```sql
 INSERT INTO moderators (user_id, role, appointed_by, appointed_at)
 VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
@@ -51,6 +55,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 ## 第二步：Phase 9 完整测试（目标：100%）
 
 ### 2.1 已测试功能 ✅
+
 - [x] Markdown 编辑器基本功能
 - [x] 创建帖子流程
 - [x] 草稿保存
@@ -59,6 +64,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 ### 2.2 待测试功能 ⏳
 
 #### 2.2.1 图片上传完整流程
+
 1. 访问创建帖子页面
 2. 点击"上传图片"按钮
 3. 选择图片文件（JPEG/PNG/GIF/WebP）
@@ -68,6 +74,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 7. 验证图片在帖子中正确显示
 
 **测试用例**：
+
 - [ ] 上传 JPEG 图片
 - [ ] 上传 PNG 图片
 - [ ] 上传 GIF 图片
@@ -76,6 +83,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 - [ ] 上传非图片文件（应失败）
 
 #### 2.2.2 草稿恢复
+
 1. 创建帖子但不发布
 2. 点击"保存草稿"
 3. 关闭页面
@@ -83,11 +91,13 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 验证草稿自动恢复
 
 **测试用例**：
+
 - [ ] 草稿保存成功
 - [ ] 草稿恢复成功
 - [ ] 发布后草稿清除
 
 #### 2.2.3 编辑帖子
+
 1. 打开自己的帖子
 2. 点击"编辑"按钮
 3. 修改标题和内容
@@ -95,6 +105,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 验证修改成功
 
 **测试用例**：
+
 - [ ] 编辑按钮显示（仅作者可见）
 - [ ] 编辑页面加载
 - [ ] 原内容正确显示
@@ -102,12 +113,14 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 - [ ] 编辑历史记录
 
 #### 2.2.4 删除帖子
+
 1. 打开自己的帖子
 2. 点击"删除"按钮
 3. 确认删除
 4. 验证帖子已删除
 
 **测试用例**：
+
 - [ ] 删除按钮显示（仅作者可见）
 - [ ] 删除确认对话框
 - [ ] 删除成功
@@ -118,6 +131,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 ## 第三步：Phase 10 完整测试（目标：100%）
 
 ### 3.1 已测试功能 ✅
+
 - [x] 发表评论
 - [x] 嵌套回复
 - [x] @提及显示
@@ -127,6 +141,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 ### 3.2 待测试功能 ⏳
 
 #### 3.2.1 评论点赞
+
 1. 打开有评论的帖子
 2. 点击评论的"点赞"按钮
 3. 验证点赞数增加
@@ -134,6 +149,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 验证点赞数减少
 
 **测试用例**：
+
 - [ ] 点赞成功
 - [ ] 点赞数更新
 - [ ] 取消点赞成功
@@ -141,6 +157,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 - [ ] 点赞通知发送
 
 #### 3.2.2 评论编辑
+
 1. 找到自己的评论
 2. 点击"编辑"按钮
 3. 修改评论内容
@@ -148,6 +165,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 验证修改成功
 
 **测试用例**：
+
 - [ ] 编辑按钮显示（仅作者可见）
 - [ ] 编辑模式切换
 - [ ] 原内容显示
@@ -155,18 +173,21 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 - [ ] 显示"已编辑"标记
 
 #### 3.2.3 评论删除
+
 1. 找到自己的评论
 2. 点击"删除"按钮
 3. 确认删除
 4. 验证评论已删除
 
 **测试用例**：
+
 - [ ] 删除按钮显示（仅作者可见）
 - [ ] 删除确认对话框
 - [ ] 删除成功
 - [ ] 评论数更新
 
 #### 3.2.4 评论排序
+
 1. 打开有多条评论的帖子
 2. 点击"最新"排序
 3. 验证评论按时间倒序排列
@@ -178,6 +199,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 9. 验证评论按时间正序排列
 
 **测试用例**：
+
 - [ ] 最新排序正确
 - [ ] 最热排序正确
 - [ ] 最佳排序正确
@@ -185,12 +207,14 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 - [ ] 排序状态保持
 
 #### 3.2.5 @提及自动补全
+
 1. 在评论框输入 @
 2. 验证用户列表弹出
 3. 选择用户
 4. 验证用户名自动插入
 
 **测试用例**：
+
 - [ ] @ 触发用户列表
 - [ ] 用户搜索功能
 - [ ] 用户选择插入
@@ -201,12 +225,14 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 ## 第四步：Phase 11 完整测试（目标：100%）
 
 ### 4.1 前置条件
+
 - [x] 数据库迁移完成
 - [ ] 版主权限配置完成
 
 ### 4.2 版主功能测试
 
 #### 4.2.1 置顶帖子
+
 1. 以版主身份打开帖子
 2. 点击"置顶"按钮
 3. 选择置顶类型（全局/分类）
@@ -214,6 +240,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 验证置顶标记显示
 
 **测试用例**：
+
 - [ ] 置顶按钮显示（仅版主可见）
 - [ ] 全局置顶成功
 - [ ] 分类置顶成功
@@ -223,6 +250,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 **API**: `POST /api/v2/barong/public/community/mod/pin-post`
 
 #### 4.2.2 锁定帖子
+
 1. 以版主身份打开帖子
 2. 点击"锁定"按钮
 3. 输入锁定原因
@@ -230,6 +258,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 验证无法评论
 
 **测试用例**：
+
 - [ ] 锁定按钮显示（仅版主可见）
 - [ ] 锁定成功
 - [ ] 锁定标记显示
@@ -239,12 +268,14 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 **API**: `POST /api/v2/barong/public/community/mod/lock-post`
 
 #### 4.2.3 移动帖子
+
 1. 以版主身份打开帖子
 2. 点击"移动"按钮
 3. 选择目标分类
 4. 验证帖子已移动
 
 **测试用例**：
+
 - [ ] 移动按钮显示（仅版主可见）
 - [ ] 分类列表显示
 - [ ] 移动成功
@@ -253,6 +284,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 **API**: `POST /api/v2/barong/public/community/mod/move-post`
 
 #### 4.2.4 删除评论（版主）
+
 1. 以版主身份打开帖子
 2. 找到任意评论
 3. 点击"删除"按钮（版主权限）
@@ -260,6 +292,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 验证评论已删除
 
 **测试用例**：
+
 - [ ] 删除按钮显示（版主可见所有评论）
 - [ ] 删除原因输入
 - [ ] 删除成功
@@ -268,6 +301,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 **API**: `DELETE /api/v2/barong/public/community/mod/delete-comment`
 
 #### 4.2.5 禁言用户
+
 1. 以版主身份访问用户资料
 2. 点击"禁言"按钮
 3. 选择禁言时长
@@ -275,6 +309,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 验证用户已被禁言
 
 **测试用例**：
+
 - [ ] 禁言按钮显示（仅版主可见）
 - [ ] 时长选择（1天/7天/30天/永久）
 - [ ] 禁言成功
@@ -284,6 +319,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 **API**: `POST /api/v2/barong/public/community/mod/mute-user`
 
 #### 4.2.6 封禁用户
+
 1. 以版主身份访问用户资料
 2. 点击"封禁"按钮
 3. 选择封禁时长
@@ -291,6 +327,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 验证用户已被封禁
 
 **测试用例**：
+
 - [ ] 封禁按钮显示（仅管理员可见）
 - [ ] 时长选择
 - [ ] 封禁成功
@@ -300,6 +337,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 **API**: `POST /api/v2/barong/public/community/mod/ban-user`
 
 #### 4.2.7 版主管理
+
 1. 以管理员身份访问版主管理页面
 2. 查看版主列表
 3. 添加新版主
@@ -307,6 +345,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 移除版主
 
 **测试用例**：
+
 - [ ] 版主列表显示
 - [ ] 添加版主成功
 - [ ] 权限修改成功
@@ -316,6 +355,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 **API**: `GET/POST/PUT/DELETE /api/v2/barong/public/community/mod/moderators`
 
 #### 4.2.8 版主日志
+
 1. 以版主身份访问日志页面
 2. 查看所有版主操作记录
 3. 筛选操作类型
@@ -323,6 +363,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 5. 导出日志
 
 **测试用例**：
+
 - [ ] 日志列表显示
 - [ ] 操作类型筛选
 - [ ] 版主筛选
@@ -336,6 +377,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 ## 第五步：集成测试
 
 ### 5.1 完整用户流程
+
 1. 注册新用户
 2. 创建帖子（含图片）
 3. 发表评论
@@ -345,6 +387,7 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 7. 删除评论
 
 ### 5.2 版主工作流程
+
 1. 版主登录
 2. 查看待审核内容
 3. 置顶优质帖子
@@ -354,12 +397,14 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 7. 查看操作日志
 
 ### 5.3 性能测试
+
 - [ ] 页面加载时间 < 2秒
 - [ ] API 响应时间 < 500ms
 - [ ] 图片上传时间 < 3秒
 - [ ] 评论加载时间 < 1秒
 
 ### 5.4 安全测试
+
 - [ ] XSS 防护
 - [ ] CSRF 防护
 - [ ] SQL 注入防护
@@ -371,21 +416,25 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 ## 测试进度追踪
 
 ### Phase 9: 发帖功能
+
 - 已测试: 4/8 (50%)
 - 待测试: 4/8 (50%)
 - 目标: 8/8 (100%)
 
 ### Phase 10: 评论系统
+
 - 已测试: 4/9 (44%)
 - 待测试: 5/9 (56%)
 - 目标: 9/9 (100%)
 
 ### Phase 11: 版主系统
+
 - 已测试: 0/8 (0%)
 - 待测试: 8/8 (100%)
 - 目标: 8/8 (100%)
 
 ### 总体进度
+
 - 已测试: 8/25 (32%)
 - 待测试: 17/25 (68%)
 - 目标: 25/25 (100%)
@@ -415,8 +464,8 @@ VALUES ('aurum51668@outlook.com', 'admin', 'system', NOW());
 ## 测试报告
 
 测试完成后将生成：
+
 1. `PHASE9_100_PERCENT_TEST_REPORT.md`
 2. `PHASE10_100_PERCENT_TEST_REPORT.md`
 3. `PHASE11_100_PERCENT_TEST_REPORT.md`
 4. `FINAL_COMPREHENSIVE_TEST_REPORT.md`
-

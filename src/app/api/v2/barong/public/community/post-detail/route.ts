@@ -13,17 +13,23 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     if (!postId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Post ID is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post ID is required',
+        },
+        { status: 400 }
+      );
     }
 
     // 确保 post_likes 表存在
@@ -66,10 +72,13 @@ export async function GET(request: NextRequest) {
     `;
 
     if (postResult.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Post not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post not found',
+        },
+        { status: 404 }
+      );
     }
 
     const post = postResult[0];
@@ -77,7 +86,7 @@ export async function GET(request: NextRequest) {
     // 获取用户资料（显示名称）
     let displayName = post.user_email?.split('@')[0] || 'Unknown';
     let userRole = 'member';
-    
+
     if (sql) {
       try {
         const profileResult = await sql`
@@ -145,9 +154,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching post detail:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

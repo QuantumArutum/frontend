@@ -3,7 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Bell, Heart, MessageSquare, UserPlus, AtSign, Check, Trash2, CheckCheck } from 'lucide-react';
+import {
+  Bell,
+  Heart,
+  MessageSquare,
+  UserPlus,
+  AtSign,
+  Check,
+  Trash2,
+  CheckCheck,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
 import ParticlesBackground from '../../components/ParticlesBackground';
@@ -61,7 +70,9 @@ export default function NotificationsPage() {
   const loadNotifications = async (userId: string) => {
     setLoading(true);
     try {
-      const response = await barongAPI.get(`/public/community/notifications?userId=${userId}&limit=50`);
+      const response = await barongAPI.get(
+        `/public/community/notifications?userId=${userId}&limit=50`
+      );
       if (response.data.success) {
         setNotifications(response.data.data.notifications);
         setUnreadCount(response.data.data.unreadCount);
@@ -80,12 +91,12 @@ export default function NotificationsPage() {
         notificationId,
         userId: userInfo.id,
       });
-      
+
       if (response.data.success) {
-        setNotifications(prev => prev.map(n => 
-          n.id === notificationId ? { ...n, isRead: true } : n
-        ));
-        setUnreadCount(prev => Math.max(0, prev - 1));
+        setNotifications((prev) =>
+          prev.map((n) => (n.id === notificationId ? { ...n, isRead: true } : n))
+        );
+        setUnreadCount((prev) => Math.max(0, prev - 1));
       }
     } catch (err) {
       console.error('Failed to mark as read:', err);
@@ -99,9 +110,9 @@ export default function NotificationsPage() {
         userId: userInfo.id,
         markAllAsRead: true,
       });
-      
+
       if (response.data.success) {
-        setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+        setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
         setUnreadCount(0);
       }
     } catch (err) {
@@ -112,13 +123,15 @@ export default function NotificationsPage() {
   const deleteNotification = async (notificationId: number) => {
     if (!userInfo) return;
     try {
-      const response = await barongAPI.delete(`/public/community/notifications?notificationId=${notificationId}&userId=${userInfo.id}`);
-      
+      const response = await barongAPI.delete(
+        `/public/community/notifications?notificationId=${notificationId}&userId=${userInfo.id}`
+      );
+
       if (response.data.success) {
-        const notification = notifications.find(n => n.id === notificationId);
-        setNotifications(prev => prev.filter(n => n.id !== notificationId));
+        const notification = notifications.find((n) => n.id === notificationId);
+        setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
         if (notification && !notification.isRead) {
-          setUnreadCount(prev => Math.max(0, prev - 1));
+          setUnreadCount((prev) => Math.max(0, prev - 1));
         }
       }
     } catch (err) {
@@ -156,9 +169,8 @@ export default function NotificationsPage() {
     return date.toLocaleDateString();
   };
 
-  const filteredNotifications = filter === 'unread' 
-    ? notifications.filter(n => !n.isRead)
-    : notifications;
+  const filteredNotifications =
+    filter === 'unread' ? notifications.filter((n) => !n.isRead) : notifications;
 
   if (loading) {
     return (
@@ -259,18 +271,12 @@ export default function NotificationsPage() {
                         onClick={() => !notification.isRead && markAsRead(notification.id)}
                         className="block hover:opacity-80 transition-opacity"
                       >
-                        <h3 className="text-white font-medium mb-1">
-                          {notification.title}
-                        </h3>
+                        <h3 className="text-white font-medium mb-1">{notification.title}</h3>
                         {notification.content && (
-                          <p className="text-white/70 text-sm mb-2">
-                            {notification.content}
-                          </p>
+                          <p className="text-white/70 text-sm mb-2">{notification.content}</p>
                         )}
                         <div className="flex items-center gap-3 text-sm text-white/50">
-                          {notification.actorName && (
-                            <span>{notification.actorName}</span>
-                          )}
+                          {notification.actorName && <span>{notification.actorName}</span>}
                           <span>{formatDate(notification.createdAt)}</span>
                         </div>
                       </Link>

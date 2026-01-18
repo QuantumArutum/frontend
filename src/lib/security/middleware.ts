@@ -1,6 +1,6 @@
 /**
  * 生产级 API 安全中间件
- * 
+ *
  * 提供:
  * - 速率限制
  * - CSRF 验证
@@ -10,13 +10,13 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { 
-  RateLimiter, 
-  InputValidator, 
-  SecurityLogger, 
+import {
+  RateLimiter,
+  InputValidator,
+  SecurityLogger,
   SecurityEventType,
   getClientIP,
-  getUserAgent 
+  getUserAgent,
 } from './index';
 
 // ==================== 安全响应头 ====================
@@ -24,37 +24,39 @@ import {
 export function addSecurityHeaders(response: NextResponse): NextResponse {
   // 防止点击劫持
   response.headers.set('X-Frame-Options', 'DENY');
-  
+
   // 防止 MIME 类型嗅探
   response.headers.set('X-Content-Type-Options', 'nosniff');
-  
+
   // XSS 保护
   response.headers.set('X-XSS-Protection', '1; mode=block');
-  
+
   // 严格传输安全 (仅 HTTPS)
   if (process.env.NODE_ENV === 'production') {
     response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   }
-  
+
   // 内容安全策略
-  response.headers.set('Content-Security-Policy', 
+  response.headers.set(
+    'Content-Security-Policy',
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
-    "style-src 'self' 'unsafe-inline'; " +
-    "img-src 'self' data: https:; " +
-    "font-src 'self' data:; " +
-    "connect-src 'self' http://localhost:* https://*; " +
-    "frame-ancestors 'none';"
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+      "style-src 'self' 'unsafe-inline'; " +
+      "img-src 'self' data: https:; " +
+      "font-src 'self' data:; " +
+      "connect-src 'self' http://localhost:* https://*; " +
+      "frame-ancestors 'none';"
   );
-  
+
   // 引用策略
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  
+
   // 权限策略
-  response.headers.set('Permissions-Policy', 
+  response.headers.set(
+    'Permissions-Policy',
     'camera=(), microphone=(), geolocation=(), payment=()'
   );
-  
+
   return response;
 }
 
@@ -68,9 +70,9 @@ export async function withRateLimit(
   const ip = getClientIP(request);
   const path = new URL(request.url).pathname;
   const identifier = `${ip}:${path}`;
-  
+
   const result = RateLimiter.check(identifier);
-  
+
   if (!result.allowed) {
     SecurityLogger.log(
       SecurityEventType.RATE_LIMIT_EXCEEDED,
@@ -80,7 +82,7 @@ export async function withRateLimit(
       ip,
       getUserAgent(request)
     );
-    
+
     const response = NextResponse.json(
       { error: '请求过于频繁，请稍后再试', retryAfter: result.retryAfter },
       { status: 429 }
@@ -88,7 +90,7 @@ export async function withRateLimit(
     response.headers.set('Retry-After', String(result.retryAfter));
     return addSecurityHeaders(response);
   }
-  
+
   return handler();
 }
 
@@ -109,18 +111,18 @@ export function validateInput(
   rules: ValidationRule[]
 ): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
-  
+
   for (const rule of rules) {
     const value = data[rule.field];
-    
+
     // 检查必填
     if (rule.required && (value === undefined || value === null || value === '')) {
       errors.push(`${rule.field} 是必填项`);
       continue;
     }
-    
+
     if (value === undefined || value === null) continue;
-    
+
     // 类型验证
     switch (rule.type) {
       case 'string':
@@ -138,7 +140,7 @@ export function validateInput(
           }
         }
         break;
-        
+
       case 'number':
         const num = Number(value);
         if (isNaN(num)) {
@@ -152,47 +154,46 @@ export function validateInput(
           }
         }
         break;
-        
+
       case 'boolean':
         if (typeof value !== 'boolean') {
           errors.push(`${rule.field} 必须是布尔值`);
         }
         break;
-        
+
       case 'address':
         if (typeof value !== 'string' || !InputValidator.isValidAddress(value)) {
           errors.push(`${rule.field} 不是有效的钱包地址`);
         }
         break;
-        
+
       case 'email':
         if (typeof value !== 'string' || !InputValidator.isValidEmail(value)) {
           errors.push(`${rule.field} 不是有效的邮箱地址`);
         }
         break;
-        
+
       case 'txHash':
         if (typeof value !== 'string' || !InputValidator.isValidTxHash(value)) {
           errors.push(`${rule.field} 不是有效的交易哈希`);
         }
         break;
-        
+
       case 'url':
         if (typeof value !== 'string' || !InputValidator.isValidUrl(value)) {
           errors.push(`${rule.field} 不是有效的 URL`);
         }
         break;
     }
-    
+
     // 自定义验证
     if (rule.custom && !rule.custom(value)) {
       errors.push(`${rule.field} 验证失败`);
     }
   }
-  
+
   return { valid: errors.length === 0, errors };
 }
-
 
 // ==================== 安全 API 处理器包装 ====================
 
@@ -212,20 +213,18 @@ export function createSecureHandler(
     const ip = getClientIP(request);
     const userAgent = getUserAgent(request);
     const path = new URL(request.url).pathname;
-    
+
     try {
       // 检查允许的方法
       if (options.allowedMethods && !options.allowedMethods.includes(request.method)) {
-        return addSecurityHeaders(
-          NextResponse.json({ error: '方法不允许' }, { status: 405 })
-        );
+        return addSecurityHeaders(NextResponse.json({ error: '方法不允许' }, { status: 405 }));
       }
-      
+
       // 速率限制
       if (options.rateLimit !== false) {
         const identifier = `${ip}:${path}`;
         const rateLimitResult = RateLimiter.check(identifier);
-        
+
         if (!rateLimitResult.allowed) {
           SecurityLogger.log(
             SecurityEventType.RATE_LIMIT_EXCEEDED,
@@ -235,7 +234,7 @@ export function createSecureHandler(
             ip,
             userAgent
           );
-          
+
           const response = NextResponse.json(
             { error: '请求过于频繁', retryAfter: rateLimitResult.retryAfter },
             { status: 429 }
@@ -244,14 +243,14 @@ export function createSecureHandler(
           return addSecurityHeaders(response);
         }
       }
-      
+
       // 验证请求体
       let validatedData: Record<string, unknown> | undefined = undefined;
       if (options.validateBody && ['POST', 'PUT', 'PATCH'].includes(request.method)) {
         try {
           const body = await request.json();
           const validation = validateInput(body, options.validateBody);
-          
+
           if (!validation.valid) {
             SecurityLogger.log(
               SecurityEventType.INVALID_INPUT,
@@ -261,20 +260,21 @@ export function createSecureHandler(
               ip,
               userAgent
             );
-            
+
             return addSecurityHeaders(
-              NextResponse.json({ error: '输入验证失败', details: validation.errors }, { status: 400 })
+              NextResponse.json(
+                { error: '输入验证失败', details: validation.errors },
+                { status: 400 }
+              )
             );
           }
-          
+
           validatedData = body;
         } catch {
-          return addSecurityHeaders(
-            NextResponse.json({ error: '无效的请求体' }, { status: 400 })
-          );
+          return addSecurityHeaders(NextResponse.json({ error: '无效的请求体' }, { status: 400 }));
         }
       }
-      
+
       // 记录请求
       if (options.logRequest) {
         SecurityLogger.log(
@@ -286,11 +286,10 @@ export function createSecureHandler(
           userAgent
         );
       }
-      
+
       // 执行处理器
       const response = await handler(request, validatedData);
       return addSecurityHeaders(response);
-      
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : '未知错误';
       SecurityLogger.log(
@@ -301,13 +300,8 @@ export function createSecureHandler(
         ip,
         userAgent
       );
-      
-      return addSecurityHeaders(
-        NextResponse.json(
-          { error: '服务器内部错误' },
-          { status: 500 }
-        )
-      );
+
+      return addSecurityHeaders(NextResponse.json({ error: '服务器内部错误' }, { status: 500 }));
     }
   };
 }
@@ -321,9 +315,7 @@ export function errorResponse(message: string, status: number = 400): NextRespon
 }
 
 export function successResponse(data: Record<string, unknown>, status: number = 200): NextResponse {
-  return addSecurityHeaders(
-    NextResponse.json({ ...data, success: true }, { status })
-  );
+  return addSecurityHeaders(NextResponse.json({ ...data, success: true }, { status }));
 }
 
 // ==================== 导出 ====================

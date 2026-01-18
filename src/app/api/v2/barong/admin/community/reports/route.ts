@@ -25,11 +25,11 @@ export async function GET(request: NextRequest) {
         per_page: limit,
         stats: {
           total: result.total,
-          pending: result.reports.filter(r => r.status === 'pending').length,
-          resolved: result.reports.filter(r => r.status === 'resolved').length,
-          rejected: result.reports.filter(r => r.status === 'rejected').length,
-        }
-      }
+          pending: result.reports.filter((r) => r.status === 'pending').length,
+          resolved: result.reports.filter((r) => r.status === 'resolved').length,
+          rejected: result.reports.filter((r) => r.status === 'rejected').length,
+        },
+      },
     });
   } catch (error: any) {
     console.error('Reports GET error:', error);
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
       target_type,
       target_id,
       reason,
-      description
+      description,
     });
 
     return NextResponse.json({ success: true, data: report });
@@ -65,7 +65,12 @@ export async function PUT(request: NextRequest) {
     const body = await request.json();
     const { id, status, admin_notes, handled_by } = body;
 
-    const success = await communityService.updateReportStatus(id, status, admin_notes || '', handled_by);
+    const success = await communityService.updateReportStatus(
+      id,
+      status,
+      admin_notes || '',
+      handled_by
+    );
 
     return NextResponse.json({ success });
   } catch (error: any) {

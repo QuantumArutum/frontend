@@ -9,10 +9,13 @@ import { sql } from '@/lib/database';
 export async function GET() {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     // 创建 user_follows 表
@@ -41,10 +44,13 @@ export async function GET() {
     });
   } catch (error) {
     console.error('Error creating user_follows table:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error',
-      error: String(error)
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+        error: String(error),
+      },
+      { status: 500 }
+    );
   }
 }

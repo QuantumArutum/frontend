@@ -41,15 +41,18 @@ export async function POST(request: NextRequest) {
       ON verification_codes(expires_at)
     `;
 
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Migration completed: verification_codes table created' 
+    return NextResponse.json({
+      success: true,
+      message: 'Migration completed: verification_codes table created',
     });
   } catch (error: any) {
     console.error('Migration error:', error);
-    return NextResponse.json({ 
-      error: 'Migration failed', 
-      details: error.message 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'Migration failed',
+        details: error.message,
+      },
+      { status: 500 }
+    );
   }
 }

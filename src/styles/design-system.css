@@ -3,57 +3,60 @@
 /* CSS Variables for Design System */
 :root {
   /* Color Palette - Quantum Theme */
-  --quantum-primary: #8B5CF6;
-  --quantum-primary-light: #A78BFA;
-  --quantum-primary-dark: #7C3AED;
-  --quantum-secondary: #06B6D4;
-  --quantum-secondary-light: #67E8F9;
-  --quantum-secondary-dark: #0891B2;
-  
+  --quantum-primary: #8b5cf6;
+  --quantum-primary-light: #a78bfa;
+  --quantum-primary-dark: #7c3aed;
+  --quantum-secondary: #06b6d4;
+  --quantum-secondary-light: #67e8f9;
+  --quantum-secondary-dark: #0891b2;
+
   /* Accent Colors */
-  --quantum-accent-purple: #C084FC;
-  --quantum-accent-cyan: #22D3EE;
-  --quantum-accent-pink: #F472B6;
-  --quantum-accent-emerald: #34D399;
-  --quantum-accent-amber: #FBBF24;
-  
+  --quantum-accent-purple: #c084fc;
+  --quantum-accent-cyan: #22d3ee;
+  --quantum-accent-pink: #f472b6;
+  --quantum-accent-emerald: #34d399;
+  --quantum-accent-amber: #fbbf24;
+
   /* Neutral Colors */
-  --quantum-gray-50: #F9FAFB;
-  --quantum-gray-100: #F3F4F6;
-  --quantum-gray-200: #E5E7EB;
-  --quantum-gray-300: #D1D5DB;
-  --quantum-gray-400: #9CA3AF;
-  --quantum-gray-500: #6B7280;
-  --quantum-gray-600: #4B5563;
+  --quantum-gray-50: #f9fafb;
+  --quantum-gray-100: #f3f4f6;
+  --quantum-gray-200: #e5e7eb;
+  --quantum-gray-300: #d1d5db;
+  --quantum-gray-400: #9ca3af;
+  --quantum-gray-500: #6b7280;
+  --quantum-gray-600: #4b5563;
   --quantum-gray-700: #374151;
-  --quantum-gray-800: #1F2937;
+  --quantum-gray-800: #1f2937;
   --quantum-gray-900: #111827;
-  
+
   /* Dark Theme Colors */
-  --quantum-dark-bg: #0A0A0F;
-  --quantum-dark-surface: #1A1A2E;
-  --quantum-dark-surface-light: #16213E;
-  --quantum-dark-border: #2D3748;
-  --quantum-dark-text: #E2E8F0;
-  --quantum-dark-text-muted: #A0AEC0;
-  
+  --quantum-dark-bg: #0a0a0f;
+  --quantum-dark-surface: #1a1a2e;
+  --quantum-dark-surface-light: #16213e;
+  --quantum-dark-border: #2d3748;
+  --quantum-dark-text: #e2e8f0;
+  --quantum-dark-text-muted: #a0aec0;
+
   /* Gradients */
-  --quantum-gradient-primary: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
-  --quantum-gradient-secondary: linear-gradient(135deg, #C084FC 0%, #22D3EE 100%);
-  --quantum-gradient-accent: linear-gradient(135deg, #F472B6 0%, #FBBF24 100%);
-  --quantum-gradient-dark: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
-  
+  --quantum-gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+  --quantum-gradient-secondary: linear-gradient(135deg, #c084fc 0%, #22d3ee 100%);
+  --quantum-gradient-accent: linear-gradient(135deg, #f472b6 0%, #fbbf24 100%);
+  --quantum-gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+
   /* Shadows */
   --quantum-shadow-sm: 0 1px 2px 0 rgba(139, 92, 246, 0.05);
-  --quantum-shadow-md: 0 4px 6px -1px rgba(139, 92, 246, 0.1), 0 2px 4px -1px rgba(139, 92, 246, 0.06);
-  --quantum-shadow-lg: 0 10px 15px -3px rgba(139, 92, 246, 0.1), 0 4px 6px -2px rgba(139, 92, 246, 0.05);
-  --quantum-shadow-xl: 0 20px 25px -5px rgba(139, 92, 246, 0.1), 0 10px 10px -5px rgba(139, 92, 246, 0.04);
+  --quantum-shadow-md:
+    0 4px 6px -1px rgba(139, 92, 246, 0.1), 0 2px 4px -1px rgba(139, 92, 246, 0.06);
+  --quantum-shadow-lg:
+    0 10px 15px -3px rgba(139, 92, 246, 0.1), 0 4px 6px -2px rgba(139, 92, 246, 0.05);
+  --quantum-shadow-xl:
+    0 20px 25px -5px rgba(139, 92, 246, 0.1), 0 10px 10px -5px rgba(139, 92, 246, 0.04);
   --quantum-shadow-glow: 0 0 20px rgba(139, 92, 246, 0.3);
-  
+
   /* Typography */
   --quantum-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --quantum-font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
-  
+
   /* Spacing Scale */
   --quantum-space-1: 0.25rem;
   --quantum-space-2: 0.5rem;
@@ -67,7 +70,7 @@
   --quantum-space-16: 4rem;
   --quantum-space-20: 5rem;
   --quantum-space-24: 6rem;
-  
+
   /* Border Radius */
   --quantum-radius-sm: 0.375rem;
   --quantum-radius-md: 0.5rem;
@@ -75,12 +78,12 @@
   --quantum-radius-xl: 1rem;
   --quantum-radius-2xl: 1.5rem;
   --quantum-radius-full: 9999px;
-  
+
   /* Transitions */
   --quantum-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --quantum-transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --quantum-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* Z-Index Scale */
   --quantum-z-dropdown: 1000;
   --quantum-z-sticky: 1020;
@@ -291,7 +294,8 @@ body {
 
 /* Quantum Animations */
 @keyframes quantum-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -309,10 +313,15 @@ body {
 }
 
 @keyframes quantum-bounce {
-  0%, 20%, 53%, 80%, 100% {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
     transform: translate3d(0, 0, 0);
   }
-  40%, 43% {
+  40%,
+  43% {
     transform: translate3d(0, -30px, 0);
   }
   70% {
@@ -401,19 +410,19 @@ body {
   .quantum-hidden-mobile {
     display: none;
   }
-  
+
   .quantum-hidden-desktop {
     display: block;
   }
-  
+
   .quantum-heading-1 {
     font-size: 2rem;
   }
-  
+
   .quantum-heading-2 {
     font-size: 1.75rem;
   }
-  
+
   .quantum-heading-3 {
     font-size: 1.5rem;
   }

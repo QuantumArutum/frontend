@@ -18,7 +18,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -51,7 +51,7 @@ export const POST = createSecureHandler(
         amount: result.amount,
         rewardsClaimed: result.rewards_claimed,
         message: `Successfully unstaked LP tokens from ${farmId}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       console.error('Farm unstake error:', error);

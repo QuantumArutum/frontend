@@ -48,7 +48,7 @@ const UtilitiesPage = () => {
     region: '',
     provider: '',
     accountNumber: '',
-    customerName: ''
+    customerName: '',
   });
   const [providers, setProviders] = useState<Provider[]>([]);
   const [selectedProvider, setSelectedProvider] = useState<Provider | null>(null);
@@ -66,7 +66,7 @@ const UtilitiesPage = () => {
       logo: '⚡',
       supportedCurrencies: ['QAU', 'USDT', 'ETH'],
       processingTime: t('utilities_page.processing.instant'),
-      fees: '0.5%'
+      fees: '0.5%',
     },
     {
       id: 'usa-001',
@@ -76,7 +76,7 @@ const UtilitiesPage = () => {
       logo: '🔌',
       supportedCurrencies: ['QAU', 'USDT', 'BTC'],
       processingTime: t('utilities_page.processing.one_to_three'),
-      fees: '0.8%'
+      fees: '0.8%',
     },
     {
       id: 'chn-001',
@@ -86,7 +86,7 @@ const UtilitiesPage = () => {
       logo: '🏭',
       supportedCurrencies: ['QAU', 'USDT'],
       processingTime: t('utilities_page.processing.instant'),
-      fees: '0.3%'
+      fees: '0.3%',
     },
     {
       id: 'jpn-001',
@@ -96,17 +96,18 @@ const UtilitiesPage = () => {
       logo: '🔋',
       supportedCurrencies: ['QAU', 'USDT', 'ETH'],
       processingTime: t('utilities_page.processing.one_to_two'),
-      fees: '0.6%'
-    }
+      fees: '0.6%',
+    },
   ];
 
   // 搜索电力公司
   const searchProviders = () => {
     setLoading(true);
     setTimeout(() => {
-      const filtered = mockProviders.filter(provider => 
-        (!searchParams.country || provider.country.includes(searchParams.country)) &&
-        (!searchParams.region || provider.region.includes(searchParams.region))
+      const filtered = mockProviders.filter(
+        (provider) =>
+          (!searchParams.country || provider.country.includes(searchParams.country)) &&
+          (!searchParams.region || provider.region.includes(searchParams.region))
       );
       setProviders(filtered);
       setCurrentView('results');
@@ -118,7 +119,7 @@ const UtilitiesPage = () => {
   const queryBill = async (provider: Provider) => {
     setLoading(true);
     setSelectedProvider(provider);
-    
+
     setTimeout(() => {
       // 模拟账单数据
       setBillData({
@@ -131,7 +132,7 @@ const UtilitiesPage = () => {
         currency: 'USD',
         usage: Math.floor(Math.random() * 1000) + 200,
         unit: 'kWh',
-        status: 'pending'
+        status: 'pending',
       });
       setCurrentView('payment');
       setLoading(false);
@@ -149,9 +150,9 @@ const UtilitiesPage = () => {
       currency: 'USD',
       timestamp: new Date().toISOString(),
       provider: selectedProvider?.name || '',
-      accountNumber: billData.accountNumber
+      accountNumber: billData.accountNumber,
     });
-    
+
     setTimeout(() => {
       setCurrentView('confirmation');
       setLoading(false);
@@ -166,26 +167,30 @@ const UtilitiesPage = () => {
           <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
             ⚡ {t('utilities_page.title')}
           </h1>
-          <p className="text-gray-300 text-lg">
-            {t('utilities_page.subtitle')}
-          </p>
+          <p className="text-gray-300 text-lg">{t('utilities_page.subtitle')}</p>
         </div>
 
         {/* 搜索界面 */}
         {currentView === 'search' && (
           <div className="max-w-2xl mx-auto">
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8">
-              <h2 className="text-2xl font-semibold mb-6 text-center">{t('utilities_page.find_provider')}</h2>
-              
+              <h2 className="text-2xl font-semibold mb-6 text-center">
+                {t('utilities_page.find_provider')}
+              </h2>
+
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">{t('utilities_page.form.country')}</label>
+                  <label className="block text-sm font-medium mb-2">
+                    {t('utilities_page.form.country')}
+                  </label>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                     <input
                       type="text"
                       value={searchParams.country}
-                      onChange={(e) => setSearchParams({...searchParams, country: e.target.value})}
+                      onChange={(e) =>
+                        setSearchParams({ ...searchParams, country: e.target.value })
+                      }
                       placeholder={t('utilities_page.form.country_placeholder')}
                       className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     />
@@ -193,33 +198,43 @@ const UtilitiesPage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">{t('utilities_page.form.region')}</label>
+                  <label className="block text-sm font-medium mb-2">
+                    {t('utilities_page.form.region')}
+                  </label>
                   <input
                     type="text"
                     value={searchParams.region}
-                    onChange={(e) => setSearchParams({...searchParams, region: e.target.value})}
+                    onChange={(e) => setSearchParams({ ...searchParams, region: e.target.value })}
                     placeholder={t('utilities_page.form.region_placeholder')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">{t('utilities_page.form.account_number')}</label>
+                  <label className="block text-sm font-medium mb-2">
+                    {t('utilities_page.form.account_number')}
+                  </label>
                   <input
                     type="text"
                     value={searchParams.accountNumber}
-                    onChange={(e) => setSearchParams({...searchParams, accountNumber: e.target.value})}
+                    onChange={(e) =>
+                      setSearchParams({ ...searchParams, accountNumber: e.target.value })
+                    }
                     placeholder={t('utilities_page.form.account_placeholder')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">{t('utilities_page.form.customer_name')}</label>
+                  <label className="block text-sm font-medium mb-2">
+                    {t('utilities_page.form.customer_name')}
+                  </label>
                   <input
                     type="text"
                     value={searchParams.customerName}
-                    onChange={(e) => setSearchParams({...searchParams, customerName: e.target.value})}
+                    onChange={(e) =>
+                      setSearchParams({ ...searchParams, customerName: e.target.value })
+                    }
                     placeholder={t('utilities_page.form.customer_placeholder')}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   />
@@ -241,7 +256,9 @@ const UtilitiesPage = () => {
         {currentView === 'results' && (
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-semibold">{t('utilities_page.found_providers', { count: providers.length })}</h2>
+              <h2 className="text-2xl font-semibold">
+                {t('utilities_page.found_providers', { count: providers.length })}
+              </h2>
               <button
                 onClick={() => setCurrentView('search')}
                 className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all duration-200"
@@ -252,13 +269,18 @@ const UtilitiesPage = () => {
 
             <div className="grid gap-6">
               {providers.map((provider) => (
-                <div key={provider.id} className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-6">
+                <div
+                  key={provider.id}
+                  className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-6"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       <div className="text-4xl">{provider.logo}</div>
                       <div>
                         <h3 className="text-xl font-semibold">{provider.name}</h3>
-                        <p className="text-gray-300">{provider.country} - {provider.region}</p>
+                        <p className="text-gray-300">
+                          {provider.country} - {provider.region}
+                        </p>
                       </div>
                     </div>
                     <button
@@ -269,13 +291,18 @@ const UtilitiesPage = () => {
                       {t('utilities_page.query_bill')}
                     </button>
                   </div>
-                  
+
                   <div className="mt-4 grid grid-cols-3 gap-4 text-sm">
                     <div>
-                      <span className="text-gray-400">{t('utilities_page.supported_currencies')}:</span>
+                      <span className="text-gray-400">
+                        {t('utilities_page.supported_currencies')}:
+                      </span>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {provider.supportedCurrencies.map((currency) => (
-                          <span key={currency} className="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">
+                          <span
+                            key={currency}
+                            className="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded"
+                          >
                             {currency}
                           </span>
                         ))}
@@ -300,8 +327,10 @@ const UtilitiesPage = () => {
         {currentView === 'payment' && billData && (
           <div className="max-w-2xl mx-auto">
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8">
-              <h2 className="text-2xl font-semibold mb-6 text-center">{t('utilities_page.electricity_bill')}</h2>
-              
+              <h2 className="text-2xl font-semibold mb-6 text-center">
+                {t('utilities_page.electricity_bill')}
+              </h2>
+
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
                   <span className="text-gray-400">{t('utilities_page.bill.provider')}:</span>
@@ -321,7 +350,9 @@ const UtilitiesPage = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400">{t('utilities_page.bill.usage')}:</span>
-                  <span>{billData.usage} {billData.unit}</span>
+                  <span>
+                    {billData.usage} {billData.unit}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400">{t('utilities_page.bill.due_date')}:</span>
@@ -329,7 +360,9 @@ const UtilitiesPage = () => {
                 </div>
                 <div className="flex justify-between text-xl font-semibold">
                   <span>{t('utilities_page.bill.amount_due')}:</span>
-                  <span className="text-yellow-400">${billData.amount} {billData.currency}</span>
+                  <span className="text-yellow-400">
+                    ${billData.amount} {billData.currency}
+                  </span>
                 </div>
               </div>
 
@@ -348,7 +381,9 @@ const UtilitiesPage = () => {
                         </div>
                         <span>{currency}</span>
                       </div>
-                      <span className="text-gray-400">{t('utilities_page.fees')}: {selectedProvider?.fees}</span>
+                      <span className="text-gray-400">
+                        {t('utilities_page.fees')}: {selectedProvider?.fees}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -370,19 +405,25 @@ const UtilitiesPage = () => {
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8 text-center">
               <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
               <h2 className="text-2xl font-semibold mb-6">{t('utilities_page.payment_success')}</h2>
-              
+
               <div className="space-y-4 mb-6 text-left">
                 <div className="flex justify-between">
-                  <span className="text-gray-400">{t('utilities_page.confirmation.transaction_id')}:</span>
+                  <span className="text-gray-400">
+                    {t('utilities_page.confirmation.transaction_id')}:
+                  </span>
                   <span className="font-mono">{paymentData.transactionId}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">{t('utilities_page.confirmation.payment_method')}:</span>
+                  <span className="text-gray-400">
+                    {t('utilities_page.confirmation.payment_method')}:
+                  </span>
                   <span>{paymentData.method}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400">{t('utilities_page.confirmation.amount')}:</span>
-                  <span>${paymentData.amount} {paymentData.currency}</span>
+                  <span>
+                    ${paymentData.amount} {paymentData.currency}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400">{t('utilities_page.confirmation.time')}:</span>
@@ -420,5 +461,3 @@ const UtilitiesPage = () => {
 };
 
 export default UtilitiesPage;
-
-

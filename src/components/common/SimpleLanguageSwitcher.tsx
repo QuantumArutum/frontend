@@ -24,10 +24,10 @@ interface SimpleLanguageSwitcherProps {
   position?: 'left' | 'right';
 }
 
-export default function SimpleLanguageSwitcher({ 
-  className = '', 
+export default function SimpleLanguageSwitcher({
+  className = '',
   variant = 'default',
-  position = 'right'
+  position = 'right',
 }: SimpleLanguageSwitcherProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState(languages[0]);
@@ -35,11 +35,11 @@ export default function SimpleLanguageSwitcher({
 
   useEffect(() => {
     setMounted(true);
-    
+
     // Load saved language from localStorage
     const savedLanguage = localStorage.getItem('quantaureum-global-language');
     if (savedLanguage) {
-      const lang = languages.find(l => l.code === savedLanguage);
+      const lang = languages.find((l) => l.code === savedLanguage);
       if (lang) {
         setCurrentLanguage(lang);
         applyLanguage(lang.code);
@@ -47,7 +47,7 @@ export default function SimpleLanguageSwitcher({
     } else {
       // Detect browser language
       const browserLang = navigator.language.split('-')[0];
-      const detectedLang = languages.find(l => l.code === browserLang);
+      const detectedLang = languages.find((l) => l.code === browserLang);
       if (detectedLang) {
         setCurrentLanguage(detectedLang);
         applyLanguage(detectedLang.code);
@@ -57,7 +57,7 @@ export default function SimpleLanguageSwitcher({
     // Listen for language changes from other parts of the website
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'quantaureum-global-language' && e.newValue) {
-        const lang = languages.find(l => l.code === e.newValue);
+        const lang = languages.find((l) => l.code === e.newValue);
         if (lang) {
           setCurrentLanguage(lang);
           applyLanguage(e.newValue);
@@ -67,7 +67,7 @@ export default function SimpleLanguageSwitcher({
 
     const handleMessage = (event: MessageEvent) => {
       if (event.data.type === 'GLOBAL_LANGUAGE_CHANGE') {
-        const lang = languages.find(l => l.code === event.data.language);
+        const lang = languages.find((l) => l.code === event.data.language);
         if (lang) {
           setCurrentLanguage(lang);
           applyLanguage(event.data.language);
@@ -87,37 +87,42 @@ export default function SimpleLanguageSwitcher({
   const applyLanguage = (languageCode: string) => {
     // Save to localStorage
     localStorage.setItem('quantaureum-global-language', languageCode);
-    
+
     // Apply to document
     document.documentElement.lang = languageCode;
-    
+
     // Apply RTL for Arabic
     const rtlLanguages = ['ar'];
     const isRTL = rtlLanguages.includes(languageCode);
     document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-    
+
     // Apply RTL CSS class
     if (isRTL) {
       document.documentElement.classList.add('rtl-language');
     } else {
       document.documentElement.classList.remove('rtl-language');
     }
-    
+
     // Dispatch custom event for other components to listen
-    window.dispatchEvent(new CustomEvent('globalLanguageChanged', { 
-      detail: { language: languageCode } 
-    }));
-    
+    window.dispatchEvent(
+      new CustomEvent('globalLanguageChanged', {
+        detail: { language: languageCode },
+      })
+    );
+
     // Sync with main website if in iframe
     if (window.parent !== window) {
-      window.parent.postMessage({
-        type: 'GLOBAL_LANGUAGE_CHANGE',
-        language: languageCode
-      }, '*');
+      window.parent.postMessage(
+        {
+          type: 'GLOBAL_LANGUAGE_CHANGE',
+          language: languageCode,
+        },
+        '*'
+      );
     }
   };
 
-  const handleLanguageChange = (language: typeof languages[0]) => {
+  const handleLanguageChange = (language: (typeof languages)[0]) => {
     setCurrentLanguage(language);
     applyLanguage(language.code);
     setIsOpen(false);
@@ -189,7 +194,9 @@ export default function SimpleLanguageSwitcher({
       >
         <span className="text-lg">{currentLanguage.flag}</span>
         <span className="text-sm font-medium text-white">{currentLanguage.code.toUpperCase()}</span>
-        <ChevronDown className={`w-4 h-4 text-white transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown
+          className={`w-4 h-4 text-white transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+        />
       </button>
 
       <AnimatePresence>

@@ -31,11 +31,7 @@ interface KYCVerificationProps {
   onCancel: () => void;
 }
 
-const KYCVerification: React.FC<KYCVerificationProps> = ({
-  currentLevel,
-  onSubmit,
-  onCancel
-}) => {
+const KYCVerification: React.FC<KYCVerificationProps> = ({ currentLevel, onSubmit, onCancel }) => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [kycData, setKycData] = useState<KYCData>({
@@ -47,19 +43,19 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
       address: '',
       city: '',
       postalCode: '',
-      country: ''
+      country: '',
     },
     documents: {
       idFront: null,
       idBack: null,
       selfie: null,
-      proofOfAddress: null
+      proofOfAddress: null,
     },
     verification: {
       phoneNumber: '',
       phoneVerified: false,
-      emailVerified: false
-    }
+      emailVerified: false,
+    },
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -100,17 +96,17 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setKycData(prev => ({
+    setKycData((prev) => ({
       ...prev,
       personalInfo: {
         ...prev.personalInfo,
-        [field]: value
-      }
+        [field]: value,
+      },
     }));
-    
+
     // 清除对应字段的错误
     if (errors[field]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[field];
         return newErrors;
@@ -118,43 +114,46 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
     }
   };
 
-  const handleFileUpload = useCallback((field: keyof KYCData['documents'], file: File) => {
-    // 验证文件类型
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-    if (!allowedTypes.includes(file.type)) {
-      setErrors(prev => ({
-        ...prev,
-        [field]: '只支持 JPG、PNG 格式的图片'
-      }));
-      return;
-    }
-
-    // 验证文件大小 (5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      setErrors(prev => ({
-        ...prev,
-        [field]: '文件大小不能超过 5MB'
-      }));
-      return;
-    }
-
-    setKycData(prev => ({
-      ...prev,
-      documents: {
-        ...prev.documents,
-        [field]: file
+  const handleFileUpload = useCallback(
+    (field: keyof KYCData['documents'], file: File) => {
+      // 验证文件类型
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      if (!allowedTypes.includes(file.type)) {
+        setErrors((prev) => ({
+          ...prev,
+          [field]: '只支持 JPG、PNG 格式的图片',
+        }));
+        return;
       }
-    }));
 
-    // 清除错误
-    if (errors[field]) {
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[field];
-        return newErrors;
-      });
-    }
-  }, [errors]);
+      // 验证文件大小 (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setErrors((prev) => ({
+          ...prev,
+          [field]: '文件大小不能超过 5MB',
+        }));
+        return;
+      }
+
+      setKycData((prev) => ({
+        ...prev,
+        documents: {
+          ...prev.documents,
+          [field]: file,
+        },
+      }));
+
+      // 清除错误
+      if (errors[field]) {
+        setErrors((prev) => {
+          const newErrors = { ...prev };
+          delete newErrors[field];
+          return newErrors;
+        });
+      }
+    },
+    [errors]
+  );
 
   const handleDragOver = (e: React.DragEvent, field: string) => {
     e.preventDefault();
@@ -168,7 +167,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
   const handleDrop = (e: React.DragEvent, field: keyof KYCData['documents']) => {
     e.preventDefault();
     setDragOver(null);
-    
+
     const files = Array.from(e.dataTransfer.files);
     if (files.length > 0) {
       handleFileUpload(field, files[0]);
@@ -177,12 +176,12 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
 
   const nextStep = () => {
     if (validateStep(step)) {
-      setStep(prev => prev + 1);
+      setStep((prev) => prev + 1);
     }
   };
 
   const prevStep = () => {
-    setStep(prev => prev - 1);
+    setStep((prev) => prev - 1);
   };
 
   const handleSubmit = async () => {
@@ -192,7 +191,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
     try {
       const targetLevel = currentLevel + 1;
       const result = await onSubmit(kycData, targetLevel);
-      
+
       if (result.success) {
         // 显示成功消息
         alert(result.message);
@@ -216,18 +215,16 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
 
     return (
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          {label}
-        </label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
         <div
           className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
             dragOver === field
               ? 'border-blue-400 bg-blue-50'
               : error
-              ? 'border-red-300 bg-red-50'
-              : file
-              ? 'border-green-300 bg-green-50'
-              : 'border-gray-300 hover:border-gray-400'
+                ? 'border-red-300 bg-red-50'
+                : file
+                  ? 'border-green-300 bg-green-50'
+                  : 'border-gray-300 hover:border-gray-400'
           }`}
           onDragOver={(e) => handleDragOver(e, field)}
           onDragLeave={handleDragLeave}
@@ -236,8 +233,18 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
           {file ? (
             <div className="space-y-2">
               <div className="text-green-600">
-                <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  className="w-8 h-8 mx-auto"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
               <div className="text-sm text-gray-600">{file.name}</div>
@@ -252,8 +259,18 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
           ) : (
             <div className="space-y-2">
               <div className="text-gray-400">
-                <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                <svg
+                  className="w-8 h-8 mx-auto"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
                 </svg>
               </div>
               <div className="text-sm text-gray-600">{description}</div>
@@ -276,9 +293,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
             </div>
           )}
         </div>
-        {error && (
-          <div className="mt-1 text-sm text-red-600">{error}</div>
-        )}
+        {error && <div className="mt-1 text-sm text-red-600">{error}</div>}
       </div>
     );
   };
@@ -295,19 +310,20 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">
-                KYC身份验证
-              </h2>
-              <p className="text-gray-600 mt-1">
-                完成身份验证以提升账户等级
-              </p>
+              <h2 className="text-2xl font-bold text-gray-900">KYC身份验证</h2>
+              <p className="text-gray-600 mt-1">完成身份验证以提升账户等级</p>
             </div>
             <button
               onClick={onCancel}
               className="text-gray-400 hover:text-gray-600 transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -317,17 +333,19 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
             <div className="flex items-center">
               {[1, 2, 3].map((stepNumber) => (
                 <React.Fragment key={stepNumber}>
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
-                    step >= stepNumber
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-600'
-                  }`}>
+                  <div
+                    className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
+                      step >= stepNumber ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
+                    }`}
+                  >
                     {stepNumber}
                   </div>
                   {stepNumber < 3 && (
-                    <div className={`flex-1 h-1 mx-2 ${
-                      step > stepNumber ? 'bg-blue-600' : 'bg-gray-200'
-                    }`} />
+                    <div
+                      className={`flex-1 h-1 mx-2 ${
+                        step > stepNumber ? 'bg-blue-600' : 'bg-gray-200'
+                      }`}
+                    />
                   )}
                 </React.Fragment>
               ))}
@@ -352,7 +370,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
                 className="space-y-4"
               >
                 <h3 className="text-lg font-semibold mb-4">个人基本信息</h3>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -390,9 +408,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      国籍 *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">国籍 *</label>
                     <input
                       type="text"
                       value={kycData.personalInfo.nationality}
@@ -437,7 +453,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
                 className="space-y-4"
               >
                 <h3 className="text-lg font-semibold mb-4">身份证明文档</h3>
-                
+
                 <FileUploadArea
                   field="idFront"
                   label="身份证正面 *"
@@ -467,7 +483,7 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
                 className="space-y-4"
               >
                 <h3 className="text-lg font-semibold mb-4">确认提交</h3>
-                
+
                 <div className="bg-gray-50 rounded-lg p-4 space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-600">姓名:</span>
@@ -490,8 +506,18 @@ const KYCVerification: React.FC<KYCVerificationProps> = ({
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <div className="flex items-start">
                     <div className="text-blue-600 mr-3">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                       </svg>
                     </div>
                     <div className="text-sm text-blue-800">

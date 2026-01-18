@@ -9,27 +9,36 @@ import { sql } from '@/lib/database';
 export async function POST(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured',
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
     const { commentId, voteType, currentUserId } = body;
 
     if (!commentId || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Comment ID and user ID are required',
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Comment ID and user ID are required',
+        },
+        { status: 400 }
+      );
     }
 
     if (voteType && !['upvote', 'downvote', 'remove'].includes(voteType)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Invalid vote type',
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Invalid vote type',
+        },
+        { status: 400 }
+      );
     }
 
     // 检查评论是否存在
@@ -38,20 +47,26 @@ export async function POST(request: NextRequest) {
     `;
 
     if (!commentResult || commentResult.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Comment not found',
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Comment not found',
+        },
+        { status: 404 }
+      );
     }
 
     const comment = commentResult[0];
 
     // 不能给自己的评论投票
     if (comment.user_id === currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'You cannot vote on your own comment',
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'You cannot vote on your own comment',
+        },
+        { status: 403 }
+      );
     }
 
     // 检查用户当前的投票状态
@@ -200,9 +215,12 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error voting on comment:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Internal server error',
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

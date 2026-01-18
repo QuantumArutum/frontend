@@ -40,7 +40,9 @@ export default function TestAdminPage() {
   const checkModeratorStatus = async () => {
     setLoading(true);
     try {
-      const response = await barongAPI.get(`/public/community/mod/moderators?currentUserId=${userId}`);
+      const response = await barongAPI.get(
+        `/public/community/mod/moderators?currentUserId=${userId}`
+      );
       setResult(response.data);
     } catch (error: any) {
       setResult({ error: error.message, details: error.response?.data });
@@ -129,7 +131,7 @@ export default function TestAdminPage() {
           <h3 className="text-lg font-semibold mb-2">📝 手动添加版主（SQL）</h3>
           <p className="text-sm text-gray-300 mb-2">如果 API 方式失败，可以直接在数据库执行：</p>
           <pre className="bg-gray-900 p-4 rounded-lg overflow-auto text-sm">
-{`INSERT INTO moderators (user_id, role, appointed_by, appointed_at)
+            {`INSERT INTO moderators (user_id, role, appointed_by, appointed_at)
 VALUES ('${userId}', 'admin', 'system', NOW())
 ON CONFLICT (user_id) DO UPDATE 
 SET role = 'admin', removed_at = NULL;`}

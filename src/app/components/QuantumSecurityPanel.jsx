@@ -20,7 +20,7 @@ import {
   Settings,
   Monitor,
   Activity,
-  Cpu
+  Cpu,
 } from 'lucide-react';
 import { quantumService } from '@/services/quantumService';
 
@@ -31,7 +31,7 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
     keyRotationStatus: 'Active',
     lastKeyRotation: new Date(),
     activeConnections: 0,
-    threatLevel: 'Low'
+    threatLevel: 'Low',
   });
 
   const [systemMetrics, setSystemMetrics] = useState({
@@ -40,14 +40,14 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
     keyGenerations: 0,
     signatureVerifications: 0,
     quantumRandomGenerations: 0,
-    averageResponseTime: 0
+    averageResponseTime: 0,
   });
 
   const [supportedAlgorithms, setSupportedAlgorithms] = useState([]);
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('AES-256-GCM');
   const [keyManagement, setKeyManagement] = useState({
     keys: [],
-    selectedKey: null
+    selectedKey: null,
   });
 
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,7 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
   useEffect(() => {
     loadSystemStatus();
     loadSupportedAlgorithms();
-    
+
     // 定期更新状态
     const interval = setInterval(loadSystemStatus, 30000);
     return () => clearInterval(interval);
@@ -66,15 +66,15 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
     try {
       const status = await quantumService.system.getStatus();
       const metrics = await quantumService.system.getMetrics();
-      
-      setSecurityStatus(prev => ({
+
+      setSecurityStatus((prev) => ({
         ...prev,
-        ...status
+        ...status,
       }));
-      
-      setSystemMetrics(prev => ({
+
+      setSystemMetrics((prev) => ({
         ...prev,
-        ...metrics
+        ...metrics,
       }));
     } catch (error) {
       console.error('Failed to load system status:', error);
@@ -95,7 +95,7 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
         'Dilithium',
         'Falcon',
         'SPHINCS+',
-        'NTRU'
+        'NTRU',
       ]);
     }
   };
@@ -105,17 +105,20 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
     try {
       const keyPair = await quantumService.keyManager.generateKeyPair();
       const keyId = `key_${Date.now()}`;
-      
+
       await quantumService.keyManager.storeKey(keyId, keyPair.privateKey);
-      
-      setKeyManagement(prev => ({
+
+      setKeyManagement((prev) => ({
         ...prev,
-        keys: [...prev.keys, {
-          id: keyId,
-          algorithm: selectedAlgorithm,
-          createdAt: new Date(),
-          status: 'Active'
-        }]
+        keys: [
+          ...prev.keys,
+          {
+            id: keyId,
+            algorithm: selectedAlgorithm,
+            createdAt: new Date(),
+            status: 'Active',
+          },
+        ],
       }));
 
       if (onSecurityChange) {
@@ -132,14 +135,12 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
     setLoading(true);
     try {
       const newKeyId = await quantumService.keyManager.rotateKey(keyId);
-      
-      setKeyManagement(prev => ({
+
+      setKeyManagement((prev) => ({
         ...prev,
-        keys: prev.keys.map(key => 
-          key.id === keyId 
-            ? { ...key, status: 'Rotated', rotatedTo: newKeyId }
-            : key
-        )
+        keys: prev.keys.map((key) =>
+          key.id === keyId ? { ...key, status: 'Rotated', rotatedTo: newKeyId } : key
+        ),
       }));
 
       if (onSecurityChange) {
@@ -167,20 +168,20 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
 
   const getSecurityLevelColor = (level) => {
     const colors = {
-      'Quantum': 'text-purple-400',
+      Quantum: 'text-purple-400',
       'Post-Quantum': 'text-cyan-400',
-      'Classical': 'text-green-400',
-      'Basic': 'text-yellow-400'
+      Classical: 'text-green-400',
+      Basic: 'text-yellow-400',
     };
     return colors[level] || 'text-gray-400';
   };
 
   const getThreatLevelColor = (level) => {
     const colors = {
-      'Low': 'text-green-400',
-      'Medium': 'text-yellow-400',
-      'High': 'text-red-400',
-      'Critical': 'text-red-600'
+      Low: 'text-green-400',
+      Medium: 'text-yellow-400',
+      High: 'text-red-400',
+      Critical: 'text-red-600',
     };
     return colors[level] || 'text-gray-400';
   };
@@ -195,7 +196,9 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
               <Shield className="w-5 h-5 text-purple-400" />
               <CardTitle className="text-white text-sm">量子安全</CardTitle>
             </div>
-            <Badge className={`${getSecurityLevelColor(securityStatus.encryptionLevel)} bg-purple-500/20`}>
+            <Badge
+              className={`${getSecurityLevelColor(securityStatus.encryptionLevel)} bg-purple-500/20`}
+            >
               {securityStatus.encryptionLevel}
             </Badge>
           </div>
@@ -216,8 +219,8 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
               </span>
             </div>
           </div>
-          <Button 
-            size="sm" 
+          <Button
+            size="sm"
             className="w-full mt-3 bg-purple-500 hover:bg-purple-600"
             onClick={() => window.open('/quantum-security', '_blank')}
           >
@@ -239,7 +242,9 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-300">加密级别</p>
-                <p className={`text-xl font-bold ${getSecurityLevelColor(securityStatus.encryptionLevel)}`}>
+                <p
+                  className={`text-xl font-bold ${getSecurityLevelColor(securityStatus.encryptionLevel)}`}
+                >
                   {securityStatus.encryptionLevel}
                 </p>
               </div>
@@ -253,7 +258,9 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-300">威胁等级</p>
-                <p className={`text-xl font-bold ${getThreatLevelColor(securityStatus.threatLevel)}`}>
+                <p
+                  className={`text-xl font-bold ${getThreatLevelColor(securityStatus.threatLevel)}`}
+                >
                   {securityStatus.threatLevel}
                 </p>
               </div>
@@ -305,9 +312,7 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
             <Card className="bg-white/10 backdrop-blur-md border-white/20">
               <CardHeader>
                 <CardTitle className="text-white">系统状态</CardTitle>
-                <CardDescription className="text-gray-300">
-                  量子加密系统运行状态
-                </CardDescription>
+                <CardDescription className="text-gray-300">量子加密系统运行状态</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -330,8 +335,8 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
                     {securityStatus.lastKeyRotation.toLocaleDateString()}
                   </span>
                 </div>
-                
-                <Button 
+
+                <Button
                   onClick={runSecurityTest}
                   disabled={loading}
                   className="w-full bg-purple-500 hover:bg-purple-600"
@@ -345,7 +350,9 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
                 </Button>
 
                 {testResults && (
-                  <div className={`p-3 rounded-lg ${testResults.success ? 'bg-green-500/20 border border-green-500/30' : 'bg-red-500/20 border border-red-500/30'}`}>
+                  <div
+                    className={`p-3 rounded-lg ${testResults.success ? 'bg-green-500/20 border border-green-500/30' : 'bg-red-500/20 border border-red-500/30'}`}
+                  >
                     <div className="flex items-center space-x-2">
                       {testResults.success ? (
                         <CheckCircle className="w-4 h-4 text-green-400" />
@@ -367,9 +374,7 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
             <Card className="bg-white/10 backdrop-blur-md border-white/20">
               <CardHeader>
                 <CardTitle className="text-white">操作统计</CardTitle>
-                <CardDescription className="text-gray-300">
-                  量子加密操作统计
-                </CardDescription>
+                <CardDescription className="text-gray-300">量子加密操作统计</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-sm">
@@ -410,11 +415,9 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
               <div className="flex justify-between items-center">
                 <div>
                   <CardTitle className="text-white">密钥管理</CardTitle>
-                  <CardDescription className="text-gray-300">
-                    管理量子加密密钥
-                  </CardDescription>
+                  <CardDescription className="text-gray-300">管理量子加密密钥</CardDescription>
                 </div>
-                <Button 
+                <Button
                   onClick={generateNewKey}
                   disabled={loading}
                   className="bg-cyan-500 hover:bg-cyan-600"
@@ -437,7 +440,9 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
                           </p>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <Badge className={`${key.status === 'Active' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                          <Badge
+                            className={`${key.status === 'Active' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}
+                          >
                             {key.status}
                           </Badge>
                           <Button
@@ -457,9 +462,7 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
                 <div className="text-center py-8">
                   <Key className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-400">暂无密钥</p>
-                  <p className="text-sm text-gray-500 mt-2">
-                    点击"生成新密钥"开始创建量子安全密钥
-                  </p>
+                  <p className="text-sm text-gray-500 mt-2">点击"生成新密钥"开始创建量子安全密钥</p>
                 </div>
               )}
             </CardContent>
@@ -471,9 +474,7 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
           <Card className="bg-white/10 backdrop-blur-md border-white/20">
             <CardHeader>
               <CardTitle className="text-white">支持的算法</CardTitle>
-              <CardDescription className="text-gray-300">
-                配置量子加密算法
-              </CardDescription>
+              <CardDescription className="text-gray-300">配置量子加密算法</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -505,9 +506,7 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
           <Card className="bg-white/10 backdrop-blur-md border-white/20">
             <CardHeader>
               <CardTitle className="text-white">实时监控</CardTitle>
-              <CardDescription className="text-gray-300">
-                量子加密系统实时监控
-              </CardDescription>
+              <CardDescription className="text-gray-300">量子加密系统实时监控</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -520,7 +519,9 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-400">量子随机数生成</span>
-                      <span className="text-purple-400">{systemMetrics.quantumRandomGenerations}</span>
+                      <span className="text-purple-400">
+                        {systemMetrics.quantumRandomGenerations}
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-400">活跃连接数</span>
@@ -528,7 +529,7 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-white font-medium mb-4">安全状态</h4>
                   <div className="space-y-3">
@@ -560,4 +561,3 @@ const QuantumSecurityPanel = ({ onSecurityChange, showFullPanel = false }) => {
 };
 
 export default QuantumSecurityPanel;
-

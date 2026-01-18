@@ -17,11 +17,14 @@ export async function GET(request: NextRequest) {
     if (!sql) {
       console.error('[hot-posts] Database connection not available');
       clearTimeout(timeoutId);
-      return NextResponse.json({
-        success: false,
-        error: 'Database connection not available',
-        message: '数据库连接不可用，请稍后重试'
-      }, { status: 503 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Database connection not available',
+          message: '数据库连接不可用，请稍后重试',
+        },
+        { status: 503 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -31,17 +34,18 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * limit;
 
     // 简化时间范围计算
-    const hours = {
-      '1h': 1,
-      '6h': 6,
-      '24h': 24,
-      '7d': 168,
-      '30d': 720,
-      'all': 8760
-    }[timeRange] || 168;
+    const hours =
+      {
+        '1h': 1,
+        '6h': 6,
+        '24h': 24,
+        '7d': 168,
+        '30d': 720,
+        all: 8760,
+      }[timeRange] || 168;
 
     // 简化查询 - 移除复杂的JOIN和子查询
-    const posts = await sql`
+    const posts = (await sql`
       SELECT 
         p.id,
         p.title,
@@ -68,7 +72,7 @@ export async function GET(request: NextRequest) {
       ORDER BY p.hot_score DESC, p.created_at DESC
       LIMIT ${limit}
       OFFSET ${offset}
-    ` as any[];
+    `) as any[];
 
     clearTimeout(timeoutId);
 
@@ -91,7 +95,7 @@ export async function GET(request: NextRequest) {
       commentCount: parseInt(post.comment_count || '0'),
       isPinned: post.is_pinned || false,
       userVote: null, // 客户端单独查询
-      createdAt: post.created_at
+      createdAt: post.created_at,
     }));
 
     return NextResponse.json({
@@ -101,38 +105,43 @@ export async function GET(request: NextRequest) {
         total: formattedPosts.length,
         page,
         limit,
-        hasMore: formattedPosts.length === limit
-      }
+        hasMore: formattedPosts.length === limit,
+      },
     });
-
   } catch (error) {
     clearTimeout(timeoutId);
-    
+
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const errorStack = error instanceof Error ? error.stack : '';
-    
+
     if (error instanceof Error && error.name === 'AbortError') {
       console.error('[hot-posts] Request timeout:', {
         message: errorMessage,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
-      return NextResponse.json({
-        success: false,
-        error: 'Request timeout',
-        message: '请求超时，请稍后重试'
-      }, { status: 504 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Request timeout',
+          message: '请求超时，请稍后重试',
+        },
+        { status: 504 }
+      );
     }
-    
+
     console.error('[hot-posts] Error fetching hot posts:', {
       message: errorMessage,
       stack: errorStack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-    
-    return NextResponse.json({
-      success: false,
-      error: errorMessage,
-      message: '获取热门帖子失败，请稍后重试'
-    }, { status: 500 });
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: errorMessage,
+        message: '获取热门帖子失败，请稍后重试',
+      },
+      { status: 500 }
+    );
   }
 }

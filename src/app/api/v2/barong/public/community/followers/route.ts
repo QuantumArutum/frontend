@@ -14,17 +14,23 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     if (!userId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'userId is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'userId is required',
+        },
+        { status: 400 }
+      );
     }
 
     // 获取粉丝列表
@@ -78,9 +84,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching followers list:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

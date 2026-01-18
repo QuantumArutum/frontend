@@ -13,7 +13,10 @@ export async function PUT(request: NextRequest) {
   try {
     const { is_active } = await request.json();
     const result = await db.toggleAllDemoModules(is_active);
-    return NextResponse.json({ success: true, message: is_active ? 'All modules enabled' : 'All modules disabled' });
+    return NextResponse.json({
+      success: true,
+      message: is_active ? 'All modules enabled' : 'All modules disabled',
+    });
   } catch (error) {
     return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }

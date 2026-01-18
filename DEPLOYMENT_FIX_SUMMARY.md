@@ -1,21 +1,25 @@
 # 部署错误修复总结
 
 ## 📅 日期
+
 2026-01-17
 
 ## 🐛 发现的问题
 
 ### 构建错误
+
 **错误信息**:
+
 ```
 Module not found: Can't resolve 'next-auth'
 ```
 
 **影响文件**:
+
 1. `src/app/api/v2/barong/public/community/follow/route.ts`
 2. `src/app/api/v2/barong/public/community/is-following/route.ts`
 
-**原因**: 
+**原因**:
 项目中没有安装 `next-auth` 包，但代码中使用了 `import { getServerSession } from 'next-auth'`
 
 ---
@@ -23,16 +27,19 @@ Module not found: Can't resolve 'next-auth'
 ## ✅ 修复方案
 
 ### 1. 移除 next-auth 依赖
+
 将认证相关的代码注释掉，暂时返回未认证状态，等待项目的认证系统实现后再启用。
 
 ### 2. 修改的文件
 
 #### follow/route.ts
+
 - 移除 `import { getServerSession } from 'next-auth'`
 - POST 和 DELETE 方法暂时返回 401 未认证错误
 - 保留完整的业务逻辑代码（注释状态），等待认证系统实现
 
 #### is-following/route.ts
+
 - 移除 `import { getServerSession } from 'next-auth'`
 - 暂时返回 `isFollowing: false`
 - 保留完整的业务逻辑代码（注释状态），等待认证系统实现
@@ -42,15 +49,18 @@ Module not found: Can't resolve 'next-auth'
 ## 📊 部署结果
 
 ### Vercel 部署状态
+
 - ✅ 构建成功
 - ✅ 部署成功
 - ✅ 状态：Ready（就绪）
 - ✅ 提交：`4bd039c - fix: 移除next-auth依赖，暂时禁用关注功能等待认证系统实现`
 
 ### 网站测试结果
+
 **测试 URL**: https://www.quantaureum.com/community/user/aurum51668
 
 **✅ 成功的功能**:
+
 1. 页面正常加载
 2. 用户信息正确显示
 3. 统计数据正确（1帖子、0获赞、0关注者、0关注中）
@@ -59,6 +69,7 @@ Module not found: Can't resolve 'next-auth'
 6. 最近发布的帖子正确显示
 
 **⚠️ 发现的小问题**:
+
 1. "编辑资料"按钮显示翻译键 `user_profile_page.edit_profile` 而不是中文文本
    - 原因：翻译文件中可能缺少这个键
    - 影响：轻微，不影响功能
@@ -97,24 +108,29 @@ da61828 - fix: 修复user-profile API的NULL值处理和post_comments表检查
 ### 临时 API 行为
 
 #### POST /api/v2/barong/public/community/follow
+
 ```json
 {
   "success": false,
   "message": "Authentication required. Please login first."
 }
 ```
+
 **状态码**: 401
 
 #### DELETE /api/v2/barong/public/community/follow
+
 ```json
 {
   "success": false,
   "message": "Authentication required. Please login first."
 }
 ```
+
 **状态码**: 401
 
 #### GET /api/v2/barong/public/community/is-following
+
 ```json
 {
   "success": true,
@@ -123,6 +139,7 @@ da61828 - fix: 修复user-profile API的NULL值处理和post_comments表检查
   }
 }
 ```
+
 **状态码**: 200
 
 ---
@@ -130,17 +147,20 @@ da61828 - fix: 修复user-profile API的NULL值处理和post_comments表检查
 ## 🎯 下一步计划
 
 ### 立即行动
+
 1. ✅ 修复部署错误
 2. ✅ 验证网站正常工作
 3. ⏳ 修复翻译键显示问题（可选）
 
 ### 短期计划（等待认证系统）
+
 1. 了解项目的认证系统实现方式
 2. 替换 `getServerSession()` 为项目的认证方法
 3. 启用关注功能的完整逻辑
 4. 测试关注/取消关注流程
 
 ### 中期计划
+
 1. 实现用户资料编辑功能
 2. 实现用户活动历史
 3. 优化性能和用户体验
@@ -150,12 +170,14 @@ da61828 - fix: 修复user-profile API的NULL值处理和post_comments表检查
 ## 📊 当前进度
 
 ### 第一阶段：核心浏览功能 - 100% ✅
+
 - ✅ 论坛分类页面
 - ✅ 论坛分类详情页
 - ✅ 搜索功能
 - ✅ 用户资料页
 
 ### 第二阶段：用户功能 - 70% ⏳
+
 - ✅ 关注/粉丝功能后端 API（5个端点）
 - ✅ 用户资料页前端更新
 - ✅ 关注者/关注中列表弹窗
@@ -168,6 +190,7 @@ da61828 - fix: 修复user-profile API的NULL值处理和post_comments表检查
 ## 🎉 成功指标
 
 ### 已达成
+
 - ✅ 部署成功，无构建错误
 - ✅ 网站正常访问
 - ✅ 用户资料页正常显示
@@ -176,6 +199,7 @@ da61828 - fix: 修复user-profile API的NULL值处理和post_comments表检查
 - ✅ 关注者/关注中可点击
 
 ### 待达成
+
 - ⏳ 关注功能完全可用（需要认证系统）
 - ⏳ 翻译文本完整
 - ⏳ 所有功能测试通过
@@ -189,6 +213,7 @@ da61828 - fix: 修复user-profile API的NULL值处理和post_comments表检查
 当项目的认证系统实现后，按以下步骤启用：
 
 1. **找到认证方法**
+
    ```typescript
    // 例如：从项目中找到获取当前用户的方法
    import { getCurrentUser } from '@/lib/auth';

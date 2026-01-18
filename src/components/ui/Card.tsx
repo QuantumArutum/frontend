@@ -11,14 +11,11 @@ interface CardProps {
   onClick?: () => void;
 }
 
-export const Card: React.FC<CardProps> = ({
-  children,
-  className = '',
-  hover = false,
-  onClick,
-}) => {
+export const Card: React.FC<CardProps> = ({ children, className = '', hover = false, onClick }) => {
   const baseClasses = 'bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700/50';
-  const hoverClasses = hover ? 'hover:border-blue-500/50 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer' : '';
+  const hoverClasses = hover
+    ? 'hover:border-blue-500/50 hover:bg-gray-800/70 transition-all duration-300 cursor-pointer'
+    : '';
 
   return (
     <motion.div
@@ -99,11 +96,7 @@ export const CardFooter: React.FC<{ children: React.ReactNode; className?: strin
   children,
   className = '',
 }) => {
-  return (
-    <div className={`px-6 py-4 border-t border-gray-700/50 ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`px-6 py-4 border-t border-gray-700/50 ${className}`}>{children}</div>;
 };
 
 // 统计卡片
@@ -138,8 +131,11 @@ export const StatCard: React.FC<StatCardProps> = ({
           <Icon className="w-6 h-6 text-white" />
         </div>
         {trend && (
-          <span className={`text-sm font-medium ${trend.isPositive ? 'text-green-400' : 'text-red-400'}`}>
-            {trend.isPositive ? '+' : ''}{trend.value}%
+          <span
+            className={`text-sm font-medium ${trend.isPositive ? 'text-green-400' : 'text-red-400'}`}
+          >
+            {trend.isPositive ? '+' : ''}
+            {trend.value}%
           </span>
         )}
       </div>

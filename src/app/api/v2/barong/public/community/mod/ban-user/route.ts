@@ -5,12 +5,15 @@ import { PERMISSIONS, hasPermission } from '@/lib/permissions';
 export async function POST(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
@@ -18,18 +21,24 @@ export async function POST(request: NextRequest) {
 
     // 验证必填字段
     if (!userId || !reason || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required fields'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing required fields',
+        },
+        { status: 400 }
+      );
     }
 
     // 不能封禁自己
     if (userId === currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Cannot ban yourself'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Cannot ban yourself',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -40,20 +49,26 @@ export async function POST(request: NextRequest) {
     `;
 
     if (moderator.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: Not a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Not a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     const userRole = moderator[0].role;
     const customPermissions = moderator[0].permissions;
 
     if (!hasPermission(userRole, PERMISSIONS.BAN_USER, customPermissions)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: No permission to ban users'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: No permission to ban users',
+        },
+        { status: 403 }
+      );
     }
 
     // 检查目标用户是否是版主（不能封禁版主）
@@ -62,10 +77,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (targetModerator.length > 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Cannot ban a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Cannot ban a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     // 计算过期时间
@@ -132,17 +150,19 @@ export async function POST(request: NextRequest) {
         userId,
         duration,
         expiresAt,
-        reason
-      }
+        reason,
+      },
     });
-
   } catch (error: any) {
     console.error('Ban user error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to ban user',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to ban user',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -150,12 +170,15 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -164,10 +187,13 @@ export async function DELETE(request: NextRequest) {
     const reason = searchParams.get('reason');
 
     if (!userId || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required parameters'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing required parameters',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -178,20 +204,26 @@ export async function DELETE(request: NextRequest) {
     `;
 
     if (moderator.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: Not a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Not a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     const userRole = moderator[0].role;
     const customPermissions = moderator[0].permissions;
 
     if (!hasPermission(userRole, PERMISSIONS.BAN_USER, customPermissions)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: No permission to unban users'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: No permission to unban users',
+        },
+        { status: 403 }
+      );
     }
 
     // 解除封禁
@@ -236,15 +268,17 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'User unbanned successfully'
+      message: 'User unbanned successfully',
     });
-
   } catch (error: any) {
     console.error('Unban user error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to unban user',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to unban user',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }

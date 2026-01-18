@@ -9,10 +9,13 @@ import { sql } from '@/lib/database';
 export async function POST(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
@@ -20,10 +23,13 @@ export async function POST(request: NextRequest) {
 
     // 验证参数
     if (!postId || !currentUserId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Post ID and user ID are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post ID and user ID are required',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证用户存在
@@ -32,10 +38,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (userCheck.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'User not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 验证帖子存在
@@ -44,10 +53,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (postCheck.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Post not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 确保 post_likes 表存在
@@ -111,11 +123,11 @@ export async function POST(request: NextRequest) {
         const postInfo = await sql`
           SELECT user_id, title FROM posts WHERE id = ${postId}
         `;
-        
+
         if (postInfo.length > 0) {
           const postAuthorId = postInfo[0].user_id;
           const postTitle = postInfo[0].title;
-          
+
           // 只有当点赞者不是帖子作者时才创建通知
           if (postAuthorId !== currentUserId) {
             // 获取点赞者的显示名称
@@ -124,7 +136,7 @@ export async function POST(request: NextRequest) {
             `;
             const userEmail = userResult[0]?.email || '';
             let displayName = userEmail.split('@')[0];
-            
+
             try {
               const profileResult = await sql`
                 SELECT display_name FROM user_profiles WHERE user_id = ${currentUserId}
@@ -170,9 +182,12 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error toggling post like:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

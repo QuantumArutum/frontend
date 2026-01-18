@@ -29,7 +29,13 @@ interface CommentTreeProps {
   currentUserId?: string;
   currentUserName?: string;
   onLike: (commentId: number) => void;
-  onReply: (postId: number, parentId: number, replyToUserId: string, replyToUserName: string, content: string) => Promise<void>;
+  onReply: (
+    postId: number,
+    parentId: number,
+    replyToUserId: string,
+    replyToUserName: string,
+    content: string
+  ) => Promise<void>;
   onEdit?: (commentId: number) => void;
   onDelete?: (commentId: number) => void;
   onLoadReplies?: (commentId: number) => Promise<Comment[]>;
@@ -45,7 +51,11 @@ export default function CommentTree({
   onDelete,
   onLoadReplies,
 }: CommentTreeProps) {
-  const [replyingTo, setReplyingTo] = useState<{ id: number; userId: string; userName: string } | null>(null);
+  const [replyingTo, setReplyingTo] = useState<{
+    id: number;
+    userId: string;
+    userName: string;
+  } | null>(null);
   const [loadedReplies, setLoadedReplies] = useState<Record<number, Comment[]>>({});
   const [loadingReplies, setLoadingReplies] = useState<Record<number, boolean>>({});
 
@@ -53,16 +63,10 @@ export default function CommentTree({
   const handleReplySubmit = async (content: string) => {
     if (!replyingTo || !currentUserId || !currentUserName) return;
 
-    const comment = comments.find(c => c.id === replyingTo.id);
+    const comment = comments.find((c) => c.id === replyingTo.id);
     if (!comment) return;
 
-    await onReply(
-      comment.postId,
-      replyingTo.id,
-      replyingTo.userId,
-      replyingTo.userName,
-      content
-    );
+    await onReply(comment.postId, replyingTo.id, replyingTo.userId, replyingTo.userName, content);
 
     setReplyingTo(null);
   };
@@ -71,7 +75,7 @@ export default function CommentTree({
   const handleLoadReplies = async (commentId: number) => {
     if (loadedReplies[commentId]) {
       // 如果已加载，则切换显示/隐藏
-      setLoadedReplies(prev => {
+      setLoadedReplies((prev) => {
         const newState = { ...prev };
         delete newState[commentId];
         return newState;
@@ -81,15 +85,15 @@ export default function CommentTree({
 
     if (!onLoadReplies) return;
 
-    setLoadingReplies(prev => ({ ...prev, [commentId]: true }));
+    setLoadingReplies((prev) => ({ ...prev, [commentId]: true }));
 
     try {
       const replies = await onLoadReplies(commentId);
-      setLoadedReplies(prev => ({ ...prev, [commentId]: replies }));
+      setLoadedReplies((prev) => ({ ...prev, [commentId]: replies }));
     } catch (error) {
       console.error('Failed to load replies:', error);
     } finally {
-      setLoadingReplies(prev => ({ ...prev, [commentId]: false }));
+      setLoadingReplies((prev) => ({ ...prev, [commentId]: false }));
     }
   };
 
@@ -108,14 +112,14 @@ export default function CommentTree({
           onReply={(id, userName) => setReplyingTo({ id, userId: comment.userId, userName })}
           onEdit={onEdit}
           onDelete={onDelete}
-          onLoadReplies={comment.replyCount && comment.replyCount > 0 ? handleLoadReplies : undefined}
+          onLoadReplies={
+            comment.replyCount && comment.replyCount > 0 ? handleLoadReplies : undefined
+          }
           showReplies={showReplies}
         >
           {/* 子评论 */}
           {showReplies && (
-            <div className="space-y-0">
-              {replies.map(reply => renderComment(reply))}
-            </div>
+            <div className="space-y-0">{replies.map((reply) => renderComment(reply))}</div>
           )}
 
           {/* 加载中状态 */}
@@ -130,9 +134,17 @@ export default function CommentTree({
         {/* 回复表单 */}
         <AnimatePresence>
           {replyingTo && replyingTo.id === comment.id && currentUserId && currentUserName && (
-            <div className={comment.depth && comment.depth > 0 ? (
-              comment.depth === 1 ? 'ml-8' : comment.depth === 2 ? 'ml-16' : 'ml-24'
-            ) : ''}>
+            <div
+              className={
+                comment.depth && comment.depth > 0
+                  ? comment.depth === 1
+                    ? 'ml-8'
+                    : comment.depth === 2
+                      ? 'ml-16'
+                      : 'ml-24'
+                  : ''
+              }
+            >
               <ReplyForm
                 postId={comment.postId}
                 parentId={comment.id}
@@ -150,9 +162,5 @@ export default function CommentTree({
     );
   };
 
-  return (
-    <div className="space-y-0">
-      {comments.map(comment => renderComment(comment))}
-    </div>
-  );
+  return <div className="space-y-0">{comments.map((comment) => renderComment(comment))}</div>;
 }

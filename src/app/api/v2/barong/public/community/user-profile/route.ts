@@ -13,17 +13,23 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     if (!username && !userId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Username or userId is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Username or userId is required',
+        },
+        { status: 400 }
+      );
     }
 
     // 确保 user_profiles 表存在
@@ -84,10 +90,13 @@ export async function GET(request: NextRequest) {
     }
 
     if (!user) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'User not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 获取用户统计数据（简化查询）
@@ -178,7 +187,11 @@ export async function GET(request: NextRequest) {
       badges.push({ name: 'Community Leader', color: 'from-orange-500 to-red-500', icon: '👑' });
     } else if (postCount > 20) {
       roleKey = 'senior_member';
-      badges.push({ name: 'Active Contributor', color: 'from-green-500 to-emerald-500', icon: '⭐' });
+      badges.push({
+        name: 'Active Contributor',
+        color: 'from-green-500 to-emerald-500',
+        icon: '⭐',
+      });
     } else if (postCount > 10) {
       roleKey = 'active_member';
       badges.push({ name: 'Rising Star', color: 'from-yellow-500 to-orange-500', icon: '🌟' });
@@ -189,7 +202,11 @@ export async function GET(request: NextRequest) {
     }
 
     if (commentCount > 100) {
-      badges.push({ name: 'Discussion Expert', color: 'from-indigo-500 to-purple-500', icon: '💬' });
+      badges.push({
+        name: 'Discussion Expert',
+        color: 'from-indigo-500 to-purple-500',
+        icon: '💬',
+      });
     }
 
     // 检查是否在线（简化查询，如果表不存在则跳过）
@@ -249,10 +266,13 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching user profile:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }
 

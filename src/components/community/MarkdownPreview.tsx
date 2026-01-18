@@ -5,10 +5,7 @@ import dynamic from 'next/dynamic';
 import '@uiw/react-markdown-preview/markdown.css';
 
 // 动态导入 MarkdownPreview 以避免 SSR 问题
-const MDPreview = dynamic(
-  () => import('@uiw/react-markdown-preview'),
-  { ssr: false }
-);
+const MDPreview = dynamic(() => import('@uiw/react-markdown-preview'), { ssr: false });
 
 interface MarkdownPreviewProps {
   content: string;

@@ -12,7 +12,6 @@
   - [ ] `DATABASE_FIXES.sql`
   - [ ] `src/app/api/v2/barong/public/community/fix-database/route.ts`
   - [ ] `src/components/community/ModeratorActions.tsx`
-  
 - [ ] 所有修改已保存
   - [ ] `src/app/community/posts/page.tsx`
 
@@ -53,8 +52,10 @@ git push
 
 ```javascript
 fetch('/api/v2/barong/public/community/fix-database', {
-  method: 'POST'
-}).then(r => r.json()).then(console.log);
+  method: 'POST',
+})
+  .then((r) => r.json())
+  .then(console.log);
 ```
 
 检查响应：
@@ -112,8 +113,8 @@ fetch('/api/v2/barong/public/community/fix-database', {
 
 ```javascript
 fetch('/api/v2/barong/public/community/forum-categories')
-  .then(r => r.json())
-  .then(d => console.log('分类数:', d.data?.length));
+  .then((r) => r.json())
+  .then((d) => console.log('分类数:', d.data?.length));
 ```
 
 - [ ] 返回 4 个分类
@@ -129,9 +130,11 @@ fetch('/api/v2/barong/public/community/mod/ban-user', {
     userId: 'test@test.com',
     duration: 1,
     reason: '测试',
-    currentUserId: 'aurum51668@outlook.com'
-  })
-}).then(r => r.json()).then(console.log);
+    currentUserId: 'aurum51668@outlook.com',
+  }),
+})
+  .then((r) => r.json())
+  .then(console.log);
 ```
 
 - [ ] 返回 `success: true`
@@ -147,9 +150,11 @@ fetch('/api/v2/barong/public/community/mod/mute-user', {
     userId: 'test@test.com',
     duration: 1,
     reason: '测试',
-    currentUserId: 'aurum51668@outlook.com'
-  })
-}).then(r => r.json()).then(console.log);
+    currentUserId: 'aurum51668@outlook.com',
+  }),
+})
+  .then((r) => r.json())
+  .then(console.log);
 ```
 
 - [ ] 返回 `success: true`
@@ -165,9 +170,11 @@ fetch('/api/v2/barong/public/community/mod/move-post', {
     postId: 5,
     categoryId: 2,
     reason: '测试',
-    currentUserId: 'aurum51668@outlook.com'
-  })
-}).then(r => r.json()).then(console.log);
+    currentUserId: 'aurum51668@outlook.com',
+  }),
+})
+  .then((r) => r.json())
+  .then(console.log);
 ```
 
 - [ ] 返回 `success: true`
@@ -177,8 +184,8 @@ fetch('/api/v2/barong/public/community/mod/move-post', {
 
 ```javascript
 fetch('/api/v2/barong/public/community/mod/logs?currentUserId=aurum51668@outlook.com')
-  .then(r => r.json())
-  .then(d => console.log('日志数:', d.data?.logs?.length));
+  .then((r) => r.json())
+  .then((d) => console.log('日志数:', d.data?.logs?.length));
 ```
 
 - [ ] 返回日志列表
@@ -287,6 +294,7 @@ fetch('/api/v2/barong/public/community/mod/logs?currentUserId=aurum51668@outlook
 当所有检查项都打勾后，部署就完成了！
 
 **最终状态:**
+
 - ✅ 代码已部署
 - ✅ 数据库已修复
 - ✅ 功能已验证

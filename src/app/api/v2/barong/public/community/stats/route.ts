@@ -22,19 +22,20 @@ export async function GET() {
 
     // 获取总用户数
     const [usersCount] = await sql`SELECT COUNT(*) as total FROM users WHERE status = 'active'`;
-    
+
     // 获取总帖子数
     const [postsCount] = await sql`SELECT COUNT(*) as total FROM posts`;
-    
+
     // 获取今日活跃用户数（基于最近24小时的活动）
     const [activeToday] = await sql`
       SELECT COUNT(DISTINCT user_id) as total 
       FROM posts 
       WHERE created_at > NOW() - INTERVAL '24 hours'
     `;
-    
+
     // 获取分类数（作为话题数）
-    const [topicsCount] = await sql`SELECT COUNT(*) as total FROM categories WHERE is_active = true`;
+    const [topicsCount] =
+      await sql`SELECT COUNT(*) as total FROM categories WHERE is_active = true`;
 
     return NextResponse.json({
       success: true,

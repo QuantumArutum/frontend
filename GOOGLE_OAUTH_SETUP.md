@@ -83,13 +83,16 @@ BACKEND_API_URL=https://api.yourdomain.com
 ## 故障排除
 
 ### 错误：redirect_uri_mismatch
+
 - 确保 Google Console 中的重定向 URI 与代码中完全一致
 - 包括协议（http/https）和端口号
 
 ### 错误：invalid_client
+
 - 检查客户端 ID 和密钥是否正确
 - 确保没有多余的空格
 
 ### 错误：access_denied
+
 - 用户取消了授权
 - 检查 OAuth 同意屏幕配置

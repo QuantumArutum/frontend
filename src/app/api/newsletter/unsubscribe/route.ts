@@ -7,10 +7,7 @@ export async function POST(request: NextRequest) {
     const { email } = body;
 
     if (!email || typeof email !== 'string') {
-      return NextResponse.json(
-        { success: false, error: 'Email is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'Email is required' }, { status: 400 });
     }
 
     const trimmedEmail = email.trim().toLowerCase();
@@ -18,7 +15,7 @@ export async function POST(request: NextRequest) {
     if (!sql) {
       return NextResponse.json({
         success: true,
-        message: 'Successfully unsubscribed from newsletter'
+        message: 'Successfully unsubscribed from newsletter',
       });
     }
 
@@ -34,20 +31,16 @@ export async function POST(request: NextRequest) {
     if (result.length === 0) {
       return NextResponse.json({
         success: true,
-        message: 'Email not found or already unsubscribed'
+        message: 'Email not found or already unsubscribed',
       });
     }
 
     return NextResponse.json({
       success: true,
-      message: 'Successfully unsubscribed from newsletter'
+      message: 'Successfully unsubscribed from newsletter',
     });
-
   } catch (error) {
     console.error('Newsletter unsubscribe error:', error);
-    return NextResponse.json(
-      { success: false, error: 'Failed to unsubscribe' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: 'Failed to unsubscribe' }, { status: 500 });
   }
 }

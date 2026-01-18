@@ -22,4 +22,3 @@ const TradingApp = () => {
 };
 
 export default TradingApp;
-

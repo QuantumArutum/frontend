@@ -8,8 +8,16 @@ import { communityService, type ModAction } from '@/lib/communityService';
 
 // Type assertion for methods that TypeScript can't infer due to object size
 const service = communityService as typeof communityService & {
-  getModerationQueue: (page?: number, limit?: number) => Promise<{ queue: ModAction[]; pending: number; approved: number; rejected: number }>;
-  updateModerationQueueItem: (id: string, status: string, reviewedBy: string, reviewNote?: string) => Promise<boolean>;
+  getModerationQueue: (
+    page?: number,
+    limit?: number
+  ) => Promise<{ queue: ModAction[]; pending: number; approved: number; rejected: number }>;
+  updateModerationQueueItem: (
+    id: string,
+    status: string,
+    reviewedBy: string,
+    reviewNote?: string
+  ) => Promise<boolean>;
   getSensitiveWords: () => Promise<string[]>;
   addSensitiveWord: (word: string, level: string, category: string) => Promise<boolean>;
   deleteSensitiveWord: (id: number) => Promise<boolean>;
@@ -30,7 +38,7 @@ export async function GET(request: NextRequest) {
         data: {
           logs: result.logs,
           total: result.total,
-        }
+        },
       });
     }
 
@@ -45,8 +53,8 @@ export async function GET(request: NextRequest) {
             pending: result.pending || 0,
             approved: result.approved || 0,
             rejected: result.rejected || 0,
-          }
-        }
+          },
+        },
       });
     }
 
@@ -55,7 +63,7 @@ export async function GET(request: NextRequest) {
       const words = await service.getSensitiveWords();
       return NextResponse.json({
         success: true,
-        data: words || []
+        data: words || [],
       });
     }
 
@@ -68,7 +76,7 @@ export async function GET(request: NextRequest) {
           pending_reports: stats?.pendingReports || 0,
           total_bans: stats?.totalBans || 0,
           active_bans: stats?.activeBans || 0,
-        }
+        },
       });
     }
 
@@ -88,7 +96,11 @@ export async function POST(request: NextRequest) {
     if (type === 'word') {
       // Add sensitive word
       const { word, level, category } = body;
-      const success = await service.addSensitiveWord(word, level || 'review', category || 'general');
+      const success = await service.addSensitiveWord(
+        word,
+        level || 'review',
+        category || 'general'
+      );
       return NextResponse.json({ success });
     }
 

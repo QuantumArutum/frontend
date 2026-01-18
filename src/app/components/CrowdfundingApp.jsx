@@ -45,7 +45,7 @@ import {
   CreditCard,
   Shield,
   Globe,
-  Zap
+  Zap,
 } from 'lucide-react';
 
 const CrowdfundingApp = () => {
@@ -60,172 +60,268 @@ const CrowdfundingApp = () => {
   const projects = [
     {
       id: 1,
-      title: "QuantumVR - 下一代虚拟现实体验",
-      description: "革命性的量子计算驱动VR技术，为用户带来前所未有的沉浸式体验。",
-      creator: "量子科技团队",
-      creatorLocation: "深圳, 中国",
+      title: 'QuantumVR - 下一代虚拟现实体验',
+      description: '革命性的量子计算驱动VR技术，为用户带来前所未有的沉浸式体验。',
+      creator: '量子科技团队',
+      creatorLocation: '深圳, 中国',
       creatorProjects: 3,
       creatorBackers: 1247,
-      category: "科技",
+      category: '科技',
       goal: 1000000,
       raised: 575000,
       backers: 8247,
       daysLeft: 20,
-      image: "/api/placeholder/400/300",
+      image: '/api/placeholder/400/300',
       video: true,
       staffPick: true,
       featured: true,
-      tags: ["VR", "量子计算", "科技", "创新"],
+      tags: ['VR', '量子计算', '科技', '创新'],
       rewards: [
-        { amount: 50, title: "早鸟支持", description: "获得项目更新和感谢信", backers: 1250, delivery: "2024年8月" },
-        { amount: 150, title: "VR体验版", description: "获得VR设备体验版本", backers: 850, delivery: "2024年10月", limited: true },
-        { amount: 500, title: "完整版套装", description: "完整VR设备 + 专属内容", backers: 320, delivery: "2024年12月" },
-        { amount: 1500, title: "创始人版", description: "限量版设备 + 终身更新", backers: 45, delivery: "2024年12月", limited: true }
+        {
+          amount: 50,
+          title: '早鸟支持',
+          description: '获得项目更新和感谢信',
+          backers: 1250,
+          delivery: '2024年8月',
+        },
+        {
+          amount: 150,
+          title: 'VR体验版',
+          description: '获得VR设备体验版本',
+          backers: 850,
+          delivery: '2024年10月',
+          limited: true,
+        },
+        {
+          amount: 500,
+          title: '完整版套装',
+          description: '完整VR设备 + 专属内容',
+          backers: 320,
+          delivery: '2024年12月',
+        },
+        {
+          amount: 1500,
+          title: '创始人版',
+          description: '限量版设备 + 终身更新',
+          backers: 45,
+          delivery: '2024年12月',
+          limited: true,
+        },
       ],
-      story: "我们的团队致力于将量子计算技术与虚拟现实相结合，创造出前所未有的沉浸式体验...",
-      risks: "技术开发风险、供应链风险、市场接受度风险",
+      story: '我们的团队致力于将量子计算技术与虚拟现实相结合，创造出前所未有的沉浸式体验...',
+      risks: '技术开发风险、供应链风险、市场接受度风险',
       updates: [
-        { date: "2024-01-15", title: "原型测试成功", content: "我们的第一个原型已经通过了所有测试..." },
-        { date: "2024-01-10", title: "团队扩充", content: "我们很高兴宣布新的技术专家加入..." }
+        {
+          date: '2024-01-15',
+          title: '原型测试成功',
+          content: '我们的第一个原型已经通过了所有测试...',
+        },
+        { date: '2024-01-10', title: '团队扩充', content: '我们很高兴宣布新的技术专家加入...' },
       ],
       comments: 234,
       likes: 1567,
       views: 45678,
-      fundingType: "all-or-nothing"
+      fundingType: 'all-or-nothing',
     },
     {
       id: 2,
-      title: "智能环保水杯 - EcoSmart Cup",
-      description: "集成IoT技术的智能水杯，实时监测水质并提醒用户保持健康饮水习惯。",
-      creator: "绿色生活工作室",
-      creatorLocation: "上海, 中国",
+      title: '智能环保水杯 - EcoSmart Cup',
+      description: '集成IoT技术的智能水杯，实时监测水质并提醒用户保持健康饮水习惯。',
+      creator: '绿色生活工作室',
+      creatorLocation: '上海, 中国',
       creatorProjects: 1,
       creatorBackers: 456,
-      category: "环保",
+      category: '环保',
       goal: 200000,
       raised: 145000,
       backers: 2156,
       daysLeft: 35,
-      image: "/api/placeholder/400/300",
+      image: '/api/placeholder/400/300',
       video: false,
       staffPick: false,
       featured: false,
-      tags: ["环保", "智能", "健康", "IoT"],
+      tags: ['环保', '智能', '健康', 'IoT'],
       rewards: [
-        { amount: 80, title: "单个水杯", description: "获得一个智能环保水杯", backers: 890, delivery: "2024年9月" },
-        { amount: 150, title: "家庭套装", description: "两个水杯 + 充电底座", backers: 567, delivery: "2024年9月" },
-        { amount: 300, title: "企业版", description: "五个水杯 + 管理系统", backers: 123, delivery: "2024年10月" }
+        {
+          amount: 80,
+          title: '单个水杯',
+          description: '获得一个智能环保水杯',
+          backers: 890,
+          delivery: '2024年9月',
+        },
+        {
+          amount: 150,
+          title: '家庭套装',
+          description: '两个水杯 + 充电底座',
+          backers: 567,
+          delivery: '2024年9月',
+        },
+        {
+          amount: 300,
+          title: '企业版',
+          description: '五个水杯 + 管理系统',
+          backers: 123,
+          delivery: '2024年10月',
+        },
       ],
-      story: "作为环保主义者，我们希望通过技术让每个人都能轻松地过上更环保的生活...",
-      risks: "生产成本控制风险、技术集成风险",
+      story: '作为环保主义者，我们希望通过技术让每个人都能轻松地过上更环保的生活...',
+      risks: '生产成本控制风险、技术集成风险',
       updates: [
-        { date: "2024-01-12", title: "材料测试完成", content: "我们已经完成了所有环保材料的安全测试..." }
+        {
+          date: '2024-01-12',
+          title: '材料测试完成',
+          content: '我们已经完成了所有环保材料的安全测试...',
+        },
       ],
       comments: 89,
       likes: 456,
       views: 12345,
-      fundingType: "flexible"
+      fundingType: 'flexible',
     },
     {
       id: 3,
-      title: "量子音乐合成器 - QuantumBeats",
-      description: "利用量子算法生成独特音乐的革命性合成器，为音乐创作带来无限可能。",
-      creator: "音频创新实验室",
-      creatorLocation: "北京, 中国",
+      title: '量子音乐合成器 - QuantumBeats',
+      description: '利用量子算法生成独特音乐的革命性合成器，为音乐创作带来无限可能。',
+      creator: '音频创新实验室',
+      creatorLocation: '北京, 中国',
       creatorProjects: 2,
       creatorBackers: 789,
-      category: "艺术",
+      category: '艺术',
       goal: 500000,
       raised: 320000,
       backers: 1876,
       daysLeft: 15,
-      image: "/api/placeholder/400/300",
+      image: '/api/placeholder/400/300',
       video: true,
       staffPick: true,
       featured: false,
-      tags: ["音乐", "量子", "艺术", "创新"],
+      tags: ['音乐', '量子', '艺术', '创新'],
       rewards: [
-        { amount: 100, title: "数字版", description: "获得软件版本", backers: 650, delivery: "2024年8月" },
-        { amount: 300, title: "硬件版", description: "物理合成器设备", backers: 420, delivery: "2024年11月" },
-        { amount: 800, title: "专业版", description: "专业级设备 + 培训", backers: 156, delivery: "2024年12月" }
+        {
+          amount: 100,
+          title: '数字版',
+          description: '获得软件版本',
+          backers: 650,
+          delivery: '2024年8月',
+        },
+        {
+          amount: 300,
+          title: '硬件版',
+          description: '物理合成器设备',
+          backers: 420,
+          delivery: '2024年11月',
+        },
+        {
+          amount: 800,
+          title: '专业版',
+          description: '专业级设备 + 培训',
+          backers: 156,
+          delivery: '2024年12月',
+        },
       ],
-      story: "音乐是人类情感的表达，我们希望通过量子技术为音乐创作开辟新的可能性...",
-      risks: "算法优化风险、硬件制造风险",
+      story: '音乐是人类情感的表达，我们希望通过量子技术为音乐创作开辟新的可能性...',
+      risks: '算法优化风险、硬件制造风险',
       updates: [
-        { date: "2024-01-18", title: "算法突破", content: "我们在量子音乐算法方面取得了重大突破..." }
+        {
+          date: '2024-01-18',
+          title: '算法突破',
+          content: '我们在量子音乐算法方面取得了重大突破...',
+        },
       ],
       comments: 156,
       likes: 892,
       views: 23456,
-      fundingType: "all-or-nothing"
+      fundingType: 'all-or-nothing',
     },
     {
       id: 4,
-      title: "教育机器人 - EduBot Pro",
-      description: "专为儿童设计的AI教育机器人，让学习变得更有趣和高效。",
-      creator: "未来教育科技",
-      creatorLocation: "广州, 中国",
+      title: '教育机器人 - EduBot Pro',
+      description: '专为儿童设计的AI教育机器人，让学习变得更有趣和高效。',
+      creator: '未来教育科技',
+      creatorLocation: '广州, 中国',
       creatorProjects: 4,
       creatorBackers: 2134,
-      category: "教育",
+      category: '教育',
       goal: 800000,
       raised: 456000,
       backers: 3421,
       daysLeft: 42,
-      image: "/api/placeholder/400/300",
+      image: '/api/placeholder/400/300',
       video: true,
       staffPick: false,
       featured: true,
-      tags: ["教育", "AI", "机器人", "儿童"],
+      tags: ['教育', 'AI', '机器人', '儿童'],
       rewards: [
-        { amount: 200, title: "基础版", description: "基础教育机器人", backers: 1200, delivery: "2024年10月" },
-        { amount: 400, title: "进阶版", description: "增强功能版本", backers: 800, delivery: "2024年11月" },
-        { amount: 800, title: "专业版", description: "全功能版 + 课程包", backers: 300, delivery: "2024年12月" }
+        {
+          amount: 200,
+          title: '基础版',
+          description: '基础教育机器人',
+          backers: 1200,
+          delivery: '2024年10月',
+        },
+        {
+          amount: 400,
+          title: '进阶版',
+          description: '增强功能版本',
+          backers: 800,
+          delivery: '2024年11月',
+        },
+        {
+          amount: 800,
+          title: '专业版',
+          description: '全功能版 + 课程包',
+          backers: 300,
+          delivery: '2024年12月',
+        },
       ],
-      story: "我们相信每个孩子都有无限的潜能，通过AI技术我们希望为他们提供个性化的学习体验...",
-      risks: "AI算法训练风险、儿童安全认证风险",
+      story: '我们相信每个孩子都有无限的潜能，通过AI技术我们希望为他们提供个性化的学习体验...',
+      risks: 'AI算法训练风险、儿童安全认证风险',
       updates: [
-        { date: "2024-01-20", title: "安全认证通过", content: "我们的产品已经通过了所有儿童安全认证..." }
+        {
+          date: '2024-01-20',
+          title: '安全认证通过',
+          content: '我们的产品已经通过了所有儿童安全认证...',
+        },
       ],
       comments: 278,
       likes: 1234,
       views: 34567,
-      fundingType: "flexible"
-    }
+      fundingType: 'flexible',
+    },
   ];
 
   // 我的项目数据
   const myProjects = [
     {
       id: 1,
-      title: "量子音乐合成器 - QuantumBeats",
-      status: "进行中",
+      title: '量子音乐合成器 - QuantumBeats',
+      status: '进行中',
       goal: 500000,
       raised: 320000,
       backers: 1876,
       daysLeft: 15,
-      category: "艺术"
-    }
+      category: '艺术',
+    },
   ];
 
   // 我的支持数据
   const myBackings = [
     {
       id: 1,
-      projectTitle: "QuantumVR - 下一代虚拟现实体验",
+      projectTitle: 'QuantumVR - 下一代虚拟现实体验',
       amount: 800,
-      reward: "完整版套装",
-      date: "2024-01-10",
-      status: "进行中"
+      reward: '完整版套装',
+      date: '2024-01-10',
+      status: '进行中',
     },
     {
       id: 2,
-      projectTitle: "智能环保水杯 - EcoSmart Cup",
+      projectTitle: '智能环保水杯 - EcoSmart Cup',
       amount: 150,
-      reward: "家庭套装",
-      date: "2024-01-05",
-      status: "进行中"
-    }
+      reward: '家庭套装',
+      date: '2024-01-05',
+      status: '进行中',
+    },
   ];
 
   const categories = [
@@ -235,7 +331,7 @@ const CrowdfundingApp = () => {
     { id: 'education', name: '教育', count: 189 },
     { id: 'environment', name: '环保', count: 167 },
     { id: 'health', name: '健康', count: 134 },
-    { id: 'games', name: '游戏', count: 67 }
+    { id: 'games', name: '游戏', count: 67 },
   ];
 
   const sortOptions = [
@@ -243,13 +339,14 @@ const CrowdfundingApp = () => {
     { id: 'newest', name: '最新发布' },
     { id: 'ending', name: '即将结束' },
     { id: 'funded', name: '筹资最多' },
-    { id: 'backers', name: '支持者最多' }
+    { id: 'backers', name: '支持者最多' },
   ];
 
   // 筛选和排序项目
-  const filteredProjects = projects.filter(project => {
-    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredProjects = projects.filter((project) => {
+    const matchesSearch =
+      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
@@ -285,7 +382,7 @@ const CrowdfundingApp = () => {
                   )}
                 </div>
                 <p className="text-cyan-200 text-responsive-base mb-4">{project.description}</p>
-                
+
                 {/* 创作者信息 */}
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
@@ -337,16 +434,28 @@ const CrowdfundingApp = () => {
                 {/* 详情标签页 */}
                 <Tabs value={activeDetailTab} onValueChange={setActiveDetailTab} className="w-full">
                   <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 border border-cyan-500/30">
-                    <TabsTrigger value="story" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white">
+                    <TabsTrigger
+                      value="story"
+                      className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white"
+                    >
                       项目故事
                     </TabsTrigger>
-                    <TabsTrigger value="updates" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white">
+                    <TabsTrigger
+                      value="updates"
+                      className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white"
+                    >
                       项目更新
                     </TabsTrigger>
-                    <TabsTrigger value="comments" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white">
+                    <TabsTrigger
+                      value="comments"
+                      className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white"
+                    >
                       评论
                     </TabsTrigger>
-                    <TabsTrigger value="risks" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white">
+                    <TabsTrigger
+                      value="risks"
+                      className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white"
+                    >
                       风险说明
                     </TabsTrigger>
                   </TabsList>
@@ -381,7 +490,9 @@ const CrowdfundingApp = () => {
                       <CardContent className="p-6">
                         <div className="flex items-center gap-2 mb-4">
                           <MessageCircle className="w-5 h-5 text-cyan-400" />
-                          <span className="text-white font-medium">{formatNumber(project.comments)} 条评论</span>
+                          <span className="text-white font-medium">
+                            {formatNumber(project.comments)} 条评论
+                          </span>
                         </div>
                         <p className="text-cyan-200">评论功能开发中...</p>
                       </CardContent>
@@ -416,7 +527,7 @@ const CrowdfundingApp = () => {
                           </span>
                         </div>
                         <div className="w-full bg-slate-700 rounded-full h-3">
-                          <div 
+                          <div
                             className="bg-gradient-to-r from-cyan-500 to-blue-600 h-3 rounded-full transition-all duration-500"
                             style={{ width: `${Math.min(progressPercentage, 100)}%` }}
                           />
@@ -455,7 +566,9 @@ const CrowdfundingApp = () => {
 
                       <div className="flex items-center gap-2 text-sm text-cyan-300">
                         <Shield className="w-4 h-4" />
-                        <span>{project.fundingType === 'all-or-nothing' ? '全额筹资' : '灵活筹资'}模式</span>
+                        <span>
+                          {project.fundingType === 'all-or-nothing' ? '全额筹资' : '灵活筹资'}模式
+                        </span>
                       </div>
                     </div>
                   </CardContent>
@@ -516,11 +629,19 @@ const CrowdfundingApp = () => {
                     </Button>
 
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="flex-1 border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10"
+                      >
                         <Heart className="w-4 h-4 mr-1" />
                         收藏
                       </Button>
-                      <Button variant="outline" size="sm" className="flex-1 border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10"
+                      >
                         <Share2 className="w-4 h-4 mr-1" />
                         分享
                       </Button>
@@ -538,21 +659,27 @@ const CrowdfundingApp = () => {
                           <Eye className="w-3 h-3" />
                           浏览量
                         </span>
-                        <span className="text-white truncate-number">{formatNumber(project.views)}</span>
+                        <span className="text-white truncate-number">
+                          {formatNumber(project.views)}
+                        </span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-cyan-300 text-sm flex items-center gap-1">
                           <ThumbsUp className="w-3 h-3" />
                           点赞数
                         </span>
-                        <span className="text-white truncate-number">{formatNumber(project.likes)}</span>
+                        <span className="text-white truncate-number">
+                          {formatNumber(project.likes)}
+                        </span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-cyan-300 text-sm flex items-center gap-1">
                           <MessageCircle className="w-3 h-3" />
                           评论数
                         </span>
-                        <span className="text-white truncate-number">{formatNumber(project.comments)}</span>
+                        <span className="text-white truncate-number">
+                          {formatNumber(project.comments)}
+                        </span>
                       </div>
                     </div>
                   </CardContent>
@@ -573,7 +700,7 @@ const CrowdfundingApp = () => {
       category: '',
       goal: '',
       duration: '',
-      fundingType: 'all-or-nothing'
+      fundingType: 'all-or-nothing',
     });
 
     return (
@@ -598,16 +725,16 @@ const CrowdfundingApp = () => {
                   <Input
                     placeholder="输入项目标题"
                     value={projectData.title}
-                    onChange={(e) => setProjectData({...projectData, title: e.target.value})}
+                    onChange={(e) => setProjectData({ ...projectData, title: e.target.value })}
                     className="bg-slate-700/50 border-slate-600 text-white"
                   />
                 </div>
                 <div>
                   <label className="text-cyan-300 text-sm mb-2 block">项目分类</label>
-                  <select 
+                  <select
                     className="w-full p-2 bg-slate-700/50 border border-slate-600 rounded-md text-white"
                     value={projectData.category}
-                    onChange={(e) => setProjectData({...projectData, category: e.target.value})}
+                    onChange={(e) => setProjectData({ ...projectData, category: e.target.value })}
                   >
                     <option value="">选择分类</option>
                     <option value="tech">科技</option>
@@ -624,7 +751,7 @@ const CrowdfundingApp = () => {
                 <textarea
                   placeholder="详细描述您的项目..."
                   value={projectData.description}
-                  onChange={(e) => setProjectData({...projectData, description: e.target.value})}
+                  onChange={(e) => setProjectData({ ...projectData, description: e.target.value })}
                   className="w-full p-3 bg-slate-700/50 border border-slate-600 rounded-md text-white h-32 resize-none"
                 />
               </div>
@@ -640,7 +767,7 @@ const CrowdfundingApp = () => {
                     type="number"
                     placeholder="输入目标金额"
                     value={projectData.goal}
-                    onChange={(e) => setProjectData({...projectData, goal: e.target.value})}
+                    onChange={(e) => setProjectData({ ...projectData, goal: e.target.value })}
                     className="bg-slate-700/50 border-slate-600 text-white"
                   />
                 </div>
@@ -650,7 +777,7 @@ const CrowdfundingApp = () => {
                     type="number"
                     placeholder="输入筹资天数"
                     value={projectData.duration}
-                    onChange={(e) => setProjectData({...projectData, duration: e.target.value})}
+                    onChange={(e) => setProjectData({ ...projectData, duration: e.target.value })}
                     className="bg-slate-700/50 border-slate-600 text-white"
                   />
                 </div>
@@ -664,7 +791,9 @@ const CrowdfundingApp = () => {
                       name="fundingType"
                       value="all-or-nothing"
                       checked={projectData.fundingType === 'all-or-nothing'}
-                      onChange={(e) => setProjectData({...projectData, fundingType: e.target.value})}
+                      onChange={(e) =>
+                        setProjectData({ ...projectData, fundingType: e.target.value })
+                      }
                       className="text-cyan-500"
                     />
                     全额筹资 (All-or-Nothing)
@@ -675,7 +804,9 @@ const CrowdfundingApp = () => {
                       name="fundingType"
                       value="flexible"
                       checked={projectData.fundingType === 'flexible'}
-                      onChange={(e) => setProjectData({...projectData, fundingType: e.target.value})}
+                      onChange={(e) =>
+                        setProjectData({ ...projectData, fundingType: e.target.value })
+                      }
                       className="text-cyan-500"
                     />
                     灵活筹资 (Keep-it-All)
@@ -703,8 +834,8 @@ const CrowdfundingApp = () => {
 
             {/* 操作按钮 */}
             <div className="flex gap-4 pt-6">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => setShowCreateProject(false)}
                 className="border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10"
               >
@@ -734,13 +865,16 @@ const CrowdfundingApp = () => {
 
       {/* 量子网格背景 */}
       <div className="absolute inset-0 opacity-10">
-        <div className="w-full h-full" style={{
-          backgroundImage: `
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundImage: `
             linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px)
           `,
-          backgroundSize: '50px 50px'
-        }} />
+            backgroundSize: '50px 50px',
+          }}
+        />
       </div>
 
       <div className="relative z-10 p-6">
@@ -748,12 +882,8 @@ const CrowdfundingApp = () => {
         <div className="max-w-7xl mx-auto mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-responsive-3xl font-bold text-white mb-2">
-                量子众筹平台
-              </h1>
-              <p className="text-cyan-200">
-                让创意获得支持，让梦想成为现实
-              </p>
+              <h1 className="text-responsive-3xl font-bold text-white mb-2">量子众筹平台</h1>
+              <p className="text-cyan-200">让创意获得支持，让梦想成为现实</p>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-right">
@@ -769,9 +899,7 @@ const CrowdfundingApp = () => {
                 <p className="text-cyan-300 text-sm">支持者</p>
               </div>
               <div className="text-right">
-                <p className="text-responsive-lg font-bold text-green-400">
-                  100%
-                </p>
+                <p className="text-responsive-lg font-bold text-green-400">100%</p>
                 <p className="text-cyan-300 text-sm">量子安全</p>
               </div>
             </div>
@@ -787,29 +915,29 @@ const CrowdfundingApp = () => {
         <div className="max-w-7xl mx-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 border border-cyan-500/30 mb-8">
-              <TabsTrigger 
-                value="discover" 
+              <TabsTrigger
+                value="discover"
                 className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white"
               >
                 <Search className="w-4 h-4 mr-2" />
                 发现项目
               </TabsTrigger>
-              <TabsTrigger 
-                value="create" 
+              <TabsTrigger
+                value="create"
                 className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 发起项目
               </TabsTrigger>
-              <TabsTrigger 
-                value="my-projects" 
+              <TabsTrigger
+                value="my-projects"
                 className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white"
               >
                 <Settings className="w-4 h-4 mr-2" />
                 我的项目
               </TabsTrigger>
-              <TabsTrigger 
-                value="my-support" 
+              <TabsTrigger
+                value="my-support"
                 className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white"
               >
                 <Heart className="w-4 h-4 mr-2" />
@@ -835,23 +963,23 @@ const CrowdfundingApp = () => {
                       </div>
                     </div>
                     <div className="flex gap-4">
-                      <select 
+                      <select
                         className="px-4 py-2 bg-slate-700/50 border border-slate-600 rounded-md text-white"
                         value={selectedCategory}
                         onChange={(e) => setSelectedCategory(e.target.value)}
                       >
-                        {categories.map(category => (
+                        {categories.map((category) => (
                           <option key={category.id} value={category.id}>
                             {category.name} ({category.count})
                           </option>
                         ))}
                       </select>
-                      <select 
+                      <select
                         className="px-4 py-2 bg-slate-700/50 border border-slate-600 rounded-md text-white"
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
                       >
-                        {sortOptions.map(option => (
+                        {sortOptions.map((option) => (
                           <option key={option.id} value={option.id}>
                             {option.name}
                           </option>
@@ -870,12 +998,8 @@ const CrowdfundingApp = () => {
                       <Star className="w-8 h-8 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-responsive-xl font-bold text-white mb-1">
-                        本周特色项目
-                      </h3>
-                      <p className="text-purple-200">
-                        精选优质项目，获得更多曝光和支持
-                      </p>
+                      <h3 className="text-responsive-xl font-bold text-white mb-1">本周特色项目</h3>
+                      <p className="text-purple-200">精选优质项目，获得更多曝光和支持</p>
                     </div>
                     <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white">
                       查看详情
@@ -888,10 +1012,10 @@ const CrowdfundingApp = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProjects.map((project) => {
                   const progressPercentage = (project.raised / project.goal) * 100;
-                  
+
                   return (
-                    <Card 
-                      key={project.id} 
+                    <Card
+                      key={project.id}
                       className="bg-slate-800/50 border-cyan-500/30 hover:border-cyan-400 transition-all duration-300 cursor-pointer group"
                       onClick={() => setSelectedProject(project)}
                     >
@@ -905,7 +1029,7 @@ const CrowdfundingApp = () => {
                               <Image className="w-12 h-12 text-cyan-400" />
                             )}
                           </div>
-                          
+
                           {/* 徽章 */}
                           <div className="absolute top-3 left-3 flex gap-2">
                             {project.staffPick && (
@@ -964,7 +1088,7 @@ const CrowdfundingApp = () => {
                               </span>
                             </div>
                             <div className="w-full bg-slate-700 rounded-full h-2">
-                              <div 
+                              <div
                                 className="bg-gradient-to-r from-cyan-500 to-blue-600 h-2 rounded-full transition-all duration-500"
                                 style={{ width: `${Math.min(progressPercentage, 100)}%` }}
                               />
@@ -996,9 +1120,9 @@ const CrowdfundingApp = () => {
                           {/* 标签 */}
                           <div className="flex flex-wrap gap-1 mb-4">
                             {project.tags.slice(0, 3).map((tag, index) => (
-                              <Badge 
-                                key={index} 
-                                variant="outline" 
+                              <Badge
+                                key={index}
+                                variant="outline"
                                 className="border-cyan-500/30 text-cyan-300 text-xs"
                               >
                                 {tag}
@@ -1008,7 +1132,7 @@ const CrowdfundingApp = () => {
 
                           {/* 操作按钮 */}
                           <div className="flex gap-2">
-                            <Button 
+                            <Button
                               className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -1017,16 +1141,16 @@ const CrowdfundingApp = () => {
                             >
                               立即支持
                             </Button>
-                            <Button 
-                              variant="outline" 
+                            <Button
+                              variant="outline"
                               size="sm"
                               className="border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10"
                               onClick={(e) => e.stopPropagation()}
                             >
                               <Heart className="w-4 h-4" />
                             </Button>
-                            <Button 
-                              variant="outline" 
+                            <Button
+                              variant="outline"
                               size="sm"
                               className="border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10"
                               onClick={(e) => e.stopPropagation()}
@@ -1055,9 +1179,7 @@ const CrowdfundingApp = () => {
                     <Settings className="w-5 h-5 text-cyan-400" />
                     我的项目管理
                   </CardTitle>
-                  <CardDescription className="text-cyan-200">
-                    管理您发起的众筹项目
-                  </CardDescription>
+                  <CardDescription className="text-cyan-200">管理您发起的众筹项目</CardDescription>
                 </CardHeader>
                 <CardContent>
                   {myProjects.length > 0 ? (
@@ -1067,27 +1189,39 @@ const CrowdfundingApp = () => {
                           <CardContent className="p-6">
                             <div className="flex justify-between items-start mb-4">
                               <div>
-                                <h3 className="text-white font-bold text-lg mb-1">{project.title}</h3>
-                                <Badge className={`${
-                                  project.status === '进行中' 
-                                    ? 'bg-green-500/20 text-green-400 border-green-500/30' 
-                                    : 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
-                                }`}>
+                                <h3 className="text-white font-bold text-lg mb-1">
+                                  {project.title}
+                                </h3>
+                                <Badge
+                                  className={`${
+                                    project.status === '进行中'
+                                      ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                                      : 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
+                                  }`}
+                                >
                                   {project.status}
                                 </Badge>
                               </div>
                               <div className="flex gap-2">
-                                <Button variant="outline" size="sm" className="border-cyan-500/30 text-cyan-300">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="border-cyan-500/30 text-cyan-300"
+                                >
                                   <Edit className="w-4 h-4 mr-1" />
                                   编辑
                                 </Button>
-                                <Button variant="outline" size="sm" className="border-cyan-500/30 text-cyan-300">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="border-cyan-500/30 text-cyan-300"
+                                >
                                   <BarChart3 className="w-4 h-4 mr-1" />
                                   统计
                                 </Button>
                               </div>
                             </div>
-                            
+
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                               <div>
                                 <p className="text-responsive-lg font-bold text-white truncate-number">
@@ -1123,7 +1257,7 @@ const CrowdfundingApp = () => {
                       <Rocket className="w-16 h-16 text-cyan-400 mx-auto mb-4" />
                       <h3 className="text-white text-lg font-medium mb-2">还没有项目</h3>
                       <p className="text-cyan-200 mb-4">开始您的第一个众筹项目</p>
-                      <Button 
+                      <Button
                         onClick={() => setActiveTab('create')}
                         className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
                       >
@@ -1143,9 +1277,7 @@ const CrowdfundingApp = () => {
                     <Heart className="w-5 h-5 text-cyan-400" />
                     我的支持记录
                   </CardTitle>
-                  <CardDescription className="text-cyan-200">
-                    查看您支持的所有项目
-                  </CardDescription>
+                  <CardDescription className="text-cyan-200">查看您支持的所有项目</CardDescription>
                 </CardHeader>
                 <CardContent>
                   {myBackings.length > 0 ? (
@@ -1155,7 +1287,9 @@ const CrowdfundingApp = () => {
                           <CardContent className="p-6">
                             <div className="flex justify-between items-start mb-4">
                               <div>
-                                <h3 className="text-white font-bold text-lg mb-1">{backing.projectTitle}</h3>
+                                <h3 className="text-white font-bold text-lg mb-1">
+                                  {backing.projectTitle}
+                                </h3>
                                 <p className="text-cyan-200">回报: {backing.reward}</p>
                               </div>
                               <div className="text-right">
@@ -1165,16 +1299,22 @@ const CrowdfundingApp = () => {
                                 <p className="text-cyan-300 text-sm">{backing.date}</p>
                               </div>
                             </div>
-                            
+
                             <div className="flex justify-between items-center">
-                              <Badge className={`${
-                                backing.status === '进行中' 
-                                  ? 'bg-green-500/20 text-green-400 border-green-500/30' 
-                                  : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
-                              }`}>
+                              <Badge
+                                className={`${
+                                  backing.status === '进行中'
+                                    ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                                    : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
+                                }`}
+                              >
                                 {backing.status}
                               </Badge>
-                              <Button variant="outline" size="sm" className="border-cyan-500/30 text-cyan-300">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="border-cyan-500/30 text-cyan-300"
+                              >
                                 <Download className="w-4 h-4 mr-1" />
                                 下载收据
                               </Button>
@@ -1188,7 +1328,7 @@ const CrowdfundingApp = () => {
                       <Heart className="w-16 h-16 text-cyan-400 mx-auto mb-4" />
                       <h3 className="text-white text-lg font-medium mb-2">还没有支持记录</h3>
                       <p className="text-cyan-200 mb-4">发现并支持您感兴趣的项目</p>
-                      <Button 
+                      <Button
                         onClick={() => setActiveTab('discover')}
                         className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
                       >
@@ -1205,14 +1345,10 @@ const CrowdfundingApp = () => {
 
       {/* 项目详情模态框 */}
       {selectedProject && (
-        <ProjectDetailModal 
-          project={selectedProject} 
-          onClose={() => setSelectedProject(null)} 
-        />
+        <ProjectDetailModal project={selectedProject} onClose={() => setSelectedProject(null)} />
       )}
     </div>
   );
 };
 
 export default CrowdfundingApp;
-

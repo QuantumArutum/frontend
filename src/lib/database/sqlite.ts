@@ -1,6 +1,6 @@
 /**
  * Quantaureum SQLite Database Service (Shared with Backend)
- * 
+ *
  * Production-ready shared database access
  */
 
@@ -27,7 +27,7 @@ class SQLiteDatabase {
       INSERT INTO users (id, email, password_hash, created_at, updated_at)
       VALUES (?, ?, ?, ?, ?)
     `);
-    
+
     stmt.run(id, email, passwordHash, now, now);
 
     return this.findUserById(id) as Promise<User>;
@@ -50,7 +50,10 @@ class SQLiteDatabase {
     const valid = await CryptoUtils.verifyPassword(password, user.passwordHash);
     if (!valid) return null;
 
-    db.prepare('UPDATE users SET last_login = ? WHERE id = ?').run(new Date().toISOString(), user.id);
+    db.prepare('UPDATE users SET last_login = ? WHERE id = ?').run(
+      new Date().toISOString(),
+      user.id
+    );
 
     return user;
   }
@@ -101,17 +104,27 @@ class SQLiteDatabase {
     stmt.run(id, userId, token, ip, userAgent, now.toISOString(), expiresAt.toISOString());
 
     return this.mapSession({
-      id, user_id: userId, token, ip, user_agent: userAgent, 
-      created_at: now.toISOString(), expires_at: expiresAt.toISOString(), is_valid: 1
+      id,
+      user_id: userId,
+      token,
+      ip,
+      user_agent: userAgent,
+      created_at: now.toISOString(),
+      expires_at: expiresAt.toISOString(),
+      is_valid: 1,
     });
   }
 
   async findSessionByToken(token: string): Promise<Session | null> {
-    const row = db.prepare(`
+    const row = db
+      .prepare(
+        `
       SELECT * FROM sessions 
       WHERE token = ? AND is_valid = 1 AND expires_at > ?
-    `).get(token, new Date().toISOString());
-    
+    `
+      )
+      .get(token, new Date().toISOString());
+
     return row ? this.mapSession(row) : null;
   }
 
@@ -125,7 +138,12 @@ class SQLiteDatabase {
 
   // ========== Community Operations ==========
 
-  async getPosts(params: { limit: number; offset: number; category?: string; id?: string }): Promise<any[]> {
+  async getPosts(params: {
+    limit: number;
+    offset: number;
+    category?: string;
+    id?: string;
+  }): Promise<any[]> {
     let query = `
       SELECT p.*, c.slug as category_slug, u.email as user_email 
       FROM community_posts p
@@ -160,21 +178,30 @@ class SQLiteDatabase {
       isPinned: Boolean(row.is_pinned),
       isLocked: Boolean(row.is_locked),
       likeCount: row.like_count,
-      commentCount: row.comment_count
+      commentCount: row.comment_count,
     }));
   }
 
-  async createPost(data: { userId: string; title: string; content: string; categorySlug: string }): Promise<any> {
-    const category = db.prepare('SELECT id FROM community_categories WHERE slug = ?').get(data.categorySlug) as any;
+  async createPost(data: {
+    userId: string;
+    title: string;
+    content: string;
+    categorySlug: string;
+  }): Promise<any> {
+    const category = db
+      .prepare('SELECT id FROM community_categories WHERE slug = ?')
+      .get(data.categorySlug) as any;
     if (!category) throw new Error('Invalid category');
 
     const id = 'post_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
     const now = new Date().toISOString();
 
-    db.prepare(`
+    db.prepare(
+      `
       INSERT INTO community_posts (id, user_id, category_id, title, content, created_at, updated_at)
       VALUES (?, ?, ?, ?, ?, ?, ?)
-    `).run(id, data.userId, category.id, data.title, data.content, now, now);
+    `
+    ).run(id, data.userId, category.id, data.title, data.content, now, now);
 
     return {
       id,
@@ -187,7 +214,7 @@ class SQLiteDatabase {
       isPinned: false,
       isLocked: false,
       userName: 'You',
-      userAvatar: null
+      userAvatar: null,
     };
   }
 
@@ -209,10 +236,12 @@ class SQLiteDatabase {
     const id = 'ord_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
     const now = new Date().toISOString();
 
-    db.prepare(`
+    db.prepare(
+      `
       INSERT INTO token_purchases (id, user_id, buyer_address, amount_usd, tokens_base, tokens_bonus, tokens_total, currency, status, tx_hash, created_at)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(
+    `
+    ).run(
       id,
       data.userId || null,
       data.buyerAddress,
@@ -235,8 +264,10 @@ class SQLiteDatabase {
   }
 
   async findPurchasesByAddress(address: string): Promise<TokenPurchase[]> {
-    const rows = db.prepare('SELECT * FROM token_purchases WHERE buyer_address = ? ORDER BY created_at DESC').all(address) as any[];
-    return rows.map(row => this.mapPurchase(row));
+    const rows = db
+      .prepare('SELECT * FROM token_purchases WHERE buyer_address = ? ORDER BY created_at DESC')
+      .all(address) as any[];
+    return rows.map((row) => this.mapPurchase(row));
   }
 
   async updatePurchase(id: string, updates: Partial<TokenPurchase>): Promise<TokenPurchase | null> {
@@ -265,15 +296,25 @@ class SQLiteDatabase {
     return this.findPurchaseById(id);
   }
 
-  async getPurchaseStats(): Promise<{ totalRaised: number; totalTokensSold: number; totalOrders: number; totalPurchases: number; completedPurchases: number }> {
-    const row = db.prepare(`
+  async getPurchaseStats(): Promise<{
+    totalRaised: number;
+    totalTokensSold: number;
+    totalOrders: number;
+    totalPurchases: number;
+    completedPurchases: number;
+  }> {
+    const row = db
+      .prepare(
+        `
       SELECT 
         COALESCE(SUM(amount_usd), 0) as total_raised,
         COALESCE(SUM(tokens_total), 0) as total_tokens_sold,
         COUNT(*) as total_orders,
         SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_purchases
       FROM token_purchases
-    `).get() as any;
+    `
+      )
+      .get() as any;
 
     return {
       totalRaised: Number(row.total_raised) || 0,
@@ -307,25 +348,33 @@ class SQLiteDatabase {
   // ========== 2FA Operations ==========
 
   async enableTOTP(userId: string, secret: string): Promise<void> {
-    db.prepare(`
+    db.prepare(
+      `
       UPDATE users 
       SET totp_secret = ?, totp_enabled = 1, updated_at = ?
       WHERE id = ?
-    `).run(secret, new Date().toISOString(), userId);
+    `
+    ).run(secret, new Date().toISOString(), userId);
   }
 
   async verifyBackupCode(userId: string, code: string): Promise<boolean> {
     // Check if backup_codes table exists, if not return false
     try {
-      const backupCode = db.prepare(`
+      const backupCode = db
+        .prepare(
+          `
         SELECT * FROM backup_codes 
         WHERE user_id = ? AND code = ? AND used = 0
-      `).get(userId, code) as any;
+      `
+        )
+        .get(userId, code) as any;
 
       if (backupCode) {
         // Mark the code as used
-        db.prepare('UPDATE backup_codes SET used = 1, used_at = ? WHERE id = ?')
-          .run(new Date().toISOString(), backupCode.id);
+        db.prepare('UPDATE backup_codes SET used = 1, used_at = ? WHERE id = ?').run(
+          new Date().toISOString(),
+          backupCode.id
+        );
         return true;
       }
       return false;
@@ -336,16 +385,19 @@ class SQLiteDatabase {
   }
 
   async disableTOTP(userId: string): Promise<void> {
-    db.prepare(`
+    db.prepare(
+      `
       UPDATE users 
       SET totp_secret = NULL, totp_enabled = 0, updated_at = ?
       WHERE id = ?
-    `).run(new Date().toISOString(), userId);
+    `
+    ).run(new Date().toISOString(), userId);
   }
 
   async saveBackupCodes(userId: string, codes: string[]): Promise<void> {
     // Create backup_codes table if not exists
-    db.prepare(`
+    db.prepare(
+      `
       CREATE TABLE IF NOT EXISTS backup_codes (
         id TEXT PRIMARY KEY,
         user_id TEXT NOT NULL,
@@ -354,7 +406,8 @@ class SQLiteDatabase {
         used_at TEXT,
         created_at TEXT DEFAULT CURRENT_TIMESTAMP
       )
-    `).run();
+    `
+    ).run();
 
     // Delete existing codes for user
     db.prepare('DELETE FROM backup_codes WHERE user_id = ?').run(userId);

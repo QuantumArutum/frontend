@@ -32,7 +32,7 @@ export default function EditPostPage() {
     content: '',
     category: 'general',
     editReason: '',
-    tags: [] as string[]
+    tags: [] as string[],
   });
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function EditPostPage() {
 
         if (data.success && data.data) {
           const post = data.data;
-          
+
           // 验证是否是帖子作者
           if (post.userId !== userInfo?.id) {
             setError('你只能编辑自己的帖子');
@@ -78,7 +78,7 @@ export default function EditPostPage() {
             content: post.content,
             category: post.categorySlug || 'general',
             editReason: '',
-            tags: []
+            tags: [],
           });
         } else {
           setError('帖子不存在');
@@ -206,22 +206,30 @@ export default function EditPostPage() {
                 maxLength={200}
                 required
               />
-              <div className="mt-1 text-xs text-gray-400 text-right">{formData.title.length}/200</div>
+              <div className="mt-1 text-xs text-gray-400 text-right">
+                {formData.title.length}/200
+              </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">内容 * (支持 Markdown)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                内容 * (支持 Markdown)
+              </label>
               <MarkdownEditor
                 value={formData.content}
                 onChange={(value) => setFormData({ ...formData, content: value })}
                 placeholder="编辑你的内容... 支持 Markdown 语法"
                 height={400}
               />
-              <div className="mt-1 text-xs text-gray-400 text-right">{formData.content.length}/50000</div>
+              <div className="mt-1 text-xs text-gray-400 text-right">
+                {formData.content.length}/50000
+              </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">编辑原因 (可选)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                编辑原因 (可选)
+              </label>
               <input
                 type="text"
                 value={formData.editReason}

@@ -8,10 +8,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth';
 import { db } from '@/lib/db';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ uid: string }> }
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ uid: string }> }) {
   const authResult = requireAdmin(request);
   if ('error' in authResult) return authResult.error;
 
@@ -21,10 +18,7 @@ export async function GET(
     const result = await db.getUserById(uid);
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 404 });
     }
 
     const user = result.data;
@@ -50,17 +44,11 @@ export async function GET(
     });
   } catch (error) {
     console.error('Get user error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ uid: string }> }
-) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ uid: string }> }) {
   const authResult = requireAdmin(request);
   if ('error' in authResult) return authResult.error;
 
@@ -81,10 +69,7 @@ export async function PUT(
     const result = await db.updateUser(uid, updates);
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 404 });
     }
 
     // Log admin action
@@ -113,9 +98,6 @@ export async function PUT(
     });
   } catch (error) {
     console.error('Update user error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

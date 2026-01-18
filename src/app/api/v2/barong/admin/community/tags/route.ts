@@ -24,8 +24,8 @@ export async function GET(request: NextRequest) {
         tags,
         stats: {
           total: tags.length,
-        }
-      }
+        },
+      },
     });
   } catch (error: any) {
     console.error('Tags GET error:', error);

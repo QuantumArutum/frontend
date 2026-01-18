@@ -16,10 +16,7 @@ export async function GET(request: NextRequest) {
     const result = await db.getSystemSettings();
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -28,10 +25,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Get system settings error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -52,10 +46,7 @@ export async function PUT(request: NextRequest) {
     const result = await db.updateSystemSettings(settings);
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -64,9 +55,6 @@ export async function PUT(request: NextRequest) {
     });
   } catch (error) {
     console.error('Update system settings error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

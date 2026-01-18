@@ -5,10 +5,23 @@ import '../../i18n';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { Badge } from '@/components/ui/Badge';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Alert, AlertDescription } from '@/components/ui/Alert';
 import { Progress } from '@/components/ui/progress';
 import QuantumSecurityPanel from '@/app/components/QuantumSecurityPanel';
@@ -54,14 +67,14 @@ import {
   Flame,
   Droplets,
   Layers,
-  Gauge
+  Gauge,
 } from 'lucide-react';
 
 const QuantumDeFi = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('swap');
   const [isLoading, setIsLoading] = useState(false);
-  
+
   // 交换相关状态
   const [fromToken, setFromToken] = useState('QAU');
   const [toToken, setToToken] = useState('USDT');
@@ -69,24 +82,24 @@ const QuantumDeFi = () => {
   const [toAmount, setToAmount] = useState('');
   const [slippage, setSlippage] = useState(0.5);
   const [priceImpact, setPriceImpact] = useState(0.12);
-  
+
   // 流动性相关状态
   const [liquidityPair, setLiquidityPair] = useState('QAU/USDT');
   const [liquidityAmount1, setLiquidityAmount1] = useState('');
   const [liquidityAmount2, setLiquidityAmount2] = useState('');
   const [lpTokens, setLpTokens] = useState(0);
-  
+
   // 借贷相关状态
   const [collateralAsset, setCollateralAsset] = useState('QAU');
   const [borrowAsset, setBorrowAsset] = useState('USDT');
   const [collateralAmount, setCollateralAmount] = useState('');
   const [borrowAmount, setBorrowAmount] = useState('');
   const [healthFactor, setHealthFactor] = useState(2.15);
-  
+
   // 收益农场状态
   const [selectedFarm, setSelectedFarm] = useState('QAU-USDT LP');
   const [farmStakeAmount, setFarmStakeAmount] = useState('');
-  
+
   // 投资组合状态
   const [portfolioValue, setPortfolioValue] = useState(1234.56);
   const [totalEarnings, setTotalEarnings] = useState(152.34);
@@ -94,10 +107,10 @@ const QuantumDeFi = () => {
 
   // 代币列表
   const tokens = [
-    { symbol: 'QAU', name: 'Quantum Gold', balance: 1250.75, price: 125.50, change: 2.34 },
-    { symbol: 'USDT', name: 'Tether USD', balance: 5000.00, price: 1.00, change: 0.01 },
-    { symbol: 'ETH', name: 'Ethereum', balance: 2.5, price: 2450.80, change: -1.23 },
-    { symbol: 'BTC', name: 'Bitcoin', balance: 0.15, price: 43250.00, change: 3.45 }
+    { symbol: 'QAU', name: 'Quantum Gold', balance: 1250.75, price: 125.5, change: 2.34 },
+    { symbol: 'USDT', name: 'Tether USD', balance: 5000.0, price: 1.0, change: 0.01 },
+    { symbol: 'ETH', name: 'Ethereum', balance: 2.5, price: 2450.8, change: -1.23 },
+    { symbol: 'BTC', name: 'Bitcoin', balance: 0.15, price: 43250.0, change: 3.45 },
   ];
 
   // 流动性池
@@ -109,7 +122,7 @@ const QuantumDeFi = () => {
       volume24h: 2500000,
       fees24h: 7500,
       userLiquidity: 5000,
-      userShare: 0.04
+      userShare: 0.04,
     },
     {
       pair: 'QAU/ETH',
@@ -118,7 +131,7 @@ const QuantumDeFi = () => {
       volume24h: 1800000,
       fees24h: 5400,
       userLiquidity: 2500,
-      userShare: 0.029
+      userShare: 0.029,
     },
     {
       pair: 'USDT/ETH',
@@ -127,8 +140,8 @@ const QuantumDeFi = () => {
       volume24h: 3200000,
       fees24h: 9600,
       userLiquidity: 0,
-      userShare: 0
-    }
+      userShare: 0,
+    },
   ];
 
   // 借贷市场
@@ -141,7 +154,7 @@ const QuantumDeFi = () => {
       borrowAPY: 12.67,
       utilizationRate: 57.14,
       userSupply: 1000,
-      userBorrow: 0
+      userBorrow: 0,
     },
     {
       asset: 'USDT',
@@ -151,7 +164,7 @@ const QuantumDeFi = () => {
       borrowAPY: 9.87,
       utilizationRate: 69.53,
       userSupply: 2500,
-      userBorrow: 800
+      userBorrow: 800,
     },
     {
       asset: 'ETH',
@@ -159,10 +172,10 @@ const QuantumDeFi = () => {
       totalBorrow: 1650,
       supplyAPY: 4.56,
       borrowAPY: 7.89,
-      utilizationRate: 66.00,
+      utilizationRate: 66.0,
       userSupply: 0.5,
-      userBorrow: 0
-    }
+      userBorrow: 0,
+    },
   ];
 
   // 收益农场
@@ -174,7 +187,7 @@ const QuantumDeFi = () => {
       multiplier: '3x',
       userStaked: 2500,
       pendingRewards: 45.67,
-      lockPeriod: '无锁定'
+      lockPeriod: '无锁定',
     },
     {
       name: 'QAU-ETH LP',
@@ -183,7 +196,7 @@ const QuantumDeFi = () => {
       multiplier: '2x',
       userStaked: 1200,
       pendingRewards: 23.45,
-      lockPeriod: '7天'
+      lockPeriod: '7天',
     },
     {
       name: 'USDT Single',
@@ -192,14 +205,14 @@ const QuantumDeFi = () => {
       multiplier: '1x',
       userStaked: 5000,
       pendingRewards: 67.89,
-      lockPeriod: '无锁定'
-    }
+      lockPeriod: '无锁定',
+    },
   ];
 
   // 计算交换汇率
   const calculateSwapRate = () => {
     if (!fromAmount || fromAmount === '0') return '0';
-    const rate = fromToken === 'QAU' ? 125.50 : 1/125.50;
+    const rate = fromToken === 'QAU' ? 125.5 : 1 / 125.5;
     const result = parseFloat(fromAmount) * rate;
     setToAmount(result.toFixed(6));
     setPriceImpact(parseFloat(fromAmount) > 1000 ? 0.25 : 0.12);
@@ -218,7 +231,7 @@ const QuantumDeFi = () => {
 
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       alert(t('defi.swap.success', { fromAmount, fromToken, toAmount, toToken }));
       setFromAmount('');
       setToAmount('');
@@ -238,7 +251,7 @@ const QuantumDeFi = () => {
 
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       const newLpTokens = parseFloat(liquidityAmount1) * 0.1;
       setLpTokens(lpTokens + newLpTokens);
       alert(`成功添加流动性，获得 ${newLpTokens.toFixed(4)} LP代币`);
@@ -260,7 +273,7 @@ const QuantumDeFi = () => {
 
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       alert(`成功供应 ${amount} ${asset}`);
     } catch (error) {
       alert('供应失败，请重试');
@@ -283,7 +296,7 @@ const QuantumDeFi = () => {
 
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       alert(`成功借款 ${amount} ${asset}`);
       setHealthFactor(healthFactor - 0.3);
     } catch (error) {
@@ -302,7 +315,7 @@ const QuantumDeFi = () => {
 
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       alert(`成功质押 ${amount} 到 ${farmName}`);
     } catch (error) {
       alert('质押失败，请重试');
@@ -331,9 +344,9 @@ const QuantumDeFi = () => {
           {/* 页面标题 */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-2">
-              <Image 
-                src="/logos/quantum-aurum-icon-ui.svg" 
-                alt="Quantaureum" 
+              <Image
+                src="/logos/quantum-aurum-icon-ui.svg"
+                alt="Quantaureum"
                 width={40}
                 height={40}
                 className="h-10 w-10"
@@ -415,11 +428,21 @@ const QuantumDeFi = () => {
                   <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     <div className="p-6 pb-0">
                       <TabsList className="grid w-full grid-cols-5 quantum-tabs">
-                        <TabsTrigger value="swap" className="quantum-tab">交换</TabsTrigger>
-                        <TabsTrigger value="liquidity" className="quantum-tab">流动性</TabsTrigger>
-                        <TabsTrigger value="lending" className="quantum-tab">借贷</TabsTrigger>
-                        <TabsTrigger value="farming" className="quantum-tab">农场</TabsTrigger>
-                        <TabsTrigger value="portfolio" className="quantum-tab">组合</TabsTrigger>
+                        <TabsTrigger value="swap" className="quantum-tab">
+                          交换
+                        </TabsTrigger>
+                        <TabsTrigger value="liquidity" className="quantum-tab">
+                          流动性
+                        </TabsTrigger>
+                        <TabsTrigger value="lending" className="quantum-tab">
+                          借贷
+                        </TabsTrigger>
+                        <TabsTrigger value="farming" className="quantum-tab">
+                          农场
+                        </TabsTrigger>
+                        <TabsTrigger value="portfolio" className="quantum-tab">
+                          组合
+                        </TabsTrigger>
                       </TabsList>
                     </div>
 
@@ -437,7 +460,10 @@ const QuantumDeFi = () => {
                             <div className="flex justify-between items-center mb-2">
                               <span className="text-sm text-gray-400">卖出</span>
                               <span className="text-sm text-gray-400">
-                                余额: {formatNumber(tokens.find(t => t.symbol === fromToken)?.balance || 0)}
+                                余额:{' '}
+                                {formatNumber(
+                                  tokens.find((t) => t.symbol === fromToken)?.balance || 0
+                                )}
                               </span>
                             </div>
                             <div className="flex gap-3">
@@ -486,7 +512,10 @@ const QuantumDeFi = () => {
                             <div className="flex justify-between items-center mb-2">
                               <span className="text-sm text-gray-400">买入</span>
                               <span className="text-sm text-gray-400">
-                                余额: {formatNumber(tokens.find(t => t.symbol === toToken)?.balance || 0)}
+                                余额:{' '}
+                                {formatNumber(
+                                  tokens.find((t) => t.symbol === toToken)?.balance || 0
+                                )}
                               </span>
                             </div>
                             <div className="flex gap-3">
@@ -518,12 +547,16 @@ const QuantumDeFi = () => {
                               <div className="flex justify-between">
                                 <span className="text-gray-400">汇率:</span>
                                 <span className="truncate-number">
-                                  1 {fromToken} = {(parseFloat(toAmount) / parseFloat(fromAmount)).toFixed(6)} {toToken}
+                                  1 {fromToken} ={' '}
+                                  {(parseFloat(toAmount) / parseFloat(fromAmount)).toFixed(6)}{' '}
+                                  {toToken}
                                 </span>
                               </div>
                               <div className="flex justify-between">
                                 <span className="text-gray-400">价格影响:</span>
-                                <span className={`truncate-number ${priceImpact > 0.2 ? 'text-red-400' : 'text-green-400'}`}>
+                                <span
+                                  className={`truncate-number ${priceImpact > 0.2 ? 'text-red-400' : 'text-green-400'}`}
+                                >
                                   {formatPercentage(priceImpact)}
                                 </span>
                               </div>
@@ -533,7 +566,7 @@ const QuantumDeFi = () => {
                                   {[0.1, 0.5, 1.0].map((value) => (
                                     <Button
                                       key={value}
-                                      variant={slippage === value ? "default" : "outline"}
+                                      variant={slippage === value ? 'default' : 'outline'}
                                       size="sm"
                                       onClick={() => setSlippage(value)}
                                       className="quantum-button-secondary text-xs"
@@ -579,7 +612,9 @@ const QuantumDeFi = () => {
                               <CardContent className="p-4">
                                 <div className="flex justify-between items-start mb-3">
                                   <div>
-                                    <div className="font-medium text-responsive-base">{pool.pair}</div>
+                                    <div className="font-medium text-responsive-base">
+                                      {pool.pair}
+                                    </div>
                                     <div className="text-sm text-gray-400">
                                       TVL: {formatCurrency(pool.tvl, 'QAU')}
                                     </div>
@@ -701,15 +736,20 @@ const QuantumDeFi = () => {
                           <CardContent className="p-4">
                             <div className="flex justify-between items-center mb-2">
                               <span className="text-sm text-gray-400">健康因子</span>
-                              <span className={`font-bold text-responsive-lg truncate-number ${
-                                healthFactor > 2 ? 'text-green-400' :
-                                healthFactor > 1.5 ? 'text-yellow-400' : 'text-red-400'
-                              }`}>
+                              <span
+                                className={`font-bold text-responsive-lg truncate-number ${
+                                  healthFactor > 2
+                                    ? 'text-green-400'
+                                    : healthFactor > 1.5
+                                      ? 'text-yellow-400'
+                                      : 'text-red-400'
+                                }`}
+                              >
                                 {healthFactor.toFixed(2)}
                               </span>
                             </div>
-                            <Progress 
-                              value={Math.min(100, (healthFactor / 3) * 100)} 
+                            <Progress
+                              value={Math.min(100, (healthFactor / 3) * 100)}
                               className="h-2"
                             />
                             <div className="text-xs text-gray-400 mt-1">
@@ -725,7 +765,9 @@ const QuantumDeFi = () => {
                               <CardContent className="p-4">
                                 <div className="flex justify-between items-start mb-3">
                                   <div>
-                                    <div className="font-medium text-responsive-base">{market.asset}</div>
+                                    <div className="font-medium text-responsive-base">
+                                      {market.asset}
+                                    </div>
                                     <div className="text-sm text-gray-400">
                                       利用率: {formatPercentage(market.utilizationRate)}
                                     </div>
@@ -807,7 +849,9 @@ const QuantumDeFi = () => {
                               <CardContent className="p-4">
                                 <div className="flex justify-between items-start mb-3">
                                   <div>
-                                    <div className="font-medium text-responsive-base">{farm.name}</div>
+                                    <div className="font-medium text-responsive-base">
+                                      {farm.name}
+                                    </div>
                                     <div className="text-sm text-gray-400">
                                       锁定期: {farm.lockPeriod}
                                     </div>
@@ -862,10 +906,7 @@ const QuantumDeFi = () => {
                                         <Minus className="w-4 h-4 mr-1" />
                                         取消质押
                                       </Button>
-                                      <Button
-                                        size="sm"
-                                        className="quantum-button-primary flex-1"
-                                      >
+                                      <Button size="sm" className="quantum-button-primary flex-1">
                                         <Gift className="w-4 h-4 mr-1" />
                                         领取奖励
                                       </Button>
@@ -923,7 +964,10 @@ const QuantumDeFi = () => {
                           <CardContent>
                             <div className="space-y-3">
                               {tokens.map((token, index) => (
-                                <div key={index} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+                                <div
+                                  key={index}
+                                  className="flex justify-between items-center p-3 bg-white/5 rounded-lg"
+                                >
                                   <div className="flex items-center gap-3">
                                     <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full flex items-center justify-center text-xs font-bold">
                                       {token.symbol.charAt(0)}
@@ -1015,10 +1059,13 @@ const QuantumDeFi = () => {
                           <div className="font-medium truncate-number">
                             {formatCurrency(token.price, 'USD')}
                           </div>
-                          <div className={`text-sm truncate-number ${
-                            token.change > 0 ? 'text-green-400' : 'text-red-400'
-                          }`}>
-                            {token.change > 0 ? '+' : ''}{formatPercentage(token.change)}
+                          <div
+                            className={`text-sm truncate-number ${
+                              token.change > 0 ? 'text-green-400' : 'text-red-400'
+                            }`}
+                          >
+                            {token.change > 0 ? '+' : ''}
+                            {formatPercentage(token.change)}
                           </div>
                         </div>
                       </div>
@@ -1125,4 +1172,3 @@ const QuantumDeFi = () => {
 };
 
 export default QuantumDeFi;
-

@@ -44,21 +44,33 @@ const ProductFeaturesSection = () => {
             <div className="feature-icon w-16 h-16 bg-gradient-to-br from-[#6E3CBC] to-[#00D4FF] rounded-lg flex items-center justify-center text-3xl mb-6">
               ⚛️
             </div>
-            <h3 className="feature-title text-xl font-bold mb-4 text-white break-words">{t('features.items.blockchain.title')}</h3>
+            <h3 className="feature-title text-xl font-bold mb-4 text-white break-words">
+              {t('features.items.blockchain.title')}
+            </h3>
             <p className="feature-desc text-gray-300 mb-6 text-sm leading-relaxed break-words">
               {t('features.items.blockchain.desc')}
             </p>
             <div className="feature-stats space-y-2">
               <div className="stat-row flex justify-between items-center">
-                <span className="text-gray-400 text-sm break-words flex-1 mr-2">{t('features.items.blockchain.stats.speed')}</span>
-                <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">1250+ TPS</span>
+                <span className="text-gray-400 text-sm break-words flex-1 mr-2">
+                  {t('features.items.blockchain.stats.speed')}
+                </span>
+                <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">
+                  1250+ TPS
+                </span>
               </div>
               <div className="stat-row flex justify-between items-center">
-                <span className="text-gray-400 text-sm break-words flex-1 mr-2">{t('features.items.blockchain.stats.security')}</span>
-                <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">NIST Level 3</span>
+                <span className="text-gray-400 text-sm break-words flex-1 mr-2">
+                  {t('features.items.blockchain.stats.security')}
+                </span>
+                <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">
+                  NIST Level 3
+                </span>
               </div>
               <div className="stat-row flex justify-between items-center">
-                <span className="text-gray-400 text-sm break-words flex-1 mr-2">{t('features.items.blockchain.stats.coverage')}</span>
+                <span className="text-gray-400 text-sm break-words flex-1 mr-2">
+                  {t('features.items.blockchain.stats.coverage')}
+                </span>
                 <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">100%</span>
               </div>
             </div>
@@ -74,22 +86,36 @@ const ProductFeaturesSection = () => {
             <div className="feature-icon w-16 h-16 bg-gradient-to-br from-[#6E3CBC] to-[#00D4FF] rounded-lg flex items-center justify-center text-3xl mb-6">
               💳
             </div>
-            <h3 className="feature-title text-xl font-bold mb-4 text-white break-words">{t('features.items.wallet.title')}</h3>
+            <h3 className="feature-title text-xl font-bold mb-4 text-white break-words">
+              {t('features.items.wallet.title')}
+            </h3>
             <p className="feature-desc text-gray-300 mb-6 text-sm leading-relaxed break-words">
               {t('features.items.wallet.desc')}
             </p>
             <div className="feature-stats space-y-2">
               <div className="stat-row flex justify-between items-center">
-                <span className="text-gray-400 text-sm break-words flex-1 mr-2">{t('features.items.wallet.stats.hardware')}</span>
-                <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">{t('features.items.wallet.values.hardware')}</span>
+                <span className="text-gray-400 text-sm break-words flex-1 mr-2">
+                  {t('features.items.wallet.stats.hardware')}
+                </span>
+                <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">
+                  {t('features.items.wallet.values.hardware')}
+                </span>
               </div>
               <div className="stat-row flex justify-between items-center">
-                <span className="text-gray-400 text-sm break-words flex-1 mr-2">{t('features.items.wallet.stats.biometric')}</span>
-                <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">{t('features.items.wallet.values.biometric')}</span>
+                <span className="text-gray-400 text-sm break-words flex-1 mr-2">
+                  {t('features.items.wallet.stats.biometric')}
+                </span>
+                <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">
+                  {t('features.items.wallet.values.biometric')}
+                </span>
               </div>
               <div className="stat-row flex justify-between items-center">
-                <span className="text-gray-400 text-sm break-words flex-1 mr-2">{t('features.items.wallet.stats.mobile')}</span>
-                <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">{t('features.items.wallet.values.mobile')}</span>
+                <span className="text-gray-400 text-sm break-words flex-1 mr-2">
+                  {t('features.items.wallet.stats.mobile')}
+                </span>
+                <span className="text-[#00D4FF] font-semibold text-sm whitespace-nowrap">
+                  {t('features.items.wallet.values.mobile')}
+                </span>
               </div>
             </div>
           </motion.div>
@@ -104,22 +130,30 @@ const ProductFeaturesSection = () => {
             <div className="feature-icon w-16 h-16 bg-gradient-to-br from-[#6E3CBC] to-[#00D4FF] rounded-lg flex items-center justify-center text-3xl mb-6">
               📜
             </div>
-            <h3 className="feature-title text-xl font-bold mb-4 text-white">{t('features.items.contracts.title')}</h3>
-            <p className="feature-desc text-gray-300 mb-6">
-              {t('features.items.contracts.desc')}
-            </p>
+            <h3 className="feature-title text-xl font-bold mb-4 text-white">
+              {t('features.items.contracts.title')}
+            </h3>
+            <p className="feature-desc text-gray-300 mb-6">{t('features.items.contracts.desc')}</p>
             <div className="feature-stats space-y-2">
               <div className="stat-row flex justify-between">
                 <span className="text-gray-400">{t('features.items.contracts.stats.vm')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.contracts.values.vm')}</span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.contracts.values.vm')}
+                </span>
               </div>
               <div className="stat-row flex justify-between">
-                <span className="text-gray-400">{t('features.items.contracts.stats.compiler')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.contracts.values.compiler')}</span>
+                <span className="text-gray-400">
+                  {t('features.items.contracts.stats.compiler')}
+                </span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.contracts.values.compiler')}
+                </span>
               </div>
               <div className="stat-row flex justify-between">
                 <span className="text-gray-400">{t('features.items.contracts.stats.speed')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.contracts.values.speed')}</span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.contracts.values.speed')}
+                </span>
               </div>
             </div>
           </motion.div>
@@ -134,22 +168,30 @@ const ProductFeaturesSection = () => {
             <div className="feature-icon w-16 h-16 bg-gradient-to-br from-[#6E3CBC] to-[#00D4FF] rounded-lg flex items-center justify-center text-3xl mb-6">
               🌐
             </div>
-            <h3 className="feature-title text-xl font-bold mb-4 text-white">{t('features.items.crosschain.title')}</h3>
-            <p className="feature-desc text-gray-300 mb-6">
-              {t('features.items.crosschain.desc')}
-            </p>
+            <h3 className="feature-title text-xl font-bold mb-4 text-white">
+              {t('features.items.crosschain.title')}
+            </h3>
+            <p className="feature-desc text-gray-300 mb-6">{t('features.items.crosschain.desc')}</p>
             <div className="feature-stats space-y-2">
               <div className="stat-row flex justify-between">
                 <span className="text-gray-400">{t('features.items.crosschain.stats.chains')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.crosschain.values.chains')}</span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.crosschain.values.chains')}
+                </span>
               </div>
               <div className="stat-row flex justify-between">
                 <span className="text-gray-400">{t('features.items.crosschain.stats.bridge')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.crosschain.values.bridge')}</span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.crosschain.values.bridge')}
+                </span>
               </div>
               <div className="stat-row flex justify-between">
-                <span className="text-gray-400">{t('features.items.crosschain.stats.verification')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.crosschain.values.verification')}</span>
+                <span className="text-gray-400">
+                  {t('features.items.crosschain.stats.verification')}
+                </span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.crosschain.values.verification')}
+                </span>
               </div>
             </div>
           </motion.div>
@@ -164,22 +206,28 @@ const ProductFeaturesSection = () => {
             <div className="feature-icon w-16 h-16 bg-gradient-to-br from-[#6E3CBC] to-[#00D4FF] rounded-lg flex items-center justify-center text-3xl mb-6">
               🌍
             </div>
-            <h3 className="feature-title text-xl font-bold mb-4 text-white">{t('features.items.i18n.title')}</h3>
-            <p className="feature-desc text-gray-300 mb-6">
-              {t('features.items.i18n.desc')}
-            </p>
+            <h3 className="feature-title text-xl font-bold mb-4 text-white">
+              {t('features.items.i18n.title')}
+            </h3>
+            <p className="feature-desc text-gray-300 mb-6">{t('features.items.i18n.desc')}</p>
             <div className="feature-stats space-y-2">
               <div className="stat-row flex justify-between">
                 <span className="text-gray-400">{t('features.items.i18n.stats.languages')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.i18n.values.languages')}</span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.i18n.values.languages')}
+                </span>
               </div>
               <div className="stat-row flex justify-between">
                 <span className="text-gray-400">{t('features.items.i18n.stats.coverage')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.i18n.values.coverage')}</span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.i18n.values.coverage')}
+                </span>
               </div>
               <div className="stat-row flex justify-between">
                 <span className="text-gray-400">{t('features.items.i18n.stats.rtl')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.i18n.values.rtl')}</span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.i18n.values.rtl')}
+                </span>
               </div>
             </div>
           </motion.div>
@@ -194,22 +242,32 @@ const ProductFeaturesSection = () => {
             <div className="feature-icon w-16 h-16 bg-gradient-to-br from-[#6E3CBC] to-[#00D4FF] rounded-lg flex items-center justify-center text-3xl mb-6">
               🏢
             </div>
-            <h3 className="feature-title text-xl font-bold mb-4 text-white">{t('features.items.enterprise.title')}</h3>
-            <p className="feature-desc text-gray-300 mb-6">
-              {t('features.items.enterprise.desc')}
-            </p>
+            <h3 className="feature-title text-xl font-bold mb-4 text-white">
+              {t('features.items.enterprise.title')}
+            </h3>
+            <p className="feature-desc text-gray-300 mb-6">{t('features.items.enterprise.desc')}</p>
             <div className="feature-stats space-y-2">
               <div className="stat-row flex justify-between">
-                <span className="text-gray-400">{t('features.items.enterprise.stats.availability')}</span>
+                <span className="text-gray-400">
+                  {t('features.items.enterprise.stats.availability')}
+                </span>
                 <span className="text-[#00D4FF] font-semibold">99.9%</span>
               </div>
               <div className="stat-row flex justify-between">
-                <span className="text-gray-400">{t('features.items.enterprise.stats.balancer')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.enterprise.values.balancer')}</span>
+                <span className="text-gray-400">
+                  {t('features.items.enterprise.stats.balancer')}
+                </span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.enterprise.values.balancer')}
+                </span>
               </div>
               <div className="stat-row flex justify-between">
-                <span className="text-gray-400">{t('features.items.enterprise.stats.deployment')}</span>
-                <span className="text-[#00D4FF] font-semibold">{t('features.items.enterprise.values.deployment')}</span>
+                <span className="text-gray-400">
+                  {t('features.items.enterprise.stats.deployment')}
+                </span>
+                <span className="text-[#00D4FF] font-semibold">
+                  {t('features.items.enterprise.values.deployment')}
+                </span>
               </div>
             </div>
           </motion.div>
@@ -220,4 +278,3 @@ const ProductFeaturesSection = () => {
 };
 
 export default ProductFeaturesSection;
-

@@ -14,28 +14,37 @@ export async function POST(request: NextRequest) {
     const file = formData.get('image') as File;
 
     if (!file) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'No image file provided' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'No image file provided',
+        },
+        { status: 400 }
+      );
     }
 
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
     if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed',
+        },
+        { status: 400 }
+      );
     }
 
     // Validate file size (max 5MB)
     const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'File size exceeds 5MB limit' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'File size exceeds 5MB limit',
+        },
+        { status: 400 }
+      );
     }
 
     // Create upload directory if it doesn't exist
@@ -69,9 +78,12 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error uploading image:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

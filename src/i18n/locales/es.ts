@@ -12,13 +12,14 @@ export const es = {
       tokenSale: 'Comprar QAU',
       exchange: 'Intercambio',
       docs: 'Documentación',
-      experience: 'Comenzar'
+      experience: 'Comenzar',
     },
     hero: {
       badge: '🚀 Blockchain de Seguridad Cuántica de Próxima Generación',
       title: 'Quantaureum',
       subtitle: 'Plataforma Blockchain Segura Cuántica',
-      description: 'Infraestructura blockchain de próxima generación basada en criptografía post-cuántica, proporcionando ',
+      description:
+        'Infraestructura blockchain de próxima generación basada en criptografía post-cuántica, proporcionando ',
       highlight: 'seguridad y rendimiento de grado empresarial',
       scroll_down: 'Desplazarse hacia abajo',
       stats: {
@@ -28,17 +29,17 @@ export const es = {
         coverage: { value: '100', label: 'Cobertura cuántica', unit: '%' },
         languages: { value: '10+', label: 'Idiomas soportados', unit: '' },
         vulnerabilities: { value: '0', label: 'Vulnerabilidades conocidas', unit: '' },
-        availability: { value: '99.99', label: 'Disponibilidad del sistema', unit: '%' }
+        availability: { value: '99.99', label: 'Disponibilidad del sistema', unit: '%' },
       },
       cta: {
         experience: 'Comenzar',
         docs: 'Ver Documentación',
-        token_sale: 'Venta de Tokens'
+        token_sale: 'Venta de Tokens',
       },
       trust: {
         nist: 'Estándar Post-Cuántica NIST',
         audit: 'Auditoría de seguridad de terceros',
-        enterprise: 'Despliegue empresarial'
+        enterprise: 'Despliegue empresarial',
       },
       modal: {
         title: 'Conectar Red Quantaureum',
@@ -54,42 +55,73 @@ export const es = {
         add_to_metamask: 'Añadir a MetaMask',
         install_metamask: 'Instalar MetaMask',
         enter_wallet: 'Entrar a Billetera Cuántica',
-        download_metamask: '¿Sin MetaMask? Haga clic aquí para descargar →'
-      }
+        download_metamask: '¿Sin MetaMask? Haga clic aquí para descargar →',
+      },
     },
     concept: {
       title: '¿Qué es Blockchain Cuántica?',
-      description: 'Combinando computación cuántica y tecnología blockchain para construir una infraestructura segura a prueba de futuro',
+      description:
+        'Combinando computación cuántica y tecnología blockchain para construir una infraestructura segura a prueba de futuro',
       items: {
         crypto: 'Cripto Post-Cuántica',
         hardware: 'Billetera de Hardware',
         mobile: 'App Móvil',
         crosschain: 'Puente Inter-Cadenas',
         performance: 'Alto Rendimiento',
-        contracts: 'Contratos Inteligentes'
-      }
+        contracts: 'Contratos Inteligentes',
+      },
     },
     benefits: {
       title: 'Ventajas Principales',
       description: '¿Por qué elegir Quantaureum?',
       items: {
-        security: { title: 'Seguridad Cuántica', desc: 'Algoritmos criptográficos post-cuánticos estándar NIST para resistir ataques cuánticos' },
-        performance: { title: 'Rendimiento Máximo', desc: '100,000+ TPS, confirmación en menos de un segundo, cumpliendo necesidades empresariales' },
-        evolution: { title: 'Evolución IA', desc: 'Motor de IA integrado optimizando continuamente el rendimiento y la seguridad de la red' },
-        global: { title: 'Cobertura Global', desc: 'Red de nodos distribuida, 10+ idiomas, sirviendo a usuarios globales' },
-        economic: { title: 'Modelo Económico', desc: 'Economía de tokens innovadora incentivando a los participantes del ecosistema' },
-        developer: { title: 'Amigable para Desarrolladores', desc: 'SDK y API completos para desarrollo rápido de dApps' }
-      }
+        security: {
+          title: 'Seguridad Cuántica',
+          desc: 'Algoritmos criptográficos post-cuánticos estándar NIST para resistir ataques cuánticos',
+        },
+        performance: {
+          title: 'Rendimiento Máximo',
+          desc: '100,000+ TPS, confirmación en menos de un segundo, cumpliendo necesidades empresariales',
+        },
+        evolution: {
+          title: 'Evolución IA',
+          desc: 'Motor de IA integrado optimizando continuamente el rendimiento y la seguridad de la red',
+        },
+        global: {
+          title: 'Cobertura Global',
+          desc: 'Red de nodos distribuida, 10+ idiomas, sirviendo a usuarios globales',
+        },
+        economic: {
+          title: 'Modelo Económico',
+          desc: 'Economía de tokens innovadora incentivando a los participantes del ecosistema',
+        },
+        developer: {
+          title: 'Amigable para Desarrolladores',
+          desc: 'SDK y API completos para desarrollo rápido de dApps',
+        },
+      },
     },
     roadmap: {
       title: 'Hoja de Ruta de Desarrollo',
       description: 'Nuestro plan de desarrollo e hitos',
       milestones: {
-        q4_2023: { title: 'Infraestructura', desc: 'Desarrollo del protocolo central, lanzamiento de testnet' },
-        q2_2024: { title: 'Construcción del Ecosistema', desc: 'Lanzamiento de mainnet, lanzamiento de billetera y explorador' },
-        q4_2024: { title: 'Expansión de Aplicaciones', desc: 'Ecosistema DeFi, puente inter-cadenas' },
-        q2_2025: { title: 'Expansión Global', desc: 'Asociaciones empresariales, despliegue global de nodos' }
-      }
+        q4_2023: {
+          title: 'Infraestructura',
+          desc: 'Desarrollo del protocolo central, lanzamiento de testnet',
+        },
+        q2_2024: {
+          title: 'Construcción del Ecosistema',
+          desc: 'Lanzamiento de mainnet, lanzamiento de billetera y explorador',
+        },
+        q4_2024: {
+          title: 'Expansión de Aplicaciones',
+          desc: 'Ecosistema DeFi, puente inter-cadenas',
+        },
+        q2_2025: {
+          title: 'Expansión Global',
+          desc: 'Asociaciones empresariales, despliegue global de nodos',
+        },
+      },
     },
     team: {
       title: 'Equipo Principal',
@@ -97,8 +129,8 @@ export const es = {
       members: {
         ceo: { name: 'Zhang Ming', role: 'CEO y Fundador' },
         cto: { name: 'Li Hua', role: 'CTO y Arquitecto Jefe' },
-        scientist: { name: 'Dr. Wang', role: 'Criptógrafo Jefe' }
-      }
+        scientist: { name: 'Dr. Wang', role: 'Criptógrafo Jefe' },
+      },
     },
     features: {
       title: 'Características del Producto',
@@ -106,49 +138,79 @@ export const es = {
       badges: {
         tests: '✓ Todas las pruebas pasadas',
         vulnerabilities: '✓ 0 Vulnerabilidades conocidas',
-        enterprise: '✓ Despliegue empresarial'
+        enterprise: '✓ Despliegue empresarial',
       },
       items: {
-        wallet: { 
-          title: 'Billetera Cuántica', 
+        wallet: {
+          title: 'Billetera Cuántica',
           desc: 'Gestión segura y conveniente de activos digitales',
-          stats: { hardware: 'Soporte de Hardware', biometric: 'Auth Biométrica', mobile: 'App Móvil' },
-          values: { hardware: 'Soporte Completo', biometric: 'Rostro/Huella', mobile: 'iOS/Android' }
+          stats: {
+            hardware: 'Soporte de Hardware',
+            biometric: 'Auth Biométrica',
+            mobile: 'App Móvil',
+          },
+          values: {
+            hardware: 'Soporte Completo',
+            biometric: 'Rostro/Huella',
+            mobile: 'iOS/Android',
+          },
         },
-        explorer: { title: 'Explorador de Bloques', desc: 'Visualización de datos on-chain en tiempo real' },
+        explorer: {
+          title: 'Explorador de Bloques',
+          desc: 'Visualización de datos on-chain en tiempo real',
+        },
         defi: { title: 'Plataforma DeFi', desc: 'Servicios financieros descentralizados' },
-        bridge: { title: 'Puente Inter-Cadenas', desc: 'Interoperabilidad de activos multi-cadena' },
+        bridge: {
+          title: 'Puente Inter-Cadenas',
+          desc: 'Interoperabilidad de activos multi-cadena',
+        },
         blockchain: {
           title: 'Núcleo Blockchain Cuántico',
           desc: 'Núcleo blockchain de alto rendimiento basado en criptografía post-cuántica con seguridad de grado empresarial',
-          stats: { speed: 'Velocidad de Procesamiento', security: 'Nivel de Seguridad', coverage: 'Cobertura Cuántica' },
-          values: { speed: '100,000 TPS', security: 'NIST L3', coverage: '100%' }
+          stats: {
+            speed: 'Velocidad de Procesamiento',
+            security: 'Nivel de Seguridad',
+            coverage: 'Cobertura Cuántica',
+          },
+          values: { speed: '100,000 TPS', security: 'NIST L3', coverage: '100%' },
         },
         contracts: {
           title: 'Sistema de Contratos Inteligentes',
           desc: 'Plataforma de contratos inteligentes compatible con EVM soportando Solidity y lenguaje propietario QSL',
           stats: { vm: 'Máquina Virtual', compiler: 'Compilador', speed: 'Velocidad de Ejecución' },
-          values: { vm: 'QVM 2.0', compiler: 'Multi-lenguaje', speed: '3x Más Rápido' }
+          values: { vm: 'QVM 2.0', compiler: 'Multi-lenguaje', speed: '3x Más Rápido' },
         },
         crosschain: {
           title: 'Interoperabilidad Inter-Cadenas',
           desc: 'Protocolo de puente seguro inter-cadenas soportando interoperabilidad de activos de principales cadenas públicas',
-          stats: { chains: 'Cadenas Soportadas', bridge: 'Protocolo de Puente', verification: 'Verificación' },
-          values: { chains: '10+', bridge: 'Seguro Cuántico', verification: 'Multi-Sig' }
+          stats: {
+            chains: 'Cadenas Soportadas',
+            bridge: 'Protocolo de Puente',
+            verification: 'Verificación',
+          },
+          values: { chains: '10+', bridge: 'Seguro Cuántico', verification: 'Multi-Sig' },
         },
         i18n: {
           title: 'Soporte Multi-Idioma',
           desc: 'Soporte completo de internacionalización cubriendo principales idiomas y regiones globales',
           stats: { languages: 'Idiomas', coverage: 'Cobertura de Traducción', rtl: 'Soporte RTL' },
-          values: { languages: '10+', coverage: '100%', rtl: 'Soporte Completo' }
+          values: { languages: '10+', coverage: '100%', rtl: 'Soporte Completo' },
         },
         enterprise: {
           title: 'Despliegue Empresarial',
           desc: 'Arquitectura de alta disponibilidad soportando despliegue privado y soluciones de nube híbrida',
-          stats: { availability: 'Disponibilidad', balancer: 'Balanceo de Carga', deployment: 'Despliegue' },
-          values: { availability: '99.99%', balancer: 'Asignación Inteligente', deployment: 'Multi-Nube' }
-        }
-      }
+          stats: {
+            availability: 'Disponibilidad',
+            balancer: 'Balanceo de Carga',
+            deployment: 'Despliegue',
+          },
+          values: {
+            availability: '99.99%',
+            balancer: 'Asignación Inteligente',
+            deployment: 'Multi-Nube',
+          },
+        },
+      },
     },
     wallet: {
       title: 'Billetera Cuántica',
@@ -158,7 +220,7 @@ export const es = {
         quantum_mainnet: 'Mainnet Cuántica',
         quantum_testnet: 'Testnet Cuántica',
         ethereum_mainnet: 'Mainnet Ethereum',
-        polygon_mainnet: 'Mainnet Polygon'
+        polygon_mainnet: 'Mainnet Polygon',
       },
       total_balance: 'Saldo Total',
       hide_balance: 'Ocultar Saldo',
@@ -172,33 +234,50 @@ export const es = {
       settings: 'Configuración',
       title_prefix: 'Billetera',
       title_suffix: 'Cuántica',
-      subtitle: 'Billetera digital segura cuántica basada en Web3, ejecutándose directamente en su navegador',
+      subtitle:
+        'Billetera digital segura cuántica basada en Web3, ejecutándose directamente en su navegador',
       tags: {
         quantum_secure: 'Seguro Cuántico',
         web3_compatible: 'Compatible Web3',
-        nist_standard: 'Estándar NIST'
+        nist_standard: 'Estándar NIST',
       },
       launch_card: {
         connected: {
           title: 'Billetera Conectada',
           desc: 'Su billetera segura cuántica está conectada exitosamente y lista para usar',
-          btn: 'Abrir Interfaz de Billetera'
+          btn: 'Abrir Interfaz de Billetera',
         },
         disconnected: {
           title: 'Lanzar Billetera Cuántica',
           desc: 'Ejecute QuantumWallet directamente en su navegador, sin descarga requerida',
           btn_launch: 'Lanzar Billetera',
-          btn_connect: 'Conectar Billetera'
-        }
+          btn_connect: 'Conectar Billetera',
+        },
       },
       features: {
         title: 'Características Principales',
         list: {
-          security: { title: 'Seguridad Cuántica', desc: 'Criptografía post-cuántica estándar NIST para resistir ataques cuánticos', details: 'CRYSTALS-Dilithium + CRYSTALS-Kyber' },
-          web3: { title: 'Compatible Web3', desc: 'Totalmente compatible con ecosistema DApp existente para conexión sin problemas', details: 'Soporta principales protocolos DApp' },
-          performance: { title: 'Alto Rendimiento', desc: 'Algoritmos cuánticos optimizados para verificación rápida de firmas', details: 'Tiempo de respuesta en milisegundos' },
-          multi_chain: { title: 'Soporte Multi-Cadena', desc: 'Soporta mainnet Quantaureum y múltiples blockchains principales', details: 'QAU, ETH, BTC, MATIC' }
-        }
+          security: {
+            title: 'Seguridad Cuántica',
+            desc: 'Criptografía post-cuántica estándar NIST para resistir ataques cuánticos',
+            details: 'CRYSTALS-Dilithium + CRYSTALS-Kyber',
+          },
+          web3: {
+            title: 'Compatible Web3',
+            desc: 'Totalmente compatible con ecosistema DApp existente para conexión sin problemas',
+            details: 'Soporta principales protocolos DApp',
+          },
+          performance: {
+            title: 'Alto Rendimiento',
+            desc: 'Algoritmos cuánticos optimizados para verificación rápida de firmas',
+            details: 'Tiempo de respuesta en milisegundos',
+          },
+          multi_chain: {
+            title: 'Soporte Multi-Cadena',
+            desc: 'Soporta mainnet Quantaureum y múltiples blockchains principales',
+            details: 'QAU, ETH, BTC, MATIC',
+          },
+        },
       },
       stats: {
         title: 'Estadísticas de Billetera',
@@ -206,8 +285,8 @@ export const es = {
           security_level: 'Nivel de Seguridad',
           supported_chains: 'Cadenas Soportadas',
           compatible_dapps: 'DApps Compatibles',
-          active_users: 'Usuarios Activos'
-        }
+          active_users: 'Usuarios Activos',
+        },
       },
       security_guarantee: {
         title: 'Garantía de Seguridad',
@@ -215,30 +294,32 @@ export const es = {
           local_storage: 'Almacenamiento local cifrado',
           multi_sig: 'Soporte Multi-Firma',
           biometric: 'Desbloqueo Biométrico',
-          quantum_rng: 'Generador de números aleatorios cuánticos'
-        }
+          quantum_rng: 'Generador de números aleatorios cuánticos',
+        },
       },
-      footer_note: 'QuantumWallet se basa en tecnología Web3 y se ejecuta directamente en su navegador sin instalación'
+      footer_note:
+        'QuantumWallet se basa en tecnología Web3 y se ejecuta directamente en su navegador sin instalación',
     },
     trading: {
       title: 'Trading Cuántico',
-      coming_soon: 'La aplicación de trading está en desarrollo...'
+      coming_soon: 'La aplicación de trading está en desarrollo...',
     },
     defi: {
       swap: {
         enter_amount: 'Ingresar cantidad a intercambiar',
         success: 'Intercambio exitoso de {{fromAmount}} {{fromToken}} por {{toAmount}} {{toToken}}',
-        failed: 'Intercambio fallido, por favor intente de nuevo'
-      }
+        failed: 'Intercambio fallido, por favor intente de nuevo',
+      },
     },
     specs: {
       title: 'Especificaciones Técnicas',
-      description: 'Inmersión profunda en la arquitectura técnica y métricas de rendimiento de Quantaureum',
+      description:
+        'Inmersión profunda en la arquitectura técnica y métricas de rendimiento de Quantaureum',
       tabs: {
         'quantum-crypto': { title: 'Cripto Cuántica', icon: '🔐' },
-        'performance': { title: 'Rendimiento', icon: '⚡' },
-        'security': { title: 'Auditoría de Seguridad', icon: '🛡️' },
-        'compatibility': { title: 'Compatibilidad', icon: '🔗' }
+        performance: { title: 'Rendimiento', icon: '⚡' },
+        security: { title: 'Auditoría de Seguridad', icon: '🛡️' },
+        compatibility: { title: 'Compatibilidad', icon: '🔗' },
       },
       data: {
         crypto: {
@@ -254,7 +335,7 @@ export const es = {
           key_length: 'Longitud de clave pública Dilithium',
           signature_length_label: 'Longitud de Firma',
           signature_length_value: '2420 bytes',
-          signature_length: 'Longitud de firma Dilithium'
+          signature_length: 'Longitud de firma Dilithium',
         },
         performance: {
           tps_label: 'Rendimiento de Transacciones',
@@ -271,7 +352,7 @@ export const es = {
           latency_label: 'Latencia de Red',
           latency: 'Latencia de red promedio',
           memory_label: 'Uso de Memoria',
-          memory: 'Uso de memoria del nodo'
+          memory: 'Uso de memoria del nodo',
         },
         security: {
           vulnerabilities_label: 'Vulnerabilidades Conocidas',
@@ -291,7 +372,7 @@ export const es = {
           side_channel: 'Protección contra ataques de tiempo',
           formal_verification_label: 'Verificación Formal',
           formal_verification_value: 'Completada',
-          formal_verification: 'Verificación formal del algoritmo central'
+          formal_verification: 'Verificación formal del algoritmo central',
         },
         compatibility: {
           evm_label: 'Compatible con EVM',
@@ -311,8 +392,8 @@ export const es = {
           languages: 'Lenguajes soportados por SDK',
           os_label: 'Sistema Operativo',
           os_value: 'Todas las Plataformas',
-          os: 'Windows/Linux/macOS'
-        }
+          os: 'Windows/Linux/macOS',
+        },
       },
       status: {
         network_label: 'Estado de la Red',
@@ -326,17 +407,34 @@ export const es = {
         tps_desc: 'Procesamiento en tiempo real',
         quantum_label: 'Seguro Cuántico',
         quantum_value: '100%',
-        quantum_desc: 'Cobertura completa'
-      }
+        quantum_desc: 'Cobertura completa',
+      },
     },
     demo: {
       title: 'Demo Interactiva',
-      description: 'Experimente las características principales y capacidades técnicas de Quantaureum',
+      description:
+        'Experimente las características principales y capacidades técnicas de Quantaureum',
       demos: {
-        'smart-contract': { title: 'Contrato Inteligente', icon: '📜', description: 'Desplegar y ejecutar contratos inteligentes seguros cuánticos' },
-        'hardware-wallet': { title: 'Billetera de Hardware', icon: '💳', description: 'Conectar billetera de hardware para firma segura' },
-        'cross-chain': { title: 'Inter-Cadenas', icon: '🌐', description: 'Demo de transferencia de activos inter-cadenas' },
-        'mobile-app': { title: 'App Móvil', icon: '📱', description: 'Demo de funcionalidad de billetera móvil' }
+        'smart-contract': {
+          title: 'Contrato Inteligente',
+          icon: '📜',
+          description: 'Desplegar y ejecutar contratos inteligentes seguros cuánticos',
+        },
+        'hardware-wallet': {
+          title: 'Billetera de Hardware',
+          icon: '💳',
+          description: 'Conectar billetera de hardware para firma segura',
+        },
+        'cross-chain': {
+          title: 'Inter-Cadenas',
+          icon: '🌐',
+          description: 'Demo de transferencia de activos inter-cadenas',
+        },
+        'mobile-app': {
+          title: 'App Móvil',
+          icon: '📱',
+          description: 'Demo de funcionalidad de billetera móvil',
+        },
       },
       steps: {
         write_contract: 'Escribir Contrato',
@@ -354,29 +452,37 @@ export const es = {
         app_launch: 'Lanzar App',
         biometric_login: 'Login Biométrico',
         view_assets: 'Ver Activos',
-        send_transaction: 'Enviar Transacción'
+        send_transaction: 'Enviar Transacción',
       },
       code: {
-        compiling: '// Compilando contrato...\n// Aplicando optimizaciones cuánticas...\n✓ Compilación exitosa',
-        deploying: '// Desplegando en cadena cuántica...\n// Esperando confirmación...\n✓ Despliegue exitoso\nContrato: 0x1234...5678',
-        executing: '// Ejecutando llamada de contrato...\n// Verificando firma cuántica...\n✓ Transacción exitosa',
+        compiling:
+          '// Compilando contrato...\n// Aplicando optimizaciones cuánticas...\n✓ Compilación exitosa',
+        deploying:
+          '// Desplegando en cadena cuántica...\n// Esperando confirmación...\n✓ Despliegue exitoso\nContrato: 0x1234...5678',
+        executing:
+          '// Ejecutando llamada de contrato...\n// Verificando firma cuántica...\n✓ Transacción exitosa',
         scanning: '// Escaneando dispositivos de hardware...\n✓ Ledger Nano X detectado',
-        generating: '// Generando par de claves seguro cuántico...\n// Usando CRYSTALS-Dilithium...\n✓ Generación de clave completa',
+        generating:
+          '// Generando par de claves seguro cuántico...\n// Usando CRYSTALS-Dilithium...\n✓ Generación de clave completa',
         authenticating: '// Por favor verifique huella en dispositivo...\n✓ Autenticación exitosa',
         signing: '// Usando algoritmo de firma cuántica...\n✓ Firma completa',
         selecting: '// Cadena origen: Ethereum\n// Cadena destino: Quantaureum',
-        proving: '// Generando prueba inter-cadenas...\n// Verificando raíz de estado...\n✓ Generación de prueba completa',
-        locking: '// Bloqueando activos de cadena origen...\n// Esperando confirmación...\n✓ Activos bloqueados',
-        releasing: '// Liberando activos en cadena destino...\n✓ Transferencia inter-cadenas completa',
+        proving:
+          '// Generando prueba inter-cadenas...\n// Verificando raíz de estado...\n✓ Generación de prueba completa',
+        locking:
+          '// Bloqueando activos de cadena origen...\n// Esperando confirmación...\n✓ Activos bloqueados',
+        releasing:
+          '// Liberando activos en cadena destino...\n✓ Transferencia inter-cadenas completa',
         launching: '// Lanzando billetera cuántica...\n✓ App lanzada',
         biometric: '// Por favor verifique Face ID/huella...\n✓ Login exitoso',
         loading: '// Cargando lista de activos...\n✓ Activos cargados',
-        sending: '// Enviando transacción...\n// Verificación de firma cuántica...\n✓ Transacción enviada'
+        sending:
+          '// Enviando transacción...\n// Verificación de firma cuántica...\n✓ Transacción enviada',
       },
       buttons: {
         run: 'Ejecutar Demo',
         running: 'Ejecutando...',
-        reset: 'Reiniciar'
+        reset: 'Reiniciar',
       },
       execution_steps: 'Pasos de Ejecución',
       output_title: 'Salida/Código',
@@ -387,7 +493,7 @@ export const es = {
         memory_usage: 'Uso de Memoria',
         memory_usage_value: '< 50MB',
         success_rate: 'Tasa de Éxito',
-        success_rate_value: '99.9%'
+        success_rate_value: '99.9%',
       },
       security: {
         title: 'Métricas de Seguridad',
@@ -396,7 +502,7 @@ export const es = {
         encryption_strength: 'Fuerza de Cifrado',
         encryption_strength_value: '256-bit',
         verification_status: 'Estado de Verificación',
-        verification_status_value: 'Verificado'
+        verification_status_value: 'Verificado',
       },
       compatibility: {
         title: 'Compatibilidad',
@@ -405,8 +511,8 @@ export const es = {
         platform_support: 'Soporte de Plataforma',
         platform_support_value: 'Web/iOS/Android',
         api_version: 'Versión de API',
-        api_version_value: 'v2.0'
-      }
+        api_version_value: 'v2.0',
+      },
     },
     ecosystem: {
       title: 'Ecosistema de Aplicaciones',
@@ -414,27 +520,36 @@ export const es = {
       status: {
         online: 'En Línea',
         offline: 'Fuera de Línea',
-        coming_soon: 'Próximamente'
+        coming_soon: 'Próximamente',
       },
       apps: {
         wallet: { title: 'Billetera Cuántica', description: 'Gestión segura de activos digitales' },
-        exchange: { title: 'Intercambio Cuántico', description: 'Plataforma de trading descentralizada' },
+        exchange: {
+          title: 'Intercambio Cuántico',
+          description: 'Plataforma de trading descentralizada',
+        },
         defi: { title: 'Plataforma DeFi', description: 'Servicios financieros descentralizados' },
         sto: { title: 'Plataforma STO', description: 'Oferta de token de seguridad' },
-        crowdfunding: { title: 'Financiación Colectiva', description: 'Crowdfunding descentralizado' },
+        crowdfunding: {
+          title: 'Financiación Colectiva',
+          description: 'Crowdfunding descentralizado',
+        },
         lottery: { title: 'Lotería Cuántica', description: 'Lotería justa y transparente' },
         movies: { title: 'Boletos de Cine', description: 'Boletería de cine blockchain' },
         concerts: { title: 'Boletos de Concierto', description: 'Venta de boletos de concierto' },
         flights: { title: 'Reserva de Vuelos', description: 'Servicio de vuelo blockchain' },
         hotels: { title: 'Reserva de Hoteles', description: 'Reserva de hotel descentralizada' },
-        utilities: { title: 'Servicios Públicos', description: 'Pagos de facturas de servicios públicos' },
-        forum: { title: 'Foro Comunitario', description: 'Comunidad descentralizada' }
+        utilities: {
+          title: 'Servicios Públicos',
+          description: 'Pagos de facturas de servicios públicos',
+        },
+        forum: { title: 'Foro Comunitario', description: 'Comunidad descentralizada' },
       },
       ui: {
         active_users: 'Usuarios Activos',
         core_features: 'Características Principales',
         view_details: 'Ver Detalles',
-        use_now: 'Usar Ahora'
+        use_now: 'Usar Ahora',
       },
       modal: {
         introduction: 'Introducción',
@@ -442,61 +557,64 @@ export const es = {
         tech_specs: 'Especificaciones Técnicas',
         usage_stats: 'Estadísticas de Uso',
         close: 'Cerrar',
-        use_now: 'Usar Ahora'
+        use_now: 'Usar Ahora',
       },
       details: {
         wallet: {
-          introduction: 'Quantum Wallet es una herramienta de gestión de activos digitales segura basada en criptografía post-cuántica.',
+          introduction:
+            'Quantum Wallet es una herramienta de gestión de activos digitales segura basada en criptografía post-cuántica.',
           features: {
             key_management: 'Gestión de claves segura cuántica',
             multi_currency: 'Soporte multi-moneda',
             hardware_integration: 'Integración de billetera de hardware',
-            biometric_auth: 'Autenticación biométrica'
+            biometric_auth: 'Autenticación biométrica',
           },
           techSpecs: {
             dilithium: 'Firmas CRYSTALS-Dilithium',
             nist_level: 'Seguridad NIST Nivel 3',
             hardware_support: 'Soporte Ledger/Trezor',
-            platforms: 'iOS/Android/Web'
-          }
+            platforms: 'iOS/Android/Web',
+          },
         },
         exchange: {
-          introduction: 'Quantum Exchange es una plataforma de trading de activos digitales descentralizada con alto rendimiento.',
+          introduction:
+            'Quantum Exchange es una plataforma de trading de activos digitales descentralizada con alto rendimiento.',
           features: {
             quantum_trading: 'Trading seguro cuántico',
             liquidity_mining: 'Minería de liquidez',
             cross_chain: 'Trading inter-cadenas',
-            smart_routing: 'Enrutamiento inteligente'
+            smart_routing: 'Enrutamiento inteligente',
           },
           techSpecs: {
             tps: '1000+ TPS',
             order_matching: 'Coincidencia < 10ms',
             trading_pairs: '20+ pares de trading',
-            fees: '0.1% tarifas'
-          }
+            fees: '0.1% tarifas',
+          },
         },
         defi: {
-          introduction: 'La plataforma DeFi proporciona préstamos descentralizados, minería de liquidez y otros servicios financieros.',
+          introduction:
+            'La plataforma DeFi proporciona préstamos descentralizados, minería de liquidez y otros servicios financieros.',
           features: {
             lending: 'Préstamos descentralizados',
             liquidity_mining: 'Minería de liquidez',
             yield_farming: 'Agricultura de rendimiento',
-            insurance: 'Seguro DeFi'
+            insurance: 'Seguro DeFi',
           },
           techSpecs: {
             automation: 'Automatización de contratos inteligentes',
             oracle: 'Oráculo descentralizado',
             cross_chain: 'Soporte de activos inter-cadenas',
-            rate_model: 'Modelo de tasa dinámica'
-          }
+            rate_model: 'Modelo de tasa dinámica',
+          },
         },
         default: {
           introduction: 'Esta aplicación está en desarrollo, manténgase al tanto.',
           features: 'Más características próximamente',
           techSpecs: 'Especificaciones técnicas por determinar',
-          status: 'En Desarrollo'
-        }
-      }
+          status: 'En Desarrollo',
+        },
+      },
     },
     footer: {
       sections: {
@@ -507,8 +625,8 @@ export const es = {
             wallet: 'Billetera Cuántica',
             contracts: 'Contratos Inteligentes',
             crosschain: 'Puente Inter-Cadenas',
-            docs: 'Documentación API'
-          }
+            docs: 'Documentación API',
+          },
         },
         developer: {
           title: 'Desarrolladores',
@@ -517,8 +635,8 @@ export const es = {
             sdk: 'SDK',
             examples: 'Ejemplos de Código',
             community: 'Comunidad de Dev',
-            github: 'GitHub'
-          }
+            github: 'GitHub',
+          },
         },
         enterprise: {
           title: 'Empresa',
@@ -527,8 +645,8 @@ export const es = {
             support: 'Soporte Técnico',
             partners: 'Socios',
             audit: 'Auditoría de Seguridad',
-            contact: 'Contáctenos'
-          }
+            contact: 'Contáctenos',
+          },
         },
         community: {
           title: 'Comunidad',
@@ -537,34 +655,37 @@ export const es = {
             telegram: 'Telegram',
             twitter: 'Twitter',
             medium: 'Medium',
-            reddit: 'Reddit'
-          }
-        }
+            reddit: 'Reddit',
+          },
+        },
       },
       stats: {
         title: 'Únase a la Red Blockchain Cuántica Global',
-        description: 'Construya un futuro seguro cuántico con desarrolladores y empresas de todo el mundo',
+        description:
+          'Construya un futuro seguro cuántico con desarrolladores y empresas de todo el mundo',
         nodes: 'Nodos Globales',
         transactions: 'Transacciones Totales',
         developers: 'Desarrolladores',
-        enterprises: 'Usuarios Empresariales'
+        enterprises: 'Usuarios Empresariales',
       },
       brand: {
-        description: 'Quantaureum es una plataforma blockchain de próxima generación segura cuántica que utiliza criptografía post-cuántica para proporcionar infraestructura blockchain segura y eficiente para empresas y desarrolladores.'
+        description:
+          'Quantaureum es una plataforma blockchain de próxima generación segura cuántica que utiliza criptografía post-cuántica para proporcionar infraestructura blockchain segura y eficiente para empresas y desarrolladores.',
       },
       newsletter: {
         title: 'Suscríbase a nuestro Boletín',
-        description: 'Reciba las últimas actualizaciones de productos, artículos técnicos y noticias de la industria',
+        description:
+          'Reciba las últimas actualizaciones de productos, artículos técnicos y noticias de la industria',
         placeholder: 'Ingrese su correo electrónico',
-        subscribe: 'Suscribirse'
+        subscribe: 'Suscribirse',
       },
       legal: {
         copyright: '© 2024 Quantaureum. Todos los derechos reservados.',
         privacy: 'Política de Privacidad',
         terms: 'Términos de Servicio',
         cookies: 'Política de Cookies',
-        security: 'Declaración de Seguridad'
-      }
+        security: 'Declaración de Seguridad',
+      },
     },
     dashboard: {
       title: 'Panel de Usuario',
@@ -579,65 +700,67 @@ export const es = {
       market: 'Mercado',
       defi: 'Protocolo DeFi',
       active: 'Activo',
-      staking: 'Staking'
+      staking: 'Staking',
     },
     common: {
       loading: 'Cargando...',
       features: 'Características',
       benefits: 'Beneficios',
-      case_study: 'Caso de Estudio'
+      case_study: 'Caso de Estudio',
     },
     developers: {
       title: 'Recursos para Desarrolladores',
-      subtitle: 'Construya aplicaciones de próxima generación con tecnología blockchain segura cuántica Quantaureum. Obtenga herramientas de desarrollo completas, documentación y soporte.',
+      subtitle:
+        'Construya aplicaciones de próxima generación con tecnología blockchain segura cuántica Quantaureum. Obtenga herramientas de desarrollo completas, documentación y soporte.',
       resources: {
         docs: {
           title: 'Documentación Técnica',
-          description: 'Documentación API completa, guías SDK y tutoriales'
+          description: 'Documentación API completa, guías SDK y tutoriales',
         },
         api: {
           title: 'Referencia API',
-          description: 'Documentación API RESTful y ejemplos de código'
+          description: 'Documentación API RESTful y ejemplos de código',
         },
         sdk: {
           title: 'Descarga de SDK',
-          description: 'Paquetes SDK multi-lenguaje y herramientas de desarrollo'
+          description: 'Paquetes SDK multi-lenguaje y herramientas de desarrollo',
         },
-        explore: 'Explorar'
+        explore: 'Explorar',
       },
       quickStart: {
         title: 'Inicio Rápido',
         step1: {
           title: 'Obtener Clave API',
-          description: 'Registre una cuenta de desarrollador y obtenga su clave de acceso API'
+          description: 'Registre una cuenta de desarrollador y obtenga su clave de acceso API',
         },
         step2: {
           title: 'Instalar SDK',
-          description: 'Elija su lenguaje de programación preferido e instale el SDK'
+          description: 'Elija su lenguaje de programación preferido e instale el SDK',
         },
         step3: {
           title: 'Comenzar a Desarrollar',
-          description: 'Vea ejemplos de código y comience a construir su app segura cuántica'
-        }
+          description: 'Vea ejemplos de código y comience a construir su app segura cuántica',
+        },
       },
       codeExample: {
         title: 'Ejemplo de Código',
-        comment: 'Crear billetera segura cuántica'
+        comment: 'Crear billetera segura cuántica',
       },
       community: {
         title: 'Comunidad de Desarrolladores',
-        description: 'Únase a nuestra comunidad de desarrolladores para intercambiar experiencias y obtener soporte técnico.',
+        description:
+          'Únase a nuestra comunidad de desarrolladores para intercambiar experiencias y obtener soporte técnico.',
         forum: 'Foro de Desarrolladores',
         github: 'Repositorio GitHub',
-        discord: 'Canal Discord'
+        discord: 'Canal Discord',
       },
       support: {
         title: 'Soporte Técnico',
         description: '¿Tiene problemas? Nuestro equipo técnico está listo para apoyarlo.',
         docs: 'Docs de Ayuda',
         faq: 'FAQ',
-        contact: 'Contactar Soporte'
-      }
+        contact: 'Contactar Soporte',
+      },
     },
     gold: {
       title: 'Estándar Oro',
@@ -646,30 +769,43 @@ export const es = {
       rate: '1 QAU = 1 Gramo de Oro',
       fee_info: 'Comprar con USDT • <0>0.5% Tarifa</0> cubre almacenamiento seguro y seguro',
       steps: {
-        buy: { title: 'Comprar QAU', desc: 'Compre QAU directamente. Su inversión se asigna automáticamente a la adquisición de oro.' },
-        acquisition: { title: 'Adquisición de Oro', desc: 'Compramos oro físico correspondiente a su cantidad de QAU y lo almacenamos en bóvedas seguras.' },
-        audit: { title: 'Auditoría y Verificación', desc: 'Auditores independientes verifican las reservas de oro mensualmente. 100% Respaldado, Siempre.' },
-        redemption: { title: 'Redención', desc: 'Los tenedores pueden canjear QAU por oro físico o intercambiarlo en mercados globales.' }
+        buy: {
+          title: 'Comprar QAU',
+          desc: 'Compre QAU directamente. Su inversión se asigna automáticamente a la adquisición de oro.',
+        },
+        acquisition: {
+          title: 'Adquisición de Oro',
+          desc: 'Compramos oro físico correspondiente a su cantidad de QAU y lo almacenamos en bóvedas seguras.',
+        },
+        audit: {
+          title: 'Auditoría y Verificación',
+          desc: 'Auditores independientes verifican las reservas de oro mensualmente. 100% Respaldado, Siempre.',
+        },
+        redemption: {
+          title: 'Redención',
+          desc: 'Los tenedores pueden canjear QAU por oro físico o intercambiarlo en mercados globales.',
+        },
       },
       stats: {
         reserve: { label: 'Reserva Total de Oro', sub: 'Auditado hace 2 horas' },
         supply: { label: 'Suministro Circulante QAU', sub: 'Ratio de Vinculación: 100%' },
-        price: { label: 'Precio de Mercado del Oro', sub: 'Datos de Oráculo en Vivo' }
+        price: { label: 'Precio de Mercado del Oro', sub: 'Datos de Oráculo en Vivo' },
       },
       cta: {
-        audit: 'Ver Informe de Auditoría'
-      }
+        audit: 'Ver Informe de Auditoría',
+      },
     },
     sto: {
       title: 'Plataforma de Oferta de Token de Seguridad',
-      description: 'Acceda a valores digitales compatibles, respaldados por activos y asegurados por cifrado cuántico. Invierta en el futuro de las finanzas.',
+      description:
+        'Acceda a valores digitales compatibles, respaldados por activos y asegurados por cifrado cuántico. Invierta en el futuro de las finanzas.',
       search_placeholder: 'Buscar proyectos por nombre o símbolo...',
       categories: {
         real_estate: 'Bienes Raíces',
         energy: 'Energía',
         healthcare: 'Salud',
         technology: 'Tecnología',
-        finance: 'Finanzas'
+        finance: 'Finanzas',
       },
       project: {
         raised: 'Recaudado',
@@ -678,9 +814,9 @@ export const es = {
         status: {
           active: 'Activo',
           upcoming: 'Próximamente',
-          completed: 'Completado'
-        }
-      }
+          completed: 'Completado',
+        },
+      },
     },
     explorer: {
       title: 'Explorador Blockchain Cuántico',
@@ -690,13 +826,13 @@ export const es = {
         latest_block: 'Último Bloque',
         tps: 'TPS',
         total_txs: 'Transacciones Totales',
-        block_time: 'Tiempo de Bloque'
+        block_time: 'Tiempo de Bloque',
       },
       links: {
         validators: 'Validadores',
         contracts: 'Contratos',
         qpos: 'QPOS',
-        verify: 'Verificar'
+        verify: 'Verificar',
       },
       activity: {
         recent_blocks: 'Bloques Recientes',
@@ -705,12 +841,13 @@ export const es = {
         miner: 'Minero',
         from: 'De',
         to: 'A',
-        txns: 'txns'
+        txns: 'txns',
       },
       errors: {
-        not_found: 'No se encontraron resultados. Verifique su número de bloque, hash de tx o dirección.',
-        search_failed: 'Búsqueda fallida. Por favor intente de nuevo.'
-      }
+        not_found:
+          'No se encontraron resultados. Verifique su número de bloque, hash de tx o dirección.',
+        search_failed: 'Búsqueda fallida. Por favor intente de nuevo.',
+      },
     },
     token_sale: {
       title: 'Venta de Tokens QAU',
@@ -724,7 +861,7 @@ export const es = {
         pay_hint: 'Ingrese cantidad en USD, pague equivalente en QAU',
         placeholder: 'Ingrese cantidad...',
         receive_label: 'Usted Recibe (QAU)',
-        balance: 'Saldo'
+        balance: 'Saldo',
       },
       rate: 'Tasa',
       sold: 'Vendido',
@@ -737,7 +874,7 @@ export const es = {
         gross: 'Cantidad Bruta',
         platform_fee: 'Tarifa de Plataforma',
         tooltip: 'Cubre almacenamiento en bóveda, seguro y costos de auditoría.',
-        net: 'Inversión Neta'
+        net: 'Inversión Neta',
       },
       actions: {
         connect: 'Conectar Billetera',
@@ -746,8 +883,9 @@ export const es = {
         confirm: 'Confirmar Compra',
         processing: 'Procesando...',
         success_title: '¡Compra Exitosa!',
-        success_desc: 'Su solicitud ha sido registrada. QAU será acuñado después de la adquisición de oro.',
-        view_explorer: 'Ver en Explorador'
+        success_desc:
+          'Su solicitud ha sido registrada. QAU será acuñado después de la adquisición de oro.',
+        view_explorer: 'Ver en Explorador',
       },
       wallet: {
         connected: 'Conectado',
@@ -756,7 +894,7 @@ export const es = {
         network: 'Red',
         chain_id: 'ID de Cadena',
         connecting: 'Conectando...',
-        install: 'Instalar MetaMask'
+        install: 'Instalar MetaMask',
       },
       steps: {
         confirm: 'Confirmar',
@@ -764,93 +902,99 @@ export const es = {
         processing: 'Procesando',
         processing_desc: 'On-chain',
         complete: 'Completado',
-        complete_desc: 'Éxito'
+        complete_desc: 'Éxito',
       },
       messages: {
         confirm_tx: 'Por favor confirme la transacción en MetaMask...',
         tx_submitted: 'Transacción enviada, esperando confirmación...',
         purchase_success: '¡Compra exitosa! Pagó {{paid}} QAU por {{received}} tokens QAU',
         tx_cancelled: 'Transacción cancelada por el usuario',
-        enter_valid_amount: 'Por favor ingrese una cantidad válida'
+        enter_valid_amount: 'Por favor ingrese una cantidad válida',
       },
       stats: {
         gold_price: 'Precio del Oro (24h)',
-        total_reserves: 'Reservas Totales'
+        total_reserves: 'Reservas Totales',
       },
       security: {
         title: 'Seguridad y Custodia',
         vaults: {
           title: 'Bóvedas Aseguradas',
-          desc: 'Todo el oro físico se almacena en bóvedas acreditadas por LBMA en Suiza y Londres, totalmente aseguradas contra robo y daños.'
+          desc: 'Todo el oro físico se almacena en bóvedas acreditadas por LBMA en Suiza y Londres, totalmente aseguradas contra robo y daños.',
         },
         audits: {
           title: 'Auditorías Mensuales',
-          desc: 'Auditores independientes verifican las reservas físicas mensualmente. Los informes se publican en cadena para una transparencia total.'
-        }
+          desc: 'Auditores independientes verifican las reservas físicas mensualmente. Los informes se publican en cadena para una transparencia total.',
+        },
       },
       faq: {
         fee_title: '¿Por qué la tarifa del {{rate}}%?',
-        fee_desc: 'A diferencia de los tokens solo digitales, Quantaureum implica logística del mundo real. La tarifa garantiza que su oro se transporte, almacene y asegure de manera segura a perpetuidad sin tarifas de gestión anuales.'
+        fee_desc:
+          'A diferencia de los tokens solo digitales, Quantaureum implica logística del mundo real. La tarifa garantiza que su oro se transporte, almacene y asegure de manera segura a perpetuidad sin tarifas de gestión anuales.',
       },
       errors: {
         install_wallet: 'Por favor instale MetaMask o una billetera compatible.',
         switch_network: 'Por favor cambie a la Red Quantaureum (ID de Cadena: {{chainId}})',
         connect_failed: 'Falló la conexión a la billetera',
         tx_failed: 'Transacción fallida',
-        metamask_not_found: 'MetaMask no encontrado'
-      }
+        metamask_not_found: 'MetaMask no encontrado',
+      },
     },
     about: {
       title: 'Acerca de Quantaureum',
-      subtitle: 'El primer ecosistema blockchain empresarial del mundo que adopta criptografía post-cuántica, dedicado a construir un futuro digital seguro cuántico',
+      subtitle:
+        'El primer ecosistema blockchain empresarial del mundo que adopta criptografía post-cuántica, dedicado a construir un futuro digital seguro cuántico',
       mission: {
         title: 'Nuestra Misión',
-        desc1: 'Quantaureum se dedica a construir una infraestructura blockchain de próxima generación segura cuántica, proporcionando gestión de activos digitales y servicios de aplicaciones descentralizadas seguros, confiables y eficientes para usuarios globales.',
-        desc2: 'Creemos que con el desarrollo de la tecnología de computación cuántica, los algoritmos de cifrado tradicionales enfrentarán enormes desafíos. Por lo tanto, adoptamos la tecnología de criptografía post-cuántica más avanzada para garantizar que nuestro sistema pueda resistir los ataques de futuras computadoras cuánticas.',
+        desc1:
+          'Quantaureum se dedica a construir una infraestructura blockchain de próxima generación segura cuántica, proporcionando gestión de activos digitales y servicios de aplicaciones descentralizadas seguros, confiables y eficientes para usuarios globales.',
+        desc2:
+          'Creemos que con el desarrollo de la tecnología de computación cuántica, los algoritmos de cifrado tradicionales enfrentarán enormes desafíos. Por lo tanto, adoptamos la tecnología de criptografía post-cuántica más avanzada para garantizar que nuestro sistema pueda resistir los ataques de futuras computadoras cuánticas.',
         card: {
           title: 'Pionero en Seguridad Cuántica',
-          desc: 'Llevando la tecnología blockchain a la era de la seguridad cuántica'
-        }
+          desc: 'Llevando la tecnología blockchain a la era de la seguridad cuántica',
+        },
       },
       vision: {
         title: 'Nuestra Visión',
-        subtitle: 'Convertirse en la plataforma blockchain segura cuántica líder en el mundo, sentando una base sólida para el desarrollo futuro de la economía digital',
+        subtitle:
+          'Convertirse en la plataforma blockchain segura cuántica líder en el mundo, sentando una base sólida para el desarrollo futuro de la economía digital',
         safety: {
           title: 'Seguridad Primero',
-          desc: 'Adoptando la tecnología de criptografía post-cuántica más avanzada para garantizar la seguridad del sistema a largo plazo'
+          desc: 'Adoptando la tecnología de criptografía post-cuántica más avanzada para garantizar la seguridad del sistema a largo plazo',
         },
         user: {
           title: 'Usuario Primero',
-          desc: 'Proporcionando interfaces intuitivas y fáciles de usar y una excelente experiencia de usuario, permitiendo que todos disfruten de la conveniencia de la tecnología blockchain'
+          desc: 'Proporcionando interfaces intuitivas y fáciles de usar y una excelente experiencia de usuario, permitiendo que todos disfruten de la conveniencia de la tecnología blockchain',
         },
         innovation: {
           title: 'Innovación Continua',
-          desc: 'Explorando y aplicando constantemente los últimos logros tecnológicos para impulsar el desarrollo de la industria blockchain'
-        }
+          desc: 'Explorando y aplicando constantemente los últimos logros tecnológicos para impulsar el desarrollo de la industria blockchain',
+        },
       },
       team: {
         title: 'Equipo Principal',
-        subtitle: 'Un equipo de expertos de las mejores instituciones globales con amplia experiencia en blockchain y computación cuántica',
+        subtitle:
+          'Un equipo de expertos de las mejores instituciones globales con amplia experiencia en blockchain y computación cuántica',
         ceo: {
           title: 'Fundador y CEO',
           role: 'Experto en Tecnología Blockchain',
-          desc: '15 años de experiencia en investigación de blockchain y criptografía'
+          desc: '15 años de experiencia en investigación de blockchain y criptografía',
         },
         cto: {
           title: 'CTO',
           role: 'Experto en Computación Cuántica',
-          desc: 'Ex miembro principal del equipo de IA Cuántica de Google'
+          desc: 'Ex miembro principal del equipo de IA Cuántica de Google',
         },
         scientist: {
           title: 'Científico Jefe',
           role: 'Experto en Investigación Criptográfica',
-          desc: 'Doctorado en Criptografía del MIT, publicado 50+ artículos'
+          desc: 'Doctorado en Criptografía del MIT, publicado 50+ artículos',
         },
         coo: {
           title: 'COO',
           role: 'Experto en Fintech',
-          desc: 'Ex Jefe del Departamento de Blockchain en JPMorgan'
-        }
+          desc: 'Ex Jefe del Departamento de Blockchain en JPMorgan',
+        },
       },
       contact: {
         title: 'Contáctenos',
@@ -858,8 +1002,8 @@ export const es = {
         email: 'Correo electrónico',
         address: 'Dirección',
         address_val: 'Torre Quantum Tech, Distrito Financiero de Singapur',
-        community: 'Comunidad'
-      }
+        community: 'Comunidad',
+      },
     },
     defi_page: {
       title: 'Protocolos DeFi',
@@ -875,20 +1019,20 @@ export const es = {
         liquidity: 'Liquidez',
         lending: 'Préstamo',
         staking: 'Staking',
-        farming: 'Granjas'
+        farming: 'Granjas',
       },
       stats: {
         liquidity: 'Pools de Liquidez',
         lending: 'Activos de Préstamo',
         staking: 'Pools de Staking',
-        farms: 'Granjas de Rendimiento'
+        farms: 'Granjas de Rendimiento',
       },
       liquidity: {
         total_liquidity: 'Liquidez Total',
         price: 'Precio',
         fee_rate: 'Tasa de Tarifa',
         add_liquidity: 'Añadir Liquidez',
-        no_pools: 'No hay pools de liquidez disponibles'
+        no_pools: 'No hay pools de liquidez disponibles',
       },
       lending: {
         asset: 'Activo',
@@ -900,7 +1044,7 @@ export const es = {
         action: 'Acción',
         supply: 'Suministrar',
         borrow: 'Pedir prestado',
-        no_assets: 'No hay activos de préstamo disponibles'
+        no_assets: 'No hay activos de préstamo disponibles',
       },
       staking: {
         reward: 'Recompensa',
@@ -909,7 +1053,7 @@ export const es = {
         min_stake: 'Apuesta Mín',
         stake_tokens: 'Apostar Tokens',
         days: 'Días',
-        no_pools: 'No hay pools de staking disponibles'
+        no_pools: 'No hay pools de staking disponibles',
       },
       farming: {
         lp: 'LP',
@@ -918,7 +1062,7 @@ export const es = {
         multiplier: 'Multiplicador',
         stake_lp: 'Apostar LP',
         farm_ended: 'Granja Terminada',
-        no_farms: 'No hay granjas de rendimiento disponibles'
+        no_farms: 'No hay granjas de rendimiento disponibles',
       },
       modal: {
         add_liquidity: 'Añadir Liquidez',
@@ -929,9 +1073,9 @@ export const es = {
         cancel: 'Cancelar',
         confirm: 'Confirmar',
         action_success: '¡Acción Exitosa!',
-        demo_mode: '(Modo demo, conecte billetera para transacciones reales)'
+        demo_mode: '(Modo demo, conecte billetera para transacciones reales)',
       },
-      error: 'Error al cargar datos DeFi. Por favor verifique su conexión.'
+      error: 'Error al cargar datos DeFi. Por favor verifique su conexión.',
     },
     auth: {
       login: {
@@ -952,7 +1096,7 @@ export const es = {
         brand_tagline: 'Quantaureum - Blockchain Seguro Cuántico',
         login_success: '¡Inicio de sesión exitoso! Redirigiendo...',
         login_failed: 'Error de inicio de sesión, verifica tus credenciales',
-        network_error: 'Error de red, intenta más tarde'
+        network_error: 'Error de red, intenta más tarde',
       },
       register: {
         title: 'Crear Cuenta',
@@ -976,7 +1120,8 @@ export const es = {
         password_placeholder: 'Ingresa tu contraseña',
         confirm_password_label: 'Confirmar Contraseña',
         confirm_password_placeholder: 'Reingresa tu contraseña',
-        password_hint: 'La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números',
+        password_hint:
+          'La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números',
         password_strength: 'Fortaleza de Contraseña',
         security_question: 'Pregunta de Seguridad',
         security_question_placeholder: 'Selecciona pregunta de seguridad',
@@ -988,8 +1133,10 @@ export const es = {
         terms_of_service: 'Términos de Servicio',
         agree_privacy: 'He leído y acepto la',
         privacy_policy: 'Política de Privacidad',
-        agree_marketing: 'Acepto recibir actualizaciones de productos e información de marketing (opcional)',
-        security_guarantee: 'Tu información personal está protegida con encriptación de nivel cuántico',
+        agree_marketing:
+          'Acepto recibir actualizaciones de productos e información de marketing (opcional)',
+        security_guarantee:
+          'Tu información personal está protegida con encriptación de nivel cuántico',
         previous: 'Anterior',
         next: 'Siguiente',
         create_account: 'Crear Cuenta',
@@ -1015,13 +1162,13 @@ export const es = {
           security_question_required: 'Por favor selecciona una pregunta de seguridad',
           security_answer_required: 'Por favor ingresa tu respuesta de seguridad',
           terms_required: 'Por favor acepta los Términos de Servicio',
-          privacy_required: 'Por favor acepta la Política de Privacidad'
+          privacy_required: 'Por favor acepta la Política de Privacidad',
         },
         security_questions: {
           q1: '¿Cuál es el apellido de soltera de tu madre?',
           q2: '¿Cuál era el nombre de tu primera mascota?',
           q3: '¿En qué ciudad naciste?',
-          q4: '¿Cuál es el nombre de tu profesor favorito?'
+          q4: '¿Cuál es el nombre de tu profesor favorito?',
         },
         countries: {
           china: 'China',
@@ -1033,44 +1180,45 @@ export const es = {
           japan: 'Japón',
           korea: 'Corea del Sur',
           germany: 'Alemania',
-          france: 'Francia'
-        }
+          france: 'Francia',
+        },
       },
       google: {
-        processing: 'Procesando inicio de sesión con Google...'
-      }
+        processing: 'Procesando inicio de sesión con Google...',
+      },
     },
     contact: {
       title: 'Contáctanos',
       title_highlight: 'Ahora',
-      subtitle: 'Ya sea que tengas preguntas, sugerencias o consultas de asociación, esperamos saber de ti',
+      subtitle:
+        'Ya sea que tengas preguntas, sugerencias o consultas de asociación, esperamos saber de ti',
       info: {
         email: {
           title: 'Correo',
           value: 'contact@quantaureum.com',
-          desc: 'Consultas generales y asociaciones'
+          desc: 'Consultas generales y asociaciones',
         },
         support: {
           title: 'Soporte Técnico',
           value: 'support@quantaureum.com',
-          desc: 'Problemas técnicos y soporte de desarrollo'
+          desc: 'Problemas técnicos y soporte de desarrollo',
         },
         website: {
           title: 'Sitio Web',
           value: 'www.quantaureum.com',
-          desc: 'Más información'
+          desc: 'Más información',
         },
         response: {
           title: 'Tiempo de Respuesta',
           value: 'Dentro de 24 horas',
-          desc: 'Respuesta rápida en días hábiles'
-        }
+          desc: 'Respuesta rápida en días hábiles',
+        },
       },
       types: {
         general: 'Consulta General',
         enterprise: 'Cooperación Empresarial',
         partnership: 'Asociación Comercial',
-        support: 'Soporte Técnico'
+        support: 'Soporte Técnico',
       },
       form: {
         title: 'Enviar Mensaje',
@@ -1088,35 +1236,36 @@ export const es = {
         submitting: 'Procesando...',
         success_title: '¡Mensaje Enviado!',
         success_message: 'Gracias por contactarnos. Responderemos lo antes posible.',
-        send_another: 'Enviar Otro Mensaje'
+        send_another: 'Enviar Otro Mensaje',
       },
       social: {
         title: 'Síguenos',
-        subtitle: 'Obtén las últimas actualizaciones y noticias técnicas a través de redes sociales'
+        subtitle:
+          'Obtén las últimas actualizaciones y noticias técnicas a través de redes sociales',
       },
       offices: {
         title: 'Oficinas Globales',
         singapore: {
           city: 'Singapur',
           address: 'Distrito Financiero de Singapur',
-          type: 'Sede Asia Pacífico'
+          type: 'Sede Asia Pacífico',
         },
         sanfrancisco: {
           city: 'San Francisco',
           address: 'Parque Tecnológico Silicon Valley',
-          type: 'Oficina Norteamérica'
+          type: 'Oficina Norteamérica',
         },
         london: {
           city: 'Londres',
           address: 'Canary Wharf',
-          type: 'Oficina Europa'
-        }
+          type: 'Oficina Europa',
+        },
       },
       faq: {
         title: 'FAQ',
         subtitle: 'Encuentra respuestas rápidas en FAQ',
-        button: 'Ver FAQ'
-      }
+        button: 'Ver FAQ',
+      },
     },
     settings: {
       title: 'Configuración de Cuenta',
@@ -1125,22 +1274,24 @@ export const es = {
         security: 'Configuración de Seguridad',
         kyc: 'Verificación KYC',
         profile: 'Perfil',
-        notifications: 'Notificaciones'
+        notifications: 'Notificaciones',
       },
       security: {
         twofa: {
           title: 'Autenticación de Dos Factores (2FA)',
           enabled: 'Habilitado',
           disabled: 'Deshabilitado',
-          description: 'Habilitar la autenticación de dos factores mejora significativamente la seguridad de tu cuenta. Cada inicio de sesión requerirá un código de verificación de tu aplicación de autenticación además de tu contraseña.',
+          description:
+            'Habilitar la autenticación de dos factores mejora significativamente la seguridad de tu cuenta. Cada inicio de sesión requerirá un código de verificación de tu aplicación de autenticación además de tu contraseña.',
           enable_button: 'Habilitar 2FA',
           disable_button: 'Deshabilitar 2FA',
-          enabled_status: '2FA Habilitado'
+          enabled_status: '2FA Habilitado',
         },
         password: {
           title: 'Configuración de Contraseña',
-          description: 'Cambiar tu contraseña regularmente mejora la seguridad de tu cuenta. Usa una contraseña fuerte con mayúsculas, minúsculas, números y caracteres especiales.',
-          change_button: 'Cambiar Contraseña'
+          description:
+            'Cambiar tu contraseña regularmente mejora la seguridad de tu cuenta. Usa una contraseña fuerte con mayúsculas, minúsculas, números y caracteres especiales.',
+          change_button: 'Cambiar Contraseña',
         },
         login_history: {
           title: 'Historial de Inicio de Sesión',
@@ -1148,11 +1299,12 @@ export const es = {
           logout: 'Cerrar Sesión',
           just_now: 'Ahora mismo',
           hours_ago: 'horas atrás',
-          yesterday: 'Ayer'
+          yesterday: 'Ayer',
         },
         twofa_modal: {
           title: 'Configurar Autenticación de Dos Factores',
-          scan_instruction: 'Usa una aplicación de autenticación (como Google Authenticator, Authy) para escanear el código QR a continuación',
+          scan_instruction:
+            'Usa una aplicación de autenticación (como Google Authenticator, Authy) para escanear el código QR a continuación',
           scan_qr: 'Escanear Código QR',
           manual_entry: 'O ingresa la clave manualmente:',
           enter_code: 'Ingresa Código de Verificación',
@@ -1160,16 +1312,18 @@ export const es = {
           cancel: 'Cancelar',
           verify_enable: 'Verificar y Habilitar',
           success_title: '¡2FA Habilitado!',
-          backup_instruction: 'Por favor guarda los siguientes códigos de respaldo de forma segura. Úsalos para recuperar tu cuenta si no puedes acceder a tu aplicación de autenticación.',
-          backup_warning: 'Cada código de respaldo solo puede usarse una vez. Guárdalos en un lugar seguro.',
+          backup_instruction:
+            'Por favor guarda los siguientes códigos de respaldo de forma segura. Úsalos para recuperar tu cuenta si no puedes acceder a tu aplicación de autenticación.',
+          backup_warning:
+            'Cada código de respaldo solo puede usarse una vez. Guárdalos en un lugar seguro.',
           saved_backup: 'He guardado los códigos de respaldo',
           verify_error: 'Por favor ingresa un código de verificación de 6 dígitos',
           verify_failed: 'Código de verificación incorrecto',
           attempts_remaining: 'intentos restantes',
           locked_message: 'Demasiados intentos fallidos. Por favor intenta de nuevo en',
           minutes: 'minutos',
-          seconds: 'segundos'
-        }
+          seconds: 'segundos',
+        },
       },
       kyc: {
         title: 'Estado de Verificación KYC',
@@ -1177,12 +1331,12 @@ export const es = {
           none: 'No Verificado',
           pending: 'En Revisión',
           approved: 'Verificado',
-          rejected: 'Rechazado'
+          rejected: 'Rechazado',
         },
         limits: {
           single: 'Límite por Transacción',
           daily: 'Límite Diario',
-          monthly: 'Límite Mensual'
+          monthly: 'Límite Mensual',
         },
         start_button: 'Iniciar Verificación KYC',
         levels: {
@@ -1190,18 +1344,18 @@ export const es = {
           basic: {
             name: 'Verificación Básica',
             limits: '$1,000/día',
-            requirements: 'Verificación de correo'
+            requirements: 'Verificación de correo',
           },
           standard: {
             name: 'Verificación Estándar',
             limits: '$10,000/día',
-            requirements: 'Documento de identidad + Selfie'
+            requirements: 'Documento de identidad + Selfie',
           },
           advanced: {
             name: 'Verificación Avanzada',
             limits: '$100,000/día',
-            requirements: 'Documento de identidad + Selfie + Comprobante de domicilio'
-          }
+            requirements: 'Documento de identidad + Selfie + Comprobante de domicilio',
+          },
         },
         modal: {
           title: 'Verificación de Identidad KYC',
@@ -1223,8 +1377,8 @@ export const es = {
           selfie: 'Selfie con Documento',
           cancel: 'Cancelar',
           submit: 'Enviar Verificación',
-          validation_error: 'Por favor completa todos los campos requeridos'
-        }
+          validation_error: 'Por favor completa todos los campos requeridos',
+        },
       },
       profile: {
         title: 'Perfil',
@@ -1233,36 +1387,38 @@ export const es = {
         username_placeholder: 'Ingresa nombre de usuario',
         wallet: 'Dirección de Billetera',
         wallet_placeholder: '0x...',
-        save: 'Guardar Cambios'
+        save: 'Guardar Cambios',
       },
       notifications: {
         title: 'Configuración de Notificaciones',
         transaction: {
           label: 'Notificaciones de Transacción',
-          desc: 'Recibir notificaciones para nuevas transacciones'
+          desc: 'Recibir notificaciones para nuevas transacciones',
         },
         security: {
           label: 'Alertas de Seguridad',
-          desc: 'Notificaciones importantes sobre seguridad de cuenta'
+          desc: 'Notificaciones importantes sobre seguridad de cuenta',
         },
         marketing: {
           label: 'Correos de Marketing',
-          desc: 'Actualizaciones de productos e información promocional'
+          desc: 'Actualizaciones de productos e información promocional',
         },
         price: {
           label: 'Alertas de Precio',
-          desc: 'Notificaciones de cambio de precio de tokens'
-        }
-      }
+          desc: 'Notificaciones de cambio de precio de tokens',
+        },
+      },
     },
     staking: {
       title: 'Staking QAU',
-      subtitle: 'Haz staking de tokens QAU para ganar recompensas, participar en la validación de red y construir el ecosistema seguro cuántico',
+      subtitle:
+        'Haz staking de tokens QAU para ganar recompensas, participar en la validación de red y construir el ecosistema seguro cuántico',
       connect_wallet: {
         title: 'Conecta tu Billetera para Comenzar Staking',
-        description: 'Conecta tu billetera Web3 para ver tu saldo y realizar operaciones de staking',
+        description:
+          'Conecta tu billetera Web3 para ver tu saldo y realizar operaciones de staking',
         button: 'Conectar Billetera',
-        connecting: 'Conectando...'
+        connecting: 'Conectando...',
       },
       wallet: {
         connected: 'Billetera Conectada',
@@ -1272,13 +1428,13 @@ export const es = {
         balance: 'Saldo QAU',
         pending_rewards: 'Recompensas Pendientes',
         switch_network: 'Cambiar Red',
-        switch_network_warning: 'Por favor cambia a la red Quantaureum para hacer staking'
+        switch_network_warning: 'Por favor cambia a la red Quantaureum para hacer staking',
       },
       stats: {
         tvl: 'Valor Total Bloqueado',
         avg_apy: 'APY Promedio',
         total_stakers: 'Total de Stakers',
-        rewards_distributed: 'Recompensas Distribuidas'
+        rewards_distributed: 'Recompensas Distribuidas',
       },
       pool: {
         select_title: 'Seleccionar Pool de Staking',
@@ -1311,18 +1467,22 @@ export const es = {
         claim: 'Reclamar',
         rewards: 'Recompensas',
         start_staking: 'Comenzar Staking',
-        connect_to_stake: 'Conectar Billetera para Stake'
+        connect_to_stake: 'Conectar Billetera para Stake',
       },
       info: {
         title: 'Información de Staking',
-        rewards_calculated: 'Las recompensas de staking se calculan por bloque y se pueden reclamar en cualquier momento',
-        early_withdrawal: 'El retiro anticipado durante el período de bloqueo incurrirá en una penalización',
-        validator_staking: 'El staking de validador requiere ejecutar un nodo validador para mayores recompensas',
-        apy_dynamic: 'El APY se ajusta dinámicamente según el stake total de la red y las recompensas de bloque',
-        security_audited: 'Los contratos inteligentes están auditados y son de código abierto'
+        rewards_calculated:
+          'Las recompensas de staking se calculan por bloque y se pueden reclamar en cualquier momento',
+        early_withdrawal:
+          'El retiro anticipado durante el período de bloqueo incurrirá en una penalización',
+        validator_staking:
+          'El staking de validador requiere ejecutar un nodo validador para mayores recompensas',
+        apy_dynamic:
+          'El APY se ajusta dinámicamente según el stake total de la red y las recompensas de bloque',
+        security_audited: 'Los contratos inteligentes están auditados y son de código abierto',
       },
       contracts: {
-        title: 'Direcciones de Contratos Inteligentes'
+        title: 'Direcciones de Contratos Inteligentes',
       },
       transaction: {
         success: '¡Transacción Exitosa!',
@@ -1335,7 +1495,7 @@ export const es = {
         to: 'Para',
         gas_used: 'Gas Usado',
         time: 'Hora',
-        waiting: 'Transacción enviada, esperando confirmación...'
+        waiting: 'Transacción enviada, esperando confirmación...',
       },
       errors: {
         connect_first: 'Por favor conecta tu billetera primero',
@@ -1344,8 +1504,8 @@ export const es = {
         cancelled: 'Transacción cancelada por el usuario',
         failed: 'Transacción fallida en blockchain',
         pending_check: 'Transacción pendiente. Por favor verifica el estado en el explorador.',
-        install_metamask: 'Por favor instala la billetera MetaMask'
-      }
+        install_metamask: 'Por favor instala la billetera MetaMask',
+      },
     },
     explorer_pages: {
       address: {
@@ -1371,7 +1531,7 @@ export const es = {
         in: 'ENTRADA',
         contract_creation: 'Creación de Contrato',
         no_transactions: 'No se encontraron transacciones para esta dirección',
-        not_found: 'Dirección no encontrada'
+        not_found: 'Dirección no encontrada',
       },
       validators: {
         title: 'Validadores',
@@ -1386,7 +1546,7 @@ export const es = {
         proposer: 'Proponente',
         active: 'Activo',
         inactive: 'Inactivo',
-        no_validators: 'No se encontraron validadores'
+        no_validators: 'No se encontraron validadores',
       },
       quantum_verify: {
         title: 'Verificación de Firma Post-Cuántica',
@@ -1394,65 +1554,69 @@ export const es = {
         tx_hash_label: 'Hash de Transacción',
         tx_hash_placeholder: 'Ingresa hash de transacción (0x...)',
         verify_button: 'Verificar Firma',
-        verifying: 'Verificando...'
-      }
+        verifying: 'Verificando...',
+      },
     },
     exchange_page: {
       redirecting: 'Redirigiendo al exchange profesional...',
       manual_redirect: 'Si la página no redirige automáticamente, por favor',
-      click_here: 'haz clic aquí'
+      click_here: 'haz clic aquí',
     },
     trading_page: {
       title: 'Quantum Exchange',
-      subtitle: 'Plataforma profesional de trading de activos digitales con seguridad cuántica, ejecuta directamente en tu navegador',
+      subtitle:
+        'Plataforma profesional de trading de activos digitales con seguridad cuántica, ejecuta directamente en tu navegador',
       badges: {
         quantum_secure: 'Seguridad Cuántica',
         high_frequency: 'Alta Frecuencia',
-        global_liquidity: 'Liquidez Global'
+        global_liquidity: 'Liquidez Global',
       },
       launch: {
         title: 'Iniciar Plataforma de Trading Profesional',
-        description: 'Ejecuta Quantum Exchange directamente en tu navegador, sin necesidad de descarga',
+        description:
+          'Ejecuta Quantum Exchange directamente en tu navegador, sin necesidad de descarga',
         launch_button: 'Iniciar Exchange',
-        start_trading: 'Comenzar a Operar'
+        start_trading: 'Comenzar a Operar',
       },
       market: {
         title: 'Datos de Mercado en Tiempo Real',
         pair: 'Par de Trading',
         price: 'Precio',
         change_24h: 'Cambio 24h',
-        volume_24h: 'Volumen 24h'
+        volume_24h: 'Volumen 24h',
       },
       features: {
         title: 'Características Principales',
         quantum_security: {
           title: 'Trading con Seguridad Cuántica',
-          description: 'Todas las transacciones protegidas con criptografía post-cuántica'
+          description: 'Todas las transacciones protegidas con criptografía post-cuántica',
         },
         high_frequency: {
           title: 'Soporte de Trading de Alta Frecuencia',
-          description: 'Ejecución de órdenes en milisegundos, herramientas de trading profesionales'
+          description:
+            'Ejecución de órdenes en milisegundos, herramientas de trading profesionales',
         },
         global_liquidity: {
           title: 'Liquidez Global',
-          description: 'Conectado a exchanges globales, mejor descubrimiento de precios'
+          description: 'Conectado a exchanges globales, mejor descubrimiento de precios',
         },
         institutional: {
           title: 'Servicios Institucionales',
-          description: 'Acceso API, trading OTC, soporte dedicado'
-        }
+          description: 'Acceso API, trading OTC, soporte dedicado',
+        },
       },
       stats: {
         title: 'Estadísticas de la Plataforma',
         volume_24h: 'Volumen 24h',
         trading_pairs: 'Pares de Trading',
         registered_users: 'Usuarios Registrados',
-        avg_latency: 'Latencia Promedio'
+        avg_latency: 'Latencia Promedio',
       },
       web_platform: {
         title: 'Plataforma de Trading Web',
-        description: 'Quantum Exchange es una plataforma de trading basada en web que se ejecuta directamente en tu navegador, sin necesidad de descarga'
-      }
+        description:
+          'Quantum Exchange es una plataforma de trading basada en web que se ejecuta directamente en tu navegador, sin necesidad de descarga',
+      },
     },
     // Páginas de Comunidad
     community_page: {
@@ -1464,7 +1628,7 @@ export const es = {
         defi: 'Discusión DeFi',
         governance: 'Gobernanza',
         events: 'Eventos',
-        menu: 'Menú de Navegación'
+        menu: 'Menú de Navegación',
       },
       // General
       title: 'Comunidad',
@@ -1477,12 +1641,13 @@ export const es = {
       new_post: 'Nueva Publicación',
       // Página Principal
       main_title: 'Comunidad Quantaureum',
-      subtitle: 'Únete a la revolución blockchain cuántica. Conecta, discute y construye el futuro juntos.',
+      subtitle:
+        'Únete a la revolución blockchain cuántica. Conecta, discute y construye el futuro juntos.',
       stats: {
         members: 'Miembros',
         posts: 'Publicaciones',
         active_today: 'Activos Hoy',
-        topics: 'Temas'
+        topics: 'Temas',
       },
       categories: {
         title: 'Categorías del Foro',
@@ -1495,7 +1660,7 @@ export const es = {
         defi_desc: 'Discusiones de finanzas descentralizadas',
         governance: 'Gobernanza',
         governance_desc: 'Gobernanza y votación de la comunidad',
-        posts_count: '{{count}} publicaciones'
+        posts_count: '{{count}} publicaciones',
       },
       hot_topics: {
         title: 'Temas Populares',
@@ -1503,24 +1668,24 @@ export const es = {
         trending: 'Tendencias',
         new: 'Nuevos',
         replies: 'respuestas',
-        views: 'vistas'
+        views: 'vistas',
       },
       active_members: {
         title: 'Miembros Activos',
-        view_all: 'Ver Todos los Miembros'
+        view_all: 'Ver Todos los Miembros',
       },
       quick_links: {
         title: 'Enlaces Rápidos',
         guidelines: 'Directrices de la Comunidad',
         faq: 'Preguntas Frecuentes',
         bug_bounty: 'Programa de Recompensas por Bugs',
-        partners: 'Programa de Socios'
+        partners: 'Programa de Socios',
       },
       community_stats: {
         title: 'Estadísticas de la Comunidad',
         total_posts: 'Total de Publicaciones',
         total_members: 'Total de Miembros',
-        online_now: 'En Línea Ahora'
+        online_now: 'En Línea Ahora',
       },
       levels: {
         core_developer: 'Desarrollador Principal',
@@ -1528,23 +1693,24 @@ export const es = {
         senior_member: 'Miembro Senior',
         defi_expert: 'Experto DeFi',
         member: 'Miembro',
-        new_member: 'Nuevo Miembro'
-      }
+        new_member: 'Nuevo Miembro',
+      },
     },
     governance_page: {
       title: 'Gobernanza de la Comunidad',
-      subtitle: 'Participa en la gobernanza descentralizada de Quantaureum, decide juntos la dirección futura del ecosistema',
+      subtitle:
+        'Participa en la gobernanza descentralizada de Quantaureum, decide juntos la dirección futura del ecosistema',
       create_proposal: 'Crear Propuesta de Gobernanza',
       stats: {
         total_staked: 'QAU Total en Staking',
         active_voters: 'Votantes Activos',
         passed_proposals: 'Propuestas Aprobadas',
-        participation_rate: 'Tasa de Participación Promedio'
+        participation_rate: 'Tasa de Participación Promedio',
       },
       tabs: {
         proposals: 'Propuestas de Gobernanza',
         delegates: 'Delegados de Votación',
-        create: 'Crear Propuesta'
+        create: 'Crear Propuesta',
       },
       status: {
         active: 'Votación',
@@ -1552,7 +1718,7 @@ export const es = {
         discussion: 'Discusión',
         passed: 'Aprobada',
         rejected: 'Rechazada',
-        unknown: 'Desconocido'
+        unknown: 'Desconocido',
       },
       voting: {
         progress: 'Progreso de Votación',
@@ -1562,14 +1728,14 @@ export const es = {
         vote_for: 'Votar a Favor',
         vote_against: 'Votar en Contra',
         support_rate: 'Tasa de Apoyo',
-        view_details: 'Ver Detalles'
+        view_details: 'Ver Detalles',
       },
       delegates: {
         delegated_votes: 'Votos Delegados',
         participation: 'Participación',
         followers: 'Seguidores',
         delegate_to: 'Delegar Votos',
-        delegating: 'Delegando...'
+        delegating: 'Delegando...',
       },
       create_form: {
         title: 'Crear Propuesta de Gobernanza',
@@ -1581,7 +1747,7 @@ export const es = {
           economy: 'Modelo Económico',
           ecosystem: 'Desarrollo del Ecosistema',
           governance: 'Gobernanza de la Comunidad',
-          security: 'Mejora de Seguridad'
+          security: 'Mejora de Seguridad',
         },
         description: 'Descripción de la Propuesta',
         description_placeholder: 'Describe tu propuesta en detalle...',
@@ -1592,22 +1758,34 @@ export const es = {
           stake: 'Debe tener al menos 10,000 QAU',
           discussion: 'La propuesta requiere 7 días de discusión',
           quorum: 'La votación requiere 1 millón de QAU de quórum',
-          threshold: 'La aprobación requiere más del 50% de apoyo'
+          threshold: 'La aprobación requiere más del 50% de apoyo',
         },
         submit: 'Enviar Propuesta',
-        submitting: 'Enviando...'
+        submitting: 'Enviando...',
       },
       process: {
         title: 'Proceso de Gobernanza',
         subtitle: 'Conoce el proceso de gobernanza descentralizada de Quantaureum',
         steps: {
-          create: { title: 'Creación de Propuesta', desc: 'Usuarios con 10,000+ QAU pueden crear propuestas de gobernanza' },
-          discussion: { title: 'Discusión de la Comunidad', desc: '7 días de discusión, los miembros pueden dar opiniones y sugerencias' },
-          voting: { title: 'Votación', desc: '7 días de votación, los poseedores de QAU realizan votación cuántica segura' },
-          execution: { title: 'Ejecución', desc: 'Las propuestas aprobadas entran en timelock de 48 horas, luego se ejecutan automáticamente' }
-        }
+          create: {
+            title: 'Creación de Propuesta',
+            desc: 'Usuarios con 10,000+ QAU pueden crear propuestas de gobernanza',
+          },
+          discussion: {
+            title: 'Discusión de la Comunidad',
+            desc: '7 días de discusión, los miembros pueden dar opiniones y sugerencias',
+          },
+          voting: {
+            title: 'Votación',
+            desc: '7 días de votación, los poseedores de QAU realizan votación cuántica segura',
+          },
+          execution: {
+            title: 'Ejecución',
+            desc: 'Las propuestas aprobadas entran en timelock de 48 horas, luego se ejecutan automáticamente',
+          },
+        },
       },
-      loading: 'Cargando...'
+      loading: 'Cargando...',
     },
     messages_page: {
       search_placeholder: 'Buscar conversaciones...',
@@ -1619,26 +1797,27 @@ export const es = {
         minutes_ago: 'hace {{count}} minutos',
         hours_ago: 'hace {{count}} horas',
         days_ago: 'hace {{count}} días',
-        you: 'Tú: '
+        you: 'Tú: ',
       },
       status: {
         online: 'En línea',
         offline: 'Desconectado',
-        send_message: 'Enviar mensaje'
-      }
+        send_message: 'Enviar mensaje',
+      },
     },
     events_page: {
       title: 'Eventos de la Comunidad',
-      subtitle: 'Participa en eventos de la comunidad Quantaureum, explora el futuro del blockchain cuántico con desarrolladores y usuarios de todo el mundo',
+      subtitle:
+        'Participa en eventos de la comunidad Quantaureum, explora el futuro del blockchain cuántico con desarrolladores y usuarios de todo el mundo',
       stats: {
         upcoming: 'Próximos',
         total_participants: 'Total de Participantes',
         past_events: 'Eventos Pasados',
-        global_cities: 'Ciudades Globales'
+        global_cities: 'Ciudades Globales',
       },
       tabs: {
         upcoming: 'Próximos',
-        past: 'Eventos Pasados'
+        past: 'Eventos Pasados',
       },
       filters: {
         search_placeholder: 'Buscar eventos...',
@@ -1646,7 +1825,7 @@ export const es = {
         online: 'Evento Online',
         offline: 'Encuentro Presencial',
         hackathon: 'Hackathon',
-        workshop: 'Taller'
+        workshop: 'Taller',
       },
       event: {
         participants: 'participantes',
@@ -1656,8 +1835,8 @@ export const es = {
         register: 'Registrarse Ahora',
         registering: 'Registrando...',
         ended: 'Finalizado',
-        registration_failed: 'Registro fallido'
-      }
+        registration_failed: 'Registro fallido',
+      },
     },
     create_post_page: {
       title: 'Crear Nueva Publicación',
@@ -1669,7 +1848,7 @@ export const es = {
           general: 'Discusión General',
           technical: 'Preguntas Técnicas',
           defi: 'Trading DeFi',
-          governance: 'Propuestas de Gobernanza'
+          governance: 'Propuestas de Gobernanza',
         },
         title: 'Título',
         title_placeholder: 'Ingresa el título de la publicación...',
@@ -1677,13 +1856,13 @@ export const es = {
         content_placeholder: 'Comparte tus ideas...',
         cancel: 'Cancelar',
         publish: 'Publicar',
-        publishing: 'Publicando...'
+        publishing: 'Publicando...',
       },
       errors: {
         empty_fields: 'El título y el contenido son obligatorios',
         post_failed: 'Publicación fallida, intenta de nuevo',
-        network_error: 'Error de red, intenta más tarde'
-      }
+        network_error: 'Error de red, intenta más tarde',
+      },
     },
     forum: {
       actions: {
@@ -1694,17 +1873,17 @@ export const es = {
         delete: 'Eliminar',
         reply: 'Responder',
         cancel: 'Cancelar',
-        post_reply: 'Publicar Respuesta'
+        post_reply: 'Publicar Respuesta',
       },
       status: {
         pinned: 'Fijado',
         locked: 'Bloqueado',
         featured: 'Destacado',
-        edited: 'editado'
+        edited: 'editado',
       },
       reply: {
-        placeholder: 'Escribe tu respuesta...'
-      }
+        placeholder: 'Escribe tu respuesta...',
+      },
     },
     governance_component: {
       title: 'Gobernanza',
@@ -1714,12 +1893,12 @@ export const es = {
         active_proposals: 'Propuestas Activas',
         total_voters: 'Total de Votantes',
         voting_power: 'Poder de Voto',
-        participation: 'Participación'
+        participation: 'Participación',
       },
       tabs: {
         active: 'Propuestas Activas',
         completed: 'Completadas',
-        all: 'Todas las Propuestas'
+        all: 'Todas las Propuestas',
       },
       voting: {
         progress: 'Progreso de Votación',
@@ -1729,8 +1908,8 @@ export const es = {
         vote_for: 'Votar a Favor',
         vote_against: 'Votar en Contra',
         details: 'Detalles',
-        discussion: 'Discusión'
-      }
+        discussion: 'Discusión',
+      },
     },
     user_profile: {
       follow: 'Seguir',
@@ -1742,13 +1921,13 @@ export const es = {
         likes: 'Me gusta',
         views: 'Vistas',
         followers: 'Seguidores',
-        following: 'Siguiendo'
+        following: 'Siguiendo',
       },
       tabs: {
         posts: 'Publicaciones',
         replies: 'Respuestas',
         badges: 'Insignias',
-        activity: 'Actividad'
+        activity: 'Actividad',
       },
       badges: {
         title: 'Mejores Insignias',
@@ -1756,19 +1935,19 @@ export const es = {
           common: 'COMÚN',
           rare: 'RARO',
           epic: 'ÉPICO',
-          legendary: 'LEGENDARIO'
-        }
+          legendary: 'LEGENDARIO',
+        },
       },
       activity: {
         title: 'Actividad Reciente',
-        coming_soon: 'Feed de actividad próximamente...'
+        coming_soon: 'Feed de actividad próximamente...',
       },
       content: {
         user_posts: 'Publicaciones del Usuario',
         user_replies: 'Respuestas del Usuario',
         posts_displayed: 'Las publicaciones se mostrarán aquí...',
-        replies_displayed: 'Las respuestas se mostrarán aquí...'
-      }
+        replies_displayed: 'Las respuestas se mostrarán aquí...',
+      },
     },
     // Página de Staking
     staking_page: {
@@ -1792,7 +1971,7 @@ export const es = {
       lock_period: 'Período de bloqueo',
       early_withdrawal_warning: 'No se permite el retiro anticipado.',
       staked_success: '¡Stake exitoso!',
-      staking_failed: 'Stake fallido'
+      staking_failed: 'Stake fallido',
     },
 
     // Página de Perfil
@@ -1806,7 +1985,7 @@ export const es = {
       two_factor: 'Autenticación de Dos Factores',
       quantum_encryption: 'Cifrado Cuántico',
       enabled: 'Habilitado',
-      save_changes: 'Guardar Cambios'
+      save_changes: 'Guardar Cambios',
     },
     // Página de FAQ
     faq_page: {
@@ -1823,50 +2002,50 @@ export const es = {
         security: 'Seguridad',
         wallet: 'Billetera',
         trading: 'Trading',
-        developer: 'Desarrollador'
+        developer: 'Desarrollador',
       },
       questions: {
         what_is_quantaureum: {
           q: '¿Qué es Quantaureum?',
-          a: 'Quantaureum es una plataforma blockchain segura cuánticamente de próxima generación que utiliza criptografía post-cuántica (CRYSTALS-Dilithium y CRYSTALS-Kyber) para proporcionar infraestructura blockchain segura y eficiente para empresas y desarrolladores.'
+          a: 'Quantaureum es una plataforma blockchain segura cuánticamente de próxima generación que utiliza criptografía post-cuántica (CRYSTALS-Dilithium y CRYSTALS-Kyber) para proporcionar infraestructura blockchain segura y eficiente para empresas y desarrolladores.',
         },
         what_is_qau: {
           q: '¿Qué es el token QAU?',
-          a: 'QAU es el token nativo de la red Quantaureum, vinculado 1:1 al oro físico. 1 QAU = 1 gramo de oro. Todas las reservas de oro se almacenan en bóvedas certificadas por LBMA y son auditadas regularmente por auditores independientes.'
+          a: 'QAU es el token nativo de la red Quantaureum, vinculado 1:1 al oro físico. 1 QAU = 1 gramo de oro. Todas las reservas de oro se almacenan en bóvedas certificadas por LBMA y son auditadas regularmente por auditores independientes.',
         },
         quantum_safe: {
           q: '¿Qué significa seguro cuánticamente?',
-          a: 'Quantaureum utiliza algoritmos criptográficos post-cuánticos estándar NIST que pueden resistir ataques de futuros ordenadores cuánticos. Los algoritmos de cifrado tradicionales (como RSA, ECDSA) pueden ser rotos por ordenadores cuánticos, pero nuestros algoritmos están diseñados para resistir tales amenazas.'
+          a: 'Quantaureum utiliza algoritmos criptográficos post-cuánticos estándar NIST que pueden resistir ataques de futuros ordenadores cuánticos. Los algoritmos de cifrado tradicionales (como RSA, ECDSA) pueden ser rotos por ordenadores cuánticos, pero nuestros algoritmos están diseñados para resistir tales amenazas.',
         },
         asset_security: {
           q: '¿Están seguros mis activos?',
-          a: 'Sí. Empleamos múltiples capas de seguridad: firmas criptográficas post-cuánticas, billeteras multi-firma, almacenamiento en frío, auditorías de seguridad regulares y reservas de oro totalmente aseguradas. Todos los contratos inteligentes son auditados por empresas de seguridad de terceros.'
+          a: 'Sí. Empleamos múltiples capas de seguridad: firmas criptográficas post-cuánticas, billeteras multi-firma, almacenamiento en frío, auditorías de seguridad regulares y reservas de oro totalmente aseguradas. Todos los contratos inteligentes son auditados por empresas de seguridad de terceros.',
         },
         create_wallet: {
           q: '¿Cómo creo una billetera cuántica?',
-          a: 'Puedes crear una billetera directamente en tu navegador a través de nuestra billetera Web3 sin descargar ningún software. La billetera soporta firmas seguras cuánticamente, gestión de activos multi-cadena y desbloqueo biométrico.'
+          a: 'Puedes crear una billetera directamente en tu navegador a través de nuestra billetera Web3 sin descargar ningún software. La billetera soporta firmas seguras cuánticamente, gestión de activos multi-cadena y desbloqueo biométrico.',
         },
         supported_assets: {
           q: '¿Qué activos son soportados?',
-          a: 'Quantum Wallet soporta QAU, ETH, BTC, USDT, USDC y otros activos digitales principales, así como todos los tokens en la red Quantaureum. También soportamos transferencias de activos entre cadenas.'
+          a: 'Quantum Wallet soporta QAU, ETH, BTC, USDT, USDC y otros activos digitales principales, así como todos los tokens en la red Quantaureum. También soportamos transferencias de activos entre cadenas.',
         },
         transaction_fees: {
           q: '¿Cuáles son las tarifas de transacción?',
-          a: 'Las tarifas de transacción de red se ajustan dinámicamente según la congestión de la red, típicamente entre 0.001-0.01 QAU. Se cobra una tarifa de plataforma del 0.5% al comprar tokens QAU, cubriendo almacenamiento de oro y seguro.'
+          a: 'Las tarifas de transacción de red se ajustan dinámicamente según la congestión de la red, típicamente entre 0.001-0.01 QAU. Se cobra una tarifa de plataforma del 0.5% al comprar tokens QAU, cubriendo almacenamiento de oro y seguro.',
         },
         confirmation_time: {
           q: '¿Cuánto tiempo toma la confirmación de transacción?',
-          a: 'La red Quantaureum tiene un tiempo de bloque promedio de aproximadamente 12 segundos, con la mayoría de las transacciones confirmadas en 1-2 bloques. Nuestro TPS puede alcanzar 100,000+, asegurando un procesamiento eficiente de transacciones.'
+          a: 'La red Quantaureum tiene un tiempo de bloque promedio de aproximadamente 12 segundos, con la mayoría de las transacciones confirmadas en 1-2 bloques. Nuestro TPS puede alcanzar 100,000+, asegurando un procesamiento eficiente de transacciones.',
         },
         start_developing: {
           q: '¿Cómo empiezo a desarrollar?',
-          a: 'Visita nuestra documentación para desarrolladores (/developers/docs) para referencia completa de API y SDK. Proporcionamos SDKs en múltiples lenguajes incluyendo JavaScript, Python, Go, Rust, junto con tutoriales detallados y código de ejemplo.'
+          a: 'Visita nuestra documentación para desarrolladores (/developers/docs) para referencia completa de API y SDK. Proporcionamos SDKs en múltiples lenguajes incluyendo JavaScript, Python, Go, Rust, junto con tutoriales detallados y código de ejemplo.',
         },
         smart_contract_languages: {
           q: '¿Qué lenguajes soportan los contratos inteligentes?',
-          a: 'Nuestra QVM (Máquina Virtual Cuántica) es totalmente compatible con EVM y soporta Solidity. También estamos desarrollando nuestro propio QSL (Quantum Smart Language) para proporcionar características de seguridad cuántica más fuertes.'
-        }
-      }
+          a: 'Nuestra QVM (Máquina Virtual Cuántica) es totalmente compatible con EVM y soporta Solidity. También estamos desarrollando nuestro propio QSL (Quantum Smart Language) para proporcionar características de seguridad cuántica más fuertes.',
+        },
+      },
     },
     // Aplicaciones del Ecosistema
     lottery_page: {
@@ -1876,7 +2055,7 @@ export const es = {
         buy: 'Comprar Boletos',
         results: 'Resultados',
         mybets: 'Mis Apuestas',
-        stats: 'Estadísticas'
+        stats: 'Estadísticas',
       },
       select_numbers: 'Selecciona Tus Números de la Suerte',
       random: 'Aleatorio',
@@ -1916,13 +2095,13 @@ export const es = {
         desc: 'Usando generador de números aleatorios cuánticos para garantizar la verdadera aleatoriedad',
         qrng: 'QRNG Cuántico',
         encryption: 'Cifrado Cuántico',
-        verification: 'Verificación Cuántica'
+        verification: 'Verificación Cuántica',
       },
       current_draw: 'Sorteo Actual',
       estimated_jackpot: 'Jackpot Estimado',
       time_remaining: 'Tiempo Restante',
       calculating: 'Calculando...',
-      other_combinations: 'Otras combinaciones ganadoras'
+      other_combinations: 'Otras combinaciones ganadoras',
     },
     movies_page: {
       title: 'Boletos de Cine Globales',
@@ -1931,7 +2110,7 @@ export const es = {
         select_movie: 'Seleccionar Película',
         select_showtime: 'Seleccionar Horario',
         select_seats: 'Seleccionar Asientos',
-        payment: 'Confirmar Pago'
+        payment: 'Confirmar Pago',
       },
       loading: 'Cargando...',
       city: 'Ciudad',
@@ -1971,7 +2150,7 @@ export const es = {
       movie: 'Película',
       time: 'Hora',
       confirm_pay: 'Confirmar Pago',
-      per_ticket: 'por boleto'
+      per_ticket: 'por boleto',
     },
     hotels_page: {
       title: 'Reserva de Hoteles Global',
@@ -2023,7 +2202,7 @@ export const es = {
       booking_details: 'Detalles de Reserva',
       guest_info: 'Información del Huésped',
       payment_info: 'Información de Pago',
-      back_to_home: 'Volver al Inicio'
+      back_to_home: 'Volver al Inicio',
     },
     flights_page: {
       title: 'Reserva de Vuelos Global',
@@ -2059,7 +2238,7 @@ export const es = {
       passenger_info: 'Información del Pasajero',
       contact_info: 'Información de Contacto',
       total_fare: 'Tarifa Total',
-      confirm_booking: 'Confirmar Reserva'
+      confirm_booking: 'Confirmar Reserva',
     },
     market_page: {
       title: 'Mercado de Trading Cuántico',
@@ -2106,7 +2285,7 @@ export const es = {
       order_success: '¡Orden enviada con éxito!',
       order_failed: 'Orden fallida, por favor reintenta',
       quantum_secure: 'Seguro Cuántico',
-      active: 'Activo'
+      active: 'Activo',
     },
     // Página de Crowdfunding
     crowdfunding_page: {
@@ -2138,26 +2317,27 @@ export const es = {
         food: 'Comida',
         fashion: 'Moda',
         health: 'Salud',
-        other: 'Otros'
+        other: 'Otros',
       },
       sort: {
         trending: 'Tendencias',
         newest: 'Más Recientes',
         ending_soon: 'Próximos a Terminar',
-        most_funded: 'Más Financiados'
+        most_funded: 'Más Financiados',
       },
       stats: {
         total_projects: 'Total de Proyectos',
         active_projects: 'Proyectos Activos',
         total_raised: 'Total Recaudado',
-        total_backers: 'Total de Patrocinadores'
+        total_backers: 'Total de Patrocinadores',
       },
       support_modal: {
         title: 'Apoyar Proyecto',
         amount_label: 'Cantidad de Apoyo (QAU)',
         custom_amount: 'Ingresa cantidad personalizada',
         confirm: 'Confirmar Apoyo',
-        success_message: '¡Apoyo exitoso de {{amount}} QAU!\nProyecto: {{title}}\n\n(Función demo, el pago real requiere conexión de billetera)'
+        success_message:
+          '¡Apoyo exitoso de {{amount}} QAU!\nProyecto: {{title}}\n\n(Función demo, el pago real requiere conexión de billetera)',
       },
       create_modal: {
         title: 'Iniciar Proyecto de Crowdfunding',
@@ -2169,13 +2349,14 @@ export const es = {
         description_placeholder: 'Describe tu proyecto en detalle...',
         end_date: 'Fecha de Finalización',
         submit: 'Enviar Proyecto',
-        success_message: '¡Proyecto creado exitosamente!\n\n(Función demo, la creación real requiere conexión de billetera y tarifas)'
+        success_message:
+          '¡Proyecto creado exitosamente!\n\n(Función demo, la creación real requiere conexión de billetera y tarifas)',
       },
       errors: {
         fetch_projects_failed: 'Error al cargar proyectos de crowdfunding:',
         fetch_stats_failed: 'Error al cargar estadísticas:',
-        search_failed: 'Error en la búsqueda:'
-      }
+        search_failed: 'Error en la búsqueda:',
+      },
     },
     // Página de Conciertos
     concerts_page: {
@@ -2219,14 +2400,14 @@ export const es = {
         genre: 'Género',
         start_date: 'Fecha de Inicio',
         artist: 'Artista',
-        search_artist: 'Buscar artista'
+        search_artist: 'Buscar artista',
       },
       cities: {
         new_york: 'Nueva York',
         los_angeles: 'Los Ángeles',
         london: 'Londres',
         tokyo: 'Tokio',
-        seoul: 'Seúl'
+        seoul: 'Seúl',
       },
       genres: {
         all: 'Todos los Géneros',
@@ -2234,23 +2415,23 @@ export const es = {
         rock: 'Rock',
         kpop: 'K-Pop',
         hiphop: 'Hip-Hop',
-        classical: 'Clásica'
+        classical: 'Clásica',
       },
       status: {
         on_sale: 'En Venta',
         sold_out: 'Agotado',
-        coming_soon: 'Próximamente'
+        coming_soon: 'Próximamente',
       },
       availability: {
         available: 'Disponible',
         limited: 'Limitado',
-        sold_out: 'Agotado'
+        sold_out: 'Agotado',
       },
       steps: {
         select_show: 'Seleccionar Show',
         show_details: 'Detalles del Show',
         confirm_booking: 'Confirmar Reserva',
-        complete_payment: 'Completar Pago'
+        complete_payment: 'Completar Pago',
       },
       form: {
         name: 'Nombre',
@@ -2264,23 +2445,24 @@ export const es = {
         emergency_contact: 'Contacto de Emergencia',
         emergency_placeholder: 'Nombre y teléfono de contacto de emergencia',
         special_requests: 'Solicitudes Especiales',
-        special_placeholder: 'Acceso para silla de ruedas, requisitos dietéticos, etc.'
+        special_placeholder: 'Acceso para silla de ruedas, requisitos dietéticos, etc.',
       },
       notice: {
         real_name: 'Venta nominativa, se requiere ID para entrar',
         no_refund: 'Las entradas no son reembolsables una vez compradas',
         no_camera: 'Equipo de fotografía profesional prohibido',
-        time_change: 'Los horarios del show están sujetos a cambios'
+        time_change: 'Los horarios del show están sujetos a cambios',
       },
       errors: {
         fetch_list_failed: 'Error al cargar lista de conciertos',
-        fetch_details_failed: 'Error al cargar detalles del concierto'
-      }
+        fetch_details_failed: 'Error al cargar detalles del concierto',
+      },
     },
     // Página de Servicios Públicos
     utilities_page: {
       title: 'Plataforma Global de Pago de Servicios',
-      subtitle: 'Soporta compañías eléctricas globales, paga facturas de forma segura con QAU y otras criptomonedas',
+      subtitle:
+        'Soporta compañías eléctricas globales, paga facturas de forma segura con QAU y otras criptomonedas',
       find_provider: 'Buscar Proveedor de Electricidad',
       search_providers: 'Buscar Proveedores',
       searching: 'Buscando...',
@@ -2305,28 +2487,28 @@ export const es = {
         account_number: 'Número de Medidor',
         account_placeholder: 'Ingresa número de medidor',
         customer_name: 'Titular de la Cuenta',
-        customer_placeholder: 'Ingresa nombre del titular'
+        customer_placeholder: 'Ingresa nombre del titular',
       },
       providers: {
         singapore: 'Singapore Power',
         china_grid: 'State Grid',
-        tokyo_electric: 'Tokyo Electric Power'
+        tokyo_electric: 'Tokyo Electric Power',
       },
       countries: {
         singapore: 'Singapur',
         usa: 'Estados Unidos',
         china: 'China',
-        japan: 'Japón'
+        japan: 'Japón',
       },
       regions: {
         nationwide: 'Nacional',
         california: 'California',
-        kanto: 'Región de Kanto'
+        kanto: 'Región de Kanto',
       },
       processing_duration: {
         instant: 'Instantáneo',
         one_to_two: '1-2 minutos',
-        one_to_three: '1-3 minutos'
+        one_to_three: '1-3 minutos',
       },
       bill: {
         provider: 'Proveedor',
@@ -2335,52 +2517,144 @@ export const es = {
         period: 'Período de Facturación',
         usage: 'Consumo',
         due_date: 'Fecha de Vencimiento',
-        amount_due: 'Monto a Pagar'
+        amount_due: 'Monto a Pagar',
       },
       confirmation: {
         transaction_id: 'ID de Transacción',
         payment_method: 'Método de Pago',
         amount: 'Monto',
-        time: 'Hora'
-      }
+        time: 'Hora',
+      },
     },
     // Página de Aplicaciones
     applications_page: {
       hero: {
         title: 'Puente Cross-Chain &',
         title_highlight: 'Soluciones Empresariales',
-        description: 'Servicios de puente de activos cross-chain seguros cuánticamente y soluciones blockchain para empresas'
+        description:
+          'Servicios de puente de activos cross-chain seguros cuánticamente y soluciones blockchain para empresas',
       },
-      stats: { chains: 'Cadenas Soportadas', transactions: 'Txs Cross-Chain', tvl: 'TVL', enterprise_clients: 'Clientes Empresariales' },
+      stats: {
+        chains: 'Cadenas Soportadas',
+        transactions: 'Txs Cross-Chain',
+        tvl: 'TVL',
+        enterprise_clients: 'Clientes Empresariales',
+      },
       status: { online: 'En Vivo', developing: 'En Desarrollo', planned: 'Planificado' },
       bridge: {
         title: 'Puente Cross-Chain Seguro Cuánticamente',
         description: 'Solución de transferencia de activos cross-chain segura, rápida y confiable',
         supported_chains: 'Redes Blockchain Soportadas',
         features: {
-          quantum_secure: { title: 'Cross-Chain Seguro Cuánticamente', description: 'Criptografía post-cuántica protege transferencias de activos cross-chain' },
-          fast_confirm: { title: 'Confirmación Rápida', description: 'Protocolo cross-chain optimizado para confirmación en minutos' },
-          multi_verify: { title: 'Multi-Verificación', description: 'Red de nodos validadores distribuidos garantiza seguridad de transacciones' },
-          multi_chain: { title: 'Soporte Multi-Chain', description: 'Soporta Ethereum, BSC, Polygon y otras redes blockchain principales' }
-        }
+          quantum_secure: {
+            title: 'Cross-Chain Seguro Cuánticamente',
+            description: 'Criptografía post-cuántica protege transferencias de activos cross-chain',
+          },
+          fast_confirm: {
+            title: 'Confirmación Rápida',
+            description: 'Protocolo cross-chain optimizado para confirmación en minutos',
+          },
+          multi_verify: {
+            title: 'Multi-Verificación',
+            description:
+              'Red de nodos validadores distribuidos garantiza seguridad de transacciones',
+          },
+          multi_chain: {
+            title: 'Soporte Multi-Chain',
+            description: 'Soporta Ethereum, BSC, Polygon y otras redes blockchain principales',
+          },
+        },
       },
       enterprise: {
         title: 'Soluciones Empresariales',
         description: 'Soluciones blockchain personalizadas para empresas',
-        blockchain: { title: 'Blockchain Empresarial', description: 'Soluciones de cadena privada y consorcio', features: { private: 'Despliegue Privado', permission: 'Gestión de Permisos', audit: 'Auditoría de Cumplimiento', privacy: 'Privacidad de Datos' } },
-        supply_chain: { title: 'Trazabilidad de Cadena de Suministro', description: 'Sistema de gestión de cadena de suministro basado en blockchain', features: { tracing: 'Rastreo de Productos', anti_fake: 'Anti-Falsificación', logistics: 'Seguimiento Logístico', quality: 'Gestión de Calidad' } },
-        asset_mgmt: { title: 'Gestión de Activos Digitales', description: 'Plataforma de custodia de activos digitales de nivel empresarial', features: { multi_sig: 'Billetera Multi-Sig', cold_hot: 'Separación Frío/Caliente', approval: 'Flujo de Aprobación', reports: 'Análisis de Informes' } },
-        identity: { title: 'Autenticación de Identidad', description: 'Solución de identidad descentralizada (DID)', features: { did: 'Estándar DID', credentials: 'Credenciales Verificables', privacy: 'Protección de Privacidad', cross_platform: 'Multiplataforma' } }
+        blockchain: {
+          title: 'Blockchain Empresarial',
+          description: 'Soluciones de cadena privada y consorcio',
+          features: {
+            private: 'Despliegue Privado',
+            permission: 'Gestión de Permisos',
+            audit: 'Auditoría de Cumplimiento',
+            privacy: 'Privacidad de Datos',
+          },
+        },
+        supply_chain: {
+          title: 'Trazabilidad de Cadena de Suministro',
+          description: 'Sistema de gestión de cadena de suministro basado en blockchain',
+          features: {
+            tracing: 'Rastreo de Productos',
+            anti_fake: 'Anti-Falsificación',
+            logistics: 'Seguimiento Logístico',
+            quality: 'Gestión de Calidad',
+          },
+        },
+        asset_mgmt: {
+          title: 'Gestión de Activos Digitales',
+          description: 'Plataforma de custodia de activos digitales de nivel empresarial',
+          features: {
+            multi_sig: 'Billetera Multi-Sig',
+            cold_hot: 'Separación Frío/Caliente',
+            approval: 'Flujo de Aprobación',
+            reports: 'Análisis de Informes',
+          },
+        },
+        identity: {
+          title: 'Autenticación de Identidad',
+          description: 'Solución de identidad descentralizada (DID)',
+          features: {
+            did: 'Estándar DID',
+            credentials: 'Credenciales Verificables',
+            privacy: 'Protección de Privacidad',
+            cross_platform: 'Multiplataforma',
+          },
+        },
       },
       use_cases: {
         title: 'Casos de Uso por Industria',
         description: 'Soluciones de aplicación blockchain para múltiples industrias',
-        finance: { title: 'Servicios Financieros', cases: { cross_border: 'Pagos Transfronterizos', tokenization: 'Tokenización de Activos', settlement: 'Compensación y Liquidación', defi: 'Protocolos DeFi' } },
-        supply_chain: { title: 'Cadena de Suministro', cases: { tracing: 'Rastreo de Productos', logistics: 'Gestión Logística', inventory: 'Optimización de Inventario', supplier: 'Gestión de Proveedores' } },
-        healthcare: { title: 'Salud', cases: { records: 'Registros Médicos', drug_trace: 'Trazabilidad de Medicamentos', clinical: 'Ensayos Clínicos', insurance: 'Reclamaciones de Seguros' } },
-        government: { title: 'Servicios Gubernamentales', cases: { e_gov: 'Gobierno Electrónico', digital_id: 'Identidad Digital', voting: 'Sistemas de Votación', certificates: 'Gestión de Certificados' } }
+        finance: {
+          title: 'Servicios Financieros',
+          cases: {
+            cross_border: 'Pagos Transfronterizos',
+            tokenization: 'Tokenización de Activos',
+            settlement: 'Compensación y Liquidación',
+            defi: 'Protocolos DeFi',
+          },
+        },
+        supply_chain: {
+          title: 'Cadena de Suministro',
+          cases: {
+            tracing: 'Rastreo de Productos',
+            logistics: 'Gestión Logística',
+            inventory: 'Optimización de Inventario',
+            supplier: 'Gestión de Proveedores',
+          },
+        },
+        healthcare: {
+          title: 'Salud',
+          cases: {
+            records: 'Registros Médicos',
+            drug_trace: 'Trazabilidad de Medicamentos',
+            clinical: 'Ensayos Clínicos',
+            insurance: 'Reclamaciones de Seguros',
+          },
+        },
+        government: {
+          title: 'Servicios Gubernamentales',
+          cases: {
+            e_gov: 'Gobierno Electrónico',
+            digital_id: 'Identidad Digital',
+            voting: 'Sistemas de Votación',
+            certificates: 'Gestión de Certificados',
+          },
+        },
       },
-      cta: { title: 'Comenzar', description: 'Experimente servicios de puente cross-chain seguros cuánticamente', launch_bridge: 'Lanzar Puente', contact_us: 'Contáctenos' }
+      cta: {
+        title: 'Comenzar',
+        description: 'Experimente servicios de puente cross-chain seguros cuánticamente',
+        launch_bridge: 'Lanzar Puente',
+        contact_us: 'Contáctenos',
+      },
     },
     apps_page: {
       title: 'Ecosistema Quantaureum',
@@ -2388,14 +2662,22 @@ export const es = {
       launch_app: 'Lanzar App',
       coming_soon: 'Próximamente',
       apps: {
-        travel: { title: 'Quantum Travel', description: 'Reserva vuelos y hoteles con QAU/USDT. Sin comisiones, confirmación instantánea.' },
-        mall: { title: 'Quantum Mall', description: 'Compra artículos de lujo con cripto. Envío global.' },
-        pay: { title: 'Quantum Pay', description: 'Pasarela de pago global para comerciantes.' }
-      }
+        travel: {
+          title: 'Quantum Travel',
+          description:
+            'Reserva vuelos y hoteles con QAU/USDT. Sin comisiones, confirmación instantánea.',
+        },
+        mall: {
+          title: 'Quantum Mall',
+          description: 'Compra artículos de lujo con cripto. Envío global.',
+        },
+        pay: { title: 'Quantum Pay', description: 'Pasarela de pago global para comerciantes.' },
+      },
     },
     quantum_security_page: {
       title: 'Centro de Gestión de Seguridad Cuántica',
-      description: 'Gestione y monitoree el estado de seguridad de todo el ecosistema blockchain cuántico'
+      description:
+        'Gestione y monitoree el estado de seguridad de todo el ecosistema blockchain cuántico',
     },
     support_help: {
       title: 'Ayuda y Soporte',
@@ -2404,27 +2686,73 @@ export const es = {
       quick_help: {
         title: 'Ayuda Rápida',
         subtitle: 'Soluciones rápidas para problemas comunes',
-        wallet: { title: 'Problemas de Billetera', desc: 'Problemas de creación, importación y seguridad de billetera' },
-        transaction: { title: 'Problemas de Transacción', desc: 'Problemas de envío, confirmación y tarifas de transacción' },
-        development: { title: 'Problemas de Desarrollo', desc: 'Problemas de uso de API, integración de SDK y desarrollo' },
-        account: { title: 'Problemas de Cuenta', desc: 'Problemas de registro, inicio de sesión y configuración de seguridad' }
+        wallet: {
+          title: 'Problemas de Billetera',
+          desc: 'Problemas de creación, importación y seguridad de billetera',
+        },
+        transaction: {
+          title: 'Problemas de Transacción',
+          desc: 'Problemas de envío, confirmación y tarifas de transacción',
+        },
+        development: {
+          title: 'Problemas de Desarrollo',
+          desc: 'Problemas de uso de API, integración de SDK y desarrollo',
+        },
+        account: {
+          title: 'Problemas de Cuenta',
+          desc: 'Problemas de registro, inicio de sesión y configuración de seguridad',
+        },
       },
       contact: {
         title: 'Contactar Soporte',
         subtitle: 'Múltiples formas de obtener soporte técnico profesional',
-        live_chat: { title: 'Chat en Vivo', desc: 'Soporte al cliente en línea 24/7', button: 'Iniciar Chat', response_time: 'Tiempo de respuesta promedio: 2 minutos' },
-        email: { title: 'Soporte por Email', desc: 'Envíe una descripción detallada del problema', button: 'Enviar Email' },
-        ticket: { title: 'Sistema de Tickets', desc: 'Envíe tickets técnicos y rastree el progreso', button: 'Crear Ticket', resolution_time: 'Tiempo de resolución promedio: 24 horas' }
+        live_chat: {
+          title: 'Chat en Vivo',
+          desc: 'Soporte al cliente en línea 24/7',
+          button: 'Iniciar Chat',
+          response_time: 'Tiempo de respuesta promedio: 2 minutos',
+        },
+        email: {
+          title: 'Soporte por Email',
+          desc: 'Envíe una descripción detallada del problema',
+          button: 'Enviar Email',
+        },
+        ticket: {
+          title: 'Sistema de Tickets',
+          desc: 'Envíe tickets técnicos y rastree el progreso',
+          button: 'Crear Ticket',
+          resolution_time: 'Tiempo de resolución promedio: 24 horas',
+        },
       },
       faq: {
         title: 'Preguntas Frecuentes',
         subtitle: 'Respuestas rápidas a las preguntas más comunes',
         view_more: 'Ver Más FAQ',
-        q1: { question: '¿Cómo crear una billetera Quantaureum?', answer: 'Puede crear una billetera a través de nuestra aplicación oficial o usando el SDK. La billetera utiliza algoritmos criptográficos seguros cuánticamente.' },
-        q2: { question: '¿Cómo se calculan las tarifas de transacción?', answer: 'Las tarifas se calculan dinámicamente según la congestión de la red y la complejidad de la transacción.' },
-        q3: { question: '¿Qué es la seguridad cuántica? ¿Por qué es importante?', answer: 'La seguridad cuántica se refiere a la tecnología criptográfica que puede resistir ataques de computadoras cuánticas.' },
-        q4: { question: '¿Cómo participar en la gobernanza de Quantaureum?', answer: 'Los usuarios que poseen tokens QAU pueden participar en la gobernanza de la red.' },
-        q5: { question: '¿Cómo protege la criptografía post-cuántica la seguridad?', answer: 'Utilizamos firmas digitales Dilithium3 y algoritmos de encapsulación de claves Kyber estandarizados por NIST.' }
+        q1: {
+          question: '¿Cómo crear una billetera Quantaureum?',
+          answer:
+            'Puede crear una billetera a través de nuestra aplicación oficial o usando el SDK. La billetera utiliza algoritmos criptográficos seguros cuánticamente.',
+        },
+        q2: {
+          question: '¿Cómo se calculan las tarifas de transacción?',
+          answer:
+            'Las tarifas se calculan dinámicamente según la congestión de la red y la complejidad de la transacción.',
+        },
+        q3: {
+          question: '¿Qué es la seguridad cuántica? ¿Por qué es importante?',
+          answer:
+            'La seguridad cuántica se refiere a la tecnología criptográfica que puede resistir ataques de computadoras cuánticas.',
+        },
+        q4: {
+          question: '¿Cómo participar en la gobernanza de Quantaureum?',
+          answer:
+            'Los usuarios que poseen tokens QAU pueden participar en la gobernanza de la red.',
+        },
+        q5: {
+          question: '¿Cómo protege la criptografía post-cuántica la seguridad?',
+          answer:
+            'Utilizamos firmas digitales Dilithium3 y algoritmos de encapsulación de claves Kyber estandarizados por NIST.',
+        },
       },
       knowledge: {
         title: 'Base de Conocimientos',
@@ -2434,33 +2762,73 @@ export const es = {
         watch_videos: 'Ver Videos',
         view_updates: 'Ver Actualizaciones',
         user_guide: { title: 'Guía de Usuario', desc: 'Guía completa de principiante a avanzado' },
-        dev_docs: { title: 'Documentación para Desarrolladores', desc: 'Referencia de API, uso de SDK y mejores prácticas' },
-        security_guide: { title: 'Guía de Seguridad', desc: 'Mejores prácticas de seguridad para proteger sus activos' },
-        troubleshooting: { title: 'Solución de Problemas', desc: 'Diagnóstico y soluciones para problemas comunes' },
-        video_tutorials: { title: 'Tutoriales en Video', desc: 'Tutoriales visuales y demostraciones' },
-        release_notes: { title: 'Notas de Versión', desc: 'Actualizaciones y mejoras de la última versión' }
-      }
+        dev_docs: {
+          title: 'Documentación para Desarrolladores',
+          desc: 'Referencia de API, uso de SDK y mejores prácticas',
+        },
+        security_guide: {
+          title: 'Guía de Seguridad',
+          desc: 'Mejores prácticas de seguridad para proteger sus activos',
+        },
+        troubleshooting: {
+          title: 'Solución de Problemas',
+          desc: 'Diagnóstico y soluciones para problemas comunes',
+        },
+        video_tutorials: {
+          title: 'Tutoriales en Video',
+          desc: 'Tutoriales visuales y demostraciones',
+        },
+        release_notes: {
+          title: 'Notas de Versión',
+          desc: 'Actualizaciones y mejoras de la última versión',
+        },
+      },
     },
     developer_docs: {
       title: 'Documentación para Desarrolladores',
-      subtitle: 'Documentación completa de API y guías de desarrollo para construir aplicaciones blockchain seguras cuánticamente',
+      subtitle:
+        'Documentación completa de API y guías de desarrollo para construir aplicaciones blockchain seguras cuánticamente',
       view_docs: 'Ver Documentación',
       quick_start: {
         title: 'Inicio Rápido',
         subtitle: 'Comience su primera aplicación Quantaureum en minutos',
-        step1: { title: 'Instalar SDK', desc: 'Descargue e instale el kit de desarrollo Quantaureum' },
-        step2: { title: 'Crear Billetera', desc: 'Cree su primera billetera usando algoritmos seguros cuánticamente' },
-        step3: { title: 'Enviar Transacción', desc: 'Envíe su primera transacción usando firmas cuánticas' }
+        step1: {
+          title: 'Instalar SDK',
+          desc: 'Descargue e instale el kit de desarrollo Quantaureum',
+        },
+        step2: {
+          title: 'Crear Billetera',
+          desc: 'Cree su primera billetera usando algoritmos seguros cuánticamente',
+        },
+        step3: {
+          title: 'Enviar Transacción',
+          desc: 'Envíe su primera transacción usando firmas cuánticas',
+        },
       },
       api: {
         title: 'Documentación de API',
         subtitle: 'Referencia completa de API que cubre todas las funciones principales',
-        wallet: { title: 'API de Billetera', desc: 'Creación, gestión y transacciones de billetera segura cuánticamente' },
-        transaction: { title: 'API de Transacciones', desc: 'Procesamiento de transacciones de alto rendimiento' },
-        smart_contract: { title: 'API de Contratos Inteligentes', desc: 'Despliegue y llamada de contratos inteligentes seguros' },
+        wallet: {
+          title: 'API de Billetera',
+          desc: 'Creación, gestión y transacciones de billetera segura cuánticamente',
+        },
+        transaction: {
+          title: 'API de Transacciones',
+          desc: 'Procesamiento de transacciones de alto rendimiento',
+        },
+        smart_contract: {
+          title: 'API de Contratos Inteligentes',
+          desc: 'Despliegue y llamada de contratos inteligentes seguros',
+        },
         data: { title: 'API de Datos', desc: 'Consulta y análisis de datos blockchain' },
-        crosschain: { title: 'API Cross-chain', desc: 'Transferencia de activos e intercambio de datos cross-chain' },
-        ai: { title: 'API de IA', desc: 'Interfaces para interactuar con el sistema de evolución de IA' }
+        crosschain: {
+          title: 'API Cross-chain',
+          desc: 'Transferencia de activos e intercambio de datos cross-chain',
+        },
+        ai: {
+          title: 'API de IA',
+          desc: 'Interfaces para interactuar con el sistema de evolución de IA',
+        },
       },
       examples: {
         title: 'Ejemplos de Código',
@@ -2468,252 +2836,878 @@ export const es = {
         create_wallet: 'Crear Billetera Cuántica',
         send_transaction: 'Enviar Transacción Segura',
         deploy_contract: 'Desplegar Contrato Inteligente',
-        crosschain_transfer: 'Transferencia Cross-chain'
+        crosschain_transfer: 'Transferencia Cross-chain',
       },
       tutorials: {
         title: 'Guías de Tutoriales',
         subtitle: 'Serie completa de tutoriales de principiante a avanzado',
         start_learning: 'Comenzar a Aprender',
-        basics: { title: 'Tutorial Básico', desc: 'Aprenda conceptos básicos y configuración del entorno' },
-        smart_contracts: { title: 'Desarrollo de Contratos Inteligentes', desc: 'Desarrollo y despliegue de contratos seguros' },
-        dapp: { title: 'Desarrollo de DApp', desc: 'Construya aplicaciones descentralizadas completas' },
-        crosschain: { title: 'Desarrollo Cross-chain', desc: 'Implemente interoperabilidad cross-chain' },
-        security: { title: 'Mejores Prácticas de Seguridad', desc: 'Aprenda patrones de seguridad y mejores prácticas' },
-        optimization: { title: 'Optimización de Rendimiento', desc: 'Técnicas avanzadas para optimizar rendimiento' }
-      }
+        basics: {
+          title: 'Tutorial Básico',
+          desc: 'Aprenda conceptos básicos y configuración del entorno',
+        },
+        smart_contracts: {
+          title: 'Desarrollo de Contratos Inteligentes',
+          desc: 'Desarrollo y despliegue de contratos seguros',
+        },
+        dapp: {
+          title: 'Desarrollo de DApp',
+          desc: 'Construya aplicaciones descentralizadas completas',
+        },
+        crosschain: {
+          title: 'Desarrollo Cross-chain',
+          desc: 'Implemente interoperabilidad cross-chain',
+        },
+        security: {
+          title: 'Mejores Prácticas de Seguridad',
+          desc: 'Aprenda patrones de seguridad y mejores prácticas',
+        },
+        optimization: {
+          title: 'Optimización de Rendimiento',
+          desc: 'Técnicas avanzadas para optimizar rendimiento',
+        },
+      },
     },
     legal: {
       home: 'Inicio',
       last_updated: 'Última Actualización',
       privacy: {
         title: 'Política de Privacidad',
-        overview: { title: 'Descripción General', content: 'Quantaureum ("nosotros") toma muy en serio su privacidad. Esta política explica cómo recopilamos, usamos, divulgamos y protegemos su información personal.' },
-        collection: { title: 'Información que Recopilamos', provided: { title: 'Información que Proporciona', item1: 'Información de registro (email, nombre de usuario)', item2: 'Direcciones de billetera y registros de transacciones', item3: 'Comunicaciones de soporte', item4: 'Otra información que elija proporcionar' }, automatic: { title: 'Información Recopilada Automáticamente', item1: 'Información del dispositivo', item2: 'Dirección IP y ubicación', item3: 'Datos de uso y análisis', item4: 'Información de cookies' } },
-        use: { title: 'Cómo Usamos la Información', item1: 'Proporcionar y mejorar servicios', item2: 'Procesar transacciones', item3: 'Responder solicitudes', item4: 'Enviar notificaciones', item5: 'Detectar fraude', item6: 'Cumplir obligaciones legales', item7: 'Investigación y análisis' },
-        security: { title: 'Seguridad de la Información', intro: 'Empleamos medidas de seguridad estándar:', item1: 'Encriptación segura cuánticamente', item2: 'Almacenamiento seguro', item3: 'Auditorías de seguridad', item4: 'Capacitación de empleados' },
-        rights: { title: 'Sus Derechos', intro: 'Puede tener los siguientes derechos:', item1: 'Acceder a su información', item2: 'Corregir información', item3: 'Eliminar información', item4: 'Restringir procesamiento', item5: 'Portabilidad de datos', item6: 'Retirar consentimiento' },
-        contact: { title: 'Contáctenos', intro: 'Si tiene preguntas:', email: 'Email', address: 'Dirección' },
-        updates: { title: 'Actualizaciones de Política', content: 'Podemos actualizar esta política periódicamente.' }
+        overview: {
+          title: 'Descripción General',
+          content:
+            'Quantaureum ("nosotros") toma muy en serio su privacidad. Esta política explica cómo recopilamos, usamos, divulgamos y protegemos su información personal.',
+        },
+        collection: {
+          title: 'Información que Recopilamos',
+          provided: {
+            title: 'Información que Proporciona',
+            item1: 'Información de registro (email, nombre de usuario)',
+            item2: 'Direcciones de billetera y registros de transacciones',
+            item3: 'Comunicaciones de soporte',
+            item4: 'Otra información que elija proporcionar',
+          },
+          automatic: {
+            title: 'Información Recopilada Automáticamente',
+            item1: 'Información del dispositivo',
+            item2: 'Dirección IP y ubicación',
+            item3: 'Datos de uso y análisis',
+            item4: 'Información de cookies',
+          },
+        },
+        use: {
+          title: 'Cómo Usamos la Información',
+          item1: 'Proporcionar y mejorar servicios',
+          item2: 'Procesar transacciones',
+          item3: 'Responder solicitudes',
+          item4: 'Enviar notificaciones',
+          item5: 'Detectar fraude',
+          item6: 'Cumplir obligaciones legales',
+          item7: 'Investigación y análisis',
+        },
+        security: {
+          title: 'Seguridad de la Información',
+          intro: 'Empleamos medidas de seguridad estándar:',
+          item1: 'Encriptación segura cuánticamente',
+          item2: 'Almacenamiento seguro',
+          item3: 'Auditorías de seguridad',
+          item4: 'Capacitación de empleados',
+        },
+        rights: {
+          title: 'Sus Derechos',
+          intro: 'Puede tener los siguientes derechos:',
+          item1: 'Acceder a su información',
+          item2: 'Corregir información',
+          item3: 'Eliminar información',
+          item4: 'Restringir procesamiento',
+          item5: 'Portabilidad de datos',
+          item6: 'Retirar consentimiento',
+        },
+        contact: {
+          title: 'Contáctenos',
+          intro: 'Si tiene preguntas:',
+          email: 'Email',
+          address: 'Dirección',
+        },
+        updates: {
+          title: 'Actualizaciones de Política',
+          content: 'Podemos actualizar esta política periódicamente.',
+        },
       },
       terms: {
         title: 'Términos de Servicio',
-        acceptance: { title: 'Aceptación de Términos', content: 'Al usar nuestros servicios, acepta estos términos.' },
-        services: { title: 'Descripción del Servicio', intro: 'Quantaureum proporciona:', item1: 'Servicios de billetera digital', item2: 'Transacciones blockchain', item3: 'Servicios DeFi', item4: 'Contratos inteligentes', item5: 'Venta de tokens', item6: 'Herramientas para desarrolladores' },
-        responsibilities: { title: 'Responsabilidades del Usuario', security: { title: 'Seguridad de Cuenta', item1: 'Proteja sus credenciales', item2: 'No comparta información de inicio de sesión', item3: 'Notifique acceso no autorizado', item4: 'Responsable de actividades de cuenta' }, compliance: { title: 'Uso Conforme', item1: 'Cumpla las leyes', item2: 'No use para actividades ilegales', item3: 'Proporcione información precisa', item4: 'Respete a otros usuarios' } },
-        prohibited: { title: 'Actividades Prohibidas', intro: 'No debe:', item1: 'Actividades fraudulentas', item2: 'Interferir con servicios', item3: 'Acceso no autorizado', item4: 'Distribuir malware', item5: 'Infringir propiedad intelectual', item6: 'Manipulación de mercado', item7: 'Eludir seguridad' },
-        risks: { title: 'Advertencia de Riesgos', intro: 'Riesgos incluyen:', item1: 'Volatilidad de precios', item2: 'Fallos técnicos', item3: 'Cambios regulatorios', item4: 'Pérdida de claves privadas', item5: 'Vulnerabilidades de contratos', warning: 'Solo invierta lo que pueda perder.' },
-        disclaimer: { title: 'Descargo de Responsabilidad', content: 'Servicios proporcionados "tal cual".' },
-        ip: { title: 'Propiedad Intelectual', content: 'Todo el contenido es propiedad de Quantaureum.' },
-        termination: { title: 'Terminación', content: 'Podemos terminar el acceso en cualquier momento.' },
-        law: { title: 'Ley Aplicable', content: 'Estos términos se rigen por la ley aplicable.' }
+        acceptance: {
+          title: 'Aceptación de Términos',
+          content: 'Al usar nuestros servicios, acepta estos términos.',
+        },
+        services: {
+          title: 'Descripción del Servicio',
+          intro: 'Quantaureum proporciona:',
+          item1: 'Servicios de billetera digital',
+          item2: 'Transacciones blockchain',
+          item3: 'Servicios DeFi',
+          item4: 'Contratos inteligentes',
+          item5: 'Venta de tokens',
+          item6: 'Herramientas para desarrolladores',
+        },
+        responsibilities: {
+          title: 'Responsabilidades del Usuario',
+          security: {
+            title: 'Seguridad de Cuenta',
+            item1: 'Proteja sus credenciales',
+            item2: 'No comparta información de inicio de sesión',
+            item3: 'Notifique acceso no autorizado',
+            item4: 'Responsable de actividades de cuenta',
+          },
+          compliance: {
+            title: 'Uso Conforme',
+            item1: 'Cumpla las leyes',
+            item2: 'No use para actividades ilegales',
+            item3: 'Proporcione información precisa',
+            item4: 'Respete a otros usuarios',
+          },
+        },
+        prohibited: {
+          title: 'Actividades Prohibidas',
+          intro: 'No debe:',
+          item1: 'Actividades fraudulentas',
+          item2: 'Interferir con servicios',
+          item3: 'Acceso no autorizado',
+          item4: 'Distribuir malware',
+          item5: 'Infringir propiedad intelectual',
+          item6: 'Manipulación de mercado',
+          item7: 'Eludir seguridad',
+        },
+        risks: {
+          title: 'Advertencia de Riesgos',
+          intro: 'Riesgos incluyen:',
+          item1: 'Volatilidad de precios',
+          item2: 'Fallos técnicos',
+          item3: 'Cambios regulatorios',
+          item4: 'Pérdida de claves privadas',
+          item5: 'Vulnerabilidades de contratos',
+          warning: 'Solo invierta lo que pueda perder.',
+        },
+        disclaimer: {
+          title: 'Descargo de Responsabilidad',
+          content: 'Servicios proporcionados "tal cual".',
+        },
+        ip: {
+          title: 'Propiedad Intelectual',
+          content: 'Todo el contenido es propiedad de Quantaureum.',
+        },
+        termination: {
+          title: 'Terminación',
+          content: 'Podemos terminar el acceso en cualquier momento.',
+        },
+        law: { title: 'Ley Aplicable', content: 'Estos términos se rigen por la ley aplicable.' },
       },
       cookies: {
         title: 'Política de Cookies',
-        what: { title: '¿Qué son las Cookies?', content: 'Las cookies son pequeños archivos de texto almacenados en su dispositivo.' },
-        types: { title: 'Tipos de Cookies', essential: { title: 'Cookies Esenciales', desc: 'Necesarias para funcionalidad básica.', item1: 'Gestión de sesión', item2: 'Autenticación', item3: 'Balanceo de carga' }, functional: { title: 'Cookies Funcionales', desc: 'Recuerdan sus preferencias.', item1: 'Preferencias de idioma', item2: 'Configuración de tema', item3: 'Personalización de interfaz' }, analytics: { title: 'Cookies de Análisis', desc: 'Nos ayudan a entender el uso.', item1: 'Estadísticas de visitas', item2: 'Análisis de comportamiento', item3: 'Monitoreo de rendimiento' }, marketing: { title: 'Cookies de Marketing', desc: 'Para publicidad relevante.', item1: 'Segmentación de anuncios', item2: 'Integración social', item3: 'Seguimiento de conversiones' } },
-        list: { title: 'Lista de Cookies', name: 'Nombre', type: 'Tipo', duration: 'Duración', purpose: 'Propósito', session: 'Sesión', session_mgmt: 'Gestión de sesión', days: 'días', year: 'año', years: 'años', auth: 'Autenticación', language: 'Preferencia de idioma', theme: 'Configuración de tema' },
-        manage: { title: 'Gestionar Preferencias', intro: 'Puede gestionar cookies:', browser: { title: 'Configuración del Navegador', desc: 'La mayoría de navegadores permiten controlar cookies.' }, center: { title: 'Centro de Preferencias', desc: 'Use nuestro centro de preferencias de cookies.' }, optout: { title: 'Optar por No Participar', desc: 'Use el complemento de exclusión de Google Analytics.' }, warning: 'Deshabilitar cookies puede afectar la funcionalidad.' },
-        updates: { title: 'Actualizaciones de Política', content: 'Podemos actualizar esta política.' }
+        what: {
+          title: '¿Qué son las Cookies?',
+          content: 'Las cookies son pequeños archivos de texto almacenados en su dispositivo.',
+        },
+        types: {
+          title: 'Tipos de Cookies',
+          essential: {
+            title: 'Cookies Esenciales',
+            desc: 'Necesarias para funcionalidad básica.',
+            item1: 'Gestión de sesión',
+            item2: 'Autenticación',
+            item3: 'Balanceo de carga',
+          },
+          functional: {
+            title: 'Cookies Funcionales',
+            desc: 'Recuerdan sus preferencias.',
+            item1: 'Preferencias de idioma',
+            item2: 'Configuración de tema',
+            item3: 'Personalización de interfaz',
+          },
+          analytics: {
+            title: 'Cookies de Análisis',
+            desc: 'Nos ayudan a entender el uso.',
+            item1: 'Estadísticas de visitas',
+            item2: 'Análisis de comportamiento',
+            item3: 'Monitoreo de rendimiento',
+          },
+          marketing: {
+            title: 'Cookies de Marketing',
+            desc: 'Para publicidad relevante.',
+            item1: 'Segmentación de anuncios',
+            item2: 'Integración social',
+            item3: 'Seguimiento de conversiones',
+          },
+        },
+        list: {
+          title: 'Lista de Cookies',
+          name: 'Nombre',
+          type: 'Tipo',
+          duration: 'Duración',
+          purpose: 'Propósito',
+          session: 'Sesión',
+          session_mgmt: 'Gestión de sesión',
+          days: 'días',
+          year: 'año',
+          years: 'años',
+          auth: 'Autenticación',
+          language: 'Preferencia de idioma',
+          theme: 'Configuración de tema',
+        },
+        manage: {
+          title: 'Gestionar Preferencias',
+          intro: 'Puede gestionar cookies:',
+          browser: {
+            title: 'Configuración del Navegador',
+            desc: 'La mayoría de navegadores permiten controlar cookies.',
+          },
+          center: {
+            title: 'Centro de Preferencias',
+            desc: 'Use nuestro centro de preferencias de cookies.',
+          },
+          optout: {
+            title: 'Optar por No Participar',
+            desc: 'Use el complemento de exclusión de Google Analytics.',
+          },
+          warning: 'Deshabilitar cookies puede afectar la funcionalidad.',
+        },
+        updates: {
+          title: 'Actualizaciones de Política',
+          content: 'Podemos actualizar esta política.',
+        },
       },
       security: {
         title: 'Declaración de Seguridad',
-        commitment: { title: 'Nuestro Compromiso', content: 'La seguridad es nuestra máxima prioridad.' },
-        quantum: { title: 'Tecnología de Seguridad Cuántica', pqc: { title: 'Criptografía Post-Cuántica', desc: 'Usamos algoritmos estandarizados por NIST:', dilithium: 'Algoritmo de firma digital', kyber: 'Mecanismo de encapsulación de claves', sphincs: 'Esquema de firma basado en hash' }, standards: { title: 'Estándares de Encriptación', item1: 'TLS 1.3 para transmisión', item2: 'AES-256 para almacenamiento', item3: 'HSM para claves privadas', item4: 'QRNG para generación de claves' } },
-        measures: { title: 'Medidas de Seguridad', infrastructure: { title: 'Seguridad de Infraestructura', item1: 'Firewall multicapa', item2: 'Protección DDoS', item3: 'Detección de intrusiones', item4: 'Monitoreo 24/7' }, application: { title: 'Seguridad de Aplicación', item1: 'Revisión de código', item2: 'Pruebas de penetración', item3: 'Escaneo de vulnerabilidades', item4: 'Ciclo de desarrollo seguro' }, account: { title: 'Seguridad de Cuenta', item1: 'MFA', item2: 'Biometría', item3: 'Detección de anomalías', item4: 'Gestión de sesiones' }, operational: { title: 'Seguridad Operacional', item1: 'Capacitación de empleados', item2: 'Privilegio mínimo', item3: 'Auditoría de acceso', item4: 'Plan de respuesta' } },
-        audits: { title: 'Auditorías y Certificaciones', intro: 'Auditorías regulares de terceros:', certik: 'Auditoría de contratos', soc2: 'Certificación de cumplimiento', iso: 'Gestión de seguridad' },
-        vulnerability: { title: 'Reporte de Vulnerabilidades', intro: 'Valoramos las contribuciones de investigadores:', bounty: 'Programa de Recompensas' },
-        tips: { title: 'Consejos de Seguridad', intro: 'Recomendamos:', item1: 'Habilitar MFA', item2: 'Usar contraseñas fuertes', item3: 'Respaldar claves de forma segura', item4: 'Cuidado con phishing', item5: 'Mantener software actualizado', item6: 'Considerar billetera hardware' },
-        contact: { title: 'Contactar Equipo de Seguridad', intro: 'Para preguntas de seguridad:', security: 'Problemas de seguridad', bounty: 'Reportes de vulnerabilidad', pgp: 'Clave PGP', pgp_note: 'Disponible en GitHub' }
-      }
+        commitment: {
+          title: 'Nuestro Compromiso',
+          content: 'La seguridad es nuestra máxima prioridad.',
+        },
+        quantum: {
+          title: 'Tecnología de Seguridad Cuántica',
+          pqc: {
+            title: 'Criptografía Post-Cuántica',
+            desc: 'Usamos algoritmos estandarizados por NIST:',
+            dilithium: 'Algoritmo de firma digital',
+            kyber: 'Mecanismo de encapsulación de claves',
+            sphincs: 'Esquema de firma basado en hash',
+          },
+          standards: {
+            title: 'Estándares de Encriptación',
+            item1: 'TLS 1.3 para transmisión',
+            item2: 'AES-256 para almacenamiento',
+            item3: 'HSM para claves privadas',
+            item4: 'QRNG para generación de claves',
+          },
+        },
+        measures: {
+          title: 'Medidas de Seguridad',
+          infrastructure: {
+            title: 'Seguridad de Infraestructura',
+            item1: 'Firewall multicapa',
+            item2: 'Protección DDoS',
+            item3: 'Detección de intrusiones',
+            item4: 'Monitoreo 24/7',
+          },
+          application: {
+            title: 'Seguridad de Aplicación',
+            item1: 'Revisión de código',
+            item2: 'Pruebas de penetración',
+            item3: 'Escaneo de vulnerabilidades',
+            item4: 'Ciclo de desarrollo seguro',
+          },
+          account: {
+            title: 'Seguridad de Cuenta',
+            item1: 'MFA',
+            item2: 'Biometría',
+            item3: 'Detección de anomalías',
+            item4: 'Gestión de sesiones',
+          },
+          operational: {
+            title: 'Seguridad Operacional',
+            item1: 'Capacitación de empleados',
+            item2: 'Privilegio mínimo',
+            item3: 'Auditoría de acceso',
+            item4: 'Plan de respuesta',
+          },
+        },
+        audits: {
+          title: 'Auditorías y Certificaciones',
+          intro: 'Auditorías regulares de terceros:',
+          certik: 'Auditoría de contratos',
+          soc2: 'Certificación de cumplimiento',
+          iso: 'Gestión de seguridad',
+        },
+        vulnerability: {
+          title: 'Reporte de Vulnerabilidades',
+          intro: 'Valoramos las contribuciones de investigadores:',
+          bounty: 'Programa de Recompensas',
+        },
+        tips: {
+          title: 'Consejos de Seguridad',
+          intro: 'Recomendamos:',
+          item1: 'Habilitar MFA',
+          item2: 'Usar contraseñas fuertes',
+          item3: 'Respaldar claves de forma segura',
+          item4: 'Cuidado con phishing',
+          item5: 'Mantener software actualizado',
+          item6: 'Considerar billetera hardware',
+        },
+        contact: {
+          title: 'Contactar Equipo de Seguridad',
+          intro: 'Para preguntas de seguridad:',
+          security: 'Problemas de seguridad',
+          bounty: 'Reportes de vulnerabilidad',
+          pgp: 'Clave PGP',
+          pgp_note: 'Disponible en GitHub',
+        },
+      },
     },
     // Páginas Empresariales
     enterprise: {
       solutions: {
         title: 'Soluciones Empresariales',
-        subtitle: 'Soluciones blockchain personalizadas para empresas, impulsando la transformación digital',
-        finance: { title: 'Servicios Financieros', desc: 'Soluciones blockchain cuántico-seguras para bancos, seguros y gestión de activos', features: ['Pagos Transfronterizos', 'Tokenización de Activos', 'Auditoría de Cumplimiento', 'Gestión de Riesgos'], benefits: ['Reducción del 60% en costos de transacción', 'Liquidación de T+2 a tiempo real', 'Cumplimiento regulatorio total'], case_study: 'Un banco internacional ahorra $20M anuales con nuestra solución' },
-        supply_chain: { title: 'Gestión de Cadena de Suministro', desc: 'Trazabilidad y verificación de cadena de suministro de extremo a extremo', features: ['Rastreo de Productos', 'Gestión de Inventario', 'Seguimiento Logístico', 'Certificación de Calidad'], benefits: ['100% transparencia en cadena de suministro', '95% reducción de productos falsificados', '40% mejora en rotación de inventario'], case_study: 'Un fabricante multinacional logra visibilidad en tiempo real de su cadena de suministro global' },
-        healthcare: { title: 'Salud', desc: 'Gestión y compartición segura de datos médicos', features: ['Registros Médicos', 'Trazabilidad de Medicamentos', 'Ensayos Clínicos', 'Reclamaciones de Seguros'], benefits: ['Seguridad de datos del paciente', 'Cumplimiento regulatorio', 'Mejora de eficiencia'] },
-        government: { title: 'Servicios Gubernamentales', desc: 'Soluciones de gobierno digital y servicios públicos', features: ['E-Gobierno', 'Identidad Digital', 'Sistemas de Votación', 'Gestión de Certificados'], benefits: ['Transparencia', 'Eficiencia', 'Seguridad'] },
+        subtitle:
+          'Soluciones blockchain personalizadas para empresas, impulsando la transformación digital',
+        finance: {
+          title: 'Servicios Financieros',
+          desc: 'Soluciones blockchain cuántico-seguras para bancos, seguros y gestión de activos',
+          features: [
+            'Pagos Transfronterizos',
+            'Tokenización de Activos',
+            'Auditoría de Cumplimiento',
+            'Gestión de Riesgos',
+          ],
+          benefits: [
+            'Reducción del 60% en costos de transacción',
+            'Liquidación de T+2 a tiempo real',
+            'Cumplimiento regulatorio total',
+          ],
+          case_study: 'Un banco internacional ahorra $20M anuales con nuestra solución',
+        },
+        supply_chain: {
+          title: 'Gestión de Cadena de Suministro',
+          desc: 'Trazabilidad y verificación de cadena de suministro de extremo a extremo',
+          features: [
+            'Rastreo de Productos',
+            'Gestión de Inventario',
+            'Seguimiento Logístico',
+            'Certificación de Calidad',
+          ],
+          benefits: [
+            '100% transparencia en cadena de suministro',
+            '95% reducción de productos falsificados',
+            '40% mejora en rotación de inventario',
+          ],
+          case_study:
+            'Un fabricante multinacional logra visibilidad en tiempo real de su cadena de suministro global',
+        },
+        healthcare: {
+          title: 'Salud',
+          desc: 'Gestión y compartición segura de datos médicos',
+          features: [
+            'Registros Médicos',
+            'Trazabilidad de Medicamentos',
+            'Ensayos Clínicos',
+            'Reclamaciones de Seguros',
+          ],
+          benefits: [
+            'Seguridad de datos del paciente',
+            'Cumplimiento regulatorio',
+            'Mejora de eficiencia',
+          ],
+        },
+        government: {
+          title: 'Servicios Gubernamentales',
+          desc: 'Soluciones de gobierno digital y servicios públicos',
+          features: [
+            'E-Gobierno',
+            'Identidad Digital',
+            'Sistemas de Votación',
+            'Gestión de Certificados',
+          ],
+          benefits: ['Transparencia', 'Eficiencia', 'Seguridad'],
+        },
         deployment: {
           title: 'Opciones de Despliegue',
-          subtitle: 'Soluciones de despliegue flexibles para satisfacer las necesidades empresariales',
-          cloud: { title: 'Despliegue en la Nube', desc: 'Solución cloud totalmente gestionada con alta disponibilidad', features: ['Escalado automático', 'CDN global', '99.99% SLA', 'Actualizaciones gestionadas'] },
-          private: { title: 'Despliegue Privado', desc: 'Despliegue on-premises para máximo control', features: ['Control total de datos', 'Seguridad personalizada', 'Opción air-gapped', 'Soporte dedicado'] },
-          hybrid: { title: 'Despliegue Híbrido', desc: 'Lo mejor de ambos mundos con arquitectura flexible', features: ['Escalado flexible', 'Soberanía de datos', 'Optimización de costos', 'Integración perfecta'] }
+          subtitle:
+            'Soluciones de despliegue flexibles para satisfacer las necesidades empresariales',
+          cloud: {
+            title: 'Despliegue en la Nube',
+            desc: 'Solución cloud totalmente gestionada con alta disponibilidad',
+            features: [
+              'Escalado automático',
+              'CDN global',
+              '99.99% SLA',
+              'Actualizaciones gestionadas',
+            ],
+          },
+          private: {
+            title: 'Despliegue Privado',
+            desc: 'Despliegue on-premises para máximo control',
+            features: [
+              'Control total de datos',
+              'Seguridad personalizada',
+              'Opción air-gapped',
+              'Soporte dedicado',
+            ],
+          },
+          hybrid: {
+            title: 'Despliegue Híbrido',
+            desc: 'Lo mejor de ambos mundos con arquitectura flexible',
+            features: [
+              'Escalado flexible',
+              'Soberanía de datos',
+              'Optimización de costos',
+              'Integración perfecta',
+            ],
+          },
         },
-        cta: { title: 'Comenzar', contact: 'Contáctenos', demo: 'Solicitar Demo' }
+        cta: { title: 'Comenzar', contact: 'Contáctenos', demo: 'Solicitar Demo' },
       },
       partners: {
         title: 'Programa de Socios',
         subtitle: 'Únete al ecosistema Quantaureum y crece con nosotros',
-        hero: { title_prefix: 'Construyendo Juntos', title_highlight: 'Seguridad Cuántica', title_suffix: 'Ecosistema' },
+        hero: {
+          title_prefix: 'Construyendo Juntos',
+          title_highlight: 'Seguridad Cuántica',
+          title_suffix: 'Ecosistema',
+        },
         view_solutions: 'Ver Soluciones',
         types_title: 'Tipos de Socios',
-        types_subtitle: 'Múltiples modelos de asociación para satisfacer diferentes necesidades empresariales',
+        types_subtitle:
+          'Múltiples modelos de asociación para satisfacer diferentes necesidades empresariales',
         types: {
-          technology: { title: 'Socios Tecnológicos', desc: 'Colabora con empresas tecnológicas líderes para construir un ecosistema cuántico-seguro', benefits: ['Soporte de integración técnica', 'Desarrollo de soluciones conjuntas', 'Co-marketing', 'Certificación técnica'], examples: ['Proveedores de nube', 'Proveedores de seguridad', 'Integradores de sistemas'] },
-          developer: { title: 'Socios Desarrolladores', desc: 'Herramientas y recursos para desarrolladores para construir aplicaciones innovadoras', benefits: ['Acceso prioritario a API', 'Soporte técnico prioritario', 'Exposición en comunidad de desarrolladores', 'Reparto de ingresos'], examples: ['Desarrolladores independientes', 'Estudios de desarrollo', 'Consultoras técnicas'] },
-          channel: { title: 'Socios de Canal', desc: 'Expande mercados globales y sirve a clientes empresariales juntos', benefits: ['Comisión de ventas', 'Soporte de marketing', 'Capacitación de ventas', 'Gerente de cuenta dedicado'], examples: ['Revendedores', 'Distribuidores', 'Consultores'] }
+          technology: {
+            title: 'Socios Tecnológicos',
+            desc: 'Colabora con empresas tecnológicas líderes para construir un ecosistema cuántico-seguro',
+            benefits: [
+              'Soporte de integración técnica',
+              'Desarrollo de soluciones conjuntas',
+              'Co-marketing',
+              'Certificación técnica',
+            ],
+            examples: [
+              'Proveedores de nube',
+              'Proveedores de seguridad',
+              'Integradores de sistemas',
+            ],
+          },
+          developer: {
+            title: 'Socios Desarrolladores',
+            desc: 'Herramientas y recursos para desarrolladores para construir aplicaciones innovadoras',
+            benefits: [
+              'Acceso prioritario a API',
+              'Soporte técnico prioritario',
+              'Exposición en comunidad de desarrolladores',
+              'Reparto de ingresos',
+            ],
+            examples: [
+              'Desarrolladores independientes',
+              'Estudios de desarrollo',
+              'Consultoras técnicas',
+            ],
+          },
+          channel: {
+            title: 'Socios de Canal',
+            desc: 'Expande mercados globales y sirve a clientes empresariales juntos',
+            benefits: [
+              'Comisión de ventas',
+              'Soporte de marketing',
+              'Capacitación de ventas',
+              'Gerente de cuenta dedicado',
+            ],
+            examples: ['Revendedores', 'Distribuidores', 'Consultores'],
+          },
         },
         featured_title: 'Socios Destacados',
         featured_subtitle: 'Asociación con empresas líderes globales',
-        categories: { cloud: 'Servicios en la Nube', consulting: 'Consultoría', audit: 'Auditoría', technology: 'Tecnología' },
-        benefits: { title: 'Beneficios de Socio', subtitle: 'Conviértete en socio y disfruta de generosos beneficios' },
+        categories: {
+          cloud: 'Servicios en la Nube',
+          consulting: 'Consultoría',
+          audit: 'Auditoría',
+          technology: 'Tecnología',
+        },
+        benefits: {
+          title: 'Beneficios de Socio',
+          subtitle: 'Conviértete en socio y disfruta de generosos beneficios',
+        },
         benefits_list: {
-          growth: { title: 'Acelerar Crecimiento', desc: 'Aprovecha la tecnología y recursos de mercado de Quantaureum para acelerar el crecimiento empresarial' },
-          revenue: { title: 'Reparto de Ingresos', desc: 'Obtén generoso reparto de ingresos a través de referencias de clientes y ventas conjuntas' },
-          support: { title: 'Soporte Dedicado', desc: 'Obtén soporte técnico dedicado y servicios del equipo de éxito del cliente' },
-          certification: { title: 'Certificación de Marca', desc: 'Obtén certificación oficial de socio para mejorar la credibilidad del mercado' }
+          growth: {
+            title: 'Acelerar Crecimiento',
+            desc: 'Aprovecha la tecnología y recursos de mercado de Quantaureum para acelerar el crecimiento empresarial',
+          },
+          revenue: {
+            title: 'Reparto de Ingresos',
+            desc: 'Obtén generoso reparto de ingresos a través de referencias de clientes y ventas conjuntas',
+          },
+          support: {
+            title: 'Soporte Dedicado',
+            desc: 'Obtén soporte técnico dedicado y servicios del equipo de éxito del cliente',
+          },
+          certification: {
+            title: 'Certificación de Marca',
+            desc: 'Obtén certificación oficial de socio para mejorar la credibilidad del mercado',
+          },
         },
         suitable_for: 'Adecuado Para',
         levels_title: 'Niveles de Socio',
         levels_subtitle: 'Sube de nivel según el rendimiento y obtén más beneficios',
         requirements: 'Requisitos',
         levels: {
-          registered: { name: 'Socio Registrado', requirements: ['Completar registro de socio', 'Firmar acuerdo de asociación'], benefits: ['Acceso al portal de socios', 'Recursos de capacitación básica', 'Materiales de marketing'] },
-          silver: { name: 'Socio Plata', requirements: ['Ventas anuales $50K+', '2+ ingenieros certificados'], benefits: ['Todos los beneficios registrados', 'Soporte técnico prioritario', 'Oportunidades de co-marketing', '10% comisión de ventas'] },
-          gold: { name: 'Socio Oro', requirements: ['Ventas anuales $200K+', '5+ ingenieros certificados'], benefits: ['Todos los beneficios plata', 'Gerente de cuenta dedicado', 'Oportunidades de proyectos prioritarios', '15% comisión de ventas'] },
-          platinum: { name: 'Socio Platino', requirements: ['Ventas anuales $500K+', '10+ ingenieros certificados'], benefits: ['Todos los beneficios oro', 'Planificación de asociación estratégica', 'Desarrollo de productos conjuntos', '20% comisión de ventas'] }
+          registered: {
+            name: 'Socio Registrado',
+            requirements: ['Completar registro de socio', 'Firmar acuerdo de asociación'],
+            benefits: [
+              'Acceso al portal de socios',
+              'Recursos de capacitación básica',
+              'Materiales de marketing',
+            ],
+          },
+          silver: {
+            name: 'Socio Plata',
+            requirements: ['Ventas anuales $50K+', '2+ ingenieros certificados'],
+            benefits: [
+              'Todos los beneficios registrados',
+              'Soporte técnico prioritario',
+              'Oportunidades de co-marketing',
+              '10% comisión de ventas',
+            ],
+          },
+          gold: {
+            name: 'Socio Oro',
+            requirements: ['Ventas anuales $200K+', '5+ ingenieros certificados'],
+            benefits: [
+              'Todos los beneficios plata',
+              'Gerente de cuenta dedicado',
+              'Oportunidades de proyectos prioritarios',
+              '15% comisión de ventas',
+            ],
+          },
+          platinum: {
+            name: 'Socio Platino',
+            requirements: ['Ventas anuales $500K+', '10+ ingenieros certificados'],
+            benefits: [
+              'Todos los beneficios oro',
+              'Planificación de asociación estratégica',
+              'Desarrollo de productos conjuntos',
+              '20% comisión de ventas',
+            ],
+          },
         },
-        cta: { title: '¿Listo para Unirte?', subtitle: 'Aplica ahora para convertirte en socio de Quantaureum y comienza un viaje de ganar-ganar' },
-        apply: { title: 'Conviértete en Socio', button: 'Aplicar Ahora' }
+        cta: {
+          title: '¿Listo para Unirte?',
+          subtitle:
+            'Aplica ahora para convertirte en socio de Quantaureum y comienza un viaje de ganar-ganar',
+        },
+        apply: { title: 'Conviértete en Socio', button: 'Aplicar Ahora' },
       },
       audit: {
         title: 'Auditorías de Seguridad',
         subtitle: 'Seguridad transparente a través de auditorías independientes de terceros',
-        reports: { title: 'Informes de Auditoría', download: 'Descargar Informe', view: 'Ver Detalles' },
-        smart_contract: { title: 'Auditoría de Contratos Inteligentes', auditor: 'CertiK', status: 'Aprobado', score: '98/100', desc: 'Auditoría de seguridad integral de contratos inteligentes principales' },
-        quantum_crypto: { title: 'Auditoría de Criptografía Cuántica', auditor: 'Trail of Bits', status: 'Aprobado', score: '99/100', desc: 'Auditoría profunda de implementaciones de criptografía post-cuántica' },
-        penetration: { title: 'Pruebas de Penetración', auditor: 'HackerOne', status: 'Aprobado', desc: 'Pruebas de penetración integrales de infraestructura' },
+        reports: {
+          title: 'Informes de Auditoría',
+          download: 'Descargar Informe',
+          view: 'Ver Detalles',
+        },
+        smart_contract: {
+          title: 'Auditoría de Contratos Inteligentes',
+          auditor: 'CertiK',
+          status: 'Aprobado',
+          score: '98/100',
+          desc: 'Auditoría de seguridad integral de contratos inteligentes principales',
+        },
+        quantum_crypto: {
+          title: 'Auditoría de Criptografía Cuántica',
+          auditor: 'Trail of Bits',
+          status: 'Aprobado',
+          score: '99/100',
+          desc: 'Auditoría profunda de implementaciones de criptografía post-cuántica',
+        },
+        penetration: {
+          title: 'Pruebas de Penetración',
+          auditor: 'HackerOne',
+          status: 'Aprobado',
+          desc: 'Pruebas de penetración integrales de infraestructura',
+        },
         findings: { critical: 'Crítico', high: 'Alto', medium: 'Medio', low: 'Bajo' },
-        certifications: { title: 'Certificaciones', soc2: 'SOC 2 Type II', iso27001: 'ISO 27001', gdpr: 'Cumplimiento GDPR' }
+        certifications: {
+          title: 'Certificaciones',
+          soc2: 'SOC 2 Type II',
+          iso27001: 'ISO 27001',
+          gdpr: 'Cumplimiento GDPR',
+        },
       },
       support: {
         title: 'Soporte Empresarial',
         subtitle: 'Soporte técnico profesional para clientes empresariales',
         plans: {
-          basic: { name: 'Soporte Básico', price: 'Gratis', desc: 'Para desarrollo y pruebas', features: ['Soporte de foro comunitario', 'Acceso a documentación', 'Soporte por email (48h respuesta)', 'Guías básicas de solución de problemas'] },
-          professional: { name: 'Soporte Profesional', price: '$999/mes', desc: 'Para despliegues de producción', features: ['Todas las funciones básicas', 'Email prioritario (24h respuesta)', 'Soporte telefónico', 'Ingeniero dedicado'] },
-          enterprise: { name: 'Soporte Empresarial', price: 'Personalizado', desc: 'Para despliegues de misión crítica', features: ['Todas las funciones profesionales', 'Soporte 24/7', 'Garantía SLA', 'Soporte en sitio'] }
+          basic: {
+            name: 'Soporte Básico',
+            price: 'Gratis',
+            desc: 'Para desarrollo y pruebas',
+            features: [
+              'Soporte de foro comunitario',
+              'Acceso a documentación',
+              'Soporte por email (48h respuesta)',
+              'Guías básicas de solución de problemas',
+            ],
+          },
+          professional: {
+            name: 'Soporte Profesional',
+            price: '$999/mes',
+            desc: 'Para despliegues de producción',
+            features: [
+              'Todas las funciones básicas',
+              'Email prioritario (24h respuesta)',
+              'Soporte telefónico',
+              'Ingeniero dedicado',
+            ],
+          },
+          enterprise: {
+            name: 'Soporte Empresarial',
+            price: 'Personalizado',
+            desc: 'Para despliegues de misión crítica',
+            features: [
+              'Todas las funciones profesionales',
+              'Soporte 24/7',
+              'Garantía SLA',
+              'Soporte en sitio',
+            ],
+          },
         },
-        contact: { title: 'Contactar Soporte', email: 'Email', phone: 'Teléfono', chat: 'Chat en Vivo' }
-      }
+        contact: {
+          title: 'Contactar Soporte',
+          email: 'Email',
+          phone: 'Teléfono',
+          chat: 'Chat en Vivo',
+        },
+      },
     },
     // Páginas de Tecnología
     technology: {
       blockchain: {
         title: 'Tecnología Blockchain',
         subtitle: 'Infraestructura blockchain cuántico-segura de próxima generación',
-        architecture: { title: 'Arquitectura', desc: 'Arquitectura multicapa diseñada para seguridad y escalabilidad' },
-        consensus: { title: 'Mecanismo de Consenso', desc: 'Consenso de Prueba de Participación Cuántico-Seguro (QPOS)', features: ['Eficiente en energía', 'Alto rendimiento', 'Finalidad rápida', 'Resistente a cuánticos'] },
-        smart_contracts: { title: 'Contratos Inteligentes', desc: 'Plataforma de contratos inteligentes segura y eficiente', features: ['Compatible con EVM', 'Verificación formal', 'Optimización de Gas', 'Actualizable'] },
-        performance: { title: 'Rendimiento', tps: '100,000+ TPS', finality: '< 1 segundo de finalidad', nodes: 'Red global de nodos' }
+        architecture: {
+          title: 'Arquitectura',
+          desc: 'Arquitectura multicapa diseñada para seguridad y escalabilidad',
+        },
+        consensus: {
+          title: 'Mecanismo de Consenso',
+          desc: 'Consenso de Prueba de Participación Cuántico-Seguro (QPOS)',
+          features: [
+            'Eficiente en energía',
+            'Alto rendimiento',
+            'Finalidad rápida',
+            'Resistente a cuánticos',
+          ],
+        },
+        smart_contracts: {
+          title: 'Contratos Inteligentes',
+          desc: 'Plataforma de contratos inteligentes segura y eficiente',
+          features: [
+            'Compatible con EVM',
+            'Verificación formal',
+            'Optimización de Gas',
+            'Actualizable',
+          ],
+        },
+        performance: {
+          title: 'Rendimiento',
+          tps: '100,000+ TPS',
+          finality: '< 1 segundo de finalidad',
+          nodes: 'Red global de nodos',
+        },
       },
       quantum_security: {
         title: 'Seguridad Cuántica',
-        subtitle: 'Criptografía post-cuántica protegiendo tus activos de futuras amenazas de computación cuántica',
+        subtitle:
+          'Criptografía post-cuántica protegiendo tus activos de futuras amenazas de computación cuántica',
         badges: {
           nist: 'Estándar NIST',
           quantum_resistant: 'Resistente a Cuántica',
-          audit: 'Auditoría de Seguridad'
+          audit: 'Auditoría de Seguridad',
         },
         pqc: {
           title: 'Criptografía Post-Cuántica',
-          subtitle: 'Algoritmos estandarizados por NIST que garantizan seguridad a largo plazo contra ataques cuánticos'
+          subtitle:
+            'Algoritmos estandarizados por NIST que garantizan seguridad a largo plazo contra ataques cuánticos',
         },
         algorithms: {
           dilithium: {
             desc: 'Algoritmo de firma digital post-cuántico estandarizado por NIST, proporcionando firma segura de transacciones',
-            specs: ['Seguridad NIST Nivel 3', 'Criptografía basada en retículos', 'Generación rápida de firmas', 'Tamaño de clave compacto']
+            specs: [
+              'Seguridad NIST Nivel 3',
+              'Criptografía basada en retículos',
+              'Generación rápida de firmas',
+              'Tamaño de clave compacto',
+            ],
           },
           kyber: {
             desc: 'Mecanismo de encapsulación de claves estandarizado por NIST para intercambio seguro de claves',
-            specs: ['Seguridad NIST Nivel 3', 'Basado en Module-LWE', 'Encapsulación eficiente', 'Secreto hacia adelante']
+            specs: [
+              'Seguridad NIST Nivel 3',
+              'Basado en Module-LWE',
+              'Encapsulación eficiente',
+              'Secreto hacia adelante',
+            ],
           },
           sha3: {
             desc: 'Función hash resistente a cuántica para integridad y verificación de datos',
-            specs: ['Seguridad de 256 bits', 'Construcción esponja', 'Resistente a colisiones', 'Resistente a preimagen']
+            specs: [
+              'Seguridad de 256 bits',
+              'Construcción esponja',
+              'Resistente a colisiones',
+              'Resistente a preimagen',
+            ],
           },
           qrng: {
             title: 'Generador de Números Aleatorios Cuánticos',
             desc: 'Verdadera aleatoriedad de fenómenos cuánticos para generación de claves criptográficas',
-            specs: ['Verdadera aleatoriedad cuántica', 'Entropía basada en hardware', 'Salida impredecible', 'Alto rendimiento']
-          }
+            specs: [
+              'Verdadera aleatoriedad cuántica',
+              'Entropía basada en hardware',
+              'Salida impredecible',
+              'Alto rendimiento',
+            ],
+          },
         },
         audit: {
           title: 'Proceso de Auditoría de Seguridad',
-          subtitle: 'Verificación de seguridad rigurosa en múltiples etapas que garantiza la integridad del sistema',
+          subtitle:
+            'Verificación de seguridad rigurosa en múltiples etapas que garantiza la integridad del sistema',
           step: 'Paso',
           steps: {
-            review: { title: 'Revisión de Código', desc: 'Revisión manual experta de todas las rutas de código críticas' },
-            scan: { title: 'Escaneo Automatizado', desc: 'Herramientas de análisis estático y dinámico para detección de vulnerabilidades' },
-            verify: { title: 'Verificación Formal', desc: 'Prueba matemática de corrección criptográfica' },
-            pentest: { title: 'Pruebas de Penetración', desc: 'Simulación de ataques del mundo real por expertos en seguridad' },
-            report: { title: 'Informe de Auditoría', desc: 'Documentación completa y remediación' }
-          }
+            review: {
+              title: 'Revisión de Código',
+              desc: 'Revisión manual experta de todas las rutas de código críticas',
+            },
+            scan: {
+              title: 'Escaneo Automatizado',
+              desc: 'Herramientas de análisis estático y dinámico para detección de vulnerabilidades',
+            },
+            verify: {
+              title: 'Verificación Formal',
+              desc: 'Prueba matemática de corrección criptográfica',
+            },
+            pentest: {
+              title: 'Pruebas de Penetración',
+              desc: 'Simulación de ataques del mundo real por expertos en seguridad',
+            },
+            report: { title: 'Informe de Auditoría', desc: 'Documentación completa y remediación' },
+          },
         },
         vulnerabilities: {
           title: 'Detección de Vulnerabilidades',
           subtitle: 'Monitoreo y detección integral de amenazas de seguridad potenciales',
           items: [
-            { name: 'Ataque de Reentrada', severity: 'Alto', description: 'Previene exploits de llamadas recursivas en contratos inteligentes' },
-            { name: 'Desbordamiento de Enteros', severity: 'Alto', description: 'Operaciones matemáticas seguras previenen vulnerabilidades aritméticas' },
-            { name: 'Control de Acceso', severity: 'Alto', description: 'Validación estricta de permisos para todas las operaciones' },
-            { name: 'Front-Running', severity: 'Medio', description: 'Mecanismos de protección de orden de transacciones' },
-            { name: 'Manipulación de Oráculo', severity: 'Medio', description: 'Feeds de precios de múltiples fuentes previenen manipulación' },
-            { name: 'Optimización de Gas', severity: 'Bajo', description: 'Uso eficiente de gas previene ataques DoS' }
-          ]
+            {
+              name: 'Ataque de Reentrada',
+              severity: 'Alto',
+              description: 'Previene exploits de llamadas recursivas en contratos inteligentes',
+            },
+            {
+              name: 'Desbordamiento de Enteros',
+              severity: 'Alto',
+              description: 'Operaciones matemáticas seguras previenen vulnerabilidades aritméticas',
+            },
+            {
+              name: 'Control de Acceso',
+              severity: 'Alto',
+              description: 'Validación estricta de permisos para todas las operaciones',
+            },
+            {
+              name: 'Front-Running',
+              severity: 'Medio',
+              description: 'Mecanismos de protección de orden de transacciones',
+            },
+            {
+              name: 'Manipulación de Oráculo',
+              severity: 'Medio',
+              description: 'Feeds de precios de múltiples fuentes previenen manipulación',
+            },
+            {
+              name: 'Optimización de Gas',
+              severity: 'Bajo',
+              description: 'Uso eficiente de gas previene ataques DoS',
+            },
+          ],
         },
         severity: {
           high: 'Alto',
           medium: 'Medio',
-          low: 'Bajo'
+          low: 'Bajo',
         },
         certifications: {
           title: 'Certificaciones de Seguridad',
           items: [
-            { name: 'SOC 2 Type II', desc: 'Cumplimiento de seguridad empresarial', status: 'Certificado' },
-            { name: 'ISO 27001', desc: 'Gestión de seguridad de información', status: 'Certificado' },
-            { name: 'NIST PQC', desc: 'Estándar de criptografía post-cuántica', status: 'Certificado' },
-            { name: 'Common Criteria', desc: 'Evaluación de seguridad internacional', status: 'En Progreso' }
-          ]
+            {
+              name: 'SOC 2 Type II',
+              desc: 'Cumplimiento de seguridad empresarial',
+              status: 'Certificado',
+            },
+            {
+              name: 'ISO 27001',
+              desc: 'Gestión de seguridad de información',
+              status: 'Certificado',
+            },
+            {
+              name: 'NIST PQC',
+              desc: 'Estándar de criptografía post-cuántica',
+              status: 'Certificado',
+            },
+            {
+              name: 'Common Criteria',
+              desc: 'Evaluación de seguridad internacional',
+              status: 'En Progreso',
+            },
+          ],
         },
         status: {
           certified: 'Certificado',
           in_progress: 'En Progreso',
-          planned: 'Planificado'
+          planned: 'Planificado',
         },
         cta: {
           title: '¿Listo para Asegurar tus Activos?',
-          subtitle: 'Únete a miles de usuarios que confían en Quantaureum para seguridad cuántico-segura',
+          subtitle:
+            'Únete a miles de usuarios que confían en Quantaureum para seguridad cuántico-segura',
           apply: 'Comenzar',
-          docs: 'Docs de Seguridad'
-        }
+          docs: 'Docs de Seguridad',
+        },
       },
       whitepaper: {
         title: 'Whitepaper Técnico',
         subtitle: 'Profundiza en la arquitectura tecnológica e innovación de Quantaureum',
         download: 'Descargar Whitepaper',
-        sections: { abstract: 'Resumen', introduction: 'Introducción', architecture: 'Arquitectura', consensus: 'Consenso', cryptography: 'Criptografía', economics: 'Economía de Tokens', roadmap: 'Hoja de Ruta' },
-        versions: { latest: 'Última Versión', previous: 'Versiones Anteriores' }
+        sections: {
+          abstract: 'Resumen',
+          introduction: 'Introducción',
+          architecture: 'Arquitectura',
+          consensus: 'Consenso',
+          cryptography: 'Criptografía',
+          economics: 'Economía de Tokens',
+          roadmap: 'Hoja de Ruta',
+        },
+        versions: { latest: 'Última Versión', previous: 'Versiones Anteriores' },
       },
       whitepaper_page: {
         hero: {
           title: 'Whitepaper Técnico',
-          subtitle: 'Profundiza en la arquitectura tecnológica, conceptos de innovación y hoja de ruta de desarrollo de Quantaureum'
+          subtitle:
+            'Profundiza en la arquitectura tecnológica, conceptos de innovación y hoja de ruta de desarrollo de Quantaureum',
         },
         download: {
           title: 'Whitepaper Técnico de Quantaureum',
           desc: 'Documentación técnica completa incluyendo arquitectura del sistema, diseño de algoritmos, mecanismos de seguridad y detalles de implementación',
           pdf_btn: 'Descargar Versión Completa (PDF)',
-          online_btn: 'Leer en Línea'
+          online_btn: 'Leer en Línea',
         },
         abstract: {
           title: 'Resumen',
           p1: 'Quantaureum es un ecosistema blockchain cuántico-seguro revolucionario diseñado para abordar los desafíos de seguridad que enfrentan las blockchains tradicionales en la era de la computación cuántica. Este whitepaper detalla nuestras innovaciones técnicas, incluyendo aplicaciones de criptografía post-cuántica y un ecosistema completo de aplicaciones descentralizadas.',
           p2: 'Empleamos algoritmos criptográficos post-cuánticos estandarizados por NIST como CRYSTALS-Dilithium y Kyber para garantizar que el sistema proporcione seguridad confiable incluso después de que emerjan las computadoras cuánticas. Mientras tanto, el innovador mecanismo de consenso Quantum Proof of Stake (QPoS) combinado con tecnología de fragmentación logra alto rendimiento y escalabilidad.',
-          p3: 'El ecosistema de aplicaciones completo cubre múltiples dominios incluyendo finanzas, entretenimiento, viajes e infraestructura, proporcionando a los usuarios servicios blockchain integrales.'
+          p3: 'El ecosistema de aplicaciones completo cubre múltiples dominios incluyendo finanzas, entretenimiento, viajes e infraestructura, proporcionando a los usuarios servicios blockchain integrales.',
         },
         toc: {
           title: 'Tabla de Contenidos',
@@ -2730,55 +3724,145 @@ export const es = {
             { title: 'Análisis de Seguridad', page: '62' },
             { title: 'Evaluación de Rendimiento', page: '68' },
             { title: 'Hoja de Ruta de Desarrollo', page: '74' },
-            { title: 'Conclusión', page: '80' }
-          ]
+            { title: 'Conclusión', page: '80' },
+          ],
         },
         highlights: {
           title: 'Aspectos Destacados de Tecnología Central',
           items: [
-            { title: 'Criptografía Post-Cuántica', desc: 'Algoritmos criptográficos post-cuánticos estandarizados por NIST garantizando seguridad en la era de la computación cuántica' },
-            { title: 'Evolución Autónoma IA', desc: 'Sistema de IA con capacidades de meta-aprendizaje y auto-mejora recursiva, optimizando continuamente el rendimiento de la plataforma' },
-            { title: 'Consenso de Alto Rendimiento', desc: 'Mecanismo de consenso QPoS innovador logrando alto throughput y procesamiento de transacciones de baja latencia' },
-            { title: 'Interoperabilidad Cross-Chain', desc: 'Conectando sin problemas múltiples redes blockchain para construir un ecosistema de economía digital unificado' },
-            { title: 'Contratos Inteligentes', desc: 'Entorno de ejecución de contratos inteligentes cuántico-seguro soportando aplicaciones descentralizadas complejas' },
-            { title: 'Ecosistema de Aplicaciones', desc: 'Ecosistema de aplicaciones completo cubriendo finanzas, entretenimiento, viajes y más' }
-          ]
+            {
+              title: 'Criptografía Post-Cuántica',
+              desc: 'Algoritmos criptográficos post-cuánticos estandarizados por NIST garantizando seguridad en la era de la computación cuántica',
+            },
+            {
+              title: 'Evolución Autónoma IA',
+              desc: 'Sistema de IA con capacidades de meta-aprendizaje y auto-mejora recursiva, optimizando continuamente el rendimiento de la plataforma',
+            },
+            {
+              title: 'Consenso de Alto Rendimiento',
+              desc: 'Mecanismo de consenso QPoS innovador logrando alto throughput y procesamiento de transacciones de baja latencia',
+            },
+            {
+              title: 'Interoperabilidad Cross-Chain',
+              desc: 'Conectando sin problemas múltiples redes blockchain para construir un ecosistema de economía digital unificado',
+            },
+            {
+              title: 'Contratos Inteligentes',
+              desc: 'Entorno de ejecución de contratos inteligentes cuántico-seguro soportando aplicaciones descentralizadas complejas',
+            },
+            {
+              title: 'Ecosistema de Aplicaciones',
+              desc: 'Ecosistema de aplicaciones completo cubriendo finanzas, entretenimiento, viajes y más',
+            },
+          ],
         },
         team: {
           title: 'Equipo de Investigación',
           members: [
-            { role: 'Científico Jefe', degree: 'PhD en Criptografía', background: 'MIT, 50+ artículos publicados', emoji: '👨‍🔬' },
-            { role: 'Experto en Computación Cuántica', degree: 'PhD en Física', background: 'Ex Equipo Google Quantum AI', emoji: '👨‍🔬' },
-            { role: 'Arquitecto Blockchain', degree: 'PhD en Ciencias de la Computación', background: 'Ex Desarrollador Core de Ethereum', emoji: '👩‍💻' },
-            { role: 'Experto en Sistemas IA', degree: 'PhD en Inteligencia Artificial', background: 'Ex Investigador de OpenAI', emoji: '🤖' }
-          ]
-        }
+            {
+              role: 'Científico Jefe',
+              degree: 'PhD en Criptografía',
+              background: 'MIT, 50+ artículos publicados',
+              emoji: '👨‍🔬',
+            },
+            {
+              role: 'Experto en Computación Cuántica',
+              degree: 'PhD en Física',
+              background: 'Ex Equipo Google Quantum AI',
+              emoji: '👨‍🔬',
+            },
+            {
+              role: 'Arquitecto Blockchain',
+              degree: 'PhD en Ciencias de la Computación',
+              background: 'Ex Desarrollador Core de Ethereum',
+              emoji: '👩‍💻',
+            },
+            {
+              role: 'Experto en Sistemas IA',
+              degree: 'PhD en Inteligencia Artificial',
+              background: 'Ex Investigador de OpenAI',
+              emoji: '🤖',
+            },
+          ],
+        },
       },
       blog: {
         title: 'Blog Técnico',
         subtitle: 'Últimas actualizaciones e insights técnicos',
-        categories: { all: 'Todo', development: 'Desarrollo', security: 'Seguridad', research: 'Investigación', announcements: 'Anuncios' },
+        categories: {
+          all: 'Todo',
+          development: 'Desarrollo',
+          security: 'Seguridad',
+          research: 'Investigación',
+          announcements: 'Anuncios',
+        },
         read_more: 'Leer Más',
         published: 'Publicado',
-        author: 'Autor'
-      }
+        author: 'Autor',
+      },
     },
     // Subpáginas de Comunidad
     community_sub: {
       bug_bounty: {
         title: 'Programa de Recompensas por Bugs',
         subtitle: 'Ayúdanos a mejorar la seguridad y gana recompensas',
-        severity: { critical: { level: 'Crítico', reward: '$10,000 - $50,000', desc: 'Vulnerabilidades que podrían llevar a pérdida de fondos o fallo total del sistema' }, high: { level: 'Alto', reward: '$5,000 - $10,000', desc: 'Problemas serios de seguridad o datos de usuario' }, medium: { level: 'Medio', reward: '$1,000 - $5,000', desc: 'Problemas de seguridad de impacto medio' }, low: { level: 'Bajo', reward: '$100 - $1,000', desc: 'Problemas de seguridad menores o sugerencias de mejora' } },
-        scope: { in_scope: 'En Alcance', out_scope: 'Fuera de Alcance', items_in: ['Contratos inteligentes de red principal', 'Apps de billetera cuántica', 'Explorador blockchain', 'Contratos de protocolo DeFi', 'Endpoints API y RPC', 'Contratos de puente cross-chain'], items_out: ['Servicios de terceros', 'Ingeniería social', 'Ataques DoS/DDoS', 'Problemas conocidos en reparación'] },
-        rules: { title: 'Reglas del Programa', items: ['Reportar vulnerabilidades responsablemente', 'No explotar vulnerabilidades', 'Proporcionar pasos detallados de reproducción', 'Esperar la corrección antes de divulgar'] },
-        submit: 'Enviar Reporte'
+        severity: {
+          critical: {
+            level: 'Crítico',
+            reward: '$10,000 - $50,000',
+            desc: 'Vulnerabilidades que podrían llevar a pérdida de fondos o fallo total del sistema',
+          },
+          high: {
+            level: 'Alto',
+            reward: '$5,000 - $10,000',
+            desc: 'Problemas serios de seguridad o datos de usuario',
+          },
+          medium: {
+            level: 'Medio',
+            reward: '$1,000 - $5,000',
+            desc: 'Problemas de seguridad de impacto medio',
+          },
+          low: {
+            level: 'Bajo',
+            reward: '$100 - $1,000',
+            desc: 'Problemas de seguridad menores o sugerencias de mejora',
+          },
+        },
+        scope: {
+          in_scope: 'En Alcance',
+          out_scope: 'Fuera de Alcance',
+          items_in: [
+            'Contratos inteligentes de red principal',
+            'Apps de billetera cuántica',
+            'Explorador blockchain',
+            'Contratos de protocolo DeFi',
+            'Endpoints API y RPC',
+            'Contratos de puente cross-chain',
+          ],
+          items_out: [
+            'Servicios de terceros',
+            'Ingeniería social',
+            'Ataques DoS/DDoS',
+            'Problemas conocidos en reparación',
+          ],
+        },
+        rules: {
+          title: 'Reglas del Programa',
+          items: [
+            'Reportar vulnerabilidades responsablemente',
+            'No explotar vulnerabilidades',
+            'Proporcionar pasos detallados de reproducción',
+            'Esperar la corrección antes de divulgar',
+          ],
+        },
+        submit: 'Enviar Reporte',
       },
       guidelines: {
         title: 'Directrices de la Comunidad',
         subtitle: 'Ayúdanos a mantener un entorno comunitario amigable, seguro y valioso',
         welcome: {
           title: 'Bienvenido a la Comunidad Quantaureum',
-          desc: 'Estamos comprometidos a crear una comunidad abierta, inclusiva y constructiva. Por favor lee y sigue estas directrices para mantener una atmósfera comunitaria positiva. Las violaciones pueden resultar en advertencias, silenciamiento o prohibiciones permanentes.'
+          desc: 'Estamos comprometidos a crear una comunidad abierta, inclusiva y constructiva. Por favor lee y sigue estas directrices para mantener una atmósfera comunitaria positiva. Las violaciones pueden resultar en advertencias, silenciamiento o prohibiciones permanentes.',
         },
         recommended: 'Recomendado',
         prohibited: 'Prohibido',
@@ -2786,114 +3870,235 @@ export const es = {
           respect: {
             title: 'Respetar a Otros',
             desc: 'Mantén respeto y cortesía hacia todos los miembros de la comunidad. No se permiten ataques personales, acoso o discursos discriminatorios.',
-            dos: ['Usar lenguaje cortés', 'Respetar diferentes puntos de vista', 'Proporcionar críticas constructivas'],
-            donts: ['Ataques personales', 'Acosar a otros', 'Publicar contenido discriminatorio']
+            dos: [
+              'Usar lenguaje cortés',
+              'Respetar diferentes puntos de vista',
+              'Proporcionar críticas constructivas',
+            ],
+            donts: ['Ataques personales', 'Acosar a otros', 'Publicar contenido discriminatorio'],
           },
           discussion: {
             title: 'Discusiones Valiosas',
             desc: 'Publica contenido significativo que agregue valor a la comunidad. Evita spam y contenido irrelevante.',
-            dos: ['Compartir información útil', 'Hacer preguntas reflexivas', 'Participar en discusiones significativas'],
-            donts: ['Publicar spam', 'Publicaciones duplicadas', 'Publicar contenido irrelevante']
+            dos: [
+              'Compartir información útil',
+              'Hacer preguntas reflexivas',
+              'Participar en discusiones significativas',
+            ],
+            donts: ['Publicar spam', 'Publicaciones duplicadas', 'Publicar contenido irrelevante'],
           },
           privacy: {
             title: 'Proteger la Privacidad',
             desc: 'Protege tu privacidad y la de otros. No compartas información personal sensible.',
-            dos: ['Proteger información personal', 'Usar métodos de comunicación seguros', 'Reportar actividad sospechosa'],
-            donts: ['Compartir información privada de otros', 'Publicar datos sensibles', 'Realizar ataques de phishing']
+            dos: [
+              'Proteger información personal',
+              'Usar métodos de comunicación seguros',
+              'Reportar actividad sospechosa',
+            ],
+            donts: [
+              'Compartir información privada de otros',
+              'Publicar datos sensibles',
+              'Realizar ataques de phishing',
+            ],
           },
           legal: {
             title: 'Cumplir con las Leyes',
             desc: 'Todas las actividades deben cumplir con las leyes y regulaciones aplicables. Cualquier actividad ilegal está prohibida.',
-            dos: ['Seguir las leyes locales', 'Reportar contenido ilegal', 'Usar la plataforma responsablemente'],
-            donts: ['Promover actividades ilegales', 'Publicar contenido infractor', 'Participar en fraude']
-          }
+            dos: [
+              'Seguir las leyes locales',
+              'Reportar contenido ilegal',
+              'Usar la plataforma responsablemente',
+            ],
+            donts: [
+              'Promover actividades ilegales',
+              'Publicar contenido infractor',
+              'Participar en fraude',
+            ],
+          },
         },
         report: {
           title: 'Reportar Violaciones',
           desc: 'Si encuentras algún comportamiento que viole las directrices de la comunidad, por favor repórtalo inmediatamente. Nuestro equipo de moderación lo manejará lo antes posible.',
-          button: 'Reportar Violación'
+          button: 'Reportar Violación',
         },
-        rules: { respect: { title: 'Sé Respetuoso', desc: 'Trata a todos los miembros de la comunidad con respeto' }, constructive: { title: 'Sé Constructivo', desc: 'Proporciona retroalimentación útil y constructiva' }, no_spam: { title: 'Sin Spam', desc: 'Evita spam, auto-promoción y contenido fuera de tema' }, no_illegal: { title: 'Sin Contenido Ilegal', desc: 'No compartas contenido ilegal o dañino' } },
-        enforcement: { title: 'Aplicación', warning: 'Advertencia', temp_ban: 'Suspensión Temporal', perm_ban: 'Suspensión Permanente' }
+        rules: {
+          respect: {
+            title: 'Sé Respetuoso',
+            desc: 'Trata a todos los miembros de la comunidad con respeto',
+          },
+          constructive: {
+            title: 'Sé Constructivo',
+            desc: 'Proporciona retroalimentación útil y constructiva',
+          },
+          no_spam: {
+            title: 'Sin Spam',
+            desc: 'Evita spam, auto-promoción y contenido fuera de tema',
+          },
+          no_illegal: {
+            title: 'Sin Contenido Ilegal',
+            desc: 'No compartas contenido ilegal o dañino',
+          },
+        },
+        enforcement: {
+          title: 'Aplicación',
+          warning: 'Advertencia',
+          temp_ban: 'Suspensión Temporal',
+          perm_ban: 'Suspensión Permanente',
+        },
       },
       members: {
         title: 'Miembros de la Comunidad',
         subtitle: 'Conoce nuestra vibrante comunidad',
         search: 'Buscar miembros...',
-        filters: { all: 'Todos los Miembros', active: 'Más Activos', new: 'Más Nuevos', top: 'Principales Contribuidores' },
+        filters: {
+          all: 'Todos los Miembros',
+          active: 'Más Activos',
+          new: 'Más Nuevos',
+          top: 'Principales Contribuidores',
+        },
         stats: { posts: 'Publicaciones', reputation: 'Reputación', joined: 'Se unió' },
         follow: 'Seguir',
-        following: 'Siguiendo'
+        following: 'Siguiendo',
       },
       notifications: {
         title: 'Notificaciones',
         mark_all_read: 'Marcar todo como leído',
-        types: { mention: 'te mencionó', reply: 'respondió a tu publicación', like: 'le gustó tu publicación', follow: 'comenzó a seguirte', announcement: 'Nuevo anuncio' },
-        empty: 'Sin notificaciones aún'
-      }
+        types: {
+          mention: 'te mencionó',
+          reply: 'respondió a tu publicación',
+          like: 'le gustó tu publicación',
+          follow: 'comenzó a seguirte',
+          announcement: 'Nuevo anuncio',
+        },
+        empty: 'Sin notificaciones aún',
+      },
     },
     // Subpáginas de Desarrolladores
     developers_sub: {
       api: {
         title: 'Referencia de API',
         subtitle: 'Documentación completa de API para Quantaureum',
-        sections: { authentication: 'Autenticación', wallet: 'API de Billetera', transaction: 'API de Transacciones', blockchain: 'API de Blockchain', smart_contract: 'API de Contratos Inteligentes' },
+        sections: {
+          authentication: 'Autenticación',
+          wallet: 'API de Billetera',
+          transaction: 'API de Transacciones',
+          blockchain: 'API de Blockchain',
+          smart_contract: 'API de Contratos Inteligentes',
+        },
         endpoints: 'Endpoints',
         parameters: 'Parámetros',
         response: 'Respuesta',
         example: 'Ejemplo',
-        try_it: 'Pruébalo'
+        try_it: 'Pruébalo',
       },
       sdk: {
         title: 'Descargas de SDK',
         subtitle: 'SDKs oficiales para múltiples lenguajes de programación',
-        languages: { javascript: 'JavaScript/TypeScript', python: 'Python', go: 'Go', rust: 'Rust', java: 'Java' },
+        languages: {
+          javascript: 'JavaScript/TypeScript',
+          python: 'Python',
+          go: 'Go',
+          rust: 'Rust',
+          java: 'Java',
+        },
         download: 'Descargar',
         docs: 'Documentación',
         github: 'GitHub',
         version: 'Versión',
-        install: 'Instalación'
+        install: 'Instalación',
       },
       examples: {
         title: 'Ejemplos de Código',
         subtitle: 'Aprende con ejemplos de código',
-        categories: { wallet: 'Operaciones de Billetera', transactions: 'Transacciones', smart_contracts: 'Contratos Inteligentes', defi: 'Integración DeFi' },
+        categories: {
+          wallet: 'Operaciones de Billetera',
+          transactions: 'Transacciones',
+          smart_contracts: 'Contratos Inteligentes',
+          defi: 'Integración DeFi',
+        },
         copy: 'Copiar Código',
         run: 'Ejecutar Ejemplo',
-        language: 'Lenguaje'
-      }
+        language: 'Lenguaje',
+      },
     },
     // Subpáginas de Configuración
     settings_sub: {
       kyc: {
         title: 'Verificación KYC',
         subtitle: 'Completa la verificación de identidad para desbloquear todas las funciones',
-        steps: { personal: 'Información Personal', document: 'Carga de Documentos', verification: 'Verificación' },
-        personal: { first_name: 'Nombre', last_name: 'Apellido', dob: 'Fecha de Nacimiento', nationality: 'Nacionalidad', address: 'Dirección' },
-        document: { type: 'Tipo de Documento', passport: 'Pasaporte', id_card: 'Cédula de Identidad', drivers_license: 'Licencia de Conducir', front: 'Lado Frontal', back: 'Lado Posterior', selfie: 'Selfie con Documento' },
+        steps: {
+          personal: 'Información Personal',
+          document: 'Carga de Documentos',
+          verification: 'Verificación',
+        },
+        personal: {
+          first_name: 'Nombre',
+          last_name: 'Apellido',
+          dob: 'Fecha de Nacimiento',
+          nationality: 'Nacionalidad',
+          address: 'Dirección',
+        },
+        document: {
+          type: 'Tipo de Documento',
+          passport: 'Pasaporte',
+          id_card: 'Cédula de Identidad',
+          drivers_license: 'Licencia de Conducir',
+          front: 'Lado Frontal',
+          back: 'Lado Posterior',
+          selfie: 'Selfie con Documento',
+        },
         status: { pending: 'Revisión Pendiente', approved: 'Aprobado', rejected: 'Rechazado' },
-        submit: 'Enviar para Verificación'
-      }
+        submit: 'Enviar para Verificación',
+      },
     },
     // Subpáginas de Venta de Tokens
     token_sale_sub: {
       orders: {
         title: 'Mis Órdenes',
         subtitle: 'Ver tu historial de compra de tokens',
-        columns: { order_id: 'ID de Orden', date: 'Fecha', amount: 'Cantidad', price: 'Precio', status: 'Estado', action: 'Acción' },
-        status: { pending: 'Pendiente', completed: 'Completado', failed: 'Fallido', refunded: 'Reembolsado' },
+        columns: {
+          order_id: 'ID de Orden',
+          date: 'Fecha',
+          amount: 'Cantidad',
+          price: 'Precio',
+          status: 'Estado',
+          action: 'Acción',
+        },
+        status: {
+          pending: 'Pendiente',
+          completed: 'Completado',
+          failed: 'Fallido',
+          refunded: 'Reembolsado',
+        },
         empty: 'Sin órdenes aún',
-        view_details: 'Ver Detalles'
+        view_details: 'Ver Detalles',
       },
       referral: {
         title: 'Programa de Referidos',
         subtitle: 'Invita amigos y gana recompensas',
         your_link: 'Tu Enlace de Referido',
         copy: 'Copiar Enlace',
-        stats: { referrals: 'Total de Referidos', earnings: 'Ganancias Totales', pending: 'Recompensas Pendientes' },
-        how_it_works: { title: 'Cómo Funciona', step1: 'Comparte tu enlace de referido único', step2: 'Amigos se registran y compran tokens', step3: 'Gana 5% de comisión en sus compras' },
-        history: { title: 'Historial de Referidos', columns: { user: 'Usuario', date: 'Fecha', amount: 'Monto de Compra', commission: 'Comisión' } }
-      }
+        stats: {
+          referrals: 'Total de Referidos',
+          earnings: 'Ganancias Totales',
+          pending: 'Recompensas Pendientes',
+        },
+        how_it_works: {
+          title: 'Cómo Funciona',
+          step1: 'Comparte tu enlace de referido único',
+          step2: 'Amigos se registran y compran tokens',
+          step3: 'Gana 5% de comisión en sus compras',
+        },
+        history: {
+          title: 'Historial de Referidos',
+          columns: {
+            user: 'Usuario',
+            date: 'Fecha',
+            amount: 'Monto de Compra',
+            commission: 'Comisión',
+          },
+        },
+      },
     },
     // Página de Notificaciones
     notifications_page: {
@@ -2908,14 +4113,14 @@ export const es = {
         like: 'Me gusta',
         comment: 'Comentarios',
         follow: 'Seguimientos',
-        system: 'Sistema'
+        system: 'Sistema',
       },
       time: {
         just_now: 'Ahora mismo',
         minutes_ago: 'hace {{count}} minutos',
         hours_ago: 'hace {{count}} horas',
-        days_ago: 'hace {{count}} días'
-      }
+        days_ago: 'hace {{count}} días',
+      },
     },
     // Página de Búsqueda
     search_page: {
@@ -2926,7 +4131,7 @@ export const es = {
       no_results: 'No se encontraron resultados para "{{query}}"',
       try_different: 'Intenta usar palabras clave diferentes',
       found_results: 'Se encontraron {{count}} resultados',
-      enter_keywords: 'Ingresa palabras clave para comenzar a buscar'
+      enter_keywords: 'Ingresa palabras clave para comenzar a buscar',
     },
     // Página de Socios de la Comunidad
     community_partners: {
@@ -2934,24 +4139,41 @@ export const es = {
       subtitle: 'Construye un futuro cuántico seguro con Quantaureum',
       breadcrumb: {
         community: 'Comunidad',
-        partners: 'Socios'
+        partners: 'Socios',
       },
       types: {
         enterprise: {
           title: 'Socios Empresariales',
-          description: 'Asóciate con nosotros para integrar tecnología blockchain cuántica segura en tu negocio',
-          benefits: ['Soporte técnico prioritario', 'Soluciones personalizadas', 'Oportunidades de marketing conjunto', 'Acceso anticipado a funciones']
+          description:
+            'Asóciate con nosotros para integrar tecnología blockchain cuántica segura en tu negocio',
+          benefits: [
+            'Soporte técnico prioritario',
+            'Soluciones personalizadas',
+            'Oportunidades de marketing conjunto',
+            'Acceso anticipado a funciones',
+          ],
         },
         technology: {
           title: 'Socios Tecnológicos',
           description: 'Co-desarrolla soluciones y herramientas blockchain innovadoras',
-          benefits: ['Compartir recursos técnicos', 'Acceso prioritario a API', 'Proyectos de desarrollo conjunto', 'Soporte de capacitación técnica']
+          benefits: [
+            'Compartir recursos técnicos',
+            'Acceso prioritario a API',
+            'Proyectos de desarrollo conjunto',
+            'Soporte de capacitación técnica',
+          ],
         },
         ecosystem: {
           title: 'Socios del Ecosistema',
-          description: 'Únete a nuestro ecosistema para impulsar el desarrollo de la industria blockchain juntos',
-          benefits: ['Soporte del fondo del ecosistema', 'Recursos de la comunidad', 'Colaboración en eventos', 'Exposición de marca']
-        }
+          description:
+            'Únete a nuestro ecosistema para impulsar el desarrollo de la industria blockchain juntos',
+          benefits: [
+            'Soporte del fondo del ecosistema',
+            'Recursos de la comunidad',
+            'Colaboración en eventos',
+            'Exposición de marca',
+          ],
+        },
       },
       partner_categories: {
         gold_storage: 'Almacenamiento de Oro',
@@ -2959,28 +4181,29 @@ export const es = {
         hardware_wallet: 'Billetera de Hardware',
         security_audit: 'Auditoría de Seguridad',
         cloud_service: 'Servicio en la Nube',
-        cross_chain: 'Cadena Cruzada'
+        cross_chain: 'Cadena Cruzada',
       },
       our_partners: 'Nuestros Socios',
       cta: {
         title: 'Conviértete en Socio',
-        description: 'Ya seas una empresa, desarrollador o equipo de proyecto, te damos la bienvenida al ecosistema Quantaureum',
-        apply: 'Solicitar Asociación'
-      }
+        description:
+          'Ya seas una empresa, desarrollador o equipo de proyecto, te damos la bienvenida al ecosistema Quantaureum',
+        apply: 'Solicitar Asociación',
+      },
     },
     // Página de Detalle de Publicación
     post_detail: {
       loading: 'Cargando...',
       error: {
         not_found: 'Publicación no encontrada',
-        load_failed: 'Error al cargar, por favor intenta de nuevo'
+        load_failed: 'Error al cargar, por favor intenta de nuevo',
       },
       back_to_community: 'Volver a la Comunidad',
       categories: {
         general: 'Discusión General',
         technical: 'Preguntas Técnicas',
         defi: 'DeFi y Trading',
-        governance: 'Propuestas de Gobernanza'
+        governance: 'Propuestas de Gobernanza',
       },
       comments: 'Comentarios',
       comments_count: '{{count}} comentarios',
@@ -2994,20 +4217,21 @@ export const es = {
         just_now: 'Ahora mismo',
         minutes_ago: 'hace {{count}} minutos',
         hours_ago: 'hace {{count}} horas',
-        days_ago: 'hace {{count}} días'
-      }
+        days_ago: 'hace {{count}} días',
+      },
     },
     // Página de Tema
     topic_page: {
-      sample_content: 'Esta es una discusión detallada sobre "{{topic}}". Aquí podemos explorar detalles técnicos, casos de uso y direcciones de desarrollo futuro.',
+      sample_content:
+        'Esta es una discusión detallada sobre "{{topic}}". Aquí podemos explorar detalles técnicos, casos de uso y direcciones de desarrollo futuro.',
       levels: {
         quantum_expert: 'Experto Cuántico',
         active_member: 'Miembro Activo',
-        newbie: 'Novato'
+        newbie: 'Novato',
       },
       joined_year: 'Se unió en {{year}}',
       categories: {
-        quantum_computing: 'Computación Cuántica'
+        quantum_computing: 'Computación Cuántica',
       },
       views: '{{count}} vistas',
       replies_count: '{{count}} respuestas',
@@ -3017,17 +4241,20 @@ export const es = {
       reply_placeholder: 'Escribe tu respuesta...',
       post_reply: 'Publicar Respuesta',
       time: {
-        hours_ago: 'hace {{count}} horas'
+        hours_ago: 'hace {{count}} horas',
       },
       sample_replies: {
-        reply1: '¡Análisis muy perspicaz! Estoy particularmente de acuerdo con las opiniones sobre las tendencias de desarrollo de la tecnología cuántica.',
-        reply2: 'Como principiante, este tema me enseñó mucho. ¿Podrías recomendar algunos recursos introductorios?'
-      }
+        reply1:
+          '¡Análisis muy perspicaz! Estoy particularmente de acuerdo con las opiniones sobre las tendencias de desarrollo de la tecnología cuántica.',
+        reply2:
+          'Como principiante, este tema me enseñó mucho. ¿Podrías recomendar algunos recursos introductorios?',
+      },
     },
     // Página de Perfil de Usuario
     user_profile_page: {
       title_quantum_expert: 'Experto en Tecnología Cuántica',
-      sample_bio: 'Soy un investigador enfocado en computación cuántica y criptografía cuántica. Apasionado por compartir conocimiento y ayudar a los miembros de la comunidad a entender los últimos desarrollos en tecnología cuántica.',
+      sample_bio:
+        'Soy un investigador enfocado en computación cuántica y criptografía cuántica. Apasionado por compartir conocimiento y ayudar a los miembros de la comunidad a entender los últimos desarrollos en tecnología cuántica.',
       sample_location: 'Beijing, China',
       joined_date: 'Marzo {{date}}',
       joined_at: 'Se unió',
@@ -3036,7 +4263,7 @@ export const es = {
         posts: 'Publicaciones',
         likes: 'Me gusta',
         followers: 'Seguidores',
-        following: 'Siguiendo'
+        following: 'Siguiendo',
       },
       follow: 'Seguir',
       send_message: 'Enviar Mensaje',
@@ -3044,56 +4271,75 @@ export const es = {
       badges: {
         quantum_pioneer: 'Pionero Cuántico',
         knowledge_sharer: 'Compartidor de Conocimiento',
-        community_contributor: 'Contribuidor de la Comunidad'
+        community_contributor: 'Contribuidor de la Comunidad',
       },
       recent_posts: 'Publicaciones Recientes',
       view_more_posts: 'Ver Más Publicaciones',
       time: {
         days_ago: 'hace {{count}} días',
-        week_ago: 'hace {{count}} semana'
+        week_ago: 'hace {{count}} semana',
       },
       sample_posts: {
         post1: {
           title: 'Aplicaciones del Entrelazamiento Cuántico en Criptografía',
-          category: 'Criptografía Cuántica'
+          category: 'Criptografía Cuántica',
         },
         post2: {
           title: 'Entendiendo la Superposición Cuántica',
-          category: 'Física Cuántica'
+          category: 'Física Cuántica',
         },
         post3: {
           title: 'Estado Actual del Desarrollo de la Computación Cuántica',
-          category: 'Computación Cuántica'
-        }
-      }
+          category: 'Computación Cuántica',
+        },
+      },
     },
     // Página de Categoría del Foro
     forum_category: {
       category_not_found: 'Categoría no encontrada',
       back_to_community: 'Volver a la Comunidad',
       categories: {
-        general: { name: 'Discusión General', description: 'Discusiones generales sobre Quantaureum, incluyendo experiencias y consejos' },
-        technical: { name: 'Intercambio Técnico', description: 'Discusiones técnicas, compartir código, intercambio de soluciones' },
-        defi: { name: 'Discusión DeFi', description: 'Protocolos DeFi, minería de liquidez, estrategias de rendimiento' },
-        trading: { name: 'Discusión de Trading', description: 'Análisis de mercado, estrategias de trading, discusiones de precios' },
-        governance: { name: 'Gobernanza Comunitaria', description: 'Gobernanza DAO, discusiones de propuestas, votación' },
-        events: { name: 'Eventos', description: 'Información de eventos en línea y presenciales, reseñas de eventos' }
+        general: {
+          name: 'Discusión General',
+          description:
+            'Discusiones generales sobre Quantaureum, incluyendo experiencias y consejos',
+        },
+        technical: {
+          name: 'Intercambio Técnico',
+          description: 'Discusiones técnicas, compartir código, intercambio de soluciones',
+        },
+        defi: {
+          name: 'Discusión DeFi',
+          description: 'Protocolos DeFi, minería de liquidez, estrategias de rendimiento',
+        },
+        trading: {
+          name: 'Discusión de Trading',
+          description: 'Análisis de mercado, estrategias de trading, discusiones de precios',
+        },
+        governance: {
+          name: 'Gobernanza Comunitaria',
+          description: 'Gobernanza DAO, discusiones de propuestas, votación',
+        },
+        events: {
+          name: 'Eventos',
+          description: 'Información de eventos en línea y presenciales, reseñas de eventos',
+        },
       },
       stats: {
         total_posts: 'Total de Publicaciones',
         total_topics: 'Temas',
-        latest_post: 'Última Publicación'
+        latest_post: 'Última Publicación',
       },
       by: 'por',
       filters: {
         all: 'Todas las Publicaciones',
         pinned: 'Publicaciones Fijadas',
-        unlocked: 'Publicaciones Desbloqueadas'
+        unlocked: 'Publicaciones Desbloqueadas',
       },
       sort: {
         latest: 'Más Recientes',
         popular: 'Más Respuestas',
-        views: 'Más Vistas'
+        views: 'Más Vistas',
       },
       new_topic: 'Nuevo Tema',
       pinned: 'Fijado',
@@ -3101,12 +4347,12 @@ export const es = {
       last_reply: 'Última respuesta',
       pagination: {
         prev: 'Anterior',
-        next: 'Siguiente'
+        next: 'Siguiente',
       },
       time: {
         minutes_ago: 'hace {{count}} min',
         hours_ago: 'hace {{count}} hora',
-        days_ago: 'hace {{count}} día'
+        days_ago: 'hace {{count}} día',
       },
       sample_posts: {
         general: 'Consejos de Uso de Billetera Cuántica',
@@ -3114,17 +4360,20 @@ export const es = {
         defi: 'Discusión de Nuevo Pool de Liquidez',
         trading: 'Análisis de Precio de QAU',
         governance: 'Votación de Nueva Propuesta de Gobernanza',
-        events: 'Vista Previa del AMA de la Próxima Semana'
+        events: 'Vista Previa del AMA de la Próxima Semana',
       },
       sample_post_titles: {
         post1: '🚀 Billetera Cuántica v2.0 Lanzada con Soporte Multi-cadena',
         post2: '💡 ¿Cómo Almacenar Claves Cuánticas de Forma Segura?',
-        post3: '📊 Análisis Profundo de la Tokenomía de QAU'
+        post3: '📊 Análisis Profundo de la Tokenomía de QAU',
       },
       sample_post_contents: {
-        post1: '¡Estamos emocionados de anunciar el lanzamiento oficial de Billetera Cuántica v2.0! Esta actualización trae varias características importantes...',
-        post2: 'Con el desarrollo de la computación cuántica, los métodos de encriptación tradicionales enfrentan desafíos...',
-        post3: 'El token QAU como núcleo del ecosistema Quantaureum tiene un modelo económico elegantemente diseñado...'
+        post1:
+          '¡Estamos emocionados de anunciar el lanzamiento oficial de Billetera Cuántica v2.0! Esta actualización trae varias características importantes...',
+        post2:
+          'Con el desarrollo de la computación cuántica, los métodos de encriptación tradicionales enfrentan desafíos...',
+        post3:
+          'El token QAU como núcleo del ecosistema Quantaureum tiene un modelo económico elegantemente diseñado...',
       },
       tags: {
         update: 'Actualización',
@@ -3134,15 +4383,16 @@ export const es = {
         quantum_key: 'Clave Cuántica',
         tutorial: 'Tutorial',
         tokenomics: 'Tokenomía',
-        analysis: 'Análisis'
-      }
+        analysis: 'Análisis',
+      },
     },
     // Página de Ejemplos para Desarrolladores
     dev_examples: {
       badge: 'Ejemplos de Código',
       title: 'Inicio Rápido',
       title_highlight: 'Ejemplos de Código',
-      subtitle: 'Ejemplos de código listos para copiar y pegar que te ayudan a integrar Quantaureum rápidamente',
+      subtitle:
+        'Ejemplos de código listos para copiar y pegar que te ayudan a integrar Quantaureum rápidamente',
       full_docs: 'Documentación Completa',
       view_docs: 'Ver Docs',
       run_online: 'Ejecutar en Línea',
@@ -3152,58 +4402,98 @@ export const es = {
         transaction: 'Transacción',
         smart_contract: 'Contrato Inteligente',
         defi: 'DeFi',
-        quantum_security: 'Seguridad Cuántica'
+        quantum_security: 'Seguridad Cuántica',
       },
       examples: {
         connect_wallet: {
           title: 'Conectar Billetera',
-          description: 'Conectar a la billetera Quantaureum usando JavaScript SDK'
+          description: 'Conectar a la billetera Quantaureum usando JavaScript SDK',
         },
         send_transaction: {
           title: 'Enviar Transacción',
-          description: 'Enviar tokens QAU a una dirección especificada'
+          description: 'Enviar tokens QAU a una dirección especificada',
         },
         deploy_contract: {
           title: 'Desplegar Contrato Inteligente',
-          description: 'Desplegar un contrato de token simple'
+          description: 'Desplegar un contrato de token simple',
         },
         staking: {
           title: 'Hacer Staking de QAU',
-          description: 'Hacer staking de QAU en nodos validadores para obtener recompensas'
+          description: 'Hacer staking de QAU en nodos validadores para obtener recompensas',
         },
         quantum_signature: {
           title: 'Firma Cuántica Segura',
-          description: 'Firmar mensajes usando algoritmos criptográficos post-cuánticos'
-        }
+          description: 'Firmar mensajes usando algoritmos criptográficos post-cuánticos',
+        },
       },
       cta: {
         title: '¿Listo para Empezar a Construir?',
-        description: 'Consulta la documentación completa para más funciones avanzadas y mejores prácticas',
+        description:
+          'Consulta la documentación completa para más funciones avanzadas y mejores prácticas',
         view_docs: 'Ver Documentación Completa',
-        download_sdk: 'Descargar SDK'
-      }
+        download_sdk: 'Descargar SDK',
+      },
     },
     // Página de Descarga de SDK
     sdk_page: {
       title: 'Descarga de SDK',
-      subtitle: 'Descarga el kit de desarrollo de Quantaureum para construir aplicaciones blockchain cuánticas seguras',
+      subtitle:
+        'Descarga el kit de desarrollo de Quantaureum para construir aplicaciones blockchain cuánticas seguras',
       available: 'Disponible',
       version: 'Versión',
       size: 'Tamaño',
       sdks: {
-        typescript: { title: 'TypeScript SDK', description: 'SDK completo para aplicaciones Web y Node.js con soporte TypeScript', download: 'Descargar TypeScript SDK' },
-        python: { title: 'Python SDK', description: 'Biblioteca Python para análisis de datos y servicios backend con soporte async', download: 'Descargar Python SDK' },
-        go: { title: 'Go SDK', description: 'Kit de desarrollo Go de alto rendimiento con soporte de concurrencia', view: 'Ver Go SDK' },
-        rust: { title: 'Rust SDK', description: 'Kit de desarrollo Rust seguro y eficiente con async y seguridad de tipos', view: 'Ver Rust SDK' },
-        java: { title: 'Java SDK', description: 'Kit de desarrollo Java empresarial con async y seguridad de tipos', view: 'Ver Java SDK' },
-        cpp: { title: 'C++ SDK', description: 'Kit de herramientas de nivel de sistema de alto rendimiento con C++17 moderno', download: 'Descargar C++ SDK' }
+        typescript: {
+          title: 'TypeScript SDK',
+          description: 'SDK completo para aplicaciones Web y Node.js con soporte TypeScript',
+          download: 'Descargar TypeScript SDK',
+        },
+        python: {
+          title: 'Python SDK',
+          description:
+            'Biblioteca Python para análisis de datos y servicios backend con soporte async',
+          download: 'Descargar Python SDK',
+        },
+        go: {
+          title: 'Go SDK',
+          description: 'Kit de desarrollo Go de alto rendimiento con soporte de concurrencia',
+          view: 'Ver Go SDK',
+        },
+        rust: {
+          title: 'Rust SDK',
+          description: 'Kit de desarrollo Rust seguro y eficiente con async y seguridad de tipos',
+          view: 'Ver Rust SDK',
+        },
+        java: {
+          title: 'Java SDK',
+          description: 'Kit de desarrollo Java empresarial con async y seguridad de tipos',
+          view: 'Ver Java SDK',
+        },
+        cpp: {
+          title: 'C++ SDK',
+          description:
+            'Kit de herramientas de nivel de sistema de alto rendimiento con C++17 moderno',
+          download: 'Descargar C++ SDK',
+        },
       },
       requirements: {
         title: 'Requisitos del Sistema',
         subtitle: 'Asegúrate de que tu entorno de desarrollo cumpla con los siguientes requisitos',
-        minimum: { title: 'Requisitos Mínimos', os: 'SO: Windows 10, macOS 10.15, Ubuntu 18.04+', memory: 'Memoria: 4GB RAM', storage: 'Almacenamiento: 2GB de espacio disponible', nodejs: 'Node.js: 18.0+ (TypeScript SDK)' },
-        recommended: { title: 'Recomendado', os: 'SO: Última versión', memory: 'Memoria: 8GB+ RAM', storage: 'Almacenamiento: 10GB+ SSD', nodejs: 'Node.js: 20.0+' }
-      }
+        minimum: {
+          title: 'Requisitos Mínimos',
+          os: 'SO: Windows 10, macOS 10.15, Ubuntu 18.04+',
+          memory: 'Memoria: 4GB RAM',
+          storage: 'Almacenamiento: 2GB de espacio disponible',
+          nodejs: 'Node.js: 18.0+ (TypeScript SDK)',
+        },
+        recommended: {
+          title: 'Recomendado',
+          os: 'SO: Última versión',
+          memory: 'Memoria: 8GB+ RAM',
+          storage: 'Almacenamiento: 10GB+ SSD',
+          nodejs: 'Node.js: 20.0+',
+        },
+      },
     },
     settings_page: {
       title: 'Configuración',
@@ -3216,108 +4506,109 @@ export const es = {
         notifications: 'Notificaciones',
         privacy: 'Privacidad',
         display: 'Visualización',
-        content: 'Contenido'
+        content: 'Contenido',
+      },
+      profile: {
+        display_name: 'Nombre para mostrar',
+        display_name_placeholder: 'Tu nombre para mostrar',
+        bio: 'Biografía',
+        bio_placeholder: 'Cuéntanos sobre ti...',
+        location: 'Ubicación',
+        location_placeholder: 'Ciudad, País',
+        website: 'Sitio web',
+      },
+      security: {
+        email: 'Correo electrónico',
+        verified: 'Verificado',
+        password: 'Contraseña',
+        last_changed: 'Cambiada hace 30 días',
+        change_password: 'Cambiar',
+        current_password: 'Contraseña actual',
+        new_password: 'Nueva contraseña',
+        confirm_password: 'Confirmar nueva contraseña',
+        update_password: 'Actualizar Contraseña',
+        password_mismatch: 'Las contraseñas no coinciden',
+        password_changed: 'Contraseña cambiada exitosamente',
+        two_factor: 'Autenticación de dos factores',
+        two_factor_desc: 'Añade una capa extra de seguridad',
+        login_alerts: 'Alertas de inicio de sesión',
+        login_alerts_desc: 'Recibe notificaciones de nuevos inicios de sesión',
+        connected_accounts: 'Cuentas conectadas',
+        connected: 'Conectada',
+        danger_zone: 'Zona de peligro',
+        delete_account: 'Eliminar cuenta',
+      },
+      notifications: {
+        email_notifications: 'Notificaciones por correo',
+        push_notifications: 'Notificaciones push',
+        replies: 'Respuestas a tus publicaciones',
+        likes: 'Me gusta en tus publicaciones',
+        follows: 'Nuevos seguidores',
+        mentions: 'Menciones',
+        newsletter: 'Boletín',
+        announcements: 'Anuncios de la plataforma',
+        direct_messages: 'Mensajes directos',
+        quiet_hours: 'Horas de silencio',
+        quiet_hours_desc: 'Pausar notificaciones durante horas específicas',
+        start_time: 'Inicio',
+        end_time: 'Fin',
+      },
+      privacy: {
+        profile_visibility: 'Visibilidad del perfil',
+        public: 'Público',
+        public_desc: 'Cualquiera puede ver tu perfil',
+        members_only: 'Solo miembros',
+        members_desc: 'Solo usuarios registrados pueden ver',
+        private: 'Privado',
+        private_desc: 'Solo tú puedes ver tu perfil',
+        show_online: 'Mostrar estado en línea',
+        show_online_desc: 'Permitir que otros vean cuando estás en línea',
+        show_activity: 'Mostrar estado de actividad',
+        show_activity_desc: 'Mostrar tu actividad reciente a otros',
+        show_email: 'Mostrar correo electrónico',
+        show_email_desc: 'Mostrar correo en tu perfil',
+        direct_messages: 'Quién puede enviarte mensajes directos',
+        dm_everyone: 'Todos',
+        dm_followers: 'Solo personas que sigues',
+        dm_none: 'Nadie',
+        blocked_users: 'Usuarios bloqueados',
+        block_user: 'Bloquear usuario',
+        no_blocked: 'Sin usuarios bloqueados',
+        unblock: 'Desbloquear',
+      },
+      display: {
+        theme: 'Tema',
+        light: 'Claro',
+        dark: 'Oscuro',
+        system: 'Sistema',
+        language: 'Idioma',
+        posts_per_page: 'Publicaciones por página',
+        default_sort: 'Orden predeterminado',
+        newest: 'Más recientes',
+        popular: 'Populares',
+        trending: 'Tendencias',
+        compact_mode: 'Modo compacto',
+        compact_mode_desc: 'Mostrar más contenido con menos espacio',
+      },
+      content: {
+        signature: 'Firma',
+        signature_placeholder: 'Tu firma aparecerá al final de tus publicaciones...',
+        default_category: 'Categoría predeterminada',
+        auto_save: 'Guardar borradores automáticamente',
+        auto_save_desc: 'Guardar automáticamente tus publicaciones como borradores',
+      },
+      delete_modal: {
+        title: 'Eliminar cuenta',
+        subtitle: 'Esta acción no se puede deshacer',
+        warning:
+          '¿Estás seguro de que quieres eliminar tu cuenta? Todos tus datos serán eliminados permanentemente.',
+        confirm: 'Eliminar cuenta',
+      },
+      block_modal: {
+        title: 'Bloquear usuario',
+        placeholder: 'Ingresa el nombre de usuario a bloquear',
+        confirm: 'Bloquear',
+      },
     },
-    profile: {
-      display_name: 'Nombre para mostrar',
-      display_name_placeholder: 'Tu nombre para mostrar',
-      bio: 'Biografía',
-      bio_placeholder: 'Cuéntanos sobre ti...',
-      location: 'Ubicación',
-      location_placeholder: 'Ciudad, País',
-      website: 'Sitio web'
-    },
-    security: {
-      email: 'Correo electrónico',
-      verified: 'Verificado',
-      password: 'Contraseña',
-      last_changed: 'Cambiada hace 30 días',
-      change_password: 'Cambiar',
-      current_password: 'Contraseña actual',
-      new_password: 'Nueva contraseña',
-      confirm_password: 'Confirmar nueva contraseña',
-      update_password: 'Actualizar Contraseña',
-      password_mismatch: 'Las contraseñas no coinciden',
-      password_changed: 'Contraseña cambiada exitosamente',
-      two_factor: 'Autenticación de dos factores',
-      two_factor_desc: 'Añade una capa extra de seguridad',
-      login_alerts: 'Alertas de inicio de sesión',
-      login_alerts_desc: 'Recibe notificaciones de nuevos inicios de sesión',
-      connected_accounts: 'Cuentas conectadas',
-      connected: 'Conectada',
-      danger_zone: 'Zona de peligro',
-      delete_account: 'Eliminar cuenta'
-    },
-    notifications: {
-      email_notifications: 'Notificaciones por correo',
-      push_notifications: 'Notificaciones push',
-      replies: 'Respuestas a tus publicaciones',
-      likes: 'Me gusta en tus publicaciones',
-      follows: 'Nuevos seguidores',
-      mentions: 'Menciones',
-      newsletter: 'Boletín',
-      announcements: 'Anuncios de la plataforma',
-      direct_messages: 'Mensajes directos',
-      quiet_hours: 'Horas de silencio',
-      quiet_hours_desc: 'Pausar notificaciones durante horas específicas',
-      start_time: 'Inicio',
-      end_time: 'Fin'
-    },
-    privacy: {
-      profile_visibility: 'Visibilidad del perfil',
-      public: 'Público',
-      public_desc: 'Cualquiera puede ver tu perfil',
-      members_only: 'Solo miembros',
-      members_desc: 'Solo usuarios registrados pueden ver',
-      private: 'Privado',
-      private_desc: 'Solo tú puedes ver tu perfil',
-      show_online: 'Mostrar estado en línea',
-      show_online_desc: 'Permitir que otros vean cuando estás en línea',
-      show_activity: 'Mostrar estado de actividad',
-      show_activity_desc: 'Mostrar tu actividad reciente a otros',
-      show_email: 'Mostrar correo electrónico',
-      show_email_desc: 'Mostrar correo en tu perfil',
-      direct_messages: 'Quién puede enviarte mensajes directos',
-      dm_everyone: 'Todos',
-      dm_followers: 'Solo personas que sigues',
-      dm_none: 'Nadie',
-      blocked_users: 'Usuarios bloqueados',
-      block_user: 'Bloquear usuario',
-      no_blocked: 'Sin usuarios bloqueados',
-      unblock: 'Desbloquear'
-    },
-    display: {
-      theme: 'Tema',
-      light: 'Claro',
-      dark: 'Oscuro',
-      system: 'Sistema',
-      language: 'Idioma',
-      posts_per_page: 'Publicaciones por página',
-      default_sort: 'Orden predeterminado',
-      newest: 'Más recientes',
-      popular: 'Populares',
-      trending: 'Tendencias',
-      compact_mode: 'Modo compacto',
-      compact_mode_desc: 'Mostrar más contenido con menos espacio'
-    },
-    content: {
-      signature: 'Firma',
-      signature_placeholder: 'Tu firma aparecerá al final de tus publicaciones...',
-      default_category: 'Categoría predeterminada',
-      auto_save: 'Guardar borradores automáticamente',
-      auto_save_desc: 'Guardar automáticamente tus publicaciones como borradores'
-    },
-    delete_modal: {
-      title: 'Eliminar cuenta',
-      subtitle: 'Esta acción no se puede deshacer',
-      warning: '¿Estás seguro de que quieres eliminar tu cuenta? Todos tus datos serán eliminados permanentemente.',
-      confirm: 'Eliminar cuenta'
-    },
-    block_modal: {
-      title: 'Bloquear usuario',
-      placeholder: 'Ingresa el nombre de usuario a bloquear',
-      confirm: 'Bloquear'
-    }
-  }
-  }
+  },
 };

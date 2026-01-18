@@ -27,58 +27,59 @@ const FAQPage = () => {
     {
       category: 'basics',
       question: t('faq_page.questions.what_is_quantaureum.q'),
-      answer: t('faq_page.questions.what_is_quantaureum.a')
+      answer: t('faq_page.questions.what_is_quantaureum.a'),
     },
     {
       category: 'basics',
       question: t('faq_page.questions.what_is_qau.q'),
-      answer: t('faq_page.questions.what_is_qau.a')
+      answer: t('faq_page.questions.what_is_qau.a'),
     },
     {
       category: 'security',
       question: t('faq_page.questions.quantum_safe.q'),
-      answer: t('faq_page.questions.quantum_safe.a')
+      answer: t('faq_page.questions.quantum_safe.a'),
     },
     {
       category: 'security',
       question: t('faq_page.questions.asset_security.q'),
-      answer: t('faq_page.questions.asset_security.a')
+      answer: t('faq_page.questions.asset_security.a'),
     },
     {
       category: 'wallet',
       question: t('faq_page.questions.create_wallet.q'),
-      answer: t('faq_page.questions.create_wallet.a')
+      answer: t('faq_page.questions.create_wallet.a'),
     },
     {
       category: 'wallet',
       question: t('faq_page.questions.supported_assets.q'),
-      answer: t('faq_page.questions.supported_assets.a')
+      answer: t('faq_page.questions.supported_assets.a'),
     },
     {
       category: 'trading',
       question: t('faq_page.questions.transaction_fees.q'),
-      answer: t('faq_page.questions.transaction_fees.a')
+      answer: t('faq_page.questions.transaction_fees.a'),
     },
     {
       category: 'trading',
       question: t('faq_page.questions.confirmation_time.q'),
-      answer: t('faq_page.questions.confirmation_time.a')
+      answer: t('faq_page.questions.confirmation_time.a'),
     },
     {
       category: 'developer',
       question: t('faq_page.questions.start_developing.q'),
-      answer: t('faq_page.questions.start_developing.a')
+      answer: t('faq_page.questions.start_developing.a'),
     },
     {
       category: 'developer',
       question: t('faq_page.questions.smart_contract_languages.q'),
-      answer: t('faq_page.questions.smart_contract_languages.a')
-    }
+      answer: t('faq_page.questions.smart_contract_languages.a'),
+    },
   ];
 
-  const filteredFAQs = faqData.filter(faq => {
+  const filteredFAQs = faqData.filter((faq) => {
     const matchesCategory = activeCategory === 'all' || faq.category === activeCategory;
-    const matchesSearch = searchQuery === '' || 
+    const matchesSearch =
+      searchQuery === '' ||
       faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
       faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -88,7 +89,7 @@ const FAQPage = () => {
     <div className="min-h-screen relative text-white">
       <ParticlesBackground />
       <EnhancedNavbar />
-      
+
       <main className="pt-24 pb-16 px-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -100,9 +101,7 @@ const FAQPage = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] bg-clip-text text-transparent">
               {t('faq_page.title')}
             </h1>
-            <p className="text-gray-400 text-lg">
-              {t('faq_page.subtitle')}
-            </p>
+            <p className="text-gray-400 text-lg">{t('faq_page.subtitle')}</p>
           </motion.div>
 
           {/* Search */}

@@ -17,6 +17,7 @@
 ### 1. 基础投票功能
 
 #### 1.1 帖子投票 ✅ (已有点赞)
+
 - [x] 点赞功能（已实现）
 - [ ] 反对/踩功能（新增）
 - [ ] 取消投票
@@ -24,6 +25,7 @@
 - [ ] 投票数统计
 
 #### 1.2 评论投票 ✅ (已有点赞)
+
 - [x] 点赞功能（已实现）
 - [ ] 反对/踩功能（新增）
 - [ ] 取消投票
@@ -33,6 +35,7 @@
 ### 2. 投票显示
 
 #### 2.1 投票数显示
+
 - [ ] 净投票数（赞 - 踩）
 - [ ] 赞同数单独显示
 - [ ] 反对数单独显示
@@ -40,6 +43,7 @@
 - [ ] 投票趋势图标
 
 #### 2.2 用户投票状态
+
 - [ ] 已赞同高亮
 - [ ] 已反对高亮
 - [ ] 未投票状态
@@ -48,6 +52,7 @@
 ### 3. 热度算法
 
 #### 3.1 热度计算
+
 - [ ] 基于投票的热度分数
 - [ ] 时间衰减因子
 - [ ] 评论数权重
@@ -55,6 +60,7 @@
 - [ ] 综合热度排序
 
 #### 3.2 热度显示
+
 - [ ] 热度分数显示
 - [ ] 热门标记
 - [ ] 上升趋势标记
@@ -63,12 +69,14 @@
 ### 4. 争议内容标记
 
 #### 4.1 争议检测
+
 - [ ] 赞踩比例计算
 - [ ] 争议阈值设定
 - [ ] 争议标记显示
 - [ ] 争议内容排序
 
 #### 4.2 争议处理
+
 - [ ] 争议内容提示
 - [ ] 争议内容折叠（可选）
 - [ ] 争议原因说明
@@ -77,12 +85,14 @@
 ### 5. 投票限制
 
 #### 5.1 防刷票机制
+
 - [ ] 同一用户只能投一次
 - [ ] 投票冷却时间
 - [ ] IP 限制（可选）
 - [ ] 异常投票检测
 
 #### 5.2 权限控制
+
 - [ ] 登录用户才能投票
 - [ ] 新用户投票限制
 - [ ] 被封禁用户无法投票
@@ -95,6 +105,7 @@
 ### 1. 扩展现有表
 
 #### posts 表（已存在，需扩展）
+
 ```sql
 ALTER TABLE posts ADD COLUMN IF NOT EXISTS upvote_count INTEGER DEFAULT 0;
 ALTER TABLE posts ADD COLUMN IF NOT EXISTS downvote_count INTEGER DEFAULT 0;
@@ -110,6 +121,7 @@ CREATE INDEX IF NOT EXISTS idx_posts_controversial ON posts(is_controversial, co
 ```
 
 #### comments 表（已存在，需扩展）
+
 ```sql
 ALTER TABLE comments ADD COLUMN IF NOT EXISTS upvote_count INTEGER DEFAULT 0;
 ALTER TABLE comments ADD COLUMN IF NOT EXISTS downvote_count INTEGER DEFAULT 0;
@@ -123,6 +135,7 @@ CREATE INDEX IF NOT EXISTS idx_comments_vote_score ON comments(vote_score DESC);
 ### 2. 扩展投票表
 
 #### post_votes 表（扩展 post_likes）
+
 ```sql
 -- 重命名现有表
 ALTER TABLE post_likes RENAME TO post_votes;
@@ -137,6 +150,7 @@ CREATE INDEX IF NOT EXISTS idx_post_votes_user_post ON post_votes(user_id, post_
 ```
 
 #### comment_votes 表（扩展 comment_likes）
+
 ```sql
 -- 重命名现有表
 ALTER TABLE comment_likes RENAME TO comment_votes;
@@ -151,6 +165,7 @@ CREATE INDEX IF NOT EXISTS idx_comment_votes_user_comment ON comment_votes(user_
 ```
 
 ### 3. 投票历史表（可选）
+
 ```sql
 CREATE TABLE IF NOT EXISTS vote_history (
   id SERIAL PRIMARY KEY,
@@ -173,6 +188,7 @@ CREATE INDEX idx_vote_history_target ON vote_history(target_type, target_id);
 ### 1. 帖子投票 API
 
 #### POST /api/v2/barong/public/community/vote-post
+
 ```typescript
 // 请求
 {
@@ -190,13 +206,14 @@ CREATE INDEX idx_vote_history_target ON vote_history(target_type, target_id);
     voteScore: number;
     userVote: 'upvote' | 'downvote' | null;
     isControversial: boolean;
-  };
+  }
 }
 ```
 
 ### 2. 评论投票 API
 
 #### POST /api/v2/barong/public/community/vote-comment
+
 ```typescript
 // 请求
 {
@@ -213,13 +230,14 @@ CREATE INDEX idx_vote_history_target ON vote_history(target_type, target_id);
     downvoteCount: number;
     voteScore: number;
     userVote: 'upvote' | 'downvote' | null;
-  };
+  }
 }
 ```
 
 ### 3. 热门帖子 API
 
 #### GET /api/v2/barong/public/community/hot-posts
+
 ```typescript
 // 请求参数
 {
@@ -244,6 +262,7 @@ CREATE INDEX idx_vote_history_target ON vote_history(target_type, target_id);
 ### 4. 争议帖子 API
 
 #### GET /api/v2/barong/public/community/controversial-posts
+
 ```typescript
 // 请求参数
 {
@@ -267,6 +286,7 @@ CREATE INDEX idx_vote_history_target ON vote_history(target_type, target_id);
 ### 5. 用户投票历史 API
 
 #### GET /api/v2/barong/public/community/user-votes
+
 ```typescript
 // 请求参数
 {
@@ -357,21 +377,17 @@ interface ControversialBadgeProps {
 ### Reddit 热度算法（参考）
 
 ```typescript
-function calculateHotScore(
-  upvotes: number,
-  downvotes: number,
-  createdAt: Date
-): number {
+function calculateHotScore(upvotes: number, downvotes: number, createdAt: Date): number {
   const score = upvotes - downvotes;
   const order = Math.log10(Math.max(Math.abs(score), 1));
   const sign = score > 0 ? 1 : score < 0 ? -1 : 0;
-  
+
   const seconds = (Date.now() - createdAt.getTime()) / 1000;
   const hours = seconds / 3600;
-  
+
   // 时间衰减：每12小时衰减一半
   const timeDecay = hours / 12;
-  
+
   return sign * order - timeDecay;
 }
 ```
@@ -379,16 +395,13 @@ function calculateHotScore(
 ### 争议分数算法
 
 ```typescript
-function calculateControversyScore(
-  upvotes: number,
-  downvotes: number
-): number {
+function calculateControversyScore(upvotes: number, downvotes: number): number {
   const total = upvotes + downvotes;
   if (total === 0) return 0;
-  
+
   const balance = Math.min(upvotes, downvotes);
   const magnitude = upvotes + downvotes;
-  
+
   // 争议分数：平衡度 × 规模
   return (balance / total) * Math.log10(magnitude + 1);
 }
@@ -526,25 +539,25 @@ const CONTROVERSIAL_THRESHOLD = 0.4; // 40% 以上认为有争议
 
 ## 🎯 成功指标
 
-| 指标 | 目标 | 测量方式 |
-|------|------|---------|
-| 投票功能完成度 | 100% | 功能清单完成率 |
-| API 响应时间 | < 500ms | 性能监控 |
-| 用户投票率 | > 30% | 数据分析 |
-| 代码质量 | 9/10 | 代码审查 |
-| 用户满意度 | > 85% | 用户反馈 |
+| 指标           | 目标    | 测量方式       |
+| -------------- | ------- | -------------- |
+| 投票功能完成度 | 100%    | 功能清单完成率 |
+| API 响应时间   | < 500ms | 性能监控       |
+| 用户投票率     | > 30%   | 数据分析       |
+| 代码质量       | 9/10    | 代码审查       |
+| 用户满意度     | > 85%   | 用户反馈       |
 
 ---
 
 ## 📅 时间表
 
-| 阶段 | 时间 | 负责人 |
-|------|------|--------|
-| 数据库迁移 | 30分钟 | Kiro AI |
-| 后端 API | 60分钟 | Kiro AI |
-| 前端组件 | 45分钟 | Kiro AI |
-| 测试优化 | 15分钟 | Kiro AI |
-| **总计** | **2.5小时** | |
+| 阶段       | 时间        | 负责人  |
+| ---------- | ----------- | ------- |
+| 数据库迁移 | 30分钟      | Kiro AI |
+| 后端 API   | 60分钟      | Kiro AI |
+| 前端组件   | 45分钟      | Kiro AI |
+| 测试优化   | 15分钟      | Kiro AI |
+| **总计**   | **2.5小时** |         |
 
 ---
 
@@ -553,6 +566,7 @@ const CONTROVERSIAL_THRESHOLD = 0.4; // 40% 以上认为有争议
 准备好开始 Phase 12 的实施了吗？
 
 **下一步:**
+
 1. 创建数据库迁移脚本
 2. 实现后端 API
 3. 开发前端组件

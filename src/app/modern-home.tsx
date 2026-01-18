@@ -2,17 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowRight, 
-  Zap, 
-  Shield, 
-  Globe, 
+import {
+  ArrowRight,
+  Zap,
+  Shield,
+  Globe,
   ChevronDown,
   Play,
   Sparkles,
   Rocket,
   Cpu,
-  Network
+  Network,
 } from 'lucide-react';
 import '../styles/design-system.css';
 import GoldReserveSection from './components/GoldReserveSection';
@@ -41,16 +41,11 @@ const ModernNavbar = () => {
       <div className="quantum-container">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center gap-3"
-          >
+          <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-3">
             <div className="w-10 h-10 quantum-bg-primary rounded-xl flex items-center justify-center">
               <Zap className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold quantum-text-gradient">
-              Quantaureum
-            </span>
+            <span className="text-xl font-bold quantum-text-gradient">Quantaureum</span>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -72,9 +67,7 @@ const ModernNavbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <button className="quantum-btn quantum-btn-ghost">
-              Sign In
-            </button>
+            <button className="quantum-btn quantum-btn-ghost">Sign In</button>
             <button className="quantum-btn quantum-btn-primary">
               Get Started
               <ArrowRight className="w-4 h-4" />
@@ -87,9 +80,15 @@ const ModernNavbar = () => {
             className="md:hidden quantum-btn quantum-btn-ghost p-2"
           >
             <div className="w-6 h-6 flex flex-col justify-center gap-1">
-              <span className={`w-full h-0.5 bg-white transition-all ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
-              <span className={`w-full h-0.5 bg-white transition-all ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-              <span className={`w-full h-0.5 bg-white transition-all ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+              <span
+                className={`w-full h-0.5 bg-white transition-all ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}
+              ></span>
+              <span
+                className={`w-full h-0.5 bg-white transition-all ${isMobileMenuOpen ? 'opacity-0' : ''}`}
+              ></span>
+              <span
+                className={`w-full h-0.5 bg-white transition-all ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+              ></span>
             </div>
           </button>
         </div>
@@ -115,9 +114,7 @@ const ModernNavbar = () => {
                   </a>
                 ))}
                 <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
-                  <button className="quantum-btn quantum-btn-ghost w-full">
-                    Sign In
-                  </button>
+                  <button className="quantum-btn quantum-btn-ghost w-full">Sign In</button>
                   <button className="quantum-btn quantum-btn-primary w-full">
                     Get Started
                     <ArrowRight className="w-4 h-4" />
@@ -135,12 +132,12 @@ const ModernNavbar = () => {
 // Hero Section Component
 const ModernHeroSection = () => {
   const [currentFeature, setCurrentFeature] = useState(0);
-  
+
   const features = [
-    { icon: Shield, text: "Quantum-Safe Security" },
-    { icon: Zap, text: "Lightning Fast Transactions" },
-    { icon: Globe, text: "Global Decentralized Network" },
-    { icon: Cpu, text: "AI-Powered Consensus" }
+    { icon: Shield, text: 'Quantum-Safe Security' },
+    { icon: Zap, text: 'Lightning Fast Transactions' },
+    { icon: Globe, text: 'Global Decentralized Network' },
+    { icon: Cpu, text: 'AI-Powered Consensus' },
   ];
 
   useEffect(() => {
@@ -221,7 +218,9 @@ const ModernHeroSection = () => {
             transition={{ delay: 0.4 }}
             className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
           >
-            Experience unprecedented security, speed, and scalability with our quantum-resistant blockchain platform. Join the revolution that&apos;s reshaping the future of decentralized technology.
+            Experience unprecedented security, speed, and scalability with our quantum-resistant
+            blockchain platform. Join the revolution that&apos;s reshaping the future of
+            decentralized technology.
           </motion.p>
 
           {/* Feature Rotation */}
@@ -240,7 +239,7 @@ const ModernHeroSection = () => {
                 className="flex items-center gap-2 px-4 py-2 quantum-glass rounded-lg"
               >
                 {React.createElement(features[currentFeature].icon, {
-                  className: "w-5 h-5 text-purple-400"
+                  className: 'w-5 h-5 text-purple-400',
                 })}
                 <span className="text-sm font-medium">{features[currentFeature].text}</span>
               </motion.div>
@@ -275,7 +274,7 @@ const ModernHeroSection = () => {
               { value: '100K+', label: 'Active Users' },
               { value: '1M+', label: 'Transactions' },
               { value: '99.9%', label: 'Uptime' },
-              { value: '50+', label: 'Countries' }
+              { value: '50+', label: 'Countries' },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -284,9 +283,7 @@ const ModernHeroSection = () => {
                 transition={{ delay: 0.8 + index * 0.1 }}
                 className="text-center"
               >
-                <div className="text-2xl font-bold quantum-text-gradient mb-1">
-                  {stat.value}
-                </div>
+                <div className="text-2xl font-bold quantum-text-gradient mb-1">{stat.value}</div>
                 <div className="text-sm text-gray-400">{stat.label}</div>
               </motion.div>
             ))}
@@ -319,28 +316,32 @@ const ModernFeaturesSection = () => {
   const features = [
     {
       icon: Shield,
-      title: "Quantum-Safe Security",
-      description: "Advanced post-quantum cryptography ensures your assets remain secure against future quantum computing threats.",
-      color: "from-purple-500 to-pink-500"
+      title: 'Quantum-Safe Security',
+      description:
+        'Advanced post-quantum cryptography ensures your assets remain secure against future quantum computing threats.',
+      color: 'from-purple-500 to-pink-500',
     },
     {
       icon: Zap,
-      title: "Lightning Speed",
-      description: "Process thousands of transactions per second with our innovative consensus mechanism and optimized architecture.",
-      color: "from-cyan-500 to-blue-500"
+      title: 'Lightning Speed',
+      description:
+        'Process thousands of transactions per second with our innovative consensus mechanism and optimized architecture.',
+      color: 'from-cyan-500 to-blue-500',
     },
     {
       icon: Network,
-      title: "Decentralized Network",
-      description: "Join a truly decentralized ecosystem with nodes distributed globally for maximum resilience and accessibility.",
-      color: "from-emerald-500 to-teal-500"
+      title: 'Decentralized Network',
+      description:
+        'Join a truly decentralized ecosystem with nodes distributed globally for maximum resilience and accessibility.',
+      color: 'from-emerald-500 to-teal-500',
     },
     {
       icon: Cpu,
-      title: "AI-Powered Consensus",
-      description: "Our AI-enhanced consensus algorithm adapts to network conditions for optimal performance and security.",
-      color: "from-amber-500 to-orange-500"
-    }
+      title: 'AI-Powered Consensus',
+      description:
+        'Our AI-enhanced consensus algorithm adapts to network conditions for optimal performance and security.',
+      color: 'from-amber-500 to-orange-500',
+    },
   ];
 
   return (
@@ -351,11 +352,10 @@ const ModernFeaturesSection = () => {
         viewport={{ once: true }}
         className="text-center mb-16"
       >
-        <h2 className="quantum-heading-2 mb-4">
-          Built for the Future
-        </h2>
+        <h2 className="quantum-heading-2 mb-4">Built for the Future</h2>
         <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-          Discover the revolutionary features that make Quantaureum the most advanced blockchain platform ever created.
+          Discover the revolutionary features that make Quantaureum the most advanced blockchain
+          platform ever created.
         </p>
       </motion.div>
 
@@ -369,7 +369,9 @@ const ModernFeaturesSection = () => {
             transition={{ delay: index * 0.1 }}
             className="quantum-card quantum-card-interactive group"
           >
-            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+            <div
+              className={`w-12 h-12 rounded-xl bg-gradient-to-r ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}
+            >
               <feature.icon className="w-6 h-6 text-white" />
             </div>
             <h3 className="quantum-heading-3 mb-4">{feature.title}</h3>
@@ -392,4 +394,3 @@ export default function ModernHome() {
     </div>
   );
 }
-

@@ -15,17 +15,23 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     if (!userId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'User ID is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User ID is required',
+        },
+        { status: 400 }
+      );
     }
 
     // 确保通知表存在
@@ -45,7 +51,7 @@ export async function GET(request: NextRequest) {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
           )
         `;
-        
+
         // 创建索引（如果不存在）
         await sql`CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications(user_id)`;
         await sql`CREATE INDEX IF NOT EXISTS idx_notifications_is_read ON notifications(is_read)`;
@@ -114,10 +120,13 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error fetching notifications:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -125,20 +134,26 @@ export async function GET(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
     const { notificationId, userId, markAllAsRead } = body;
 
     if (!userId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'User ID is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User ID is required',
+        },
+        { status: 400 }
+      );
     }
 
     if (markAllAsRead) {
@@ -166,17 +181,23 @@ export async function PUT(request: NextRequest) {
         message: 'Notification marked as read',
       });
     } else {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Notification ID or markAllAsRead flag is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Notification ID or markAllAsRead flag is required',
+        },
+        { status: 400 }
+      );
     }
   } catch (error) {
     console.error('Error marking notification as read:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -188,17 +209,23 @@ export async function DELETE(request: NextRequest) {
 
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     if (!notificationId || !userId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Notification ID and User ID are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Notification ID and User ID are required',
+        },
+        { status: 400 }
+      );
     }
 
     await sql`
@@ -212,9 +239,12 @@ export async function DELETE(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error deleting notification:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

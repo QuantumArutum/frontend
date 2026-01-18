@@ -1,6 +1,6 @@
 /**
  * Quantaureum KYC验证服务
- * 
+ *
  * 生产级KYC (Know Your Customer) 验证流程
  * 支持身份证、护照、驾照验证
  */
@@ -59,26 +59,44 @@ const KYC_CONFIG = {
     standard: { dailyLimit: 10000, monthlyLimit: 50000, singleTransactionLimit: 5000 },
     advanced: { dailyLimit: 100000, monthlyLimit: 500000, singleTransactionLimit: 50000 },
   },
-  
+
   // 文档要求
   documentRequirements: {
     id_card: { front: true, back: true, selfie: true },
     passport: { front: true, back: false, selfie: true },
     drivers_license: { front: true, back: true, selfie: true },
   },
-  
+
   // 支持的国家
   supportedCountries: [
-    'CN', 'US', 'GB', 'DE', 'FR', 'JP', 'KR', 'SG', 'AU', 'CA',
-    'NL', 'CH', 'SE', 'NO', 'DK', 'FI', 'IE', 'NZ', 'HK', 'TW',
+    'CN',
+    'US',
+    'GB',
+    'DE',
+    'FR',
+    'JP',
+    'KR',
+    'SG',
+    'AU',
+    'CA',
+    'NL',
+    'CH',
+    'SE',
+    'NO',
+    'DK',
+    'FI',
+    'IE',
+    'NZ',
+    'HK',
+    'TW',
   ],
-  
+
   // 禁止的国家
   restrictedCountries: ['KP', 'IR', 'SY', 'CU', 'VE'],
-  
+
   // 最小年龄
   minimumAge: 18,
-  
+
   // 文档有效期检查（月）
   documentValidityMonths: 6,
 };
@@ -97,7 +115,10 @@ export class KYCService {
       errors.push('用户ID不能为空');
     }
 
-    if (!submission.documentType || !['id_card', 'passport', 'drivers_license'].includes(submission.documentType)) {
+    if (
+      !submission.documentType ||
+      !['id_card', 'passport', 'drivers_license'].includes(submission.documentType)
+    ) {
       errors.push('无效的证件类型');
     }
 
@@ -241,7 +262,7 @@ export class KYCService {
     const today = new Date();
     let age = today.getFullYear() - dob.getFullYear();
     const monthDiff = today.getMonth() - dob.getMonth();
-    
+
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
       age--;
     }
@@ -261,7 +282,7 @@ export class KYCService {
       'data:image/webp;base64,',
     ];
 
-    return validPrefixes.some(prefix => base64Image.startsWith(prefix));
+    return validPrefixes.some((prefix) => base64Image.startsWith(prefix));
   }
 
   /**
@@ -274,8 +295,8 @@ export class KYCService {
   }> {
     // 实际生产环境应调用OCR服务（如阿里云、腾讯云、AWS Textract等）
     // 这里模拟验证过程
-    
-    await new Promise(resolve => setTimeout(resolve, 100));
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     // 模拟验证成功
     return {
@@ -298,8 +319,8 @@ export class KYCService {
   }> {
     // 实际生产环境应调用人脸识别服务（如Face++、阿里云、AWS Rekognition等）
     // 这里模拟验证过程
-    
-    await new Promise(resolve => setTimeout(resolve, 100));
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     // 模拟验证成功，相似度95%
     return {

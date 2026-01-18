@@ -16,11 +16,7 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ children, columns = 4 }) =
     4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
   };
 
-  return (
-    <div className={`grid ${gridCols[columns]} gap-4`}>
-      {children}
-    </div>
-  );
+  return <div className={`grid ${gridCols[columns]} gap-4`}>{children}</div>;
 };
 
 interface StatItemProps {
@@ -102,15 +98,18 @@ export const StatItem: React.FC<StatItemProps> = ({
           </div>
         )}
         {trend && (
-          <div className={`flex items-center gap-1 text-sm font-medium ${
-            trend.isPositive ? 'text-green-400' : 'text-red-400'
-          }`}>
+          <div
+            className={`flex items-center gap-1 text-sm font-medium ${
+              trend.isPositive ? 'text-green-400' : 'text-red-400'
+            }`}
+          >
             {trend.isPositive ? (
               <TrendingUp className="w-4 h-4" />
             ) : (
               <TrendingDown className="w-4 h-4" />
             )}
-            {trend.isPositive ? '+' : ''}{trend.value}%
+            {trend.isPositive ? '+' : ''}
+            {trend.value}%
           </div>
         )}
       </div>

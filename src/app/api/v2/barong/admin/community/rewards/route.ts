@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
           points: pointsConfig,
           levels: levelsConfig,
           topUsers: reputations.users,
-        }
+        },
       });
     }
 
@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
         data: {
           users: result.users,
           total: result.total,
-        }
+        },
       });
     }
 
@@ -88,7 +88,13 @@ export async function POST(request: NextRequest) {
 
     if (type === 'badge' || action === 'award_badge') {
       const { user_id, badge_type, badge_name, badge_icon, description } = body;
-      const badge = await communityService.awardBadge(user_id, badge_type, badge_name, badge_icon, description);
+      const badge = await communityService.awardBadge(
+        user_id,
+        badge_type,
+        badge_name,
+        badge_icon,
+        description
+      );
       return NextResponse.json({ success: true, data: badge });
     }
 

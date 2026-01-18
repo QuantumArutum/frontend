@@ -20,7 +20,7 @@ interface LanguageContextType {
   currentLanguage: string;
   languages: typeof languages;
   changeLanguage: (languageCode: string) => void;
-  getCurrentLanguageInfo: () => typeof languages[0];
+  getCurrentLanguageInfo: () => (typeof languages)[0];
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -35,13 +35,13 @@ export const GlobalLanguageProvider: React.FC<LanguageProviderProps> = ({ childr
   useEffect(() => {
     // Load saved language from localStorage
     const savedLanguage = localStorage.getItem('quantaureum-global-language');
-    if (savedLanguage && languages.find(l => l.code === savedLanguage)) {
+    if (savedLanguage && languages.find((l) => l.code === savedLanguage)) {
       setCurrentLanguage(savedLanguage);
       applyLanguage(savedLanguage);
     } else {
       // Detect browser language
       const browserLang = navigator.language.split('-')[0];
-      const detectedLang = languages.find(l => l.code === browserLang);
+      const detectedLang = languages.find((l) => l.code === browserLang);
       if (detectedLang) {
         setCurrentLanguage(detectedLang.code);
         applyLanguage(detectedLang.code);
@@ -52,35 +52,40 @@ export const GlobalLanguageProvider: React.FC<LanguageProviderProps> = ({ childr
   const applyLanguage = (languageCode: string) => {
     // Apply to document
     document.documentElement.lang = languageCode;
-    
+
     // Apply RTL for Arabic
     const rtlLanguages = ['ar'];
     const isRTL = rtlLanguages.includes(languageCode);
     document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-    
+
     // Apply RTL CSS class
     if (isRTL) {
       document.documentElement.classList.add('rtl-language');
     } else {
       document.documentElement.classList.remove('rtl-language');
     }
-    
+
     // Dispatch custom event for other components to listen
-    window.dispatchEvent(new CustomEvent('globalLanguageChanged', { 
-      detail: { language: languageCode } 
-    }));
-    
+    window.dispatchEvent(
+      new CustomEvent('globalLanguageChanged', {
+        detail: { language: languageCode },
+      })
+    );
+
     // Sync with main website if in iframe
     if (window.parent !== window) {
-      window.parent.postMessage({
-        type: 'GLOBAL_LANGUAGE_CHANGE',
-        language: languageCode
-      }, '*');
+      window.parent.postMessage(
+        {
+          type: 'GLOBAL_LANGUAGE_CHANGE',
+          language: languageCode,
+        },
+        '*'
+      );
     }
   };
 
   const changeLanguage = (languageCode: string) => {
-    if (languages.find(l => l.code === languageCode)) {
+    if (languages.find((l) => l.code === languageCode)) {
       setCurrentLanguage(languageCode);
       localStorage.setItem('quantaureum-global-language', languageCode);
       applyLanguage(languageCode);
@@ -88,7 +93,7 @@ export const GlobalLanguageProvider: React.FC<LanguageProviderProps> = ({ childr
   };
 
   const getCurrentLanguageInfo = () => {
-    return languages.find(l => l.code === currentLanguage) || languages[0];
+    return languages.find((l) => l.code === currentLanguage) || languages[0];
   };
 
   // Listen for language changes from other parts of the website
@@ -123,11 +128,7 @@ export const GlobalLanguageProvider: React.FC<LanguageProviderProps> = ({ childr
     getCurrentLanguageInfo,
   };
 
-  return (
-    <LanguageContext.Provider value={value}>
-      {children}
-    </LanguageContext.Provider>
-  );
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 };
 
 export const useGlobalLanguage = (): LanguageContextType => {

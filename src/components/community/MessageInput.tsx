@@ -46,7 +46,7 @@ export default function MessageInput({
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
-    
+
     // 自动调整高度
     e.target.style.height = 'auto';
     e.target.style.height = `${Math.min(e.target.scrollHeight, 120)}px`;
@@ -81,17 +81,14 @@ export default function MessageInput({
         disabled={!content.trim() || isSending || disabled}
         className={`
           p-3 rounded-lg transition-colors
-          ${content.trim() && !isSending && !disabled
-            ? 'bg-blue-600 hover:bg-blue-700 text-white'
-            : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+          ${
+            content.trim() && !isSending && !disabled
+              ? 'bg-blue-600 hover:bg-blue-700 text-white'
+              : 'bg-gray-700 text-gray-400 cursor-not-allowed'
           }
         `}
       >
-        {isSending ? (
-          <Loader2 className="w-5 h-5 animate-spin" />
-        ) : (
-          <Send className="w-5 h-5" />
-        )}
+        {isSending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
       </motion.button>
     </div>
   );

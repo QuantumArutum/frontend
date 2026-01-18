@@ -60,7 +60,7 @@ export default function PostDetailPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { t } = useTranslation();
-  
+
   const postId = searchParams?.get('id');
 
   const [loading, setLoading] = useState(true);
@@ -88,23 +88,23 @@ export default function PostDetailPage() {
     // 检查登录状态
     const token = localStorage.getItem('auth_token');
     const userInfoStr = localStorage.getItem('user_info');
-    
+
     let currentUserId: string | null = null;
-    
+
     if (token && userInfoStr) {
       try {
         const user = JSON.parse(userInfoStr);
         setUserInfo(user);
         setIsAuthenticated(true);
         currentUserId = user.id;
-        
+
         // 检查是否是版主
         checkModeratorStatus(user.id);
       } catch (error) {
         console.error('Failed to parse user info:', error);
       }
     }
-    
+
     // 加载帖子数据
     loadPostDetail(currentUserId);
     loadComments(currentUserId);
@@ -114,7 +114,9 @@ export default function PostDetailPage() {
   // 检查版主状态
   const checkModeratorStatus = async (userId: string) => {
     try {
-      const response = await barongAPI.get(`/public/community/mod/moderators?currentUserId=${userId}`);
+      const response = await barongAPI.get(
+        `/public/community/mod/moderators?currentUserId=${userId}`
+      );
       if (response.data.success) {
         setIsModerator(true);
       }
@@ -130,7 +132,7 @@ export default function PostDetailPage() {
       setError(null);
       const url = `/public/community/post-detail?postId=${postId}${currentUserId ? `&currentUserId=${currentUserId}` : ''}`;
       const response = await barongAPI.get(url);
-      
+
       if (response.data.success) {
         setPost(response.data.data);
       } else {
@@ -149,7 +151,7 @@ export default function PostDetailPage() {
       setCommentsLoading(true);
       const url = `/public/community/post-comments?postId=${postId}&sort=${commentSort}${currentUserId ? `&currentUserId=${currentUserId}` : ''}`;
       const response = await barongAPI.get(url);
-      
+
       if (response.data.success) {
         setComments(response.data.data.comments);
       }
@@ -171,7 +173,7 @@ export default function PostDetailPage() {
 
     const newIsLiked = !post.isLiked;
     const newLikeCount = newIsLiked ? post.likeCount + 1 : post.likeCount - 1;
-    
+
     setPost({
       ...post,
       isLiked: newIsLiked,
@@ -231,7 +233,7 @@ export default function PostDetailPage() {
       if (response.data.success) {
         setComments([response.data.data, ...comments]);
         setCommentContent('');
-        
+
         if (post) {
           setPost({
             ...post,
@@ -258,16 +260,18 @@ export default function PostDetailPage() {
 
     const originalComments = [...comments];
 
-    setComments(comments.map(c => {
-      if (c.id === commentId) {
-        return {
-          ...c,
-          isLiked: !c.isLiked,
-          likeCount: c.isLiked ? c.likeCount - 1 : c.likeCount + 1,
-        };
-      }
-      return c;
-    }));
+    setComments(
+      comments.map((c) => {
+        if (c.id === commentId) {
+          return {
+            ...c,
+            isLiked: !c.isLiked,
+            likeCount: c.isLiked ? c.likeCount - 1 : c.likeCount + 1,
+          };
+        }
+        return c;
+      })
+    );
 
     try {
       const response = await barongAPI.post('/public/community/like-comment', {
@@ -276,16 +280,18 @@ export default function PostDetailPage() {
       });
 
       if (response.data.success) {
-        setComments(comments.map(c => {
-          if (c.id === commentId) {
-            return {
-              ...c,
-              isLiked: response.data.data.isLiked,
-              likeCount: response.data.data.likeCount,
-            };
-          }
-          return c;
-        }));
+        setComments(
+          comments.map((c) => {
+            if (c.id === commentId) {
+              return {
+                ...c,
+                isLiked: response.data.data.isLiked,
+                likeCount: response.data.data.likeCount,
+              };
+            }
+            return c;
+          })
+        );
       }
     } catch (err) {
       console.error('Failed to like comment:', err);
@@ -319,7 +325,7 @@ export default function PostDetailPage() {
       if (response.data.success) {
         // 重新加载评论列表
         loadComments(userInfo.id);
-        
+
         // 更新帖子评论数
         if (post) {
           setPost({
@@ -341,7 +347,7 @@ export default function PostDetailPage() {
     try {
       const url = `/public/community/comment-replies?commentId=${commentId}${userInfo ? `&currentUserId=${userInfo.id}` : ''}`;
       const response = await barongAPI.get(url);
-      
+
       if (response.data.success) {
         return response.data.data.replies;
       }
@@ -565,9 +571,7 @@ export default function PostDetailPage() {
 
           {/* 评论区 */}
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">
-              评论 ({post.commentCount})
-            </h2>
+            <h2 className="text-2xl font-bold text-white mb-6">评论 ({post.commentCount})</h2>
 
             {/* 发表评论 */}
             {isAuthenticated ? (
@@ -581,9 +585,7 @@ export default function PostDetailPage() {
                   maxLength={1000}
                 />
                 <div className="flex items-center justify-between mt-2">
-                  <span className="text-sm text-white/60">
-                    {commentContent.length}/1000
-                  </span>
+                  <span className="text-sm text-white/60">{commentContent.length}/1000</span>
                   <button
                     type="submit"
                     disabled={submittingComment || !commentContent.trim()}
@@ -607,10 +609,7 @@ export default function PostDetailPage() {
 
             {/* 评论排序 */}
             {comments.length > 0 && (
-              <CommentSort
-                currentSort={commentSort}
-                onSortChange={handleSortChange}
-              />
+              <CommentSort currentSort={commentSort} onSortChange={handleSortChange} />
             )}
 
             {/* 评论列表 */}
@@ -619,9 +618,7 @@ export default function PostDetailPage() {
                 <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
               </div>
             ) : comments.length === 0 ? (
-              <div className="text-center py-8 text-white/60">
-                暂无评论，快来发表第一条评论吧！
-              </div>
+              <div className="text-center py-8 text-white/60">暂无评论，快来发表第一条评论吧！</div>
             ) : (
               <CommentTree
                 comments={comments}

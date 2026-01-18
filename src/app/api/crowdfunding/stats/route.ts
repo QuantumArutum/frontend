@@ -11,14 +11,14 @@ const mockStats = {
   total_backers: 45000,
   success_rate: 78.5,
   active_projects: 42,
-  trending_categories: ['technology', 'gaming', 'art', 'music']
+  trending_categories: ['technology', 'gaming', 'art', 'music'],
 };
 
 export const GET = createSecureHandler(
   async (_request: NextRequest): Promise<NextResponse> => {
     return successResponse({
       data: mockStats,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   },
   { rateLimit: true, allowedMethods: ['GET'] }

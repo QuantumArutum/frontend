@@ -14,11 +14,14 @@ export async function GET() {
     // 检查数据库连接
     if (!sql) {
       console.error('[forum-categories] Database connection not available');
-      return NextResponse.json({
-        success: false,
-        error: 'Database connection not available',
-        message: '数据库连接不可用，请稍后重试'
-      }, { status: 503 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Database connection not available',
+          message: '数据库连接不可用，请稍后重试',
+        },
+        { status: 503 }
+      );
     }
 
     // 使用超时控制
@@ -27,7 +30,7 @@ export async function GET() {
 
     try {
       // 简化查询，移除复杂的子查询
-      const categories = await sql`
+      const categories = (await sql`
         SELECT 
           c.id,
           c.name,
@@ -43,12 +46,12 @@ export async function GET() {
         GROUP BY c.id, c.name, c.slug, c.description, c.icon, c.color, c.sort_order
         ORDER BY c.sort_order ASC, c.name ASC
         LIMIT 20
-      ` as Category[];
+      `) as Category[];
 
       clearTimeout(timeoutId);
 
       // 格式化数据
-      const formattedCategories = categories.map(cat => ({
+      const formattedCategories = categories.map((cat) => ({
         id: cat.id,
         name: cat.name,
         slug: cat.slug,
@@ -57,41 +60,39 @@ export async function GET() {
         color: cat.color || '#6366f1',
         posts: cat.postCount || 0,
         topics: cat.postCount || 0,
-        lastPost: null // 移除复杂查询以提高性能
+        lastPost: null, // 移除复杂查询以提高性能
       }));
 
       return NextResponse.json({
         success: true,
-        data: formattedCategories.length > 0 ? formattedCategories : getDefaultCategories()
+        data: formattedCategories.length > 0 ? formattedCategories : getDefaultCategories(),
       });
-
     } catch (queryError) {
       clearTimeout(timeoutId);
-      
+
       if (queryError instanceof Error && queryError.name === 'AbortError') {
         console.error('Query timeout');
         return NextResponse.json({
           success: true,
-          data: getDefaultCategories()
+          data: getDefaultCategories(),
         });
       }
       throw queryError;
     }
-
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const errorStack = error instanceof Error ? error.stack : '';
-    
+
     console.error('[forum-categories] Error fetching categories:', {
       message: errorMessage,
       stack: errorStack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-    
+
     // 返回默认分类而不是错误
     return NextResponse.json({
       success: true,
-      data: getDefaultCategories()
+      data: getDefaultCategories(),
     });
   }
 }
@@ -110,7 +111,7 @@ function getDefaultCategories() {
       color: '#6366f1',
       posts: 0,
       topics: 0,
-      lastPost: null
+      lastPost: null,
     },
     {
       id: 2,
@@ -121,7 +122,7 @@ function getDefaultCategories() {
       color: '#f59e0b',
       posts: 0,
       topics: 0,
-      lastPost: null
+      lastPost: null,
     },
     {
       id: 3,
@@ -132,7 +133,7 @@ function getDefaultCategories() {
       color: '#10b981',
       posts: 0,
       topics: 0,
-      lastPost: null
+      lastPost: null,
     },
     {
       id: 4,
@@ -143,7 +144,7 @@ function getDefaultCategories() {
       color: '#8b5cf6',
       posts: 0,
       topics: 0,
-      lastPost: null
+      lastPost: null,
     },
     {
       id: 5,
@@ -154,7 +155,7 @@ function getDefaultCategories() {
       color: '#ec4899',
       posts: 0,
       topics: 0,
-      lastPost: null
-    }
+      lastPost: null,
+    },
   ];
 }

@@ -24,10 +24,13 @@ async function getCurrentUserId(request: NextRequest): Promise<string | null> {
 export async function POST(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     // 确保表存在
@@ -45,25 +48,34 @@ export async function POST(request: NextRequest) {
     const { userId, currentUserId } = body;
 
     if (!userId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'userId is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'userId is required',
+        },
+        { status: 400 }
+      );
     }
 
     if (!currentUserId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Authentication required. Please login first.' 
-      }, { status: 401 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Authentication required. Please login first.',
+        },
+        { status: 401 }
+      );
     }
 
     // 不能关注自己
     if (currentUserId === userId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Cannot follow yourself' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Cannot follow yourself',
+        },
+        { status: 400 }
+      );
     }
 
     // 检查目标用户是否存在
@@ -72,10 +84,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (targetUserResult.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Target user not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Target user not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 检查是否已经关注
@@ -85,10 +100,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (existingFollow.length > 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Already following this user' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Already following this user',
+        },
+        { status: 400 }
+      );
     }
 
     // 创建关注关系
@@ -105,7 +123,7 @@ export async function POST(request: NextRequest) {
       `;
       const userEmail = userResult[0]?.email || '';
       let displayName = userEmail.split('@')[0];
-      
+
       try {
         const profileResult = await sql`
           SELECT display_name FROM user_profiles WHERE user_id = ${currentUserId}
@@ -123,7 +141,7 @@ export async function POST(request: NextRequest) {
       `;
       const targetUserEmail = targetUserResult[0]?.email || '';
       let targetUserName = targetUserEmail.split('@')[0];
-      
+
       try {
         const targetProfileResult = await sql`
           SELECT display_name FROM user_profiles WHERE user_id = ${userId}
@@ -162,20 +180,26 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error following user:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }
 
 export async function DELETE(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -183,17 +207,23 @@ export async function DELETE(request: NextRequest) {
     const currentUserId = searchParams.get('currentUserId');
 
     if (!userId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'userId is required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'userId is required',
+        },
+        { status: 400 }
+      );
     }
 
     if (!currentUserId) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Authentication required. Please login first.' 
-      }, { status: 401 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Authentication required. Please login first.',
+        },
+        { status: 401 }
+      );
     }
 
     // 删除关注关系
@@ -204,10 +234,13 @@ export async function DELETE(request: NextRequest) {
     `;
 
     if (result.length === 0) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Not following this user' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Not following this user',
+        },
+        { status: 400 }
+      );
     }
 
     return NextResponse.json({
@@ -216,9 +249,12 @@ export async function DELETE(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error unfollowing user:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Internal server error',
+      },
+      { status: 500 }
+    );
   }
 }

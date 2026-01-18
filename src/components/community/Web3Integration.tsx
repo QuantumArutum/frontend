@@ -2,10 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Wallet,
-  Unlink
-} from 'lucide-react';
+import { Wallet, Unlink } from 'lucide-react';
 
 interface WalletInfo {
   address: string;
@@ -52,7 +49,7 @@ export default function Web3Integration() {
     address: '',
     balance: '0',
     network: 'Ethereum',
-    isConnected: false
+    isConnected: false,
   });
 
   const [userProfile] = useState<UserProfile>({
@@ -69,7 +66,7 @@ export default function Web3Integration() {
         image: '🌟',
         rarity: 'legendary',
         category: 'Community',
-        earnedDate: '2024-01-15'
+        earnedDate: '2024-01-15',
       },
       {
         id: '2',
@@ -78,7 +75,7 @@ export default function Web3Integration() {
         image: '🏛️',
         rarity: 'epic',
         category: 'Governance',
-        earnedDate: '2024-03-20'
+        earnedDate: '2024-03-20',
       },
       {
         id: '3',
@@ -87,8 +84,8 @@ export default function Web3Integration() {
         image: '⚙️',
         rarity: 'rare',
         category: 'Technical',
-        earnedDate: '2024-05-10'
-      }
+        earnedDate: '2024-05-10',
+      },
     ],
     achievements: [
       {
@@ -103,11 +100,11 @@ export default function Web3Integration() {
           image: '👷',
           rarity: 'epic',
           category: 'Content',
-          earnedDate: '2024-06-01'
+          earnedDate: '2024-06-01',
         },
         progress: 78,
         maxProgress: 100,
-        isCompleted: false
+        isCompleted: false,
       },
       {
         id: '2',
@@ -121,19 +118,21 @@ export default function Web3Integration() {
           image: '⭐',
           rarity: 'rare',
           category: 'Governance',
-          earnedDate: '2024-04-15'
+          earnedDate: '2024-04-15',
         },
         progress: 25,
         maxProgress: 25,
-        isCompleted: true
-      }
+        isCompleted: true,
+      },
     ],
     stakedAmount: '15,000 QAU',
-    votingPower: 15000
+    votingPower: 15000,
   });
 
   const [showWalletModal, setShowWalletModal] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<'profile' | 'badges' | 'achievements' | 'staking'>('profile');
+  const [selectedTab, setSelectedTab] = useState<'profile' | 'badges' | 'achievements' | 'staking'>(
+    'profile'
+  );
 
   const connectWallet = async () => {
     // 模拟钱包连接
@@ -141,7 +140,7 @@ export default function Web3Integration() {
       address: '0x742d35Cc6634C0532925a3b8D4e6D3b6e8d3e8A0',
       balance: '1,234.56 QAU',
       network: 'Quantaureum Mainnet',
-      isConnected: true
+      isConnected: true,
     });
     setShowWalletModal(false);
   };
@@ -151,27 +150,37 @@ export default function Web3Integration() {
       address: '',
       balance: '0',
       network: 'Ethereum',
-      isConnected: false
+      isConnected: false,
     });
   };
 
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
-      case 'common': return 'from-gray-400 to-gray-500';
-      case 'rare': return 'from-blue-500 to-cyan-500';
-      case 'epic': return 'from-purple-500 to-pink-500';
-      case 'legendary': return 'from-yellow-500 to-orange-500';
-      default: return 'from-gray-500 to-gray-600';
+      case 'common':
+        return 'from-gray-400 to-gray-500';
+      case 'rare':
+        return 'from-blue-500 to-cyan-500';
+      case 'epic':
+        return 'from-purple-500 to-pink-500';
+      case 'legendary':
+        return 'from-yellow-500 to-orange-500';
+      default:
+        return 'from-gray-500 to-gray-600';
     }
   };
 
   const getRarityIcon = (rarity: string) => {
     switch (rarity) {
-      case 'common': return '⚪';
-      case 'rare': return '🔵';
-      case 'epic': return '🟣';
-      case 'legendary': return '🟡';
-      default: return '⚪';
+      case 'common':
+        return '⚪';
+      case 'rare':
+        return '🔵';
+      case 'epic':
+        return '🟣';
+      case 'legendary':
+        return '🟡';
+      default:
+        return '⚪';
     }
   };
 
@@ -265,22 +274,31 @@ export default function Web3Integration() {
                     <div className="space-y-2">
                       <div className="flex justify-between">
                         <span className="text-gray-400">声望值</span>
-                        <span className="text-white font-medium">{userProfile.reputation.toLocaleString()}</span>
+                        <span className="text-white font-medium">
+                          {userProfile.reputation.toLocaleString()}
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-400">质押数量</span>
-                        <span className="text-purple-400 font-medium">{userProfile.stakedAmount}</span>
+                        <span className="text-purple-400 font-medium">
+                          {userProfile.stakedAmount}
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-400">投票力</span>
-                        <span className="text-green-400 font-medium">{userProfile.votingPower.toLocaleString()}</span>
+                        <span className="text-green-400 font-medium">
+                          {userProfile.votingPower.toLocaleString()}
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div>
                     <h5 className="text-white font-medium mb-3">等级进度</h5>
                     <div className="w-full bg-white/20 rounded-full h-3">
-                      <div className="bg-gradient-to-r from-purple-500 to-cyan-500 h-3 rounded-full" style={{width: '75%'}}></div>
+                      <div
+                        className="bg-gradient-to-r from-purple-500 to-cyan-500 h-3 rounded-full"
+                        style={{ width: '75%' }}
+                      ></div>
                     </div>
                     <p className="text-sm text-gray-400 mt-2">15级 - 距离16级还需2,500经验</p>
                   </div>
@@ -304,7 +322,9 @@ export default function Web3Integration() {
                       <div className="text-3xl mb-2">{badge.image}</div>
                       <h5 className="text-white font-medium text-sm mb-1">{badge.name}</h5>
                       <p className="text-xs text-gray-400 mb-2">{badge.description}</p>
-                      <span className={`px-2 py-1 bg-gradient-to-r ${getRarityColor(badge.rarity)} text-white text-xs rounded-full`}>
+                      <span
+                        className={`px-2 py-1 bg-gradient-to-r ${getRarityColor(badge.rarity)} text-white text-xs rounded-full`}
+                      >
                         {getRarityIcon(badge.rarity)} {badge.rarity}
                       </span>
                     </motion.div>
@@ -324,18 +344,26 @@ export default function Web3Integration() {
                     <div key={achievement.id} className="bg-white/5 rounded-xl p-4">
                       <div className="flex items-center justify-between mb-2">
                         <h5 className="text-white font-medium">{achievement.title}</h5>
-                        <span className="text-purple-400 font-medium">+{achievement.points} XP</span>
+                        <span className="text-purple-400 font-medium">
+                          +{achievement.points} XP
+                        </span>
                       </div>
                       <p className="text-sm text-gray-400 mb-3">{achievement.description}</p>
                       <div className="w-full bg-white/20 rounded-full h-2 mb-2">
-                        <div 
+                        <div
                           className={`h-2 rounded-full ${achievement.isCompleted ? 'bg-green-500' : 'bg-gradient-to-r from-purple-500 to-cyan-500'}`}
-                          style={{width: `${(achievement.progress / achievement.maxProgress) * 100}%`}}
+                          style={{
+                            width: `${(achievement.progress / achievement.maxProgress) * 100}%`,
+                          }}
                         ></div>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-400">{achievement.progress}/{achievement.maxProgress}</span>
-                        <span className={achievement.isCompleted ? 'text-green-400' : 'text-gray-400'}>
+                        <span className="text-gray-400">
+                          {achievement.progress}/{achievement.maxProgress}
+                        </span>
+                        <span
+                          className={achievement.isCompleted ? 'text-green-400' : 'text-gray-400'}
+                        >
                           {achievement.isCompleted ? '已完成' : '进行中'}
                         </span>
                       </div>

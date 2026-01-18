@@ -1,11 +1,16 @@
 /**
  * 创建支付请求API
- * 
+ *
  * 生成支付地址和金额
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createSecureHandler, successResponse, errorResponse, ValidationRule } from '@/lib/security/middleware';
+import {
+  createSecureHandler,
+  successResponse,
+  errorResponse,
+  ValidationRule,
+} from '@/lib/security/middleware';
 import { SecurityLogger, SecurityEventType, getClientIP, getUserAgent } from '@/lib/security';
 import { PaymentVerificationService } from '@/lib/payment/verification';
 import { KYCService } from '@/lib/kyc/service';
@@ -41,7 +46,7 @@ export const POST = createSecureHandler(
         if (user) {
           const kycLevel = user.kycStatus === 'approved' ? 'standard' : 'basic';
           const limitCheck = await KYCService.checkTransactionLimit(userId, amountUSD, kycLevel);
-          
+
           if (!limitCheck.allowed) {
             return errorResponse(limitCheck.reason || '超出交易限额', 400);
           }
@@ -98,7 +103,6 @@ export const POST = createSecureHandler(
         },
         message: `请发送 ${paymentRequest.expectedAmount} ${currency} 到指定地址`,
       });
-
     } catch (error: unknown) {
       SecurityLogger.log(
         SecurityEventType.PAYMENT_FAILED,
@@ -108,7 +112,10 @@ export const POST = createSecureHandler(
         ip,
         userAgent
       );
-      return errorResponse('创建支付请求失败: ' + (error instanceof Error ? error.message : 'Unknown error'), 500);
+      return errorResponse(
+        '创建支付请求失败: ' + (error instanceof Error ? error.message : 'Unknown error'),
+        500
+      );
     }
   },
   { rateLimit: true, validateBody: validationRules, logRequest: true }

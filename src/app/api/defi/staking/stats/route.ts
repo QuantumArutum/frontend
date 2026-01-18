@@ -18,7 +18,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -30,12 +30,14 @@ export const GET = createSecureHandler(
   async (_request: NextRequest): Promise<NextResponse> => {
     try {
       const result = await callRPC('qau_getStakingStats');
-      
+
       // Convert wei to human readable
-      const totalValueLocked = result.totalValueLocked ? 
-        Number(BigInt(result.totalValueLocked) / BigInt(1e18)) : 0;
-      const totalRewardsDistributed = result.totalRewardsDistributed ?
-        Number(BigInt(result.totalRewardsDistributed) / BigInt(1e18)) : 0;
+      const totalValueLocked = result.totalValueLocked
+        ? Number(BigInt(result.totalValueLocked) / BigInt(1e18))
+        : 0;
+      const totalRewardsDistributed = result.totalRewardsDistributed
+        ? Number(BigInt(result.totalRewardsDistributed) / BigInt(1e18))
+        : 0;
 
       return successResponse({
         data: {
@@ -48,7 +50,7 @@ export const GET = createSecureHandler(
           activeStakers: result.activeStakers || 0,
           activePools: result.activePools || 3,
         },
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       console.error('Failed to fetch staking stats:', error);
@@ -63,7 +65,7 @@ export const GET = createSecureHandler(
           totalStakers: 28200,
           activePools: 3,
         },
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     }
   },

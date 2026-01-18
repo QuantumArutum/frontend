@@ -28,7 +28,7 @@ const resources = {
   pt,
   it,
   nl,
-  vi
+  vi,
 };
 
 // RTL languages list
@@ -42,11 +42,11 @@ export function isRTLLanguage(languageCode: string): boolean {
 // Helper function to apply RTL direction to document
 export function applyRTLDirection(languageCode: string): void {
   if (typeof document === 'undefined') return;
-  
+
   const isRTL = isRTLLanguage(languageCode);
   document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
   document.documentElement.lang = languageCode;
-  
+
   if (isRTL) {
     document.documentElement.classList.add('rtl-language');
   } else {
@@ -57,29 +57,27 @@ export function applyRTLDirection(languageCode: string): void {
 // Detect initial language from localStorage only (default to English)
 function detectInitialLanguage(): string {
   if (typeof window === 'undefined') return 'en';
-  
+
   // Only check localStorage - user must manually select language
   const savedLanguage = localStorage.getItem('quantaureum-global-language');
   if (savedLanguage && resources[savedLanguage as keyof typeof resources]) {
     return savedLanguage;
   }
-  
+
   // Default to English
   return 'en';
 }
 
 const initialLanguage = detectInitialLanguage();
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: initialLanguage,
-    fallbackLng: 'en',
-    interpolation: {
-      escapeValue: false
-    }
-  });
+i18n.use(initReactI18next).init({
+  resources,
+  lng: initialLanguage,
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 // Apply RTL direction on language change
 i18n.on('languageChanged', (lng) => {

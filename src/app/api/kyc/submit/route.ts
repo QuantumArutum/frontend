@@ -1,11 +1,16 @@
 /**
  * KYC提交API
- * 
+ *
  * 处理KYC文档提交和验证
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createSecureHandler, successResponse, errorResponse, ValidationRule } from '@/lib/security/middleware';
+import {
+  createSecureHandler,
+  successResponse,
+  errorResponse,
+  ValidationRule,
+} from '@/lib/security/middleware';
 import { SecurityLogger, SecurityEventType, getClientIP, getUserAgent } from '@/lib/security';
 import { KYCService } from '@/lib/kyc/service';
 import { db } from '@/lib/database';
@@ -88,7 +93,10 @@ export const POST = createSecureHandler(
           userAgent
         );
 
-        return errorResponse(result.rejectionReason || result.errors?.join(', ') || 'KYC验证失败', 400);
+        return errorResponse(
+          result.rejectionReason || result.errors?.join(', ') || 'KYC验证失败',
+          400
+        );
       }
 
       // 更新用户KYC状态
@@ -111,11 +119,8 @@ export const POST = createSecureHandler(
         level: result.level,
         verificationId: result.verificationId,
         limits: KYCService.getLimits(result.level || 'basic'),
-        message: result.status === 'approved' 
-          ? 'KYC验证通过！' 
-          : 'KYC已提交，正在审核中',
+        message: result.status === 'approved' ? 'KYC验证通过！' : 'KYC已提交，正在审核中',
       });
-
     } catch (error: unknown) {
       SecurityLogger.log(
         SecurityEventType.KYC_REJECTED,
@@ -125,7 +130,10 @@ export const POST = createSecureHandler(
         ip,
         userAgent
       );
-      return errorResponse('KYC提交失败: ' + (error instanceof Error ? error.message : 'Unknown error'), 500);
+      return errorResponse(
+        'KYC提交失败: ' + (error instanceof Error ? error.message : 'Unknown error'),
+        500
+      );
     }
   },
   { rateLimit: true, validateBody: validationRules, logRequest: true }

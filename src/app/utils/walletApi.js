@@ -97,7 +97,7 @@ export const walletApi = {
     const qaPattern = /^QA[a-fA-F0-9]{40}$/;
     const ethPattern = /^0x[a-fA-F0-9]{40}$/;
     const btcPattern = /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/;
-    
+
     return qaPattern.test(address) || ethPattern.test(address) || btcPattern.test(address);
   },
 
@@ -105,7 +105,9 @@ export const walletApi = {
   formatBalance(balance, decimals = 6) {
     if (balance === 0) return '0';
     if (balance < 0.000001) return '< 0.000001';
-    return parseFloat(balance).toFixed(decimals).replace(/\.?0+$/, '');
+    return parseFloat(balance)
+      .toFixed(decimals)
+      .replace(/\.?0+$/, '');
   },
 
   // 格式化地址显示
@@ -118,12 +120,12 @@ export const walletApi = {
   // 计算交易费用
   calculateFee(amount, currency) {
     const feeRates = {
-      QAU: 0.001,  // 0.1%
+      QAU: 0.001, // 0.1%
       BTC: 0.0005, // 0.05%
-      ETH: 0.002,  // 0.2%
-      USDT: 0.001  // 0.1%
+      ETH: 0.002, // 0.2%
+      USDT: 0.001, // 0.1%
     };
-    
+
     const rate = feeRates[currency] || 0.001;
     return amount * rate;
   },
@@ -135,7 +137,7 @@ export const walletApi = {
       qrData = `${address}?amount=${amount}&currency=${currency}`;
     }
     return qrData;
-  }
+  },
 };
 
 // 量子安全工具函数
@@ -144,7 +146,7 @@ export const quantumUtils = {
   generateSecureRandom(length = 32) {
     const array = new Uint8Array(length);
     crypto.getRandomValues(array);
-    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('');
   },
 
   // 验证量子签名
@@ -155,8 +157,8 @@ export const quantumUtils = {
       const dataBuffer = encoder.encode(data + publicKey);
       const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      
+      const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+
       return hashHex === signature;
     } catch (error) {
       console.error('量子签名验证失败:', error);
@@ -170,7 +172,7 @@ export const quantumUtils = {
       const encoder = new TextEncoder();
       const dataBuffer = encoder.encode(data);
       const passwordBuffer = encoder.encode(password);
-      
+
       // 生成密钥
       const keyMaterial = await crypto.subtle.importKey(
         'raw',
@@ -179,38 +181,33 @@ export const quantumUtils = {
         false,
         ['deriveKey']
       );
-      
+
       const key = await crypto.subtle.deriveKey(
         {
           name: 'PBKDF2',
           salt: encoder.encode('quantum-salt'),
           iterations: 100000,
-          hash: 'SHA-256'
+          hash: 'SHA-256',
         },
         keyMaterial,
         { name: 'AES-GCM', length: 256 },
         false,
         ['encrypt']
       );
-      
+
       // 加密数据
       const iv = crypto.getRandomValues(new Uint8Array(12));
-      const encrypted = await crypto.subtle.encrypt(
-        { name: 'AES-GCM', iv },
-        key,
-        dataBuffer
-      );
-      
+      const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, dataBuffer);
+
       return {
         encrypted: Array.from(new Uint8Array(encrypted)),
-        iv: Array.from(iv)
+        iv: Array.from(iv),
       };
     } catch (error) {
       console.error('数据加密失败:', error);
       throw error;
     }
-  }
+  },
 };
 
 export default walletApi;
-

@@ -19,26 +19,29 @@ interface DemoModuleWrapperProps {
  * Demo Badge Component (Requirements 7.5)
  * Shows a "Demo" or "Coming Soon" label on demo modules
  */
-export const DemoBadge: React.FC<{ 
+export const DemoBadge: React.FC<{
   variant?: 'demo' | 'coming-soon';
   className?: string;
 }> = ({ variant = 'demo', className = '' }) => {
   const isDemo = variant === 'demo';
-  
+
   return (
     <motion.span
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       className={`
         inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold
-        ${isDemo 
-          ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
-          : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+        ${
+          isDemo
+            ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+            : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
         }
         ${className}
       `}
     >
-      <span className={`w-1.5 h-1.5 rounded-full ${isDemo ? 'bg-amber-400' : 'bg-purple-400'} animate-pulse`}></span>
+      <span
+        className={`w-1.5 h-1.5 rounded-full ${isDemo ? 'bg-amber-400' : 'bg-purple-400'} animate-pulse`}
+      ></span>
       {isDemo ? 'Demo' : 'Coming Soon'}
     </motion.span>
   );
@@ -52,7 +55,7 @@ const DemoModuleWrapper: React.FC<DemoModuleWrapperProps> = ({
   moduleSlug,
   children,
   fallback,
-  showBadge = true
+  showBadge = true,
 }) => {
   const { isModuleActive, shouldShowDemoBadge, loading } = useDemoModules();
 
@@ -93,12 +96,12 @@ const DemoModuleWrapper: React.FC<DemoModuleWrapperProps> = ({
  */
 export function useDemoModule(moduleSlug: string) {
   const { isModuleActive, shouldShowDemoBadge, getModuleConfig, loading } = useDemoModules();
-  
+
   return {
     isActive: isModuleActive(moduleSlug),
     showBadge: shouldShowDemoBadge(moduleSlug),
     config: getModuleConfig(moduleSlug),
-    loading
+    loading,
   };
 }
 
@@ -120,9 +123,7 @@ export const DemoModuleDisabledCard: React.FC<{
         <span className="text-2xl">🔒</span>
       </div>
       <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-      <p className="text-gray-400">
-        {description || 'This feature is currently unavailable.'}
-      </p>
+      <p className="text-gray-400">{description || 'This feature is currently unavailable.'}</p>
       <DemoBadge variant="coming-soon" className="mt-4" />
     </motion.div>
   );

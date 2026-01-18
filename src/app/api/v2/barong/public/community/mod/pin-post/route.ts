@@ -5,12 +5,15 @@ import { PERMISSIONS, hasPermission } from '@/lib/permissions';
 export async function POST(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
@@ -18,18 +21,24 @@ export async function POST(request: NextRequest) {
 
     // 验证必填字段
     if (!postId || !pinType || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required fields'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing required fields',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证 pinType
     if (!['global', 'category'].includes(pinType)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Invalid pin type'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Invalid pin type',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -40,20 +49,26 @@ export async function POST(request: NextRequest) {
     `;
 
     if (moderator.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: Not a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Not a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     const userRole = moderator[0].role;
     const customPermissions = moderator[0].permissions;
 
     if (!hasPermission(userRole, PERMISSIONS.PIN_POST, customPermissions)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: No permission to pin posts'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: No permission to pin posts',
+        },
+        { status: 403 }
+      );
     }
 
     // 检查帖子是否存在
@@ -62,10 +77,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (post.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Post not found'
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Post not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 置顶帖子
@@ -100,17 +118,19 @@ export async function POST(request: NextRequest) {
       data: {
         postId,
         pinType,
-        pinnedAt: new Date().toISOString()
-      }
+        pinnedAt: new Date().toISOString(),
+      },
     });
-
   } catch (error: any) {
     console.error('Pin post error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to pin post',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to pin post',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -118,12 +138,15 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -132,10 +155,13 @@ export async function DELETE(request: NextRequest) {
     const reason = searchParams.get('reason');
 
     if (!postId || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required parameters'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing required parameters',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -146,20 +172,26 @@ export async function DELETE(request: NextRequest) {
     `;
 
     if (moderator.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: Not a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Not a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     const userRole = moderator[0].role;
     const customPermissions = moderator[0].permissions;
 
     if (!hasPermission(userRole, PERMISSIONS.PIN_POST, customPermissions)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: No permission to unpin posts'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: No permission to unpin posts',
+        },
+        { status: 403 }
+      );
     }
 
     // 取消置顶
@@ -189,15 +221,17 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Post unpinned successfully'
+      message: 'Post unpinned successfully',
     });
-
   } catch (error: any) {
     console.error('Unpin post error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to unpin post',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to unpin post',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }

@@ -43,12 +43,12 @@ export default function EnhancedQuantumParticles() {
     const handleMouseMove = (e: MouseEvent) => {
       mousePosition.current = { x: e.clientX, y: e.clientY };
       isMouseMoving.current = true;
-      
+
       // 重置定时器
       if (mouseTimer.current) {
         clearTimeout(mouseTimer.current);
       }
-      
+
       // 设置新的定时器，2秒后认为鼠标停止移动
       mouseTimer.current = setTimeout(() => {
         isMouseMoving.current = false;
@@ -68,11 +68,11 @@ export default function EnhancedQuantumParticles() {
         const y = Math.random() * canvas.height;
         const speedX = (Math.random() - 0.5) * 0.6;
         const speedY = (Math.random() - 0.5) * 0.6;
-        
+
         // 量子色彩范围: 蓝色、紫色、青色
         const colors = ['#01c4ff', '#8a2be2', '#00ffcc', '#7b68ee'];
         const color = colors[Math.floor(Math.random() * colors.length)];
-        
+
         const alpha = Math.random() * 0.6 + 0.2;
         const alphaSpeed = Math.random() * 0.01 + 0.005;
         const pulse = Math.random() * 0.5 + 0.5;
@@ -88,7 +88,7 @@ export default function EnhancedQuantumParticles() {
           alpha,
           alphaSpeed,
           pulse,
-          pulseSpeed
+          pulseSpeed,
         });
       }
     };
@@ -101,11 +101,11 @@ export default function EnhancedQuantumParticles() {
 
       // 绘制背景渐变
       const gradient = ctx.createRadialGradient(
-        canvas.width / 2, 
-        canvas.height / 2, 
-        0, 
-        canvas.width / 2, 
-        canvas.height / 2, 
+        canvas.width / 2,
+        canvas.height / 2,
+        0,
+        canvas.width / 2,
+        canvas.height / 2,
         canvas.width / 1.5
       );
       gradient.addColorStop(0, 'rgba(10, 10, 40, 1)');
@@ -144,18 +144,20 @@ export default function EnhancedQuantumParticles() {
           const dy = mousePosition.current.y - particle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           const maxDistance = 200;
-          
+
           if (distance < maxDistance) {
             // 计算鼠标影响力（距离越近影响越大）
             const force = (maxDistance - distance) / maxDistance;
-            
+
             // 粒子远离鼠标
             particle.speedX -= dx * force * 0.02;
             particle.speedY -= dy * force * 0.02;
-            
+
             // 限制最大速度
             const maxSpeed = 2;
-            const currentSpeed = Math.sqrt(particle.speedX * particle.speedX + particle.speedY * particle.speedY);
+            const currentSpeed = Math.sqrt(
+              particle.speedX * particle.speedX + particle.speedY * particle.speedY
+            );
             if (currentSpeed > maxSpeed) {
               particle.speedX = (particle.speedX / currentSpeed) * maxSpeed;
               particle.speedY = (particle.speedY / currentSpeed) * maxSpeed;
@@ -165,25 +167,25 @@ export default function EnhancedQuantumParticles() {
 
         // 绘制粒子
         const currentSize = particle.size * particle.pulse;
-        
+
         // 绘制发光效果
         const glow = ctx.createRadialGradient(
-          particle.x, 
-          particle.y, 
-          0, 
-          particle.x, 
-          particle.y, 
+          particle.x,
+          particle.y,
+          0,
+          particle.x,
+          particle.y,
           currentSize * 4
         );
         glow.addColorStop(0, particle.color);
         glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        
+
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, currentSize * 4, 0, Math.PI * 2);
         ctx.fillStyle = glow;
         ctx.globalAlpha = particle.alpha * 0.3;
         ctx.fill();
-        
+
         // 绘制粒子核心
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, currentSize, 0, Math.PI * 2);
@@ -202,7 +204,7 @@ export default function EnhancedQuantumParticles() {
     // 连接附近的粒子
     const connectParticles = (particle: Particle, index: number) => {
       const connectionDistance = 200; // 增加连接距离
-      
+
       for (let i = index + 1; i < particles.current.length; i++) {
         const otherParticle = particles.current[i];
         const dx = particle.x - otherParticle.x;
@@ -211,18 +213,18 @@ export default function EnhancedQuantumParticles() {
 
         if (distance < connectionDistance) {
           // 根据距离计算线的透明度
-          const alpha = 1 - (distance / connectionDistance);
-          
+          const alpha = 1 - distance / connectionDistance;
+
           // 创建渐变线
           const gradient = ctx.createLinearGradient(
-            particle.x, 
-            particle.y, 
-            otherParticle.x, 
+            particle.x,
+            particle.y,
+            otherParticle.x,
             otherParticle.y
           );
           gradient.addColorStop(0, particle.color);
           gradient.addColorStop(1, otherParticle.color);
-          
+
           ctx.beginPath();
           ctx.strokeStyle = gradient;
           ctx.globalAlpha = alpha * 0.3; // 增加线的透明度
@@ -257,7 +259,7 @@ export default function EnhancedQuantumParticles() {
         width: '100vw',
         height: '100vh',
         zIndex: -1,
-        pointerEvents: 'none'
+        pointerEvents: 'none',
       }}
     />
   );

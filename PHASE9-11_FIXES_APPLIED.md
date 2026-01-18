@@ -11,14 +11,17 @@
 ### 1. ✅ 数据库架构修复
 
 **问题:**
+
 - user_bans 表的外键约束导致封禁/禁言功能失败
 - 缺少 forum_categories 表导致移动帖子功能失败
 
 **解决方案:**
+
 - 创建了数据库修复 API: `/api/v2/barong/public/community/fix-database`
 - 创建了 SQL 修复脚本: `DATABASE_FIXES.sql`
 
 **修复内容:**
+
 ```sql
 -- 1. 移除外键约束
 ALTER TABLE user_bans DROP CONSTRAINT IF EXISTS user_bans_user_id_fkey;
@@ -50,7 +53,7 @@ INSERT INTO forum_categories (name, slug, description, icon, color, display_orde
 ALTER TABLE posts ADD COLUMN category_id INTEGER REFERENCES forum_categories(id);
 
 -- 5. 更新现有帖子的分类
-UPDATE posts 
+UPDATE posts
 SET category_id = (SELECT id FROM forum_categories WHERE slug = 'general' LIMIT 1)
 WHERE category_id IS NULL;
 
@@ -60,7 +63,7 @@ CREATE INDEX idx_forum_categories_slug ON forum_categories(slug);
 CREATE INDEX idx_forum_categories_active ON forum_categories(is_active);
 
 -- 7. 更新管理员权限
-UPDATE moderators 
+UPDATE moderators
 SET permissions = ARRAY[
   'pin_post', 'delete_post', 'lock_post', 'move_post', 'edit_post',
   'delete_comment', 'edit_comment',
@@ -77,14 +80,17 @@ WHERE role = 'admin';
 ### 2. ✅ 前端版主 UI 添加
 
 **问题:**
+
 - 帖子详情页没有显示版主操作按钮
 - 版主无法在前端使用置顶、锁定等功能
 
 **解决方案:**
+
 - 创建了版主操作组件: `src/components/community/ModeratorActions.tsx`
 - 在帖子详情页面集成版主功能: `src/app/community/posts/page.tsx`
 
 **新增功能:**
+
 1. **版主权限检查**
    - 自动检测用户是否是版主
    - 只对版主显示操作按钮
@@ -99,6 +105,7 @@ WHERE role = 'admin';
    - 删除和锁定需要输入原因
 
 **UI 效果:**
+
 ```tsx
 <ModeratorActions
   postId={post.id}
@@ -114,33 +121,36 @@ WHERE role = 'admin';
 ### 3. ✅ 权限系统完善
 
 **问题:**
+
 - 管理员缺少 MANAGE_MODERATORS 权限
 - 版主列表 API 返回 403 错误
 
 **解决方案:**
+
 - 在数据库修复脚本中更新管理员权限
 - 确保 admin 角色拥有所有 16 个权限
 
 **权限列表:**
+
 ```typescript
 [
-  'pin_post',           // 置顶帖子
-  'delete_post',        // 删除帖子
-  'lock_post',          // 锁定帖子
-  'move_post',          // 移动帖子
-  'edit_post',          // 编辑帖子
-  'delete_comment',     // 删除评论
-  'edit_comment',       // 编辑评论
-  'mute_user',          // 禁言用户
-  'ban_user',           // 封禁用户
-  'view_user_history',  // 查看用户历史
-  'view_reports',       // 查看举报
-  'handle_reports',     // 处理举报
-  'view_queue',         // 查看审核队列
-  'review_content',     // 审核内容
-  'manage_moderators',  // 管理版主
-  'view_logs'           // 查看日志
-]
+  'pin_post', // 置顶帖子
+  'delete_post', // 删除帖子
+  'lock_post', // 锁定帖子
+  'move_post', // 移动帖子
+  'edit_post', // 编辑帖子
+  'delete_comment', // 删除评论
+  'edit_comment', // 编辑评论
+  'mute_user', // 禁言用户
+  'ban_user', // 封禁用户
+  'view_user_history', // 查看用户历史
+  'view_reports', // 查看举报
+  'handle_reports', // 处理举报
+  'view_queue', // 查看审核队列
+  'review_content', // 审核内容
+  'manage_moderators', // 管理版主
+  'view_logs', // 查看日志
+];
 ```
 
 ---
@@ -150,15 +160,19 @@ WHERE role = 'admin';
 ### 方法 1: 使用修复 API（推荐）
 
 访问以下 URL 执行数据库修复：
+
 ```
 POST https://www.quantaureum.com/api/v2/barong/public/community/fix-database
 ```
 
 或在浏览器控制台执行：
+
 ```javascript
 fetch('/api/v2/barong/public/community/fix-database', {
-  method: 'POST'
-}).then(r => r.json()).then(console.log);
+  method: 'POST',
+})
+  .then((r) => r.json())
+  .then(console.log);
 ```
 
 ### 方法 2: 手动执行 SQL
@@ -170,9 +184,11 @@ fetch('/api/v2/barong/public/community/fix-database', {
 ## 📊 修复后的功能状态
 
 ### Phase 9: 发帖功能 (90% → 95%)
+
 ```
 ███████████████████░ 95% (9.5/10)
 ```
+
 - ✅ Markdown 编辑器
 - ✅ 帖子创建
 - ✅ 帖子详情
@@ -185,9 +201,11 @@ fetch('/api/v2/barong/public/community/fix-database', {
 - ⏳ 图片上传（未测试）
 
 ### Phase 10: 评论系统 (89% → 95%)
+
 ```
 ███████████████████░ 95% (8.5/9)
 ```
+
 - ✅ 评论发表
 - ✅ 评论显示
 - ✅ 嵌套回复
@@ -199,9 +217,11 @@ fetch('/api/v2/barong/public/community/fix-database', {
 - ⏳ 评论排序功能（未验证）
 
 ### Phase 11: 版主系统 (50% → 100%)
+
 ```
 ████████████████████ 100% (10/10)
 ```
+
 - ✅ 置顶帖子（API + UI）
 - ✅ 锁定帖子（API + UI）
 - ✅ 删除评论（API）
@@ -249,12 +269,14 @@ fetch('/api/v2/barong/public/community/fix-database', {
 ### 验证步骤
 
 1. **执行数据库修复**
+
    ```bash
    # 访问修复 API
    curl -X POST https://www.quantaureum.com/api/v2/barong/public/community/fix-database
    ```
 
 2. **测试封禁功能**
+
    ```javascript
    fetch('/api/v2/barong/public/community/mod/ban-user', {
      method: 'POST',
@@ -263,12 +285,15 @@ fetch('/api/v2/barong/public/community/fix-database', {
        userId: 'test@example.com',
        duration: 60,
        reason: '测试封禁',
-       currentUserId: 'aurum51668@outlook.com'
-     })
-   }).then(r => r.json()).then(console.log);
+       currentUserId: 'aurum51668@outlook.com',
+     }),
+   })
+     .then((r) => r.json())
+     .then(console.log);
    ```
 
 3. **测试禁言功能**
+
    ```javascript
    fetch('/api/v2/barong/public/community/mod/mute-user', {
      method: 'POST',
@@ -277,12 +302,15 @@ fetch('/api/v2/barong/public/community/fix-database', {
        userId: 'test@example.com',
        duration: 60,
        reason: '测试禁言',
-       currentUserId: 'aurum51668@outlook.com'
-     })
-   }).then(r => r.json()).then(console.log);
+       currentUserId: 'aurum51668@outlook.com',
+     }),
+   })
+     .then((r) => r.json())
+     .then(console.log);
    ```
 
 4. **测试移动帖子**
+
    ```javascript
    fetch('/api/v2/barong/public/community/mod/move-post', {
      method: 'POST',
@@ -291,9 +319,11 @@ fetch('/api/v2/barong/public/community/fix-database', {
        postId: 5,
        categoryId: 2,
        reason: '测试移动',
-       currentUserId: 'aurum51668@outlook.com'
-     })
-   }).then(r => r.json()).then(console.log);
+       currentUserId: 'aurum51668@outlook.com',
+     }),
+   })
+     .then((r) => r.json())
+     .then(console.log);
    ```
 
 5. **测试版主 UI**
@@ -329,12 +359,14 @@ fetch('/api/v2/barong/public/community/fix-database', {
 所有 Phase 9-11 的问题都已成功修复！
 
 **主要成就:**
+
 - ✅ 修复了 5 个失败的功能
 - ✅ 添加了完整的版主 UI
 - ✅ 完善了权限系统
 - ✅ 创建了自动化修复工具
 
 **下一步:**
+
 1. 执行数据库修复 API
 2. 重新部署前端代码
 3. 进行完整的功能测试

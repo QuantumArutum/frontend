@@ -10,7 +10,7 @@ export const getVisibleApplications = () => {
       level: 0,
       position: 'left',
       users: '1.2M',
-      features: ['资产管理', '交易记录', '多链支持']
+      features: ['资产管理', '交易记录', '多链支持'],
     },
     {
       id: 'defi-protocol',
@@ -22,7 +22,7 @@ export const getVisibleApplications = () => {
       level: 1,
       position: 'left',
       users: '800K',
-      features: ['借贷', '质押', '流动性挖矿']
+      features: ['借贷', '质押', '流动性挖矿'],
     },
     {
       id: 'crowdfunding-platform',
@@ -34,7 +34,7 @@ export const getVisibleApplications = () => {
       level: 2,
       position: 'left',
       users: '500K',
-      features: ['项目发布', '投资管理', '智能合约']
+      features: ['项目发布', '投资管理', '智能合约'],
     },
     {
       id: 'global-movie-tickets',
@@ -46,7 +46,7 @@ export const getVisibleApplications = () => {
       level: 3,
       position: 'left',
       users: '300K',
-      features: ['影院查询', '在线选座', '加密支付']
+      features: ['影院查询', '在线选座', '加密支付'],
     },
     {
       id: 'global-flight-tickets',
@@ -58,7 +58,7 @@ export const getVisibleApplications = () => {
       level: 4,
       position: 'left',
       users: '200K',
-      features: ['航班查询', '在线预订', '加密支付']
+      features: ['航班查询', '在线预订', '加密支付'],
     },
     {
       id: 'global-electricity-bill',
@@ -70,7 +70,7 @@ export const getVisibleApplications = () => {
       level: 5,
       position: 'left',
       users: '150K',
-      features: ['账单查询', '在线缴费', '历史记录']
+      features: ['账单查询', '在线缴费', '历史记录'],
     },
     {
       id: 'trading-market',
@@ -82,7 +82,7 @@ export const getVisibleApplications = () => {
       level: 0,
       position: 'right',
       users: '1.5M',
-      features: ['现货交易', '合约交易', '杠杆交易']
+      features: ['现货交易', '合约交易', '杠杆交易'],
     },
     {
       id: 'sto-platform',
@@ -94,7 +94,7 @@ export const getVisibleApplications = () => {
       level: 1,
       position: 'right',
       users: '700K',
-      features: ['代币发行', '合规交易', '资产数字化']
+      features: ['代币发行', '合规交易', '资产数字化'],
     },
     {
       id: 'quantum-lottery',
@@ -106,7 +106,7 @@ export const getVisibleApplications = () => {
       level: 2,
       position: 'right',
       users: '400K',
-      features: ['随机数生成', '开奖查询', '奖金领取']
+      features: ['随机数生成', '开奖查询', '奖金领取'],
     },
     {
       id: 'global-concerts',
@@ -118,7 +118,7 @@ export const getVisibleApplications = () => {
       level: 3,
       position: 'right',
       users: '250K',
-      features: ['票务预订', '座位选择', '加密支付']
+      features: ['票务预订', '座位选择', '加密支付'],
     },
     {
       id: 'global-hotel-booking',
@@ -130,9 +130,7 @@ export const getVisibleApplications = () => {
       level: 4,
       position: 'right',
       users: '180K',
-      features: ['酒店搜索', '房间预订', '安全支付']
-    }
+      features: ['酒店搜索', '房间预订', '安全支付'],
+    },
   ];
 };
-
-

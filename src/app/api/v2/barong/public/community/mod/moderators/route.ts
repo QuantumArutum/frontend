@@ -6,12 +6,15 @@ import { PERMISSIONS, hasPermission, ROLES } from '@/lib/permissions';
 export async function GET(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -19,10 +22,13 @@ export async function GET(request: NextRequest) {
     const categoryId = searchParams.get('categoryId');
 
     if (!currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing currentUserId'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing currentUserId',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -33,20 +39,26 @@ export async function GET(request: NextRequest) {
     `;
 
     if (moderator.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: Not a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Not a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     const userRole = moderator[0].role;
     const customPermissions = moderator[0].permissions;
 
     if (!hasPermission(userRole, PERMISSIONS.MANAGE_MODERATORS, customPermissions)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: No permission to view moderators'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: No permission to view moderators',
+        },
+        { status: 403 }
+      );
     }
 
     // 获取版主列表
@@ -68,16 +80,18 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: { moderators }
+      data: { moderators },
     });
-
   } catch (error: any) {
     console.error('Get moderators error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to get moderators',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to get moderators',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -85,12 +99,15 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
@@ -98,18 +115,24 @@ export async function POST(request: NextRequest) {
 
     // 验证必填字段
     if (!userId || !role || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required fields'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing required fields',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证角色
     if (![ROLES.ADMIN, ROLES.MODERATOR].includes(role)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Invalid role'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Invalid role',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -120,20 +143,26 @@ export async function POST(request: NextRequest) {
     `;
 
     if (moderator.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: Not a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Not a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     const userRole = moderator[0].role;
     const customPermissions = moderator[0].permissions;
 
     if (!hasPermission(userRole, PERMISSIONS.MANAGE_MODERATORS, customPermissions)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: No permission to add moderators'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: No permission to add moderators',
+        },
+        { status: 403 }
+      );
     }
 
     // 检查用户是否已经是版主
@@ -142,10 +171,13 @@ export async function POST(request: NextRequest) {
     `;
 
     if (existingModerator.length > 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'User is already a moderator'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User is already a moderator',
+        },
+        { status: 400 }
+      );
     }
 
     // 添加版主
@@ -201,17 +233,19 @@ export async function POST(request: NextRequest) {
       data: {
         userId,
         role,
-        categoryId
-      }
+        categoryId,
+      },
     });
-
   } catch (error: any) {
     console.error('Add moderator error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to add moderator',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to add moderator',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -219,12 +253,15 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -233,18 +270,24 @@ export async function DELETE(request: NextRequest) {
     const reason = searchParams.get('reason');
 
     if (!userId || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required parameters'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing required parameters',
+        },
+        { status: 400 }
+      );
     }
 
     // 不能移除自己
     if (userId === currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Cannot remove yourself'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Cannot remove yourself',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -255,20 +298,26 @@ export async function DELETE(request: NextRequest) {
     `;
 
     if (moderator.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: Not a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Not a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     const userRole = moderator[0].role;
     const customPermissions = moderator[0].permissions;
 
     if (!hasPermission(userRole, PERMISSIONS.MANAGE_MODERATORS, customPermissions)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: No permission to remove moderators'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: No permission to remove moderators',
+        },
+        { status: 403 }
+      );
     }
 
     // 移除版主
@@ -313,16 +362,18 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Moderator removed successfully'
+      message: 'Moderator removed successfully',
     });
-
   } catch (error: any) {
     console.error('Remove moderator error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to remove moderator',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to remove moderator',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -330,22 +381,28 @@ export async function DELETE(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const body = await request.json();
     const { userId, permissions, currentUserId } = body;
 
     if (!userId || !permissions || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required fields'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing required fields',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -356,20 +413,26 @@ export async function PUT(request: NextRequest) {
     `;
 
     if (moderator.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: Not a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Not a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     const userRole = moderator[0].role;
     const customPermissions = moderator[0].permissions;
 
     if (!hasPermission(userRole, PERMISSIONS.MANAGE_MODERATORS, customPermissions)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: No permission to update moderator permissions'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: No permission to update moderator permissions',
+        },
+        { status: 403 }
+      );
     }
 
     // 更新权限
@@ -395,15 +458,17 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Moderator permissions updated successfully'
+      message: 'Moderator permissions updated successfully',
     });
-
   } catch (error: any) {
     console.error('Update moderator permissions error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to update moderator permissions',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to update moderator permissions',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }

@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   // Build configuration - allow production build to pass with warnings
@@ -118,7 +118,8 @@ const nextConfig: NextConfig = {
 
   // Environment variables - use process.env directly instead of hardcoding
   env: {
-    USE_MOCK_API: process.env.USE_MOCK_API || (process.env.NODE_ENV === 'development' ? 'true' : 'false'),
+    USE_MOCK_API:
+      process.env.USE_MOCK_API || (process.env.NODE_ENV === 'development' ? 'true' : 'false'),
   },
 
   // Rewrites - redirect external APIs to local mock APIs in development
@@ -127,16 +128,16 @@ const nextConfig: NextConfig = {
       return [
         {
           source: '/api/quantum/:path*',
-          destination: '/api/mock/quantum/:path*'
+          destination: '/api/mock/quantum/:path*',
         },
         {
           source: '/api/defi/:path*',
-          destination: '/api/mock/defi/:path*'
-        }
+          destination: '/api/mock/defi/:path*',
+        },
       ];
     }
     return [];
-  }
+  },
 };
 
 export default nextConfig;

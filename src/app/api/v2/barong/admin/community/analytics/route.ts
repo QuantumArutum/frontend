@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
             active: stats?.activeAnnouncements || 0,
           },
           topCategories: stats?.topCategories || [],
-        }
+        },
       });
     }
 
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
       const analytics = await communityService.getAnalytics(days);
       return NextResponse.json({
         success: true,
-        data: analytics
+        data: analytics,
       });
     }
 
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
           topPosters: analytics?.leaderboards?.topPosters || [],
           topCommenters: analytics?.leaderboards?.topCommenters || [],
           categoryStats: analytics?.categoryStats || [],
-        }
+        },
       });
     }
 
@@ -76,14 +76,14 @@ export async function GET(request: NextRequest) {
       const totalPosts = stats?.totalPosts || 1;
       const totalComments = stats?.totalComments || 0;
       const totalUsers = stats?.totalUsers || 1;
-      
+
       return NextResponse.json({
         success: true,
         data: {
           avgPostsPerUser: Math.round((totalPosts / totalUsers) * 100) / 100,
           avgCommentsPerPost: Math.round((totalComments / totalPosts) * 100) / 100,
           engagementRate: stats?.engagementRate || 0,
-        }
+        },
       });
     }
 

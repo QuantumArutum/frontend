@@ -18,11 +18,14 @@ export async function POST(request: NextRequest) {
     if (!sql) {
       console.error('[create-post] Database connection not available');
       clearTimeout(timeoutId);
-      return NextResponse.json({ 
-        success: false,
-        error: 'Database connection not available',
-        message: '数据库连接不可用，请稍后重试' 
-      }, { status: 503 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Database connection not available',
+          message: '数据库连接不可用，请稍后重试',
+        },
+        { status: 503 }
+      );
     }
 
     const body = await request.json();
@@ -31,28 +34,37 @@ export async function POST(request: NextRequest) {
     // 验证参数
     if (!title || !content || !currentUserId) {
       clearTimeout(timeoutId);
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Title, content, and user ID are required' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Title, content, and user ID are required',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证标题长度
     if (title.length < 1 || title.length > 200) {
       clearTimeout(timeoutId);
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Title must be between 1 and 200 characters' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Title must be between 1 and 200 characters',
+        },
+        { status: 400 }
+      );
     }
 
     // 验证内容长度
     if (content.length < 10 || content.length > 50000) {
       clearTimeout(timeoutId);
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Content must be between 10 and 50000 characters' 
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Content must be between 10 and 50000 characters',
+        },
+        { status: 400 }
+      );
     }
 
     // 简化用户验证
@@ -62,10 +74,13 @@ export async function POST(request: NextRequest) {
 
     if (userCheck.length === 0) {
       clearTimeout(timeoutId);
-      return NextResponse.json({ 
-        success: false, 
-        message: 'User not found' 
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 获取分类ID（使用默认值避免额外查询）
@@ -104,34 +119,36 @@ export async function POST(request: NextRequest) {
     if (tags && tags.length > 0 && sql) {
       // 在后台处理标签，不等待完成
       const sqlInstance = sql; // 保存引用以便在回调中使用
-      Promise.all(tags.slice(0, 5).map(async (tagName: string) => {
-        try {
-          const tagResult = await sqlInstance`
+      Promise.all(
+        tags.slice(0, 5).map(async (tagName: string) => {
+          try {
+            const tagResult = await sqlInstance`
             SELECT id FROM tags WHERE name = ${tagName} LIMIT 1
           `;
-          
-          let tagId;
-          if (tagResult.length === 0) {
-            const newTag = await sqlInstance`
+
+            let tagId;
+            if (tagResult.length === 0) {
+              const newTag = await sqlInstance`
               INSERT INTO tags (name, slug, use_count, created_at)
               VALUES (${tagName}, ${tagName.toLowerCase().replace(/\s+/g, '-')}, 1, NOW())
               RETURNING id
             `;
-            tagId = newTag[0].id;
-          } else {
-            tagId = tagResult[0].id;
-            await sqlInstance`UPDATE tags SET use_count = use_count + 1 WHERE id = ${tagId}`;
-          }
-          
-          await sqlInstance`
+              tagId = newTag[0].id;
+            } else {
+              tagId = tagResult[0].id;
+              await sqlInstance`UPDATE tags SET use_count = use_count + 1 WHERE id = ${tagId}`;
+            }
+
+            await sqlInstance`
             INSERT INTO post_tags (post_id, tag_id, created_at)
             VALUES (${postId}, ${tagId}, NOW())
             ON CONFLICT (post_id, tag_id) DO NOTHING
           `;
-        } catch (tagError) {
-          console.error('Error processing tag:', tagName, tagError);
-        }
-      })).catch(err => console.error('Tag processing error:', err));
+          } catch (tagError) {
+            console.error('Error processing tag:', tagName, tagError);
+          }
+        })
+      ).catch((err) => console.error('Tag processing error:', err));
     }
 
     clearTimeout(timeoutId);
@@ -142,38 +159,43 @@ export async function POST(request: NextRequest) {
       data: {
         postId,
         isDraft,
-        tagsAdded: tags.length
+        tagsAdded: tags.length,
       },
     });
-    
   } catch (error) {
     clearTimeout(timeoutId);
-    
+
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const errorStack = error instanceof Error ? error.stack : '';
-    
+
     if (error instanceof Error && error.name === 'AbortError') {
       console.error('[create-post] Request timeout:', {
         message: errorMessage,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
-      return NextResponse.json({ 
-        success: false,
-        error: 'Request timeout',
-        message: '请求超时，请稍后重试' 
-      }, { status: 504 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Request timeout',
+          message: '请求超时，请稍后重试',
+        },
+        { status: 504 }
+      );
     }
-    
+
     console.error('[create-post] Error:', {
       message: errorMessage,
       stack: errorStack,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-    
-    return NextResponse.json({ 
-      success: false,
-      error: errorMessage,
-      message: '创建帖子失败，请稍后重试' 
-    }, { status: 500 });
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: errorMessage,
+        message: '创建帖子失败，请稍后重试',
+      },
+      { status: 500 }
+    );
   }
 }

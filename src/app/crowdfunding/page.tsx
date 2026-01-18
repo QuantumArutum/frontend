@@ -2,7 +2,22 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Search, TrendingUp, Clock, Users, DollarSign, Star, Heart, Share2, Eye, Calendar, Award, Shield, Zap, Plus } from 'lucide-react';
+import {
+  Search,
+  TrendingUp,
+  Clock,
+  Users,
+  DollarSign,
+  Star,
+  Heart,
+  Share2,
+  Eye,
+  Calendar,
+  Award,
+  Shield,
+  Zap,
+  Plus,
+} from 'lucide-react';
 import { PageLayout } from '@/components/ui/PageLayout';
 import { Card, CardHeader, CardContent, StatCard } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -16,14 +31,14 @@ import { useTranslation } from 'react-i18next';
 const getCategoryName = (t: any, id: string): string => {
   const categoryMap: Record<string, string> = {
     '': t('crowdfunding_page.categories.all'),
-    'technology': t('crowdfunding_page.categories.technology'),
-    'design': t('crowdfunding_page.categories.design'),
-    'games': t('crowdfunding_page.categories.games'),
-    'music': t('crowdfunding_page.categories.music'),
-    'film': t('crowdfunding_page.categories.film'),
-    'food': t('crowdfunding_page.categories.food'),
-    'fashion': t('crowdfunding_page.categories.fashion'),
-    'health': t('crowdfunding_page.categories.health')
+    technology: t('crowdfunding_page.categories.technology'),
+    design: t('crowdfunding_page.categories.design'),
+    games: t('crowdfunding_page.categories.games'),
+    music: t('crowdfunding_page.categories.music'),
+    film: t('crowdfunding_page.categories.film'),
+    food: t('crowdfunding_page.categories.food'),
+    fashion: t('crowdfunding_page.categories.fashion'),
+    health: t('crowdfunding_page.categories.health'),
   };
   return categoryMap[id] || t('crowdfunding_page.categories.other');
 };
@@ -62,19 +77,19 @@ interface Project {
 
 const categoryIcons: Record<string, string> = {
   '': '🌟',
-  'technology': '💻',
-  'design': '🎨',
-  'games': '🎮',
-  'music': '🎵',
-  'film': '🎬',
-  'food': '🍽️',
-  'fashion': '👗',
-  'health': '🏥'
+  technology: '💻',
+  design: '🎨',
+  games: '🎮',
+  music: '🎵',
+  film: '🎬',
+  food: '🍽️',
+  fashion: '👗',
+  health: '🏥',
 };
 
 const CrowdfundingPage = () => {
   const { t } = useTranslation();
-  
+
   const categories = [
     { id: '', name: t('crowdfunding_page.categories.all'), icon: '🌟' },
     { id: 'technology', name: t('crowdfunding_page.categories.technology'), icon: '💻' },
@@ -84,7 +99,7 @@ const CrowdfundingPage = () => {
     { id: 'film', name: t('crowdfunding_page.categories.film'), icon: '🎬' },
     { id: 'food', name: t('crowdfunding_page.categories.food'), icon: '🍽️' },
     { id: 'fashion', name: t('crowdfunding_page.categories.fashion'), icon: '👗' },
-    { id: 'health', name: t('crowdfunding_page.categories.health'), icon: '🏥' }
+    { id: 'health', name: t('crowdfunding_page.categories.health'), icon: '🏥' },
   ];
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -108,12 +123,12 @@ const CrowdfundingPage = () => {
       const params = new URLSearchParams({
         category: selectedCategory,
         sort_by: sortBy,
-        limit: '12'
+        limit: '12',
       });
-      
+
       const response = await fetch(`/api/crowdfunding/projects?${params}`);
       const data = await response.json();
-      
+
       if (data.success && data.data?.projects) {
         setProjects(data.data.projects);
       } else {
@@ -193,9 +208,7 @@ const CrowdfundingPage = () => {
       <CardContent className="p-4">
         {/* 分类标签 */}
         <div className="flex items-center gap-2 mb-2">
-          <Badge variant="default">
-            {getCategoryName(t, project.category)}
-          </Badge>
+          <Badge variant="default">{getCategoryName(t, project.category)}</Badge>
           {project.quantum_security && (
             <Badge variant="info" className="flex items-center gap-1">
               <Zap className="w-3 h-3" /> {t('crowdfunding_page.quantum_security')}
@@ -210,7 +223,9 @@ const CrowdfundingPage = () => {
         {/* 创作者信息 */}
         <div className="flex items-center gap-2 mb-3">
           <div className="w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
-          <span className="text-sm text-gray-300">{project.creator?.name || t('crowdfunding_page.anonymous')}</span>
+          <span className="text-sm text-gray-300">
+            {project.creator?.name || t('crowdfunding_page.anonymous')}
+          </span>
           {project.creator?.verified && <Award className="w-4 h-4 text-blue-400" />}
         </div>
 
@@ -218,7 +233,9 @@ const CrowdfundingPage = () => {
         <div className="mb-3">
           <div className="flex justify-between items-center mb-1">
             <span className="text-sm text-gray-400">{t('crowdfunding_page.funding_progress')}</span>
-            <span className="text-sm font-medium text-green-400">{(project.funding?.progress || 0).toFixed(1)}%</span>
+            <span className="text-sm font-medium text-green-400">
+              {(project.funding?.progress || 0).toFixed(1)}%
+            </span>
           </div>
           <div className="w-full bg-gray-700 rounded-full h-2">
             <div
@@ -231,7 +248,9 @@ const CrowdfundingPage = () => {
         {/* 统计 */}
         <div className="grid grid-cols-3 gap-2 text-center mb-3">
           <div>
-            <div className="text-sm font-bold text-white">{formatCurrency(project.funding?.raised_amount || 0)}</div>
+            <div className="text-sm font-bold text-white">
+              {formatCurrency(project.funding?.raised_amount || 0)}
+            </div>
             <div className="text-xs text-gray-500">{t('crowdfunding_page.raised')}</div>
           </div>
           <div>
@@ -272,10 +291,26 @@ const CrowdfundingPage = () => {
   );
 
   const sortTabs = [
-    { id: 'trending', label: t('crowdfunding_page.sort.trending'), icon: <TrendingUp className="w-4 h-4" /> },
-    { id: 'newest', label: t('crowdfunding_page.sort.newest'), icon: <Clock className="w-4 h-4" /> },
-    { id: 'ending_soon', label: t('crowdfunding_page.sort.ending_soon'), icon: <Calendar className="w-4 h-4" /> },
-    { id: 'most_funded', label: t('crowdfunding_page.sort.most_funded'), icon: <DollarSign className="w-4 h-4" /> },
+    {
+      id: 'trending',
+      label: t('crowdfunding_page.sort.trending'),
+      icon: <TrendingUp className="w-4 h-4" />,
+    },
+    {
+      id: 'newest',
+      label: t('crowdfunding_page.sort.newest'),
+      icon: <Clock className="w-4 h-4" />,
+    },
+    {
+      id: 'ending_soon',
+      label: t('crowdfunding_page.sort.ending_soon'),
+      icon: <Calendar className="w-4 h-4" />,
+    },
+    {
+      id: 'most_funded',
+      label: t('crowdfunding_page.sort.most_funded'),
+      icon: <DollarSign className="w-4 h-4" />,
+    },
   ];
 
   return (
@@ -292,10 +327,30 @@ const CrowdfundingPage = () => {
       {/* 统计卡片 */}
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <StatCard title={t('crowdfunding_page.stats.total_projects')} value={stats.total_projects.toLocaleString()} icon={TrendingUp} color="blue" />
-          <StatCard title={t('crowdfunding_page.stats.active_projects')} value={stats.active_projects.toLocaleString()} icon={Clock} color="green" />
-          <StatCard title={t('crowdfunding_page.stats.total_raised')} value={`${(stats.total_raised / 1e6).toFixed(1)}M`} icon={DollarSign} color="purple" />
-          <StatCard title={t('crowdfunding_page.stats.total_backers')} value={stats.total_backers.toLocaleString()} icon={Users} color="orange" />
+          <StatCard
+            title={t('crowdfunding_page.stats.total_projects')}
+            value={stats.total_projects.toLocaleString()}
+            icon={TrendingUp}
+            color="blue"
+          />
+          <StatCard
+            title={t('crowdfunding_page.stats.active_projects')}
+            value={stats.active_projects.toLocaleString()}
+            icon={Clock}
+            color="green"
+          />
+          <StatCard
+            title={t('crowdfunding_page.stats.total_raised')}
+            value={`${(stats.total_raised / 1e6).toFixed(1)}M`}
+            icon={DollarSign}
+            color="purple"
+          />
+          <StatCard
+            title={t('crowdfunding_page.stats.total_backers')}
+            value={stats.total_backers.toLocaleString()}
+            icon={Users}
+            color="orange"
+          />
         </div>
       )}
 
@@ -313,7 +368,9 @@ const CrowdfundingPage = () => {
                 icon={<Search className="w-4 h-4" />}
                 className="flex-1"
               />
-              <Button variant="primary" onClick={handleSearch}>{t('crowdfunding_page.search')}</Button>
+              <Button variant="primary" onClick={handleSearch}>
+                {t('crowdfunding_page.search')}
+              </Button>
             </div>
           </div>
 
@@ -333,11 +390,7 @@ const CrowdfundingPage = () => {
 
           {/* 排序 */}
           <div className="mt-4">
-            <Tabs
-              tabs={sortTabs}
-              activeTab={sortBy}
-              onChange={setSortBy}
-            />
+            <Tabs tabs={sortTabs} activeTab={sortBy} onChange={setSortBy} />
           </div>
         </CardContent>
       </Card>
@@ -383,7 +436,9 @@ const CrowdfundingPage = () => {
         <Card className="text-center py-16">
           <CardContent>
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-white mb-2">{t('crowdfunding_page.no_results')}</h3>
+            <h3 className="text-xl font-semibold text-white mb-2">
+              {t('crowdfunding_page.no_results')}
+            </h3>
             <p className="text-gray-400 mb-6">{t('crowdfunding_page.try_different_search')}</p>
             <Button
               variant="primary"
@@ -408,11 +463,13 @@ const CrowdfundingPage = () => {
         {selectedProject && (
           <div>
             <p className="text-gray-400 mb-4">{selectedProject.title}</p>
-            
+
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-300 mb-2">{t('crowdfunding_page.support_modal.amount_label')}</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                {t('crowdfunding_page.support_modal.amount_label')}
+              </label>
               <div className="flex gap-2 mb-3">
-                {['50', '100', '500', '1000'].map(amount => (
+                {['50', '100', '500', '1000'].map((amount) => (
                   <Button
                     key={amount}
                     variant={supportAmount === amount ? 'primary' : 'outline'}
@@ -439,7 +496,12 @@ const CrowdfundingPage = () => {
                 variant="primary"
                 className="flex-1"
                 onClick={() => {
-                  alert(t('crowdfunding_page.support_modal.success_message', { amount: supportAmount, title: selectedProject.title }));
+                  alert(
+                    t('crowdfunding_page.support_modal.success_message', {
+                      amount: supportAmount,
+                      title: selectedProject.title,
+                    })
+                  );
                   setShowSupportModal(false);
                 }}
               >
@@ -458,28 +520,43 @@ const CrowdfundingPage = () => {
         size="lg"
       >
         <div className="space-y-4">
-          <Input label={t('crowdfunding_page.create_modal.project_name')} placeholder={t('crowdfunding_page.create_modal.project_name_placeholder')} />
-          
+          <Input
+            label={t('crowdfunding_page.create_modal.project_name')}
+            placeholder={t('crowdfunding_page.create_modal.project_name_placeholder')}
+          />
+
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">{t('crowdfunding_page.create_modal.category')}</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              {t('crowdfunding_page.create_modal.category')}
+            </label>
             <select className="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-blue-500 focus:outline-none">
-              {categories.filter(c => c.id).map(cat => (
-                <option key={cat.id} value={cat.id}>{categoryIcons[cat.id]} {cat.name}</option>
-              ))}
+              {categories
+                .filter((c) => c.id)
+                .map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {categoryIcons[cat.id]} {cat.name}
+                  </option>
+                ))}
             </select>
           </div>
-          
-          <Input label={t('crowdfunding_page.create_modal.goal_amount')} type="number" placeholder="10000" />
-          
+
+          <Input
+            label={t('crowdfunding_page.create_modal.goal_amount')}
+            type="number"
+            placeholder="10000"
+          />
+
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">{t('crowdfunding_page.create_modal.description')}</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              {t('crowdfunding_page.create_modal.description')}
+            </label>
             <textarea
               rows={4}
               className="w-full bg-gray-700 text-white px-4 py-3 rounded-xl border border-gray-600 focus:border-blue-500 focus:outline-none"
               placeholder={t('crowdfunding_page.create_modal.description_placeholder')}
             />
           </div>
-          
+
           <Input label={t('crowdfunding_page.create_modal.end_date')} type="date" />
 
           <div className="flex gap-3 pt-4">
@@ -504,4 +581,3 @@ const CrowdfundingPage = () => {
 };
 
 export default CrowdfundingPage;
-

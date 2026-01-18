@@ -4,11 +4,69 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || '';
 
 // 默认活动数据（开发环境）
 const defaultEvents = [
-  { id: '1', title: 'Quantaureum技术分享会', description: '深入了解后量子密码学和AI进化系统的最新技术进展', type: 'online', date: '12月5日', time: '北京时间 20:00-22:00', location: '在线直播', participants: 1234, status: 'upcoming', organizer: 'Quantaureum Foundation' },
-  { id: '2', title: '北京开发者聚会', description: '与北京地区的开发者面对面交流，分享开发经验和最佳实践', type: 'offline', date: '1月5日', time: '14:00-18:00', location: '北京中关村创业大街', participants: 89, maxParticipants: 100, status: 'upcoming', organizer: 'QAU Beijing Community' },
-  { id: '3', title: '全球量子区块链黑客松', description: '48小时编程马拉松，构建创新的量子安全区块链应用', type: 'hackathon', date: '2月20-22日', time: '48小时', location: '全球在线', participants: 456, prize: '100万QAU', status: 'upcoming', organizer: 'Quantaureum Foundation' },
-  { id: '4', title: 'DeFi安全工作坊', description: '学习如何在量子安全环境下构建DeFi应用', type: 'workshop', date: '3月10日', time: '10:00-17:00', location: '上海浦东', participants: 45, maxParticipants: 60, status: 'upcoming', organizer: 'QAU Shanghai' },
-  { id: '5', title: 'Quantaureum主网启动庆典', description: '庆祝Quantaureum主网正式上线，全球社区成员共同见证历史时刻', type: 'online', date: '11月15日', time: '全天', location: '全球在线', participants: 5000, status: 'past', organizer: 'Quantaureum Foundation' }
+  {
+    id: '1',
+    title: 'Quantaureum技术分享会',
+    description: '深入了解后量子密码学和AI进化系统的最新技术进展',
+    type: 'online',
+    date: '12月5日',
+    time: '北京时间 20:00-22:00',
+    location: '在线直播',
+    participants: 1234,
+    status: 'upcoming',
+    organizer: 'Quantaureum Foundation',
+  },
+  {
+    id: '2',
+    title: '北京开发者聚会',
+    description: '与北京地区的开发者面对面交流，分享开发经验和最佳实践',
+    type: 'offline',
+    date: '1月5日',
+    time: '14:00-18:00',
+    location: '北京中关村创业大街',
+    participants: 89,
+    maxParticipants: 100,
+    status: 'upcoming',
+    organizer: 'QAU Beijing Community',
+  },
+  {
+    id: '3',
+    title: '全球量子区块链黑客松',
+    description: '48小时编程马拉松，构建创新的量子安全区块链应用',
+    type: 'hackathon',
+    date: '2月20-22日',
+    time: '48小时',
+    location: '全球在线',
+    participants: 456,
+    prize: '100万QAU',
+    status: 'upcoming',
+    organizer: 'Quantaureum Foundation',
+  },
+  {
+    id: '4',
+    title: 'DeFi安全工作坊',
+    description: '学习如何在量子安全环境下构建DeFi应用',
+    type: 'workshop',
+    date: '3月10日',
+    time: '10:00-17:00',
+    location: '上海浦东',
+    participants: 45,
+    maxParticipants: 60,
+    status: 'upcoming',
+    organizer: 'QAU Shanghai',
+  },
+  {
+    id: '5',
+    title: 'Quantaureum主网启动庆典',
+    description: '庆祝Quantaureum主网正式上线，全球社区成员共同见证历史时刻',
+    type: 'online',
+    date: '11月15日',
+    time: '全天',
+    location: '全球在线',
+    participants: 5000,
+    status: 'past',
+    organizer: 'Quantaureum Foundation',
+  },
 ];
 
 // 用户报名记录
@@ -34,10 +92,10 @@ export async function GET(request: Request) {
     // 开发环境返回默认数据
     let events = [...defaultEvents];
     if (status) {
-      events = events.filter(e => e.status === status);
+      events = events.filter((e) => e.status === status);
     }
     if (type) {
-      events = events.filter(e => e.type === type);
+      events = events.filter((e) => e.type === type);
     }
     return NextResponse.json({ success: true, data: events });
   } catch (error) {
@@ -61,14 +119,14 @@ export async function POST(request: Request) {
       const response = await fetch(`${BACKEND_API_URL}/api/events/${eventId}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId })
+        body: JSON.stringify({ userId }),
       });
       const data = await response.json();
       return NextResponse.json(data);
     }
 
     // 开发环境模拟报名
-    const event = defaultEvents.find(e => e.id === eventId);
+    const event = defaultEvents.find((e) => e.id === eventId);
     if (!event) {
       return NextResponse.json({ success: false, message: '活动不存在' }, { status: 404 });
     }
@@ -92,10 +150,10 @@ export async function POST(request: Request) {
     registrations[eventId].push(userId);
     event.participants++;
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       message: '报名成功',
-      data: { eventId, userId, participants: event.participants }
+      data: { eventId, userId, participants: event.participants },
     });
   } catch (error) {
     console.error('Event registration error:', error);
@@ -116,9 +174,12 @@ export async function DELETE(request: Request) {
   try {
     // 生产环境调用后端API
     if (BACKEND_API_URL) {
-      const response = await fetch(`${BACKEND_API_URL}/api/events/${eventId}/register?userId=${userId}`, {
-        method: 'DELETE'
-      });
+      const response = await fetch(
+        `${BACKEND_API_URL}/api/events/${eventId}/register?userId=${userId}`,
+        {
+          method: 'DELETE',
+        }
+      );
       const data = await response.json();
       return NextResponse.json(data);
     }
@@ -128,7 +189,7 @@ export async function DELETE(request: Request) {
       const index = registrations[eventId].indexOf(userId);
       if (index > -1) {
         registrations[eventId].splice(index, 1);
-        const event = defaultEvents.find(e => e.id === eventId);
+        const event = defaultEvents.find((e) => e.id === eventId);
         if (event) event.participants--;
       }
     }

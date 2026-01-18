@@ -63,12 +63,9 @@ export default function TagSubscribeButton({
     try {
       if (isSubscribed) {
         // 取消订阅
-        const response = await barongAPI.delete(
-          `/public/community/tags/${tagSlug}/subscribe`,
-          {
-            params: { currentUserId },
-          }
-        );
+        const response = await barongAPI.delete(`/public/community/tags/${tagSlug}/subscribe`, {
+          params: { currentUserId },
+        });
 
         if (response.data.success) {
           setIsSubscribed(false);
@@ -79,13 +76,10 @@ export default function TagSubscribeButton({
         }
       } else {
         // 订阅
-        const response = await barongAPI.post(
-          `/public/community/tags/${tagSlug}/subscribe`,
-          {
-            currentUserId,
-            notifyNewPosts: true,
-          }
-        );
+        const response = await barongAPI.post(`/public/community/tags/${tagSlug}/subscribe`, {
+          currentUserId,
+          notifyNewPosts: true,
+        });
 
         if (response.data.success) {
           setIsSubscribed(true);
@@ -117,9 +111,10 @@ export default function TagSubscribeButton({
         ${config.padding} ${config.text}
         flex items-center gap-1.5 rounded-lg
         transition-all duration-200
-        ${isSubscribed
-          ? 'bg-blue-600 hover:bg-blue-700 text-white'
-          : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
+        ${
+          isSubscribed
+            ? 'bg-blue-600 hover:bg-blue-700 text-white'
+            : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
         }
         ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
       `}

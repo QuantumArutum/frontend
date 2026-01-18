@@ -13,10 +13,10 @@ import EnhancedFooter from '../../../../components/EnhancedFooter';
 const generateConsistentNumber = (seed: string, max: number, min: number = 0) => {
   let hash = 0;
   for (let i = 0; i < seed.length; i++) {
-    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+    hash = (hash << 5) - hash + seed.charCodeAt(i);
     hash |= 0;
   }
-  return Math.abs(hash) % (max - min) + min;
+  return (Math.abs(hash) % (max - min)) + min;
 };
 
 export default function TopicPage() {
@@ -31,21 +31,21 @@ export default function TopicPage() {
   // 模拟话题数据 - 使用一致的数字生成避免 hydration 错误
   const topicData = {
     id: topicId,
-    title: topicId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+    title: topicId.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
     content: t('topic_page.sample_content', { topic: topicId.replace(/-/g, ' ') }),
     author: {
       name: 'QuantumPioneer',
       avatar: 'QP',
       level: t('topic_page.levels.quantum_expert'),
-      joinDate: t('topic_page.joined_year', { year: '2023' })
+      joinDate: t('topic_page.joined_year', { year: '2023' }),
     },
     stats: {
       views: generateConsistentNumber(topicId + 'views', 5000, 1000),
       likes: generateConsistentNumber(topicId + 'likes', 200, 50),
-      replies: generateConsistentNumber(topicId + 'replies', 100, 20)
+      replies: generateConsistentNumber(topicId + 'replies', 100, 20),
     },
     createdAt: '2024-01-15 14:30',
-    category: t('topic_page.categories.quantum_computing')
+    category: t('topic_page.categories.quantum_computing'),
   };
 
   const replies = [
@@ -54,15 +54,15 @@ export default function TopicPage() {
       author: { name: 'TechEnthusiast', avatar: 'TE', level: t('topic_page.levels.active_member') },
       content: t('topic_page.sample_replies.reply1'),
       createdAt: t('topic_page.time.hours_ago', { count: 2 }),
-      likes: 12
+      likes: 12,
     },
     {
       id: 2,
       author: { name: 'QuantumStudent', avatar: 'QS', level: t('topic_page.levels.newbie') },
       content: t('topic_page.sample_replies.reply2'),
       createdAt: t('topic_page.time.hours_ago', { count: 4 }),
-      likes: 8
-    }
+      likes: 8,
+    },
   ];
 
   return (
@@ -77,7 +77,7 @@ export default function TopicPage() {
             {/* Topic Header */}
             <div className="p-6 border-b border-white/10">
               <h1 className="text-2xl font-bold text-white mb-4">{topicData.title}</h1>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center text-white font-bold">
@@ -96,7 +96,7 @@ export default function TopicPage() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-4 text-sm text-white/60">
                   <span>{t('topic_page.views', { count: topicData.stats.views })}</span>
                   <span>{t('topic_page.replies_count', { count: topicData.stats.replies })}</span>
@@ -133,9 +133,11 @@ export default function TopicPage() {
           {/* Replies */}
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
             <div className="p-6 border-b border-white/10">
-              <h3 className="text-lg font-semibold text-white">{t('topic_page.replies_title', { count: replies.length })}</h3>
+              <h3 className="text-lg font-semibold text-white">
+                {t('topic_page.replies_title', { count: replies.length })}
+              </h3>
             </div>
-            
+
             <div className="divide-y divide-white/10">
               {replies.map((reply) => (
                 <div key={reply.id} className="p-6">

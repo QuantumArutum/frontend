@@ -26,50 +26,146 @@ const TechnicalSpecsSection = () => {
       title: t('specs.tabs.quantum-crypto.title'),
       icon: t('specs.tabs.quantum-crypto.icon'),
       data: [
-        { label: 'CRYSTALS-Dilithium', value: 'NIST Level 3', description: t('specs.data.crypto.dilithium') },
-        { label: 'CRYSTALS-Kyber', value: 'NIST Level 3', description: t('specs.data.crypto.kyber') },
-        { label: 'SPHINCS+', value: t('specs.data.crypto.sphincs_value'), description: t('specs.data.crypto.sphincs') },
-        { label: t('specs.data.crypto.prng_label'), value: t('specs.data.crypto.prng_value'), description: t('specs.data.crypto.prng') },
-        { label: t('specs.data.crypto.key_length_label'), value: t('specs.data.crypto.key_length_value'), description: t('specs.data.crypto.key_length') },
-        { label: t('specs.data.crypto.signature_length_label'), value: t('specs.data.crypto.signature_length_value'), description: t('specs.data.crypto.signature_length') }
-      ]
+        {
+          label: 'CRYSTALS-Dilithium',
+          value: 'NIST Level 3',
+          description: t('specs.data.crypto.dilithium'),
+        },
+        {
+          label: 'CRYSTALS-Kyber',
+          value: 'NIST Level 3',
+          description: t('specs.data.crypto.kyber'),
+        },
+        {
+          label: 'SPHINCS+',
+          value: t('specs.data.crypto.sphincs_value'),
+          description: t('specs.data.crypto.sphincs'),
+        },
+        {
+          label: t('specs.data.crypto.prng_label'),
+          value: t('specs.data.crypto.prng_value'),
+          description: t('specs.data.crypto.prng'),
+        },
+        {
+          label: t('specs.data.crypto.key_length_label'),
+          value: t('specs.data.crypto.key_length_value'),
+          description: t('specs.data.crypto.key_length'),
+        },
+        {
+          label: t('specs.data.crypto.signature_length_label'),
+          value: t('specs.data.crypto.signature_length_value'),
+          description: t('specs.data.crypto.signature_length'),
+        },
+      ],
     },
-    'performance': {
+    performance: {
       title: t('specs.tabs.performance.title'),
       icon: t('specs.tabs.performance.icon'),
       data: [
-        { label: t('specs.data.performance.tps_label'), value: '1250+ TPS', description: t('specs.data.performance.tps') },
-        { label: t('specs.data.performance.block_time_label'), value: t('specs.data.performance.block_time_value'), description: t('specs.data.performance.block_time') },
-        { label: t('specs.data.performance.key_gen_label'), value: t('specs.data.performance.key_gen_value'), description: t('specs.data.performance.key_gen') },
-        { label: t('specs.data.performance.verify_label'), value: t('specs.data.performance.verify_value'), description: t('specs.data.performance.verify') },
-        { label: t('specs.data.performance.latency_label'), value: '45ms', description: t('specs.data.performance.latency') },
-        { label: t('specs.data.performance.memory_label'), value: '1.4GB', description: t('specs.data.performance.memory') }
-      ]
+        {
+          label: t('specs.data.performance.tps_label'),
+          value: '1250+ TPS',
+          description: t('specs.data.performance.tps'),
+        },
+        {
+          label: t('specs.data.performance.block_time_label'),
+          value: t('specs.data.performance.block_time_value'),
+          description: t('specs.data.performance.block_time'),
+        },
+        {
+          label: t('specs.data.performance.key_gen_label'),
+          value: t('specs.data.performance.key_gen_value'),
+          description: t('specs.data.performance.key_gen'),
+        },
+        {
+          label: t('specs.data.performance.verify_label'),
+          value: t('specs.data.performance.verify_value'),
+          description: t('specs.data.performance.verify'),
+        },
+        {
+          label: t('specs.data.performance.latency_label'),
+          value: '45ms',
+          description: t('specs.data.performance.latency'),
+        },
+        {
+          label: t('specs.data.performance.memory_label'),
+          value: '1.4GB',
+          description: t('specs.data.performance.memory'),
+        },
+      ],
     },
-    'security': {
+    security: {
       title: t('specs.tabs.security.title'),
       icon: t('specs.tabs.security.icon'),
       data: [
-        { label: t('specs.data.security.vulnerabilities_label'), value: t('specs.data.security.vulnerabilities_value'), description: t('specs.data.security.vulnerabilities') },
-        { label: t('specs.data.security.coverage_label'), value: t('specs.data.security.coverage_value'), description: t('specs.data.security.coverage') },
-        { label: t('specs.data.security.penetration_label'), value: t('specs.data.security.penetration_value'), description: t('specs.data.security.penetration') },
-        { label: t('specs.data.security.quantum_resistance_label'), value: t('specs.data.security.quantum_resistance_value'), description: t('specs.data.security.quantum_resistance') },
-        { label: t('specs.data.security.side_channel_label'), value: t('specs.data.security.side_channel_value'), description: t('specs.data.security.side_channel') },
-        { label: t('specs.data.security.formal_verification_label'), value: t('specs.data.security.formal_verification_value'), description: t('specs.data.security.formal_verification') }
-      ]
+        {
+          label: t('specs.data.security.vulnerabilities_label'),
+          value: t('specs.data.security.vulnerabilities_value'),
+          description: t('specs.data.security.vulnerabilities'),
+        },
+        {
+          label: t('specs.data.security.coverage_label'),
+          value: t('specs.data.security.coverage_value'),
+          description: t('specs.data.security.coverage'),
+        },
+        {
+          label: t('specs.data.security.penetration_label'),
+          value: t('specs.data.security.penetration_value'),
+          description: t('specs.data.security.penetration'),
+        },
+        {
+          label: t('specs.data.security.quantum_resistance_label'),
+          value: t('specs.data.security.quantum_resistance_value'),
+          description: t('specs.data.security.quantum_resistance'),
+        },
+        {
+          label: t('specs.data.security.side_channel_label'),
+          value: t('specs.data.security.side_channel_value'),
+          description: t('specs.data.security.side_channel'),
+        },
+        {
+          label: t('specs.data.security.formal_verification_label'),
+          value: t('specs.data.security.formal_verification_value'),
+          description: t('specs.data.security.formal_verification'),
+        },
+      ],
     },
-    'compatibility': {
+    compatibility: {
       title: t('specs.tabs.compatibility.title'),
       icon: t('specs.tabs.compatibility.icon'),
       data: [
-        { label: t('specs.data.compatibility.evm_label'), value: t('specs.data.compatibility.evm_value'), description: t('specs.data.compatibility.evm') },
-        { label: t('specs.data.compatibility.protocols_label'), value: t('specs.data.compatibility.protocols_value'), description: t('specs.data.compatibility.protocols') },
-        { label: t('specs.data.compatibility.hardware_label'), value: t('specs.data.compatibility.hardware_value'), description: t('specs.data.compatibility.hardware') },
-        { label: t('specs.data.compatibility.api_label'), value: t('specs.data.compatibility.api_value'), description: t('specs.data.compatibility.api') },
-        { label: t('specs.data.compatibility.languages_label'), value: t('specs.data.compatibility.languages_value'), description: t('specs.data.compatibility.languages') },
-        { label: t('specs.data.compatibility.os_label'), value: t('specs.data.compatibility.os_value'), description: t('specs.data.compatibility.os') }
-      ]
-    }
+        {
+          label: t('specs.data.compatibility.evm_label'),
+          value: t('specs.data.compatibility.evm_value'),
+          description: t('specs.data.compatibility.evm'),
+        },
+        {
+          label: t('specs.data.compatibility.protocols_label'),
+          value: t('specs.data.compatibility.protocols_value'),
+          description: t('specs.data.compatibility.protocols'),
+        },
+        {
+          label: t('specs.data.compatibility.hardware_label'),
+          value: t('specs.data.compatibility.hardware_value'),
+          description: t('specs.data.compatibility.hardware'),
+        },
+        {
+          label: t('specs.data.compatibility.api_label'),
+          value: t('specs.data.compatibility.api_value'),
+          description: t('specs.data.compatibility.api'),
+        },
+        {
+          label: t('specs.data.compatibility.languages_label'),
+          value: t('specs.data.compatibility.languages_value'),
+          description: t('specs.data.compatibility.languages'),
+        },
+        {
+          label: t('specs.data.compatibility.os_label'),
+          value: t('specs.data.compatibility.os_value'),
+          description: t('specs.data.compatibility.os'),
+        },
+      ],
+    },
   };
 
   return (
@@ -84,9 +180,7 @@ const TechnicalSpecsSection = () => {
           <h2 className="text-4xl font-bold mb-5 bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] bg-clip-text text-transparent">
             {t('specs.title')}
           </h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-            {t('specs.description')}
-          </p>
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto">{t('specs.description')}</p>
         </motion.div>
 
         {/* Tab Navigation */}
@@ -125,10 +219,16 @@ const TechnicalSpecsSection = () => {
                 className="bg-white/5 rounded-lg p-6 border border-white/10 hover:border-cyan-500/50 transition-all duration-300"
               >
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-white font-semibold text-lg break-words flex-1 mr-3">{item.label}</h3>
-                  <span className="text-[#00D4FF] font-bold text-xl whitespace-nowrap">{item.value}</span>
+                  <h3 className="text-white font-semibold text-lg break-words flex-1 mr-3">
+                    {item.label}
+                  </h3>
+                  <span className="text-[#00D4FF] font-bold text-xl whitespace-nowrap">
+                    {item.value}
+                  </span>
                 </div>
-                <p className="text-gray-400 text-sm leading-relaxed break-words">{item.description}</p>
+                <p className="text-gray-400 text-sm leading-relaxed break-words">
+                  {item.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -144,7 +244,9 @@ const TechnicalSpecsSection = () => {
           <div className="bg-gradient-to-br from-green-500/20 to-green-600/20 rounded-lg p-6 border border-green-500/30">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-green-400 font-semibold">{t('specs.status.network_label')}</span>
+              <span className="text-green-400 font-semibold">
+                {t('specs.status.network_label')}
+              </span>
             </div>
             <div className="text-white text-2xl font-bold">{t('specs.status.network_value')}</div>
             <div className="text-green-300 text-sm">{t('specs.status.network_desc')}</div>
@@ -183,5 +285,3 @@ const TechnicalSpecsSection = () => {
 };
 
 export default TechnicalSpecsSection;
-
-

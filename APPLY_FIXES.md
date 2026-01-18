@@ -35,31 +35,31 @@ Vercel 会自动部署新代码。
 fetch('/api/v2/barong/public/community/fix-database', {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 })
-.then(response => response.json())
-.then(data => {
-  console.log('✅ 数据库修复结果:', data);
-  
-  if (data.success) {
-    console.log('🎉 修复成功！');
-    console.log('📊 验证结果:');
-    console.log('  - 论坛分类数:', data.verification.categoryCount);
-    console.log('  - 版主数:', data.verification.moderatorCount);
-    console.log('  - 管理员权限数:', data.verification.adminPermissionCount);
-    console.log('\n📝 修复详情:');
-    data.results.forEach(r => {
-      const icon = r.status === 'success' ? '✅' : '❌';
-      console.log(`  ${icon} 步骤 ${r.step}: ${r.action}`);
-    });
-  } else {
-    console.error('❌ 修复失败:', data.message);
-  }
-})
-.catch(error => {
-  console.error('❌ 执行失败:', error);
-});
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('✅ 数据库修复结果:', data);
+
+    if (data.success) {
+      console.log('🎉 修复成功！');
+      console.log('📊 验证结果:');
+      console.log('  - 论坛分类数:', data.verification.categoryCount);
+      console.log('  - 版主数:', data.verification.moderatorCount);
+      console.log('  - 管理员权限数:', data.verification.adminPermissionCount);
+      console.log('\n📝 修复详情:');
+      data.results.forEach((r) => {
+        const icon = r.status === 'success' ? '✅' : '❌';
+        console.log(`  ${icon} 步骤 ${r.step}: ${r.action}`);
+      });
+    } else {
+      console.error('❌ 修复失败:', data.message);
+    }
+  })
+  .catch((error) => {
+    console.error('❌ 执行失败:', error);
+  });
 ```
 
 **方法 B: 使用 Neon SQL 编辑器**
@@ -79,15 +79,15 @@ fetch('/api/v2/barong/public/community/fix-database', {
 ```javascript
 // 测试 1: 检查论坛分类
 fetch('/api/v2/barong/public/community/forum-categories')
-  .then(r => r.json())
-  .then(data => {
+  .then((r) => r.json())
+  .then((data) => {
     console.log('✅ 论坛分类:', data);
   });
 
 // 测试 2: 检查版主权限
 fetch('/api/v2/barong/public/community/mod/moderators?currentUserId=aurum51668@outlook.com')
-  .then(r => r.json())
-  .then(data => {
+  .then((r) => r.json())
+  .then((data) => {
     console.log('✅ 版主信息:', data);
   });
 
@@ -99,13 +99,13 @@ fetch('/api/v2/barong/public/community/mod/ban-user', {
     userId: 'test@example.com',
     duration: 1,
     reason: '测试封禁功能',
-    currentUserId: 'aurum51668@outlook.com'
-  })
+    currentUserId: 'aurum51668@outlook.com',
+  }),
 })
-.then(r => r.json())
-.then(data => {
-  console.log('✅ 封禁测试:', data);
-});
+  .then((r) => r.json())
+  .then((data) => {
+    console.log('✅ 封禁测试:', data);
+  });
 
 // 测试 4: 测试禁言功能
 fetch('/api/v2/barong/public/community/mod/mute-user', {
@@ -115,13 +115,13 @@ fetch('/api/v2/barong/public/community/mod/mute-user', {
     userId: 'test@example.com',
     duration: 1,
     reason: '测试禁言功能',
-    currentUserId: 'aurum51668@outlook.com'
-  })
+    currentUserId: 'aurum51668@outlook.com',
+  }),
 })
-.then(r => r.json())
-.then(data => {
-  console.log('✅ 禁言测试:', data);
-});
+  .then((r) => r.json())
+  .then((data) => {
+    console.log('✅ 禁言测试:', data);
+  });
 ```
 
 ---
@@ -205,6 +205,7 @@ fetch('/api/v2/barong/public/community/mod/mute-user', {
 ### Q2: 看不到版主操作按钮
 
 **A:** 可能的原因：
+
 1. 没有登录管理员账户
 2. 代码还没有部署
 3. 浏览器缓存，尝试硬刷新（Ctrl+Shift+R）

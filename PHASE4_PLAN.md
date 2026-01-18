@@ -1,9 +1,11 @@
 # 第四阶段实施计划 - 帖子详情与基础互动
 
 ## 📅 开始日期
+
 2026-01-17
 
 ## 🎯 目标
+
 实现帖子详情页、基础评论系统和点赞功能，让用户能够查看完整内容并进行基本互动
 
 ---
@@ -13,6 +15,7 @@
 ### 任务 1: 数据库表设计 ✅
 
 #### 1.1 评论表 (post_comments)
+
 ```sql
 CREATE TABLE IF NOT EXISTS post_comments (
   id SERIAL PRIMARY KEY,
@@ -30,6 +33,7 @@ CREATE TABLE IF NOT EXISTS post_comments (
 ```
 
 #### 1.2 点赞表 (post_likes)
+
 ```sql
 CREATE TABLE IF NOT EXISTS post_likes (
   id SERIAL PRIMARY KEY,
@@ -42,6 +46,7 @@ CREATE TABLE IF NOT EXISTS post_likes (
 ```
 
 #### 1.3 评论点赞表 (comment_likes)
+
 ```sql
 CREATE TABLE IF NOT EXISTS comment_likes (
   id SERIAL PRIMARY KEY,
@@ -58,9 +63,10 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 ### 任务 2: API 端点实现
 
 #### 2.1 获取帖子详情 API
+
 - **路径**: `GET /api/v2/barong/public/community/post-detail`
 - **参数**: `postId`
-- **返回**: 
+- **返回**:
   ```json
   {
     "success": true,
@@ -87,9 +93,10 @@ CREATE TABLE IF NOT EXISTS comment_likes (
   ```
 
 #### 2.2 获取评论列表 API
+
 - **路径**: `GET /api/v2/barong/public/community/post-comments`
 - **参数**: `postId`, `page`, `limit`
-- **返回**: 
+- **返回**:
   ```json
   {
     "success": true,
@@ -115,8 +122,9 @@ CREATE TABLE IF NOT EXISTS comment_likes (
   ```
 
 #### 2.3 发表评论 API
+
 - **路径**: `POST /api/v2/barong/public/community/post-comment`
-- **参数**: 
+- **参数**:
   ```json
   {
     "postId": 1,
@@ -128,15 +136,16 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 - **需要认证**: ✅
 
 #### 2.4 点赞帖子 API
+
 - **路径**: `POST /api/v2/barong/public/community/like-post`
-- **参数**: 
+- **参数**:
   ```json
   {
     "postId": 1,
     "currentUserId": "user_123"
   }
   ```
-- **返回**: 
+- **返回**:
   ```json
   {
     "success": true,
@@ -149,15 +158,16 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 - **需要认证**: ✅
 
 #### 2.5 点赞评论 API
+
 - **路径**: `POST /api/v2/barong/public/community/like-comment`
-- **参数**: 
+- **参数**:
   ```json
   {
     "commentId": 1,
     "currentUserId": "user_123"
   }
   ```
-- **返回**: 
+- **返回**:
   ```json
   {
     "success": true,
@@ -174,6 +184,7 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 ### 任务 3: 前端实现
 
 #### 3.1 创建帖子详情页
+
 - **路径**: `/community/posts/[postId]/page.tsx`
 - **功能**：
   - 显示帖子完整内容
@@ -184,6 +195,7 @@ CREATE TABLE IF NOT EXISTS comment_likes (
   - 编辑/删除按钮（仅作者可见）
 
 #### 3.2 评论区组件
+
 - **组件**: `CommentSection.tsx`
 - **功能**：
   - 评论列表展示
@@ -193,6 +205,7 @@ CREATE TABLE IF NOT EXISTS comment_likes (
   - 分页加载
 
 #### 3.3 评论卡片组件
+
 - **组件**: `CommentCard.tsx`
 - **功能**：
   - 显示评论内容
@@ -206,20 +219,24 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 ## 🔧 技术实现细节
 
 ### 浏览量统计
+
 - 每次访问帖子详情页时，增加 `view_count`
 - 使用防抖避免重复计数（同一用户 5 分钟内只计数一次）
 
 ### 点赞功能
+
 - 点赞/取消点赞切换
 - 乐观更新 UI（先更新界面，再调用 API）
 - 点赞动画效果
 
 ### 评论功能
+
 - 支持 Markdown 格式
 - 实时字符计数（最多 1000 字符）
 - 评论成功后自动刷新列表
 
 ### 认证处理
+
 - 使用简化方案：前端传递 `currentUserId`
 - 未登录用户可以查看但不能点赞/评论
 - 显示登录提示
@@ -229,6 +246,7 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 ## 📊 实施步骤
 
 ### 步骤 1: 创建数据库表和 API（后端）
+
 1. 创建 `post-detail` API
 2. 创建 `post-comments` API
 3. 创建 `post-comment` API（发表评论）
@@ -237,12 +255,14 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 6. 自动创建所需数据库表
 
 ### 步骤 2: 创建帖子详情页（前端）
+
 1. 创建 `/community/posts/[postId]/page.tsx`
 2. 实现帖子内容展示
 3. 实现点赞功能
 4. 实现浏览量统计
 
 ### 步骤 3: 实现评论系统（前端）
+
 1. 创建 `CommentSection` 组件
 2. 创建 `CommentCard` 组件
 3. 实现评论列表
@@ -250,6 +270,7 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 5. 实现评论点赞
 
 ### 步骤 4: 测试和优化
+
 1. 测试所有功能
 2. 优化加载性能
 3. 添加错误处理
@@ -260,6 +281,7 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 ## 🎯 成功指标
 
 ### 功能完整性
+
 - ✅ 用户可以查看帖子完整内容
 - ✅ 用户可以点赞帖子
 - ✅ 用户可以发表评论
@@ -267,6 +289,7 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 - ✅ 浏览量正确统计
 
 ### 用户体验
+
 - ✅ 页面加载快速
 - ✅ 点赞动画流畅
 - ✅ 评论发表响应快
@@ -276,6 +299,7 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 ---
 
 ## 📅 预计时间
+
 - API 实现: 2-3 小时
 - 前端实现: 3-4 小时
 - 测试和调试: 1-2 小时
@@ -289,6 +313,7 @@ CREATE TABLE IF NOT EXISTS comment_likes (
 准备开始第四阶段的开发！
 
 ### 实施顺序：
+
 1. 先创建所有 API 端点
 2. 再创建帖子详情页
 3. 最后实现评论系统

@@ -1,9 +1,17 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { 
-  Users, Gift, Copy, Share2, CheckCircle, DollarSign, 
-  TrendingUp, Award, Link as LinkIcon, ArrowLeft 
+import {
+  Users,
+  Gift,
+  Copy,
+  Share2,
+  CheckCircle,
+  DollarSign,
+  TrendingUp,
+  Award,
+  Link as LinkIcon,
+  ArrowLeft,
 } from 'lucide-react';
 import Link from 'next/link';
 import { PageLayout } from '@/components/ui/PageLayout';
@@ -48,7 +56,7 @@ export default function ReferralPage() {
 
   const fetchReferralInfo = useCallback(async () => {
     if (!searchAddress) return;
-    
+
     if (!/^0x[a-fA-F0-9]{40}$/.test(searchAddress)) {
       setError(t('token_sale.referral.errors.invalid_address'));
       return;
@@ -126,9 +134,17 @@ export default function ReferralPage() {
   const getTierBadge = (tier: string) => {
     switch (tier) {
       case 'ambassador':
-        return <Badge variant="warning"><Award className="w-3 h-3 mr-1" /> {t('token_sale.referral.tiers.ambassador')}</Badge>;
+        return (
+          <Badge variant="warning">
+            <Award className="w-3 h-3 mr-1" /> {t('token_sale.referral.tiers.ambassador')}
+          </Badge>
+        );
       case 'vip':
-        return <Badge variant="info"><TrendingUp className="w-3 h-3 mr-1" /> VIP</Badge>;
+        return (
+          <Badge variant="info">
+            <TrendingUp className="w-3 h-3 mr-1" /> VIP
+          </Badge>
+        );
       default:
         return <Badge variant="default">{t('token_sale.referral.tiers.standard')}</Badge>;
     }
@@ -159,11 +175,12 @@ export default function ReferralPage() {
     {
       key: 'status',
       header: t('token_sale.referral.columns.status'),
-      render: (_: unknown, record: ReferralRecord) => (
-        record.status === 'paid' 
-          ? <Badge variant="success">{t('token_sale.referral.status.paid')}</Badge>
-          : <Badge variant="warning">{t('token_sale.referral.status.pending')}</Badge>
-      ),
+      render: (_: unknown, record: ReferralRecord) =>
+        record.status === 'paid' ? (
+          <Badge variant="success">{t('token_sale.referral.status.paid')}</Badge>
+        ) : (
+          <Badge variant="warning">{t('token_sale.referral.status.pending')}</Badge>
+        ),
     },
     {
       key: 'createdAt',
@@ -191,22 +208,36 @@ export default function ReferralPage() {
     >
       <Card className="mb-6 bg-gradient-to-r from-purple-900/30 to-pink-900/30 border-purple-500/30">
         <CardContent className="p-6">
-          <h3 className="text-xl font-bold text-white mb-4">{t('token_sale.referral.program_title')}</h3>
+          <h3 className="text-xl font-bold text-white mb-4">
+            {t('token_sale.referral.program_title')}
+          </h3>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-gray-800/50 rounded-xl p-4 text-center">
               <div className="text-3xl font-bold text-green-400 mb-1">5%</div>
-              <div className="text-gray-400 text-sm">{t('token_sale.referral.commission_rates.standard')}</div>
-              <div className="text-gray-500 text-xs mt-1">{t('token_sale.referral.commission_rates.standard_desc')}</div>
+              <div className="text-gray-400 text-sm">
+                {t('token_sale.referral.commission_rates.standard')}
+              </div>
+              <div className="text-gray-500 text-xs mt-1">
+                {t('token_sale.referral.commission_rates.standard_desc')}
+              </div>
             </div>
             <div className="bg-gray-800/50 rounded-xl p-4 text-center border border-blue-500/30">
               <div className="text-3xl font-bold text-blue-400 mb-1">7%</div>
-              <div className="text-gray-400 text-sm">{t('token_sale.referral.commission_rates.vip')}</div>
-              <div className="text-gray-500 text-xs mt-1">{t('token_sale.referral.commission_rates.vip_desc')}</div>
+              <div className="text-gray-400 text-sm">
+                {t('token_sale.referral.commission_rates.vip')}
+              </div>
+              <div className="text-gray-500 text-xs mt-1">
+                {t('token_sale.referral.commission_rates.vip_desc')}
+              </div>
             </div>
             <div className="bg-gray-800/50 rounded-xl p-4 text-center border border-yellow-500/30">
               <div className="text-3xl font-bold text-yellow-400 mb-1">10%</div>
-              <div className="text-gray-400 text-sm">{t('token_sale.referral.commission_rates.ambassador')}</div>
-              <div className="text-gray-500 text-xs mt-1">{t('token_sale.referral.commission_rates.ambassador_desc')}</div>
+              <div className="text-gray-400 text-sm">
+                {t('token_sale.referral.commission_rates.ambassador')}
+              </div>
+              <div className="text-gray-500 text-xs mt-1">
+                {t('token_sale.referral.commission_rates.ambassador_desc')}
+              </div>
             </div>
           </div>
         </CardContent>
@@ -234,7 +265,11 @@ export default function ReferralPage() {
       ) : searchAddress ? (
         <>
           <Card className="mb-6">
-            <CardHeader title={t('token_sale.referral.your_code')} icon={LinkIcon} iconColor="text-purple-400" />
+            <CardHeader
+              title={t('token_sale.referral.your_code')}
+              icon={LinkIcon}
+              iconColor="text-purple-400"
+            />
             <CardContent>
               {referralCode ? (
                 <div className="space-y-4">
@@ -242,47 +277,62 @@ export default function ReferralPage() {
                     <div className="flex-1 bg-gray-800/50 rounded-xl p-4 border border-gray-700/50">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-gray-400 text-sm mb-1">{t('token_sale.referral.code_label')}</p>
-                          <p className="text-2xl font-bold text-yellow-400 font-mono">{referralCode}</p>
+                          <p className="text-gray-400 text-sm mb-1">
+                            {t('token_sale.referral.code_label')}
+                          </p>
+                          <p className="text-2xl font-bold text-yellow-400 font-mono">
+                            {referralCode}
+                          </p>
                         </div>
                         <div className="text-right">
-                          <p className="text-gray-400 text-sm mb-1">{t('token_sale.referral.tier_label')}</p>
+                          <p className="text-gray-400 text-sm mb-1">
+                            {t('token_sale.referral.tier_label')}
+                          </p>
                           {getTierBadge(tier)}
                         </div>
                       </div>
                     </div>
                     <div className="text-center">
-                      <p className="text-gray-400 text-sm mb-1">{t('token_sale.referral.rate_label')}</p>
+                      <p className="text-gray-400 text-sm mb-1">
+                        {t('token_sale.referral.rate_label')}
+                      </p>
                       <p className="text-3xl font-bold text-green-400">{commissionRate}%</p>
                     </div>
                   </div>
 
                   <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700/50">
-                    <p className="text-gray-400 text-sm mb-2">{t('token_sale.referral.share_link')}</p>
+                    <p className="text-gray-400 text-sm mb-2">
+                      {t('token_sale.referral.share_link')}
+                    </p>
                     <div className="flex items-center gap-2">
                       <code className="flex-1 text-blue-400 text-sm break-all">{shareLink}</code>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={() => copyToClipboard(shareLink)}
-                      >
-                        {copied ? <CheckCircle className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                      <Button variant="ghost" size="sm" onClick={() => copyToClipboard(shareLink)}>
+                        {copied ? (
+                          <CheckCircle className="w-4 h-4 text-green-400" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
                       </Button>
                     </div>
                   </div>
 
                   <div className="flex gap-2">
-                    <Button 
-                      variant="primary" 
+                    <Button
+                      variant="primary"
                       className="flex-1"
                       onClick={() => copyToClipboard(shareLink)}
                     >
                       <Copy className="w-4 h-4 mr-2" /> {t('token_sale.referral.copy_link')}
                     </Button>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="flex-1"
-                      onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(t('token_sale.referral.share_text'))}${shareLink}`, '_blank')}
+                      onClick={() =>
+                        window.open(
+                          `https://twitter.com/intent/tweet?text=${encodeURIComponent(t('token_sale.referral.share_text'))}${shareLink}`,
+                          '_blank'
+                        )
+                      }
                     >
                       <Share2 className="w-4 h-4 mr-2" /> {t('token_sale.referral.share_twitter')}
                     </Button>
@@ -291,10 +341,12 @@ export default function ReferralPage() {
               ) : (
                 <div className="text-center py-8">
                   <div className="text-6xl mb-4">🎁</div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{t('token_sale.referral.no_code')}</h3>
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    {t('token_sale.referral.no_code')}
+                  </h3>
                   <p className="text-gray-400 mb-6">{t('token_sale.referral.no_code_desc')}</p>
-                  <Button 
-                    variant="primary" 
+                  <Button
+                    variant="primary"
                     onClick={handleCreateCode}
                     disabled={creating}
                     loading={creating}
@@ -308,10 +360,30 @@ export default function ReferralPage() {
 
           {stats && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              <StatCard title={t('token_sale.referral.stats.total_referrals')} value={stats.totalReferrals.toString()} icon={Users} color="blue" />
-              <StatCard title={t('token_sale.referral.stats.total_earnings')} value={`${stats.totalEarnings.toFixed(2)}`} icon={DollarSign} color="green" />
-              <StatCard title={t('token_sale.referral.stats.pending')} value={`${stats.pendingEarnings.toFixed(2)}`} icon={Gift} color="orange" />
-              <StatCard title={t('token_sale.referral.stats.paid')} value={`${stats.paidEarnings.toFixed(2)}`} icon={CheckCircle} color="purple" />
+              <StatCard
+                title={t('token_sale.referral.stats.total_referrals')}
+                value={stats.totalReferrals.toString()}
+                icon={Users}
+                color="blue"
+              />
+              <StatCard
+                title={t('token_sale.referral.stats.total_earnings')}
+                value={`${stats.totalEarnings.toFixed(2)}`}
+                icon={DollarSign}
+                color="green"
+              />
+              <StatCard
+                title={t('token_sale.referral.stats.pending')}
+                value={`${stats.pendingEarnings.toFixed(2)}`}
+                icon={Gift}
+                color="orange"
+              />
+              <StatCard
+                title={t('token_sale.referral.stats.paid')}
+                value={`${stats.paidEarnings.toFixed(2)}`}
+                icon={CheckCircle}
+                color="purple"
+              />
             </div>
           )}
 
@@ -328,7 +400,9 @@ export default function ReferralPage() {
         <Card className="text-center py-12">
           <CardContent>
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-white mb-2">{t('token_sale.referral.enter_address')}</h3>
+            <h3 className="text-xl font-semibold text-white mb-2">
+              {t('token_sale.referral.enter_address')}
+            </h3>
             <p className="text-gray-400">{t('token_sale.referral.enter_address_desc')}</p>
           </CardContent>
         </Card>

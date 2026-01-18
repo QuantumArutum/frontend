@@ -9,11 +9,11 @@ import { sql } from '@/lib/database';
 export async function GET(request: NextRequest) {
   try {
     const startTime = Date.now();
-    
+
     // Check database health
     let databaseHealthy = false;
     let dbResponseTime = 0;
-    
+
     if (sql) {
       try {
         const dbStart = Date.now();
@@ -25,14 +25,14 @@ export async function GET(request: NextRequest) {
         databaseHealthy = false;
       }
     }
-    
+
     // API is healthy if we got this far
     const apiHealthy = true;
     const apiResponseTime = Date.now() - startTime;
-    
+
     // Overall health
     const overallHealthy = apiHealthy; // Database is optional
-    
+
     return NextResponse.json({
       success: true,
       data: {
@@ -43,20 +43,20 @@ export async function GET(request: NextRequest) {
           database: {
             status: databaseHealthy ? 'connected' : 'disconnected',
             response_time_ms: dbResponseTime,
-            configured: !!process.env.DATABASE_URL
+            configured: !!process.env.DATABASE_URL,
           },
           api: {
             status: 'healthy',
             response_time_ms: apiResponseTime,
-            version: '2.0.0'
+            version: '2.0.0',
           },
           cache: {
             status: 'healthy',
-            type: 'memory'
-          }
+            type: 'memory',
+          },
         },
-        timestamp: new Date().toISOString()
-      }
+        timestamp: new Date().toISOString(),
+      },
     });
   } catch (error: any) {
     console.error('Health check error:', error);
@@ -69,10 +69,10 @@ export async function GET(request: NextRequest) {
         details: {
           database: { status: 'error', response_time_ms: 0, configured: false },
           api: { status: 'healthy', response_time_ms: 0, version: '2.0.0' },
-          cache: { status: 'healthy', type: 'memory' }
+          cache: { status: 'healthy', type: 'memory' },
         },
-        timestamp: new Date().toISOString()
-      }
+        timestamp: new Date().toISOString(),
+      },
     });
   }
 }

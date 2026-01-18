@@ -29,7 +29,9 @@
     box-shadow: 0 0 5px currentColor;
   }
   50% {
-    box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+    box-shadow:
+      0 0 20px currentColor,
+      0 0 30px currentColor;
   }
   100% {
     box-shadow: 0 0 5px currentColor;
@@ -46,4 +48,3 @@
   z-index: -1;
   overflow: hidden;
 }
-

@@ -102,14 +102,17 @@ export async function POST(request: NextRequest) {
           isRead: message.is_read,
           createdAt: message.created_at,
         },
-        conversation: conversation ? {
-          id: conversation.id,
-          otherUserId: receiverId,
-          lastMessageAt: conversation.last_message_at,
-          unreadCount: currentUserId === user1Id 
-            ? conversation.user1_unread_count 
-            : conversation.user2_unread_count,
-        } : null,
+        conversation: conversation
+          ? {
+              id: conversation.id,
+              otherUserId: receiverId,
+              lastMessageAt: conversation.last_message_at,
+              unreadCount:
+                currentUserId === user1Id
+                  ? conversation.user1_unread_count
+                  : conversation.user2_unread_count,
+            }
+          : null,
       },
       message: '消息发送成功',
     });

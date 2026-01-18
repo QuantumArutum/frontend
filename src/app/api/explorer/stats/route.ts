@@ -56,36 +56,38 @@ export const GET = createSecureHandler(
       ]);
 
       const latestBlock = blockNumber ? parseInt(blockNumber, 16) : 0;
-      
+
       // 如果无法获取区块号，返回错误状态
       if (latestBlock === 0 && !blockNumber) {
-        return addSecurityHeaders(NextResponse.json({
-          error: 'RPC连接失败',
-          latestBlock: 0,
-          totalTransactions: 0,
-          avgBlockTime: 0,
-          tps: 0,
-          peerCount: 0,
-          chainId: 1668,
-          gasPrice: '0x0',
-          difficulty: '0x0',
-          hashRate: '0',
-          syncing: false,
-        }));
+        return addSecurityHeaders(
+          NextResponse.json({
+            error: 'RPC连接失败',
+            latestBlock: 0,
+            totalTransactions: 0,
+            avgBlockTime: 0,
+            tps: 0,
+            peerCount: 0,
+            chainId: 1668,
+            gasPrice: '0x0',
+            difficulty: '0x0',
+            hashRate: '0',
+            syncing: false,
+          })
+        );
       }
-      
+
       const effectiveLatestBlock = latestBlock;
-      
+
       // 增量扫描：只扫描新区块
       const startBlock = incrementalStats.lastScannedBlock + 1;
-      
+
       if (startBlock <= effectiveLatestBlock && effectiveLatestBlock < 2000000) {
         const blockPromises = [];
         for (let i = startBlock; i <= effectiveLatestBlock; i++) {
           blockPromises.push(makeRPCCall('qau_getBlockByNumber', [toEvenHex(i), false]));
         }
         const blocks = await Promise.all(blockPromises);
-        
+
         for (const block of blocks) {
           if (block) {
             incrementalStats.totalTransactions += block.transactions?.length || 0;
@@ -93,31 +95,36 @@ export const GET = createSecureHandler(
         }
         incrementalStats.lastScannedBlock = effectiveLatestBlock;
       }
-      
+
       // 计算 TPS：只获取最近 10 个区块
       let recentTxCount = 0;
       let oldestTimestamp = 0;
       let newestTimestamp = 0;
-      
+
       const recentStart = Math.max(0, effectiveLatestBlock - 9);
       const recentPromises = [];
       for (let i = recentStart; i <= effectiveLatestBlock; i++) {
         recentPromises.push(makeRPCCall('qau_getBlockByNumber', [toEvenHex(i), false]));
       }
       const recentBlocks = await Promise.all(recentPromises);
-      
+
       for (let j = 0; j < recentBlocks.length; j++) {
         const block = recentBlocks[j];
         if (!block) continue;
-        
+
         recentTxCount += block.transactions?.length || 0;
         const timestamp = parseInt(block.timestamp, 16);
-        const normalizedTs = timestamp > 1e15 ? Math.floor(timestamp / 1e6) : (timestamp > 1e12 ? timestamp : timestamp * 1000);
-        
+        const normalizedTs =
+          timestamp > 1e15
+            ? Math.floor(timestamp / 1e6)
+            : timestamp > 1e12
+              ? timestamp
+              : timestamp * 1000;
+
         if (j === recentBlocks.length - 1) newestTimestamp = normalizedTs;
         if (j === 0) oldestTimestamp = normalizedTs;
       }
-      
+
       const timeDiff = (newestTimestamp - oldestTimestamp) / 1000;
       const calculatedTps = timeDiff > 0 ? Math.round((recentTxCount / timeDiff) * 100) / 100 : 0;
       // 使用真实数据，不使用fallback
@@ -142,19 +149,21 @@ export const GET = createSecureHandler(
     } catch (error) {
       console.error('获取统计失败:', error);
       // 返回错误状态，不使用fallback数据
-      return addSecurityHeaders(NextResponse.json({
-        error: 'RPC连接失败',
-        latestBlock: 0,
-        totalTransactions: 0,
-        avgBlockTime: 0,
-        tps: 0,
-        peerCount: 0,
-        chainId: 1668,
-        gasPrice: '0x0',
-        difficulty: '0x0',
-        hashRate: '0',
-        syncing: false,
-      }));
+      return addSecurityHeaders(
+        NextResponse.json({
+          error: 'RPC连接失败',
+          latestBlock: 0,
+          totalTransactions: 0,
+          avgBlockTime: 0,
+          tps: 0,
+          peerCount: 0,
+          chainId: 1668,
+          gasPrice: '0x0',
+          difficulty: '0x0',
+          hashRate: '0',
+          syncing: false,
+        })
+      );
     }
   },
   { rateLimit: true, allowedMethods: ['GET'] }

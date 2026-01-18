@@ -16,12 +16,12 @@ export const GET = createSecureHandler(
       total_bets: 45000000,
       draw_date: '2025-01-05',
       draw_time: '21:30',
-      time_remaining: { days: 6, hours: 12, minutes: 30 }
+      time_remaining: { days: 6, hours: 12, minutes: 30 },
     };
 
     return successResponse({
       data: mockDraw,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   },
   { rateLimit: true, allowedMethods: ['GET'] }

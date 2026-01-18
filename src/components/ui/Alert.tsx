@@ -49,18 +49,10 @@ export const Alert: React.FC<AlertProps> = ({
         ${className}
       `}
     >
-      {displayIcon && (
-        <div className="flex-shrink-0 mt-0.5">
-          {displayIcon}
-        </div>
-      )}
+      {displayIcon && <div className="flex-shrink-0 mt-0.5">{displayIcon}</div>}
       <div className="flex-1 min-w-0">
-        {title && (
-          <AlertTitle>{title}</AlertTitle>
-        )}
-        {description && (
-          <AlertDescription>{description}</AlertDescription>
-        )}
+        {title && <AlertTitle>{title}</AlertTitle>}
+        {description && <AlertDescription>{description}</AlertDescription>}
         {children}
       </div>
       {onClose && (
@@ -83,9 +75,7 @@ export interface AlertTitleProps {
 
 export const AlertTitle: React.FC<AlertTitleProps> = ({ className = '', children }) => {
   return (
-    <h5 className={`font-medium leading-none tracking-tight mb-1 ${className}`}>
-      {children}
-    </h5>
+    <h5 className={`font-medium leading-none tracking-tight mb-1 ${className}`}>{children}</h5>
   );
 };
 
@@ -95,11 +85,7 @@ export interface AlertDescriptionProps {
 }
 
 export const AlertDescription: React.FC<AlertDescriptionProps> = ({ className = '', children }) => {
-  return (
-    <div className={`text-sm opacity-90 ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`text-sm opacity-90 ${className}`}>{children}</div>;
 };
 
 export default Alert;

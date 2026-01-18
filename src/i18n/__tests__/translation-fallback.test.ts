@@ -1,13 +1,13 @@
 /**
  * Translation Fallback Tests
- * 
+ *
  * Property 2: Fallback to English
- * For any translation key that is missing or empty in a non-English locale, 
- * the translation system must return the corresponding English translation 
+ * For any translation key that is missing or empty in a non-English locale,
+ * the translation system must return the corresponding English translation
  * instead of the raw key or an empty string.
- * 
+ *
  * **Validates: Requirements 1.4**
- * 
+ *
  * Feature: full-site-internationalization
  */
 
@@ -39,7 +39,7 @@ const locales = {
   ar,
   pt,
   it: itLocale,
-  nl
+  nl,
 };
 
 type LocaleCode = keyof typeof locales;
@@ -55,7 +55,7 @@ const localeNames: Record<LocaleCode, string> = {
   ar: 'Arabic',
   pt: 'Portuguese',
   it: 'Italian',
-  nl: 'Dutch'
+  nl: 'Dutch',
 };
 
 /**
@@ -64,25 +64,25 @@ const localeNames: Record<LocaleCode, string> = {
  */
 function getAllTranslationKeys(obj: unknown, prefix = ''): string[] {
   const keys: string[] = [];
-  
+
   if (obj === null || obj === undefined) {
     return keys;
   }
-  
+
   if (typeof obj !== 'object') {
     return keys;
   }
-  
+
   for (const [key, value] of Object.entries(obj)) {
     const fullKey = prefix ? `${prefix}.${key}` : key;
-    
+
     if (typeof value === 'string') {
       keys.push(fullKey);
     } else if (typeof value === 'object' && value !== null) {
       keys.push(...getAllTranslationKeys(value, fullKey));
     }
   }
-  
+
   return keys;
 }
 
@@ -92,14 +92,14 @@ function getAllTranslationKeys(obj: unknown, prefix = ''): string[] {
 function getNestedValue(obj: unknown, path: string): unknown {
   const parts = path.split('.');
   let current: unknown = obj;
-  
+
   for (const part of parts) {
     if (current === null || current === undefined || typeof current !== 'object') {
       return undefined;
     }
     current = (current as Record<string, unknown>)[part];
   }
-  
+
   return current;
 }
 
@@ -114,10 +114,10 @@ function createTestI18nInstance() {
     lng: 'en',
     fallbackLng: 'en',
     interpolation: {
-      escapeValue: false
+      escapeValue: false,
     },
     returnEmptyString: false,
-    returnNull: false
+    returnNull: false,
   });
   return testI18n;
 }
@@ -152,18 +152,18 @@ describe('Translation Fallback Mechanism', () => {
           translation: {
             test: {
               existing: 'English existing',
-              fallbackTest: 'English fallback value'
-            }
-          }
+              fallbackTest: 'English fallback value',
+            },
+          },
         },
         zh: {
           translation: {
             test: {
-              existing: '中文存在'
+              existing: '中文存在',
               // fallbackTest is intentionally missing
-            }
-          }
-        }
+            },
+          },
+        },
       };
 
       const fallbackTestI18n = i18n.createInstance();
@@ -172,13 +172,13 @@ describe('Translation Fallback Mechanism', () => {
         lng: 'zh',
         fallbackLng: 'en',
         interpolation: {
-          escapeValue: false
-        }
+          escapeValue: false,
+        },
       });
 
       // Existing key should return Chinese
       expect(fallbackTestI18n.t('test.existing')).toBe('中文存在');
-      
+
       // Missing key should fall back to English
       expect(fallbackTestI18n.t('test.fallbackTest')).toBe('English fallback value');
     });
@@ -188,17 +188,17 @@ describe('Translation Fallback Mechanism', () => {
         en: {
           translation: {
             test: {
-              emptyTest: 'English value for empty'
-            }
-          }
+              emptyTest: 'English value for empty',
+            },
+          },
         },
         zh: {
           translation: {
             test: {
-              emptyTest: '' // Empty string
-            }
-          }
-        }
+              emptyTest: '', // Empty string
+            },
+          },
+        },
       };
 
       const emptyTestI18n = i18n.createInstance();
@@ -208,8 +208,8 @@ describe('Translation Fallback Mechanism', () => {
         fallbackLng: 'en',
         returnEmptyString: false,
         interpolation: {
-          escapeValue: false
-        }
+          escapeValue: false,
+        },
       });
 
       // Empty value should fall back to English
@@ -218,10 +218,10 @@ describe('Translation Fallback Mechanism', () => {
 
     test('should never return raw translation key pattern', () => {
       testI18n.changeLanguage('zh');
-      
+
       // Test with a few known keys
       const testKeys = ['nav.home', 'hero.title', 'common.loading'];
-      
+
       for (const key of testKeys) {
         const result = testI18n.t(key);
         // Result should not be the raw key
@@ -242,7 +242,7 @@ describe('Translation Fallback Mechanism', () => {
       for (const localeCode of nonEnglishLocales) {
         testI18n.changeLanguage(localeCode);
         const result = testI18n.t(testKey);
-        
+
         // Result should either be the locale's translation or English fallback
         // It should never be the raw key
         expect(result).not.toBe(testKey);
@@ -251,7 +251,6 @@ describe('Translation Fallback Mechanism', () => {
       }
     });
   });
-
 
   /**
    * Task 18.2: Property Test - Fallback to English
@@ -263,7 +262,7 @@ describe('Translation Fallback Mechanism', () => {
     /**
      * Property-based test: For any randomly selected English key and any non-English locale,
      * the translation function should return a non-empty string that is not the raw key.
-     * 
+     *
      * **Feature: full-site-internationalization, Property 2: Fallback to English**
      * **Validates: Requirements 1.4**
      */
@@ -280,28 +279,28 @@ describe('Translation Fallback Mechanism', () => {
         fc.property(englishKeyArb, localeArb, (key, localeCode) => {
           testI18n.changeLanguage(localeCode);
           const result = testI18n.t(key);
-          
+
           // Result must be a string
           if (typeof result !== 'string') {
             throw new Error(
               `Translation for key "${key}" in ${localeNames[localeCode]} returned non-string: ${typeof result}`
             );
           }
-          
+
           // Result must not be empty
           if (result.trim() === '') {
             throw new Error(
               `Translation for key "${key}" in ${localeNames[localeCode]} returned empty string`
             );
           }
-          
+
           // Result must not be the raw key (fallback should provide English value)
           if (result === key) {
             throw new Error(
               `Translation for key "${key}" in ${localeNames[localeCode]} returned raw key instead of fallback`
             );
           }
-          
+
           // Result should not look like a translation key pattern (contains dots between words)
           // This catches cases where the key is returned as-is
           const keyPattern = /^[a-z_]+(\.[a-z_]+)+$/i;
@@ -310,7 +309,7 @@ describe('Translation Fallback Mechanism', () => {
               `Translation for key "${key}" in ${localeNames[localeCode]} appears to be a raw key: "${result}"`
             );
           }
-          
+
           return true;
         }),
         { numRuns: 100 } // Run at least 100 iterations as per design spec
@@ -320,50 +319,50 @@ describe('Translation Fallback Mechanism', () => {
     /**
      * Property-based test: For any missing key scenario, the system should fall back to English.
      * This simulates what happens when a translation is missing.
-     * 
+     *
      * **Feature: full-site-internationalization, Property 2: Fallback to English**
      * **Validates: Requirements 1.4**
      */
     test('Property Test: Missing translations fall back to English value', () => {
       // Create a test scenario with intentionally missing translations
       const englishKeyArb = fc.constantFrom(...englishKeys.slice(0, 50)); // Use subset for performance
-      
+
       fc.assert(
         fc.property(englishKeyArb, (key) => {
           // Get the English value for this key
           const englishValue = getNestedValue(en.translation, key) as string;
-          
+
           if (!englishValue || typeof englishValue !== 'string') {
             return true; // Skip if English value is not a string
           }
-          
+
           // Create a test instance with a locale that has this key missing
           const testResources = {
             en: en,
             testLang: {
-              translation: {} // Empty translation - all keys missing
-            }
+              translation: {}, // Empty translation - all keys missing
+            },
           };
-          
+
           const missingTestI18n = i18n.createInstance();
           missingTestI18n.init({
             resources: testResources,
             lng: 'testLang',
             fallbackLng: 'en',
             interpolation: {
-              escapeValue: false
-            }
+              escapeValue: false,
+            },
           });
-          
+
           const result = missingTestI18n.t(key);
-          
+
           // Result should be the English fallback value
           if (result !== englishValue) {
             throw new Error(
               `Missing key "${key}" did not fall back to English. Expected "${englishValue}", got "${result}"`
             );
           }
-          
+
           return true;
         }),
         { numRuns: 100 }

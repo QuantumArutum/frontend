@@ -21,10 +21,7 @@ export async function GET(request: NextRequest) {
     const result = await db.getUsers({ page, limit, search, state });
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, message: result.error }, { status: 500 });
     }
 
     const { users, total } = result.data!;
@@ -55,9 +52,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Get users error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }

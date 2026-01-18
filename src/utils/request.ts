@@ -26,9 +26,7 @@ export async function request(url: string, options?: RequestInit) {
 
     return await response.json();
   } catch (error) {
-    console.error("Request failed:", error);
+    console.error('Request failed:', error);
     throw error;
   }
 }
-
-

@@ -116,7 +116,7 @@ export default function ModeratorActions({
     <div className="flex items-center gap-2 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
       <Shield className="w-5 h-5 text-yellow-400" />
       <span className="text-yellow-300 text-sm font-medium mr-2">版主操作：</span>
-      
+
       <button
         onClick={handlePin}
         disabled={loading}

@@ -16,11 +16,7 @@ const sizeStyles = {
   lg: 'w-12 h-12',
 };
 
-export const Loading: React.FC<LoadingProps> = ({
-  size = 'md',
-  text,
-  fullScreen = false,
-}) => {
+export const Loading: React.FC<LoadingProps> = ({ size = 'md', text, fullScreen = false }) => {
   const content = (
     <div className="flex flex-col items-center justify-center gap-4">
       <Loader2 className={`${sizeStyles[size]} text-blue-500 animate-spin`} />

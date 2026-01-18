@@ -5,12 +5,15 @@ import { PERMISSIONS, hasPermission } from '@/lib/permissions';
 export async function DELETE(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -19,10 +22,13 @@ export async function DELETE(request: NextRequest) {
     const reason = searchParams.get('reason');
 
     if (!commentId || !currentUserId) {
-      return NextResponse.json({
-        success: false,
-        message: 'Missing required parameters'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing required parameters',
+        },
+        { status: 400 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -33,20 +39,26 @@ export async function DELETE(request: NextRequest) {
     `;
 
     if (moderator.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: Not a moderator'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Not a moderator',
+        },
+        { status: 403 }
+      );
     }
 
     const userRole = moderator[0].role;
     const customPermissions = moderator[0].permissions;
 
     if (!hasPermission(userRole, PERMISSIONS.DELETE_COMMENT, customPermissions)) {
-      return NextResponse.json({
-        success: false,
-        message: 'Unauthorized: No permission to delete comments'
-      }, { status: 403 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: No permission to delete comments',
+        },
+        { status: 403 }
+      );
     }
 
     // 检查评论是否存在
@@ -56,10 +68,13 @@ export async function DELETE(request: NextRequest) {
     `;
 
     if (comment.length === 0) {
-      return NextResponse.json({
-        success: false,
-        message: 'Comment not found'
-      }, { status: 404 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Comment not found',
+        },
+        { status: 404 }
+      );
     }
 
     // 软删除评论（标记为已删除）
@@ -90,10 +105,10 @@ export async function DELETE(request: NextRequest) {
         'comment',
         ${commentId},
         ${reason || null},
-        ${JSON.stringify({ 
+        ${JSON.stringify({
           postId: comment[0].post_id,
           commentUserId: comment[0].user_id,
-          contentPreview: comment[0].content.substring(0, 100)
+          contentPreview: comment[0].content.substring(0, 100),
         })}
       )
     `;
@@ -121,15 +136,17 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Comment deleted successfully'
+      message: 'Comment deleted successfully',
     });
-
   } catch (error: any) {
     console.error('Delete comment error:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to delete comment',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to delete comment',
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }

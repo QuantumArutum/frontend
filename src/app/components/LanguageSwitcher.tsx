@@ -22,10 +22,10 @@ const LanguageSwitcher = () => {
     { code: 'pt', name: 'Português', flag: '🇧🇷' },
     { code: 'it', name: 'Italiano', flag: '🇮🇹' },
     { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
-    { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' }
+    { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
   ];
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLanguage = languages.find((lang) => lang.code === i18n.language) || languages[0];
 
   const changeLanguage = (langCode: string) => {
     i18n.changeLanguage(langCode);
@@ -78,7 +78,7 @@ const LanguageSwitcher = () => {
               onClick={() => setIsOpen(false)}
               className="fixed inset-0 z-40"
             />
-            
+
             <motion.div
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -95,10 +95,11 @@ const LanguageSwitcher = () => {
                     transition={{ duration: 0.2, delay: index * 0.03 }}
                     whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
                     onClick={() => changeLanguage(language.code)}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all duration-200 ${i18n.language === language.code
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all duration-200 ${
+                      i18n.language === language.code
                         ? 'bg-gradient-to-r from-[#6E3CBC]/20 to-[#00D4FF]/20 border border-cyan-500/30 text-white'
                         : 'text-gray-300 hover:text-white'
-                      }`}
+                    }`}
                   >
                     <span className="text-lg">{language.flag}</span>
                     <span className="text-sm font-medium whitespace-nowrap">{language.name}</span>

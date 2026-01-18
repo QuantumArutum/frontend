@@ -82,9 +82,7 @@ export const Modal: React.FC<ModalProps> = ({
             {/* 头部 */}
             {(title || showCloseButton) && (
               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700/50">
-                {title && (
-                  <h2 className="text-xl font-semibold text-white">{title}</h2>
-                )}
+                {title && <h2 className="text-xl font-semibold text-white">{title}</h2>}
                 {showCloseButton && (
                   <button
                     onClick={onClose}
@@ -97,9 +95,7 @@ export const Modal: React.FC<ModalProps> = ({
             )}
 
             {/* 内容 */}
-            <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
-              {children}
-            </div>
+            <div className="overflow-y-auto max-h-[calc(90vh-80px)]">{children}</div>
           </motion.div>
         </div>
       )}
@@ -121,7 +117,9 @@ export const ModalFooter: React.FC<{ children: React.ReactNode; className?: stri
   className = '',
 }) => {
   return (
-    <div className={`px-6 py-4 border-t border-gray-700/50 flex items-center justify-end gap-3 ${className}`}>
+    <div
+      className={`px-6 py-4 border-t border-gray-700/50 flex items-center justify-end gap-3 ${className}`}
+    >
       {children}
     </div>
   );

@@ -60,8 +60,10 @@ export default function SearchPage() {
 
     try {
       setLoading(true);
-      const response = await barongAPI.get(`/public/community/search?q=${encodeURIComponent(q)}&type=${searchType}&limit=20`);
-      
+      const response = await barongAPI.get(
+        `/public/community/search?q=${encodeURIComponent(q)}&type=${searchType}&limit=20`
+      );
+
       if (response.data.success) {
         setResults(response.data.data.results);
         setTotal(response.data.data.pagination.total);
@@ -101,10 +103,14 @@ export default function SearchPage() {
   const highlightText = (text: string, query: string) => {
     if (!query) return text;
     const parts = text.split(new RegExp(`(${query})`, 'gi'));
-    return parts.map((part, i) => 
-      part.toLowerCase() === query.toLowerCase() ? 
-        <mark key={i} className="bg-yellow-500/30 text-yellow-200">{part}</mark> : 
+    return parts.map((part, i) =>
+      part.toLowerCase() === query.toLowerCase() ? (
+        <mark key={i} className="bg-yellow-500/30 text-yellow-200">
+          {part}
+        </mark>
+      ) : (
         part
+      )
     );
   };
 
@@ -139,12 +145,8 @@ export default function SearchPage() {
           {/* 搜索结果标题 */}
           {query && (
             <div className="mb-6">
-              <h1 className="text-2xl font-bold text-white mb-2">
-                搜索结果: &quot;{query}&quot;
-              </h1>
-              <p className="text-white/60">
-                找到 {total} 个结果
-              </p>
+              <h1 className="text-2xl font-bold text-white mb-2">搜索结果: &quot;{query}&quot;</h1>
+              <p className="text-white/60">找到 {total} 个结果</p>
             </div>
           )}
 
@@ -283,12 +285,8 @@ export default function SearchPage() {
               {results.posts.length === 0 && results.users.length === 0 && (
                 <div className="text-center py-12 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
                   <Search className="w-16 h-16 text-white/30 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    没有找到相关结果
-                  </h3>
-                  <p className="text-white/60">
-                    试试其他关键词或浏览社区内容
-                  </p>
+                  <h3 className="text-xl font-semibold text-white mb-2">没有找到相关结果</h3>
+                  <p className="text-white/60">试试其他关键词或浏览社区内容</p>
                   <Link
                     href="/community"
                     className="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg hover:from-purple-600 hover:to-cyan-600 transition-all"
@@ -304,12 +302,8 @@ export default function SearchPage() {
           {!loading && !query && (
             <div className="text-center py-12 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20">
               <Search className="w-16 h-16 text-white/30 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">
-                开始搜索
-              </h3>
-              <p className="text-white/60">
-                输入关键词搜索帖子、用户等内容
-              </p>
+              <h3 className="text-xl font-semibold text-white mb-2">开始搜索</h3>
+              <p className="text-white/60">输入关键词搜索帖子、用户等内容</p>
             </div>
           )}
         </main>

@@ -2,17 +2,17 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Building2, 
-  TrendingUp, 
-  Shield, 
-  Globe, 
+import {
+  Building2,
+  TrendingUp,
+  Shield,
+  Globe,
   PieChart,
   Users,
   ArrowRight,
   CheckCircle,
   Clock,
-  DollarSign
+  DollarSign,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -26,43 +26,43 @@ const STOApp = () => {
   const featuredSTOs = [
     {
       id: 1,
-      name: "QuantumTech Real Estate Fund",
-      symbol: "QTREF",
-      type: "Real Estate",
-      raised: "$65M",
-      target: "$100M",
-      minInvestment: "$1,000",
-      apy: "8.5%",
-      status: "active",
+      name: 'QuantumTech Real Estate Fund',
+      symbol: 'QTREF',
+      type: 'Real Estate',
+      raised: '$65M',
+      target: '$100M',
+      minInvestment: '$1,000',
+      apy: '8.5%',
+      status: 'active',
       investors: 1247,
-      progress: 65
+      progress: 65,
     },
     {
       id: 2,
-      name: "Green Energy Infrastructure",
-      symbol: "GEI",
-      type: "Energy",
-      raised: "$12.5M",
-      target: "$50M",
-      minInvestment: "$500",
-      apy: "12%",
-      status: "active",
+      name: 'Green Energy Infrastructure',
+      symbol: 'GEI',
+      type: 'Energy',
+      raised: '$12.5M',
+      target: '$50M',
+      minInvestment: '$500',
+      apy: '12%',
+      status: 'active',
       investors: 856,
-      progress: 25
+      progress: 25,
     },
     {
       id: 3,
-      name: "Global Logistics Chain",
-      symbol: "GLC",
-      type: "Supply Chain",
-      raised: "$28M",
-      target: "$30M",
-      minInvestment: "$2,000",
-      apy: "9.2%",
-      status: "closing_soon",
+      name: 'Global Logistics Chain',
+      symbol: 'GLC',
+      type: 'Supply Chain',
+      raised: '$28M',
+      target: '$30M',
+      minInvestment: '$2,000',
+      apy: '9.2%',
+      status: 'closing_soon',
       investors: 932,
-      progress: 93
-    }
+      progress: 93,
+    },
   ];
 
   return (
@@ -78,7 +78,7 @@ const STOApp = () => {
             Invest in compliant, asset-backed digital securities secured by quantum encryption.
           </p>
         </div>
-        <Button 
+        <Button
           variant="primary"
           className="bg-emerald-500 hover:bg-emerald-600 text-white"
           onClick={() => router.push('/sto')}
@@ -90,10 +90,15 @@ const STOApp = () => {
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[
-          { label: "Total Value Locked", value: "$2.8B", icon: TrendingUp, color: "text-emerald-400" },
-          { label: "Active Investors", value: "15.2K", icon: Users, color: "text-blue-400" },
-          { label: "Successful Exits", value: "124", icon: CheckCircle, color: "text-purple-400" },
-          { label: "Avg. Annual Yield", value: "11.4%", icon: PieChart, color: "text-yellow-400" }
+          {
+            label: 'Total Value Locked',
+            value: '$2.8B',
+            icon: TrendingUp,
+            color: 'text-emerald-400',
+          },
+          { label: 'Active Investors', value: '15.2K', icon: Users, color: 'text-blue-400' },
+          { label: 'Successful Exits', value: '124', icon: CheckCircle, color: 'text-purple-400' },
+          { label: 'Avg. Annual Yield', value: '11.4%', icon: PieChart, color: 'text-yellow-400' },
         ].map((stat, index) => (
           <Card key={index} className="bg-slate-800/50 border-slate-700 p-4">
             <div className="flex items-center gap-3">
@@ -141,7 +146,7 @@ const STOApp = () => {
                     <span className="text-white">{sto.progress}%</span>
                   </div>
                   <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
-                    <div 
+                    <div
                       className="h-full bg-gradient-to-r from-blue-500 to-emerald-500"
                       style={{ width: `${sto.progress}%` }}
                     />

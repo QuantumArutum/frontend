@@ -2,7 +2,20 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Shield, DollarSign, Award, Users, Dice6, RefreshCw, Gift, Trophy, Target, TrendingUp, Calendar } from 'lucide-react';
+import {
+  Zap,
+  Shield,
+  DollarSign,
+  Award,
+  Users,
+  Dice6,
+  RefreshCw,
+  Gift,
+  Trophy,
+  Target,
+  TrendingUp,
+  Calendar,
+} from 'lucide-react';
 import { PageLayout } from '@/components/ui/PageLayout';
 import { Card, CardHeader, CardContent, StatCard } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -68,14 +81,14 @@ const QuantumLotteryPage = () => {
       const response = await fetch('/api/lottery/random-numbers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bet_count: 1 })
+        body: JSON.stringify({ bet_count: 1 }),
       });
       const data = await response.json();
       if (data.success && data.data.bets.length > 0) {
         const bet = data.data.bets[0];
         setSelectedNumbers({
           frontZone: bet.front_zone.map((num: string) => parseInt(num)),
-          backZone: bet.back_zone.map((num: string) => parseInt(num))
+          backZone: bet.back_zone.map((num: string) => parseInt(num)),
         });
       }
     } catch (error) {
@@ -84,17 +97,17 @@ const QuantumLotteryPage = () => {
   };
 
   const handleNumberSelect = (zone: string, number: number) => {
-    setSelectedNumbers(prev => {
+    setSelectedNumbers((prev) => {
       const newNumbers = { ...prev };
       if (zone === 'front') {
         if (newNumbers.frontZone.includes(number)) {
-          newNumbers.frontZone = newNumbers.frontZone.filter(n => n !== number);
+          newNumbers.frontZone = newNumbers.frontZone.filter((n) => n !== number);
         } else if (newNumbers.frontZone.length < 5) {
           newNumbers.frontZone = [...newNumbers.frontZone, number].sort((a, b) => a - b);
         }
       } else {
         if (newNumbers.backZone.includes(number)) {
-          newNumbers.backZone = newNumbers.backZone.filter(n => n !== number);
+          newNumbers.backZone = newNumbers.backZone.filter((n) => n !== number);
         } else if (newNumbers.backZone.length < 2) {
           newNumbers.backZone = [...newNumbers.backZone, number].sort((a, b) => a - b);
         }
@@ -104,7 +117,8 @@ const QuantumLotteryPage = () => {
   };
 
   const clearSelection = () => setSelectedNumbers({ frontZone: [], backZone: [] });
-  const isSelectionComplete = () => selectedNumbers.frontZone.length === 5 && selectedNumbers.backZone.length === 2;
+  const isSelectionComplete = () =>
+    selectedNumbers.frontZone.length === 5 && selectedNumbers.backZone.length === 2;
 
   const formatCurrency = (amount: number): string => {
     if (amount >= 1e9) return (amount / 1e9).toFixed(1) + 'B QAU';
@@ -112,14 +126,26 @@ const QuantumLotteryPage = () => {
     return amount.toLocaleString() + ' QAU';
   };
 
-  const formatTimeRemaining = (timeRemaining: { days: number; hours: number; minutes: number } | null): string => {
+  const formatTimeRemaining = (
+    timeRemaining: { days: number; hours: number; minutes: number } | null
+  ): string => {
     if (!timeRemaining) return t('lottery_page.calculating');
     return `${timeRemaining.days}${t('staking_page.days')}${timeRemaining.hours}h${timeRemaining.minutes}m`;
   };
 
-  const NumberGrid = ({ zone, range, selected, maxSelect }: { zone: string; range: number; selected: number[]; maxSelect: number }) => (
+  const NumberGrid = ({
+    zone,
+    range,
+    selected,
+    maxSelect,
+  }: {
+    zone: string;
+    range: number;
+    selected: number[];
+    maxSelect: number;
+  }) => (
     <div className="grid grid-cols-7 gap-2">
-      {Array.from({ length: range }, (_, i) => i + 1).map(number => {
+      {Array.from({ length: range }, (_, i) => i + 1).map((number) => {
         const isSelected = selected.includes(number);
         const isDisabled = !isSelected && selected.length >= maxSelect;
         return (
@@ -130,13 +156,13 @@ const QuantumLotteryPage = () => {
             onClick={() => !isDisabled && handleNumberSelect(zone, number)}
             disabled={isDisabled}
             className={`w-10 h-10 rounded-lg font-bold text-sm transition-all ${
-              isSelected 
-                ? zone === 'front' 
-                  ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg' 
+              isSelected
+                ? zone === 'front'
+                  ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg'
                   : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
                 : isDisabled
-                ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
-                : 'bg-gray-700 text-gray-300 border border-gray-600 hover:border-blue-400 hover:bg-gray-600'
+                  ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                  : 'bg-gray-700 text-gray-300 border border-gray-600 hover:border-blue-400 hover:bg-gray-600'
             }`}
           >
             {number.toString().padStart(2, '0')}
@@ -146,19 +172,35 @@ const QuantumLotteryPage = () => {
     </div>
   );
 
-  const PrizeLevel = ({ level, condition, probability, prize }: { level: number; condition: string; probability: string; prize: string }) => (
+  const PrizeLevel = ({
+    level,
+    condition,
+    probability,
+    prize,
+  }: {
+    level: number;
+    condition: string;
+    probability: string;
+    prize: string;
+  }) => (
     <div className="flex items-center justify-between p-3 bg-gray-800/50 rounded-xl border border-gray-700/50">
       <div className="flex items-center gap-3">
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${
-          level <= 3 ? 'bg-gradient-to-r from-yellow-400 to-orange-500' :
-          level <= 6 ? 'bg-gradient-to-r from-blue-400 to-purple-500' :
-          'bg-gradient-to-r from-gray-500 to-gray-600'
-        }`}>
+        <div
+          className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${
+            level <= 3
+              ? 'bg-gradient-to-r from-yellow-400 to-orange-500'
+              : level <= 6
+                ? 'bg-gradient-to-r from-blue-400 to-purple-500'
+                : 'bg-gradient-to-r from-gray-500 to-gray-600'
+          }`}
+        >
           {level}
         </div>
         <div>
           <div className="font-medium text-white text-sm">{condition}</div>
-          <div className="text-xs text-gray-500">{t('lottery_page.probability')}: {probability}</div>
+          <div className="text-xs text-gray-500">
+            {t('lottery_page.probability')}: {probability}
+          </div>
         </div>
       </div>
       <div className="text-right">
@@ -178,13 +220,16 @@ const QuantumLotteryPage = () => {
           <Shield className="w-3 h-3" /> {t('lottery_page.quantum_verified')}
         </Badge>
       </div>
-      
+
       <div className="mb-3">
         <div className="text-sm text-gray-400 mb-2">{t('lottery_page.winning_numbers')}</div>
         <div className="flex items-center gap-3">
           <div className="flex gap-1">
             {result.winning_numbers.front_zone.map((num: number, index: number) => (
-              <div key={index} className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+              <div
+                key={index}
+                className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full flex items-center justify-center text-sm font-bold"
+              >
                 {num}
               </div>
             ))}
@@ -192,14 +237,17 @@ const QuantumLotteryPage = () => {
           <div className="text-gray-500">+</div>
           <div className="flex gap-1">
             {result.winning_numbers.back_zone.map((num: number, index: number) => (
-              <div key={index} className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+              <div
+                key={index}
+                className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold"
+              >
                 {num}
               </div>
             ))}
           </div>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-3 gap-2 text-center text-sm">
         <div>
           <div className="font-bold text-white">{formatCurrency(result.total_sales)}</div>
@@ -229,12 +277,32 @@ const QuantumLotteryPage = () => {
       title={t('lottery_page.title')}
       subtitle={t('lottery_page.subtitle')}
       icon={Zap}
-      headerStats={currentDraw ? [
-        { label: t('lottery_page.current_draw'), value: currentDraw.draw_number, color: 'text-yellow-400' },
-        { label: t('lottery_page.estimated_jackpot'), value: formatCurrency(currentDraw.estimated_jackpot), color: 'text-green-400' },
-        { label: t('lottery_page.time_remaining'), value: formatTimeRemaining(currentDraw.time_remaining), color: 'text-blue-400' },
-        { label: t('lottery_page.total_bets'), value: currentDraw.total_bets?.toLocaleString() || '0', color: 'text-pink-400' },
-      ] : undefined}
+      headerStats={
+        currentDraw
+          ? [
+              {
+                label: t('lottery_page.current_draw'),
+                value: currentDraw.draw_number,
+                color: 'text-yellow-400',
+              },
+              {
+                label: t('lottery_page.estimated_jackpot'),
+                value: formatCurrency(currentDraw.estimated_jackpot),
+                color: 'text-green-400',
+              },
+              {
+                label: t('lottery_page.time_remaining'),
+                value: formatTimeRemaining(currentDraw.time_remaining),
+                color: 'text-blue-400',
+              },
+              {
+                label: t('lottery_page.total_bets'),
+                value: currentDraw.total_bets?.toLocaleString() || '0',
+                color: 'text-pink-400',
+              },
+            ]
+          : undefined
+      }
     >
       {/* Navigation Tabs */}
       <div className="mb-6">
@@ -254,7 +322,9 @@ const QuantumLotteryPage = () => {
                   <Button variant="success" size="sm" onClick={generateRandomNumbers}>
                     <RefreshCw className="w-4 h-4 mr-1" /> {t('lottery_page.random')}
                   </Button>
-                  <Button variant="ghost" size="sm" onClick={clearSelection}>{t('lottery_page.clear')}</Button>
+                  <Button variant="ghost" size="sm" onClick={clearSelection}>
+                    {t('lottery_page.clear')}
+                  </Button>
                 </div>
               }
             />
@@ -262,19 +332,39 @@ const QuantumLotteryPage = () => {
               {/* Front Zone */}
               <div className="mb-6">
                 <div className="flex items-center gap-3 mb-3">
-                  <h3 className="text-lg font-semibold text-white">{t('lottery_page.front_zone')}</h3>
-                  <Badge variant="error">{t('lottery_page.select_from', { count: 5, max: 35 })} ({selectedNumbers.frontZone.length}/5)</Badge>
+                  <h3 className="text-lg font-semibold text-white">
+                    {t('lottery_page.front_zone')}
+                  </h3>
+                  <Badge variant="error">
+                    {t('lottery_page.select_from', { count: 5, max: 35 })} (
+                    {selectedNumbers.frontZone.length}/5)
+                  </Badge>
                 </div>
-                <NumberGrid zone="front" range={35} selected={selectedNumbers.frontZone} maxSelect={5} />
+                <NumberGrid
+                  zone="front"
+                  range={35}
+                  selected={selectedNumbers.frontZone}
+                  maxSelect={5}
+                />
               </div>
 
               {/* Back Zone */}
               <div className="mb-6">
                 <div className="flex items-center gap-3 mb-3">
-                  <h3 className="text-lg font-semibold text-white">{t('lottery_page.back_zone')}</h3>
-                  <Badge variant="info">{t('lottery_page.select_from', { count: 2, max: 12 })} ({selectedNumbers.backZone.length}/2)</Badge>
+                  <h3 className="text-lg font-semibold text-white">
+                    {t('lottery_page.back_zone')}
+                  </h3>
+                  <Badge variant="info">
+                    {t('lottery_page.select_from', { count: 2, max: 12 })} (
+                    {selectedNumbers.backZone.length}/2)
+                  </Badge>
                 </div>
-                <NumberGrid zone="back" range={12} selected={selectedNumbers.backZone} maxSelect={2} />
+                <NumberGrid
+                  zone="back"
+                  range={12}
+                  selected={selectedNumbers.backZone}
+                  maxSelect={2}
+                />
               </div>
 
               {/* Bet Info */}
@@ -285,7 +375,7 @@ const QuantumLotteryPage = () => {
                     <Shield className="w-3 h-3" /> {t('lottery_page.quantum_secure')}
                   </Badge>
                 </div>
-                
+
                 <div className="grid grid-cols-3 gap-4 mb-4 text-center">
                   <div>
                     <div className="text-2xl font-bold text-white">1</div>
@@ -304,13 +394,20 @@ const QuantumLotteryPage = () => {
                 {/* Selected Numbers Display */}
                 {(selectedNumbers.frontZone.length > 0 || selectedNumbers.backZone.length > 0) && (
                   <div className="mb-4 p-3 bg-gray-800/50 rounded-lg">
-                    <div className="text-sm text-gray-400 mb-2">{t('lottery_page.selected_numbers')}</div>
+                    <div className="text-sm text-gray-400 mb-2">
+                      {t('lottery_page.selected_numbers')}
+                    </div>
                     <div className="flex items-center gap-3">
                       {selectedNumbers.frontZone.length > 0 && (
                         <div className="flex items-center gap-1">
-                          <span className="text-xs text-gray-500">{t('lottery_page.front_zone')}:</span>
+                          <span className="text-xs text-gray-500">
+                            {t('lottery_page.front_zone')}:
+                          </span>
                           {selectedNumbers.frontZone.map((num, index) => (
-                            <div key={index} className="w-7 h-7 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                            <div
+                              key={index}
+                              className="w-7 h-7 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full flex items-center justify-center text-xs font-bold"
+                            >
                               {num.toString().padStart(2, '0')}
                             </div>
                           ))}
@@ -318,9 +415,14 @@ const QuantumLotteryPage = () => {
                       )}
                       {selectedNumbers.backZone.length > 0 && (
                         <div className="flex items-center gap-1">
-                          <span className="text-xs text-gray-500">{t('lottery_page.back_zone')}:</span>
+                          <span className="text-xs text-gray-500">
+                            {t('lottery_page.back_zone')}:
+                          </span>
                           {selectedNumbers.backZone.map((num, index) => (
-                            <div key={index} className="w-7 h-7 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                            <div
+                              key={index}
+                              className="w-7 h-7 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold"
+                            >
                               {num.toString().padStart(2, '0')}
                             </div>
                           ))}
@@ -337,7 +439,9 @@ const QuantumLotteryPage = () => {
                   disabled={!isSelectionComplete()}
                 >
                   {isSelectionComplete() ? (
-                    <><Gift className="w-5 h-5 mr-2" /> {t('lottery_page.place_bet')} - 2.0 QAU</>
+                    <>
+                      <Gift className="w-5 h-5 mr-2" /> {t('lottery_page.place_bet')} - 2.0 QAU
+                    </>
                   ) : (
                     t('lottery_page.select_complete')
                   )}
@@ -348,17 +452,66 @@ const QuantumLotteryPage = () => {
 
           {/* Prize Levels */}
           <Card>
-            <CardHeader title={t('lottery_page.prize_levels')} icon={Award} iconColor="text-yellow-400" />
+            <CardHeader
+              title={t('lottery_page.prize_levels')}
+              icon={Award}
+              iconColor="text-yellow-400"
+            />
             <CardContent className="space-y-2">
-              <PrizeLevel level={1} condition={`${t('lottery_page.front_zone')} 5 + ${t('lottery_page.back_zone')} 2`} probability="1/21,425,712" prize={t('lottery_page.floating_prize')} />
-              <PrizeLevel level={2} condition={`${t('lottery_page.front_zone')} 5 + ${t('lottery_page.back_zone')} 1`} probability="1/1,785,476" prize={t('lottery_page.floating_prize')} />
-              <PrizeLevel level={3} condition={`${t('lottery_page.front_zone')} 5 + ${t('lottery_page.back_zone')} 0`} probability="1/109,389" prize="10,000 QAU" />
-              <PrizeLevel level={4} condition={`${t('lottery_page.front_zone')} 4 + ${t('lottery_page.back_zone')} 2`} probability="1/2,669" prize="3,000 QAU" />
-              <PrizeLevel level={5} condition={`${t('lottery_page.front_zone')} 4 + ${t('lottery_page.back_zone')} 1`} probability="1/640" prize="300 QAU" />
-              <PrizeLevel level={6} condition={`${t('lottery_page.front_zone')} 3 + ${t('lottery_page.back_zone')} 2`} probability="1/175" prize="200 QAU" />
-              <PrizeLevel level={7} condition={`${t('lottery_page.front_zone')} 4 + ${t('lottery_page.back_zone')} 0`} probability="1/39" prize="100 QAU" />
-              <PrizeLevel level={8} condition={`${t('lottery_page.front_zone')} 3+1 / 2+2`} probability="1/17" prize="15 QAU" />
-              <PrizeLevel level={9} condition={t('lottery_page.other_combinations') || 'Other combinations'} probability="1/7.2" prize="5 QAU" />
+              <PrizeLevel
+                level={1}
+                condition={`${t('lottery_page.front_zone')} 5 + ${t('lottery_page.back_zone')} 2`}
+                probability="1/21,425,712"
+                prize={t('lottery_page.floating_prize')}
+              />
+              <PrizeLevel
+                level={2}
+                condition={`${t('lottery_page.front_zone')} 5 + ${t('lottery_page.back_zone')} 1`}
+                probability="1/1,785,476"
+                prize={t('lottery_page.floating_prize')}
+              />
+              <PrizeLevel
+                level={3}
+                condition={`${t('lottery_page.front_zone')} 5 + ${t('lottery_page.back_zone')} 0`}
+                probability="1/109,389"
+                prize="10,000 QAU"
+              />
+              <PrizeLevel
+                level={4}
+                condition={`${t('lottery_page.front_zone')} 4 + ${t('lottery_page.back_zone')} 2`}
+                probability="1/2,669"
+                prize="3,000 QAU"
+              />
+              <PrizeLevel
+                level={5}
+                condition={`${t('lottery_page.front_zone')} 4 + ${t('lottery_page.back_zone')} 1`}
+                probability="1/640"
+                prize="300 QAU"
+              />
+              <PrizeLevel
+                level={6}
+                condition={`${t('lottery_page.front_zone')} 3 + ${t('lottery_page.back_zone')} 2`}
+                probability="1/175"
+                prize="200 QAU"
+              />
+              <PrizeLevel
+                level={7}
+                condition={`${t('lottery_page.front_zone')} 4 + ${t('lottery_page.back_zone')} 0`}
+                probability="1/39"
+                prize="100 QAU"
+              />
+              <PrizeLevel
+                level={8}
+                condition={`${t('lottery_page.front_zone')} 3+1 / 2+2`}
+                probability="1/17"
+                prize="15 QAU"
+              />
+              <PrizeLevel
+                level={9}
+                condition={t('lottery_page.other_combinations') || 'Other combinations'}
+                probability="1/7.2"
+                prize="5 QAU"
+              />
             </CardContent>
           </Card>
         </div>
@@ -370,7 +523,7 @@ const QuantumLotteryPage = () => {
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <Trophy className="w-5 h-5 text-yellow-400" /> {t('lottery_page.history_results')}
           </h2>
-          
+
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[...Array(4)].map((_, index) => (
@@ -420,38 +573,74 @@ const QuantumLotteryPage = () => {
       {activeTab === 'stats' && statistics && (
         <div className="space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCard title={t('lottery_page.total_draws')} value={statistics.total_draws.toLocaleString()} icon={Calendar} color="blue" />
-            <StatCard title={t('lottery_page.total_sales')} value={`${(statistics.total_sales / 1e9).toFixed(1)}B`} icon={DollarSign} color="green" />
-            <StatCard title={t('lottery_page.total_prizes')} value={`${(statistics.total_prizes / 1e9).toFixed(1)}B`} icon={Gift} color="purple" />
-            <StatCard title={t('lottery_page.total_players')} value={`${(statistics.total_players / 1e6).toFixed(1)}M`} icon={Users} color="orange" />
+            <StatCard
+              title={t('lottery_page.total_draws')}
+              value={statistics.total_draws.toLocaleString()}
+              icon={Calendar}
+              color="blue"
+            />
+            <StatCard
+              title={t('lottery_page.total_sales')}
+              value={`${(statistics.total_sales / 1e9).toFixed(1)}B`}
+              icon={DollarSign}
+              color="green"
+            />
+            <StatCard
+              title={t('lottery_page.total_prizes')}
+              value={`${(statistics.total_prizes / 1e9).toFixed(1)}B`}
+              icon={Gift}
+              color="purple"
+            />
+            <StatCard
+              title={t('lottery_page.total_players')}
+              value={`${(statistics.total_players / 1e6).toFixed(1)}M`}
+              icon={Users}
+              color="orange"
+            />
           </div>
 
           <Card>
-            <CardHeader title={t('lottery_page.number_frequency')} icon={TrendingUp} iconColor="text-blue-400" />
+            <CardHeader
+              title={t('lottery_page.number_frequency')}
+              icon={TrendingUp}
+              iconColor="text-blue-400"
+            />
             <CardContent>
               <div className="mb-6">
-                <h4 className="text-lg font-semibold text-white mb-3">{t('lottery_page.front_zone')} (01-35)</h4>
+                <h4 className="text-lg font-semibold text-white mb-3">
+                  {t('lottery_page.front_zone')} (01-35)
+                </h4>
                 <div className="grid grid-cols-7 gap-2">
-                  {Object.entries(statistics.number_frequency.front_zone as Record<string, number>).map(([num, freq]) => (
+                  {Object.entries(
+                    statistics.number_frequency.front_zone as Record<string, number>
+                  ).map(([num, freq]) => (
                     <div key={num} className="text-center">
                       <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-1">
                         {num}
                       </div>
-                      <div className="text-xs text-gray-400">{freq} {t('lottery_page.times')}</div>
+                      <div className="text-xs text-gray-400">
+                        {freq} {t('lottery_page.times')}
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div>
-                <h4 className="text-lg font-semibold text-white mb-3">{t('lottery_page.back_zone')} (01-12)</h4>
+                <h4 className="text-lg font-semibold text-white mb-3">
+                  {t('lottery_page.back_zone')} (01-12)
+                </h4>
                 <div className="grid grid-cols-6 gap-2">
-                  {Object.entries(statistics.number_frequency.back_zone as Record<string, number>).map(([num, freq]) => (
+                  {Object.entries(
+                    statistics.number_frequency.back_zone as Record<string, number>
+                  ).map(([num, freq]) => (
                     <div key={num} className="text-center">
                       <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-1">
                         {num}
                       </div>
-                      <div className="text-xs text-gray-400">{freq} {t('lottery_page.times')}</div>
+                      <div className="text-xs text-gray-400">
+                        {freq} {t('lottery_page.times')}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -466,7 +655,9 @@ const QuantumLotteryPage = () => {
         <CardContent className="text-center py-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Shield className="w-8 h-8 text-blue-400" />
-            <h3 className="text-xl font-bold text-white">{t('lottery_page.quantum_security.title')}</h3>
+            <h3 className="text-xl font-bold text-white">
+              {t('lottery_page.quantum_security.title')}
+            </h3>
             <Zap className="w-8 h-8 text-yellow-400" />
           </div>
           <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
@@ -475,15 +666,21 @@ const QuantumLotteryPage = () => {
           <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto">
             <div className="text-center">
               <Zap className="w-10 h-10 text-yellow-400 mx-auto mb-2" />
-              <h4 className="font-bold text-white text-sm">{t('lottery_page.quantum_security.qrng')}</h4>
+              <h4 className="font-bold text-white text-sm">
+                {t('lottery_page.quantum_security.qrng')}
+              </h4>
             </div>
             <div className="text-center">
               <Shield className="w-10 h-10 text-blue-400 mx-auto mb-2" />
-              <h4 className="font-bold text-white text-sm">{t('lottery_page.quantum_security.encryption')}</h4>
+              <h4 className="font-bold text-white text-sm">
+                {t('lottery_page.quantum_security.encryption')}
+              </h4>
             </div>
             <div className="text-center">
               <Award className="w-10 h-10 text-green-400 mx-auto mb-2" />
-              <h4 className="font-bold text-white text-sm">{t('lottery_page.quantum_security.verification')}</h4>
+              <h4 className="font-bold text-white text-sm">
+                {t('lottery_page.quantum_security.verification')}
+              </h4>
             </div>
           </div>
         </CardContent>
@@ -493,4 +690,3 @@ const QuantumLotteryPage = () => {
 };
 
 export default QuantumLotteryPage;
-

@@ -16,25 +16,28 @@ interface UserProfile {
 
 const ProfilePage: React.FC = () => {
   const [user] = useState<UserProfile>({
-    name: "量子用户",
-    email: "user@quantaureum.com",
-    walletAddress: "0x1234...5678",
-    balance: "1,234.56 QAU",
-    level: "白银会员",
-    joinDate: "2024-01-15"
+    name: '量子用户',
+    email: 'user@quantaureum.com',
+    walletAddress: '0x1234...5678',
+    balance: '1,234.56 QAU',
+    level: '白银会员',
+    joinDate: '2024-01-15',
   });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
       {/* 量子网格背景 */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
             linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px)
           `,
-          backgroundSize: '50px 50px'
-        }}></div>
+            backgroundSize: '50px 50px',
+          }}
+        ></div>
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-8">
@@ -51,9 +54,7 @@ const ProfilePage: React.FC = () => {
           <Card className="bg-white/10 backdrop-blur-md border-white/20 p-6 mb-6">
             <div className="flex items-center space-x-6 mb-6">
               <div className="w-20 h-20 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full flex items-center justify-center">
-                <span className="text-2xl font-bold text-white">
-                  {user.name.charAt(0)}
-                </span>
+                <span className="text-2xl font-bold text-white">{user.name.charAt(0)}</span>
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-white mb-2">{user.name}</h2>
@@ -65,36 +66,28 @@ const ProfilePage: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">
-                  邮箱地址
-                </label>
+                <label className="block text-gray-300 text-sm font-medium mb-2">邮箱地址</label>
                 <div className="bg-white/5 border border-white/20 rounded-lg p-3">
                   <span className="text-white">{user.email}</span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">
-                  钱包地址
-                </label>
+                <label className="block text-gray-300 text-sm font-medium mb-2">钱包地址</label>
                 <div className="bg-white/5 border border-white/20 rounded-lg p-3">
                   <span className="text-white font-mono">{user.walletAddress}</span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">
-                  账户余额
-                </label>
+                <label className="block text-gray-300 text-sm font-medium mb-2">账户余额</label>
                 <div className="bg-white/5 border border-white/20 rounded-lg p-3">
                   <span className="text-green-400 font-bold">{user.balance}</span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">
-                  注册时间
-                </label>
+                <label className="block text-gray-300 text-sm font-medium mb-2">注册时间</label>
                 <div className="bg-white/5 border border-white/20 rounded-lg p-3">
                   <span className="text-white">{user.joinDate}</span>
                 </div>

@@ -15,14 +15,17 @@ export default function PrivacyPolicy() {
             <h1 className="text-4xl font-bold text-white mb-8 text-center">
               {t('privacy.title', '隐私政策')}
             </h1>
-            
+
             <div className="prose prose-invert max-w-none">
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-white mb-4">
                   {t('privacy.overview.title', '概述')}
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  {t('privacy.overview.content', 'Quantaureum致力于保护您的隐私。本隐私政策说明了我们如何收集、使用和保护您的个人信息。')}
+                  {t(
+                    'privacy.overview.content',
+                    'Quantaureum致力于保护您的隐私。本隐私政策说明了我们如何收集、使用和保护您的个人信息。'
+                  )}
                 </p>
               </section>
 
@@ -61,7 +64,10 @@ export default function PrivacyPolicy() {
                   {t('privacy.security.title', '数据安全')}
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  {t('privacy.security.content', '我们采用行业领先的量子安全加密技术来保护您的数据。所有敏感信息都经过加密存储和传输。')}
+                  {t(
+                    'privacy.security.content',
+                    '我们采用行业领先的量子安全加密技术来保护您的数据。所有敏感信息都经过加密存储和传输。'
+                  )}
                 </p>
               </section>
 
@@ -85,7 +91,10 @@ export default function PrivacyPolicy() {
                   {t('privacy.contact.title', '联系我们')}
                 </h2>
                 <p className="text-gray-300 leading-relaxed">
-                  {t('privacy.contact.content', '如果您对本隐私政策有任何疑问，请通过以下方式联系我们：')}
+                  {t(
+                    'privacy.contact.content',
+                    '如果您对本隐私政策有任何疑问，请通过以下方式联系我们：'
+                  )}
                 </p>
                 <div className="mt-4 text-gray-300">
                   <p>Email: privacy@quantaureum.com</p>
@@ -105,4 +114,3 @@ export default function PrivacyPolicy() {
     </div>
   );
 }
-

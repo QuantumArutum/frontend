@@ -23,7 +23,7 @@ export default function CommentSort({ currentSort, onSortChange }: CommentSortPr
         {sortOptions.map((option) => {
           const Icon = option.icon;
           const isActive = currentSort === option.value;
-          
+
           return (
             <button
               key={option.value}

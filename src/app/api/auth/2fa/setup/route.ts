@@ -1,6 +1,6 @@
 /**
  * 2FA设置API
- * 
+ *
  * 生成TOTP密钥和二维码URI
  */
 
@@ -55,7 +55,6 @@ export const POST = createSecureHandler(
         uri,
         message: '请使用身份验证器应用扫描二维码，然后输入验证码完成设置',
       });
-
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       SecurityLogger.log(

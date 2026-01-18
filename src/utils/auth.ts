@@ -56,7 +56,6 @@ interface ApiResponse<T = unknown> {
   data?: T;
 }
 
-
 // 操作结果类型
 export interface AuthResult {
   success: boolean;
@@ -86,10 +85,7 @@ class AuthService {
   }
 
   // 通用请求方法
-  private async request<T>(
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<ApiResponse<T>> {
+  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
       ...(this.token ? { Authorization: `Bearer ${this.token}` } : {}),
@@ -170,7 +166,6 @@ class AuthService {
       };
     }
   }
-
 
   // 用户注册
   async register(userData: RegisterData): Promise<AuthResult> {
@@ -303,7 +298,6 @@ class AuthService {
     return this.user.role === role;
   }
 
-
   // 更新用户信息
   async updateProfile(profileData: Partial<User>): Promise<AuthResult> {
     try {
@@ -431,7 +425,6 @@ class AuthService {
       };
     }
   }
-
 
   // 忘记密码
   async forgotPassword(email: string): Promise<AuthResult> {

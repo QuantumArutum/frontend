@@ -53,13 +53,15 @@ export const GET = createSecureHandler(
 
     try {
       const qposStatus = await makeRPCCall('qpos_status');
-      
+
       if (!qposStatus) {
-        return addSecurityHeaders(NextResponse.json({
-          pendingWithdrawals: [],
-          pendingCount: 0,
-          error: 'QPOS status not available',
-        }));
+        return addSecurityHeaders(
+          NextResponse.json({
+            pendingWithdrawals: [],
+            pendingCount: 0,
+            error: 'QPOS status not available',
+          })
+        );
       }
 
       const currentEpoch = qposStatus.currentEpoch || 0;
@@ -73,22 +75,23 @@ export const GET = createSecureHandler(
       const response = {
         // 待处理提款数量
         pendingCount,
-        
+
         // 提款配置
         config: {
           minWithdrawableEpoch,
           maxWithdrawalsPerEpoch,
-          estimatedWaitTime: pendingCount > 0 
-            ? Math.ceil(pendingCount / maxWithdrawalsPerEpoch) * 12 * 32 // 秒
-            : 0,
+          estimatedWaitTime:
+            pendingCount > 0
+              ? Math.ceil(pendingCount / maxWithdrawalsPerEpoch) * 12 * 32 // 秒
+              : 0,
         },
-        
+
         // 当前状态
         currentEpoch,
-        
+
         // 高级功能状态
         inactivityLeakActive: advanced.inactivityLeakActive || false,
-        
+
         timestamp: Date.now(),
       };
 
@@ -98,11 +101,16 @@ export const GET = createSecureHandler(
       return addSecurityHeaders(NextResponse.json(response));
     } catch (error) {
       console.error('获取 Withdrawals 失败:', error);
-      return addSecurityHeaders(NextResponse.json({
-        pendingWithdrawals: [],
-        pendingCount: 0,
-        error: 'Failed to fetch withdrawals',
-      }, { status: 500 }));
+      return addSecurityHeaders(
+        NextResponse.json(
+          {
+            pendingWithdrawals: [],
+            pendingCount: 0,
+            error: 'Failed to fetch withdrawals',
+          },
+          { status: 500 }
+        )
+      );
     }
   },
   { rateLimit: true, allowedMethods: ['GET'] }

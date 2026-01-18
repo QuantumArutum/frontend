@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState } from 'react';
@@ -18,7 +17,14 @@ export default function StyledComponentsRegistry({ children }: { children: React
 
   const shouldForwardProp = (propName: string, target: unknown): boolean => {
     // 过滤 framer-motion 的 props
-    if (propName.startsWith('while') || propName.startsWith('initial') || propName.startsWith('animate') || propName.startsWith('exit') || propName.startsWith('transition') || propName.startsWith('variants')) {
+    if (
+      propName.startsWith('while') ||
+      propName.startsWith('initial') ||
+      propName.startsWith('animate') ||
+      propName.startsWith('exit') ||
+      propName.startsWith('transition') ||
+      propName.startsWith('variants')
+    ) {
       return false;
     }
     // 过滤掉自定义的布局 props，这些 props 仅用于 styled-components 内部逻辑
@@ -29,12 +35,5 @@ export default function StyledComponentsRegistry({ children }: { children: React
     return isPropValid(propName);
   };
 
-  return (
-    <StyleSheetManager shouldForwardProp={shouldForwardProp}>
-      {children}
-    </StyleSheetManager>
-  );
+  return <StyleSheetManager shouldForwardProp={shouldForwardProp}>{children}</StyleSheetManager>;
 }
-
-
-

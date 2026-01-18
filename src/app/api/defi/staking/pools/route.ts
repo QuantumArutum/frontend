@@ -18,7 +18,7 @@ async function callRPC(method: string, params: unknown[] = []) {
       params,
     }),
   });
-  
+
   const data = await response.json();
   if (data.error) {
     throw new Error(data.error.message || 'RPC error');
@@ -30,23 +30,24 @@ export const GET = createSecureHandler(
   async (_request: NextRequest): Promise<NextResponse> => {
     try {
       const result = await callRPC('qau_getStakingPools');
-      
+
       // Transform to frontend format
-      const pools = result.pools?.map((pool: Record<string, unknown>) => ({
-        pool_id: pool.pool_id,
-        token: pool.token,
-        reward_token: pool.reward_token,
-        total_staked: Number(BigInt(pool.total_staked as string) / BigInt(1e18)),
-        reward_rate: pool.reward_rate,
-        duration_days: pool.duration_days,
-        min_stake_amount: Number(BigInt(pool.min_stake_amount as string) / BigInt(1e18)),
-        apy: pool.apy,
-        validators: pool.validators,
-      })) || [];
+      const pools =
+        result.pools?.map((pool: Record<string, unknown>) => ({
+          pool_id: pool.pool_id,
+          token: pool.token,
+          reward_token: pool.reward_token,
+          total_staked: Number(BigInt(pool.total_staked as string) / BigInt(1e18)),
+          reward_rate: pool.reward_rate,
+          duration_days: pool.duration_days,
+          min_stake_amount: Number(BigInt(pool.min_stake_amount as string) / BigInt(1e18)),
+          apy: pool.apy,
+          validators: pool.validators,
+        })) || [];
 
       return successResponse({
         data: { pools },
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       console.error('Failed to fetch staking pools:', error);
@@ -60,7 +61,7 @@ export const GET = createSecureHandler(
           reward_rate: 0.15,
           duration_days: 30,
           min_stake_amount: 100,
-          apy: 18.5
+          apy: 18.5,
         },
         {
           pool_id: 'STAKE-QAU-90',
@@ -70,7 +71,7 @@ export const GET = createSecureHandler(
           reward_rate: 0.25,
           duration_days: 90,
           min_stake_amount: 500,
-          apy: 25.2
+          apy: 25.2,
         },
         {
           pool_id: 'STAKE-QAU-365',
@@ -80,12 +81,12 @@ export const GET = createSecureHandler(
           reward_rate: 0.35,
           duration_days: 365,
           min_stake_amount: 1000,
-          apy: 35.8
-        }
+          apy: 35.8,
+        },
       ];
       return successResponse({
         data: { pools: fallbackPools },
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     }
   },

@@ -4,7 +4,7 @@ import { sql } from '@/lib/database';
 /**
  * GET /api/v2/barong/public/community/user-activity
  * 获取用户活动历史
- * 
+ *
  * Query Parameters:
  * - userId: 用户ID（必需）
  * - type: 活动类型 (all | posts | comments | likes)，默认 all
@@ -14,10 +14,13 @@ import { sql } from '@/lib/database';
 export async function GET(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const searchParams = request.nextUrl.searchParams;
@@ -27,10 +30,13 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
 
     if (!userId) {
-      return NextResponse.json({
-        success: false,
-        message: 'User ID is required'
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'User ID is required',
+        },
+        { status: 400 }
+      );
     }
 
     let activities: { type: string; description: string; created_at: string }[] = [];
@@ -59,11 +65,13 @@ export async function GET(request: NextRequest) {
         LIMIT ${type === 'posts' ? limit : 10}
         OFFSET ${type === 'posts' ? offset : 0}
       `;
-      
-      activities.push(...postsResult.map((row: any) => ({
-        ...row,
-        content: row.content?.substring(0, 200) // 截取前200字符
-      })));
+
+      activities.push(
+        ...postsResult.map((row: any) => ({
+          ...row,
+          content: row.content?.substring(0, 200), // 截取前200字符
+        }))
+      );
     }
 
     if (type === 'all' || type === 'comments') {
@@ -88,11 +96,13 @@ export async function GET(request: NextRequest) {
           LIMIT ${type === 'comments' ? limit : 10}
           OFFSET ${type === 'comments' ? offset : 0}
         `;
-        
-        activities.push(...commentsResult.map((row: any) => ({
-          ...row,
-          content: row.content?.substring(0, 200)
-        })));
+
+        activities.push(
+          ...commentsResult.map((row: any) => ({
+            ...row,
+            content: row.content?.substring(0, 200),
+          }))
+        );
       } catch (err) {
         console.log('post_comments table might not exist:', err);
       }
@@ -119,7 +129,7 @@ export async function GET(request: NextRequest) {
           LIMIT ${type === 'likes' ? limit : 10}
           OFFSET ${type === 'likes' ? offset : 0}
         `;
-        
+
         activities.push(...likesResult);
       } catch (err) {
         console.log('post_likes table might not exist:', err);
@@ -142,15 +152,17 @@ export async function GET(request: NextRequest) {
         activities,
         total: activities.length,
         limit,
-        offset
-      }
+        offset,
+      },
     });
-
   } catch (error) {
     console.error('Failed to fetch user activity:', error);
-    return NextResponse.json({
-      success: false,
-      message: 'Failed to fetch user activity'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to fetch user activity',
+      },
+      { status: 500 }
+    );
   }
 }

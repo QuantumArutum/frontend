@@ -99,11 +99,7 @@ export default function TagBadge({
       {/* 图标 */}
       {showIcon && (
         <>
-          {icon ? (
-            <span className={config.icon}>{icon}</span>
-          ) : (
-            <TagIcon className={config.icon} />
-          )}
+          {icon ? <span className={config.icon}>{icon}</span> : <TagIcon className={config.icon} />}
         </>
       )}
 
@@ -111,15 +107,11 @@ export default function TagBadge({
       <span className="font-medium">{name}</span>
 
       {/* 官方标记 */}
-      {is_official && (
-        <span className="text-xs opacity-75">✓</span>
-      )}
+      {is_official && <span className="text-xs opacity-75">✓</span>}
 
       {/* 使用次数 */}
       {showCount && usage_count !== undefined && (
-        <span className="text-xs opacity-75">
-          {usage_count}
-        </span>
+        <span className="text-xs opacity-75">{usage_count}</span>
       )}
 
       {/* 删除按钮 */}

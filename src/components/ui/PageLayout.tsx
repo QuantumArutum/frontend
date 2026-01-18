@@ -43,17 +43,11 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
               )}
               <div>
                 <h1 className="text-3xl font-bold text-white">{title}</h1>
-                {subtitle && (
-                  <p className="text-gray-400 mt-1">{subtitle}</p>
-                )}
+                {subtitle && <p className="text-gray-400 mt-1">{subtitle}</p>}
               </div>
             </div>
 
-            {headerContent && (
-              <div className="flex items-center gap-4">
-                {headerContent}
-              </div>
-            )}
+            {headerContent && <div className="flex items-center gap-4">{headerContent}</div>}
           </motion.div>
 
           {/* 头部统计 */}

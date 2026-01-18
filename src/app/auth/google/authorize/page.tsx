@@ -28,8 +28,8 @@ export default function GoogleAuthorizePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code }),
       })
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           if (data.success) {
             localStorage.setItem('auth_token', data.data.token);
             localStorage.setItem('user_info', JSON.stringify(data.data.user));
@@ -55,4 +55,3 @@ export default function GoogleAuthorizePage() {
     </div>
   );
 }
-

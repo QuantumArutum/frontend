@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
         data: {
           messages: result.messages,
           total: result.total,
-        }
+        },
       });
     }
 
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
         data: {
           messages: result.messages,
           total: result.total,
-        }
+        },
       });
     }
 
@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
         data: {
           messages: result.messages,
           total: result.total,
-        }
+        },
       });
     }
 
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
         success: true,
         data: {
           total_messages: allMessages.total,
-        }
+        },
       });
     }
 

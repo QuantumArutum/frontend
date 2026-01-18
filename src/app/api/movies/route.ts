@@ -19,7 +19,7 @@ const mockMovies = [
     synopsis: '在量子计算机被黑客入侵后，一位科学家必须阻止全球金融系统崩溃...',
     poster: '/placeholder-movie.svg',
     price: 45,
-    currency: 'QAU'
+    currency: 'QAU',
   },
   {
     id: 'MV002',
@@ -34,7 +34,7 @@ const mockMovies = [
     synopsis: '人类首次接触外星文明，开启星际探索新篇章...',
     poster: '/placeholder-movie.svg',
     price: 55,
-    currency: 'QAU'
+    currency: 'QAU',
   },
   {
     id: 'MV003',
@@ -49,8 +49,8 @@ const mockMovies = [
     synopsis: '一个天才程序员如何创建了改变世界的加密货币...',
     poster: '/placeholder-movie.svg',
     price: 40,
-    currency: 'QAU'
-  }
+    currency: 'QAU',
+  },
 ];
 
 export const GET = createSecureHandler(
@@ -58,7 +58,7 @@ export const GET = createSecureHandler(
     return successResponse({
       data: mockMovies,
       total: mockMovies.length,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   },
   { rateLimit: true, allowedMethods: ['GET'] }

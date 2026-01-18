@@ -3,7 +3,17 @@
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
 
-type BadgeVariant = 'default' | 'success' | 'warning' | 'danger' | 'info' | 'purple' | 'error' | 'outline' | 'destructive' | 'secondary';
+type BadgeVariant =
+  | 'default'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  | 'purple'
+  | 'error'
+  | 'outline'
+  | 'destructive'
+  | 'secondary';
 type BadgeSize = 'sm' | 'md' | 'lg';
 
 interface BadgeProps {
@@ -64,9 +74,7 @@ export const Badge: React.FC<BadgeProps> = ({
         ${className}
       `.trim()}
     >
-      {dot && (
-        <span className={`w-1.5 h-1.5 rounded-full ${dotColors[variant]}`} />
-      )}
+      {dot && <span className={`w-1.5 h-1.5 rounded-full ${dotColors[variant]}`} />}
       {Icon && <Icon className="w-3.5 h-3.5" />}
       {children}
     </span>
@@ -93,13 +101,11 @@ export const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   showLabel = true,
 }) => {
   const { color, label: defaultLabel } = statusStyles[status];
-  
+
   return (
     <span className="inline-flex items-center gap-2">
       <span className={`w-2 h-2 rounded-full ${color} animate-pulse`} />
-      {showLabel && (
-        <span className="text-sm text-gray-400">{label || defaultLabel}</span>
-      )}
+      {showLabel && <span className="text-sm text-gray-400">{label || defaultLabel}</span>}
     </span>
   );
 };

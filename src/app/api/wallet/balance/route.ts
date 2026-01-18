@@ -28,7 +28,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     });
 
     const data = await response.json();
-    
+
     if (data.error) {
       return NextResponse.json({ success: false, error: data.error.message }, { status: 500 });
     }

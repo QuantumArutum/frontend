@@ -18,7 +18,7 @@ export default function KYCPage() {
     try {
       const values = await form.validateFields();
       const formData = new FormData();
-      fileList.forEach(file => {
+      fileList.forEach((file) => {
         formData.append('upload', file);
       });
       formData.append('doc_type', values.doc_type);
@@ -63,36 +63,61 @@ export default function KYCPage() {
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-12">
-          <Title level={1} className="text-white">{t('settings.kyc.title')}</Title>
-          <Paragraph className="text-lg text-gray-400">
-            {t('settings.kyc.subtitle')}
-          </Paragraph>
+          <Title level={1} className="text-white">
+            {t('settings.kyc.title')}
+          </Title>
+          <Paragraph className="text-lg text-gray-400">{t('settings.kyc.subtitle')}</Paragraph>
         </div>
 
         <Card className="bg-gray-900 border-gray-800">
           <Form form={form} layout="vertical" onFinish={handleUpload}>
-            <Form.Item name="doc_type" label={<span className="text-white">{t('settings.kyc.doc_type')}</span>} rules={[{ required: true }]}>
+            <Form.Item
+              name="doc_type"
+              label={<span className="text-white">{t('settings.kyc.doc_type')}</span>}
+              rules={[{ required: true }]}
+            >
               <Select className="bg-gray-800" placeholder={t('settings.kyc.select_doc_type')}>
-                <Select.Option value="Identity Card">{t('settings.kyc.doc_types.id_card')}</Select.Option>
-                <Select.Option value="Passport">{t('settings.kyc.doc_types.passport')}</Select.Option>
-                <Select.Option value="Driver License">{t('settings.kyc.doc_types.driver_license')}</Select.Option>
+                <Select.Option value="Identity Card">
+                  {t('settings.kyc.doc_types.id_card')}
+                </Select.Option>
+                <Select.Option value="Passport">
+                  {t('settings.kyc.doc_types.passport')}
+                </Select.Option>
+                <Select.Option value="Driver License">
+                  {t('settings.kyc.doc_types.driver_license')}
+                </Select.Option>
               </Select>
             </Form.Item>
 
-            <Form.Item name="doc_number" label={<span className="text-white">{t('settings.kyc.doc_number')}</span>} rules={[{ required: true }]}>
-              <Input className="bg-gray-800 text-white border-gray-700" placeholder={t('settings.kyc.enter_doc_number')} />
+            <Form.Item
+              name="doc_number"
+              label={<span className="text-white">{t('settings.kyc.doc_number')}</span>}
+              rules={[{ required: true }]}
+            >
+              <Input
+                className="bg-gray-800 text-white border-gray-700"
+                placeholder={t('settings.kyc.enter_doc_number')}
+              />
             </Form.Item>
 
-            <Form.Item label={<span className="text-white">{t('settings.kyc.upload_doc')}</span>} required>
+            <Form.Item
+              label={<span className="text-white">{t('settings.kyc.upload_doc')}</span>}
+              required
+            >
               <Upload {...props} maxCount={1} className="text-white">
-                <Button icon={<UploadOutlined />} className="bg-gray-800 text-white border-gray-700">{t('settings.kyc.select_file')}</Button>
+                <Button
+                  icon={<UploadOutlined />}
+                  className="bg-gray-800 text-white border-gray-700"
+                >
+                  {t('settings.kyc.select_file')}
+                </Button>
               </Upload>
             </Form.Item>
 
-            <Button 
-              type="primary" 
-              htmlType="submit" 
-              loading={uploading} 
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={uploading}
               disabled={fileList.length === 0}
               block
               size="large"

@@ -10,7 +10,10 @@ export async function POST(request: NextRequest) {
     const { amount_usd, currency, wallet_address, gold_price } = await request.json();
 
     if (!wallet_address) {
-      return NextResponse.json({ success: false, message: 'Wallet address required' }, { status: 400 });
+      return NextResponse.json(
+        { success: false, message: 'Wallet address required' },
+        { status: 400 }
+      );
     }
 
     if (!amount_usd || amount_usd <= 0) {

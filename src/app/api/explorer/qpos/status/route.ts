@@ -38,13 +38,18 @@ export const GET = createSecureHandler(
 
     try {
       const qposStatus = await makeRPCCall('qpos_status');
-      
+
       if (!qposStatus) {
-        return addSecurityHeaders(NextResponse.json({
-          error: 'QPOS status not available',
-          consensus: 'QPOS',
-          initialized: false,
-        }, { status: 503 }));
+        return addSecurityHeaders(
+          NextResponse.json(
+            {
+              error: 'QPOS status not available',
+              consensus: 'QPOS',
+              initialized: false,
+            },
+            { status: 503 }
+          )
+        );
       }
 
       // 格式化响应
@@ -53,37 +58,37 @@ export const GET = createSecureHandler(
         consensus: qposStatus.consensus || 'QPOS',
         slotDuration: qposStatus.slotDuration || 12,
         slotsPerEpoch: qposStatus.slotsPerEpoch || 32,
-        
+
         // 当前状态
         currentSlot: qposStatus.currentSlot || 0,
         currentEpoch: qposStatus.currentEpoch || 0,
         slotInEpoch: qposStatus.slotInEpoch || 0,
-        
+
         // Finality
         justifiedEpoch: qposStatus.justifiedEpoch || 0,
         finalizedEpoch: qposStatus.finalizedEpoch || 0,
         finality: qposStatus.finality || {},
-        
+
         // Validators
         validatorCount: qposStatus.validatorCount || 0,
         currentProposer: qposStatus.currentProposer || null,
-        
+
         // Epoch 摘要
         epochSummary: qposStatus.epochSummary || null,
-        
+
         // 上一个 Epoch 奖励
         lastEpochRewards: qposStatus.lastEpochRewards || null,
-        
+
         // Slashed validators
         slashedValidators: qposStatus.slashedValidators || [],
-        
+
         // Proposer boost
         proposerBoost: qposStatus.proposerBoost || null,
-        
+
         // 高级功能
         advanced: qposStatus.advanced || null,
         syncCommittee: qposStatus.syncCommittee || null,
-        
+
         // 时间戳
         timestamp: Date.now(),
       };
@@ -94,11 +99,16 @@ export const GET = createSecureHandler(
       return addSecurityHeaders(NextResponse.json(response));
     } catch (error) {
       console.error('获取 QPOS 状态失败:', error);
-      return addSecurityHeaders(NextResponse.json({
-        error: 'Failed to fetch QPOS status',
-        consensus: 'QPOS',
-        initialized: false,
-      }, { status: 500 }));
+      return addSecurityHeaders(
+        NextResponse.json(
+          {
+            error: 'Failed to fetch QPOS status',
+            consensus: 'QPOS',
+            initialized: false,
+          },
+          { status: 500 }
+        )
+      );
     }
   },
   { rateLimit: true, allowedMethods: ['GET'] }

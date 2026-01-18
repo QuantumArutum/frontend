@@ -4,12 +4,15 @@ import { neon } from '@neondatabase/serverless';
 export async function POST(request: NextRequest) {
   try {
     const databaseUrl = process.env.DATABASE_URL;
-    
+
     if (!databaseUrl) {
-      return NextResponse.json({
-        success: false,
-        message: 'Database not configured'
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     const sql = neon(databaseUrl);
@@ -103,7 +106,7 @@ export async function POST(request: NextRequest) {
         WHERE table_name = 'post_reports'
       )
     `;
-    
+
     if (tableExists[0]?.exists) {
       console.log('Adding fields to post_reports table...');
       await sql`
@@ -124,25 +127,30 @@ export async function POST(request: NextRequest) {
       details: {
         tables_created: ['moderators', 'mod_actions', 'user_bans'],
         tables_updated: ['posts', 'post_reports'],
-        indexes_created: 11
-      }
+        indexes_created: 11,
+      },
     });
-
   } catch (error: any) {
     console.error('Migration error:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
       code: error.code,
-      detail: error.detail
+      detail: error.detail,
     });
-    return NextResponse.json({
-      success: false,
-      message: 'Migration failed',
-      error: error instanceof Error ? error.message : 'Unknown error',
-      details: process.env.NODE_ENV === 'development' ? {
-        code: error.code,
-        detail: error.detail
-      } : undefined
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Migration failed',
+        error: error instanceof Error ? error.message : 'Unknown error',
+        details:
+          process.env.NODE_ENV === 'development'
+            ? {
+                code: error.code,
+                detail: error.detail,
+              }
+            : undefined,
+      },
+      { status: 500 }
+    );
   }
 }

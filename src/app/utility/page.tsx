@@ -2,7 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Zap, CreditCard, Lightbulb, Leaf, BarChart3, TrendingUp, Clock, Search } from 'lucide-react';
+import {
+  Zap,
+  CreditCard,
+  Lightbulb,
+  Leaf,
+  BarChart3,
+  TrendingUp,
+  Clock,
+  Search,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
 
@@ -59,10 +68,10 @@ const UtilityBillPage = () => {
       const params = new URLSearchParams();
       if (country) params.append('country', country);
       if (region) params.append('region', region);
-      
+
       const response = await fetch(`/api/utility/providers?${params}`);
       const data = await response.json();
-      
+
       if (data.success) {
         return data.data.providers;
       }
@@ -79,9 +88,9 @@ const UtilityBillPage = () => {
       const response = await fetch('/api/utility/account/bind', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(providerData)
+        body: JSON.stringify(providerData),
       });
-      
+
       const data = await response.json();
       if (data.success) {
         setBoundAccounts([...boundAccounts, data.data]);
@@ -98,7 +107,7 @@ const UtilityBillPage = () => {
     try {
       const response = await fetch(`/api/utility/bills?binding_id=${bindingId}`);
       const data = await response.json();
-      
+
       if (data.success) {
         setBills(data.data.bills);
         return data.data;
@@ -118,10 +127,10 @@ const UtilityBillPage = () => {
         body: JSON.stringify({
           bill_id: billId,
           payment_amount: amount,
-          payment_method: method
-        })
+          payment_method: method,
+        }),
       });
-      
+
       const data = await response.json();
       if (data.success) {
         return data.data;
@@ -135,9 +144,11 @@ const UtilityBillPage = () => {
   // 获取用电分析
   const getUsageAnalysis = async (bindingId: string, period = '12months') => {
     try {
-      const response = await fetch(`/api/utility/usage/analysis?binding_id=${bindingId}&period=${period}`);
+      const response = await fetch(
+        `/api/utility/usage/analysis?binding_id=${bindingId}&period=${period}`
+      );
       const data = await response.json();
-      
+
       if (data.success) {
         setUsageAnalysis(data.data);
         return data.data;
@@ -153,7 +164,7 @@ const UtilityBillPage = () => {
     try {
       const response = await fetch(`/api/utility/smart-meter?binding_id=${bindingId}&date=${date}`);
       const data = await response.json();
-      
+
       if (data.success) {
         setSmartMeterData(data.data);
         return data.data;
@@ -180,7 +191,9 @@ const UtilityBillPage = () => {
               <Zap className="h-6 w-6 text-blue-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">{t('utility.stats.monthly_usage')}</p>
+              <p className="text-sm font-medium text-gray-600">
+                {t('utility.stats.monthly_usage')}
+              </p>
               <p className="text-2xl font-bold text-gray-900">450.5 kWh</p>
             </div>
           </div>
@@ -204,7 +217,9 @@ const UtilityBillPage = () => {
               <TrendingUp className="h-6 w-6 text-yellow-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">{t('utility.stats.vs_last_month')}</p>
+              <p className="text-sm font-medium text-gray-600">
+                {t('utility.stats.vs_last_month')}
+              </p>
               <p className="text-2xl font-bold text-gray-900">+7.1%</p>
             </div>
           </div>
@@ -216,7 +231,9 @@ const UtilityBillPage = () => {
               <Leaf className="h-6 w-6 text-purple-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">{t('utility.stats.carbon_footprint')}</p>
+              <p className="text-sm font-medium text-gray-600">
+                {t('utility.stats.carbon_footprint')}
+              </p>
               <p className="text-2xl font-bold text-gray-900">225.8 kg</p>
             </div>
           </div>
@@ -225,7 +242,7 @@ const UtilityBillPage = () => {
 
       {/* 快速操作 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div 
+        <div
           className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => setCurrentView('providers')}
         >
@@ -238,7 +255,7 @@ const UtilityBillPage = () => {
           </div>
         </div>
 
-        <div 
+        <div
           className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => setCurrentView('bills')}
         >
@@ -251,7 +268,7 @@ const UtilityBillPage = () => {
           </div>
         </div>
 
-        <div 
+        <div
           className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
           onClick={() => setCurrentView('analysis')}
         >
@@ -270,20 +287,29 @@ const UtilityBillPage = () => {
         <h3 className="text-lg font-semibold mb-4">{t('utility.recent_bills')}</h3>
         <div className="space-y-4">
           {[
-            { period: '2024-01', amount: 359.00, status: 'paid', dueDate: '2024-02-15' },
-            { period: '2023-12', amount: 335.00, status: 'paid', dueDate: '2024-01-15' },
-            { period: '2023-11', amount: 298.50, status: 'paid', dueDate: '2023-12-15' }
+            { period: '2024-01', amount: 359.0, status: 'paid', dueDate: '2024-02-15' },
+            { period: '2023-12', amount: 335.0, status: 'paid', dueDate: '2024-01-15' },
+            { period: '2023-11', amount: 298.5, status: 'paid', dueDate: '2023-12-15' },
           ].map((bill, index) => (
-            <div key={index} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+            <div
+              key={index}
+              className="flex items-center justify-between p-4 border border-gray-200 rounded-lg"
+            >
               <div>
                 <h4 className="font-medium">{bill.period}</h4>
-                <p className="text-sm text-gray-600">{t('utility.due_date')}: {bill.dueDate}</p>
+                <p className="text-sm text-gray-600">
+                  {t('utility.due_date')}: {bill.dueDate}
+                </p>
               </div>
               <div className="text-right">
                 <p className="text-lg font-bold">{bill.amount} QAU</p>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  bill.status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                }`}>
+                <span
+                  className={`px-2 py-1 rounded text-xs ${
+                    bill.status === 'paid'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-red-100 text-red-800'
+                  }`}
+                >
                   {bill.status === 'paid' ? t('utility.status.paid') : t('utility.status.pending')}
                 </span>
               </div>
@@ -324,7 +350,9 @@ const UtilityBillPage = () => {
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('utility.providers.country')}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('utility.providers.country')}
+              </label>
               <select
                 value={searchCountry}
                 onChange={(e) => setSearchCountry(e.target.value)}
@@ -339,7 +367,9 @@ const UtilityBillPage = () => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('utility.providers.region')}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('utility.providers.region')}
+              </label>
               <select
                 value={searchRegion}
                 onChange={(e) => setSearchRegion(e.target.value)}
@@ -358,7 +388,10 @@ const UtilityBillPage = () => {
         {/* 电力公司列表 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {providers.map((provider) => (
-            <div key={provider.provider_id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div
+              key={provider.provider_id}
+              className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+            >
               <div className="flex items-center mb-4">
                 <Image
                   src={provider.logo_url}
@@ -369,15 +402,22 @@ const UtilityBillPage = () => {
                 />
                 <div>
                   <h3 className="text-lg font-semibold">{provider.name}</h3>
-                  <p className="text-sm text-gray-600">{provider.country} - {provider.region}</p>
+                  <p className="text-sm text-gray-600">
+                    {provider.country} - {provider.region}
+                  </p>
                 </div>
               </div>
 
               <div className="mb-4">
-                <p className="text-sm text-gray-600 mb-2">{t('utility.providers.service_areas')}:</p>
+                <p className="text-sm text-gray-600 mb-2">
+                  {t('utility.providers.service_areas')}:
+                </p>
                 <div className="flex flex-wrap gap-1">
                   {provider.service_areas.slice(0, 3).map((area, index) => (
-                    <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                    <span
+                      key={index}
+                      className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                    >
                       {area}
                     </span>
                   ))}
@@ -393,7 +433,10 @@ const UtilityBillPage = () => {
                 <p className="text-sm text-gray-600 mb-2">{t('utility.providers.services')}:</p>
                 <div className="flex flex-wrap gap-1">
                   {provider.services.slice(0, 3).map((service, index) => (
-                    <span key={index} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
+                    <span
+                      key={index}
+                      className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded"
+                    >
                       {service}
                     </span>
                   ))}
@@ -407,9 +450,7 @@ const UtilityBillPage = () => {
                       {t('utility.providers.quantum_secure')}
                     </span>
                   )}
-                  <span className="text-sm text-gray-500">
-                    {provider.contact_info.phone}
-                  </span>
+                  <span className="text-sm text-gray-500">{provider.contact_info.phone}</span>
                 </div>
                 <button
                   onClick={() => {
@@ -448,16 +489,16 @@ const UtilityBillPage = () => {
             bill_id: 'BILL_202401_001',
             billing_period: { start_date: '2024-01-01', end_date: '2024-01-31' },
             usage_details: { total_kwh: 450.5 },
-            charges: { total_amount: 359.00 },
-            payment_info: { due_date: '2024-02-15', payment_status: 'paid' }
+            charges: { total_amount: 359.0 },
+            payment_info: { due_date: '2024-02-15', payment_status: 'paid' },
           },
           {
             bill_id: 'BILL_202312_001',
             billing_period: { start_date: '2023-12-01', end_date: '2023-12-31' },
             usage_details: { total_kwh: 420.8 },
-            charges: { total_amount: 335.00 },
-            payment_info: { due_date: '2024-01-15', payment_status: 'paid' }
-          }
+            charges: { total_amount: 335.0 },
+            payment_info: { due_date: '2024-01-15', payment_status: 'paid' },
+          },
         ].map((bill) => (
           <div key={bill.bill_id} className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between mb-4">
@@ -465,16 +506,22 @@ const UtilityBillPage = () => {
                 <h3 className="text-lg font-semibold">
                   {bill.billing_period.start_date} - {bill.billing_period.end_date}
                 </h3>
-                <p className="text-sm text-gray-600">{t('utility.bills.bill_id')}: {bill.bill_id}</p>
+                <p className="text-sm text-gray-600">
+                  {t('utility.bills.bill_id')}: {bill.bill_id}
+                </p>
               </div>
               <div className="text-right">
                 <p className="text-2xl font-bold text-blue-600">{bill.charges.total_amount} QAU</p>
-                <span className={`px-2 py-1 rounded text-xs ${
-                  bill.payment_info.payment_status === 'paid' 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-red-100 text-red-800'
-                }`}>
-                  {bill.payment_info.payment_status === 'paid' ? t('utility.status.paid') : t('utility.status.pending')}
+                <span
+                  className={`px-2 py-1 rounded text-xs ${
+                    bill.payment_info.payment_status === 'paid'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-red-100 text-red-800'
+                  }`}
+                >
+                  {bill.payment_info.payment_status === 'paid'
+                    ? t('utility.status.paid')
+                    : t('utility.status.pending')}
                 </span>
               </div>
             </div>
@@ -491,7 +538,9 @@ const UtilityBillPage = () => {
               <div>
                 <p className="text-sm text-gray-600">{t('utility.bills.status')}</p>
                 <p className="text-lg font-semibold">
-                  {bill.payment_info.payment_status === 'paid' ? t('utility.status.paid') : t('utility.status.pending')}
+                  {bill.payment_info.payment_status === 'paid'
+                    ? t('utility.status.paid')
+                    : t('utility.status.pending')}
                 </p>
               </div>
             </div>
@@ -542,26 +591,25 @@ const UtilityBillPage = () => {
               type: 'energy_saving',
               title: t('utility.analysis.tips.ac_title'),
               description: t('utility.analysis.tips.ac_desc'),
-              potential_savings: 45.00,
-              icon: <Lightbulb className="h-5 w-5" />
+              potential_savings: 45.0,
+              icon: <Lightbulb className="h-5 w-5" />,
             },
             {
               type: 'time_shifting',
               title: t('utility.analysis.tips.offpeak_title'),
               description: t('utility.analysis.tips.offpeak_desc'),
-              potential_savings: 25.00,
-              icon: <Clock className="h-5 w-5" />
-            }
+              potential_savings: 25.0,
+              icon: <Clock className="h-5 w-5" />,
+            },
           ].map((recommendation, index) => (
             <div key={index} className="flex items-start p-4 border border-gray-200 rounded-lg">
-              <div className="p-2 bg-green-100 rounded-full mr-4">
-                {recommendation.icon}
-              </div>
+              <div className="p-2 bg-green-100 rounded-full mr-4">{recommendation.icon}</div>
               <div className="flex-1">
                 <h4 className="font-medium mb-1">{recommendation.title}</h4>
                 <p className="text-sm text-gray-600 mb-2">{recommendation.description}</p>
                 <p className="text-sm font-medium text-green-600">
-                  {t('utility.analysis.estimated_savings')}: {recommendation.potential_savings} QAU/{t('utility.analysis.month')}
+                  {t('utility.analysis.estimated_savings')}: {recommendation.potential_savings} QAU/
+                  {t('utility.analysis.month')}
                 </p>
               </div>
             </div>
@@ -582,7 +630,7 @@ const UtilityBillPage = () => {
               { key: 'providers', label: t('utility.nav.providers'), icon: Search },
               { key: 'bills', label: t('utility.nav.bills'), icon: CreditCard },
               { key: 'analysis', label: t('utility.nav.analysis'), icon: TrendingUp },
-              { key: 'smart-meter', label: t('utility.nav.smart_meter'), icon: Zap }
+              { key: 'smart-meter', label: t('utility.nav.smart_meter'), icon: Zap },
             ].map((item) => {
               const Icon = item.icon;
               return (
@@ -614,5 +662,3 @@ const UtilityBillPage = () => {
 };
 
 export default UtilityBillPage;
-
-

@@ -5,14 +5,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { FaXTwitter, FaDiscord, FaTelegram, FaLinkedinIn, FaGithub, FaMedium } from 'react-icons/fa6';
+import {
+  FaXTwitter,
+  FaDiscord,
+  FaTelegram,
+  FaLinkedinIn,
+  FaGithub,
+  FaMedium,
+} from 'react-icons/fa6';
 import { useFooter, useSiteConfig } from '../hooks/useSiteConfig';
 import '../i18n';
 
 const EnhancedFooter = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
-  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
+    'idle'
+  );
   const [subscribeMessage, setSubscribeMessage] = useState('');
 
   const handleSubscribe = async () => {
@@ -36,7 +45,7 @@ const EnhancedFooter = () => {
       const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), source: 'footer' })
+        body: JSON.stringify({ email: email.trim(), source: 'footer' }),
       });
 
       const data = await response.json();
@@ -51,65 +60,76 @@ const EnhancedFooter = () => {
         }, 3000);
       } else {
         setSubscribeStatus('error');
-        setSubscribeMessage(data.error || t('footer.newsletter.errorFailed', 'Subscription failed'));
+        setSubscribeMessage(
+          data.error || t('footer.newsletter.errorFailed', 'Subscription failed')
+        );
       }
     } catch {
       setSubscribeStatus('error');
       setSubscribeMessage(t('footer.newsletter.errorFailed', 'Subscription failed'));
     }
   };
-  
+
   // Fetch dynamic footer data from API (Requirements 2.2, 2.3, 2.4, 2.5)
   const { sections: dynamicSections, loading: footerLoading } = useFooter();
   const { config: siteConfig } = useSiteConfig();
 
   // Default footer sections (fallback when API is not available)
-  const defaultFooterSections = useMemo(() => [
-    {
-      title: t('footer.sections.product.title'),
-      links: [
-        { label: t('footer.sections.product.links.core'), href: '/technology/blockchain' },
-        { label: t('footer.sections.product.links.wallet'), href: '/wallet' },
-        { label: t('footer.sections.product.links.contracts'), href: '/technology/quantum-security' },
-        { label: t('footer.sections.product.links.crosschain'), href: '/applications' },
-        { label: t('footer.sections.product.links.docs'), href: '/developers/api' }
-      ]
-    },
-    {
-      title: t('footer.sections.developer.title'),
-      links: [
-        { label: t('footer.sections.developer.links.docs'), href: '/developers/docs' },
-        { label: t('footer.sections.developer.links.sdk'), href: '/developers/sdk' },
-        { label: t('footer.sections.developer.links.examples'), href: '/developers/examples' },
-        { label: t('footer.sections.developer.links.community'), href: '/community' },
-        { label: t('footer.sections.developer.links.github'), href: 'https://github.com/quantaureum' }
-      ]
-    },
-    {
-      title: t('footer.sections.enterprise.title'),
-      links: [
-        { label: t('footer.sections.enterprise.links.solutions'), href: '/enterprise/solutions' },
-        { label: t('footer.sections.enterprise.links.support'), href: '/enterprise/support' },
-        { label: t('footer.sections.enterprise.links.partners'), href: '/enterprise/partners' },
-        { label: t('footer.sections.enterprise.links.audit'), href: '/enterprise/audit' },
-        { label: t('footer.sections.enterprise.links.contact'), href: '/contact' }
-      ]
-    }
-  ], [t]);
+  const defaultFooterSections = useMemo(
+    () => [
+      {
+        title: t('footer.sections.product.title'),
+        links: [
+          { label: t('footer.sections.product.links.core'), href: '/technology/blockchain' },
+          { label: t('footer.sections.product.links.wallet'), href: '/wallet' },
+          {
+            label: t('footer.sections.product.links.contracts'),
+            href: '/technology/quantum-security',
+          },
+          { label: t('footer.sections.product.links.crosschain'), href: '/applications' },
+          { label: t('footer.sections.product.links.docs'), href: '/developers/api' },
+        ],
+      },
+      {
+        title: t('footer.sections.developer.title'),
+        links: [
+          { label: t('footer.sections.developer.links.docs'), href: '/developers/docs' },
+          { label: t('footer.sections.developer.links.sdk'), href: '/developers/sdk' },
+          { label: t('footer.sections.developer.links.examples'), href: '/developers/examples' },
+          { label: t('footer.sections.developer.links.community'), href: '/community' },
+          {
+            label: t('footer.sections.developer.links.github'),
+            href: 'https://github.com/quantaureum',
+          },
+        ],
+      },
+      {
+        title: t('footer.sections.enterprise.title'),
+        links: [
+          { label: t('footer.sections.enterprise.links.solutions'), href: '/enterprise/solutions' },
+          { label: t('footer.sections.enterprise.links.support'), href: '/enterprise/support' },
+          { label: t('footer.sections.enterprise.links.partners'), href: '/enterprise/partners' },
+          { label: t('footer.sections.enterprise.links.audit'), href: '/enterprise/audit' },
+          { label: t('footer.sections.enterprise.links.contact'), href: '/contact' },
+        ],
+      },
+    ],
+    [t]
+  );
 
   // Use dynamic sections if available, otherwise use defaults
   const footerSections = useMemo(() => {
     if (footerLoading || dynamicSections.length === 0) {
       return defaultFooterSections;
     }
-    
+
     // Convert dynamic sections to the expected format
-    return dynamicSections.map(section => ({
+    return dynamicSections.map((section) => ({
       title: section.title,
-      links: section.links.map(link => ({
+      links: section.links.map((link) => ({
         label: link.label,
-        href: link.link || '#'
-      }))
+        href: link.link || '#',
+      })),
     }));
   }, [dynamicSections, footerLoading, defaultFooterSections]);
 
@@ -120,20 +140,44 @@ const EnhancedFooter = () => {
     { name: 'Telegram', icon: FaTelegram, href: 'https://t.me/quantaureum' },
     { name: 'LinkedIn', icon: FaLinkedinIn, href: 'https://linkedin.com/company/quantaureum' },
     { name: 'GitHub', icon: FaGithub, href: 'https://github.com/quantaureum' },
-    { name: 'Medium', icon: FaMedium, href: 'https://medium.com/@quantaureum' }
+    { name: 'Medium', icon: FaMedium, href: 'https://medium.com/@quantaureum' },
   ];
 
   // Use site config social links if available
   const socialLinks = useMemo(() => {
     if (!siteConfig) return defaultSocialLinks;
-    
+
     return [
-      { name: 'Twitter', icon: FaXTwitter, href: siteConfig.social_twitter || 'https://twitter.com/quantaureum' },
-      { name: 'Discord', icon: FaDiscord, href: siteConfig.social_discord || 'https://discord.gg/quantaureum' },
-      { name: 'Telegram', icon: FaTelegram, href: siteConfig.social_telegram || 'https://t.me/quantaureum' },
-      { name: 'LinkedIn', icon: FaLinkedinIn, href: siteConfig.social_linkedin || 'https://linkedin.com/company/quantaureum' },
-      { name: 'GitHub', icon: FaGithub, href: siteConfig.social_github || 'https://github.com/quantaureum' },
-      { name: 'Medium', icon: FaMedium, href: siteConfig.social_medium || 'https://medium.com/@quantaureum' }
+      {
+        name: 'Twitter',
+        icon: FaXTwitter,
+        href: siteConfig.social_twitter || 'https://twitter.com/quantaureum',
+      },
+      {
+        name: 'Discord',
+        icon: FaDiscord,
+        href: siteConfig.social_discord || 'https://discord.gg/quantaureum',
+      },
+      {
+        name: 'Telegram',
+        icon: FaTelegram,
+        href: siteConfig.social_telegram || 'https://t.me/quantaureum',
+      },
+      {
+        name: 'LinkedIn',
+        icon: FaLinkedinIn,
+        href: siteConfig.social_linkedin || 'https://linkedin.com/company/quantaureum',
+      },
+      {
+        name: 'GitHub',
+        icon: FaGithub,
+        href: siteConfig.social_github || 'https://github.com/quantaureum',
+      },
+      {
+        name: 'Medium',
+        icon: FaMedium,
+        href: siteConfig.social_medium || 'https://medium.com/@quantaureum',
+      },
     ];
   }, [siteConfig]);
 
@@ -141,7 +185,7 @@ const EnhancedFooter = () => {
     { label: t('footer.stats.nodes'), value: '127+' },
     { label: t('footer.stats.transactions'), value: '1M+' },
     { label: t('footer.stats.developers'), value: '5K+' },
-    { label: t('footer.stats.enterprises'), value: '50+' }
+    { label: t('footer.stats.enterprises'), value: '50+' },
   ];
 
   return (
@@ -158,9 +202,7 @@ const EnhancedFooter = () => {
             <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] bg-clip-text text-transparent">
               {t('footer.stats.title')}
             </h3>
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              {t('footer.stats.description')}
-            </p>
+            <p className="text-gray-300 max-w-2xl mx-auto">{t('footer.stats.description')}</p>
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
@@ -192,9 +234,9 @@ const EnhancedFooter = () => {
                 transition={{ duration: 0.6 }}
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <Image 
-                    src="/quantaureum-icon.svg" 
-                    alt="Quantaureum" 
+                  <Image
+                    src="/quantaureum-icon.svg"
+                    alt="Quantaureum"
                     width={48}
                     height={48}
                     className="w-12 h-12"
@@ -236,9 +278,7 @@ const EnhancedFooter = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: sectionIndex * 0.1 }}
                 >
-                  <h4 className="text-lg font-semibold text-white mb-6">
-                    {section.title}
-                  </h4>
+                  <h4 className="text-lg font-semibold text-white mb-6">{section.title}</h4>
                   <ul className="space-y-3">
                     {section.links.map((link, linkIndex) => (
                       <li key={linkIndex}>
@@ -304,8 +344,8 @@ const EnhancedFooter = () => {
                 disabled={subscribeStatus === 'loading'}
                 className="px-6 py-3 bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {subscribeStatus === 'loading' 
-                  ? t('footer.newsletter.subscribing', 'Subscribing...') 
+                {subscribeStatus === 'loading'
+                  ? t('footer.newsletter.subscribing', 'Subscribing...')
                   : t('footer.newsletter.subscribe')}
               </motion.button>
             </div>
@@ -326,9 +366,7 @@ const EnhancedFooter = () => {
       <div className="py-6 px-5 border-t border-white/10">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-gray-400 text-sm">
-              {t('footer.legal.copyright')}
-            </div>
+            <div className="text-gray-400 text-sm">{t('footer.legal.copyright')}</div>
             <div className="flex flex-wrap gap-6 text-sm">
               <Link href="/legal/privacy">
                 <motion.span

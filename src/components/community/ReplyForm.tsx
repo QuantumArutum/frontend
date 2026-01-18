@@ -65,7 +65,10 @@ export default function ReplyForm({
       exit={{ opacity: 0, height: 0 }}
       className="mt-3 mb-2"
     >
-      <form onSubmit={handleSubmit} className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-gray-800/50 rounded-lg p-4 border border-gray-700"
+      >
         {/* 回复提示 */}
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm text-gray-400">
@@ -92,11 +95,7 @@ export default function ReplyForm({
         />
 
         {/* 错误提示 */}
-        {error && (
-          <div className="mt-2 text-sm text-red-400">
-            {error}
-          </div>
-        )}
+        {error && <div className="mt-2 text-sm text-red-400">{error}</div>}
 
         {/* 底部操作栏 */}
         <div className="flex items-center justify-between mt-3">

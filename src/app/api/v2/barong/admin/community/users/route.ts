@@ -25,12 +25,17 @@ export async function GET(request: NextRequest) {
           total: result.total,
           page,
           per_page: limit,
-        }
+        },
       });
     }
 
     if (type === 'bans' || type === 'restrictions') {
-      const active = searchParams.get('active') === 'true' ? true : searchParams.get('active') === 'false' ? false : undefined;
+      const active =
+        searchParams.get('active') === 'true'
+          ? true
+          : searchParams.get('active') === 'false'
+            ? false
+            : undefined;
       const result = await communityService.getBans(active, page, limit);
       return NextResponse.json({
         success: true,
@@ -38,9 +43,9 @@ export async function GET(request: NextRequest) {
           bans: result.bans,
           total: result.total,
           stats: {
-            active_bans: result.bans.filter(b => b.is_active).length,
-          }
-        }
+            active_bans: result.bans.filter((b) => b.is_active).length,
+          },
+        },
       });
     }
 
@@ -51,7 +56,7 @@ export async function GET(request: NextRequest) {
         data: {
           users: result.users,
           total: result.total,
-        }
+        },
       });
     }
 
@@ -64,7 +69,7 @@ export async function GET(request: NextRequest) {
           active_today: stats?.activeToday || 0,
           total_bans: stats?.totalBans || 0,
           active_bans: stats?.activeBans || 0,
-        }
+        },
       });
     }
 
@@ -83,7 +88,13 @@ export async function POST(request: NextRequest) {
 
     if (type === 'ban' || action === 'ban') {
       const { user_id, banned_by, reason, ban_type, expires_at } = body;
-      const ban = await communityService.createBan(user_id, banned_by, reason, ban_type, expires_at);
+      const ban = await communityService.createBan(
+        user_id,
+        banned_by,
+        reason,
+        ban_type,
+        expires_at
+      );
       return NextResponse.json({ success: true, data: ban });
     }
 
@@ -95,7 +106,13 @@ export async function POST(request: NextRequest) {
 
     if (type === 'badge' || action === 'award_badge') {
       const { user_id, badge_type, badge_name, badge_icon, description } = body;
-      const badge = await communityService.awardBadge(user_id, badge_type, badge_name, badge_icon, description);
+      const badge = await communityService.awardBadge(
+        user_id,
+        badge_type,
+        badge_name,
+        badge_icon,
+        description
+      );
       return NextResponse.json({ success: true, data: badge });
     }
 

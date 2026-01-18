@@ -27,11 +27,13 @@ git push
 
 ```javascript
 fetch('/api/v2/barong/public/community/fix-database', {
-  method: 'POST'
-}).then(r => r.json()).then(d => {
-  console.log(d.success ? '✅ 修复成功！' : '❌ 修复失败');
-  console.table(d.results);
-});
+  method: 'POST',
+})
+  .then((r) => r.json())
+  .then((d) => {
+    console.log(d.success ? '✅ 修复成功！' : '❌ 修复失败');
+    console.table(d.results);
+  });
 ```
 
 ---

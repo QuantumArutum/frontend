@@ -258,7 +258,7 @@ import {
   CurrencyIost as IostIcon,
   CurrencyOnt as OntIcon,
   CurrencyVet as VetIcon,
-  CurrencyIcx as IcxIcon
+  CurrencyIcx as IcxIcon,
 } from 'lucide-react';
 
 const MovieBookingApp = () => {
@@ -280,22 +280,23 @@ const MovieBookingApp = () => {
   useEffect(() => {
     const mockMovies = [
       {
-        ID: "movie_001",
-        Title: "量子纪元：时空守护者",
-        EnglishTitle: "Quantum Era: Guardians of Time",
-        Genre: ["科幻", "动作", "冒险"],
+        ID: 'movie_001',
+        Title: '量子纪元：时空守护者',
+        EnglishTitle: 'Quantum Era: Guardians of Time',
+        Genre: ['科幻', '动作', '冒险'],
         Duration: 148,
         Rating: 9.2,
         WantToSee: 156789,
-        ReleaseDate: "2024-06-15",
-        Director: "克里斯托弗·诺兰",
-        Cast: ["汤姆·哈迪", "安妮·海瑟薇", "马修·麦康纳", "杰西卡·查斯坦"],
-        Synopsis: "在不久的将来，人类发现了量子技术的终极秘密，但这项技术也带来了前所未有的危险。一支精英团队必须穿越多重宇宙，拯救人类文明免于毁灭。影片采用最新的量子视觉效果技术，为观众呈现前所未见的视觉盛宴。",
-        Poster: "/api/placeholder/300/450",
-        Trailer: "https://example.com/trailer",
-        Language: "英语",
-        Subtitles: ["中文", "英文"],
-        AgeRating: "PG-13",
+        ReleaseDate: '2024-06-15',
+        Director: '克里斯托弗·诺兰',
+        Cast: ['汤姆·哈迪', '安妮·海瑟薇', '马修·麦康纳', '杰西卡·查斯坦'],
+        Synopsis:
+          '在不久的将来，人类发现了量子技术的终极秘密，但这项技术也带来了前所未有的危险。一支精英团队必须穿越多重宇宙，拯救人类文明免于毁灭。影片采用最新的量子视觉效果技术，为观众呈现前所未见的视觉盛宴。',
+        Poster: '/api/placeholder/300/450',
+        Trailer: 'https://example.com/trailer',
+        Language: '英语',
+        Subtitles: ['中文', '英文'],
+        AgeRating: 'PG-13',
         Price: 8000000000, // 80 QAU
         VIPPrice: 12000000000, // 120 QAU
         IMAXPrice: 15000000000, // 150 QAU
@@ -303,44 +304,55 @@ const MovieBookingApp = () => {
         IsHot: true,
         IsNew: true,
         BookingCount: 234567,
-        BoxOffice: "15.6亿",
-        Country: "美国",
-        ProductionCompany: "华纳兄弟",
-        Tags: ["IMAX", "杜比全景声", "4DX", "中国巨幕"],
+        BoxOffice: '15.6亿',
+        Country: '美国',
+        ProductionCompany: '华纳兄弟',
+        Tags: ['IMAX', '杜比全景声', '4DX', '中国巨幕'],
         Photos: [
-          "/api/placeholder/800/450",
-          "/api/placeholder/800/450",
-          "/api/placeholder/800/450"
+          '/api/placeholder/800/450',
+          '/api/placeholder/800/450',
+          '/api/placeholder/800/450',
         ],
         Videos: [
-          { title: "正式预告片", url: "https://example.com/trailer1", duration: "2:30" },
-          { title: "幕后花絮", url: "https://example.com/behind1", duration: "5:45" },
-          { title: "演员访谈", url: "https://example.com/interview1", duration: "8:20" }
+          { title: '正式预告片', url: 'https://example.com/trailer1', duration: '2:30' },
+          { title: '幕后花絮', url: 'https://example.com/behind1', duration: '5:45' },
+          { title: '演员访谈', url: 'https://example.com/interview1', duration: '8:20' },
         ],
         Reviews: [
-          { user: "影迷小王", rating: 9.5, content: "视觉效果震撼，剧情紧凑，是今年最佳科幻片！", date: "2024-06-16" },
-          { user: "电影达人", rating: 9.0, content: "诺兰再次证明了自己的天才，量子概念运用得非常巧妙。", date: "2024-06-17" }
+          {
+            user: '影迷小王',
+            rating: 9.5,
+            content: '视觉效果震撼，剧情紧凑，是今年最佳科幻片！',
+            date: '2024-06-16',
+          },
+          {
+            user: '电影达人',
+            rating: 9.0,
+            content: '诺兰再次证明了自己的天才，量子概念运用得非常巧妙。',
+            date: '2024-06-17',
+          },
         ],
-        Awards: ["奥斯卡最佳视觉效果提名", "金球奖最佳科幻片"],
-        Festivals: ["戛纳电影节", "威尼斯电影节"]
+        Awards: ['奥斯卡最佳视觉效果提名', '金球奖最佳科幻片'],
+        Festivals: ['戛纳电影节', '威尼斯电影节'],
       },
       {
-        ID: "movie_002",
-        Title: "星际迷航：新纪元",
-        EnglishTitle: "Star Trek: New Era",
-        Genre: ["科幻", "冒险", "动作"],
+        ID: 'movie_002',
+        Title: '星际迷航：新纪元',
+        EnglishTitle: 'Star Trek: New Era',
+        Genre: ['科幻', '冒险', '动作'],
         Duration: 132,
         Rating: 8.8,
         WantToSee: 98765,
-        ReleaseDate: "2024-06-20",
-        Director: "J.J. 艾布拉姆斯",
-        Cast: ["克里斯·派恩", "扎克瑞·昆图", "佐伊·索尔达娜", "卡尔·厄本"],
-        Synopsis: "企业号船员发现了一个神秘的量子异常现象，这可能改变整个银河系的命运。在这场史诗般的冒险中，船员们必须面对前所未有的挑战，探索未知的星域，拯救无数文明。",
-        Poster: "/api/placeholder/300/450",
-        Trailer: "https://example.com/trailer2",
-        Language: "英语",
-        Subtitles: ["中文", "英文"],
-        AgeRating: "PG-13",
+        ReleaseDate: '2024-06-20',
+        Director: 'J.J. 艾布拉姆斯',
+        Cast: ['克里斯·派恩', '扎克瑞·昆图', '佐伊·索尔达娜', '卡尔·厄本'],
+        Synopsis:
+          '企业号船员发现了一个神秘的量子异常现象，这可能改变整个银河系的命运。在这场史诗般的冒险中，船员们必须面对前所未有的挑战，探索未知的星域，拯救无数文明。',
+        Poster: '/api/placeholder/300/450',
+        Trailer: 'https://example.com/trailer2',
+        Language: '英语',
+        Subtitles: ['中文', '英文'],
+        AgeRating: 'PG-13',
         Price: 7500000000, // 75 QAU
         VIPPrice: 11000000000, // 110 QAU
         IMAXPrice: 14000000000, // 140 QAU
@@ -348,41 +360,44 @@ const MovieBookingApp = () => {
         IsHot: true,
         IsNew: false,
         BookingCount: 187432,
-        BoxOffice: "12.3亿",
-        Country: "美国",
-        ProductionCompany: "派拉蒙影业",
-        Tags: ["IMAX", "杜比全景声", "中国巨幕"],
-        Photos: [
-          "/api/placeholder/800/450",
-          "/api/placeholder/800/450"
-        ],
+        BoxOffice: '12.3亿',
+        Country: '美国',
+        ProductionCompany: '派拉蒙影业',
+        Tags: ['IMAX', '杜比全景声', '中国巨幕'],
+        Photos: ['/api/placeholder/800/450', '/api/placeholder/800/450'],
         Videos: [
-          { title: "官方预告", url: "https://example.com/trailer2", duration: "2:15" },
-          { title: "制作特辑", url: "https://example.com/making2", duration: "6:30" }
+          { title: '官方预告', url: 'https://example.com/trailer2', duration: '2:15' },
+          { title: '制作特辑', url: 'https://example.com/making2', duration: '6:30' },
         ],
         Reviews: [
-          { user: "科幻迷", rating: 8.5, content: "经典IP的全新演绎，特效和剧情都很棒！", date: "2024-06-21" }
+          {
+            user: '科幻迷',
+            rating: 8.5,
+            content: '经典IP的全新演绎，特效和剧情都很棒！',
+            date: '2024-06-21',
+          },
         ],
-        Awards: ["土星奖最佳科幻电影"],
-        Festivals: ["圣丹斯电影节"]
+        Awards: ['土星奖最佳科幻电影'],
+        Festivals: ['圣丹斯电影节'],
       },
       {
-        ID: "movie_003",
-        Title: "复仇者联盟：量子战争",
-        EnglishTitle: "Avengers: Quantum War",
-        Genre: ["动作", "科幻", "冒险"],
+        ID: 'movie_003',
+        Title: '复仇者联盟：量子战争',
+        EnglishTitle: 'Avengers: Quantum War',
+        Genre: ['动作', '科幻', '冒险'],
         Duration: 165,
         Rating: 9.5,
         WantToSee: 289456,
-        ReleaseDate: "2024-06-25",
-        Director: "罗素兄弟",
-        Cast: ["小罗伯特·唐尼", "克里斯·埃文斯", "斯嘉丽·约翰逊", "克里斯·海姆斯沃斯"],
-        Synopsis: "复仇者们面临史上最强大的敌人，必须利用量子技术穿越时空，集结所有英雄力量。这是一场关乎宇宙存亡的终极之战，每一个英雄都将面临前所未有的考验。",
-        Poster: "/api/placeholder/300/450",
-        Trailer: "https://example.com/trailer3",
-        Language: "英语",
-        Subtitles: ["中文", "英文"],
-        AgeRating: "PG-13",
+        ReleaseDate: '2024-06-25',
+        Director: '罗素兄弟',
+        Cast: ['小罗伯特·唐尼', '克里斯·埃文斯', '斯嘉丽·约翰逊', '克里斯·海姆斯沃斯'],
+        Synopsis:
+          '复仇者们面临史上最强大的敌人，必须利用量子技术穿越时空，集结所有英雄力量。这是一场关乎宇宙存亡的终极之战，每一个英雄都将面临前所未有的考验。',
+        Poster: '/api/placeholder/300/450',
+        Trailer: 'https://example.com/trailer3',
+        Language: '英语',
+        Subtitles: ['中文', '英文'],
+        AgeRating: 'PG-13',
         Price: 9000000000, // 90 QAU
         VIPPrice: 13500000000, // 135 QAU
         IMAXPrice: 16500000000, // 165 QAU
@@ -390,45 +405,56 @@ const MovieBookingApp = () => {
         IsHot: true,
         IsNew: true,
         BookingCount: 456789,
-        BoxOffice: "28.9亿",
-        Country: "美国",
-        ProductionCompany: "漫威影业",
-        Tags: ["IMAX", "杜比全景声", "4DX", "中国巨幕", "杜比影院"],
+        BoxOffice: '28.9亿',
+        Country: '美国',
+        ProductionCompany: '漫威影业',
+        Tags: ['IMAX', '杜比全景声', '4DX', '中国巨幕', '杜比影院'],
         Photos: [
-          "/api/placeholder/800/450",
-          "/api/placeholder/800/450",
-          "/api/placeholder/800/450",
-          "/api/placeholder/800/450"
+          '/api/placeholder/800/450',
+          '/api/placeholder/800/450',
+          '/api/placeholder/800/450',
+          '/api/placeholder/800/450',
         ],
         Videos: [
-          { title: "终极预告", url: "https://example.com/trailer3", duration: "3:00" },
-          { title: "角色特辑", url: "https://example.com/characters3", duration: "4:20" },
-          { title: "动作场面", url: "https://example.com/action3", duration: "2:45" }
+          { title: '终极预告', url: 'https://example.com/trailer3', duration: '3:00' },
+          { title: '角色特辑', url: 'https://example.com/characters3', duration: '4:20' },
+          { title: '动作场面', url: 'https://example.com/action3', duration: '2:45' },
         ],
         Reviews: [
-          { user: "漫威粉", rating: 10, content: "史诗级的超级英雄电影，每一分钟都让人热血沸腾！", date: "2024-06-26" },
-          { user: "电影评论家", rating: 9.0, content: "罗素兄弟再次创造奇迹，这是漫威宇宙的巅峰之作。", date: "2024-06-27" }
+          {
+            user: '漫威粉',
+            rating: 10,
+            content: '史诗级的超级英雄电影，每一分钟都让人热血沸腾！',
+            date: '2024-06-26',
+          },
+          {
+            user: '电影评论家',
+            rating: 9.0,
+            content: '罗素兄弟再次创造奇迹，这是漫威宇宙的巅峰之作。',
+            date: '2024-06-27',
+          },
         ],
-        Awards: ["人民选择奖最受欢迎电影", "MTV电影奖最佳动作片"],
-        Festivals: ["圣地亚哥动漫展首映"]
+        Awards: ['人民选择奖最受欢迎电影', 'MTV电影奖最佳动作片'],
+        Festivals: ['圣地亚哥动漫展首映'],
       },
       {
-        ID: "movie_004",
-        Title: "流浪地球3：量子远征",
-        EnglishTitle: "The Wandering Earth 3: Quantum Expedition",
-        Genre: ["科幻", "灾难", "剧情"],
+        ID: 'movie_004',
+        Title: '流浪地球3：量子远征',
+        EnglishTitle: 'The Wandering Earth 3: Quantum Expedition',
+        Genre: ['科幻', '灾难', '剧情'],
         Duration: 155,
         Rating: 9.0,
         WantToSee: 198765,
-        ReleaseDate: "2024-06-30",
-        Director: "郭帆",
-        Cast: ["吴京", "易烊千玺", "李光洁", "沈腾"],
-        Synopsis: "地球在宇宙中继续流浪，人类发现了量子跳跃技术，可以瞬间穿越星系。但这项技术也带来了新的危机，人类必须在拯救地球和探索未知之间做出选择。",
-        Poster: "/api/placeholder/300/450",
-        Trailer: "https://example.com/trailer4",
-        Language: "中文",
-        Subtitles: ["英文", "日文", "韩文"],
-        AgeRating: "PG-13",
+        ReleaseDate: '2024-06-30',
+        Director: '郭帆',
+        Cast: ['吴京', '易烊千玺', '李光洁', '沈腾'],
+        Synopsis:
+          '地球在宇宙中继续流浪，人类发现了量子跳跃技术，可以瞬间穿越星系。但这项技术也带来了新的危机，人类必须在拯救地球和探索未知之间做出选择。',
+        Poster: '/api/placeholder/300/450',
+        Trailer: 'https://example.com/trailer4',
+        Language: '中文',
+        Subtitles: ['英文', '日文', '韩文'],
+        AgeRating: 'PG-13',
         Price: 8500000000, // 85 QAU
         VIPPrice: 12500000000, // 125 QAU
         IMAXPrice: 15500000000, // 155 QAU
@@ -436,163 +462,357 @@ const MovieBookingApp = () => {
         IsHot: true,
         IsNew: true,
         BookingCount: 345678,
-        BoxOffice: "22.1亿",
-        Country: "中国",
-        ProductionCompany: "中国电影股份有限公司",
-        Tags: ["IMAX", "杜比全景声", "中国巨幕", "4DX"],
+        BoxOffice: '22.1亿',
+        Country: '中国',
+        ProductionCompany: '中国电影股份有限公司',
+        Tags: ['IMAX', '杜比全景声', '中国巨幕', '4DX'],
         Photos: [
-          "/api/placeholder/800/450",
-          "/api/placeholder/800/450",
-          "/api/placeholder/800/450"
+          '/api/placeholder/800/450',
+          '/api/placeholder/800/450',
+          '/api/placeholder/800/450',
         ],
         Videos: [
-          { title: "正式预告", url: "https://example.com/trailer4", duration: "2:50" },
-          { title: "制作花絮", url: "https://example.com/making4", duration: "7:15" }
+          { title: '正式预告', url: 'https://example.com/trailer4', duration: '2:50' },
+          { title: '制作花絮', url: 'https://example.com/making4', duration: '7:15' },
         ],
         Reviews: [
-          { user: "国产科幻迷", rating: 9.5, content: "中国科幻电影的新高度，特效和情感并重！", date: "2024-07-01" }
+          {
+            user: '国产科幻迷',
+            rating: 9.5,
+            content: '中国科幻电影的新高度，特效和情感并重！',
+            date: '2024-07-01',
+          },
         ],
-        Awards: ["华表奖优秀故事片", "金鸡奖最佳视觉效果"],
-        Festivals: ["上海国际电影节", "北京国际电影节"]
-      }
+        Awards: ['华表奖优秀故事片', '金鸡奖最佳视觉效果'],
+        Festivals: ['上海国际电影节', '北京国际电影节'],
+      },
     ];
 
     const mockCinemas = [
       {
-        ID: "cinema_001",
-        Name: "万达影城(五角场店)",
-        Brand: "万达影城",
-        Location: "上海市杨浦区",
-        Address: "翔殷路1099号合生汇购物中心5楼",
-        Distance: "1.2km",
-        Facilities: ["IMAX", "杜比全景声", "4DX", "VIP厅", "杜比影院"],
+        ID: 'cinema_001',
+        Name: '万达影城(五角场店)',
+        Brand: '万达影城',
+        Location: '上海市杨浦区',
+        Address: '翔殷路1099号合生汇购物中心5楼',
+        Distance: '1.2km',
+        Facilities: ['IMAX', '杜比全景声', '4DX', 'VIP厅', '杜比影院'],
         Rating: 4.8,
-        Price: "低价",
+        Price: '低价',
         Parking: true,
         Restaurant: true,
         Shopping: true,
-        Metro: "10号线五角场站",
-        Phone: "021-12345678",
-        BusinessHours: "09:00-24:00",
+        Metro: '10号线五角场站',
+        Phone: '021-12345678',
+        BusinessHours: '09:00-24:00',
         Showtimes: {
-          "movie_001": [
-            { Time: "10:00", Hall: "IMAX厅1", Type: "IMAX", AvailableSeats: 45, TotalSeats: 300, Price: 15000000000 },
-            { Time: "13:30", Hall: "IMAX厅1", Type: "IMAX", AvailableSeats: 120, TotalSeats: 300, Price: 15000000000 },
-            { Time: "16:45", Hall: "2号厅", Type: "普通", AvailableSeats: 89, TotalSeats: 200, Price: 8000000000 },
-            { Time: "20:15", Hall: "VIP厅", Type: "VIP", AvailableSeats: 12, TotalSeats: 50, Price: 12000000000 },
-            { Time: "23:00", Hall: "杜比厅", Type: "杜比全景声", AvailableSeats: 156, TotalSeats: 280, Price: 10000000000 }
+          movie_001: [
+            {
+              Time: '10:00',
+              Hall: 'IMAX厅1',
+              Type: 'IMAX',
+              AvailableSeats: 45,
+              TotalSeats: 300,
+              Price: 15000000000,
+            },
+            {
+              Time: '13:30',
+              Hall: 'IMAX厅1',
+              Type: 'IMAX',
+              AvailableSeats: 120,
+              TotalSeats: 300,
+              Price: 15000000000,
+            },
+            {
+              Time: '16:45',
+              Hall: '2号厅',
+              Type: '普通',
+              AvailableSeats: 89,
+              TotalSeats: 200,
+              Price: 8000000000,
+            },
+            {
+              Time: '20:15',
+              Hall: 'VIP厅',
+              Type: 'VIP',
+              AvailableSeats: 12,
+              TotalSeats: 50,
+              Price: 12000000000,
+            },
+            {
+              Time: '23:00',
+              Hall: '杜比厅',
+              Type: '杜比全景声',
+              AvailableSeats: 156,
+              TotalSeats: 280,
+              Price: 10000000000,
+            },
           ],
-          "movie_003": [
-            { Time: "09:30", Hall: "IMAX厅2", Type: "IMAX", AvailableSeats: 78, TotalSeats: 320, Price: 16500000000 },
-            { Time: "12:45", Hall: "4DX厅", Type: "4DX", AvailableSeats: 34, TotalSeats: 120, Price: 18000000000 },
-            { Time: "15:30", Hall: "3号厅", Type: "普通", AvailableSeats: 92, TotalSeats: 180, Price: 9000000000 },
-            { Time: "18:45", Hall: "VIP厅", Type: "VIP", AvailableSeats: 23, TotalSeats: 50, Price: 13500000000 },
-            { Time: "21:30", Hall: "杜比影院", Type: "杜比影院", AvailableSeats: 67, TotalSeats: 150, Price: 20000000000 }
-          ]
+          movie_003: [
+            {
+              Time: '09:30',
+              Hall: 'IMAX厅2',
+              Type: 'IMAX',
+              AvailableSeats: 78,
+              TotalSeats: 320,
+              Price: 16500000000,
+            },
+            {
+              Time: '12:45',
+              Hall: '4DX厅',
+              Type: '4DX',
+              AvailableSeats: 34,
+              TotalSeats: 120,
+              Price: 18000000000,
+            },
+            {
+              Time: '15:30',
+              Hall: '3号厅',
+              Type: '普通',
+              AvailableSeats: 92,
+              TotalSeats: 180,
+              Price: 9000000000,
+            },
+            {
+              Time: '18:45',
+              Hall: 'VIP厅',
+              Type: 'VIP',
+              AvailableSeats: 23,
+              TotalSeats: 50,
+              Price: 13500000000,
+            },
+            {
+              Time: '21:30',
+              Hall: '杜比影院',
+              Type: '杜比影院',
+              AvailableSeats: 67,
+              TotalSeats: 150,
+              Price: 20000000000,
+            },
+          ],
         },
-        Services: ["在线选座", "退改签", "小食配送", "会员积分"],
-        Promotions: ["周二半价", "学生票8折", "会员专享优惠"],
-        Photos: ["/api/placeholder/400/300", "/api/placeholder/400/300"]
+        Services: ['在线选座', '退改签', '小食配送', '会员积分'],
+        Promotions: ['周二半价', '学生票8折', '会员专享优惠'],
+        Photos: ['/api/placeholder/400/300', '/api/placeholder/400/300'],
       },
       {
-        ID: "cinema_002",
-        Name: "CGV影城(大悦城店)",
-        Brand: "CGV影城",
-        Location: "上海市静安区",
-        Address: "西藏北路166号大悦城北座8-9楼",
-        Distance: "2.8km",
-        Facilities: ["4DX", "ScreenX", "杜比全景声", "VIP厅"],
+        ID: 'cinema_002',
+        Name: 'CGV影城(大悦城店)',
+        Brand: 'CGV影城',
+        Location: '上海市静安区',
+        Address: '西藏北路166号大悦城北座8-9楼',
+        Distance: '2.8km',
+        Facilities: ['4DX', 'ScreenX', '杜比全景声', 'VIP厅'],
         Rating: 4.7,
-        Price: "中等",
+        Price: '中等',
         Parking: true,
         Restaurant: true,
         Shopping: true,
-        Metro: "1号线汉中路站",
-        Phone: "021-87654321",
-        BusinessHours: "09:30-23:30",
+        Metro: '1号线汉中路站',
+        Phone: '021-87654321',
+        BusinessHours: '09:30-23:30',
         Showtimes: {
-          "movie_002": [
-            { Time: "11:00", Hall: "ScreenX厅", Type: "ScreenX", AvailableSeats: 56, TotalSeats: 180, Price: 16000000000 },
-            { Time: "14:15", Hall: "4DX厅", Type: "4DX", AvailableSeats: 28, TotalSeats: 100, Price: 18000000000 },
-            { Time: "17:30", Hall: "1号厅", Type: "普通", AvailableSeats: 134, TotalSeats: 200, Price: 7500000000 },
-            { Time: "20:45", Hall: "VIP厅", Type: "VIP", AvailableSeats: 18, TotalSeats: 40, Price: 11000000000 }
+          movie_002: [
+            {
+              Time: '11:00',
+              Hall: 'ScreenX厅',
+              Type: 'ScreenX',
+              AvailableSeats: 56,
+              TotalSeats: 180,
+              Price: 16000000000,
+            },
+            {
+              Time: '14:15',
+              Hall: '4DX厅',
+              Type: '4DX',
+              AvailableSeats: 28,
+              TotalSeats: 100,
+              Price: 18000000000,
+            },
+            {
+              Time: '17:30',
+              Hall: '1号厅',
+              Type: '普通',
+              AvailableSeats: 134,
+              TotalSeats: 200,
+              Price: 7500000000,
+            },
+            {
+              Time: '20:45',
+              Hall: 'VIP厅',
+              Type: 'VIP',
+              AvailableSeats: 18,
+              TotalSeats: 40,
+              Price: 11000000000,
+            },
           ],
-          "movie_004": [
-            { Time: "10:30", Hall: "2号厅", Type: "普通", AvailableSeats: 145, TotalSeats: 220, Price: 8500000000 },
-            { Time: "13:45", Hall: "杜比厅", Type: "杜比全景声", AvailableSeats: 89, TotalSeats: 160, Price: 11500000000 },
-            { Time: "17:00", Hall: "VIP厅", Type: "VIP", AvailableSeats: 25, TotalSeats: 40, Price: 12500000000 },
-            { Time: "20:30", Hall: "ScreenX厅", Type: "ScreenX", AvailableSeats: 67, TotalSeats: 180, Price: 17000000000 }
-          ]
+          movie_004: [
+            {
+              Time: '10:30',
+              Hall: '2号厅',
+              Type: '普通',
+              AvailableSeats: 145,
+              TotalSeats: 220,
+              Price: 8500000000,
+            },
+            {
+              Time: '13:45',
+              Hall: '杜比厅',
+              Type: '杜比全景声',
+              AvailableSeats: 89,
+              TotalSeats: 160,
+              Price: 11500000000,
+            },
+            {
+              Time: '17:00',
+              Hall: 'VIP厅',
+              Type: 'VIP',
+              AvailableSeats: 25,
+              TotalSeats: 40,
+              Price: 12500000000,
+            },
+            {
+              Time: '20:30',
+              Hall: 'ScreenX厅',
+              Type: 'ScreenX',
+              AvailableSeats: 67,
+              TotalSeats: 180,
+              Price: 17000000000,
+            },
+          ],
         },
-        Services: ["在线选座", "退改签", "爆米花套餐", "生日优惠"],
-        Promotions: ["情侣套票", "家庭套票", "会员日优惠"],
-        Photos: ["/api/placeholder/400/300", "/api/placeholder/400/300"]
+        Services: ['在线选座', '退改签', '爆米花套餐', '生日优惠'],
+        Promotions: ['情侣套票', '家庭套票', '会员日优惠'],
+        Photos: ['/api/placeholder/400/300', '/api/placeholder/400/300'],
       },
       {
-        ID: "cinema_003",
-        Name: "上海影城",
-        Brand: "上海影城",
-        Location: "上海市静安区",
-        Address: "新闸路160号",
-        Distance: "3.5km",
-        Facilities: ["IMAX", "杜比全景声", "中国巨幕", "艺术厅"],
+        ID: 'cinema_003',
+        Name: '上海影城',
+        Brand: '上海影城',
+        Location: '上海市静安区',
+        Address: '新闸路160号',
+        Distance: '3.5km',
+        Facilities: ['IMAX', '杜比全景声', '中国巨幕', '艺术厅'],
         Rating: 4.9,
-        Price: "高端",
+        Price: '高端',
         Parking: true,
         Restaurant: false,
         Shopping: false,
-        Metro: "2号线静安寺站",
-        Phone: "021-62172426",
-        BusinessHours: "09:00-24:00",
+        Metro: '2号线静安寺站',
+        Phone: '021-62172426',
+        BusinessHours: '09:00-24:00',
         Showtimes: {
-          "movie_001": [
-            { Time: "10:30", Hall: "IMAX厅", Type: "IMAX", AvailableSeats: 89, TotalSeats: 400, Price: 18000000000 },
-            { Time: "14:00", Hall: "中国巨幕厅", Type: "中国巨幕", AvailableSeats: 123, TotalSeats: 350, Price: 16000000000 },
-            { Time: "17:30", Hall: "1号厅", Type: "普通", AvailableSeats: 167, TotalSeats: 250, Price: 8000000000 },
-            { Time: "21:00", Hall: "杜比厅", Type: "杜比全景声", AvailableSeats: 78, TotalSeats: 200, Price: 12000000000 }
+          movie_001: [
+            {
+              Time: '10:30',
+              Hall: 'IMAX厅',
+              Type: 'IMAX',
+              AvailableSeats: 89,
+              TotalSeats: 400,
+              Price: 18000000000,
+            },
+            {
+              Time: '14:00',
+              Hall: '中国巨幕厅',
+              Type: '中国巨幕',
+              AvailableSeats: 123,
+              TotalSeats: 350,
+              Price: 16000000000,
+            },
+            {
+              Time: '17:30',
+              Hall: '1号厅',
+              Type: '普通',
+              AvailableSeats: 167,
+              TotalSeats: 250,
+              Price: 8000000000,
+            },
+            {
+              Time: '21:00',
+              Hall: '杜比厅',
+              Type: '杜比全景声',
+              AvailableSeats: 78,
+              TotalSeats: 200,
+              Price: 12000000000,
+            },
           ],
-          "movie_003": [
-            { Time: "09:00", Hall: "IMAX厅", Type: "IMAX", AvailableSeats: 234, TotalSeats: 400, Price: 20000000000 },
-            { Time: "12:30", Hall: "中国巨幕厅", Type: "中国巨幕", AvailableSeats: 189, TotalSeats: 350, Price: 18000000000 },
-            { Time: "16:00", Hall: "2号厅", Type: "普通", AvailableSeats: 145, TotalSeats: 220, Price: 9000000000 },
-            { Time: "19:30", Hall: "杜比厅", Type: "杜比全景声", AvailableSeats: 98, TotalSeats: 200, Price: 14000000000 },
-            { Time: "22:45", Hall: "3号厅", Type: "普通", AvailableSeats: 178, TotalSeats: 200, Price: 9000000000 }
-          ]
+          movie_003: [
+            {
+              Time: '09:00',
+              Hall: 'IMAX厅',
+              Type: 'IMAX',
+              AvailableSeats: 234,
+              TotalSeats: 400,
+              Price: 20000000000,
+            },
+            {
+              Time: '12:30',
+              Hall: '中国巨幕厅',
+              Type: '中国巨幕',
+              AvailableSeats: 189,
+              TotalSeats: 350,
+              Price: 18000000000,
+            },
+            {
+              Time: '16:00',
+              Hall: '2号厅',
+              Type: '普通',
+              AvailableSeats: 145,
+              TotalSeats: 220,
+              Price: 9000000000,
+            },
+            {
+              Time: '19:30',
+              Hall: '杜比厅',
+              Type: '杜比全景声',
+              AvailableSeats: 98,
+              TotalSeats: 200,
+              Price: 14000000000,
+            },
+            {
+              Time: '22:45',
+              Hall: '3号厅',
+              Type: '普通',
+              AvailableSeats: 178,
+              TotalSeats: 200,
+              Price: 9000000000,
+            },
+          ],
         },
-        Services: ["在线选座", "退改签", "艺术片专场", "影迷俱乐部"],
-        Promotions: ["艺术片优惠", "老年票半价", "学生证优惠"],
-        Photos: ["/api/placeholder/400/300", "/api/placeholder/400/300"]
-      }
+        Services: ['在线选座', '退改签', '艺术片专场', '影迷俱乐部'],
+        Promotions: ['艺术片优惠', '老年票半价', '学生证优惠'],
+        Photos: ['/api/placeholder/400/300', '/api/placeholder/400/300'],
+      },
     ];
 
     // 模拟用户订单
     const mockBookings = [
       {
-        ID: "booking_001",
-        MovieTitle: "量子纪元：时空守护者",
-        CinemaName: "万达影城(五角场店)",
-        ShowTime: "2024-06-20 20:15",
-        Hall: "VIP厅",
-        Seats: ["J8", "J9"],
+        ID: 'booking_001',
+        MovieTitle: '量子纪元：时空守护者',
+        CinemaName: '万达影城(五角场店)',
+        ShowTime: '2024-06-20 20:15',
+        Hall: 'VIP厅',
+        Seats: ['J8', 'J9'],
         TotalPrice: 24000000000, // 240 QAU
-        Status: "已支付",
-        BookingTime: "2024-06-18 14:30",
-        QRCode: "QR123456789",
-        TicketCode: "T20240620001"
+        Status: '已支付',
+        BookingTime: '2024-06-18 14:30',
+        QRCode: 'QR123456789',
+        TicketCode: 'T20240620001',
       },
       {
-        ID: "booking_002",
-        MovieTitle: "复仇者联盟：量子战争",
-        CinemaName: "CGV影城(大悦城店)",
-        ShowTime: "2024-06-25 18:45",
-        Hall: "4DX厅",
-        Seats: ["F5", "F6", "F7"],
+        ID: 'booking_002',
+        MovieTitle: '复仇者联盟：量子战争',
+        CinemaName: 'CGV影城(大悦城店)',
+        ShowTime: '2024-06-25 18:45',
+        Hall: '4DX厅',
+        Seats: ['F5', 'F6', 'F7'],
         TotalPrice: 54000000000, // 540 QAU
-        Status: "待观影",
-        BookingTime: "2024-06-23 16:45",
-        QRCode: "QR987654321",
-        TicketCode: "T20240625002"
-      }
+        Status: '待观影',
+        BookingTime: '2024-06-23 16:45',
+        QRCode: 'QR987654321',
+        TicketCode: 'T20240625002',
+      },
     ];
 
     setMovies(mockMovies);
@@ -618,12 +838,13 @@ const MovieBookingApp = () => {
 
   // 猫眼风格的电影筛选和排序
   const filteredAndSortedMovies = movies
-    .filter(movie => {
+    .filter((movie) => {
       const matchesCategory = selectedCategory === 'all' || movie.Genre.includes(selectedCategory);
-      const matchesSearch = movie.Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           movie.EnglishTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           movie.Cast.some(actor => actor.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                           movie.Director.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch =
+        movie.Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        movie.EnglishTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        movie.Cast.some((actor) => actor.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        movie.Director.toLowerCase().includes(searchTerm.toLowerCase());
       return matchesCategory && matchesSearch;
     })
     .sort((a, b) => {
@@ -661,7 +882,7 @@ const MovieBookingApp = () => {
           isOccupied,
           isVIP,
           row,
-          seat
+          seat,
         });
       }
       seatMap.push(rowSeats);
@@ -691,10 +912,10 @@ const MovieBookingApp = () => {
                     seat.isOccupied
                       ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                       : seat.isSelected
-                      ? 'bg-cyan-500 text-white scale-110'
-                      : seat.isVIP
-                      ? 'bg-yellow-600 text-white hover:bg-yellow-500'
-                      : 'bg-green-600 text-white hover:bg-green-500'
+                        ? 'bg-cyan-500 text-white scale-110'
+                        : seat.isVIP
+                          ? 'bg-yellow-600 text-white hover:bg-yellow-500'
+                          : 'bg-green-600 text-white hover:bg-green-500'
                   }`}
                   title={seat.id}
                 >
@@ -730,10 +951,8 @@ const MovieBookingApp = () => {
 
   // 选择座位
   const handleSeatSelect = (seatId) => {
-    setSelectedSeats(prev => 
-      prev.includes(seatId) 
-        ? prev.filter(id => id !== seatId)
-        : [...prev, seatId]
+    setSelectedSeats((prev) =>
+      prev.includes(seatId) ? prev.filter((id) => id !== seatId) : [...prev, seatId]
     );
   };
 
@@ -754,15 +973,17 @@ const MovieBookingApp = () => {
         Hall: selectedShowtime.Hall,
         Seats: selectedSeats,
         TotalPrice: totalPrice,
-        Status: "已支付",
+        Status: '已支付',
         BookingTime: new Date().toLocaleString(),
         QRCode: `QR${Date.now()}`,
-        TicketCode: `T${Date.now()}`
+        TicketCode: `T${Date.now()}`,
       };
 
-      setBookings(prev => [newBooking, ...prev]);
-      alert(`预订成功！\n电影: ${selectedMovie.Title}\n影院: ${selectedCinema.Name}\n场次: ${selectedShowtime.Time}\n座位: ${selectedSeats.join(', ')}\n总价: ${formatAmount(totalPrice)}`);
-      
+      setBookings((prev) => [newBooking, ...prev]);
+      alert(
+        `预订成功！\n电影: ${selectedMovie.Title}\n影院: ${selectedCinema.Name}\n场次: ${selectedShowtime.Time}\n座位: ${selectedSeats.join(', ')}\n总价: ${formatAmount(totalPrice)}`
+      );
+
       // 重置选择
       setSelectedSeats([]);
       setCurrentStep(3); // 跳转到订单页面
@@ -796,7 +1017,7 @@ const MovieBookingApp = () => {
               <p className="text-gray-300 text-lg">使用量子加密技术，安全预订全球影院电影票</p>
             </div>
             <div className="flex items-center space-x-4">
-              <select 
+              <select
                 value={selectedCity}
                 onChange={(e) => setSelectedCity(e.target.value)}
                 className="px-4 py-2 bg-white/10 border border-white/20 text-white rounded-lg"
@@ -820,9 +1041,9 @@ const MovieBookingApp = () => {
                 className="pl-10 bg-white/10 border-white/20 text-white"
               />
             </div>
-            
+
             <div className="flex space-x-4">
-              <select 
+              <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className="px-4 py-2 bg-white/10 border border-white/20 text-white rounded-lg"
@@ -835,7 +1056,7 @@ const MovieBookingApp = () => {
                 <option value="喜剧">喜剧</option>
               </select>
 
-              <select 
+              <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className="px-4 py-2 bg-white/10 border border-white/20 text-white rounded-lg"
@@ -849,12 +1070,31 @@ const MovieBookingApp = () => {
           </div>
         </div>
 
-        <Tabs value={currentStep === 0 ? "movies" : currentStep === 1 ? "showtimes" : currentStep === 2 ? "seats" : "orders"} className="space-y-6">
+        <Tabs
+          value={
+            currentStep === 0
+              ? 'movies'
+              : currentStep === 1
+                ? 'showtimes'
+                : currentStep === 2
+                  ? 'seats'
+                  : 'orders'
+          }
+          className="space-y-6"
+        >
           <TabsList className="grid w-full grid-cols-4 bg-white/10 rounded-lg">
-            <TabsTrigger value="movies" onClick={() => setCurrentStep(0)}>选择电影</TabsTrigger>
-            <TabsTrigger value="showtimes" onClick={() => setCurrentStep(1)}>选择场次</TabsTrigger>
-            <TabsTrigger value="seats" onClick={() => setCurrentStep(2)}>选择座位</TabsTrigger>
-            <TabsTrigger value="orders" onClick={() => setCurrentStep(3)}>我的订单</TabsTrigger>
+            <TabsTrigger value="movies" onClick={() => setCurrentStep(0)}>
+              选择电影
+            </TabsTrigger>
+            <TabsTrigger value="showtimes" onClick={() => setCurrentStep(1)}>
+              选择场次
+            </TabsTrigger>
+            <TabsTrigger value="seats" onClick={() => setCurrentStep(2)}>
+              选择座位
+            </TabsTrigger>
+            <TabsTrigger value="orders" onClick={() => setCurrentStep(3)}>
+              我的订单
+            </TabsTrigger>
           </TabsList>
 
           {/* 选择电影 - 猫眼风格 */}
@@ -868,7 +1108,9 @@ const MovieBookingApp = () => {
                     <p className="text-gray-300">精选本周最受欢迎的电影</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-3xl font-bold text-cyan-400 truncate-number">{movies.filter(m => m.IsHot).length}</p>
+                    <p className="text-3xl font-bold text-cyan-400 truncate-number">
+                      {movies.filter((m) => m.IsHot).length}
+                    </p>
                     <p className="text-gray-300">部热映影片</p>
                   </div>
                 </div>
@@ -878,8 +1120,8 @@ const MovieBookingApp = () => {
             {/* 电影列表 */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredAndSortedMovies.map((movie) => (
-                <Card 
-                  key={movie.ID} 
+                <Card
+                  key={movie.ID}
                   className={`bg-white/10 backdrop-blur-md border-white/20 hover:bg-white/15 transition-all duration-200 cursor-pointer ${
                     selectedMovie?.ID === movie.ID ? 'ring-2 ring-cyan-400' : ''
                   }`}
@@ -925,11 +1167,15 @@ const MovieBookingApp = () => {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
                         <p className="text-gray-400">时长</p>
-                        <p className="text-white truncate-number">{formatDuration(movie.Duration)}</p>
+                        <p className="text-white truncate-number">
+                          {formatDuration(movie.Duration)}
+                        </p>
                       </div>
                       <div>
                         <p className="text-gray-400">起价</p>
-                        <p className="text-cyan-400 font-bold truncate-number">{formatAmount(movie.Price)}</p>
+                        <p className="text-cyan-400 font-bold truncate-number">
+                          {formatAmount(movie.Price)}
+                        </p>
                       </div>
                       <div>
                         <p className="text-gray-400">导演</p>
@@ -993,7 +1239,9 @@ const MovieBookingApp = () => {
                         <Film className="w-8 h-8 text-gray-400" />
                       </div>
                       <div className="flex-1">
-                        <h2 className="text-2xl font-bold text-white mb-2">{selectedMovie.Title}</h2>
+                        <h2 className="text-2xl font-bold text-white mb-2">
+                          {selectedMovie.Title}
+                        </h2>
                         <p className="text-gray-300 mb-4">{selectedMovie.EnglishTitle}</p>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                           <div>
@@ -1010,7 +1258,9 @@ const MovieBookingApp = () => {
                           </div>
                           <div>
                             <p className="text-gray-400">想看</p>
-                            <p className="text-purple-400">{formatWantToSee(selectedMovie.WantToSee)}</p>
+                            <p className="text-purple-400">
+                              {formatWantToSee(selectedMovie.WantToSee)}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -1021,117 +1271,149 @@ const MovieBookingApp = () => {
                 {/* 影院列表 */}
                 <div className="space-y-4">
                   <h3 className="text-xl font-bold text-white">选择影院和场次</h3>
-                  {cinemas.filter(cinema => cinema.Showtimes[selectedMovie.ID]).map((cinema) => (
-                    <Card key={cinema.ID} className="bg-white/10 backdrop-blur-md border-white/20">
-                      <CardHeader>
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <CardTitle className="text-white flex items-center space-x-2">
-                              <span>{cinema.Name}</span>
-                              <Badge className="bg-blue-500/20 text-blue-400">{cinema.Brand}</Badge>
-                            </CardTitle>
-                            <CardDescription className="text-gray-300 flex items-center space-x-4 mt-2">
-                              <span className="flex items-center">
-                                <MapPin className="w-4 h-4 mr-1" />
-                                {cinema.Address}
-                              </span>
-                              <span className="flex items-center">
-                                <Car className="w-4 h-4 mr-1" />
-                                {cinema.Distance}
-                              </span>
-                              <span className="flex items-center">
-                                <Train className="w-4 h-4 mr-1" />
-                                {cinema.Metro}
-                              </span>
-                            </CardDescription>
+                  {cinemas
+                    .filter((cinema) => cinema.Showtimes[selectedMovie.ID])
+                    .map((cinema) => (
+                      <Card
+                        key={cinema.ID}
+                        className="bg-white/10 backdrop-blur-md border-white/20"
+                      >
+                        <CardHeader>
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <CardTitle className="text-white flex items-center space-x-2">
+                                <span>{cinema.Name}</span>
+                                <Badge className="bg-blue-500/20 text-blue-400">
+                                  {cinema.Brand}
+                                </Badge>
+                              </CardTitle>
+                              <CardDescription className="text-gray-300 flex items-center space-x-4 mt-2">
+                                <span className="flex items-center">
+                                  <MapPin className="w-4 h-4 mr-1" />
+                                  {cinema.Address}
+                                </span>
+                                <span className="flex items-center">
+                                  <Car className="w-4 h-4 mr-1" />
+                                  {cinema.Distance}
+                                </span>
+                                <span className="flex items-center">
+                                  <Train className="w-4 h-4 mr-1" />
+                                  {cinema.Metro}
+                                </span>
+                              </CardDescription>
+                            </div>
+                            <div className="text-right">
+                              <Badge className="bg-yellow-500/20 text-yellow-400 mb-2">
+                                ⭐ {cinema.Rating}
+                              </Badge>
+                              <p className="text-sm text-gray-400">{cinema.Price}价位</p>
+                            </div>
                           </div>
-                          <div className="text-right">
-                            <Badge className="bg-yellow-500/20 text-yellow-400 mb-2">
-                              ⭐ {cinema.Rating}
-                            </Badge>
-                            <p className="text-sm text-gray-400">{cinema.Price}价位</p>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        {/* 影院设施 */}
-                        <div className="flex flex-wrap gap-2">
-                          {cinema.Facilities.map((facility, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
-                              {facility}
-                            </Badge>
-                          ))}
-                        </div>
-
-                        {/* 场次时间 */}
-                        <div>
-                          <h4 className="text-white font-semibold mb-3">今日场次</h4>
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                            {cinema.Showtimes[selectedMovie.ID].map((showtime, index) => (
-                              <Card
-                                key={index}
-                                className={`bg-white/5 border-white/10 hover:bg-white/10 transition-all duration-200 cursor-pointer ${
-                                  selectedShowtime?.Time === showtime.Time && selectedCinema?.ID === cinema.ID ? 'ring-2 ring-cyan-400' : ''
-                                }`}
-                                onClick={() => {
-                                  setSelectedCinema(cinema);
-                                  setSelectedShowtime(showtime);
-                                }}
-                              >
-                                <CardContent className="p-4">
-                                  <div className="flex justify-between items-start mb-2">
-                                    <div>
-                                      <p className="text-lg font-bold text-cyan-400">{showtime.Time}</p>
-                                      <p className="text-sm text-gray-300">{showtime.Hall}</p>
-                                    </div>
-                                    <Badge className="bg-purple-500/20 text-purple-400">
-                                      {showtime.Type}
-                                    </Badge>
-                                  </div>
-                                  <div className="space-y-1 text-sm">
-                                    <div className="flex justify-between">
-                                      <span className="text-gray-400">票价</span>
-                                      <span className="text-white font-bold">{formatAmount(showtime.Price)}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                      <span className="text-gray-400">余票</span>
-                                      <span className={`truncate-number ${showtime.AvailableSeats < 20 ? 'text-red-400' : 'text-green-400'}`}>
-                                        {formatNumber(showtime.AvailableSeats)}/{formatNumber(showtime.TotalSeats)}
-                                      </span>
-                                    </div>
-                                  </div>
-                                  {showtime.AvailableSeats < 20 && (
-                                    <Badge className="bg-red-500/20 text-red-400 mt-2">
-                                      余票紧张
-                                    </Badge>
-                                  )}
-                                </CardContent>
-                              </Card>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          {/* 影院设施 */}
+                          <div className="flex flex-wrap gap-2">
+                            {cinema.Facilities.map((facility, index) => (
+                              <Badge key={index} variant="outline" className="text-xs">
+                                {facility}
+                              </Badge>
                             ))}
                           </div>
-                        </div>
 
-                        {/* 影院服务 */}
-                        <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                          <div className="flex space-x-4 text-sm text-gray-400">
-                            {cinema.Parking && <span className="flex items-center"><Car className="w-3 h-3 mr-1" />停车</span>}
-                            {cinema.Restaurant && <span className="flex items-center"><Utensils className="w-3 h-3 mr-1" />餐饮</span>}
-                            {cinema.Shopping && <span className="flex items-center"><ShoppingBag className="w-3 h-3 mr-1" />购物</span>}
+                          {/* 场次时间 */}
+                          <div>
+                            <h4 className="text-white font-semibold mb-3">今日场次</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                              {cinema.Showtimes[selectedMovie.ID].map((showtime, index) => (
+                                <Card
+                                  key={index}
+                                  className={`bg-white/5 border-white/10 hover:bg-white/10 transition-all duration-200 cursor-pointer ${
+                                    selectedShowtime?.Time === showtime.Time &&
+                                    selectedCinema?.ID === cinema.ID
+                                      ? 'ring-2 ring-cyan-400'
+                                      : ''
+                                  }`}
+                                  onClick={() => {
+                                    setSelectedCinema(cinema);
+                                    setSelectedShowtime(showtime);
+                                  }}
+                                >
+                                  <CardContent className="p-4">
+                                    <div className="flex justify-between items-start mb-2">
+                                      <div>
+                                        <p className="text-lg font-bold text-cyan-400">
+                                          {showtime.Time}
+                                        </p>
+                                        <p className="text-sm text-gray-300">{showtime.Hall}</p>
+                                      </div>
+                                      <Badge className="bg-purple-500/20 text-purple-400">
+                                        {showtime.Type}
+                                      </Badge>
+                                    </div>
+                                    <div className="space-y-1 text-sm">
+                                      <div className="flex justify-between">
+                                        <span className="text-gray-400">票价</span>
+                                        <span className="text-white font-bold">
+                                          {formatAmount(showtime.Price)}
+                                        </span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span className="text-gray-400">余票</span>
+                                        <span
+                                          className={`truncate-number ${showtime.AvailableSeats < 20 ? 'text-red-400' : 'text-green-400'}`}
+                                        >
+                                          {formatNumber(showtime.AvailableSeats)}/
+                                          {formatNumber(showtime.TotalSeats)}
+                                        </span>
+                                      </div>
+                                    </div>
+                                    {showtime.AvailableSeats < 20 && (
+                                      <Badge className="bg-red-500/20 text-red-400 mt-2">
+                                        余票紧张
+                                      </Badge>
+                                    )}
+                                  </CardContent>
+                                </Card>
+                              ))}
+                            </div>
                           </div>
-                          <Button variant="outline" size="sm">
-                            <Phone className="w-3 h-3 mr-1" />
-                            {cinema.Phone}
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+
+                          {/* 影院服务 */}
+                          <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                            <div className="flex space-x-4 text-sm text-gray-400">
+                              {cinema.Parking && (
+                                <span className="flex items-center">
+                                  <Car className="w-3 h-3 mr-1" />
+                                  停车
+                                </span>
+                              )}
+                              {cinema.Restaurant && (
+                                <span className="flex items-center">
+                                  <Utensils className="w-3 h-3 mr-1" />
+                                  餐饮
+                                </span>
+                              )}
+                              {cinema.Shopping && (
+                                <span className="flex items-center">
+                                  <ShoppingBag className="w-3 h-3 mr-1" />
+                                  购物
+                                </span>
+                              )}
+                            </div>
+                            <Button variant="outline" size="sm">
+                              <Phone className="w-3 h-3 mr-1" />
+                              {cinema.Phone}
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
                 </div>
 
                 {/* 下一步按钮 */}
                 {selectedCinema && selectedShowtime && (
                   <div className="flex justify-center">
-                    <Button 
+                    <Button
                       onClick={() => setCurrentStep(2)}
                       className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 px-8 py-3"
                     >
@@ -1145,7 +1427,7 @@ const MovieBookingApp = () => {
                 <CardContent className="text-center py-8">
                   <Film className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-400">请先选择电影</p>
-                  <Button 
+                  <Button
                     onClick={() => setCurrentStep(0)}
                     className="mt-4 bg-gradient-to-r from-cyan-500 to-purple-500"
                   >
@@ -1167,11 +1449,14 @@ const MovieBookingApp = () => {
                       <div>
                         <h2 className="text-xl font-bold text-white mb-2">选择座位</h2>
                         <p className="text-gray-300">
-                          {selectedMovie.Title} - {selectedCinema.Name} - {selectedShowtime.Time} ({selectedShowtime.Hall})
+                          {selectedMovie.Title} - {selectedCinema.Name} - {selectedShowtime.Time} (
+                          {selectedShowtime.Hall})
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-2xl font-bold text-cyan-400 truncate-number">{formatAmount(selectedShowtime.Price)}</p>
+                        <p className="text-2xl font-bold text-cyan-400 truncate-number">
+                          {formatAmount(selectedShowtime.Price)}
+                        </p>
                         <p className="text-gray-400">单价</p>
                       </div>
                     </div>
@@ -1204,11 +1489,13 @@ const MovieBookingApp = () => {
                           <p className="text-3xl font-bold text-green-400 truncate-number">
                             {formatAmount(selectedShowtime.Price * selectedSeats.length)}
                           </p>
-                          <p className="text-gray-400 truncate-number">{selectedSeats.length}张票</p>
+                          <p className="text-gray-400 truncate-number">
+                            {selectedSeats.length}张票
+                          </p>
                         </div>
                       </div>
                       <div className="flex justify-end mt-4">
-                        <Button 
+                        <Button
                           onClick={handleBooking}
                           className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 px-8 py-3"
                         >
@@ -1225,7 +1512,7 @@ const MovieBookingApp = () => {
                 <CardContent className="text-center py-8">
                   <Ticket className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                   <p className="text-gray-400">请先选择电影和场次</p>
-                  <Button 
+                  <Button
                     onClick={() => setCurrentStep(1)}
                     className="mt-4 bg-gradient-to-r from-cyan-500 to-purple-500"
                   >
@@ -1253,18 +1540,24 @@ const MovieBookingApp = () => {
                         <CardContent className="p-6">
                           <div className="flex justify-between items-start mb-4">
                             <div>
-                              <h3 className="text-lg font-semibold text-white mb-1">{booking.MovieTitle}</h3>
+                              <h3 className="text-lg font-semibold text-white mb-1">
+                                {booking.MovieTitle}
+                              </h3>
                               <p className="text-gray-400">{booking.CinemaName}</p>
                             </div>
-                            <Badge className={`${
-                              booking.Status === '已支付' ? 'bg-green-500/20 text-green-400' :
-                              booking.Status === '待观影' ? 'bg-blue-500/20 text-blue-400' :
-                              'bg-gray-500/20 text-gray-400'
-                            }`}>
+                            <Badge
+                              className={`${
+                                booking.Status === '已支付'
+                                  ? 'bg-green-500/20 text-green-400'
+                                  : booking.Status === '待观影'
+                                    ? 'bg-blue-500/20 text-blue-400'
+                                    : 'bg-gray-500/20 text-gray-400'
+                              }`}
+                            >
                               {booking.Status}
                             </Badge>
                           </div>
-                          
+
                           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
                             <div>
                               <p className="text-gray-400">观影时间</p>
@@ -1280,7 +1573,9 @@ const MovieBookingApp = () => {
                             </div>
                             <div>
                               <p className="text-gray-400">总价</p>
-                              <p className="text-green-400 font-bold truncate-number">{formatAmount(booking.TotalPrice)}</p>
+                              <p className="text-green-400 font-bold truncate-number">
+                                {formatAmount(booking.TotalPrice)}
+                              </p>
                             </div>
                           </div>
 
@@ -1315,7 +1610,7 @@ const MovieBookingApp = () => {
                     <Ticket className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                     <h3 className="text-lg font-semibold text-white mb-2">还没有购票记录</h3>
                     <p className="text-gray-300 mb-6">快去选择心仪的电影吧</p>
-                    <Button 
+                    <Button
                       onClick={() => setCurrentStep(0)}
                       className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600"
                     >
@@ -1339,4 +1634,3 @@ const MovieBookingApp = () => {
 };
 
 export default MovieBookingApp;
-

@@ -30,18 +30,22 @@ async function makeRPCCall(method: string, params: unknown[] = []) {
 }
 
 // 计算 epoch 的时间范围
-function calculateEpochTime(epoch: number, slotDuration: number, slotsPerEpoch: number): {
+function calculateEpochTime(
+  epoch: number,
+  slotDuration: number,
+  slotsPerEpoch: number
+): {
   startTime: number;
   endTime: number;
   duration: number;
 } {
   const epochDuration = slotDuration * slotsPerEpoch * 1000; // 毫秒
   // 假设 epoch 0 从某个基准时间开始
-  const genesisTime = Date.now() - (epoch * epochDuration);
-  
+  const genesisTime = Date.now() - epoch * epochDuration;
+
   return {
-    startTime: genesisTime + (epoch * epochDuration),
-    endTime: genesisTime + ((epoch + 1) * epochDuration),
+    startTime: genesisTime + epoch * epochDuration,
+    endTime: genesisTime + (epoch + 1) * epochDuration,
     duration: epochDuration,
   };
 }
@@ -55,13 +59,15 @@ export const GET = createSecureHandler(
 
     try {
       const qposStatus = await makeRPCCall('qpos_status');
-      
+
       if (!qposStatus) {
-        return addSecurityHeaders(NextResponse.json({
-          currentEpoch: 0,
-          epochs: [],
-          finality: {},
-        }));
+        return addSecurityHeaders(
+          NextResponse.json({
+            currentEpoch: 0,
+            epochs: [],
+            finality: {},
+          })
+        );
       }
 
       const currentEpoch = qposStatus.currentEpoch || 0;
@@ -73,21 +79,21 @@ export const GET = createSecureHandler(
       // 构建最近的 epoch 列表
       const epochs = [];
       const epochCount = Math.min(currentEpoch + 1, 10); // 最多显示 10 个 epoch
-      
+
       for (let i = 0; i < epochCount; i++) {
         const epochNum = currentEpoch - i;
         if (epochNum < 0) break;
-        
+
         const epochTime = calculateEpochTime(epochNum, slotDuration, slotsPerEpoch);
         const startSlot = epochNum * slotsPerEpoch;
         const endSlot = startSlot + slotsPerEpoch - 1;
-        
+
         // 确定 epoch 状态
         let status = 'pending';
         if (epochNum < currentEpoch) status = 'completed';
         if (epochNum <= finalizedEpoch) status = 'finalized';
         else if (epochNum <= justifiedEpoch) status = 'justified';
-        
+
         epochs.push({
           epoch: epochNum,
           startSlot,
@@ -121,24 +127,24 @@ export const GET = createSecureHandler(
         slotDuration,
         slotsPerEpoch,
         epochDuration: slotDuration * slotsPerEpoch,
-        
+
         // Finality 状态
         justifiedEpoch,
         finalizedEpoch,
         epochsToFinality: currentEpoch - finalizedEpoch,
-        
+
         // Epoch 列表
         epochs,
-        
+
         // 当前 epoch 摘要
         epochSummary,
-        
+
         // 奖励信息
         lastEpochRewards,
-        
+
         // Finality 详情
         finality: qposStatus.finality || {},
-        
+
         timestamp: Date.now(),
       };
 
@@ -148,11 +154,16 @@ export const GET = createSecureHandler(
       return addSecurityHeaders(NextResponse.json(response));
     } catch (error) {
       console.error('获取 Epochs 失败:', error);
-      return addSecurityHeaders(NextResponse.json({
-        currentEpoch: 0,
-        epochs: [],
-        error: 'Failed to fetch epochs',
-      }, { status: 500 }));
+      return addSecurityHeaders(
+        NextResponse.json(
+          {
+            currentEpoch: 0,
+            epochs: [],
+            error: 'Failed to fetch epochs',
+          },
+          { status: 500 }
+        )
+      );
     }
   },
   { rateLimit: true, allowedMethods: ['GET'] }

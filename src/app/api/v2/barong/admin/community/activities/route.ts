@@ -24,15 +24,20 @@ export async function GET(request: NextRequest) {
           total: result.total,
           stats: {
             total: result.total,
-            active: result.events.filter(e => e.status === 'active').length,
-            scheduled: result.events.filter(e => e.status === 'upcoming').length
-          }
-        }
+            active: result.events.filter((e) => e.status === 'active').length,
+            scheduled: result.events.filter((e) => e.status === 'upcoming').length,
+          },
+        },
       });
     }
 
     if (type === 'announcements') {
-      const active = searchParams.get('active') === 'true' ? true : searchParams.get('active') === 'false' ? false : undefined;
+      const active =
+        searchParams.get('active') === 'true'
+          ? true
+          : searchParams.get('active') === 'false'
+            ? false
+            : undefined;
       const result = await communityService.getAnnouncements(active, page, limit);
       return NextResponse.json({
         success: true,
@@ -41,9 +46,9 @@ export async function GET(request: NextRequest) {
           total: result.total,
           stats: {
             total: result.total,
-            active: result.announcements.filter(a => a.is_active).length
-          }
-        }
+            active: result.announcements.filter((a) => a.is_active).length,
+          },
+        },
       });
     }
 

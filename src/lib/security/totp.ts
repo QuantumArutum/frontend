@@ -1,6 +1,6 @@
 /**
  * Quantaureum 2FA双因素认证服务
- * 
+ *
  * 基于TOTP (Time-based One-Time Password) 实现
  * 兼容 Google Authenticator, Authy 等应用
  */
@@ -98,7 +98,7 @@ export class TOTPService {
   private static generateTOTP(secret: string, counter: number): string {
     const decodedSecret = this.base32Decode(secret);
     const buffer = Buffer.alloc(8);
-    
+
     for (let i = 7; i >= 0; i--) {
       buffer[i] = counter & 0xff;
       counter = Math.floor(counter / 256);
@@ -145,7 +145,7 @@ export class TOTPService {
   private static base32Decode(encoded: string): Buffer {
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
     const cleanedInput = encoded.toUpperCase().replace(/[^A-Z2-7]/g, '');
-    
+
     let bits = 0;
     let value = 0;
     const output: number[] = [];
@@ -168,10 +168,10 @@ export class TOTPService {
 
   private static timingSafeEqual(a: string, b: string): boolean {
     if (a.length !== b.length) return false;
-    
+
     const bufA = Buffer.from(a);
     const bufB = Buffer.from(b);
-    
+
     return crypto.timingSafeEqual(bufA, bufB);
   }
 }

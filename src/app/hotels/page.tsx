@@ -2,8 +2,30 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { MapPin, Calendar, Users, Star, Wifi, Car, Utensils, Dumbbell, Waves, Shield, Filter, Heart, Share2, Phone, Mail, Globe, Clock, CheckCircle } from 'lucide-react';
-import DemoModuleWrapper, { DemoBadge, DemoModuleDisabledCard } from '../../components/DemoModuleWrapper';
+import {
+  MapPin,
+  Calendar,
+  Users,
+  Star,
+  Wifi,
+  Car,
+  Utensils,
+  Dumbbell,
+  Waves,
+  Shield,
+  Filter,
+  Heart,
+  Share2,
+  Phone,
+  Mail,
+  Globe,
+  Clock,
+  CheckCircle,
+} from 'lucide-react';
+import DemoModuleWrapper, {
+  DemoBadge,
+  DemoModuleDisabledCard,
+} from '../../components/DemoModuleWrapper';
 import { useTranslation } from 'react-i18next';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,7 +39,7 @@ const HotelBookingPage = () => {
     checkIn: '',
     checkOut: '',
     guests: 1,
-    rooms: 1
+    rooms: 1,
   });
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
@@ -27,13 +49,13 @@ const HotelBookingPage = () => {
     priceMin: 0,
     priceMax: 10000,
     starRating: '',
-    amenities: [] as string[]
+    amenities: [] as string[],
   });
   const [guestInfo, setGuestInfo] = useState({
     name: '',
     email: '',
     phone: '',
-    specialRequests: ''
+    specialRequests: '',
   });
 
   // Search hotels
@@ -53,7 +75,7 @@ const HotelBookingPage = () => {
 
       const response = await fetch(`/api/hotels/search?${params}`);
       const data = await response.json();
-      
+
       if (data.success) {
         setHotels(data.data.hotels);
         setCurrentView('results');
@@ -70,7 +92,7 @@ const HotelBookingPage = () => {
     try {
       const response = await fetch(`/api/hotels/${hotelId}`);
       const data = await response.json();
-      
+
       if (data.success) {
         setSelectedHotel(data.data);
         setCurrentView('details');
@@ -88,9 +110,9 @@ const HotelBookingPage = () => {
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bookingDetails)
+        body: JSON.stringify(bookingDetails),
       });
-      
+
       const data = await response.json();
       if (data.success) {
         setBookingData(data.data);
@@ -114,13 +136,17 @@ const HotelBookingPage = () => {
         <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <div className="lg:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('hotels_page.destination')}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('hotels_page.destination')}
+              </label>
               <div className="relative">
                 <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   value={searchParams.destination}
-                  onChange={(e) => setSearchParams({...searchParams, destination: e.target.value})}
+                  onChange={(e) =>
+                    setSearchParams({ ...searchParams, destination: e.target.value })
+                  }
                   placeholder={t('hotels_page.destination_placeholder')}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -128,53 +154,67 @@ const HotelBookingPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('hotels_page.check_in')}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('hotels_page.check_in')}
+              </label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <input
                   type="date"
                   value={searchParams.checkIn}
-                  onChange={(e) => setSearchParams({...searchParams, checkIn: e.target.value})}
+                  onChange={(e) => setSearchParams({ ...searchParams, checkIn: e.target.value })}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('hotels_page.check_out')}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('hotels_page.check_out')}
+              </label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <input
                   type="date"
                   value={searchParams.checkOut}
-                  onChange={(e) => setSearchParams({...searchParams, checkOut: e.target.value})}
+                  onChange={(e) => setSearchParams({ ...searchParams, checkOut: e.target.value })}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('hotels_page.guests_rooms')}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('hotels_page.guests_rooms')}
+              </label>
               <div className="flex space-x-2">
                 <div className="relative flex-1">
                   <Users className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <select
                     value={searchParams.guests}
-                    onChange={(e) => setSearchParams({...searchParams, guests: parseInt(e.target.value)})}
+                    onChange={(e) =>
+                      setSearchParams({ ...searchParams, guests: parseInt(e.target.value) })
+                    }
                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
-                    {[1,2,3,4,5,6].map(num => (
-                      <option key={num} value={num}>{num}</option>
+                    {[1, 2, 3, 4, 5, 6].map((num) => (
+                      <option key={num} value={num}>
+                        {num}
+                      </option>
                     ))}
                   </select>
                 </div>
                 <select
                   value={searchParams.rooms}
-                  onChange={(e) => setSearchParams({...searchParams, rooms: parseInt(e.target.value)})}
+                  onChange={(e) =>
+                    setSearchParams({ ...searchParams, rooms: parseInt(e.target.value) })
+                  }
                   className="w-20 px-2 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  {[1,2,3,4].map(num => (
-                    <option key={num} value={num}>{num}</option>
+                  {[1, 2, 3, 4].map((num) => (
+                    <option key={num} value={num}>
+                      {num}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -184,7 +224,12 @@ const HotelBookingPage = () => {
           <div className="mt-6 text-center">
             <button
               onClick={searchHotels}
-              disabled={loading || !searchParams.destination || !searchParams.checkIn || !searchParams.checkOut}
+              disabled={
+                loading ||
+                !searchParams.destination ||
+                !searchParams.checkIn ||
+                !searchParams.checkOut
+              }
               className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
             >
               {loading ? t('hotels_page.searching') : t('hotels_page.search_hotels')}
@@ -193,17 +238,34 @@ const HotelBookingPage = () => {
         </div>
 
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{t('hotels_page.popular_destinations')}</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+            {t('hotels_page.popular_destinations')}
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: 'Beijing', country: 'China', image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400', hotels: 1250 },
-              { name: 'New York', country: 'USA', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400', hotels: 2100 },
-              { name: 'Paris', country: 'France', image: 'https://images.unsplash.com/photo-1502602898536-47ad22581b52?w=400', hotels: 1800 }
+              {
+                name: 'Beijing',
+                country: 'China',
+                image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=400',
+                hotels: 1250,
+              },
+              {
+                name: 'New York',
+                country: 'USA',
+                image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400',
+                hotels: 2100,
+              },
+              {
+                name: 'Paris',
+                country: 'France',
+                image: 'https://images.unsplash.com/photo-1502602898536-47ad22581b52?w=400',
+                hotels: 1800,
+              },
             ].map((destination, index) => (
-              <div 
+              <div
                 key={index}
                 className="relative bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow"
-                onClick={() => setSearchParams({...searchParams, destination: destination.name})}
+                onClick={() => setSearchParams({ ...searchParams, destination: destination.name })}
               >
                 <Image
                   src={destination.image}
@@ -236,7 +298,8 @@ const HotelBookingPage = () => {
               Hotels in {searchParams.destination}
             </h1>
             <p className="text-gray-600">
-              {searchParams.checkIn} - {searchParams.checkOut} - {searchParams.guests} guests - {searchParams.rooms} rooms
+              {searchParams.checkIn} - {searchParams.checkOut} - {searchParams.guests} guests -{' '}
+              {searchParams.rooms} rooms
             </p>
           </div>
           <button
@@ -253,10 +316,10 @@ const HotelBookingPage = () => {
               <Filter className="h-5 w-5 text-gray-500" />
               <span className="font-medium">{t('hotels_page.filter')}</span>
             </div>
-            
+
             <select
               value={filters.starRating}
-              onChange={(e) => setFilters({...filters, starRating: e.target.value})}
+              onChange={(e) => setFilters({ ...filters, starRating: e.target.value })}
               className="px-3 py-2 border border-gray-300 rounded-md"
             >
               <option value="">{t('hotels_page.all_stars')}</option>
@@ -270,7 +333,7 @@ const HotelBookingPage = () => {
               <input
                 type="number"
                 value={filters.priceMin}
-                onChange={(e) => setFilters({...filters, priceMin: parseInt(e.target.value)})}
+                onChange={(e) => setFilters({ ...filters, priceMin: parseInt(e.target.value) })}
                 placeholder="Min"
                 className="w-20 px-2 py-1 border border-gray-300 rounded"
               />
@@ -278,7 +341,7 @@ const HotelBookingPage = () => {
               <input
                 type="number"
                 value={filters.priceMax}
-                onChange={(e) => setFilters({...filters, priceMax: parseInt(e.target.value)})}
+                onChange={(e) => setFilters({ ...filters, priceMax: parseInt(e.target.value) })}
                 placeholder="Max"
                 className="w-20 px-2 py-1 border border-gray-300 rounded"
               />
@@ -296,11 +359,17 @@ const HotelBookingPage = () => {
 
         <div className="space-y-6">
           {hotels.map((hotel) => (
-            <div key={hotel.hotel_id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div
+              key={hotel.hotel_id}
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+            >
               <div className="flex">
                 <div className="w-1/3">
                   <Image
-                    src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400'}
+                    src={
+                      hotel.images?.[0] ||
+                      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400'
+                    }
                     alt={hotel.name}
                     width={400}
                     height={192}
@@ -327,20 +396,27 @@ const HotelBookingPage = () => {
 
                       <div className="flex items-center text-gray-600 mb-2">
                         <MapPin className="h-4 w-4 mr-1" />
-                        <span>{hotel.location?.city}, {hotel.location?.country}</span>
+                        <span>
+                          {hotel.location?.city}, {hotel.location?.country}
+                        </span>
                       </div>
 
                       <div className="flex items-center mb-4">
                         <div className="flex items-center mr-4">
                           <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
                           <span className="font-medium">{hotel.rating?.overall}</span>
-                          <span className="text-gray-500 ml-1">({hotel.rating?.review_count} reviews)</span>
+                          <span className="text-gray-500 ml-1">
+                            ({hotel.rating?.review_count} reviews)
+                          </span>
                         </div>
                       </div>
 
                       <div className="flex flex-wrap gap-2 mb-4">
                         {hotel.amenities?.slice(0, 4).map((amenity: string, index: number) => (
-                          <span key={index} className="flex items-center text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                          <span
+                            key={index}
+                            className="flex items-center text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded"
+                          >
                             {amenity === 'WiFi' && <Wifi className="h-3 w-3 mr-1" />}
                             {amenity === 'Parking' && <Car className="h-3 w-3 mr-1" />}
                             {amenity === 'Restaurant' && <Utensils className="h-3 w-3 mr-1" />}
@@ -350,7 +426,9 @@ const HotelBookingPage = () => {
                           </span>
                         ))}
                         {hotel.amenities?.length > 4 && (
-                          <span className="text-sm text-gray-500">+{hotel.amenities.length - 4} more</span>
+                          <span className="text-sm text-gray-500">
+                            +{hotel.amenities.length - 4} more
+                          </span>
                         )}
                       </div>
                     </div>
@@ -358,18 +436,25 @@ const HotelBookingPage = () => {
                     <div className="text-right ml-6">
                       <div className="mb-2">
                         <span className="text-2xl font-bold text-blue-600">
-                          {hotel.room_types ? Math.min(...hotel.room_types.map((room: Hotel) => room.price_per_night)) : 0} QAU
+                          {hotel.room_types
+                            ? Math.min(
+                                ...hotel.room_types.map((room: Hotel) => room.price_per_night)
+                              )
+                            : 0}{' '}
+                          QAU
                         </span>
-                        <span className="text-gray-500 block text-sm">{t('hotels_page.per_night')}</span>
+                        <span className="text-gray-500 block text-sm">
+                          {t('hotels_page.per_night')}
+                        </span>
                       </div>
-                      
+
                       <button
                         onClick={() => getHotelDetails(hotel.hotel_id)}
                         className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
                       >
                         {t('hotels_page.view_details')}
                       </button>
-                      
+
                       <div className="flex items-center justify-end mt-2 space-x-2">
                         <button className="p-1 text-gray-400 hover:text-red-500">
                           <Heart className="h-4 w-4" />
@@ -415,7 +500,10 @@ const HotelBookingPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
               <div>
                 <Image
-                  src={selectedHotel.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600'}
+                  src={
+                    selectedHotel.images?.[0] ||
+                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600'
+                  }
                   alt={selectedHotel.name}
                   width={600}
                   height={256}
@@ -425,7 +513,10 @@ const HotelBookingPage = () => {
                   {selectedHotel.images?.slice(1, 4).map((image: string, index: number) => (
                     <Image
                       key={index}
-                      src={image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=200'}
+                      src={
+                        image ||
+                        'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=200'
+                      }
                       alt={`${selectedHotel.name} ${index + 2}`}
                       width={200}
                       height={80}
@@ -463,7 +554,9 @@ const HotelBookingPage = () => {
                   </div>
                   <div>
                     <div className="font-medium">Excellent</div>
-                    <div className="text-sm text-gray-500">{selectedHotel.rating?.review_count} reviews</div>
+                    <div className="text-sm text-gray-500">
+                      {selectedHotel.rating?.review_count} reviews
+                    </div>
                   </div>
                 </div>
 
@@ -486,7 +579,9 @@ const HotelBookingPage = () => {
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('hotels_page.select_room')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              {t('hotels_page.select_room')}
+            </h2>
             <div className="space-y-4">
               {selectedHotel.room_types?.map((room: Hotel) => (
                 <div key={room.room_type_id} className="border border-gray-200 rounded-lg p-4">
@@ -494,7 +589,7 @@ const HotelBookingPage = () => {
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-gray-900">{room.name}</h3>
                       <p className="text-gray-600 mb-2">{room.description}</p>
-                      
+
                       <div className="flex items-center space-x-4 text-sm text-gray-500 mb-2">
                         <span>Max {room.max_guests} guests</span>
                         <span>{room.bed_type}</span>
@@ -503,7 +598,10 @@ const HotelBookingPage = () => {
 
                       <div className="flex flex-wrap gap-2">
                         {room.amenities?.map((amenity: string, index: number) => (
-                          <span key={index} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                          <span
+                            key={index}
+                            className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded"
+                          >
                             {amenity}
                           </span>
                         ))}
@@ -518,13 +616,13 @@ const HotelBookingPage = () => {
                       <div className="text-sm text-gray-500 mb-4">
                         {room.available_rooms} rooms left
                       </div>
-                      
+
                       <button
                         onClick={() => {
                           setBookingData({
                             hotel: selectedHotel,
                             room: room,
-                            searchParams: searchParams
+                            searchParams: searchParams,
                           });
                           setCurrentView('booking');
                         }}
@@ -545,18 +643,26 @@ const HotelBookingPage = () => {
               {selectedHotel.amenities?.map((amenity: Hotel, index: number) => (
                 <div key={index} className="flex items-center">
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                    {(amenity.name || amenity) === 'WiFi' && <Wifi className="h-4 w-4 text-blue-600" />}
-                    {(amenity.name || amenity) === 'Parking' && <Car className="h-4 w-4 text-blue-600" />}
-                    {(amenity.name || amenity) === 'Restaurant' && <Utensils className="h-4 w-4 text-blue-600" />}
-                    {(amenity.name || amenity) === 'Gym' && <Dumbbell className="h-4 w-4 text-blue-600" />}
-                    {(amenity.name || amenity) === 'Pool' && <Waves className="h-4 w-4 text-blue-600" />}
+                    {(amenity.name || amenity) === 'WiFi' && (
+                      <Wifi className="h-4 w-4 text-blue-600" />
+                    )}
+                    {(amenity.name || amenity) === 'Parking' && (
+                      <Car className="h-4 w-4 text-blue-600" />
+                    )}
+                    {(amenity.name || amenity) === 'Restaurant' && (
+                      <Utensils className="h-4 w-4 text-blue-600" />
+                    )}
+                    {(amenity.name || amenity) === 'Gym' && (
+                      <Dumbbell className="h-4 w-4 text-blue-600" />
+                    )}
+                    {(amenity.name || amenity) === 'Pool' && (
+                      <Waves className="h-4 w-4 text-blue-600" />
+                    )}
                   </div>
                   <div>
                     <div className="font-medium">{amenity.name || amenity}</div>
                     {amenity.free !== undefined && (
-                      <div className="text-sm text-gray-500">
-                        {amenity.free ? 'Free' : 'Paid'}
-                      </div>
+                      <div className="text-sm text-gray-500">{amenity.free ? 'Free' : 'Paid'}</div>
                     )}
                   </div>
                 </div>
@@ -565,7 +671,9 @@ const HotelBookingPage = () => {
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('hotels_page.hotel_policies')}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              {t('hotels_page.hotel_policies')}
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Check-in/Check-out</h3>
@@ -580,17 +688,17 @@ const HotelBookingPage = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Cancellation Policy</h3>
                 <p className="text-gray-600">{selectedHotel.policies?.cancellation_policy}</p>
               </div>
-              
+
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Pet Policy</h3>
                 <p className="text-gray-600">{selectedHotel.policies?.pet_policy}</p>
               </div>
-              
+
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Smoking Policy</h3>
                 <p className="text-gray-600">{selectedHotel.policies?.smoking_policy}</p>
@@ -606,7 +714,10 @@ const HotelBookingPage = () => {
   const renderBookingPage = () => {
     if (!bookingData) return null;
 
-    const nights = Math.ceil((new Date(searchParams.checkOut).getTime() - new Date(searchParams.checkIn).getTime()) / (1000 * 60 * 60 * 24));
+    const nights = Math.ceil(
+      (new Date(searchParams.checkOut).getTime() - new Date(searchParams.checkIn).getTime()) /
+        (1000 * 60 * 60 * 24)
+    );
     const totalAmount = bookingData.room.price_per_night * nights * searchParams.rooms;
 
     const handleBooking = () => {
@@ -625,7 +736,7 @@ const HotelBookingPage = () => {
         room_rate: bookingData.room.price_per_night,
         total_amount: totalAmount,
         signature: 'quantum_signature_placeholder',
-        public_key: 'quantum_public_key_placeholder'
+        public_key: 'quantum_public_key_placeholder',
       };
 
       createBooking(bookingDetails);
@@ -644,15 +755,17 @@ const HotelBookingPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('hotels_page.booking_info')}</h2>
-                
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                  {t('hotels_page.booking_info')}
+                </h2>
+
                 <div className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Name *</label>
                     <input
                       type="text"
                       value={guestInfo.name}
-                      onChange={(e) => setGuestInfo({...guestInfo, name: e.target.value})}
+                      onChange={(e) => setGuestInfo({ ...guestInfo, name: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="Enter your name"
                     />
@@ -663,7 +776,7 @@ const HotelBookingPage = () => {
                     <input
                       type="email"
                       value={guestInfo.email}
-                      onChange={(e) => setGuestInfo({...guestInfo, email: e.target.value})}
+                      onChange={(e) => setGuestInfo({ ...guestInfo, email: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="Enter your email"
                     />
@@ -674,17 +787,21 @@ const HotelBookingPage = () => {
                     <input
                       type="tel"
                       value={guestInfo.phone}
-                      onChange={(e) => setGuestInfo({...guestInfo, phone: e.target.value})}
+                      onChange={(e) => setGuestInfo({ ...guestInfo, phone: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="Enter your phone number"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Special Requests</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Special Requests
+                    </label>
                     <textarea
                       value={guestInfo.specialRequests}
-                      onChange={(e) => setGuestInfo({...guestInfo, specialRequests: e.target.value})}
+                      onChange={(e) =>
+                        setGuestInfo({ ...guestInfo, specialRequests: e.target.value })
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       rows={3}
                       placeholder="Any special requests?"
@@ -697,7 +814,7 @@ const HotelBookingPage = () => {
             <div>
               <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Booking Summary</h3>
-                
+
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Hotel</span>
@@ -761,10 +878,11 @@ const HotelBookingPage = () => {
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="h-8 w-8 text-green-600" />
           </div>
-          
+
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Booking Confirmed!</h2>
           <p className="text-gray-600 mb-6">
-            Your booking has been successfully confirmed. A confirmation email has been sent to your email address.
+            Your booking has been successfully confirmed. A confirmation email has been sent to your
+            email address.
           </p>
 
           <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
@@ -802,12 +920,12 @@ const HotelBookingPage = () => {
 
   // Main render
   return (
-    <DemoModuleWrapper 
+    <DemoModuleWrapper
       moduleSlug="hotels"
       fallback={
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-          <DemoModuleDisabledCard 
-            title="Hotel Booking" 
+          <DemoModuleDisabledCard
+            title="Hotel Booking"
             description="Hotel booking feature is currently unavailable. Please check back later."
           />
         </div>

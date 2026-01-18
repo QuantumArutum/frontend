@@ -25,7 +25,9 @@ interface Post {
 export default function CategoryPage() {
   const params = useParams();
   const router = useRouter();
-  const categoryName = params?.categoryName ? decodeURIComponent(params.categoryName as string) : '';
+  const categoryName = params?.categoryName
+    ? decodeURIComponent(params.categoryName as string)
+    : '';
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,9 +37,9 @@ export default function CategoryPage() {
     try {
       const categoryMap: Record<string, string> = {
         'General Discussion': 'general',
-        'Technical': 'technical',
+        Technical: 'technical',
         'DeFi & Trading': 'defi',
-        'Governance': 'governance'
+        Governance: 'governance',
       };
 
       const category = categoryMap[categoryName] || 'general';
@@ -117,7 +119,13 @@ export default function CategoryPage() {
                 >
                   <div className="flex items-start gap-4">
                     {post.userAvatar ? (
-                      <Image src={post.userAvatar} alt={post.userName} width={48} height={48} className="w-12 h-12 rounded-full" />
+                      <Image
+                        src={post.userAvatar}
+                        alt={post.userName}
+                        width={48}
+                        height={48}
+                        className="w-12 h-12 rounded-full"
+                      />
                     ) : (
                       <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center text-white font-bold">
                         {post.userName?.[0] || 'U'}

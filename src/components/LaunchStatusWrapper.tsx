@@ -21,7 +21,7 @@ const CountdownDisplay: React.FC<{ time: CountdownTime }> = ({ time }) => {
     { value: time.days, label: 'Days' },
     { value: time.hours, label: 'Hours' },
     { value: time.minutes, label: 'Minutes' },
-    { value: time.seconds, label: 'Seconds' }
+    { value: time.seconds, label: 'Seconds' },
   ];
 
   return (
@@ -47,13 +47,20 @@ const CountdownDisplay: React.FC<{ time: CountdownTime }> = ({ time }) => {
 };
 
 // Pre-launch page component (Requirements 15.5, 15.7)
-const PreLaunchPage: React.FC<{ 
-  message?: string; 
+const PreLaunchPage: React.FC<{
+  message?: string;
   launchDate?: string;
 }> = ({ message, launchDate }) => {
-  const [countdown, setCountdown] = useState<CountdownTime>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [countdown, setCountdown] = useState<CountdownTime>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
   const [email, setEmail] = useState('');
-  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
+    'idle'
+  );
   const [subscribeMessage, setSubscribeMessage] = useState('');
 
   const handleSubscribe = async () => {
@@ -77,14 +84,14 @@ const PreLaunchPage: React.FC<{
       const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), source: 'pre-launch' })
+        body: JSON.stringify({ email: email.trim(), source: 'pre-launch' }),
       });
 
       const data = await response.json();
 
       if (data.success) {
         setSubscribeStatus('success');
-        setSubscribeMessage('Successfully subscribed! We\'ll notify you when we launch.');
+        setSubscribeMessage("Successfully subscribed! We'll notify you when we launch.");
         setEmail('');
         setTimeout(() => {
           setSubscribeStatus('idle');
@@ -117,7 +124,7 @@ const PreLaunchPage: React.FC<{
         days: Math.floor(diff / (1000 * 60 * 60 * 24)),
         hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
         minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((diff % (1000 * 60)) / 1000)
+        seconds: Math.floor((diff % (1000 * 60)) / 1000),
       });
     };
 
@@ -217,7 +224,8 @@ const MaintenancePage: React.FC<{ message?: string }> = ({ message }) => {
 
           {/* Message */}
           <p className="text-lg text-gray-300 mb-8">
-            {message || 'We are currently performing scheduled maintenance. Please check back soon.'}
+            {message ||
+              'We are currently performing scheduled maintenance. Please check back soon.'}
           </p>
 
           {/* Status indicator */}
@@ -251,12 +259,7 @@ const LaunchStatusWrapper: React.FC<LaunchStatusWrapperProps> = ({ children }) =
 
   // Check pre-launch mode (Requirements 15.7)
   if (status?.pre_launch_enabled && !status?.is_launched) {
-    return (
-      <PreLaunchPage 
-        message={status.countdown_message} 
-        launchDate={status.launch_date}
-      />
-    );
+    return <PreLaunchPage message={status.countdown_message} launchDate={status.launch_date} />;
   }
 
   // Site is live, render children

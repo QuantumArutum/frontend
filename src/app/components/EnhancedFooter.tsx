@@ -4,13 +4,22 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
-import { FaXTwitter, FaDiscord, FaTelegram, FaLinkedinIn, FaGithub, FaMedium } from 'react-icons/fa6';
+import {
+  FaXTwitter,
+  FaDiscord,
+  FaTelegram,
+  FaLinkedinIn,
+  FaGithub,
+  FaMedium,
+} from 'react-icons/fa6';
 import '../../i18n';
 
 const EnhancedFooter = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
-  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
+    'idle'
+  );
   const [subscribeMessage, setSubscribeMessage] = useState('');
 
   const handleSubscribe = async () => {
@@ -34,7 +43,7 @@ const EnhancedFooter = () => {
       const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), source: 'community-footer' })
+        body: JSON.stringify({ email: email.trim(), source: 'community-footer' }),
       });
 
       const data = await response.json();
@@ -49,7 +58,9 @@ const EnhancedFooter = () => {
         }, 3000);
       } else {
         setSubscribeStatus('error');
-        setSubscribeMessage(data.error || t('footer.newsletter.errorFailed', 'Subscription failed'));
+        setSubscribeMessage(
+          data.error || t('footer.newsletter.errorFailed', 'Subscription failed')
+        );
       }
     } catch {
       setSubscribeStatus('error');
@@ -63,7 +74,10 @@ const EnhancedFooter = () => {
       links: [
         { label: t('footer.sections.product.links.core'), href: '/technology/blockchain' },
         { label: t('footer.sections.product.links.wallet'), href: '/wallet' },
-        { label: t('footer.sections.product.links.contracts'), href: '/technology/quantum-security' },
+        {
+          label: t('footer.sections.product.links.contracts'),
+          href: '/technology/quantum-security',
+        },
         { label: t('footer.sections.product.links.crosschain'), href: '/applications' },
         { label: t('footer.sections.product.links.docs'), href: '/developers/api' },
       ],
@@ -75,7 +89,10 @@ const EnhancedFooter = () => {
         { label: t('footer.sections.developer.links.sdk'), href: '/developers/sdk' },
         { label: t('footer.sections.developer.links.examples'), href: '/developers/examples' },
         { label: t('footer.sections.developer.links.community'), href: '/community' },
-        { label: t('footer.sections.developer.links.github'), href: 'https://github.com/quantaureum' },
+        {
+          label: t('footer.sections.developer.links.github'),
+          href: 'https://github.com/quantaureum',
+        },
       ],
     },
     {
@@ -125,8 +142,16 @@ const EnhancedFooter = () => {
           {/* Brand Section */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <Image src="/quantaureum-icon.svg" alt="Quantaureum" width={48} height={48} className="w-12 h-12" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] bg-clip-text text-transparent">Quantaureum</span>
+              <Image
+                src="/quantaureum-icon.svg"
+                alt="Quantaureum"
+                width={48}
+                height={48}
+                className="w-12 h-12"
+              />
+              <span className="text-2xl font-bold bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] bg-clip-text text-transparent">
+                Quantaureum
+              </span>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">{t('footer.brand.description')}</p>
             <div className="flex gap-4">
@@ -134,13 +159,24 @@ const EnhancedFooter = () => {
                 { icon: FaXTwitter, href: 'https://twitter.com/quantaureum', name: 'Twitter' },
                 { icon: FaDiscord, href: 'https://discord.gg/quantaureum', name: 'Discord' },
                 { icon: FaTelegram, href: 'https://t.me/quantaureum', name: 'Telegram' },
-                { icon: FaLinkedinIn, href: 'https://linkedin.com/company/quantaureum', name: 'LinkedIn' },
+                {
+                  icon: FaLinkedinIn,
+                  href: 'https://linkedin.com/company/quantaureum',
+                  name: 'LinkedIn',
+                },
                 { icon: FaGithub, href: 'https://github.com/quantaureum', name: 'GitHub' },
                 { icon: FaMedium, href: 'https://medium.com/@quantaureum', name: 'Medium' },
               ].map((social) => {
                 const IconComponent = social.icon;
                 return (
-                  <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" title={social.name} className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30">
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={social.name}
+                    className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center text-white transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30"
+                  >
                     <IconComponent size={20} />
                   </a>
                 );
@@ -157,10 +193,19 @@ const EnhancedFooter = () => {
                   {section.links.map((link, lIdx) => (
                     <li key={lIdx}>
                       {link.href.startsWith('http') ? (
-                        <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-all duration-300 block">{link.label}</a>
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-gray-400 hover:text-white transition-all duration-300 block"
+                        >
+                          {link.label}
+                        </a>
                       ) : (
                         <Link href={link.href}>
-                          <span className="text-gray-400 hover:text-white transition-all duration-300 block cursor-pointer">{link.label}</span>
+                          <span className="text-gray-400 hover:text-white transition-all duration-300 block cursor-pointer">
+                            {link.label}
+                          </span>
                         </Link>
                       )}
                     </li>
@@ -182,27 +227,29 @@ const EnhancedFooter = () => {
             </div>
             <div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
-                  placeholder={t('footer.newsletter.placeholder')} 
+                  placeholder={t('footer.newsletter.placeholder')}
                   disabled={subscribeStatus === 'loading'}
-                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 transition-colors duration-300 disabled:opacity-50" 
+                  className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 transition-colors duration-300 disabled:opacity-50"
                 />
-                <button 
+                <button
                   onClick={handleSubscribe}
                   disabled={subscribeStatus === 'loading'}
                   className="px-6 py-3 bg-gradient-to-r from-[#6E3CBC] to-[#00D4FF] text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {subscribeStatus === 'loading' 
-                    ? t('footer.newsletter.subscribing', 'Subscribing...') 
+                  {subscribeStatus === 'loading'
+                    ? t('footer.newsletter.subscribing', 'Subscribing...')
                     : t('footer.newsletter.subscribe')}
                 </button>
               </div>
               {subscribeMessage && (
-                <p className={`mt-3 text-sm ${subscribeStatus === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                <p
+                  className={`mt-3 text-sm ${subscribeStatus === 'success' ? 'text-green-400' : 'text-red-400'}`}
+                >
                   {subscribeMessage}
                 </p>
               )}
@@ -216,10 +263,30 @@ const EnhancedFooter = () => {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-gray-400 text-sm">{t('footer.legal.copyright')}</div>
           <div className="flex flex-wrap gap-6 text-sm">
-            <Link href="/legal/privacy" className="text-gray-400 hover:text-white transition-colors duration-300">{t('footer.legal.privacy')}</Link>
-            <Link href="/legal/terms" className="text-gray-400 hover:text-white transition-colors duration-300">{t('footer.legal.terms')}</Link>
-            <Link href="/legal/cookies" className="text-gray-400 hover:text-white transition-colors duration-300">{t('footer.legal.cookies')}</Link>
-            <Link href="/legal/security" className="text-gray-400 hover:text-white transition-colors duration-300">{t('footer.legal.security')}</Link>
+            <Link
+              href="/legal/privacy"
+              className="text-gray-400 hover:text-white transition-colors duration-300"
+            >
+              {t('footer.legal.privacy')}
+            </Link>
+            <Link
+              href="/legal/terms"
+              className="text-gray-400 hover:text-white transition-colors duration-300"
+            >
+              {t('footer.legal.terms')}
+            </Link>
+            <Link
+              href="/legal/cookies"
+              className="text-gray-400 hover:text-white transition-colors duration-300"
+            >
+              {t('footer.legal.cookies')}
+            </Link>
+            <Link
+              href="/legal/security"
+              className="text-gray-400 hover:text-white transition-colors duration-300"
+            >
+              {t('footer.legal.security')}
+            </Link>
           </div>
         </div>
       </div>
@@ -228,4 +295,3 @@ const EnhancedFooter = () => {
 };
 
 export default EnhancedFooter;
-

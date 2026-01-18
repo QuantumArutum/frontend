@@ -1,9 +1,9 @@
 /**
  * Database Configuration - Production Mode
- * 
+ *
  * This module provides database connectivity using the real PostgreSQL database.
  * All demo/mock data has been removed for production use.
- * 
+ *
  * Environment Variables Required:
  * - DATABASE_URL or POSTGRES_URL: PostgreSQL connection string
  */
@@ -72,7 +72,12 @@ export const db = {
   isDemoMode: () => false, // Always production mode now
 
   // Users
-  getUsers: async (params: { page?: number; limit?: number; search?: string; state?: string }): Promise<DBResult<{ users: User[]; total: number }>> => {
+  getUsers: async (params: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    state?: string;
+  }): Promise<DBResult<{ users: User[]; total: number }>> => {
     try {
       const result = await dbQuery.getUsers(params);
       return { success: true, data: result };
@@ -105,7 +110,12 @@ export const db = {
   },
 
   // Community Posts
-  getPosts: async (params: { page?: number; limit?: number; category?: string; search?: string }): Promise<DBResult<{ posts: Post[]; total: number }>> => {
+  getPosts: async (params: {
+    page?: number;
+    limit?: number;
+    category?: string;
+    search?: string;
+  }): Promise<DBResult<{ posts: Post[]; total: number }>> => {
     try {
       const result = await dbQuery.getPosts(params);
       return { success: true, data: result };
@@ -118,7 +128,8 @@ export const db = {
   getPostById: async (id: string): Promise<DBResult<Post>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
-      const result = await sql`SELECT p.*, u.email as author_email FROM posts p LEFT JOIN users u ON p.user_id = u.uid WHERE p.id = ${parseInt(id)} OR p.id::text = ${id}`;
+      const result =
+        await sql`SELECT p.*, u.email as author_email FROM posts p LEFT JOIN users u ON p.user_id = u.uid WHERE p.id = ${parseInt(id)} OR p.id::text = ${id}`;
       if (!result || result.length === 0) return { success: false, error: 'Post not found' };
       return { success: true, data: result[0] };
     } catch (error) {
@@ -162,7 +173,8 @@ export const db = {
   togglePostPin: async (id: string): Promise<DBResult<any>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
-      const result = await sql`UPDATE posts SET is_pinned = NOT COALESCE(is_pinned, false) WHERE id = ${parseInt(id)} RETURNING *`;
+      const result =
+        await sql`UPDATE posts SET is_pinned = NOT COALESCE(is_pinned, false) WHERE id = ${parseInt(id)} RETURNING *`;
       if (!result || result.length === 0) return { success: false, error: 'Post not found' };
       return { success: true, data: result[0] };
     } catch (error) {
@@ -174,7 +186,8 @@ export const db = {
   togglePostLock: async (id: string): Promise<DBResult<any>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
-      const result = await sql`UPDATE posts SET is_locked = NOT COALESCE(is_locked, false) WHERE id = ${parseInt(id)} RETURNING *`;
+      const result =
+        await sql`UPDATE posts SET is_locked = NOT COALESCE(is_locked, false) WHERE id = ${parseInt(id)} RETURNING *`;
       if (!result || result.length === 0) return { success: false, error: 'Post not found' };
       return { success: true, data: result[0] };
     } catch (error) {
@@ -183,11 +196,15 @@ export const db = {
     }
   },
 
-  togglePostLike: async (postId: string, userId: string): Promise<DBResult<{ liked: boolean; like_count: number }>> => {
+  togglePostLike: async (
+    postId: string,
+    userId: string
+  ): Promise<DBResult<{ liked: boolean; like_count: number }>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
       // Check if already liked
-      const existing = await sql`SELECT id FROM post_likes WHERE post_id = ${parseInt(postId)} AND user_id = ${userId}`;
+      const existing =
+        await sql`SELECT id FROM post_likes WHERE post_id = ${parseInt(postId)} AND user_id = ${userId}`;
       let liked: boolean;
       if (existing && existing.length > 0) {
         await sql`DELETE FROM post_likes WHERE post_id = ${parseInt(postId)} AND user_id = ${userId}`;
@@ -197,7 +214,8 @@ export const db = {
         liked = true;
       }
       // Update like count
-      const countResult = await sql`SELECT COUNT(*) as count FROM post_likes WHERE post_id = ${parseInt(postId)}`;
+      const countResult =
+        await sql`SELECT COUNT(*) as count FROM post_likes WHERE post_id = ${parseInt(postId)}`;
       const likeCount = parseInt(countResult[0]?.count || '0');
       await sql`UPDATE posts SET like_count = ${likeCount} WHERE id = ${parseInt(postId)}`;
       return { success: true, data: { liked, like_count: likeCount } };
@@ -253,7 +271,8 @@ export const db = {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
       // Check if category has posts
-      const posts = await sql`SELECT COUNT(*) as count FROM posts WHERE category_id = ${parseInt(id)}`;
+      const posts =
+        await sql`SELECT COUNT(*) as count FROM posts WHERE category_id = ${parseInt(id)}`;
       if (parseInt(posts[0]?.count || '0') > 0) {
         return { success: false, error: 'Cannot delete category with posts' };
       }
@@ -375,7 +394,11 @@ export const db = {
     }
   },
 
-  createStake: async (stake: { user_id: string; pool_id: string; amount: number }): Promise<DBResult<any>> => {
+  createStake: async (stake: {
+    user_id: string;
+    pool_id: string;
+    amount: number;
+  }): Promise<DBResult<any>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
       const result = await sql`
@@ -396,7 +419,9 @@ export const db = {
       if (!sql) return { success: false, error: 'Database not configured', data: {} };
       const settings = await sql`SELECT * FROM system_settings WHERE key LIKE 'ico_%'`;
       const result: Record<string, string> = {};
-      settings.forEach((s: any) => { result[s.key.replace('ico_', '')] = s.value; });
+      settings.forEach((s: any) => {
+        result[s.key.replace('ico_', '')] = s.value;
+      });
       return { success: true, data: result };
     } catch (error) {
       console.error('Error getting ICO settings:', error);
@@ -429,7 +454,8 @@ export const db = {
                COALESCE(SUM(tokens_total), 0) as total_tokens
         FROM token_purchases WHERE status = 'completed'
       `;
-      const [goalSetting] = await sql`SELECT value FROM system_settings WHERE key = 'ico_goal_amount'`;
+      const [goalSetting] =
+        await sql`SELECT value FROM system_settings WHERE key = 'ico_goal_amount'`;
       const goal = parseFloat(goalSetting?.value || '10000000');
       const totalRaised = parseFloat(stats?.total_raised || '0');
       return {
@@ -507,7 +533,8 @@ export const db = {
       const [postsCount] = await sql`SELECT COUNT(*) as total FROM posts`;
       const [commentsCount] = await sql`SELECT COUNT(*) as total FROM comments`;
       const today = new Date().toISOString().split('T')[0];
-      const [activeToday] = await sql`SELECT COUNT(DISTINCT user_id) as total FROM user_activity_logs WHERE DATE(created_at) = ${today}`;
+      const [activeToday] =
+        await sql`SELECT COUNT(DISTINCT user_id) as total FROM user_activity_logs WHERE DATE(created_at) = ${today}`;
       return {
         success: true,
         data: {
@@ -523,7 +550,14 @@ export const db = {
   },
 
   // Audit Log
-  logAdminAction: async (action: string, targetType: string, targetId: string, oldValue: any, newValue: any, adminId: string): Promise<void> => {
+  logAdminAction: async (
+    action: string,
+    targetType: string,
+    targetId: string,
+    oldValue: any,
+    newValue: any,
+    adminId: string
+  ): Promise<void> => {
     try {
       await dbQuery.logAction(adminId, action, targetType, targetId, oldValue, newValue);
     } catch (error) {
@@ -531,30 +565,42 @@ export const db = {
     }
   },
 
-  getAuditLogs: async (params: { page?: number; limit?: number; action?: string; admin_id?: string }): Promise<DBResult<{ logs: AuditLog[]; total: number }>> => {
+  getAuditLogs: async (params: {
+    page?: number;
+    limit?: number;
+    action?: string;
+    admin_id?: string;
+  }): Promise<DBResult<{ logs: AuditLog[]; total: number }>> => {
     try {
-      if (!sql) return { success: false, error: 'Database not configured', data: { logs: [], total: 0 } };
+      if (!sql)
+        return { success: false, error: 'Database not configured', data: { logs: [], total: 0 } };
       const { page = 1, limit = 50, action, admin_id } = params;
       const offset = (page - 1) * limit;
-      
+
       // Build query with optional filters
       let logs;
       let countResult;
-      
+
       if (action && admin_id) {
-        logs = await sql`SELECT * FROM audit_logs WHERE action = ${action} AND admin_id = ${admin_id} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
-        countResult = await sql`SELECT COUNT(*) as total FROM audit_logs WHERE action = ${action} AND admin_id = ${admin_id}`;
+        logs =
+          await sql`SELECT * FROM audit_logs WHERE action = ${action} AND admin_id = ${admin_id} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        countResult =
+          await sql`SELECT COUNT(*) as total FROM audit_logs WHERE action = ${action} AND admin_id = ${admin_id}`;
       } else if (action) {
-        logs = await sql`SELECT * FROM audit_logs WHERE action = ${action} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        logs =
+          await sql`SELECT * FROM audit_logs WHERE action = ${action} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
         countResult = await sql`SELECT COUNT(*) as total FROM audit_logs WHERE action = ${action}`;
       } else if (admin_id) {
-        logs = await sql`SELECT * FROM audit_logs WHERE admin_id = ${admin_id} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
-        countResult = await sql`SELECT COUNT(*) as total FROM audit_logs WHERE admin_id = ${admin_id}`;
+        logs =
+          await sql`SELECT * FROM audit_logs WHERE admin_id = ${admin_id} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        countResult =
+          await sql`SELECT COUNT(*) as total FROM audit_logs WHERE admin_id = ${admin_id}`;
       } else {
-        logs = await sql`SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        logs =
+          await sql`SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
         countResult = await sql`SELECT COUNT(*) as total FROM audit_logs`;
       }
-      
+
       return { success: true, data: { logs, total: parseInt(countResult[0]?.total || '0') } };
     } catch (error) {
       console.error('Error getting audit logs:', error);
@@ -619,7 +665,7 @@ export const db = {
   getMenus: async (onlyActive = false): Promise<DBResult<any[]>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured', data: [] };
-      const menus = onlyActive 
+      const menus = onlyActive
         ? await sql`SELECT * FROM menus WHERE is_active = true ORDER BY sort_order ASC`
         : await sql`SELECT * FROM menus ORDER BY sort_order ASC`;
       return { success: true, data: menus };
@@ -927,7 +973,10 @@ export const db = {
     try {
       if (!sql) return { success: false, error: 'Database not configured' };
       const result = await sql`SELECT * FROM launch_config LIMIT 1`;
-      return { success: true, data: result?.[0] || { pre_launch_enabled: false, maintenance_mode: false } };
+      return {
+        success: true,
+        data: result?.[0] || { pre_launch_enabled: false, maintenance_mode: false },
+      };
     } catch (error) {
       console.error('Error getting launch config:', error);
       return { success: false, error: 'Database error' };
@@ -968,7 +1017,14 @@ export const db = {
       if (!sql) return { success: false, error: 'Database not configured' };
       const domains = await sql`SELECT * FROM domains ORDER BY created_at DESC`;
       const primary = domains?.find((d: any) => d.type === 'primary' && d.is_active);
-      return { success: true, data: { domains: domains || [], primary, alternates: domains?.filter((d: any) => d.type !== 'primary') || [] } };
+      return {
+        success: true,
+        data: {
+          domains: domains || [],
+          primary,
+          alternates: domains?.filter((d: any) => d.type !== 'primary') || [],
+        },
+      };
     } catch (error) {
       console.error('Error getting domains:', error);
       return { success: false, error: 'Database error' };
@@ -1062,14 +1118,26 @@ export const db = {
   },
 
   // Deposits
-  getDeposits: async (params: { page?: number; limit?: number }): Promise<DBResult<{ deposits: Deposit[]; total: number }>> => {
+  getDeposits: async (params: {
+    page?: number;
+    limit?: number;
+  }): Promise<DBResult<{ deposits: Deposit[]; total: number }>> => {
     try {
-      if (!sql) return { success: false, error: 'Database not configured', data: { deposits: [], total: 0 } };
+      if (!sql)
+        return {
+          success: false,
+          error: 'Database not configured',
+          data: { deposits: [], total: 0 },
+        };
       const { page = 1, limit = 20 } = params;
       const offset = (page - 1) * limit;
-      const deposits = await sql`SELECT * FROM deposits ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+      const deposits =
+        await sql`SELECT * FROM deposits ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
       const [countResult] = await sql`SELECT COUNT(*) as total FROM deposits`;
-      return { success: true, data: { deposits: deposits || [], total: parseInt(countResult?.total || '0') } };
+      return {
+        success: true,
+        data: { deposits: deposits || [], total: parseInt(countResult?.total || '0') },
+      };
     } catch (error) {
       console.error('Error getting deposits:', error);
       return { success: false, error: 'Database error', data: { deposits: [], total: 0 } };
@@ -1195,10 +1263,21 @@ export const db = {
   getPublicSystemSettings: async (): Promise<DBResult<any>> => {
     try {
       if (!sql) return { success: false, error: 'Database not configured', data: {} };
-      const publicKeys = ['site_name', 'site_logo', 'meta_title', 'meta_description', 'social_twitter', 'social_telegram', 'contact_email', 'maintenance_mode'];
+      const publicKeys = [
+        'site_name',
+        'site_logo',
+        'meta_title',
+        'meta_description',
+        'social_twitter',
+        'social_telegram',
+        'contact_email',
+        'maintenance_mode',
+      ];
       const settings = await sql`SELECT * FROM system_settings WHERE key = ANY(${publicKeys})`;
       const result: Record<string, any> = {};
-      settings?.forEach((s: any) => { result[s.key] = s.value; });
+      settings?.forEach((s: any) => {
+        result[s.key] = s.value;
+      });
       return { success: true, data: result };
     } catch (error) {
       console.error('Error getting public system settings:', error);

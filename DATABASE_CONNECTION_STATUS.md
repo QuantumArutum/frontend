@@ -10,19 +10,23 @@ The Vercel Postgres database is **already connected** to the frontend project. A
 ## Database Configuration
 
 ### Database Details
+
 - **Database Name:** `quantaureum_db`
 - **Created:** 3 days ago (January 15, 2026)
 - **Status:** Active and connected
 
 ### Environment Variables (Verified)
+
 The following environment variables are configured for **all environments** (Development, Preview, Production):
 
 1. ✅ **DATABASE_URL** - Added 3 days ago
-2. ✅ **POSTGRES_URL** - Added 3 days ago  
+2. ✅ **POSTGRES_URL** - Added 3 days ago
 3. ✅ **RESEND_API_KEY** - Added 1 day ago
 
 ### Connection Attempt
+
 When attempting to connect the database again, Vercel returned:
+
 ```
 Error: This project already has an existing environment variable with name POSTGRES_URL
 ```
@@ -32,12 +36,14 @@ This confirms the database is already properly connected.
 ## Current Deployment Status
 
 ### Production Deployment
+
 - **URL:** https://frontend-git-main-quantumarutums-projects.vercel.app
 - **Alternative:** https://www.quantaureum.com
 - **Status:** Ready (deployed 37 minutes ago)
 - **Commit:** aa4bf2e - "docs: Add Phase 9-11 fixes summary and final test report"
 
 ### Redeploy Limitation
+
 - Attempted to trigger a redeploy to ensure environment variables are active
 - **Error:** "Resource is limited - try again in 1 hour (more than 100 deployments per day)"
 - **Note:** Free tier deployment limit reached for today
@@ -47,12 +53,15 @@ This confirms the database is already properly connected.
 Since the database is already connected, you can proceed with testing:
 
 ### 1. Run Database Migration
+
 Visit the admin testing page to initialize the database schema:
+
 ```
 https://frontend-git-main-quantumarutums-projects.vercel.app/test-admin
 ```
 
 Or:
+
 ```
 https://www.quantaureum.com/test-admin
 ```
@@ -60,6 +69,7 @@ https://www.quantaureum.com/test-admin
 Click the "Run Migration" button to create the moderator system tables.
 
 ### 2. Test Database Connection
+
 After migration, test the Phase 11 moderator APIs:
 
 ```powershell
@@ -71,6 +81,7 @@ cd Quantaureum/frontend
 ```
 
 ### 3. Manual Testing
+
 1. Login with test account: `aurum51668@outlook.com` / `TestPass2026!`
 2. Test remaining features:
    - Image upload in post creation
@@ -81,8 +92,9 @@ cd Quantaureum/frontend
 ## Database Connection Details
 
 The database connection is managed through Vercel's Storage integration:
+
 - **Integration Type:** Vercel Postgres
-- **Environment Prefix:** Default (POSTGRES_*)
+- **Environment Prefix:** Default (POSTGRES\_\*)
 - **Environments:** Development, Preview, Production
 - **Auto-generated Variables:**
   - POSTGRES_URL
@@ -96,6 +108,7 @@ The database connection is managed through Vercel's Storage integration:
 ## Testing Status
 
 ### Phase 9 (发帖功能) - 95% Complete
+
 - ✅ Markdown editor functional
 - ✅ Post creation works
 - ✅ Draft save works
@@ -103,6 +116,7 @@ The database connection is managed through Vercel's Storage integration:
 - ⏳ Edit/Delete needs database testing
 
 ### Phase 10 (评论系统) - 85% Complete
+
 - ✅ Comment posting works
 - ✅ Nested replies work
 - ✅ @mention works
@@ -110,6 +124,7 @@ The database connection is managed through Vercel's Storage integration:
 - ⏳ Comment edit/delete needs database
 
 ### Phase 11 (版主系统) - 0% Complete
+
 - ✅ All APIs implemented
 - ✅ Database migration script ready
 - ⏳ Requires database migration to test

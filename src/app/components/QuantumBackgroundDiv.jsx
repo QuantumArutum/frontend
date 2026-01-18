@@ -1,4 +1,3 @@
-
 'use client';
 import React from 'react';
 
@@ -14,5 +13,3 @@ const QuantumBackgroundDiv = () => {
 };
 
 export default QuantumBackgroundDiv;
-
-

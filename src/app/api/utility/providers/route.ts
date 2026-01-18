@@ -14,7 +14,7 @@ const mockProviders = [
     regions: ['全国'],
     payment_methods: ['QAU', '银行卡', '支付宝'],
     min_payment: 10,
-    service_fee: 0
+    service_fee: 0,
   },
   {
     id: 'UP002',
@@ -24,7 +24,7 @@ const mockProviders = [
     regions: ['全国'],
     payment_methods: ['QAU', '银行卡', '微信'],
     min_payment: 20,
-    service_fee: 0
+    service_fee: 0,
   },
   {
     id: 'UP003',
@@ -34,7 +34,7 @@ const mockProviders = [
     regions: ['上海', '北京', '广州', '深圳'],
     payment_methods: ['QAU', '银行卡'],
     min_payment: 5,
-    service_fee: 0
+    service_fee: 0,
   },
   {
     id: 'UP004',
@@ -44,7 +44,7 @@ const mockProviders = [
     regions: ['全国'],
     payment_methods: ['QAU', '银行卡', '支付宝', '微信'],
     min_payment: 10,
-    service_fee: 0
+    service_fee: 0,
   },
   {
     id: 'UP005',
@@ -54,8 +54,8 @@ const mockProviders = [
     regions: ['全国'],
     payment_methods: ['QAU', '银行卡', '支付宝', '微信'],
     min_payment: 10,
-    service_fee: 0
-  }
+    service_fee: 0,
+  },
 ];
 
 export const GET = createSecureHandler(
@@ -63,7 +63,7 @@ export const GET = createSecureHandler(
     return successResponse({
       data: mockProviders,
       total: mockProviders.length,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   },
   { rateLimit: true, allowedMethods: ['GET'] }

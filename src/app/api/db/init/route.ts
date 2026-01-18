@@ -10,17 +10,17 @@ import bcrypt from 'bcryptjs';
 export async function POST(request: NextRequest) {
   try {
     const { secret } = await request.json().catch(() => ({}));
-    
+
     if (secret !== 'quantaureum_init_2024') {
-      return NextResponse.json(
-        { success: false, message: 'Invalid secret key' },
-        { status: 401 }
-      );
+      return NextResponse.json({ success: false, message: 'Invalid secret key' }, { status: 401 });
     }
 
     if (!sql) {
       return NextResponse.json(
-        { success: false, message: 'Database not configured. Check DATABASE_URL environment variable.' },
+        {
+          success: false,
+          message: 'Database not configured. Check DATABASE_URL environment variable.',
+        },
         { status: 500 }
       );
     }
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
     // Create default admin user if not exists
     const existingAdmin = await dbQuery.getAdminByEmail('admin@quantaureum.com');
-    
+
     if (!existingAdmin) {
       const passwordHash = bcrypt.hashSync('admin123', 10);
       await dbQuery.createAdminUser({
@@ -45,9 +45,24 @@ export async function POST(request: NextRequest) {
     // Create default categories
     const categories = await dbQuery.getCategories();
     if (categories.length === 0) {
-      await dbQuery.createCategory({ name: 'Announcements', slug: 'announcements', description: 'Official updates', sort_order: 1 });
-      await dbQuery.createCategory({ name: 'General Discussion', slug: 'general', description: 'General talk', sort_order: 2 });
-      await dbQuery.createCategory({ name: 'Technical Support', slug: 'support', description: 'Get help', sort_order: 3 });
+      await dbQuery.createCategory({
+        name: 'Announcements',
+        slug: 'announcements',
+        description: 'Official updates',
+        sort_order: 1,
+      });
+      await dbQuery.createCategory({
+        name: 'General Discussion',
+        slug: 'general',
+        description: 'General talk',
+        sort_order: 2,
+      });
+      await dbQuery.createCategory({
+        name: 'Technical Support',
+        slug: 'support',
+        description: 'Get help',
+        sort_order: 3,
+      });
     }
 
     // Create default staking pools

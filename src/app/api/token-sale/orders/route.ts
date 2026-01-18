@@ -1,6 +1,6 @@
 /**
  * 代币销售订单API
- * 
+ *
  * 查询用户购买订单
  */
 
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       if (!order) {
         return errorResponse('订单不存在', 404);
       }
-      
+
       return successResponse({
         order: {
           id: order.id,
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const orders = await db.findPurchasesByAddress(address);
-    
+
     // 过滤状态
     let filteredOrders = orders;
     if (status) {
@@ -78,8 +78,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       totalOrders: orders.length,
       completedOrders: orders.filter((o: any) => o.status === 'completed').length,
       pendingOrders: orders.filter((o: any) => o.status === 'pending').length,
-      totalSpent: orders.filter((o: any) => o.status === 'completed').reduce((sum: number, o: any) => sum + o.amountUSD, 0),
-      totalTokens: orders.filter((o: any) => o.status === 'completed').reduce((sum: number, o: any) => sum + o.tokensTotal, 0),
+      totalSpent: orders
+        .filter((o: any) => o.status === 'completed')
+        .reduce((sum: number, o: any) => sum + o.amountUSD, 0),
+      totalTokens: orders
+        .filter((o: any) => o.status === 'completed')
+        .reduce((sum: number, o: any) => sum + o.tokensTotal, 0),
     };
 
     return successResponse({
@@ -101,7 +105,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
       stats,
     });
-
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : '未知错误';
     SecurityLogger.log(

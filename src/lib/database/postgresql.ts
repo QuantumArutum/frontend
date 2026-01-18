@@ -1,6 +1,6 @@
 /**
  * Quantaureum PostgreSQL 数据库服务
- * 
+ *
  * 生产级数据持久化层 - 支持全球分布式部署
  */
 
@@ -163,18 +163,12 @@ class PostgresDatabase {
   }
 
   async findUserByEmail(email: string): Promise<User | null> {
-    const result = await pool.query(
-      'SELECT * FROM users WHERE email = $1',
-      [email]
-    );
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     return result.rows[0] ? this.mapUser(result.rows[0]) : null;
   }
 
   async findUserById(id: string): Promise<User | null> {
-    const result = await pool.query(
-      'SELECT * FROM users WHERE id = $1',
-      [id]
-    );
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
     return result.rows[0] ? this.mapUser(result.rows[0]) : null;
   }
 
@@ -185,10 +179,10 @@ class PostgresDatabase {
     const valid = await CryptoUtils.verifyPassword(password, user.passwordHash);
     if (!valid) return null;
 
-    await pool.query(
-      'UPDATE users SET last_login = $1 WHERE id = $2',
-      [new Date().toISOString(), user.id]
-    );
+    await pool.query('UPDATE users SET last_login = $1 WHERE id = $2', [
+      new Date().toISOString(),
+      user.id,
+    ]);
 
     return user;
   }
@@ -275,10 +269,11 @@ class PostgresDatabase {
     for (const code of codes) {
       const id = CryptoUtils.generateSecureToken(8);
       const hash = await CryptoUtils.hashPassword(code);
-      await pool.query(
-        'INSERT INTO backup_codes (id, user_id, code_hash) VALUES ($1, $2, $3)',
-        [id, userId, hash]
-      );
+      await pool.query('INSERT INTO backup_codes (id, user_id, code_hash) VALUES ($1, $2, $3)', [
+        id,
+        userId,
+        hash,
+      ]);
     }
   }
 
@@ -291,10 +286,9 @@ class PostgresDatabase {
     for (const row of result.rows) {
       const valid = await CryptoUtils.verifyPassword(code, row.code_hash);
       if (valid) {
-        await pool.query(
-          'UPDATE backup_codes SET used = TRUE, used_at = NOW() WHERE id = $1',
-          [row.id]
-        );
+        await pool.query('UPDATE backup_codes SET used = TRUE, used_at = NOW() WHERE id = $1', [
+          row.id,
+        ]);
         return true;
       }
     }
@@ -303,7 +297,9 @@ class PostgresDatabase {
 
   // ========== 代币购买操作 ==========
 
-  async createPurchase(data: Omit<TokenPurchase, 'id' | 'createdAt' | 'status'>): Promise<TokenPurchase> {
+  async createPurchase(
+    data: Omit<TokenPurchase, 'id' | 'createdAt' | 'status'>
+  ): Promise<TokenPurchase> {
     const id = CryptoUtils.generateSecureToken(16);
 
     const result = await pool.query(
@@ -311,7 +307,18 @@ class PostgresDatabase {
        (id, user_id, buyer_address, amount_usd, tokens_base, tokens_bonus, tokens_total, tx_hash, payment_method, payment_status)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
        RETURNING *`,
-      [id, data.userId, data.buyerAddress, data.amountUSD, data.tokensBase, data.tokensBonus, data.tokensTotal, data.txHash, data.paymentMethod, data.paymentStatus]
+      [
+        id,
+        data.userId,
+        data.buyerAddress,
+        data.amountUSD,
+        data.tokensBase,
+        data.tokensBonus,
+        data.tokensTotal,
+        data.txHash,
+        data.paymentMethod,
+        data.paymentStatus,
+      ]
     );
 
     return this.mapPurchase(result.rows[0]);
@@ -327,7 +334,7 @@ class PostgresDatabase {
       'SELECT * FROM token_purchases WHERE LOWER(buyer_address) = LOWER($1) ORDER BY created_at DESC',
       [address]
     );
-    return result.rows.map(row => this.mapPurchase(row));
+    return result.rows.map((row) => this.mapPurchase(row));
   }
 
   async getPurchaseStats() {
@@ -428,7 +435,9 @@ class PostgresDatabase {
       paymentMethod: row.payment_method as string,
       paymentTxHash: row.payment_tx_hash as string | undefined,
       paymentStatus: row.payment_status as TokenPurchase['paymentStatus'],
-      paymentVerifiedAt: row.payment_verified_at ? (row.payment_verified_at as Date).toISOString() : undefined,
+      paymentVerifiedAt: row.payment_verified_at
+        ? (row.payment_verified_at as Date).toISOString()
+        : undefined,
       status: row.status as TokenPurchase['status'],
       createdAt: (row.created_at as Date).toISOString(),
       completedAt: row.completed_at ? (row.completed_at as Date).toISOString() : undefined,

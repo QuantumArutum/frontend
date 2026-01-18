@@ -6,24 +6,24 @@ export const PERMISSIONS = {
   LOCK_POST: 'lock_post',
   MOVE_POST: 'move_post',
   EDIT_POST: 'edit_post',
-  
+
   // 评论管理
   DELETE_COMMENT: 'delete_comment',
   EDIT_COMMENT: 'edit_comment',
-  
+
   // 用户管理
   MUTE_USER: 'mute_user',
   BAN_USER: 'ban_user',
   VIEW_USER_HISTORY: 'view_user_history',
-  
+
   // 举报管理
   VIEW_REPORTS: 'view_reports',
   HANDLE_REPORTS: 'handle_reports',
-  
+
   // 审核管理
   VIEW_QUEUE: 'view_queue',
   REVIEW_CONTENT: 'review_content',
-  
+
   // 版主管理
   MANAGE_MODERATORS: 'manage_moderators',
   VIEW_LOGS: 'view_logs',
@@ -40,7 +40,7 @@ export const ROLES = {
 // 角色权限映射
 export const ROLE_PERMISSIONS: Record<string, string[]> = {
   [ROLES.SUPER_ADMIN]: Object.values(PERMISSIONS),
-  
+
   [ROLES.ADMIN]: [
     PERMISSIONS.PIN_POST,
     PERMISSIONS.DELETE_POST,
@@ -58,7 +58,7 @@ export const ROLE_PERMISSIONS: Record<string, string[]> = {
     PERMISSIONS.REVIEW_CONTENT,
     PERMISSIONS.VIEW_LOGS,
   ],
-  
+
   [ROLES.MODERATOR]: [
     PERMISSIONS.PIN_POST,
     PERMISSIONS.DELETE_POST,
@@ -71,7 +71,7 @@ export const ROLE_PERMISSIONS: Record<string, string[]> = {
     PERMISSIONS.VIEW_QUEUE,
     PERMISSIONS.REVIEW_CONTENT,
   ],
-  
+
   [ROLES.USER]: [],
 };
 
@@ -85,7 +85,7 @@ export function hasPermission(
   if (customPermissions && customPermissions.length > 0) {
     return customPermissions.includes(permission);
   }
-  
+
   // 否则使用角色默认权限
   const rolePermissions = ROLE_PERMISSIONS[userRole] || [];
   return rolePermissions.includes(permission);
@@ -93,12 +93,16 @@ export function hasPermission(
 
 // 检查是否是版主
 export function isModerator(userRole: string): boolean {
-  return [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.MODERATOR].includes(userRole as typeof ROLES.SUPER_ADMIN | typeof ROLES.ADMIN | typeof ROLES.MODERATOR);
+  return [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.MODERATOR].includes(
+    userRole as typeof ROLES.SUPER_ADMIN | typeof ROLES.ADMIN | typeof ROLES.MODERATOR
+  );
 }
 
 // 检查是否是管理员
 export function isAdmin(userRole: string): boolean {
-  return [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole as typeof ROLES.SUPER_ADMIN | typeof ROLES.ADMIN);
+  return [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(
+    userRole as typeof ROLES.SUPER_ADMIN | typeof ROLES.ADMIN
+  );
 }
 
 // 检查是否是超级管理员
@@ -107,10 +111,7 @@ export function isSuperAdmin(userRole: string): boolean {
 }
 
 // 获取用户所有权限
-export function getUserPermissions(
-  userRole: string,
-  customPermissions?: string[]
-): string[] {
+export function getUserPermissions(userRole: string, customPermissions?: string[]): string[] {
   if (customPermissions && customPermissions.length > 0) {
     return customPermissions;
   }

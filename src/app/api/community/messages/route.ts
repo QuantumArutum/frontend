@@ -45,7 +45,9 @@ export async function GET(request: Request) {
       // 返回空数据，数据库未连接
       return NextResponse.json({
         success: true,
-        data: conversationId ? { messages: [], total: 0, hasMore: false } : { conversations: [], totalUnread: 0 }
+        data: conversationId
+          ? { messages: [], total: 0, hasMore: false }
+          : { conversations: [], totalUnread: 0 },
       });
     }
 
@@ -71,8 +73,8 @@ export async function GET(request: Request) {
         data: {
           messages,
           total: Number(countResult?.total || 0),
-          hasMore: offset + limit < Number(countResult?.total || 0)
-        }
+          hasMore: offset + limit < Number(countResult?.total || 0),
+        },
       });
     } else {
       // 获取用户的会话列表
@@ -90,7 +92,8 @@ export async function GET(request: Request) {
       const conversations = await Promise.all(
         conversationsData.map(async (c: any) => {
           const otherUserId = c.participant1_id === userId ? c.participant2_id : c.participant1_id;
-          const otherUserEmail = c.participant1_id === userId ? c.participant2_email : c.participant1_email;
+          const otherUserEmail =
+            c.participant1_id === userId ? c.participant2_email : c.participant1_email;
 
           // 获取最后一条消息
           const [lastMsg] = await sqlQuery`
@@ -113,13 +116,19 @@ export async function GET(request: Request) {
             id: c.id,
             participants: [c.participant1_id, c.participant2_id],
             participantInfo: {
-              [c.participant1_id]: { name: c.participant1_email || c.participant1_id, avatar: c.participant1_email?.[0]?.toUpperCase() },
-              [c.participant2_id]: { name: c.participant2_email || c.participant2_id, avatar: c.participant2_email?.[0]?.toUpperCase() }
+              [c.participant1_id]: {
+                name: c.participant1_email || c.participant1_id,
+                avatar: c.participant1_email?.[0]?.toUpperCase(),
+              },
+              [c.participant2_id]: {
+                name: c.participant2_email || c.participant2_id,
+                avatar: c.participant2_email?.[0]?.toUpperCase(),
+              },
             },
             lastMessage: lastMsg || undefined,
             unreadCount: Number(unreadResult?.count || 0),
             createdAt: c.created_at,
-            updatedAt: c.updated_at
+            updatedAt: c.updated_at,
           };
         })
       );
@@ -133,13 +142,16 @@ export async function GET(request: Request) {
         success: true,
         data: {
           conversations,
-          totalUnread: Number(totalUnreadResult?.total || 0)
-        }
+          totalUnread: Number(totalUnreadResult?.total || 0),
+        },
       });
     }
   } catch (error: any) {
     console.error('Messages GET error:', error);
-    return NextResponse.json({ success: false, message: '获取消息失败: ' + error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: '获取消息失败: ' + error.message },
+      { status: 500 }
+    );
   }
 }
 
@@ -187,11 +199,14 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       data: { message: { ...newMessage, senderName }, conversation },
-      message: '消息发送成功'
+      message: '消息发送成功',
     });
   } catch (error: any) {
     console.error('Messages POST error:', error);
-    return NextResponse.json({ success: false, message: '发送消息失败: ' + error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: '发送消息失败: ' + error.message },
+      { status: 500 }
+    );
   }
 }
 
@@ -233,11 +248,14 @@ export async function PUT(request: Request) {
     return NextResponse.json({
       success: true,
       data: { updatedCount },
-      message: `已标记 ${updatedCount} 条消息为已读`
+      message: `已标记 ${updatedCount} 条消息为已读`,
     });
   } catch (error: any) {
     console.error('Messages PUT error:', error);
-    return NextResponse.json({ success: false, message: '更新消息失败: ' + error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: '更新消息失败: ' + error.message },
+      { status: 500 }
+    );
   }
 }
 
@@ -268,13 +286,16 @@ export async function DELETE(request: Request) {
 
     // 删除会话中的所有消息
     await sql`DELETE FROM private_messages WHERE conversation_id = ${conversationId}`;
-    
+
     // 删除会话
     await sql`DELETE FROM conversations WHERE id = ${conversationId}`;
 
     return NextResponse.json({ success: true, message: '会话已删除' });
   } catch (error: any) {
     console.error('Messages DELETE error:', error);
-    return NextResponse.json({ success: false, message: '删除会话失败: ' + error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: '删除会话失败: ' + error.message },
+      { status: 500 }
+    );
   }
 }

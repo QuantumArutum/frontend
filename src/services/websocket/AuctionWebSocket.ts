@@ -6,7 +6,13 @@ export interface WebSocketMessageData {
 }
 
 export interface WebSocketMessage {
-  type: 'bid_update' | 'auction_update' | 'price_change' | 'auction_end' | 'user_notification' | 'system_alert';
+  type:
+    | 'bid_update'
+    | 'auction_update'
+    | 'price_change'
+    | 'auction_end'
+    | 'user_notification'
+    | 'system_alert';
   data: WebSocketMessageData;
   timestamp: number;
   auctionId?: string;
@@ -54,10 +60,10 @@ export interface NotificationMessage {
   };
 }
 
-export type AuctionWebSocketMessage = 
-  | BidUpdateMessage 
-  | AuctionUpdateMessage 
-  | PriceChangeMessage 
+export type AuctionWebSocketMessage =
+  | BidUpdateMessage
+  | AuctionUpdateMessage
+  | PriceChangeMessage
   | NotificationMessage;
 
 export class AuctionWebSocketClient {
@@ -80,7 +86,7 @@ export class AuctionWebSocketClient {
       try {
         this.userId = userId || null;
         this.connectionState = 'connecting';
-        
+
         // 构建连接URL，包含用户ID
         const url = this.userId ? `${this.wsUrl}?userId=${this.userId}` : this.wsUrl;
         this.ws = new WebSocket(url);
@@ -106,7 +112,7 @@ export class AuctionWebSocketClient {
           console.log('WebSocket连接已关闭', event.code, event.reason);
           this.connectionState = 'disconnected';
           this.stopHeartbeat();
-          
+
           // 自动重连
           if (!event.wasClean && this.reconnectAttempts < this.maxReconnectAttempts) {
             this.scheduleReconnect();
@@ -126,7 +132,6 @@ export class AuctionWebSocketClient {
             reject(new Error('WebSocket连接超时'));
           }
         }, 10000);
-
       } catch (error) {
         this.connectionState = 'error';
         reject(error);
@@ -148,11 +153,13 @@ export class AuctionWebSocketClient {
   send(message: Record<string, unknown>): boolean {
     if (this.ws && this.ws.readyState === WebSocket.OPEN) {
       try {
-        this.ws.send(JSON.stringify({
-          ...message,
-          timestamp: Date.now(),
-          userId: this.userId
-        }));
+        this.ws.send(
+          JSON.stringify({
+            ...message,
+            timestamp: Date.now(),
+            userId: this.userId,
+          })
+        );
         return true;
       } catch (error) {
         console.error('发送WebSocket消息失败:', error);
@@ -187,7 +194,7 @@ export class AuctionWebSocketClient {
     // 发送订阅请求
     this.send({
       type: 'subscribe_auction',
-      auctionId: auctionId
+      auctionId: auctionId,
     });
 
     return this.subscribe(`auction_${auctionId}`, handler);
@@ -197,7 +204,7 @@ export class AuctionWebSocketClient {
   unsubscribeFromAuction(auctionId: string): void {
     this.send({
       type: 'unsubscribe_auction',
-      auctionId: auctionId
+      auctionId: auctionId,
     });
     this.messageHandlers.delete(`auction_${auctionId}`);
   }
@@ -207,14 +214,14 @@ export class AuctionWebSocketClient {
     return this.send({
       type: 'place_bid',
       auctionId: auctionId,
-      amount: amount
+      amount: amount,
     });
   }
 
   // 发送心跳
   sendHeartbeat(): boolean {
     return this.send({
-      type: 'heartbeat'
+      type: 'heartbeat',
     });
   }
 
@@ -235,14 +242,14 @@ export class AuctionWebSocketClient {
     // 通用消息处理器
     const generalHandlers = this.messageHandlers.get(message.type);
     if (generalHandlers) {
-      generalHandlers.forEach(handler => handler(message));
+      generalHandlers.forEach((handler) => handler(message));
     }
 
     // 拍卖特定消息处理器
     if (message.auctionId) {
       const auctionHandlers = this.messageHandlers.get(`auction_${message.auctionId}`);
       if (auctionHandlers) {
-        auctionHandlers.forEach(handler => handler(message));
+        auctionHandlers.forEach((handler) => handler(message));
       }
     }
   }
@@ -287,12 +294,12 @@ export class AuctionWebSocketClient {
   private scheduleReconnect(): void {
     this.reconnectAttempts++;
     const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1); // 指数退避
-    
+
     console.log(`${delay}ms后尝试第${this.reconnectAttempts}次重连...`);
-    
+
     setTimeout(() => {
       if (this.connectionState === 'disconnected') {
-        this.connect(this.userId ?? undefined).catch(error => {
+        this.connect(this.userId ?? undefined).catch((error) => {
           console.error('重连失败:', error);
         });
       }
@@ -306,7 +313,9 @@ export const auctionWebSocket = new AuctionWebSocketClient();
 // 导出便捷方法
 export const connectToAuctionWS = (userId?: string) => auctionWebSocket.connect(userId);
 export const disconnectFromAuctionWS = () => auctionWebSocket.disconnect();
-export const subscribeToAuctionUpdates = (auctionId: string, handler: (message: WebSocketMessage) => void) => 
-  auctionWebSocket.subscribeToAuction(auctionId, handler);
-export const sendBidViaWS = (auctionId: string, amount: number) => 
+export const subscribeToAuctionUpdates = (
+  auctionId: string,
+  handler: (message: WebSocketMessage) => void
+) => auctionWebSocket.subscribeToAuction(auctionId, handler);
+export const sendBidViaWS = (auctionId: string, amount: number) =>
   auctionWebSocket.sendBid(auctionId, amount);

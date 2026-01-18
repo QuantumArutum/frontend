@@ -17,9 +17,7 @@ const ClientProviders: React.FC<ClientProvidersProps> = ({ children }) => {
   return (
     <AuthProvider>
       <LaunchStatusWrapper>
-        <div className="relative z-10">
-          {children}
-        </div>
+        <div className="relative z-10">{children}</div>
       </LaunchStatusWrapper>
     </AuthProvider>
   );

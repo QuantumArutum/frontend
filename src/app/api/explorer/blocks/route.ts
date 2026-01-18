@@ -38,28 +38,28 @@ export const GET = createSecureHandler(
   async (request: NextRequest): Promise<NextResponse> => {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(Math.max(parseInt(searchParams.get('limit') || '10'), 1), 100);
-    
+
     // 检查缓存
     if (blockCache && Date.now() - blockCache.timestamp < CACHE_TTL) {
       return addSecurityHeaders(NextResponse.json(blockCache.data.slice(0, limit)));
     }
-    
+
     try {
       const latestBlockNumber = await makeRPCCall('qau_blockNumber');
       if (!latestBlockNumber) throw new Error('无法获取区块号');
-      
+
       const latestBlock = parseInt(latestBlockNumber, 16);
-      
+
       // 并行获取区块
       const blockPromises = [];
       for (let i = 0; i < limit && latestBlock - i >= 0; i++) {
         blockPromises.push(makeRPCCall('qau_getBlockByNumber', [toEvenHex(latestBlock - i), true]));
       }
-      
+
       const blockResults = await Promise.all(blockPromises);
       const blocks = blockResults
-        .filter(b => b !== null)
-        .map(b => ({
+        .filter((b) => b !== null)
+        .map((b) => ({
           number: b.number,
           hash: b.hash,
           parentHash: b.parentHash,
@@ -75,10 +75,10 @@ export const GET = createSecureHandler(
           transactions: b.transactions || [],
           transactionCount: b.transactions?.length || 0,
         }));
-      
+
       // 更新缓存
       blockCache = { data: blocks, timestamp: Date.now() };
-      
+
       return addSecurityHeaders(NextResponse.json(blocks));
     } catch (error) {
       console.error('获取区块失败:', error);

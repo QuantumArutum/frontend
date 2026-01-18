@@ -9,15 +9,18 @@ import { sql } from '@/lib/database';
 export async function GET(request: NextRequest) {
   try {
     if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database not configured',
+        },
+        { status: 500 }
+      );
     }
 
     // 计算最近 15 分钟内活跃的用户数
     const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
-    
+
     const result = await sql`
       SELECT COUNT(DISTINCT user_id) as count
       FROM user_activity_logs
@@ -52,10 +55,13 @@ export async function GET(request: NextRequest) {
         },
       });
     } catch (fallbackError) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Internal server error' 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Internal server error',
+        },
+        { status: 500 }
+      );
     }
   }
 }

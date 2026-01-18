@@ -4,7 +4,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { LucideIcon, Loader2 } from 'lucide-react';
 
-type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success' | 'default';
+type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'ghost'
+  | 'danger'
+  | 'success'
+  | 'default';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface ButtonProps {
@@ -22,12 +29,16 @@ interface ButtonProps {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg shadow-blue-500/25',
+  primary:
+    'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg shadow-blue-500/25',
   secondary: 'bg-gray-700 hover:bg-gray-600 text-white',
-  outline: 'border-2 border-gray-600 hover:border-blue-500 text-gray-300 hover:text-white bg-transparent',
+  outline:
+    'border-2 border-gray-600 hover:border-blue-500 text-gray-300 hover:text-white bg-transparent',
   ghost: 'bg-transparent hover:bg-gray-800 text-gray-300 hover:text-white',
-  danger: 'bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white shadow-lg shadow-red-500/25',
-  success: 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg shadow-green-500/25',
+  danger:
+    'bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white shadow-lg shadow-red-500/25',
+  success:
+    'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg shadow-green-500/25',
   default: 'bg-gray-700 hover:bg-gray-600 text-white',
 };
 

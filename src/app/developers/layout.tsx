@@ -2,15 +2,6 @@
 
 import React from 'react';
 
-export default function DevelopersLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex flex-col min-h-screen">
-      {children}
-    </div>
-  );
+export default function DevelopersLayout({ children }: { children: React.ReactNode }) {
+  return <div className="flex flex-col min-h-screen">{children}</div>;
 }
-

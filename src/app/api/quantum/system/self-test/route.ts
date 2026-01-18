@@ -18,8 +18,8 @@ export async function POST() {
           keysGenerated: 1000,
           successRate: 100,
           averageTime: '0.5ms',
-          entropyLevel: 'high'
-        }
+          entropyLevel: 'high',
+        },
       },
       {
         name: 'CRYSTALS-Dilithium Signature',
@@ -31,8 +31,8 @@ export async function POST() {
           verificationsPerformed: 500,
           successRate: 100,
           averageSignTime: '1.2ms',
-          averageVerifyTime: '0.8ms'
-        }
+          averageVerifyTime: '0.8ms',
+        },
       },
       {
         name: 'CRYSTALS-Kyber Encryption',
@@ -44,8 +44,8 @@ export async function POST() {
           decryptionOperations: 1000,
           successRate: 100,
           averageEncryptTime: '0.4ms',
-          averageDecryptTime: '0.6ms'
-        }
+          averageDecryptTime: '0.6ms',
+        },
       },
       {
         name: 'System Performance',
@@ -57,8 +57,8 @@ export async function POST() {
           memoryUsage: '45%',
           diskUsage: '25%',
           networkLatency: '12ms',
-          throughput: '1250 TPS'
-        }
+          throughput: '1250 TPS',
+        },
       },
       {
         name: 'Security Validation',
@@ -70,8 +70,8 @@ export async function POST() {
           intrusionDetection: 'active',
           firewallStatus: 'operational',
           certificateValidation: 'valid',
-          accessControlTests: 'pass'
-        }
+          accessControlTests: 'pass',
+        },
       },
       {
         name: 'Blockchain Integration',
@@ -83,8 +83,8 @@ export async function POST() {
           transactionProcessing: 'optimal',
           consensusParticipation: 'active',
           peerConnectivity: '18 peers',
-          syncStatus: 'synchronized'
-        }
+          syncStatus: 'synchronized',
+        },
       },
       {
         name: 'Quantum Random Number Generator',
@@ -95,9 +95,9 @@ export async function POST() {
           entropyRate: '1.0 bits/bit',
           outputRate: '1 Mbps',
           statisticalTests: 'pass',
-          hardwareStatus: 'operational'
-        }
-      }
+          hardwareStatus: 'operational',
+        },
+      },
     ],
     summary: {
       totalTests: 7,
@@ -109,16 +109,16 @@ export async function POST() {
         performance: { total: 1, passed: 1 },
         security: { total: 1, passed: 1 },
         blockchain: { total: 1, passed: 1 },
-        hardware: { total: 1, passed: 1 }
-      }
+        hardware: { total: 1, passed: 1 },
+      },
     },
     recommendations: [
       'System is operating within optimal parameters',
       'All quantum cryptographic algorithms are functioning correctly',
       'Security posture is excellent',
-      'Performance metrics are within expected ranges'
+      'Performance metrics are within expected ranges',
     ],
-    nextScheduledTest: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24小时后
+    nextScheduledTest: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24小时后
   };
 
   return NextResponse.json(mockSelfTest);

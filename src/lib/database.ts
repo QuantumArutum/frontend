@@ -237,7 +237,7 @@ export async function initDatabase() {
     `;
 
     // ========== COMMUNITY EXTENDED TABLES ==========
-    
+
     // User badges table
     await sql`
       CREATE TABLE IF NOT EXISTS user_badges (
@@ -668,13 +668,13 @@ export const dbQuery = {
   // Users
   async getUsers(params: { page?: number; limit?: number; search?: string; status?: string }) {
     if (!sql) return { users: [], total: 0 };
-    
+
     const { page = 1, limit = 20, search, status } = params;
     const offset = (page - 1) * limit;
-    
+
     let users;
     let countResult;
-    
+
     if (search) {
       users = await sql`
         SELECT * FROM users 
@@ -701,7 +701,7 @@ export const dbQuery = {
       `;
       countResult = await sql`SELECT COUNT(*) as total FROM users`;
     }
-    
+
     return { users, total: parseInt(countResult[0]?.total || '0') };
   },
 
@@ -748,13 +748,13 @@ export const dbQuery = {
   // Posts
   async getPosts(params: { page?: number; limit?: number; category_id?: number }) {
     if (!sql) return { posts: [], total: 0 };
-    
+
     const { page = 1, limit = 10, category_id } = params;
     const offset = (page - 1) * limit;
-    
+
     let posts;
     let countResult;
-    
+
     if (category_id) {
       posts = await sql`
         SELECT p.*, u.email as author_email FROM posts p
@@ -763,7 +763,8 @@ export const dbQuery = {
         ORDER BY p.is_pinned DESC, p.created_at DESC
         LIMIT ${limit} OFFSET ${offset}
       `;
-      countResult = await sql`SELECT COUNT(*) as total FROM posts WHERE category_id = ${category_id}`;
+      countResult =
+        await sql`SELECT COUNT(*) as total FROM posts WHERE category_id = ${category_id}`;
     } else {
       posts = await sql`
         SELECT p.*, u.email as author_email FROM posts p
@@ -773,7 +774,7 @@ export const dbQuery = {
       `;
       countResult = await sql`SELECT COUNT(*) as total FROM posts`;
     }
-    
+
     return { posts, total: parseInt(countResult[0]?.total || '0') };
   },
 
@@ -885,22 +886,25 @@ export const dbQuery = {
   // Dashboard Stats
   async getDashboardStats() {
     if (!sql) return null;
-    
+
     const [usersCount] = await sql`SELECT COUNT(*) as total FROM users`;
     const [activeUsers] = await sql`SELECT COUNT(*) as total FROM users WHERE status = 'active'`;
     const [postsCount] = await sql`SELECT COUNT(*) as total FROM posts`;
     const [commentsCount] = await sql`SELECT COUNT(*) as total FROM comments`;
-    const [poolsCount] = await sql`SELECT COUNT(*) as total FROM staking_pools WHERE is_active = true`;
-    const [stakesSum] = await sql`SELECT COALESCE(SUM(total_staked), 0) as total FROM staking_pools`;
+    const [poolsCount] =
+      await sql`SELECT COUNT(*) as total FROM staking_pools WHERE is_active = true`;
+    const [stakesSum] =
+      await sql`SELECT COALESCE(SUM(total_staked), 0) as total FROM staking_pools`;
     const [purchasesStats] = await sql`
       SELECT COUNT(*) as total_orders, 
              COALESCE(SUM(amount_usd), 0) as total_raised,
              COALESCE(SUM(tokens_total), 0) as total_tokens
       FROM token_purchases WHERE status = 'completed'
     `;
-    
+
     // Recent data
-    const recentUsers = await sql`SELECT uid as id, email, role, created_at FROM users ORDER BY created_at DESC LIMIT 5`;
+    const recentUsers =
+      await sql`SELECT uid as id, email, role, created_at FROM users ORDER BY created_at DESC LIMIT 5`;
     const recentPosts = await sql`
       SELECT p.id, p.title, p.created_at, u.email as author_email 
       FROM posts p LEFT JOIN users u ON p.user_id = u.uid 
@@ -910,21 +914,24 @@ export const dbQuery = {
       SELECT id, buyer_address, amount_usd, tokens_total, status, created_at 
       FROM token_purchases ORDER BY created_at DESC LIMIT 5
     `;
-    
+
     // Growth stats
     const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
     const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
-    
-    const [newUsersThisWeek] = await sql`SELECT COUNT(*) as total FROM users WHERE created_at > ${weekAgo}`;
+
+    const [newUsersThisWeek] =
+      await sql`SELECT COUNT(*) as total FROM users WHERE created_at > ${weekAgo}`;
     const [newUsersLastWeek] = await sql`
       SELECT COUNT(*) as total FROM users WHERE created_at > ${twoWeeksAgo} AND created_at <= ${weekAgo}
     `;
-    const [newPostsThisWeek] = await sql`SELECT COUNT(*) as total FROM posts WHERE created_at > ${weekAgo}`;
-    
+    const [newPostsThisWeek] =
+      await sql`SELECT COUNT(*) as total FROM posts WHERE created_at > ${weekAgo}`;
+
     const thisWeek = parseInt(newUsersThisWeek.total);
     const lastWeek = parseInt(newUsersLastWeek.total);
-    const growthPercent = lastWeek > 0 ? ((thisWeek - lastWeek) / lastWeek * 100).toFixed(1) : (thisWeek > 0 ? 100 : 0);
-    
+    const growthPercent =
+      lastWeek > 0 ? (((thisWeek - lastWeek) / lastWeek) * 100).toFixed(1) : thisWeek > 0 ? 100 : 0;
+
     return {
       overview: {
         total_users: parseInt(usersCount.total),
@@ -956,7 +963,14 @@ export const dbQuery = {
   },
 
   // Audit Log
-  async logAction(adminId: string, action: string, targetType: string, targetId: string, oldValue: any, newValue: any) {
+  async logAction(
+    adminId: string,
+    action: string,
+    targetType: string,
+    targetId: string,
+    oldValue: any,
+    newValue: any
+  ) {
     if (!sql) return;
     await sql`
       INSERT INTO audit_logs (admin_id, action, target_type, target_id, old_value, new_value)
@@ -1051,7 +1065,7 @@ export const db = {
   findUserByEmail: async (email: string) => dbQuery.getUserByEmail(email),
   createUser: async (userData: any) => dbQuery.createUser(userData),
   updateUser: async (id: string, updates: any) => dbQuery.updateUser(id, updates),
-  
+
   // TOTP methods
   enableTOTP: async (userId: string, secret: string) => {
     if (!sql) return null;
@@ -1065,15 +1079,16 @@ export const db = {
     // Simplified backup code verification
     return false;
   },
-  
+
   // Session methods
   createSession: async (userId: string, tokenOrIp: string, expiresAtOrUserAgent: Date | string) => {
     if (!sql) return { token: 'session_' + Date.now(), userId };
     // Generate a session token
     const token = 'sess_' + Date.now() + '_' + Math.random().toString(36).substring(7);
-    const expiresAt = expiresAtOrUserAgent instanceof Date 
-      ? expiresAtOrUserAgent 
-      : new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours default
+    const expiresAt =
+      expiresAtOrUserAgent instanceof Date
+        ? expiresAtOrUserAgent
+        : new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours default
     try {
       await sql`INSERT INTO sessions (user_id, token, expires_at) VALUES (${userId}, ${token}, ${expiresAt})`;
     } catch (e) {
@@ -1109,7 +1124,7 @@ export const db = {
       return false;
     }
   },
-  
+
   // Token purchase methods
   createTokenPurchase: async (purchase: any) => {
     if (!sql) return null;
@@ -1135,7 +1150,7 @@ export const db = {
     `;
     return result[0];
   },
-  
+
   // KYC methods
   getKYCStatus: async (userId: string) => {
     if (!sql) return null;
@@ -1146,13 +1161,13 @@ export const db = {
     if (!sql) return null;
     return await sql`UPDATE users SET kyc_status = ${status}, kyc_data = ${JSON.stringify(data)} WHERE uid = ${userId} RETURNING *`;
   },
-  
+
   // Posts methods
   getPosts: async (params: any) => dbQuery.getPosts(params),
   createPost: async (post: any) => dbQuery.createPost(post),
   updatePost: async (id: number, updates: any) => dbQuery.updatePost(id, updates),
   deletePost: async (id: number) => dbQuery.deletePost(id),
-  
+
   // Referral methods
   createReferral: async (referral: any) => {
     if (!sql) return null;
@@ -1163,7 +1178,7 @@ export const db = {
     if (!sql) return null;
     return null;
   },
-  
+
   // Backup codes methods
   saveBackupCodes: async (userId: string, codes: string[]) => {
     if (!sql) return null;
@@ -1174,7 +1189,7 @@ export const db = {
     const result = await sql`SELECT backup_codes FROM users WHERE uid = ${userId}`;
     return result[0]?.backup_codes || [];
   },
-  
+
   // Payment methods
   createPayment: async (payment: any) => {
     if (!sql) return null;
@@ -1188,7 +1203,7 @@ export const db = {
     if (!sql) return null;
     return null;
   },
-  
+
   // Auth methods
   verifyUserPassword: async (email: string, password: string) => {
     if (!sql) return null;
@@ -1210,7 +1225,7 @@ export const db = {
       role: user.role || 'user',
     };
   },
-  
+
   // Order methods
   getOrdersByUserId: async (userId: string) => {
     if (!sql) return [];
@@ -1221,7 +1236,7 @@ export const db = {
     const result = await sql`SELECT * FROM token_purchases WHERE id = ${orderId}`;
     return result[0] || null;
   },
-  
+
   // Purchase methods
   createPurchase: async (purchase: any) => {
     if (!sql) return null;
@@ -1241,8 +1256,23 @@ export const db = {
     return await sql`SELECT * FROM token_purchases WHERE wallet_address = ${address} ORDER BY created_at DESC`;
   },
   getPurchaseStats: async () => {
-    if (!sql) return { totalPurchases: 0, totalAmount: 0, totalTokens: 0, totalRaised: 0, totalTokensSold: 0, completedPurchases: 0 };
-    return { totalPurchases: 0, totalAmount: 0, totalTokens: 0, totalRaised: 0, totalTokensSold: 0, completedPurchases: 0 };
+    if (!sql)
+      return {
+        totalPurchases: 0,
+        totalAmount: 0,
+        totalTokens: 0,
+        totalRaised: 0,
+        totalTokensSold: 0,
+        completedPurchases: 0,
+      };
+    return {
+      totalPurchases: 0,
+      totalAmount: 0,
+      totalTokens: 0,
+      totalRaised: 0,
+      totalTokensSold: 0,
+      completedPurchases: 0,
+    };
   },
 };
 

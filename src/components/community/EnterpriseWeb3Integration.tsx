@@ -2,17 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  WalletIcon, 
-  ShieldCheckIcon, 
-  TrophyIcon, 
+import {
+  WalletIcon,
+  ShieldCheckIcon,
+  TrophyIcon,
   CubeIcon,
   StarIcon,
   BanknotesIcon,
   UserCircleIcon,
   ChartBarIcon,
   GiftIcon,
-  LockClosedIcon
+  LockClosedIcon,
 } from '@heroicons/react/24/outline';
 
 // Type definitions
@@ -76,34 +76,34 @@ export default function EnterpriseWeb3Integration() {
 
   // Supported wallets for enterprise integration
   const supportedWallets = [
-    { 
-      id: 'metamask', 
-      name: 'MetaMask', 
+    {
+      id: 'metamask',
+      name: 'MetaMask',
       icon: '🦊',
       description: 'Most popular Ethereum wallet',
-      installed: typeof window !== 'undefined' && window.ethereum?.isMetaMask
+      installed: typeof window !== 'undefined' && window.ethereum?.isMetaMask,
     },
-    { 
-      id: 'walletconnect', 
-      name: 'WalletConnect', 
+    {
+      id: 'walletconnect',
+      name: 'WalletConnect',
       icon: '🔗',
       description: 'Connect to mobile wallets',
-      installed: true
+      installed: true,
     },
-    { 
-      id: 'coinbase', 
-      name: 'Coinbase Wallet', 
+    {
+      id: 'coinbase',
+      name: 'Coinbase Wallet',
       icon: '🔵',
-      description: 'Coinbase\'s self-custody wallet',
-      installed: typeof window !== 'undefined' && window.ethereum?.isCoinbaseWallet
+      description: "Coinbase's self-custody wallet",
+      installed: typeof window !== 'undefined' && window.ethereum?.isCoinbaseWallet,
     },
-    { 
-      id: 'phantom', 
-      name: 'Phantom', 
+    {
+      id: 'phantom',
+      name: 'Phantom',
       icon: '👻',
       description: 'Solana ecosystem wallet',
-      installed: typeof window !== 'undefined' && window.solana?.isPhantom
-    }
+      installed: typeof window !== 'undefined' && window.solana?.isPhantom,
+    },
   ];
 
   // NFT Badge rarities and types
@@ -111,7 +111,7 @@ export default function EnterpriseWeb3Integration() {
     common: { color: 'from-gray-400 to-gray-600', glow: 'shadow-gray-500/50' },
     rare: { color: 'from-blue-400 to-blue-600', glow: 'shadow-blue-500/50' },
     epic: { color: 'from-purple-400 to-purple-600', glow: 'shadow-purple-500/50' },
-    legendary: { color: 'from-yellow-400 to-yellow-600', glow: 'shadow-yellow-500/50' }
+    legendary: { color: 'from-yellow-400 to-yellow-600', glow: 'shadow-yellow-500/50' },
   };
 
   // Mock data for demonstration
@@ -126,7 +126,7 @@ export default function EnterpriseWeb3Integration() {
         totalPosts: 156,
         totalLikes: 892,
         stakingPower: 15000,
-        governanceVotes: 23
+        governanceVotes: 23,
       });
 
       setNftBadges([
@@ -137,7 +137,7 @@ export default function EnterpriseWeb3Integration() {
           rarity: 'legendary',
           image: '🏆',
           earned: '2024-01-15',
-          tokenId: 'QAU-BADGE-001'
+          tokenId: 'QAU-BADGE-001',
         },
         {
           id: 2,
@@ -146,7 +146,7 @@ export default function EnterpriseWeb3Integration() {
           rarity: 'epic',
           image: '🏗️',
           earned: '2024-03-20',
-          tokenId: 'QAU-BADGE-045'
+          tokenId: 'QAU-BADGE-045',
         },
         {
           id: 3,
@@ -155,8 +155,8 @@ export default function EnterpriseWeb3Integration() {
           rarity: 'rare',
           image: '🗳️',
           earned: '2024-05-10',
-          tokenId: 'QAU-BADGE-089'
-        }
+          tokenId: 'QAU-BADGE-089',
+        },
       ]);
 
       setAchievements([
@@ -167,7 +167,7 @@ export default function EnterpriseWeb3Integration() {
           icon: '📝',
           progress: 100,
           unlocked: true,
-          reward: '10 QAU'
+          reward: '10 QAU',
         },
         {
           id: 2,
@@ -176,7 +176,7 @@ export default function EnterpriseWeb3Integration() {
           icon: '🦋',
           progress: 89,
           unlocked: false,
-          reward: '50 QAU'
+          reward: '50 QAU',
         },
         {
           id: 3,
@@ -185,8 +185,8 @@ export default function EnterpriseWeb3Integration() {
           icon: '💎',
           progress: 100,
           unlocked: true,
-          reward: 'Staker Badge NFT'
-        }
+          reward: 'Staker Badge NFT',
+        },
       ]);
 
       setStakingData({
@@ -195,7 +195,7 @@ export default function EnterpriseWeb3Integration() {
         votingPower: 15000,
         lockPeriod: '90 days',
         apy: 12.5,
-        nextReward: '2024-12-01'
+        nextReward: '2024-12-01',
       });
     }
   }, [isConnected]);
@@ -204,10 +204,12 @@ export default function EnterpriseWeb3Integration() {
     setLoading(true);
     try {
       // Simulate wallet connection
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       if (walletId === 'metamask' && window.ethereum) {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }) as string[];
+        const accounts = (await window.ethereum.request({
+          method: 'eth_requestAccounts',
+        })) as string[];
         setWalletAddress(accounts[0]);
         setIsConnected(true);
       } else {
@@ -266,9 +268,7 @@ export default function EnterpriseWeb3Integration() {
                 <div className="text-left">
                   <h3 className="font-semibold text-white">{wallet.name}</h3>
                   <p className="text-sm text-gray-400">{wallet.description}</p>
-                  {!wallet.installed && (
-                    <p className="text-xs text-red-400 mt-1">Not installed</p>
-                  )}
+                  {!wallet.installed && <p className="text-xs text-red-400 mt-1">Not installed</p>}
                 </div>
               </div>
             </motion.button>
@@ -340,7 +340,9 @@ export default function EnterpriseWeb3Integration() {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Reputation</span>
-                <span className="text-white font-semibold">{userProfile.reputation.toLocaleString()}</span>
+                <span className="text-white font-semibold">
+                  {userProfile.reputation.toLocaleString()}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Posts</span>
@@ -361,7 +363,9 @@ export default function EnterpriseWeb3Integration() {
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-gray-400">Staked QAU</span>
-                <span className="text-white font-semibold">{stakingData?.totalStaked?.toLocaleString()}</span>
+                <span className="text-white font-semibold">
+                  {stakingData?.totalStaked?.toLocaleString()}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Rewards</span>
@@ -373,7 +377,9 @@ export default function EnterpriseWeb3Integration() {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Voting Power</span>
-                <span className="text-purple-400 font-semibold">{stakingData?.votingPower?.toLocaleString()}</span>
+                <span className="text-purple-400 font-semibold">
+                  {stakingData?.votingPower?.toLocaleString()}
+                </span>
               </div>
             </div>
           </div>
@@ -433,12 +439,17 @@ export default function EnterpriseWeb3Integration() {
                   Earned: {badge.earned ? new Date(badge.earned).toLocaleDateString() : 'N/A'}
                 </div>
                 <div className="absolute top-2 right-2">
-                  <span className={`px-2 py-1 text-xs rounded-full ${
-                    badge.rarity === 'legendary' ? 'bg-yellow-500/30 text-yellow-200' :
-                    badge.rarity === 'epic' ? 'bg-purple-500/30 text-purple-200' :
-                    badge.rarity === 'rare' ? 'bg-blue-500/30 text-blue-200' :
-                    'bg-gray-500/30 text-gray-200'
-                  }`}>
+                  <span
+                    className={`px-2 py-1 text-xs rounded-full ${
+                      badge.rarity === 'legendary'
+                        ? 'bg-yellow-500/30 text-yellow-200'
+                        : badge.rarity === 'epic'
+                          ? 'bg-purple-500/30 text-purple-200'
+                          : badge.rarity === 'rare'
+                            ? 'bg-blue-500/30 text-blue-200'
+                            : 'bg-gray-500/30 text-gray-200'
+                    }`}
+                  >
                     {badge.rarity}
                   </span>
                 </div>
@@ -468,8 +479,8 @@ export default function EnterpriseWeb3Integration() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
               className={`p-4 rounded-lg border ${
-                achievement.unlocked 
-                  ? 'bg-green-500/10 border-green-500/30' 
+                achievement.unlocked
+                  ? 'bg-green-500/10 border-green-500/30'
                   : 'bg-white/5 border-white/20'
               }`}
             >
@@ -480,9 +491,7 @@ export default function EnterpriseWeb3Integration() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <h4 className="font-semibold text-white">{achievement.title}</h4>
-                    {achievement.unlocked && (
-                      <ShieldCheckIcon className="w-4 h-4 text-green-400" />
-                    )}
+                    {achievement.unlocked && <ShieldCheckIcon className="w-4 h-4 text-green-400" />}
                   </div>
                   <p className="text-sm text-gray-400 mb-2">{achievement.description}</p>
                   <div className="flex items-center gap-4">
@@ -492,7 +501,7 @@ export default function EnterpriseWeb3Integration() {
                         <span>{achievement.progress}%</span>
                       </div>
                       <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div 
+                        <div
                           className={`h-2 rounded-full transition-all duration-500 ${
                             achievement.unlocked ? 'bg-green-500' : 'bg-purple-500'
                           }`}

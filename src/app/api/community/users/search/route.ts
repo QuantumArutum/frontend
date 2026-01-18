@@ -11,17 +11,20 @@ export async function GET(request: Request) {
   const limit = parseInt(searchParams.get('limit') || '10');
 
   if (!query || query.length < 2) {
-    return NextResponse.json({ 
-      success: false, 
-      message: '搜索关键词至少需要2个字符' 
-    }, { status: 400 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: '搜索关键词至少需要2个字符',
+      },
+      { status: 400 }
+    );
   }
 
   try {
     if (!sql) {
       return NextResponse.json({
         success: true,
-        data: { users: [] }
+        data: { users: [] },
       });
     }
 
@@ -40,19 +43,22 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       success: true,
-      data: { 
-        users: users.map(u => ({
+      data: {
+        users: users.map((u) => ({
           uid: u.uid,
           email: u.email,
-          name: u.name || u.email?.split('@')[0] || 'User'
-        }))
-      }
+          name: u.name || u.email?.split('@')[0] || 'User',
+        })),
+      },
     });
   } catch (error: any) {
     console.error('User search error:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: '搜索用户失败: ' + error.message 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: '搜索用户失败: ' + error.message,
+      },
+      { status: 500 }
+    );
   }
 }

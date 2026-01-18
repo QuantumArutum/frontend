@@ -1,6 +1,14 @@
 'use client';
 
-import React, { createContext, useState, useContext, useEffect, useMemo, ReactNode, ComponentType } from 'react';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useMemo,
+  ReactNode,
+  ComponentType,
+} from 'react';
 import AuthService from '../../utils/auth';
 
 // 用户类型定义
@@ -77,7 +85,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkAuthStatus();
   }, [authService]);
 
-
   // 登录函数
   const login = async (email: string, password: string): Promise<AuthResult> => {
     const result = await authService.login({ email, password });
@@ -89,7 +96,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   // 注册函数
-  const register = async (username: string, email: string, password: string): Promise<AuthResult> => {
+  const register = async (
+    username: string,
+    email: string,
+    password: string
+  ): Promise<AuthResult> => {
     const result = await authService.register({ username, email, password });
     if (result.success && result.user) {
       setUser(result.user);
@@ -132,14 +143,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     updateUser,
     getToken,
-    checkAuth
+    checkAuth,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 // 自定义Hook用于使用认证上下文
@@ -155,34 +162,35 @@ export const useAuth = (): AuthContextType => {
 export function withAuth<P extends object>(WrappedComponent: ComponentType<P>): React.FC<P> {
   const AuthenticatedComponent: React.FC<P> = (props) => {
     const { isAuthenticated, loading } = useAuth();
-    
+
     if (loading) {
       return (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          fontSize: '1.2rem',
-          color: '#6c757d'
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            fontSize: '1.2rem',
+            color: '#6c757d',
+          }}
+        >
           正在验证身份...
         </div>
       );
     }
-    
+
     if (!isAuthenticated) {
       if (typeof window !== 'undefined') {
         window.location.href = '/zh-CN/auth/login';
       }
       return null;
     }
-    
+
     return <WrappedComponent {...props} />;
   };
-  
+
   return AuthenticatedComponent;
 }
 
 export default AuthContext;
-

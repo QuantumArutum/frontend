@@ -54,10 +54,7 @@ function formatStake(stakeWei: string): string {
 }
 
 // 计算 validator 状态
-function getValidatorStatus(validator: {
-  active: boolean;
-  slashed: boolean;
-}): string {
+function getValidatorStatus(validator: { active: boolean; slashed: boolean }): string {
   if (validator.slashed) return 'slashed';
   if (validator.active) return 'active';
   return 'inactive';
@@ -72,52 +69,59 @@ export const GET = createSecureHandler(
 
     try {
       const qposStatus = await makeRPCCall('qpos_status');
-      
+
       if (!qposStatus || !qposStatus.validators) {
-        return addSecurityHeaders(NextResponse.json({
-          validators: [],
-          totalCount: 0,
-          activeCount: 0,
-          slashedCount: 0,
-          totalStake: '0',
-        }));
+        return addSecurityHeaders(
+          NextResponse.json({
+            validators: [],
+            totalCount: 0,
+            activeCount: 0,
+            slashedCount: 0,
+            totalStake: '0',
+          })
+        );
       }
 
       const validators = qposStatus.validators || [];
-      
+
       // 统计
       let activeCount = 0;
       let slashedCount = 0;
       let totalStake = BigInt(0);
-      
+
       // 格式化 validator 信息
-      const formattedValidators = validators.map((v: {
-        address: string;
-        stake: string;
-        active: boolean;
-        slashed: boolean;
-      }, index: number) => {
-        const status = getValidatorStatus(v);
-        if (v.active) activeCount++;
-        if (v.slashed) slashedCount++;
-        
-        try {
-          totalStake += BigInt(v.stake);
-        } catch {
-          // ignore
+      const formattedValidators = validators.map(
+        (
+          v: {
+            address: string;
+            stake: string;
+            active: boolean;
+            slashed: boolean;
+          },
+          index: number
+        ) => {
+          const status = getValidatorStatus(v);
+          if (v.active) activeCount++;
+          if (v.slashed) slashedCount++;
+
+          try {
+            totalStake += BigInt(v.stake);
+          } catch {
+            // ignore
+          }
+
+          return {
+            index,
+            address: '0x' + v.address,
+            stake: v.stake,
+            stakeFormatted: formatStake(v.stake),
+            status,
+            active: v.active,
+            slashed: v.slashed,
+            isCurrentProposer: qposStatus.currentProposer === v.address,
+          };
         }
-        
-        return {
-          index,
-          address: '0x' + v.address,
-          stake: v.stake,
-          stakeFormatted: formatStake(v.stake),
-          status,
-          active: v.active,
-          slashed: v.slashed,
-          isCurrentProposer: qposStatus.currentProposer === v.address,
-        };
-      });
+      );
 
       const response = {
         validators: formattedValidators,
@@ -138,14 +142,19 @@ export const GET = createSecureHandler(
       return addSecurityHeaders(NextResponse.json(response));
     } catch (error) {
       console.error('获取 Validators 失败:', error);
-      return addSecurityHeaders(NextResponse.json({
-        validators: [],
-        totalCount: 0,
-        activeCount: 0,
-        slashedCount: 0,
-        totalStake: '0',
-        error: 'Failed to fetch validators',
-      }, { status: 500 }));
+      return addSecurityHeaders(
+        NextResponse.json(
+          {
+            validators: [],
+            totalCount: 0,
+            activeCount: 0,
+            slashedCount: 0,
+            totalStake: '0',
+            error: 'Failed to fetch validators',
+          },
+          { status: 500 }
+        )
+      );
     }
   },
   { rateLimit: true, allowedMethods: ['GET'] }
