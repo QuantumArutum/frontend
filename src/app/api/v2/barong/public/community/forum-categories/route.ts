@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/database';
+import type { Category, ApiResponse } from '@/types';
 
 // 设置运行时配置 - 使用Node.js runtime以支持完整的数据库功能
 export const maxDuration = 30;
@@ -42,7 +43,7 @@ export async function GET(request: NextRequest) {
         GROUP BY c.id, c.name, c.slug, c.description, c.icon, c.color, c.sort_order
         ORDER BY c.sort_order ASC, c.name ASC
         LIMIT 20
-      ` as any[];
+      ` as Category[];
 
       clearTimeout(timeoutId);
 
