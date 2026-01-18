@@ -6,17 +6,25 @@
 // ============= 用户相关类型 =============
 
 export interface User {
-  id: string;
+  id?: string;
   uid: string;
   email: string;
   username?: string;
   name?: string;
   avatar?: string;
-  role: 'user' | 'moderator' | 'admin';
-  level: number;
-  status: 'active' | 'banned' | 'suspended';
-  createdAt: Date | string;
+  role?: 'user' | 'moderator' | 'admin';
+  level?: number;
+  status?: 'active' | 'banned' | 'suspended';
+  is_active?: boolean;
+  totp_enabled?: boolean;
+  created_at?: Date | string;
+  createdAt?: Date | string;
+  updated_at?: Date | string;
   updatedAt?: Date | string;
+  last_login_at?: Date | string;
+  post_count?: number;
+  comment_count?: number;
+  stake_count?: number;
 }
 
 export interface UserProfile extends User {
@@ -177,6 +185,15 @@ export interface Notification {
 }
 
 // ============= 活动相关类型 =============
+
+export interface Activity {
+  id: number;
+  user_id: string;
+  activity_type: string;
+  description: string;
+  created_at: Date | string;
+  metadata?: Record<string, any>;
+}
 
 export interface Event {
   id: number;
