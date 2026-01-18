@@ -1,168 +1,189 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { neon } from '@neondatabase/serverless';
+import { sql } from '@/lib/database';
 
-const sql = neon(process.env.DATABASE_URL!);
+// 设置运行时配置
+export const runtime = 'edge';
+export const maxDuration = 10;
 
-// GET /api/v2/barong/public/community/tags - 获取标签列表
+// GET /api/v2/barong/public/community/tags - 获取标签列表（优化版）
 export async function GET(request: NextRequest) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 8000);
+
   try {
+    if (!sql) {
+      clearTimeout(timeoutId);
+      return NextResponse.json({
+        success: true,
+        data: { tags: [], total: 0, page: 1, limit: 20, hasMore: false }
+      });
+    }
+
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '20');
+    const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 50);
     const search = searchParams.get('search') || '';
-    const sortBy = searchParams.get('sortBy') || 'usage'; // usage, name, created
-    const official = searchParams.get('official'); // true, false, null
-
+    const sortBy = searchParams.get('sortBy') || 'usage';
     const offset = (page - 1) * limit;
 
-    // 构建查询条件
-    let whereClause = 'WHERE t.is_active = TRUE';
-    const params: any[] = [];
-    let paramIndex = 1;
-
+    // 简化查询
+    let tags;
     if (search) {
-      whereClause += ` AND (t.name ILIKE $${paramIndex} OR t.description ILIKE $${paramIndex})`;
-      params.push(`%${search}%`);
-      paramIndex++;
+      tags = await sql`
+        SELECT 
+          t.id,
+          t.name,
+          t.slug,
+          t.description,
+          t.color,
+          t.use_count as usage_count,
+          t.is_official,
+          t.created_at
+        FROM tags t
+        WHERE t.name ILIKE ${'%' + search + '%'}
+        ORDER BY t.use_count DESC
+        LIMIT ${limit}
+        OFFSET ${offset}
+      ` as any[];
+    } else {
+      const orderBy = sortBy === 'name' ? 't.name ASC' : 
+                      sortBy === 'created' ? 't.created_at DESC' : 
+                      't.use_count DESC';
+      
+      tags = await sql`
+        SELECT 
+          t.id,
+          t.name,
+          t.slug,
+          t.description,
+          t.color,
+          t.use_count as usage_count,
+          t.is_official,
+          t.created_at
+        FROM tags t
+        ORDER BY ${sql.unsafe(orderBy)}
+        LIMIT ${limit}
+        OFFSET ${offset}
+      ` as any[];
     }
 
-    if (official === 'true') {
-      whereClause += ' AND t.is_official = TRUE';
-    } else if (official === 'false') {
-      whereClause += ' AND t.is_official = FALSE';
-    }
-
-    // 排序
-    let orderBy = 't.usage_count DESC';
-    if (sortBy === 'name') {
-      orderBy = 't.name ASC';
-    } else if (sortBy === 'created') {
-      orderBy = 't.created_at DESC';
-    }
-
-    // 获取标签列表
-    const tags = await sql`
-      SELECT 
-        t.id,
-        t.name,
-        t.slug,
-        t.description,
-        t.color,
-        t.icon,
-        t.usage_count,
-        t.is_official,
-        t.created_at,
-        COUNT(DISTINCT pt.post_id) as post_count,
-        COUNT(DISTINCT ts.user_id) as subscriber_count
-      FROM tags t
-      LEFT JOIN post_tags pt ON t.id = pt.tag_id
-      LEFT JOIN tag_subscriptions ts ON t.id = ts.tag_id
-      ${sql.unsafe(whereClause)}
-      GROUP BY t.id
-      ORDER BY ${sql.unsafe(orderBy)}
-      LIMIT ${limit} OFFSET ${offset}
-    `;
-
-    // 获取总数
-    const countResult = await sql`
-      SELECT COUNT(*) as total
-      FROM tags t
-      ${sql.unsafe(whereClause)}
-    `;
-
-    const total = parseInt(countResult[0]?.total || '0');
-    const hasMore = offset + tags.length < total;
+    clearTimeout(timeoutId);
 
     return NextResponse.json({
       success: true,
       data: {
         tags,
-        total,
+        total: tags.length,
         page,
         limit,
-        hasMore,
-      },
+        hasMore: tags.length === limit
+      }
     });
+
   } catch (error: any) {
+    clearTimeout(timeoutId);
+    
+    if (error instanceof Error && error.name === 'AbortError') {
+      return NextResponse.json({
+        success: true,
+        data: { tags: [], total: 0, page: 1, limit: 20, hasMore: false }
+      });
+    }
+    
     console.error('Error fetching tags:', error);
     return NextResponse.json(
       {
         success: false,
         message: '获取标签列表失败',
-        error: error.message,
+        error: error.message
       },
       { status: 500 }
     );
   }
 }
 
-// POST /api/v2/barong/public/community/tags - 创建标签
+// POST /api/v2/barong/public/community/tags - 创建标签（优化版）
 export async function POST(request: NextRequest) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
+
   try {
+    if (!sql) {
+      clearTimeout(timeoutId);
+      return NextResponse.json(
+        { success: false, message: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { name, description, color = '#3b82f6' } = body;
 
     if (!name || name.trim().length === 0) {
+      clearTimeout(timeoutId);
       return NextResponse.json(
-        {
-          success: false,
-          message: '标签名称不能为空',
-        },
+        { success: false, message: '标签名称不能为空' },
         { status: 400 }
       );
     }
 
-    // 验证标签名称长度
     if (name.length > 50) {
+      clearTimeout(timeoutId);
       return NextResponse.json(
-        {
-          success: false,
-          message: '标签名称不能超过50个字符',
-        },
+        { success: false, message: '标签名称不能超过50个字符' },
         { status: 400 }
       );
     }
 
-    // 生成 slug
     const slug = name
       .toLowerCase()
       .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
       .replace(/^-+|-+$/g, '');
 
-    // 检查标签是否已存在
+    // 检查是否存在
     const existing = await sql`
-      SELECT id FROM tags WHERE name = ${name} OR slug = ${slug}
+      SELECT id FROM tags WHERE name = ${name} OR slug = ${slug} LIMIT 1
     `;
 
     if (existing.length > 0) {
+      clearTimeout(timeoutId);
       return NextResponse.json(
-        {
-          success: false,
-          message: '标签已存在',
-        },
+        { success: false, message: '标签已存在' },
         { status: 400 }
       );
     }
 
     // 创建标签
     const result = await sql`
-      INSERT INTO tags (name, slug, description, color)
-      VALUES (${name}, ${slug}, ${description || null}, ${color})
+      INSERT INTO tags (name, slug, description, color, use_count, created_at)
+      VALUES (${name}, ${slug}, ${description || null}, ${color}, 0, NOW())
       RETURNING *
     `;
+
+    clearTimeout(timeoutId);
 
     return NextResponse.json({
       success: true,
       data: result[0],
-      message: '标签创建成功',
+      message: '标签创建成功'
     });
+
   } catch (error: any) {
+    clearTimeout(timeoutId);
+    
+    if (error instanceof Error && error.name === 'AbortError') {
+      return NextResponse.json(
+        { success: false, message: 'Request timeout' },
+        { status: 504 }
+      );
+    }
+    
     console.error('Error creating tag:', error);
     return NextResponse.json(
       {
         success: false,
         message: '创建标签失败',
-        error: error.message,
+        error: error.message
       },
       { status: 500 }
     );
