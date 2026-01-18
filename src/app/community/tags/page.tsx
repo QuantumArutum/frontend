@@ -65,20 +65,6 @@ export default function TagsPage() {
     loadTrendingTags();
   }, [loadTags, loadTrendingTags]);
 
-  const loadTrendingTags = async () => {
-    try {
-      const response = await barongAPI.get('/public/community/tags/trending', {
-        params: { timeRange: '7d', limit: 20 },
-      });
-
-      if (response.data.success) {
-        setTrendingTags(response.data.data.tags);
-      }
-    } catch (error) {
-      console.error('Error loading trending tags:', error);
-    }
-  };
-
   const handleSearch = () => {
     loadTags();
   };

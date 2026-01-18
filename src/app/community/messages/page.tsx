@@ -51,31 +51,45 @@ export default function MessagesPage() {
   }, [currentUserId]);
 
   const loadMessages = useCallback(
-    async (userId: string) => {
+    async (otherUserId: string) => {
       try {
-        const response = await barongAPI.get(`/public/community/messages/conversation/${userId}`, {
-          params: { currentUserId },
-        });
+        const response = await barongAPI.get(
+          `/public/community/messages/conversation/${otherUserId}`,
+          {
+            params: { currentUserId, page: 1, limit: 50 },
+          }
+        );
 
         if (response.data.success) {
           setMessages(response.data.data.messages);
         }
       } catch (error) {
-        console.error('Failed to load messages:', error);
+        console.error('Error loading messages:', error);
+        antdMessage.error('加载消息失败');
       }
     },
     [currentUserId]
   );
 
   const markAsRead = useCallback(
-    async (userId: string) => {
+    async (otherUserId: string) => {
       try {
         await barongAPI.post('/public/community/messages/mark-read', {
           currentUserId,
-          otherUserId: userId,
+          conversationUserId: otherUserId,
         });
+
+        // 更新会话列表中的未读数
+        setConversations((prev) =>
+          prev.map((conv) =>
+            conv.otherUserId === otherUserId ? { ...conv, unreadCount: 0 } : conv
+          )
+        );
+
+        // 更新总未读数
+        loadConversations();
       } catch (error) {
-        console.error('Failed to mark as read:', error);
+        console.error('Error marking as read:', error);
       }
     },
     [currentUserId]
@@ -93,43 +107,6 @@ export default function MessagesPage() {
       markAsRead(selectedUserId);
     }
   }, [currentUserId, selectedUserId, loadMessages, markAsRead]);
-
-  const loadMessages = async (otherUserId: string) => {
-    try {
-      const response = await barongAPI.get(
-        `/public/community/messages/conversation/${otherUserId}`,
-        {
-          params: { currentUserId, page: 1, limit: 50 },
-        }
-      );
-
-      if (response.data.success) {
-        setMessages(response.data.data.messages);
-      }
-    } catch (error) {
-      console.error('Error loading messages:', error);
-      antdMessage.error('加载消息失败');
-    }
-  };
-
-  const markAsRead = async (otherUserId: string) => {
-    try {
-      await barongAPI.post('/public/community/messages/mark-read', {
-        currentUserId,
-        conversationUserId: otherUserId,
-      });
-
-      // 更新会话列表中的未读数
-      setConversations((prev) =>
-        prev.map((conv) => (conv.otherUserId === otherUserId ? { ...conv, unreadCount: 0 } : conv))
-      );
-
-      // 更新总未读数
-      loadConversations();
-    } catch (error) {
-      console.error('Error marking as read:', error);
-    }
-  };
 
   const handleSendMessage = async (content: string) => {
     if (!selectedUserId) return;

@@ -85,32 +85,6 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
     }
   }, [tag, loadPosts]);
 
-  const loadPosts = async () => {
-    try {
-      const userInfoStr = localStorage.getItem('user_info');
-      const currentUserId = userInfoStr
-        ? JSON.parse(userInfoStr).id || JSON.parse(userInfoStr).uid || JSON.parse(userInfoStr).email
-        : null;
-
-      const response = await barongAPI.get(`/public/community/tags/${slug}/posts`, {
-        params: {
-          page: 1,
-          limit: 20,
-          sortBy,
-          timeRange,
-          currentUserId,
-        },
-      });
-
-      if (response.data.success) {
-        setPosts(response.data.data.posts);
-      }
-    } catch (error) {
-      console.error('Error loading posts:', error);
-      message.error('加载帖子失败');
-    }
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">

@@ -43,13 +43,12 @@ export default function ProfileSettingsPage() {
 
       if (response.data.success) {
         const profileData = response.data.data;
-        setProfile({
-          username: profileData.username || '',
+        setFormData({
+          displayName: profileData.username || '',
           bio: profileData.bio || '',
           location: profileData.location || '',
           website: profileData.website || '',
-          avatar: profileData.avatar || '',
-          social: {
+          socialLinks: {
             twitter: profileData.social?.twitter || '',
             github: profileData.social?.github || '',
             linkedin: profileData.social?.linkedin || '',
