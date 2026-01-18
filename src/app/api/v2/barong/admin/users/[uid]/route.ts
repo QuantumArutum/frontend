@@ -23,17 +23,21 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     const user = result.data;
 
+    if (!user) {
+      return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 });
+    }
+
     return NextResponse.json({
       success: true,
       data: {
-        uid: user.id,
+        uid: user.id || user.uid,
         email: user.email,
-        role: user.role,
+        role: user.role || 'user',
         level: user.level || 1,
         otp: user.totp_enabled || false,
         state: user.is_active ? 'active' : 'banned',
-        created_at: user.created_at,
-        updated_at: user.updated_at,
+        created_at: user.created_at || user.createdAt,
+        updated_at: user.updated_at || user.updatedAt,
         last_login: user.last_login_at,
         activity: {
           post_count: user.post_count || 0,
@@ -84,16 +88,20 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
     const user = result.data;
 
+    if (!user) {
+      return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 });
+    }
+
     return NextResponse.json({
       success: true,
       message: state === 'banned' ? 'User banned successfully' : 'User updated successfully',
       data: {
-        uid: user.id,
+        uid: user.id || user.uid,
         email: user.email,
-        role: user.role,
+        role: user.role || 'user',
         level: user.level || 1,
         state: user.is_active ? 'active' : 'banned',
-        updated_at: user.updated_at,
+        updated_at: user.updated_at || user.updatedAt,
       },
     });
   } catch (error) {
