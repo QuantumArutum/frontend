@@ -1,28 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/database';
+import { withCache, generateCacheKey, CacheTTL } from '@/lib/cache';
 
 // 设置运行时配置 - 使用Node.js runtime以支持完整的数据库功能
 export const maxDuration = 30;
 
-// GET /api/v2/barong/public/community/tags - 获取标签列表（优化版）
+// GET /api/v2/barong/public/community/tags - 获取标签列表（优化版 + 缓存）
 export async function GET(request: NextRequest) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 8000);
-
   try {
-    if (!sql) {
-      console.error('[tags] Database connection not available');
-      clearTimeout(timeoutId);
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'Database connection not available',
-          message: '数据库连接不可用，请稍后重试',
-        },
-        { status: 503 }
-      );
-    }
-
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 50);
@@ -30,102 +15,127 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get('sortBy') || 'usage';
     const offset = (page - 1) * limit;
 
-    // 简化查询 - 使用安全的条件查询替代sql.unsafe()
-    let tags;
-    if (search) {
-      tags = (await sql`
-        SELECT 
-          t.id,
-          t.name,
-          t.slug,
-          t.description,
-          t.color,
-          t.use_count as usage_count,
-          t.is_official,
-          t.created_at
-        FROM tags t
-        WHERE t.name ILIKE ${'%' + search + '%'}
-        ORDER BY t.use_count DESC
-        LIMIT ${limit}
-        OFFSET ${offset}
-      `) as any[];
-    } else {
-      // 使用条件查询替代动态SQL，避免SQL注入风险
-      if (sortBy === 'name') {
-        tags = (await sql`
-          SELECT 
-            t.id,
-            t.name,
-            t.slug,
-            t.description,
-            t.color,
-            t.use_count as usage_count,
-            t.is_official,
-            t.created_at
-          FROM tags t
-          ORDER BY t.name ASC
-          LIMIT ${limit}
-          OFFSET ${offset}
-        `) as any[];
-      } else if (sortBy === 'created') {
-        tags = (await sql`
-          SELECT 
-            t.id,
-            t.name,
-            t.slug,
-            t.description,
-            t.color,
-            t.use_count as usage_count,
-            t.is_official,
-            t.created_at
-          FROM tags t
-          ORDER BY t.created_at DESC
-          LIMIT ${limit}
-          OFFSET ${offset}
-        `) as any[];
-      } else {
-        // 默认按使用次数排序
-        tags = (await sql`
-          SELECT 
-            t.id,
-            t.name,
-            t.slug,
-            t.description,
-            t.color,
-            t.use_count as usage_count,
-            t.is_official,
-            t.created_at
-          FROM tags t
-          ORDER BY t.use_count DESC
-          LIMIT ${limit}
-          OFFSET ${offset}
-        `) as any[];
-      }
-    }
+    // 生成缓存键
+    const cacheKey = generateCacheKey('tags', { page, limit, search, sortBy });
 
-    clearTimeout(timeoutId);
+    // 使用缓存包装数据获取逻辑
+    const result = await withCache(
+      cacheKey,
+      CacheTTL.FIVE_MINUTES, // 标签列表缓存5分钟
+      async () => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+        try {
+          if (!sql) {
+            console.error('[tags] Database connection not available');
+            clearTimeout(timeoutId);
+            throw new Error('Database connection not available');
+          }
+
+          // 简化查询 - 使用安全的条件查询替代sql.unsafe()
+          let tags;
+          if (search) {
+            tags = (await sql`
+              SELECT 
+                t.id,
+                t.name,
+                t.slug,
+                t.description,
+                t.color,
+                t.use_count as usage_count,
+                t.is_official,
+                t.created_at
+              FROM tags t
+              WHERE t.name ILIKE ${'%' + search + '%'}
+              ORDER BY t.use_count DESC
+              LIMIT ${limit}
+              OFFSET ${offset}
+            `) as any[];
+          } else {
+            // 使用条件查询替代动态SQL，避免SQL注入风险
+            if (sortBy === 'name') {
+              tags = (await sql`
+                SELECT 
+                  t.id,
+                  t.name,
+                  t.slug,
+                  t.description,
+                  t.color,
+                  t.use_count as usage_count,
+                  t.is_official,
+                  t.created_at
+                FROM tags t
+                ORDER BY t.name ASC
+                LIMIT ${limit}
+                OFFSET ${offset}
+              `) as any[];
+            } else if (sortBy === 'created') {
+              tags = (await sql`
+                SELECT 
+                  t.id,
+                  t.name,
+                  t.slug,
+                  t.description,
+                  t.color,
+                  t.use_count as usage_count,
+                  t.is_official,
+                  t.created_at
+                FROM tags t
+                ORDER BY t.created_at DESC
+                LIMIT ${limit}
+                OFFSET ${offset}
+              `) as any[];
+            } else {
+              // 默认按使用次数排序
+              tags = (await sql`
+                SELECT 
+                  t.id,
+                  t.name,
+                  t.slug,
+                  t.description,
+                  t.color,
+                  t.use_count as usage_count,
+                  t.is_official,
+                  t.created_at
+                FROM tags t
+                ORDER BY t.use_count DESC
+                LIMIT ${limit}
+                OFFSET ${offset}
+              `) as any[];
+            }
+          }
+
+          clearTimeout(timeoutId);
+
+          return {
+            tags,
+            total: tags.length,
+            page,
+            limit,
+            hasMore: tags.length === limit,
+          };
+        } catch (queryError) {
+          clearTimeout(timeoutId);
+
+          if (queryError instanceof Error && queryError.name === 'AbortError') {
+            console.error('[tags] Request timeout');
+            throw new Error('Request timeout');
+          }
+          throw queryError;
+        }
+      }
+    );
 
     return NextResponse.json({
       success: true,
-      data: {
-        tags,
-        total: tags.length,
-        page,
-        limit,
-        hasMore: tags.length === limit,
-      },
+      data: result,
     });
   } catch (error: any) {
-    clearTimeout(timeoutId);
-
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const errorStack = error instanceof Error ? error.stack : '';
 
-    if (error instanceof Error && error.name === 'AbortError') {
-      console.error('[tags] Request timeout:', {
-        message: errorMessage,
-        timestamp: new Date().toISOString(),
-      });
+    if (errorMessage === 'Request timeout') {
       return NextResponse.json(
         {
           success: false,
@@ -133,6 +143,17 @@ export async function GET(request: NextRequest) {
           message: '请求超时，请稍后重试',
         },
         { status: 504 }
+      );
+    }
+
+    if (errorMessage === 'Database connection not available') {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Database connection not available',
+          message: '数据库连接不可用，请稍后重试',
+        },
+        { status: 503 }
       );
     }
 
