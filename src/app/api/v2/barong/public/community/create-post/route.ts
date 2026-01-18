@@ -99,17 +99,18 @@ export async function POST(request: NextRequest) {
     const postId = postResult[0].id;
 
     // 异步处理标签（不阻塞响应）
-    if (tags && tags.length > 0) {
+    if (tags && tags.length > 0 && sql) {
       // 在后台处理标签，不等待完成
+      const sqlInstance = sql; // 保存引用以便在回调中使用
       Promise.all(tags.slice(0, 5).map(async (tagName: string) => {
         try {
-          let tagResult = await sql`
+          let tagResult = await sqlInstance`
             SELECT id FROM tags WHERE name = ${tagName} LIMIT 1
           `;
           
           let tagId;
           if (tagResult.length === 0) {
-            const newTag = await sql`
+            const newTag = await sqlInstance`
               INSERT INTO tags (name, slug, use_count, created_at)
               VALUES (${tagName}, ${tagName.toLowerCase().replace(/\s+/g, '-')}, 1, NOW())
               RETURNING id
@@ -117,10 +118,10 @@ export async function POST(request: NextRequest) {
             tagId = newTag[0].id;
           } else {
             tagId = tagResult[0].id;
-            await sql`UPDATE tags SET use_count = use_count + 1 WHERE id = ${tagId}`;
+            await sqlInstance`UPDATE tags SET use_count = use_count + 1 WHERE id = ${tagId}`;
           }
           
-          await sql`
+          await sqlInstance`
             INSERT INTO post_tags (post_id, tag_id, created_at)
             VALUES (${postId}, ${tagId}, NOW())
             ON CONFLICT (post_id, tag_id) DO NOTHING
