@@ -140,7 +140,7 @@ export default function SearchPage() {
           {query && (
             <div className="mb-6">
               <h1 className="text-2xl font-bold text-white mb-2">
-                搜索结果: "{query}"
+                搜索结果: &quot;{query}&quot;
               </h1>
               <p className="text-white/60">
                 找到 {total} 个结果

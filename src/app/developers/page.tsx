@@ -115,7 +115,7 @@ export default function DevelopersPage() {
               {t('developers.codeExample.title', 'Code Example')}
             </h2>
             <div className="bg-black/50 rounded-lg p-6 font-mono text-sm overflow-x-auto">
-              <div className="text-green-400 mb-2">// {t('developers.codeExample.comment', 'Create quantum-safe wallet')}</div>
+              <div className="text-green-400 mb-2">{`// ${t('developers.codeExample.comment', 'Create quantum-safe wallet')}`}</div>
               <div className="text-blue-400">import</div> <span className="text-white">{'{ QuantumWallet }'}</span> <span className="text-blue-400">from</span> <span className="text-yellow-400">{`'@quantaureum/sdk'`}</span><span className="text-white">;</span>
               <br /><br />
               <span className="text-blue-400">const</span> <span className="text-white">wallet</span> <span className="text-purple-400">=</span> <span className="text-blue-400">new</span> <span className="text-green-300">QuantumWallet</span><span className="text-white">(</span><span className="text-yellow-400">{`'your-api-key'`}</span><span className="text-white">);</span>
