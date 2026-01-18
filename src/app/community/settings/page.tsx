@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
   User, Shield, Bell, Eye, Palette, FileText, Save, Camera,
@@ -426,7 +427,13 @@ export default function CommunitySettingsPage() {
           onClick={() => coverInputRef.current?.click()}
         >
           {settings.coverImage && (
-            <img src={settings.coverImage} alt="Cover" className="w-full h-full object-cover" />
+            <Image 
+              src={settings.coverImage} 
+              alt="Cover" 
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 1200px"
+            />
           )}
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <Camera className="w-8 h-8 text-white" />
@@ -440,7 +447,13 @@ export default function CommunitySettingsPage() {
             onClick={() => fileInputRef.current?.click()}
           >
             {settings.avatar || userInfo?.avatar ? (
-              <img src={settings.avatar || userInfo?.avatar} alt="Avatar" className="w-full h-full object-cover" />
+              <Image 
+                src={settings.avatar || userInfo?.avatar || ''} 
+                alt="Avatar" 
+                fill
+                className="object-cover rounded-full"
+                sizes="96px"
+              />
             ) : (
               <span className="text-3xl font-bold text-white">{userInfo?.name?.[0]?.toUpperCase() || 'U'}</span>
             )}

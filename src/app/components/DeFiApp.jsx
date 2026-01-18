@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -330,9 +331,11 @@ const QuantumDeFi = () => {
           {/* 页面标题 */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-2">
-              <img 
+              <Image 
                 src="/logos/quantum-aurum-icon-ui.svg" 
                 alt="Quantaureum" 
+                width={40}
+                height={40}
                 className="h-10 w-10"
               />
               <h1 className="text-responsive-3xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">
