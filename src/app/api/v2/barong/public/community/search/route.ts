@@ -1,38 +1,38 @@
-/**
- * Community Search API
- * Search posts, users, and tags
- */
-
 import { NextRequest, NextResponse } from 'next/server';
-import { sql } from '@/lib/database';
+import { neon } from '@neondatabase/serverless';
 
+const sql = neon(process.env.DATABASE_URL!);
+
+/**
+ * GET /api/v2/barong/public/community/search
+ * 全局搜索功能 - 搜索帖子、用户、标签
+ */
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const query = searchParams.get('q') || '';
-  const type = searchParams.get('type') || 'all'; // all, posts, users, tags
-  const limit = parseInt(searchParams.get('limit') || '20');
-  const offset = parseInt(searchParams.get('offset') || '0');
-
   try {
-    if (!sql) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database not configured' 
-      }, { status: 500 });
+    const { searchParams } = new URL(request.url);
+    const query = searchParams.get('q') || '';
+    const type = searchParams.get('type') || 'all'; // all, posts, users, tags
+    const limit = parseInt(searchParams.get('limit') || '20');
+    const offset = parseInt(searchParams.get('offset') || '0');
+
+    if (!query || query.trim().length === 0) {
+      return NextResponse.json({
+        success: true,
+        data: {
+          posts: [],
+          users: [],
+          tags: [],
+          total: 0
+        }
+      });
     }
 
-    if (!query.trim()) {
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Search query is required' 
-      }, { status: 400 });
-    }
-
-    const searchPattern = `%${query.toLowerCase()}%`;
+    const searchTerm = `%${query.trim()}%`;
     const results: any = {
       posts: [],
       users: [],
       tags: [],
+      total: 0
     };
 
     // 搜索帖子
@@ -42,46 +42,48 @@ export async function GET(request: NextRequest) {
           p.id,
           p.title,
           p.content,
-          p.user_id,
           p.created_at,
+          p.view_count,
           p.comment_count,
           p.like_count,
-          p.view_count,
-          p.status,
-          u.email as author_email,
+          u.username,
+          u.avatar,
           c.name as category_name,
           c.slug as category_slug
         FROM posts p
-        LEFT JOIN users u ON p.user_id = u.uid
+        LEFT JOIN users u ON p.user_id = u.id
         LEFT JOIN categories c ON p.category_id = c.id
         WHERE 
-          p.status = 'published' AND (
-            LOWER(p.title) LIKE ${searchPattern} OR
-            LOWER(p.content) LIKE ${searchPattern}
+          p.deleted_at IS NULL
+          AND (
+            p.title ILIKE ${searchTerm}
+            OR p.content ILIKE ${searchTerm}
           )
         ORDER BY 
           CASE 
-            WHEN LOWER(p.title) LIKE ${searchPattern} THEN 1
+            WHEN p.title ILIKE ${searchTerm} THEN 1
             ELSE 2
           END,
           p.created_at DESC
-        LIMIT ${type === 'posts' ? limit : 5}
-        OFFSET ${type === 'posts' ? offset : 0}
-      `;
+        LIMIT ${limit}
+        OFFSET ${offset}
+      ` as any[];
 
-      results.posts = posts.map((post: any) => ({
+      results.posts = posts.map(post => ({
         id: post.id,
         title: post.title,
         content: post.content.substring(0, 200) + (post.content.length > 200 ? '...' : ''),
+        author: post.username || 'Unknown',
+        authorAvatar: post.avatar,
         category: post.category_name,
         categorySlug: post.category_slug,
-        userId: post.user_id,
-        userName: post.author_email ? post.author_email.split('@')[0] : 'Unknown',
-        userAvatar: post.author_email ? post.author_email[0].toUpperCase() : 'U',
+        views: parseInt(post.view_count) || 0,
+        replies: parseInt(post.comment_count) || 0,
+        likes: parseInt(post.like_count) || 0,
         createdAt: post.created_at,
-        commentCount: parseInt(post.comment_count || '0'),
-        likeCount: parseInt(post.like_count || '0'),
-        viewCount: parseInt(post.view_count || '0'),
+        // 高亮搜索关键词
+        highlightedTitle: highlightText(post.title, query),
+        highlightedContent: highlightText(post.content.substring(0, 200), query)
       }));
     }
 
@@ -89,111 +91,115 @@ export async function GET(request: NextRequest) {
     if (type === 'all' || type === 'users') {
       const users = await sql`
         SELECT 
-          u.uid as id,
+          u.id,
+          u.username,
           u.email,
+          u.avatar,
+          u.bio,
           u.created_at,
-          up.display_name
+          COUNT(DISTINCT p.id) as posts_count,
+          COUNT(DISTINCT f.id) as followers_count
         FROM users u
-        LEFT JOIN user_profiles up ON u.uid = up.user_id
+        LEFT JOIN posts p ON p.user_id = u.id AND p.deleted_at IS NULL
+        LEFT JOIN follows f ON f.following_id = u.id
         WHERE 
-          u.status = 'active' AND (
-            LOWER(u.email) LIKE ${searchPattern} OR
-            LOWER(up.display_name) LIKE ${searchPattern}
-          )
-        ORDER BY u.created_at DESC
-        LIMIT ${type === 'users' ? limit : 5}
-        OFFSET ${type === 'users' ? offset : 0}
-      `;
+          u.username ILIKE ${searchTerm}
+          OR u.email ILIKE ${searchTerm}
+          OR u.bio ILIKE ${searchTerm}
+        GROUP BY u.id, u.username, u.email, u.avatar, u.bio, u.created_at
+        ORDER BY 
+          CASE 
+            WHEN u.username ILIKE ${searchTerm} THEN 1
+            ELSE 2
+          END,
+          u.created_at DESC
+        LIMIT ${limit}
+        OFFSET ${offset}
+      ` as any[];
 
-      results.users = users.map((user: any) => ({
+      results.users = users.map(user => ({
         id: user.id,
-        username: user.display_name || user.email.split('@')[0],
+        username: user.username,
         email: user.email,
-        avatar: user.email[0].toUpperCase(),
+        avatar: user.avatar,
+        bio: user.bio,
+        postsCount: parseInt(user.posts_count) || 0,
+        followersCount: parseInt(user.followers_count) || 0,
         joinedAt: user.created_at,
+        highlightedUsername: highlightText(user.username, query)
       }));
     }
 
-    // 搜索标签（如果实现了标签功能）
+    // 搜索标签
     if (type === 'all' || type === 'tags') {
-      // TODO: 实现标签搜索
-      results.tags = [];
+      const tags = await sql`
+        SELECT 
+          t.id,
+          t.name,
+          t.slug,
+          t.description,
+          t.color,
+          t.use_count,
+          t.is_official,
+          COUNT(DISTINCT pt.post_id) as posts_count
+        FROM tags t
+        LEFT JOIN post_tags pt ON pt.tag_id = t.id
+        WHERE 
+          t.name ILIKE ${searchTerm}
+          OR t.description ILIKE ${searchTerm}
+        GROUP BY t.id, t.name, t.slug, t.description, t.color, t.use_count, t.is_official
+        ORDER BY 
+          CASE 
+            WHEN t.name ILIKE ${searchTerm} THEN 1
+            ELSE 2
+          END,
+          t.use_count DESC
+        LIMIT ${limit}
+        OFFSET ${offset}
+      ` as any[];
+
+      results.tags = tags.map(tag => ({
+        id: tag.id,
+        name: tag.name,
+        slug: tag.slug,
+        description: tag.description,
+        color: tag.color,
+        useCount: parseInt(tag.use_count) || 0,
+        postsCount: parseInt(tag.posts_count) || 0,
+        isOfficial: tag.is_official,
+        highlightedName: highlightText(tag.name, query)
+      }));
     }
 
-    // 记录搜索日志（用于优化搜索）
-    if (sql) {
-      try {
-        // 确保表存在
-        await sql`
-          CREATE TABLE IF NOT EXISTS search_logs (
-            id SERIAL PRIMARY KEY,
-            query TEXT NOT NULL,
-            results_count INTEGER DEFAULT 0,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-          )
-        `;
-        
-        await sql`
-          INSERT INTO search_logs (query, results_count, created_at)
-          VALUES (
-            ${query},
-            ${results.posts.length + results.users.length + results.tags.length},
-            CURRENT_TIMESTAMP
-          )
-        `;
-      } catch (logError) {
-        // 忽略日志错误，不影响搜索结果
-        console.error('Failed to log search:', logError);
-      }
-    }
-
-    // 获取总数
-    let total = 0;
-    if (type === 'posts') {
-      const countResult = await sql`
-        SELECT COUNT(*) as total
-        FROM posts
-        WHERE 
-          status = 'published' AND (
-            LOWER(title) LIKE ${searchPattern} OR
-            LOWER(content) LIKE ${searchPattern}
-          )
-      `;
-      total = parseInt(countResult[0]?.total || '0');
-    } else if (type === 'users') {
-      const countResult = await sql`
-        SELECT COUNT(*) as total
-        FROM users u
-        LEFT JOIN user_profiles up ON u.uid = up.user_id
-        WHERE 
-          u.status = 'active' AND (
-            LOWER(u.email) LIKE ${searchPattern} OR
-            LOWER(up.display_name) LIKE ${searchPattern}
-          )
-      `;
-      total = parseInt(countResult[0]?.total || '0');
-    } else {
-      total = results.posts.length + results.users.length + results.tags.length;
-    }
+    // 计算总数
+    results.total = results.posts.length + results.users.length + results.tags.length;
 
     return NextResponse.json({
       success: true,
-      data: {
-        query,
-        results,
-        pagination: {
-          total,
-          limit,
-          offset,
-          hasMore: offset + limit < total,
-        },
-      },
+      data: results,
+      query: query,
+      type: type
     });
+
   } catch (error) {
     console.error('Error searching:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Internal server error' 
-    }, { status: 500 });
+    return NextResponse.json(
+      { 
+        success: false, 
+        error: 'Failed to search',
+        message: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    );
   }
+}
+
+/**
+ * 高亮搜索关键词
+ */
+function highlightText(text: string, query: string): string {
+  if (!text || !query) return text;
+  
+  const regex = new RegExp(`(${query})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
 }

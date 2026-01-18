@@ -8,6 +8,7 @@ import ParticlesBackground from '../../../components/ParticlesBackground';
 import CommunityNavbar from '../../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../../components/EnhancedFooter';
 import MarkdownEditor from '../../../../components/community/MarkdownEditor';
+import TagInput from '../../../../components/community/TagInput';
 
 interface UserInfo {
   id: string;
@@ -31,6 +32,7 @@ export default function EditPostPage() {
     content: '',
     category: 'general',
     editReason: '',
+    tags: [] as string[]
   });
 
   useEffect(() => {
@@ -76,6 +78,7 @@ export default function EditPostPage() {
             content: post.content,
             category: post.categorySlug || 'general',
             editReason: '',
+            tags: []
           });
         } else {
           setError('帖子不存在');
@@ -113,6 +116,7 @@ export default function EditPostPage() {
           categorySlug: formData.category,
           currentUserId: userInfo?.id,
           editReason: formData.editReason || null,
+          tags: formData.tags,
         }),
       });
 

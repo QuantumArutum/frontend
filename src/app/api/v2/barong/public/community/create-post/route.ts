@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { title, content, categorySlug, currentUserId, isDraft = false } = body;
+    const { title, content, categorySlug, currentUserId, tags = [], isDraft = false } = body;
 
     // 验证参数
     if (!title || !content || !currentUserId) {
@@ -91,12 +91,51 @@ export async function POST(request: NextRequest) {
 
     const postId = postResult[0].id;
 
+    // 处理标签
+    if (tags && tags.length > 0) {
+      for (const tagName of tags) {
+        try {
+          // 查找或创建标签
+          let tagResult = await sql`
+            SELECT id FROM tags WHERE name = ${tagName}
+          `;
+          
+          let tagId;
+          if (tagResult.length === 0) {
+            // 创建新标签
+            const newTag = await sql`
+              INSERT INTO tags (name, slug, use_count, created_at)
+              VALUES (${tagName}, ${tagName.toLowerCase().replace(/\s+/g, '-')}, 1, NOW())
+              RETURNING id
+            `;
+            tagId = newTag[0].id;
+          } else {
+            tagId = tagResult[0].id;
+            // 更新使用次数
+            await sql`
+              UPDATE tags SET use_count = use_count + 1 WHERE id = ${tagId}
+            `;
+          }
+          
+          // 关联帖子和标签
+          await sql`
+            INSERT INTO post_tags (post_id, tag_id, created_at)
+            VALUES (${postId}, ${tagId}, NOW())
+            ON CONFLICT (post_id, tag_id) DO NOTHING
+          `;
+        } catch (tagError) {
+          console.error('Error processing tag:', tagName, tagError);
+        }
+      }
+    }
+
     return NextResponse.json({
       success: true,
       message: isDraft ? 'Draft saved successfully' : 'Post created successfully',
       data: {
         postId,
         isDraft,
+        tagsAdded: tags.length
       },
     });
   } catch (error) {

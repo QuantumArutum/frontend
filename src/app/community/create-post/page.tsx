@@ -8,6 +8,7 @@ import ParticlesBackground from '../../components/ParticlesBackground';
 import CommunityNavbar from '../../../components/community/CommunityNavbar';
 import EnhancedFooter from '../../components/EnhancedFooter';
 import MarkdownEditor from '../../../components/community/MarkdownEditor';
+import TagInput from '../../../components/community/TagInput';
 import { useDraftSave } from '../../../hooks/useDraftSave';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
@@ -30,7 +31,8 @@ export default function CreatePostPage() {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    category: 'general'
+    category: 'general',
+    tags: [] as string[]
   });
   const [showPreview, setShowPreview] = useState(false);
   const [draftLoaded, setDraftLoaded] = useState(false);
@@ -69,6 +71,7 @@ export default function CreatePostPage() {
               title: draft.title,
               content: draft.content,
               category: draft.category,
+              tags: []
             });
           }
         }
@@ -109,6 +112,7 @@ export default function CreatePostPage() {
           content: formData.content,
           categorySlug: formData.category,
           currentUserId: userInfo?.id,
+          tags: formData.tags,
           isDraft,
         }),
       });
@@ -205,6 +209,19 @@ export default function CreatePostPage() {
               required
             />
             <div className="mt-1 text-xs text-gray-400 text-right">{formData.title.length}/200</div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">标签</label>
+            <TagInput
+              value={formData.tags}
+              onChange={(tags) => setFormData({ ...formData, tags })}
+              placeholder="添加标签（最多5个）..."
+              maxTags={5}
+            />
+            <div className="mt-1 text-xs text-gray-500">
+              添加相关标签可以帮助其他用户更容易找到你的帖子
+            </div>
           </div>
 
           <div>
