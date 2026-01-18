@@ -51,7 +51,7 @@ export default function PostDetailPage() {
 
   const loadPost = useCallback(async () => {
     if (!postId) return;
-    
+
     try {
       setLoading(true);
       const response = await fetch(`/api/v2/barong/public/community/post-detail?postId=${postId}`);
@@ -74,28 +74,13 @@ export default function PostDetailPage() {
   useEffect(() => {
     loadPost();
   }, [loadPost]);
-      
-      if (data.success) {
-        setPost(data.data);
-        // 加载帖子标签
-        loadPostTags(postId);
-      } else {
-        setError('Failed to load post');
-      }
-    } catch (err) {
-      console.error('Error:', err);
-      setError('Failed to load post');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const loadPostTags = async (postId: string) => {
     try {
       const response = await fetch(`/api/v2/barong/public/community/posts/${postId}/tags`);
       const data = await response.json();
       if (data.success && data.data.tags) {
-        setPost(prev => prev ? { ...prev, tags: data.data.tags } : null);
+        setPost((prev) => (prev ? { ...prev, tags: data.data.tags } : null));
       }
     } catch (err) {
       console.error('Error loading tags:', err);
@@ -104,7 +89,7 @@ export default function PostDetailPage() {
 
   const handleVote = async (type: 'upvote' | 'downvote') => {
     if (!post) return;
-    
+
     try {
       const response = await fetch('/api/v2/barong/public/community/vote-post', {
         method: 'POST',
@@ -112,8 +97,8 @@ export default function PostDetailPage() {
         body: JSON.stringify({
           postId: post.id,
           voteType: type,
-          userId: localStorage.getItem('user_id') || 'anonymous'
-        })
+          userId: localStorage.getItem('user_id') || 'anonymous',
+        }),
       });
 
       const data = await response.json();
@@ -216,13 +201,8 @@ export default function PostDetailPage() {
                 {/* 标签 */}
                 {post.tags && post.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {post.tags.map(tag => (
-                      <TagBadge
-                        key={tag.id}
-                        tag={tag}
-                        size="medium"
-                        clickable
-                      />
+                    {post.tags.map((tag) => (
+                      <TagBadge key={tag.id} tag={tag} size="medium" clickable />
                     ))}
                   </div>
                 )}
@@ -293,12 +273,8 @@ export default function PostDetailPage() {
 
               {/* 评论区 */}
               <div className="bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 p-8">
-                <h2 className="text-2xl font-bold text-white mb-6">
-                  评论 ({post.commentCount})
-                </h2>
-                <div className="text-center py-12 text-gray-400">
-                  评论功能即将推出...
-                </div>
+                <h2 className="text-2xl font-bold text-white mb-6">评论 ({post.commentCount})</h2>
+                <div className="text-center py-12 text-gray-400">评论功能即将推出...</div>
               </div>
             </div>
           </div>

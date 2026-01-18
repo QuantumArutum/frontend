@@ -31,7 +31,9 @@ export default function TagsPage() {
         params.search = searchQuery;
       }
 
-      const response = await fetch(`/api/v2/barong/public/community/tags?${new URLSearchParams(params)}`);
+      const response = await fetch(
+        `/api/v2/barong/public/community/tags?${new URLSearchParams(params)}`
+      );
       const data = await response.json();
 
       if (data.success) {
@@ -62,29 +64,6 @@ export default function TagsPage() {
     loadTags();
     loadTrendingTags();
   }, [loadTags, loadTrendingTags]);
-
-      if (filterOfficial === 'official') {
-        params.official = 'true';
-      } else if (filterOfficial === 'community') {
-        params.official = 'false';
-      }
-
-      if (searchQuery) {
-        params.search = searchQuery;
-      }
-
-      const response = await barongAPI.get('/public/community/tags', { params });
-
-      if (response.data.success) {
-        setTags(response.data.data.tags);
-      }
-    } catch (error) {
-      console.error('Error loading tags:', error);
-      message.error('加载标签失败');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const loadTrendingTags = async () => {
     try {
@@ -117,9 +96,7 @@ export default function TagsPage() {
             <TagIcon className="w-8 h-8" />
             标签广场
           </h1>
-          <p className="text-gray-400">
-            浏览和订阅感兴趣的标签，发现更多精彩内容
-          </p>
+          <p className="text-gray-400">浏览和订阅感兴趣的标签，发现更多精彩内容</p>
         </div>
 
         {/* 热门标签云 */}
@@ -129,11 +106,7 @@ export default function TagsPage() {
             <h2 className="text-xl font-bold">热门标签</h2>
             <span className="text-sm text-gray-400">(最近7天)</span>
           </div>
-          <TagCloud
-            tags={trendingTags}
-            maxTags={30}
-            onTagClick={handleTagClick}
-          />
+          <TagCloud tags={trendingTags} maxTags={30} onTagClick={handleTagClick} />
         </div>
 
         {/* 搜索和筛选 */}
@@ -200,20 +173,12 @@ export default function TagsPage() {
 
         {/* 标签列表 */}
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-6">
-          <h2 className="text-xl font-bold mb-4">
-            所有标签 ({tags.length})
-          </h2>
+          <h2 className="text-xl font-bold mb-4">所有标签 ({tags.length})</h2>
 
           {loading ? (
-            <div className="text-center py-12 text-gray-400">
-              加载中...
-            </div>
+            <div className="text-center py-12 text-gray-400">加载中...</div>
           ) : viewMode === 'cloud' ? (
-            <TagCloud
-              tags={tags}
-              maxTags={100}
-              onTagClick={handleTagClick}
-            />
+            <TagCloud tags={tags} maxTags={100} onTagClick={handleTagClick} />
           ) : (
             <TagList
               tags={tags}

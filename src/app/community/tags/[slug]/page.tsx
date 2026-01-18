@@ -26,11 +26,13 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
 
   const loadTagDetail = useCallback(async () => {
     if (!slug) return;
-    
+
     try {
       setLoading(true);
       const userInfoStr = localStorage.getItem('user_info');
-      const currentUserId = userInfoStr ? JSON.parse(userInfoStr).id || JSON.parse(userInfoStr).uid || JSON.parse(userInfoStr).email : null;
+      const currentUserId = userInfoStr
+        ? JSON.parse(userInfoStr).id || JSON.parse(userInfoStr).uid || JSON.parse(userInfoStr).email
+        : null;
 
       const response = await barongAPI.get(`/public/community/tags/${slug}`, {
         params: { currentUserId },
@@ -49,7 +51,7 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
 
   const loadPosts = useCallback(async () => {
     if (!tag) return;
-    
+
     try {
       setLoadingPosts(true);
       const response = await barongAPI.get(`/public/community/tags/${slug}/posts`, {
@@ -82,29 +84,13 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
       loadPosts();
     }
   }, [tag, loadPosts]);
-        params: { currentUserId },
-      });
-
-      if (response.data.success) {
-        setTag(response.data.data.tag);
-        setRelatedTags(response.data.data.relatedTags);
-        setIsSubscribed(response.data.data.isSubscribed);
-      } else {
-        message.error('标签不存在');
-        router.push('/community/tags');
-      }
-    } catch (error) {
-      console.error('Error loading tag detail:', error);
-      message.error('加载标签详情失败');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const loadPosts = async () => {
     try {
       const userInfoStr = localStorage.getItem('user_info');
-      const currentUserId = userInfoStr ? JSON.parse(userInfoStr).id || JSON.parse(userInfoStr).uid || JSON.parse(userInfoStr).email : null;
+      const currentUserId = userInfoStr
+        ? JSON.parse(userInfoStr).id || JSON.parse(userInfoStr).uid || JSON.parse(userInfoStr).email
+        : null;
 
       const response = await barongAPI.get(`/public/community/tags/${slug}/posts`, {
         params: {
@@ -153,12 +139,7 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-6 mb-6">
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-4">
-              <TagBadge
-                tag={tag}
-                size="large"
-                clickable={false}
-                showIcon={true}
-              />
+              <TagBadge tag={tag} size="large" clickable={false} showIcon={true} />
               {tag.is_official && (
                 <span className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full">
                   官方标签
@@ -173,9 +154,7 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
             />
           </div>
 
-          {tag.description && (
-            <p className="text-gray-300 mb-4">{tag.description}</p>
-          )}
+          {tag.description && <p className="text-gray-300 mb-4">{tag.description}</p>}
 
           <div className="flex items-center gap-6 text-sm text-gray-400">
             <span>{tag.post_count} 个帖子</span>
@@ -253,9 +232,7 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
                     onClick={() => router.push(`/community/posts/${post.id}`)}
                     className="bg-gray-800 border border-gray-700 rounded-lg p-4 hover:border-gray-600 transition-colors cursor-pointer"
                   >
-                    <h3 className="text-lg font-semibold mb-2 hover:text-blue-400">
-                      {post.title}
-                    </h3>
+                    <h3 className="text-lg font-semibold mb-2 hover:text-blue-400">{post.title}</h3>
                     <div className="flex items-center gap-4 text-sm text-gray-400">
                       <span>{post.author_name}</span>
                       <span>•</span>
@@ -288,13 +265,7 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
                 <h3 className="text-lg font-semibold mb-4">相关标签</h3>
                 <div className="flex flex-wrap gap-2">
                   {relatedTags.map((t) => (
-                    <TagBadge
-                      key={t.id}
-                      tag={t}
-                      size="small"
-                      clickable={true}
-                      showCount={true}
-                    />
+                    <TagBadge key={t.id} tag={t} size="small" clickable={true} showCount={true} />
                   ))}
                 </div>
               </div>

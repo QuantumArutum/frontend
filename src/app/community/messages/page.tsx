@@ -50,30 +50,36 @@ export default function MessagesPage() {
     }
   }, [currentUserId]);
 
-  const loadMessages = useCallback(async (userId: string) => {
-    try {
-      const response = await barongAPI.get(`/public/community/messages/conversation/${userId}`, {
-        params: { currentUserId },
-      });
+  const loadMessages = useCallback(
+    async (userId: string) => {
+      try {
+        const response = await barongAPI.get(`/public/community/messages/conversation/${userId}`, {
+          params: { currentUserId },
+        });
 
-      if (response.data.success) {
-        setMessages(response.data.data.messages);
+        if (response.data.success) {
+          setMessages(response.data.data.messages);
+        }
+      } catch (error) {
+        console.error('Failed to load messages:', error);
       }
-    } catch (error) {
-      console.error('Failed to load messages:', error);
-    }
-  }, [currentUserId]);
+    },
+    [currentUserId]
+  );
 
-  const markAsRead = useCallback(async (userId: string) => {
-    try {
-      await barongAPI.post('/public/community/messages/mark-read', {
-        currentUserId,
-        otherUserId: userId,
-      });
-    } catch (error) {
-      console.error('Failed to mark as read:', error);
-    }
-  }, [currentUserId]);
+  const markAsRead = useCallback(
+    async (userId: string) => {
+      try {
+        await barongAPI.post('/public/community/messages/mark-read', {
+          currentUserId,
+          otherUserId: userId,
+        });
+      } catch (error) {
+        console.error('Failed to mark as read:', error);
+      }
+    },
+    [currentUserId]
+  );
 
   useEffect(() => {
     if (currentUserId) {
@@ -87,17 +93,6 @@ export default function MessagesPage() {
       markAsRead(selectedUserId);
     }
   }, [currentUserId, selectedUserId, loadMessages, markAsRead]);
-        setConversations(response.data.data.conversations);
-        setFilteredConversations(response.data.data.conversations);
-        setTotalUnread(response.data.data.totalUnread);
-      }
-    } catch (error) {
-      console.error('Error loading conversations:', error);
-      antdMessage.error('加载会话列表失败');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const loadMessages = async (otherUserId: string) => {
     try {
@@ -123,16 +118,12 @@ export default function MessagesPage() {
         currentUserId,
         conversationUserId: otherUserId,
       });
-      
+
       // 更新会话列表中的未读数
-      setConversations(prev =>
-        prev.map(conv =>
-          conv.otherUserId === otherUserId
-            ? { ...conv, unreadCount: 0 }
-            : conv
-        )
+      setConversations((prev) =>
+        prev.map((conv) => (conv.otherUserId === otherUserId ? { ...conv, unreadCount: 0 } : conv))
       );
-      
+
       // 更新总未读数
       loadConversations();
     } catch (error) {
@@ -154,8 +145,8 @@ export default function MessagesPage() {
 
       if (response.data.success) {
         const newMessage = response.data.data.message;
-        setMessages(prev => [...prev, { ...newMessage, isSender: true }]);
-        
+        setMessages((prev) => [...prev, { ...newMessage, isSender: true }]);
+
         // 更新会话列表
         loadConversations();
         antdMessage.success('发送成功');
@@ -178,10 +169,11 @@ export default function MessagesPage() {
       setFilteredConversations(conversations);
       return;
     }
-    
-    const filtered = conversations.filter(conv =>
-      conv.otherUserName?.toLowerCase().includes(query.toLowerCase()) ||
-      conv.lastMessage?.toLowerCase().includes(query.toLowerCase())
+
+    const filtered = conversations.filter(
+      (conv) =>
+        conv.otherUserName?.toLowerCase().includes(query.toLowerCase()) ||
+        conv.lastMessage?.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredConversations(filtered);
   };
@@ -277,22 +269,15 @@ export default function MessagesPage() {
               {/* 消息列表 */}
               <div className="flex-1 overflow-y-auto p-4">
                 {messages.length === 0 ? (
-                  <div className="text-center text-gray-400 mt-8">
-                    暂无消息，开始聊天吧
-                  </div>
+                  <div className="text-center text-gray-400 mt-8">暂无消息，开始聊天吧</div>
                 ) : (
-                  messages.map((msg) => (
-                    <MessageBubble key={msg.id} message={msg} />
-                  ))
+                  messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)
                 )}
                 <div ref={messagesEndRef} />
               </div>
 
               {/* 输入框 */}
-              <MessageInput
-                onSend={handleSendMessage}
-                disabled={sending}
-              />
+              <MessageInput onSend={handleSendMessage} disabled={sending} />
             </>
           ) : (
             <div className="flex-1 flex items-center justify-center text-gray-400">
