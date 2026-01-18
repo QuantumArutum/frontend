@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/database';
-import type { Category, ApiResponse } from '@/types';
+import type { Category } from '@/types/community';
 
 // 设置运行时配置 - 使用Node.js runtime以支持完整的数据库功能
 export const maxDuration = 30;
@@ -9,7 +9,7 @@ export const maxDuration = 30;
  * GET /api/v2/barong/public/community/forum-categories
  * 获取论坛分类及统计信息（优化版）
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // 检查数据库连接
     if (!sql) {
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
           c.icon,
           c.color,
           c.sort_order as display_order,
-          COALESCE(COUNT(DISTINCT p.id), 0) as posts_count
+          COALESCE(COUNT(DISTINCT p.id), 0) as post_count
         FROM categories c
         LEFT JOIN posts p ON p.category_id = c.id AND p.status = 'published'
         WHERE c.is_active = true
@@ -55,8 +55,8 @@ export async function GET(request: NextRequest) {
         description: cat.description || '',
         icon: cat.icon || '📁',
         color: cat.color || '#6366f1',
-        posts: parseInt(cat.posts_count) || 0,
-        topics: parseInt(cat.posts_count) || 0,
+        posts: cat.postCount || 0,
+        topics: cat.postCount || 0,
         lastPost: null // 移除复杂查询以提高性能
       }));
 
