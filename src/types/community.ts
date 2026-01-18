@@ -3,6 +3,57 @@
  * 用于替换项目中的 any 类型，提供完整的类型安全
  */
 
+// ============= 数据库相关类型 =============
+
+interface AuditLog {
+  id: number;
+  action: string;
+  admin_id?: string;
+  details?: string;
+  created_at: string;
+  [key: string]: any;
+}
+
+interface FooterLink {
+  id: number;
+  title: string;
+  url: string;
+  order: number;
+  label?: string;
+  link?: string;
+  sort_order?: number;
+  is_active?: boolean;
+  [key: string]: any;
+}
+
+interface Domain {
+  id: number;
+  domain: string;
+  is_active: boolean;
+  type?: string;
+  ssl_enabled?: boolean;
+  [key: string]: any;
+}
+
+interface Deposit {
+  id: number;
+  user_id: string;
+  amount: number;
+  currency: string;
+  status: string;
+  created_at: string;
+  [key: string]: any;
+}
+
+interface BlockchainNetwork {
+  id: number;
+  name: string;
+  chain_id: number;
+  rpc_url: string;
+  is_active: boolean;
+  [key: string]: any;
+}
+
 // ============= 用户相关类型 =============
 
 export interface User {
@@ -25,6 +76,8 @@ export interface User {
   post_count?: number;
   comment_count?: number;
   stake_count?: number;
+  reputation_points?: number;
+  [key: string]: any; // 允许额外的字段
 }
 
 export interface UserProfile extends User {
@@ -193,6 +246,10 @@ export interface Activity {
   description: string;
   created_at: Date | string;
   metadata?: Record<string, any>;
+  type?: string; // 别名字段
+  target_type?: string;
+  target_id?: number;
+  [key: string]: any; // 允许额外的字段
 }
 
 export interface Event {
@@ -351,11 +408,17 @@ export interface Moderator extends User {
 
 export interface ModAction {
   id: number;
-  moderatorId: string;
+  moderatorId?: string;
+  moderator_id: string;
   moderatorName?: string;
-  action: 'pin' | 'lock' | 'delete' | 'ban' | 'warn' | 'move';
-  targetType: 'post' | 'comment' | 'user';
-  targetId: string | number;
+  action: 'pin' | 'lock' | 'delete' | 'ban' | 'warn' | 'move' | string;
+  targetType?: 'post' | 'comment' | 'user';
+  target_type: string;
+  targetId?: string | number;
+  target_id: number;
   reason?: string;
-  createdAt: Date | string;
+  status?: string;
+  createdAt?: Date | string;
+  created_at: Date | string;
+  [key: string]: any; // 允许额外的字段
 }

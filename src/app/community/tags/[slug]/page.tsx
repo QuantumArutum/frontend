@@ -53,7 +53,7 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
     if (!tag) return;
 
     try {
-      setLoadingPosts(true);
+      setLoading(true);
       const response = await barongAPI.get(`/public/community/tags/${slug}/posts`, {
         params: {
           page: 1,
@@ -69,7 +69,7 @@ export default function TagDetailPage({ params }: { params: Promise<{ slug: stri
     } catch (error) {
       console.error('Failed to load posts:', error);
     } finally {
-      setLoadingPosts(false);
+      setLoading(false);
     }
   }, [slug, tag, sortBy, timeRange]);
 

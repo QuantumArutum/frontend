@@ -80,7 +80,7 @@ export const db = {
   }): Promise<DBResult<{ users: User[]; total: number }>> => {
     try {
       const result = await dbQuery.getUsers(params);
-      return { success: true, data: result };
+      return { success: true, data: result as { users: User[]; total: number } };
     } catch (error) {
       console.error('Error getting users:', error);
       return { success: false, error: 'Database error', data: { users: [], total: 0 } };
@@ -91,7 +91,7 @@ export const db = {
     try {
       const user = await dbQuery.getUserByUid(id);
       if (!user) return { success: false, error: 'User not found' };
-      return { success: true, data: user };
+      return { success: true, data: user as User };
     } catch (error) {
       console.error('Error getting user:', error);
       return { success: false, error: 'Database error' };
@@ -102,7 +102,7 @@ export const db = {
     try {
       const user = await dbQuery.updateUser(id, updates);
       if (!user) return { success: false, error: 'User not found' };
-      return { success: true, data: user };
+      return { success: true, data: user as User };
     } catch (error) {
       console.error('Error updating user:', error);
       return { success: false, error: 'Database error' };
@@ -118,7 +118,7 @@ export const db = {
   }): Promise<DBResult<{ posts: Post[]; total: number }>> => {
     try {
       const result = await dbQuery.getPosts(params);
-      return { success: true, data: result };
+      return { success: true, data: result as { posts: Post[]; total: number } };
     } catch (error) {
       console.error('Error getting posts:', error);
       return { success: false, error: 'Database error', data: { posts: [], total: 0 } };
@@ -131,7 +131,7 @@ export const db = {
       const result =
         await sql`SELECT p.*, u.email as author_email FROM posts p LEFT JOIN users u ON p.user_id = u.uid WHERE p.id = ${parseInt(id)} OR p.id::text = ${id}`;
       if (!result || result.length === 0) return { success: false, error: 'Post not found' };
-      return { success: true, data: result[0] };
+      return { success: true, data: result[0] as Post };
     } catch (error) {
       console.error('Error getting post:', error);
       return { success: false, error: 'Database error' };
@@ -578,26 +578,26 @@ export const db = {
       const offset = (page - 1) * limit;
 
       // Build query with optional filters
-      let logs;
+      let logs: AuditLog[];
       let countResult;
 
       if (action && admin_id) {
         logs =
-          await sql`SELECT * FROM audit_logs WHERE action = ${action} AND admin_id = ${admin_id} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+          (await sql`SELECT * FROM audit_logs WHERE action = ${action} AND admin_id = ${admin_id} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as AuditLog[];
         countResult =
           await sql`SELECT COUNT(*) as total FROM audit_logs WHERE action = ${action} AND admin_id = ${admin_id}`;
       } else if (action) {
         logs =
-          await sql`SELECT * FROM audit_logs WHERE action = ${action} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+          (await sql`SELECT * FROM audit_logs WHERE action = ${action} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as AuditLog[];
         countResult = await sql`SELECT COUNT(*) as total FROM audit_logs WHERE action = ${action}`;
       } else if (admin_id) {
         logs =
-          await sql`SELECT * FROM audit_logs WHERE admin_id = ${admin_id} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+          (await sql`SELECT * FROM audit_logs WHERE admin_id = ${admin_id} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as AuditLog[];
         countResult =
           await sql`SELECT COUNT(*) as total FROM audit_logs WHERE admin_id = ${admin_id}`;
       } else {
         logs =
-          await sql`SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+          (await sql`SELECT * FROM audit_logs ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as AuditLog[];
         countResult = await sql`SELECT COUNT(*) as total FROM audit_logs`;
       }
 
@@ -1051,7 +1051,7 @@ export const db = {
       if (!sql) return { success: false, error: 'Database not configured' };
       for (const d of domains) {
         if (d.id) {
-          await sql`UPDATE domains SET domain = ${d.domain}, type = ${d.type}, ssl_enabled = ${d.ssl_enabled}, is_active = ${d.is_active} WHERE id = ${d.id}`;
+          await sql`UPDATE domains SET domain = ${d.domain}, type = ${(d as any).type}, ssl_enabled = ${(d as any).ssl_enabled}, is_active = ${d.is_active} WHERE id = ${d.id}`;
         }
       }
       return { success: true };
@@ -1132,7 +1132,7 @@ export const db = {
       const { page = 1, limit = 20 } = params;
       const offset = (page - 1) * limit;
       const deposits =
-        await sql`SELECT * FROM deposits ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        (await sql`SELECT * FROM deposits ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as Deposit[];
       const [countResult] = await sql`SELECT COUNT(*) as total FROM deposits`;
       return {
         success: true,
@@ -1238,7 +1238,7 @@ export const db = {
       if (!sql) return { success: false, error: 'Database not configured' };
       for (const link of links) {
         if (link.id) {
-          await sql`UPDATE footer_links SET label = ${link.label}, link = ${link.link}, sort_order = ${link.sort_order}, is_active = ${link.is_active} WHERE id = ${link.id}`;
+          await sql`UPDATE footer_links SET label = ${(link as any).label}, link = ${(link as any).link}, sort_order = ${(link as any).sort_order}, is_active = ${(link as any).is_active} WHERE id = ${link.id}`;
         }
       }
       return { success: true };

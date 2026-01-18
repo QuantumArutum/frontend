@@ -504,17 +504,23 @@ export const communityService = {
         comments =
           (await sql`SELECT c.*, u.email as author_email FROM comments c LEFT JOIN users u ON c.user_id = u.uid
           WHERE c.post_id = ${post_id} ORDER BY c.created_at ASC LIMIT ${limit} OFFSET ${offset}`) as Comment[];
-        countResult = await sql`SELECT COUNT(*) as total FROM comments WHERE post_id = ${post_id}`;
+        countResult =
+          (await sql`SELECT COUNT(*) as total FROM comments WHERE post_id = ${post_id}`) as {
+            total: number;
+          }[];
       } else if (user_id) {
         comments =
           (await sql`SELECT c.*, u.email as author_email FROM comments c LEFT JOIN users u ON c.user_id = u.uid
           WHERE c.user_id = ${user_id} ORDER BY c.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as Comment[];
-        countResult = await sql`SELECT COUNT(*) as total FROM comments WHERE user_id = ${user_id}`;
+        countResult =
+          (await sql`SELECT COUNT(*) as total FROM comments WHERE user_id = ${user_id}`) as {
+            total: number;
+          }[];
       } else {
         comments =
           (await sql`SELECT c.*, u.email as author_email FROM comments c LEFT JOIN users u ON c.user_id = u.uid
           ORDER BY c.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as Comment[];
-        countResult = await sql`SELECT COUNT(*) as total FROM comments`;
+        countResult = (await sql`SELECT COUNT(*) as total FROM comments`) as { total: number }[];
       }
       return { comments, total: Number(countResult[0]?.total || 0) };
     } catch (error) {
@@ -746,12 +752,16 @@ export const communityService = {
           FROM user_reports r LEFT JOIN users u1 ON r.reporter_id = u1.uid LEFT JOIN users u2 ON r.reported_user_id = u2.uid
           WHERE r.status = ${status} ORDER BY r.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as Report[];
         countResult =
-          await sql`SELECT COUNT(*) as total FROM user_reports WHERE status = ${status}`;
+          (await sql`SELECT COUNT(*) as total FROM user_reports WHERE status = ${status}`) as {
+            total: number;
+          }[];
       } else {
         reports = (await sql`SELECT r.*, u1.email as reporter_email, u2.email as reported_user_email
           FROM user_reports r LEFT JOIN users u1 ON r.reporter_id = u1.uid LEFT JOIN users u2 ON r.reported_user_id = u2.uid
           ORDER BY r.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as Report[];
-        countResult = await sql`SELECT COUNT(*) as total FROM user_reports`;
+        countResult = (await sql`SELECT COUNT(*) as total FROM user_reports`) as {
+          total: number;
+        }[];
       }
       return { reports, total: Number(countResult[0]?.total || 0) };
     } catch (error) {
@@ -814,12 +824,14 @@ export const communityService = {
           (await sql`SELECT b.*, u.email as user_email FROM user_bans b LEFT JOIN users u ON b.user_id = u.uid
           WHERE b.is_active = ${active} ORDER BY b.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as UserBan[];
         countResult =
-          await sql`SELECT COUNT(*) as total FROM user_bans WHERE is_active = ${active}`;
+          (await sql`SELECT COUNT(*) as total FROM user_bans WHERE is_active = ${active}`) as {
+            total: number;
+          }[];
       } else {
         bans =
           (await sql`SELECT b.*, u.email as user_email FROM user_bans b LEFT JOIN users u ON b.user_id = u.uid
           ORDER BY b.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as UserBan[];
-        countResult = await sql`SELECT COUNT(*) as total FROM user_bans`;
+        countResult = (await sql`SELECT COUNT(*) as total FROM user_bans`) as { total: number }[];
       }
       return { bans, total: Number(countResult[0]?.total || 0) };
     } catch (error) {
@@ -889,12 +901,16 @@ export const communityService = {
         announcements = (await sql`SELECT * FROM community_announcements WHERE is_active = ${active}
           ORDER BY is_pinned DESC, created_at DESC LIMIT ${limit} OFFSET ${offset}`) as Announcement[];
         countResult =
-          await sql`SELECT COUNT(*) as total FROM community_announcements WHERE is_active = ${active}`;
+          (await sql`SELECT COUNT(*) as total FROM community_announcements WHERE is_active = ${active}`) as {
+            total: number;
+          }[];
       } else {
         announcements =
           (await sql`SELECT * FROM community_announcements ORDER BY is_pinned DESC, created_at DESC
           LIMIT ${limit} OFFSET ${offset}`) as Announcement[];
-        countResult = await sql`SELECT COUNT(*) as total FROM community_announcements`;
+        countResult = (await sql`SELECT COUNT(*) as total FROM community_announcements`) as {
+          total: number;
+        }[];
       }
       return { announcements, total: Number(countResult[0]?.total || 0) };
     } catch (error) {
@@ -959,11 +975,15 @@ export const communityService = {
         events =
           (await sql`SELECT * FROM community_events WHERE status = ${status} ORDER BY start_time DESC LIMIT ${limit} OFFSET ${offset}`) as CommunityEvent[];
         countResult =
-          await sql`SELECT COUNT(*) as total FROM community_events WHERE status = ${status}`;
+          (await sql`SELECT COUNT(*) as total FROM community_events WHERE status = ${status}`) as {
+            total: number;
+          }[];
       } else {
         events =
           (await sql`SELECT * FROM community_events ORDER BY start_time DESC LIMIT ${limit} OFFSET ${offset}`) as CommunityEvent[];
-        countResult = await sql`SELECT COUNT(*) as total FROM community_events`;
+        countResult = (await sql`SELECT COUNT(*) as total FROM community_events`) as {
+          total: number;
+        }[];
       }
       return { events, total: Number(countResult[0]?.total || 0) };
     } catch (error) {
@@ -1194,11 +1214,13 @@ export const communityService = {
     try {
       const offset = (page - 1) * limit;
       const users =
-        await sql`SELECT u.uid, u.email, ur.reputation_points, ur.level FROM user_follows uf
+        (await sql`SELECT u.uid, u.email, ur.reputation_points, ur.level FROM user_follows uf
         JOIN users u ON uf.follower_id = u.uid LEFT JOIN user_reputation ur ON u.uid = ur.user_id
-        WHERE uf.following_id = ${userId} ORDER BY uf.created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        WHERE uf.following_id = ${userId} ORDER BY uf.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as User[];
       const [countResult] =
-        await sql`SELECT COUNT(*) as total FROM user_follows WHERE following_id = ${userId}`;
+        (await sql`SELECT COUNT(*) as total FROM user_follows WHERE following_id = ${userId}`) as {
+          total: number;
+        }[];
       return { users, total: Number(countResult?.total || 0) };
     } catch (error) {
       console.error('Error getting followers:', error);
@@ -1215,11 +1237,13 @@ export const communityService = {
     try {
       const offset = (page - 1) * limit;
       const users =
-        await sql`SELECT u.uid, u.email, ur.reputation_points, ur.level FROM user_follows uf
+        (await sql`SELECT u.uid, u.email, ur.reputation_points, ur.level FROM user_follows uf
         JOIN users u ON uf.following_id = u.uid LEFT JOIN user_reputation ur ON u.uid = ur.user_id
-        WHERE uf.follower_id = ${userId} ORDER BY uf.created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        WHERE uf.follower_id = ${userId} ORDER BY uf.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as User[];
       const [countResult] =
-        await sql`SELECT COUNT(*) as total FROM user_follows WHERE follower_id = ${userId}`;
+        (await sql`SELECT COUNT(*) as total FROM user_follows WHERE follower_id = ${userId}`) as {
+          total: number;
+        }[];
       return { users, total: Number(countResult?.total || 0) };
     } catch (error) {
       console.error('Error getting following:', error);
@@ -1292,13 +1316,17 @@ export const communityService = {
           (await sql`SELECT pm.*, u.email as sender_email FROM private_messages pm LEFT JOIN users u ON pm.sender_id = u.uid
           WHERE pm.receiver_id = ${userId} ORDER BY pm.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as PrivateMessage[];
         countResult =
-          await sql`SELECT COUNT(*) as total FROM private_messages WHERE receiver_id = ${userId}`;
+          (await sql`SELECT COUNT(*) as total FROM private_messages WHERE receiver_id = ${userId}`) as {
+            total: number;
+          }[];
       } else {
         messages =
           (await sql`SELECT pm.*, u.email as receiver_email FROM private_messages pm LEFT JOIN users u ON pm.receiver_id = u.uid
           WHERE pm.sender_id = ${userId} ORDER BY pm.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as PrivateMessage[];
         countResult =
-          await sql`SELECT COUNT(*) as total FROM private_messages WHERE sender_id = ${userId}`;
+          (await sql`SELECT COUNT(*) as total FROM private_messages WHERE sender_id = ${userId}`) as {
+            total: number;
+          }[];
       }
       return { messages, total: Number(countResult[0]?.total || 0) };
     } catch (error) {
@@ -1455,11 +1483,15 @@ export const communityService = {
         tasks =
           (await sql`SELECT * FROM community_tasks WHERE is_active = ${active} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as CommunityTask[];
         countResult =
-          await sql`SELECT COUNT(*) as total FROM community_tasks WHERE is_active = ${active}`;
+          (await sql`SELECT COUNT(*) as total FROM community_tasks WHERE is_active = ${active}`) as {
+            total: number;
+          }[];
       } else {
         tasks =
           (await sql`SELECT * FROM community_tasks ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as CommunityTask[];
-        countResult = await sql`SELECT COUNT(*) as total FROM community_tasks`;
+        countResult = (await sql`SELECT COUNT(*) as total FROM community_tasks`) as {
+          total: number;
+        }[];
       }
       return { tasks, total: Number(countResult[0]?.total || 0) };
     } catch (error) {
@@ -1558,9 +1590,11 @@ export const communityService = {
     try {
       const offset = (page - 1) * limit;
       const activities =
-        await sql`SELECT * FROM user_activity_logs WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+        (await sql`SELECT * FROM user_activity_logs WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as Activity[];
       const [countResult] =
-        await sql`SELECT COUNT(*) as total FROM user_activity_logs WHERE user_id = ${userId}`;
+        (await sql`SELECT COUNT(*) as total FROM user_activity_logs WHERE user_id = ${userId}`) as {
+          total: number;
+        }[];
       return { activities, total: Number(countResult?.total || 0) };
     } catch (error) {
       console.error('Error getting user activities:', error);
@@ -1575,9 +1609,11 @@ export const communityService = {
     if (!sql) return { activities: [], total: 0 };
     try {
       const offset = (page - 1) * limit;
-      const activities = await sql`SELECT al.*, u.email as user_email FROM user_activity_logs al
-        LEFT JOIN users u ON al.user_id = u.uid ORDER BY al.created_at DESC LIMIT ${limit} OFFSET ${offset}`;
-      const [countResult] = await sql`SELECT COUNT(*) as total FROM user_activity_logs`;
+      const activities = (await sql`SELECT al.*, u.email as user_email FROM user_activity_logs al
+        LEFT JOIN users u ON al.user_id = u.uid ORDER BY al.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as Activity[];
+      const [countResult] = (await sql`SELECT COUNT(*) as total FROM user_activity_logs`) as {
+        total: number;
+      }[];
       return { activities, total: Number(countResult?.total || 0) };
     } catch (error) {
       console.error('Error getting recent activities:', error);
@@ -1702,16 +1738,18 @@ export const communityService = {
         whereConditions.push(`(u.email ILIKE '%${search}%' OR u.uid ILIKE '%${search}%')`);
       if (status && status !== 'all') whereConditions.push(`u.status = '${status}'`);
 
-      const users = await sql`
+      const users = (await sql`
         SELECT u.uid, u.email, u.status, u.created_at, ur.reputation_points, ur.level, ur.posts_count, ur.comments_count,
           (SELECT COUNT(*) FROM user_bans WHERE user_id = u.uid AND is_active = true) as active_bans
         FROM users u LEFT JOIN user_reputation ur ON u.uid = ur.user_id
         ${whereConditions.length > 0 ? sql`WHERE ${sql.unsafe(whereConditions.join(' AND '))}` : sql``}
         ORDER BY u.created_at DESC LIMIT ${limit} OFFSET ${offset}
-      `;
+      `) as User[];
 
-      const [countResult] = await sql`SELECT COUNT(*) as total FROM users u
-        ${whereConditions.length > 0 ? sql`WHERE ${sql.unsafe(whereConditions.join(' AND '))}` : sql``}`;
+      const [countResult] = (await sql`SELECT COUNT(*) as total FROM users u
+        ${whereConditions.length > 0 ? sql`WHERE ${sql.unsafe(whereConditions.join(' AND '))}` : sql``}`) as {
+        total: number;
+      }[];
 
       return { users, total: Number(countResult?.total || 0) };
     } catch (error) {
@@ -1740,12 +1778,16 @@ export const communityService = {
           WHERE pm.subject ILIKE ${'%' + search + '%'} OR pm.content ILIKE ${'%' + search + '%'}
           ORDER BY pm.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as PrivateMessage[];
         countResult =
-          await sql`SELECT COUNT(*) as total FROM private_messages WHERE subject ILIKE ${'%' + search + '%'} OR content ILIKE ${'%' + search + '%'}`;
+          (await sql`SELECT COUNT(*) as total FROM private_messages WHERE subject ILIKE ${'%' + search + '%'} OR content ILIKE ${'%' + search + '%'}`) as {
+            total: number;
+          }[];
       } else {
         messages = (await sql`SELECT pm.*, u1.email as sender_email, u2.email as receiver_email
           FROM private_messages pm LEFT JOIN users u1 ON pm.sender_id = u1.uid LEFT JOIN users u2 ON pm.receiver_id = u2.uid
           ORDER BY pm.created_at DESC LIMIT ${limit} OFFSET ${offset}`) as PrivateMessage[];
-        countResult = await sql`SELECT COUNT(*) as total FROM private_messages`;
+        countResult = (await sql`SELECT COUNT(*) as total FROM private_messages`) as {
+          total: number;
+        }[];
       }
 
       return { messages, total: Number(countResult[0]?.total || 0) };
@@ -1766,20 +1808,26 @@ export const communityService = {
 
       // Try to get from moderation_queue table, fallback to empty if not exists
       try {
-        const queue = await sql`
+        const queue = (await sql`
           SELECT mq.*, u.email as author_email 
           FROM moderation_queue mq 
           LEFT JOIN users u ON mq.author_id = u.uid
           ORDER BY mq.created_at DESC 
           LIMIT ${limit} OFFSET ${offset}
-        `;
+        `) as ModAction[];
 
         const [pendingCount] =
-          await sql`SELECT COUNT(*) as total FROM moderation_queue WHERE status = 'pending'`;
+          (await sql`SELECT COUNT(*) as total FROM moderation_queue WHERE status = 'pending'`) as {
+            total: number;
+          }[];
         const [approvedCount] =
-          await sql`SELECT COUNT(*) as total FROM moderation_queue WHERE status = 'approved'`;
+          (await sql`SELECT COUNT(*) as total FROM moderation_queue WHERE status = 'approved'`) as {
+            total: number;
+          }[];
         const [rejectedCount] =
-          await sql`SELECT COUNT(*) as total FROM moderation_queue WHERE status = 'rejected'`;
+          (await sql`SELECT COUNT(*) as total FROM moderation_queue WHERE status = 'rejected'`) as {
+            total: number;
+          }[];
 
         return {
           queue: queue || [],

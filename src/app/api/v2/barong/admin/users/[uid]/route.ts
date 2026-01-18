@@ -21,7 +21,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       return NextResponse.json({ success: false, message: result.error }, { status: 404 });
     }
 
-    const user = result.data;
+    const user = result.data as any; // 使用 any 类型以兼容不同的 User 定义
 
     if (!user) {
       return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 });
@@ -34,11 +34,18 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         email: user.email,
         role: user.role || 'user',
         level: user.level || 1,
-        otp: user.totp_enabled || false,
-        state: user.is_active ? 'active' : 'banned',
+        otp: user.totp_enabled || user.totpEnabled || false,
+        state:
+          user.is_active !== undefined
+            ? user.is_active
+              ? 'active'
+              : 'banned'
+            : user.isActive
+              ? 'active'
+              : 'banned',
         created_at: user.created_at || user.createdAt,
         updated_at: user.updated_at || user.updatedAt,
-        last_login: user.last_login_at,
+        last_login: user.last_login_at || user.lastLogin,
         activity: {
           post_count: user.post_count || 0,
           comment_count: user.comment_count || 0,
@@ -86,7 +93,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       authResult.user.uid
     );
 
-    const user = result.data;
+    const user = result.data as any; // 使用 any 类型以兼容不同的 User 定义
 
     if (!user) {
       return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 });
@@ -100,7 +107,14 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         email: user.email,
         role: user.role || 'user',
         level: user.level || 1,
-        state: user.is_active ? 'active' : 'banned',
+        state:
+          user.is_active !== undefined
+            ? user.is_active
+              ? 'active'
+              : 'banned'
+            : user.isActive
+              ? 'active'
+              : 'banned',
         updated_at: user.updated_at || user.updatedAt,
       },
     });

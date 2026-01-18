@@ -16,7 +16,13 @@ export async function POST(request: NextRequest) {
     }
 
     const sql = neon(databaseUrl);
-    const results: { step: number; action: string; status: string; error?: string }[] = [];
+    const results: {
+      step: number;
+      action: string;
+      status: string;
+      error?: string;
+      count?: number;
+    }[] = [];
 
     // 1. 移除 user_bans 表的外键约束
     try {

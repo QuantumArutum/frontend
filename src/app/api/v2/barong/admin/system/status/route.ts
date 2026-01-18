@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get recent errors from audit log
-    let recentErrors: { message: string; timestamp: string }[] = [];
+    let recentErrors: any[] = [];
     if (sql && dbStatus.status === 'connected') {
       try {
         recentErrors = await sql`
