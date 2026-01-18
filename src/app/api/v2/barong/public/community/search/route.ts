@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sql } from '@/lib/database';
 
-// 设置运行时配置
-export const runtime = 'edge';
-export const maxDuration = 10;
+// 设置运行时配置 - 使用Node.js runtime以支持完整的数据库功能
+export const maxDuration = 30;
 
 /**
  * GET /api/v2/barong/public/community/search
